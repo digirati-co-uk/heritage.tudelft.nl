@@ -1,0 +1,28 @@
+{
+  "extends": "@repo/typescript-config/nextjs.json",
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./*"],
+      "contentlayer/generated": ["./.contentlayer/generated"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "next.config.js",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".contentlayer/generated",
+    "@repo/ui"
+  ],
+  "exclude": ["node_modules"]
+}

@@ -1,0 +1,58 @@
+server:
+  url: http://localhost:3000/iiif
+
+# Run these everywhere.
+run:
+  - flat-manifests
+  - delft-labels
+  - extract-remote-source
+  - extract-slug-source
+  - extract-label-string
+  - extract-thumbnail
+  - manifest-sqlite
+  - metadata-analysis
+  - folder-collections
+  - site-collections
+
+stores:
+
+  manifests:
+    type: iiif-json
+    path: ./iiif/manifests
+    pattern: "**/*.json"
+
+  libis-objects:
+    type: iiif-json
+    path: ./iiif/libis/objects
+    destination: manifests
+    pattern: "**/*.json"
+    run:
+      - extract-topics
+      - delft-image-source
+      - delft-related
+    config:
+      extract-topics:
+        commaSeparated: ['material']
+        topicTypes:
+          material: [ 'Materiaal', 'Material' ]
+          date: [ 'Date', 'Datering' ]
+          Maker: [ 'Maker' ]
+          Publisher: [ 'Publisher' ]
+
+  libis-collections:
+    type: iiif-json
+    path: ./iiif/libis/collections
+    destination: collections
+    pattern: "**/*.json"
+
+  delta-archief:
+    type: iiif-json
+    path: ./iiif/delta-archief
+    destination: manifests
+    pattern: "**/*.json"
+
+  map-series:
+    type: iiif-json
+    path: ./iiif/map-series
+    destination: manifests
+    pattern: "**/*.json"

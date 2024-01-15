@@ -1,0 +1,658 @@
+{
+        "@context": "http://iiif.io/api/presentation/2/context.json",
+        "@id": "https://dlc.services/iiif-resource/7/string1string2string3/kalktekeningen/AA270936",
+        "@type": "sc:Manifest",
+        "metadata": [
+                {
+                        "label": "Titel",
+                        "value": "Cultuurtuin"
+                },
+                {
+                        "label": "Koker",
+                        "value": "AA270936"
+                },
+                {
+                        "label": "Gebouw",
+                        "value": "Biotechnologie"
+                }
+        ],
+        "sequences": [
+                {
+                        "@id": "https://dlc.services/iiif-query/7/?sequence=n1&manifest=s1&canvas=n2&s1=kalktekeningen&n1=",
+                        "@type": "sc:Sequence",
+                        "label": "Sequence 0",
+                        "canvases": [
+                                {
+                                        "@id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=kalktekeningen&n1=&n2=2369",
+                                        "@type": "sc:Canvas",
+                                        "thumbnail": {
+                                                "@id": "https://dlc.services/thumbs/7/14/a53c4f8b-85bc-405c-8dc5-313a017c5c27/full/full/0/default.jpg",
+                                                "@type": "dctypes:Image",
+                                                "service": {
+                                                        "@context": "http://iiif.io/api/image/2/context.json",
+                                                        "@id": "https://apex.dlc.services/thumbs/7/14/a53c4f8b-85bc-405c-8dc5-313a017c5c27",
+                                                        "profile": [
+                                                                "http://iiif.io/api/image/2/level0.json",
+                                                                {
+                                                                        "formats": [
+                                                                                "jpg"
+                                                                        ],
+                                                                        "qualities": [
+                                                                                "color"
+                                                                        ],
+                                                                        "supports": [
+                                                                                "sizeByWhListed"
+                                                                        ]
+                                                                }
+                                                        ],
+                                                        "width": 1024,
+                                                        "height": 613,
+                                                        "sizes": [
+                                                                {
+                                                                        "width": 1024,
+                                                                        "height": 613
+                                                                },
+                                                                {
+                                                                        "width": 400,
+                                                                        "height": 239
+                                                                },
+                                                                {
+                                                                        "width": 200,
+                                                                        "height": 120
+                                                                },
+                                                                {
+                                                                        "width": 100,
+                                                                        "height": 60
+                                                                }
+                                                        ]
+                                                }
+                                        },
+                                        "height": 10472,
+                                        "width": 17490,
+                                        "images": [
+                                                {
+                                                        "@id": "https://dlc.services/iiif-img/7/14/a53c4f8b-85bc-405c-8dc5-313a017c5c27/anno",
+                                                        "@type": "oa:Annotation",
+                                                        "motivation": "sc:painting",
+                                                        "resource": {
+                                                                "@id": "https://dlc.services/iiif-img/7/14/a53c4f8b-85bc-405c-8dc5-313a017c5c27/full/!2000,2000/0/default.jpg",
+                                                                "@type": "dctypes:Image",
+                                                                "height": 10472,
+                                                                "width": 17490,
+                                                                "service": {
+                                                                        "@id": "https://dlc.services/iiif-img/7/14/a53c4f8b-85bc-405c-8dc5-313a017c5c27",
+                                                                        "protocol": "http://iiif.io/api/image",
+                                                                        "height": 10472,
+                                                                        "width": 17490,
+                                                                        "profile": "http://iiif.io/api/image/2/level1.json"
+                                                                }
+                                                        },
+                                                        "on": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=kalktekeningen&n1=&n2=2369"
+                                                }
+                                        ],
+                                        "label": "Plattegrond cultuurtuin techn. gewassen"
+                                },
+                                {
+                                        "@id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=kalktekeningen&n1=&n2=2370",
+                                        "@type": "sc:Canvas",
+                                        "thumbnail": {
+                                                "@id": "https://dlc.services/thumbs/7/14/012342ab-66e4-4de7-a5a3-0206c7606ca5/full/full/0/default.jpg",
+                                                "@type": "dctypes:Image",
+                                                "service": {
+                                                        "@context": "http://iiif.io/api/image/2/context.json",
+                                                        "@id": "https://apex.dlc.services/thumbs/7/14/012342ab-66e4-4de7-a5a3-0206c7606ca5",
+                                                        "profile": [
+                                                                "http://iiif.io/api/image/2/level0.json",
+                                                                {
+                                                                        "formats": [
+                                                                                "jpg"
+                                                                        ],
+                                                                        "qualities": [
+                                                                                "color"
+                                                                        ],
+                                                                        "supports": [
+                                                                                "sizeByWhListed"
+                                                                        ]
+                                                                }
+                                                        ],
+                                                        "width": 1024,
+                                                        "height": 733,
+                                                        "sizes": [
+                                                                {
+                                                                        "width": 1024,
+                                                                        "height": 733
+                                                                },
+                                                                {
+                                                                        "width": 400,
+                                                                        "height": 286
+                                                                },
+                                                                {
+                                                                        "width": 200,
+                                                                        "height": 143
+                                                                },
+                                                                {
+                                                                        "width": 100,
+                                                                        "height": 72
+                                                                }
+                                                        ]
+                                                }
+                                        },
+                                        "height": 5512,
+                                        "width": 7704,
+                                        "images": [
+                                                {
+                                                        "@id": "https://dlc.services/iiif-img/7/14/012342ab-66e4-4de7-a5a3-0206c7606ca5/anno",
+                                                        "@type": "oa:Annotation",
+                                                        "motivation": "sc:painting",
+                                                        "resource": {
+                                                                "@id": "https://dlc.services/iiif-img/7/14/012342ab-66e4-4de7-a5a3-0206c7606ca5/full/!2000,2000/0/default.jpg",
+                                                                "@type": "dctypes:Image",
+                                                                "height": 5512,
+                                                                "width": 7704,
+                                                                "service": {
+                                                                        "@id": "https://dlc.services/iiif-img/7/14/012342ab-66e4-4de7-a5a3-0206c7606ca5",
+                                                                        "protocol": "http://iiif.io/api/image",
+                                                                        "height": 5512,
+                                                                        "width": 7704,
+                                                                        "profile": "http://iiif.io/api/image/2/level1.json"
+                                                                }
+                                                        },
+                                                        "on": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=kalktekeningen&n1=&n2=2370"
+                                                }
+                                        ],
+                                        "label": "Vernieuwen en wijzigen vd varen plantenkas schaal 1a10"
+                                },
+                                {
+                                        "@id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=kalktekeningen&n1=&n2=2371",
+                                        "@type": "sc:Canvas",
+                                        "thumbnail": {
+                                                "@id": "https://dlc.services/thumbs/7/14/89f10ea7-5d8c-4fb5-b851-a84cef20d3b7/full/full/0/default.jpg",
+                                                "@type": "dctypes:Image",
+                                                "service": {
+                                                        "@context": "http://iiif.io/api/image/2/context.json",
+                                                        "@id": "https://apex.dlc.services/thumbs/7/14/89f10ea7-5d8c-4fb5-b851-a84cef20d3b7",
+                                                        "profile": [
+                                                                "http://iiif.io/api/image/2/level0.json",
+                                                                {
+                                                                        "formats": [
+                                                                                "jpg"
+                                                                        ],
+                                                                        "qualities": [
+                                                                                "color"
+                                                                        ],
+                                                                        "supports": [
+                                                                                "sizeByWhListed"
+                                                                        ]
+                                                                }
+                                                        ],
+                                                        "width": 1024,
+                                                        "height": 756,
+                                                        "sizes": [
+                                                                {
+                                                                        "width": 1024,
+                                                                        "height": 756
+                                                                },
+                                                                {
+                                                                        "width": 400,
+                                                                        "height": 295
+                                                                },
+                                                                {
+                                                                        "width": 200,
+                                                                        "height": 148
+                                                                },
+                                                                {
+                                                                        "width": 100,
+                                                                        "height": 74
+                                                                }
+                                                        ]
+                                                }
+                                        },
+                                        "height": 7900,
+                                        "width": 10694,
+                                        "images": [
+                                                {
+                                                        "@id": "https://dlc.services/iiif-img/7/14/89f10ea7-5d8c-4fb5-b851-a84cef20d3b7/anno",
+                                                        "@type": "oa:Annotation",
+                                                        "motivation": "sc:painting",
+                                                        "resource": {
+                                                                "@id": "https://dlc.services/iiif-img/7/14/89f10ea7-5d8c-4fb5-b851-a84cef20d3b7/full/!2000,2000/0/default.jpg",
+                                                                "@type": "dctypes:Image",
+                                                                "height": 7900,
+                                                                "width": 10694,
+                                                                "service": {
+                                                                        "@id": "https://dlc.services/iiif-img/7/14/89f10ea7-5d8c-4fb5-b851-a84cef20d3b7",
+                                                                        "protocol": "http://iiif.io/api/image",
+                                                                        "height": 7900,
+                                                                        "width": 10694,
+                                                                        "profile": "http://iiif.io/api/image/2/level1.json"
+                                                                }
+                                                        },
+                                                        "on": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=kalktekeningen&n1=&n2=2371"
+                                                }
+                                        ],
+                                        "label": "Vernieuwen en wijzigen vd kweek en experimenteer kas incl. riolering"
+                                },
+                                {
+                                        "@id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=kalktekeningen&n1=&n2=2372",
+                                        "@type": "sc:Canvas",
+                                        "thumbnail": {
+                                                "@id": "https://dlc.services/thumbs/7/14/e2934e57-ffc2-49fd-af1a-687bd33e8a65/full/full/0/default.jpg",
+                                                "@type": "dctypes:Image",
+                                                "service": {
+                                                        "@context": "http://iiif.io/api/image/2/context.json",
+                                                        "@id": "https://apex.dlc.services/thumbs/7/14/e2934e57-ffc2-49fd-af1a-687bd33e8a65",
+                                                        "profile": [
+                                                                "http://iiif.io/api/image/2/level0.json",
+                                                                {
+                                                                        "formats": [
+                                                                                "jpg"
+                                                                        ],
+                                                                        "qualities": [
+                                                                                "color"
+                                                                        ],
+                                                                        "supports": [
+                                                                                "sizeByWhListed"
+                                                                        ]
+                                                                }
+                                                        ],
+                                                        "width": 1024,
+                                                        "height": 615,
+                                                        "sizes": [
+                                                                {
+                                                                        "width": 1024,
+                                                                        "height": 615
+                                                                },
+                                                                {
+                                                                        "width": 400,
+                                                                        "height": 240
+                                                                },
+                                                                {
+                                                                        "width": 200,
+                                                                        "height": 120
+                                                                },
+                                                                {
+                                                                        "width": 100,
+                                                                        "height": 60
+                                                                }
+                                                        ]
+                                                }
+                                        },
+                                        "height": 10364,
+                                        "width": 17248,
+                                        "images": [
+                                                {
+                                                        "@id": "https://dlc.services/iiif-img/7/14/e2934e57-ffc2-49fd-af1a-687bd33e8a65/anno",
+                                                        "@type": "oa:Annotation",
+                                                        "motivation": "sc:painting",
+                                                        "resource": {
+                                                                "@id": "https://dlc.services/iiif-img/7/14/e2934e57-ffc2-49fd-af1a-687bd33e8a65/full/!2000,2000/0/default.jpg",
+                                                                "@type": "dctypes:Image",
+                                                                "height": 10364,
+                                                                "width": 17248,
+                                                                "service": {
+                                                                        "@id": "https://dlc.services/iiif-img/7/14/e2934e57-ffc2-49fd-af1a-687bd33e8a65",
+                                                                        "protocol": "http://iiif.io/api/image",
+                                                                        "height": 10364,
+                                                                        "width": 17248,
+                                                                        "profile": "http://iiif.io/api/image/2/level1.json"
+                                                                }
+                                                        },
+                                                        "on": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=kalktekeningen&n1=&n2=2372"
+                                                }
+                                        ],
+                                        "label": "Plattegrond cultuurtuin v. techn. gewassen"
+                                },
+                                {
+                                        "@id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=kalktekeningen&n1=&n2=2373",
+                                        "@type": "sc:Canvas",
+                                        "thumbnail": {
+                                                "@id": "https://dlc.services/thumbs/7/14/16b042f1-69a1-465c-87ae-fa175a9cdc03/full/full/0/default.jpg",
+                                                "@type": "dctypes:Image",
+                                                "service": {
+                                                        "@context": "http://iiif.io/api/image/2/context.json",
+                                                        "@id": "https://apex.dlc.services/thumbs/7/14/16b042f1-69a1-465c-87ae-fa175a9cdc03",
+                                                        "profile": [
+                                                                "http://iiif.io/api/image/2/level0.json",
+                                                                {
+                                                                        "formats": [
+                                                                                "jpg"
+                                                                        ],
+                                                                        "qualities": [
+                                                                                "color"
+                                                                        ],
+                                                                        "supports": [
+                                                                                "sizeByWhListed"
+                                                                        ]
+                                                                }
+                                                        ],
+                                                        "width": 825,
+                                                        "height": 1024,
+                                                        "sizes": [
+                                                                {
+                                                                        "width": 825,
+                                                                        "height": 1024
+                                                                },
+                                                                {
+                                                                        "width": 322,
+                                                                        "height": 400
+                                                                },
+                                                                {
+                                                                        "width": 161,
+                                                                        "height": 200
+                                                                },
+                                                                {
+                                                                        "width": 81,
+                                                                        "height": 100
+                                                                }
+                                                        ]
+                                                }
+                                        },
+                                        "height": 6894,
+                                        "width": 5556,
+                                        "images": [
+                                                {
+                                                        "@id": "https://dlc.services/iiif-img/7/14/16b042f1-69a1-465c-87ae-fa175a9cdc03/anno",
+                                                        "@type": "oa:Annotation",
+                                                        "motivation": "sc:painting",
+                                                        "resource": {
+                                                                "@id": "https://dlc.services/iiif-img/7/14/16b042f1-69a1-465c-87ae-fa175a9cdc03/full/!2000,2000/0/default.jpg",
+                                                                "@type": "dctypes:Image",
+                                                                "height": 6894,
+                                                                "width": 5556,
+                                                                "service": {
+                                                                        "@id": "https://dlc.services/iiif-img/7/14/16b042f1-69a1-465c-87ae-fa175a9cdc03",
+                                                                        "protocol": "http://iiif.io/api/image",
+                                                                        "height": 6894,
+                                                                        "width": 5556,
+                                                                        "profile": "http://iiif.io/api/image/2/level1.json"
+                                                                }
+                                                        },
+                                                        "on": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=kalktekeningen&n1=&n2=2373"
+                                                }
+                                        ],
+                                        "label": "Plantenkassen"
+                                },
+                                {
+                                        "@id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=kalktekeningen&n1=&n2=2374",
+                                        "@type": "sc:Canvas",
+                                        "thumbnail": {
+                                                "@id": "https://dlc.services/thumbs/7/14/f24b3681-c5d3-4134-a7be-52f30dba145a/full/full/0/default.jpg",
+                                                "@type": "dctypes:Image",
+                                                "service": {
+                                                        "@context": "http://iiif.io/api/image/2/context.json",
+                                                        "@id": "https://apex.dlc.services/thumbs/7/14/f24b3681-c5d3-4134-a7be-52f30dba145a",
+                                                        "profile": [
+                                                                "http://iiif.io/api/image/2/level0.json",
+                                                                {
+                                                                        "formats": [
+                                                                                "jpg"
+                                                                        ],
+                                                                        "qualities": [
+                                                                                "color"
+                                                                        ],
+                                                                        "supports": [
+                                                                                "sizeByWhListed"
+                                                                        ]
+                                                                }
+                                                        ],
+                                                        "width": 1024,
+                                                        "height": 889,
+                                                        "sizes": [
+                                                                {
+                                                                        "width": 1024,
+                                                                        "height": 889
+                                                                },
+                                                                {
+                                                                        "width": 400,
+                                                                        "height": 347
+                                                                },
+                                                                {
+                                                                        "width": 200,
+                                                                        "height": 174
+                                                                },
+                                                                {
+                                                                        "width": 100,
+                                                                        "height": 87
+                                                                }
+                                                        ]
+                                                }
+                                        },
+                                        "height": 4220,
+                                        "width": 4861,
+                                        "images": [
+                                                {
+                                                        "@id": "https://dlc.services/iiif-img/7/14/f24b3681-c5d3-4134-a7be-52f30dba145a/anno",
+                                                        "@type": "oa:Annotation",
+                                                        "motivation": "sc:painting",
+                                                        "resource": {
+                                                                "@id": "https://dlc.services/iiif-img/7/14/f24b3681-c5d3-4134-a7be-52f30dba145a/full/!2000,2000/0/default.jpg",
+                                                                "@type": "dctypes:Image",
+                                                                "height": 4220,
+                                                                "width": 4861,
+                                                                "service": {
+                                                                        "@id": "https://dlc.services/iiif-img/7/14/f24b3681-c5d3-4134-a7be-52f30dba145a",
+                                                                        "protocol": "http://iiif.io/api/image",
+                                                                        "height": 4220,
+                                                                        "width": 4861,
+                                                                        "profile": "http://iiif.io/api/image/2/level1.json"
+                                                                }
+                                                        },
+                                                        "on": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=kalktekeningen&n1=&n2=2374"
+                                                }
+                                        ],
+                                        "label": "Geen omschrijving"
+                                },
+                                {
+                                        "@id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=kalktekeningen&n1=&n2=2375",
+                                        "@type": "sc:Canvas",
+                                        "thumbnail": {
+                                                "@id": "https://dlc.services/thumbs/7/14/9a5eec16-84c6-480d-aa19-f6eedb8181d1/full/full/0/default.jpg",
+                                                "@type": "dctypes:Image",
+                                                "service": {
+                                                        "@context": "http://iiif.io/api/image/2/context.json",
+                                                        "@id": "https://apex.dlc.services/thumbs/7/14/9a5eec16-84c6-480d-aa19-f6eedb8181d1",
+                                                        "profile": [
+                                                                "http://iiif.io/api/image/2/level0.json",
+                                                                {
+                                                                        "formats": [
+                                                                                "jpg"
+                                                                        ],
+                                                                        "qualities": [
+                                                                                "color"
+                                                                        ],
+                                                                        "supports": [
+                                                                                "sizeByWhListed"
+                                                                        ]
+                                                                }
+                                                        ],
+                                                        "width": 1024,
+                                                        "height": 562,
+                                                        "sizes": [
+                                                                {
+                                                                        "width": 1024,
+                                                                        "height": 562
+                                                                },
+                                                                {
+                                                                        "width": 400,
+                                                                        "height": 220
+                                                                },
+                                                                {
+                                                                        "width": 200,
+                                                                        "height": 110
+                                                                },
+                                                                {
+                                                                        "width": 100,
+                                                                        "height": 55
+                                                                }
+                                                        ]
+                                                }
+                                        },
+                                        "height": 6118,
+                                        "width": 11146,
+                                        "images": [
+                                                {
+                                                        "@id": "https://dlc.services/iiif-img/7/14/9a5eec16-84c6-480d-aa19-f6eedb8181d1/anno",
+                                                        "@type": "oa:Annotation",
+                                                        "motivation": "sc:painting",
+                                                        "resource": {
+                                                                "@id": "https://dlc.services/iiif-img/7/14/9a5eec16-84c6-480d-aa19-f6eedb8181d1/full/!2000,2000/0/default.jpg",
+                                                                "@type": "dctypes:Image",
+                                                                "height": 6118,
+                                                                "width": 11146,
+                                                                "service": {
+                                                                        "@id": "https://dlc.services/iiif-img/7/14/9a5eec16-84c6-480d-aa19-f6eedb8181d1",
+                                                                        "protocol": "http://iiif.io/api/image",
+                                                                        "height": 6118,
+                                                                        "width": 11146,
+                                                                        "profile": "http://iiif.io/api/image/2/level1.json"
+                                                                }
+                                                        },
+                                                        "on": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=kalktekeningen&n1=&n2=2375"
+                                                }
+                                        ],
+                                        "label": "Bergloods vd cultuurtuin v. technische gewassen"
+                                },
+                                {
+                                        "@id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=kalktekeningen&n1=&n2=2376",
+                                        "@type": "sc:Canvas",
+                                        "thumbnail": {
+                                                "@id": "https://dlc.services/thumbs/7/14/a829dc37-2067-4b09-8427-ff0d5c26a32d/full/full/0/default.jpg",
+                                                "@type": "dctypes:Image",
+                                                "service": {
+                                                        "@context": "http://iiif.io/api/image/2/context.json",
+                                                        "@id": "https://apex.dlc.services/thumbs/7/14/a829dc37-2067-4b09-8427-ff0d5c26a32d",
+                                                        "profile": [
+                                                                "http://iiif.io/api/image/2/level0.json",
+                                                                {
+                                                                        "formats": [
+                                                                                "jpg"
+                                                                        ],
+                                                                        "qualities": [
+                                                                                "color"
+                                                                        ],
+                                                                        "supports": [
+                                                                                "sizeByWhListed"
+                                                                        ]
+                                                                }
+                                                        ],
+                                                        "width": 1019,
+                                                        "height": 1024,
+                                                        "sizes": [
+                                                                {
+                                                                        "width": 1019,
+                                                                        "height": 1024
+                                                                },
+                                                                {
+                                                                        "width": 398,
+                                                                        "height": 400
+                                                                },
+                                                                {
+                                                                        "width": 199,
+                                                                        "height": 200
+                                                                },
+                                                                {
+                                                                        "width": 100,
+                                                                        "height": 100
+                                                                }
+                                                        ]
+                                                }
+                                        },
+                                        "height": 5718,
+                                        "width": 5691,
+                                        "images": [
+                                                {
+                                                        "@id": "https://dlc.services/iiif-img/7/14/a829dc37-2067-4b09-8427-ff0d5c26a32d/anno",
+                                                        "@type": "oa:Annotation",
+                                                        "motivation": "sc:painting",
+                                                        "resource": {
+                                                                "@id": "https://dlc.services/iiif-img/7/14/a829dc37-2067-4b09-8427-ff0d5c26a32d/full/!2000,2000/0/default.jpg",
+                                                                "@type": "dctypes:Image",
+                                                                "height": 5718,
+                                                                "width": 5691,
+                                                                "service": {
+                                                                        "@id": "https://dlc.services/iiif-img/7/14/a829dc37-2067-4b09-8427-ff0d5c26a32d",
+                                                                        "protocol": "http://iiif.io/api/image",
+                                                                        "height": 5718,
+                                                                        "width": 5691,
+                                                                        "profile": "http://iiif.io/api/image/2/level1.json"
+                                                                }
+                                                        },
+                                                        "on": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=kalktekeningen&n1=&n2=2376"
+                                                }
+                                        ],
+                                        "label": "Plantenkassen"
+                                },
+                                {
+                                        "@id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=kalktekeningen&n1=&n2=2377",
+                                        "@type": "sc:Canvas",
+                                        "thumbnail": {
+                                                "@id": "https://dlc.services/thumbs/7/14/0e73149c-7ef5-4cb8-b001-3b06861e3da7/full/full/0/default.jpg",
+                                                "@type": "dctypes:Image",
+                                                "service": {
+                                                        "@context": "http://iiif.io/api/image/2/context.json",
+                                                        "@id": "https://apex.dlc.services/thumbs/7/14/0e73149c-7ef5-4cb8-b001-3b06861e3da7",
+                                                        "profile": [
+                                                                "http://iiif.io/api/image/2/level0.json",
+                                                                {
+                                                                        "formats": [
+                                                                                "jpg"
+                                                                        ],
+                                                                        "qualities": [
+                                                                                "color"
+                                                                        ],
+                                                                        "supports": [
+                                                                                "sizeByWhListed"
+                                                                        ]
+                                                                }
+                                                        ],
+                                                        "width": 967,
+                                                        "height": 1024,
+                                                        "sizes": [
+                                                                {
+                                                                        "width": 967,
+                                                                        "height": 1024
+                                                                },
+                                                                {
+                                                                        "width": 378,
+                                                                        "height": 400
+                                                                },
+                                                                {
+                                                                        "width": 189,
+                                                                        "height": 200
+                                                                },
+                                                                {
+                                                                        "width": 94,
+                                                                        "height": 100
+                                                                }
+                                                        ]
+                                                }
+                                        },
+                                        "height": 5534,
+                                        "width": 5224,
+                                        "images": [
+                                                {
+                                                        "@id": "https://dlc.services/iiif-img/7/14/0e73149c-7ef5-4cb8-b001-3b06861e3da7/anno",
+                                                        "@type": "oa:Annotation",
+                                                        "motivation": "sc:painting",
+                                                        "resource": {
+                                                                "@id": "https://dlc.services/iiif-img/7/14/0e73149c-7ef5-4cb8-b001-3b06861e3da7/full/!2000,2000/0/default.jpg",
+                                                                "@type": "dctypes:Image",
+                                                                "height": 5534,
+                                                                "width": 5224,
+                                                                "service": {
+                                                                        "@id": "https://dlc.services/iiif-img/7/14/0e73149c-7ef5-4cb8-b001-3b06861e3da7",
+                                                                        "protocol": "http://iiif.io/api/image",
+                                                                        "height": 5534,
+                                                                        "width": 5224,
+                                                                        "profile": "http://iiif.io/api/image/2/level1.json"
+                                                                }
+                                                        },
+                                                        "on": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=kalktekeningen&n1=&n2=2377"
+                                                }
+                                        ],
+                                        "label": "Plantenkassen"
+                                }
+                        ]
+                }
+        ]
+}

@@ -1,0 +1,98 @@
+{
+        "@context": "http://iiif.io/api/presentation/2/context.json",
+        "@id": "https://dlc.services/iiif-resource/7/string1string2string3/kalktekeningen/AA270918",
+        "@type": "sc:Manifest",
+        "metadata": [
+                {
+                        "label": "Titel",
+                        "value": "afstandsverwarmingskoker 23-09-1986"
+                },
+                {
+                        "label": "Koker",
+                        "value": "AA270918"
+                },
+                {
+                        "label": "Gebouw",
+                        "value": "Campus"
+                }
+        ],
+        "sequences": [
+                {
+                        "@id": "https://dlc.services/iiif-query/7/?sequence=n1&manifest=s1&canvas=n2&s1=kalktekeningen&n1=",
+                        "@type": "sc:Sequence",
+                        "label": "Sequence 0",
+                        "canvases": [
+                                {
+                                        "@id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=kalktekeningen&n1=&n2=1961",
+                                        "@type": "sc:Canvas",
+                                        "thumbnail": {
+                                                "@id": "https://dlc.services/thumbs/7/14/5bef4a45-653a-45b0-aca4-f11bdc928a3e/full/full/0/default.jpg",
+                                                "@type": "dctypes:Image",
+                                                "service": {
+                                                        "@context": "http://iiif.io/api/image/2/context.json",
+                                                        "@id": "https://apex.dlc.services/thumbs/7/14/5bef4a45-653a-45b0-aca4-f11bdc928a3e",
+                                                        "profile": [
+                                                                "http://iiif.io/api/image/2/level0.json",
+                                                                {
+                                                                        "formats": [
+                                                                                "jpg"
+                                                                        ],
+                                                                        "qualities": [
+                                                                                "color"
+                                                                        ],
+                                                                        "supports": [
+                                                                                "sizeByWhListed"
+                                                                        ]
+                                                                }
+                                                        ],
+                                                        "width": 1024,
+                                                        "height": 332,
+                                                        "sizes": [
+                                                                {
+                                                                        "width": 1024,
+                                                                        "height": 332
+                                                                },
+                                                                {
+                                                                        "width": 400,
+                                                                        "height": 130
+                                                                },
+                                                                {
+                                                                        "width": 200,
+                                                                        "height": 65
+                                                                },
+                                                                {
+                                                                        "width": 100,
+                                                                        "height": 32
+                                                                }
+                                                        ]
+                                                }
+                                        },
+                                        "height": 10280,
+                                        "width": 31706,
+                                        "images": [
+                                                {
+                                                        "@id": "https://dlc.services/iiif-img/7/14/5bef4a45-653a-45b0-aca4-f11bdc928a3e/anno",
+                                                        "@type": "oa:Annotation",
+                                                        "motivation": "sc:painting",
+                                                        "resource": {
+                                                                "@id": "https://dlc.services/iiif-img/7/14/5bef4a45-653a-45b0-aca4-f11bdc928a3e/full/!2000,2000/0/default.jpg",
+                                                                "@type": "dctypes:Image",
+                                                                "height": 10280,
+                                                                "width": 31706,
+                                                                "service": {
+                                                                        "@id": "https://dlc.services/iiif-img/7/14/5bef4a45-653a-45b0-aca4-f11bdc928a3e",
+                                                                        "protocol": "http://iiif.io/api/image",
+                                                                        "height": 10280,
+                                                                        "width": 31706,
+                                                                        "profile": "http://iiif.io/api/image/2/level1.json"
+                                                                }
+                                                        },
+                                                        "on": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=kalktekeningen&n1=&n2=1961"
+                                                }
+                                        ],
+                                        "label": "Afstand verwarmingsnet"
+                                }
+                        ]
+                }
+        ]
+}

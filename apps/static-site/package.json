@@ -1,0 +1,46 @@
+{
+  "name": "static-site",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -H 0.0.0.0",
+    "build": "next build",
+    "build-iiif": "iiif-hss build --out ./public/iiif --scripts ./iiif/scripts",
+    "start": "next start",
+    "lint": "eslint . --max-warnings 0"
+  },
+  "dependencies": {
+    "@iiif/helpers": "^1.0.2",
+    "@page-blocks/file-system": "^0.0.5",
+    "@page-blocks/next": "^0.0.5",
+    "@page-blocks/react": "^0.0.6",
+    "@page-blocks/client": "^0.0.4",
+    "@page-blocks/react-client": "^0.0.5",
+    "@page-blocks/react-editor": "^0.0.9",
+    "@page-blocks/screenshots": "^0.0.4",
+    "@page-blocks/web-components": "^0.0.6",
+    "@repo/ui": "*",
+    "@repo/exhibition-viewer": "workspace:*",
+    "iiif-hss": "^0.2.1",
+    "next": "^14.0.4",
+    "react": "^18.2.0",
+    "react-iiif-vault": "^0.9.21",
+    "sqlite": "^5.0.1",
+    "sqlite3": "^5.1.6",
+    "react-dom": "^18.2.0",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@next/eslint-plugin-next": "^14.0.2",
+    "@repo/eslint-config": "*",
+    "@repo/typescript-config": "*",
+    "@types/eslint": "^8.44.7",
+    "@types/node": "^17.0.12",
+    "@types/react": "^18.0.22",
+    "@types/react-dom": "^18.0.7",
+    "eslint": "^8.53.0",
+    "next-contentlayer": "^0.3.4",
+    "typescript": "^5.2.2",
+    "playwright": "^1.39.0"
+  }
+}

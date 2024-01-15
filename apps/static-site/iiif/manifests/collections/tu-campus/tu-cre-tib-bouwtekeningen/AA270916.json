@@ -1,0 +1,238 @@
+{
+        "@context": "http://iiif.io/api/presentation/2/context.json",
+        "@id": "https://dlc.services/iiif-resource/7/string1string2string3/kalktekeningen/AA270916",
+        "@type": "sc:Manifest",
+        "metadata": [
+                {
+                        "label": "Titel",
+                        "value": "oude delft 75"
+                },
+                {
+                        "label": "Koker",
+                        "value": "AA270916"
+                },
+                {
+                        "label": "Gebouw",
+                        "value": "Oude Delft 75"
+                }
+        ],
+        "sequences": [
+                {
+                        "@id": "https://dlc.services/iiif-query/7/?sequence=n1&manifest=s1&canvas=n2&s1=kalktekeningen&n1=",
+                        "@type": "sc:Sequence",
+                        "label": "Sequence 0",
+                        "canvases": [
+                                {
+                                        "@id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=kalktekeningen&n1=&n2=1955",
+                                        "@type": "sc:Canvas",
+                                        "thumbnail": {
+                                                "@id": "https://dlc.services/thumbs/7/14/074a4598-5988-46a2-95f4-f8c625a1fcb3/full/full/0/default.jpg",
+                                                "@type": "dctypes:Image",
+                                                "service": {
+                                                        "@context": "http://iiif.io/api/image/2/context.json",
+                                                        "@id": "https://apex.dlc.services/thumbs/7/14/074a4598-5988-46a2-95f4-f8c625a1fcb3",
+                                                        "profile": [
+                                                                "http://iiif.io/api/image/2/level0.json",
+                                                                {
+                                                                        "formats": [
+                                                                                "jpg"
+                                                                        ],
+                                                                        "qualities": [
+                                                                                "color"
+                                                                        ],
+                                                                        "supports": [
+                                                                                "sizeByWhListed"
+                                                                        ]
+                                                                }
+                                                        ],
+                                                        "width": 747,
+                                                        "height": 1024,
+                                                        "sizes": [
+                                                                {
+                                                                        "width": 747,
+                                                                        "height": 1024
+                                                                },
+                                                                {
+                                                                        "width": 292,
+                                                                        "height": 400
+                                                                },
+                                                                {
+                                                                        "width": 146,
+                                                                        "height": 200
+                                                                },
+                                                                {
+                                                                        "width": 73,
+                                                                        "height": 100
+                                                                }
+                                                        ]
+                                                }
+                                        },
+                                        "height": 10474,
+                                        "width": 7636,
+                                        "images": [
+                                                {
+                                                        "@id": "https://dlc.services/iiif-img/7/14/074a4598-5988-46a2-95f4-f8c625a1fcb3/anno",
+                                                        "@type": "oa:Annotation",
+                                                        "motivation": "sc:painting",
+                                                        "resource": {
+                                                                "@id": "https://dlc.services/iiif-img/7/14/074a4598-5988-46a2-95f4-f8c625a1fcb3/full/!2000,2000/0/default.jpg",
+                                                                "@type": "dctypes:Image",
+                                                                "height": 10474,
+                                                                "width": 7636,
+                                                                "service": {
+                                                                        "@id": "https://dlc.services/iiif-img/7/14/074a4598-5988-46a2-95f4-f8c625a1fcb3",
+                                                                        "protocol": "http://iiif.io/api/image",
+                                                                        "height": 10474,
+                                                                        "width": 7636,
+                                                                        "profile": "http://iiif.io/api/image/2/level1.json"
+                                                                }
+                                                        },
+                                                        "on": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=kalktekeningen&n1=&n2=1955"
+                                                }
+                                        ],
+                                        "label": "Blad 1 schaal 1 a 100"
+                                },
+                                {
+                                        "@id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=kalktekeningen&n1=&n2=1956",
+                                        "@type": "sc:Canvas",
+                                        "thumbnail": {
+                                                "@id": "https://dlc.services/thumbs/7/14/a8453a5b-7b1f-4310-833e-c399b6df5d7e/full/full/0/default.jpg",
+                                                "@type": "dctypes:Image",
+                                                "service": {
+                                                        "@context": "http://iiif.io/api/image/2/context.json",
+                                                        "@id": "https://apex.dlc.services/thumbs/7/14/a8453a5b-7b1f-4310-833e-c399b6df5d7e",
+                                                        "profile": [
+                                                                "http://iiif.io/api/image/2/level0.json",
+                                                                {
+                                                                        "formats": [
+                                                                                "jpg"
+                                                                        ],
+                                                                        "qualities": [
+                                                                                "color"
+                                                                        ],
+                                                                        "supports": [
+                                                                                "sizeByWhListed"
+                                                                        ]
+                                                                }
+                                                        ],
+                                                        "width": 1024,
+                                                        "height": 797,
+                                                        "sizes": [
+                                                                {
+                                                                        "width": 1024,
+                                                                        "height": 797
+                                                                },
+                                                                {
+                                                                        "width": 400,
+                                                                        "height": 311
+                                                                },
+                                                                {
+                                                                        "width": 200,
+                                                                        "height": 156
+                                                                },
+                                                                {
+                                                                        "width": 100,
+                                                                        "height": 78
+                                                                }
+                                                        ]
+                                                }
+                                        },
+                                        "height": 8688,
+                                        "width": 11162,
+                                        "images": [
+                                                {
+                                                        "@id": "https://dlc.services/iiif-img/7/14/a8453a5b-7b1f-4310-833e-c399b6df5d7e/anno",
+                                                        "@type": "oa:Annotation",
+                                                        "motivation": "sc:painting",
+                                                        "resource": {
+                                                                "@id": "https://dlc.services/iiif-img/7/14/a8453a5b-7b1f-4310-833e-c399b6df5d7e/full/!2000,2000/0/default.jpg",
+                                                                "@type": "dctypes:Image",
+                                                                "height": 8688,
+                                                                "width": 11162,
+                                                                "service": {
+                                                                        "@id": "https://dlc.services/iiif-img/7/14/a8453a5b-7b1f-4310-833e-c399b6df5d7e",
+                                                                        "protocol": "http://iiif.io/api/image",
+                                                                        "height": 8688,
+                                                                        "width": 11162,
+                                                                        "profile": "http://iiif.io/api/image/2/level1.json"
+                                                                }
+                                                        },
+                                                        "on": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=kalktekeningen&n1=&n2=1956"
+                                                }
+                                        ],
+                                        "label": "Kasten wand op kabinet decor kunst"
+                                },
+                                {
+                                        "@id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=kalktekeningen&n1=&n2=1957",
+                                        "@type": "sc:Canvas",
+                                        "thumbnail": {
+                                                "@id": "https://dlc.services/thumbs/7/14/2bea1e4a-0073-4189-9cce-7bdce5419334/full/full/0/default.jpg",
+                                                "@type": "dctypes:Image",
+                                                "service": {
+                                                        "@context": "http://iiif.io/api/image/2/context.json",
+                                                        "@id": "https://apex.dlc.services/thumbs/7/14/2bea1e4a-0073-4189-9cce-7bdce5419334",
+                                                        "profile": [
+                                                                "http://iiif.io/api/image/2/level0.json",
+                                                                {
+                                                                        "formats": [
+                                                                                "jpg"
+                                                                        ],
+                                                                        "qualities": [
+                                                                                "color"
+                                                                        ],
+                                                                        "supports": [
+                                                                                "sizeByWhListed"
+                                                                        ]
+                                                                }
+                                                        ],
+                                                        "width": 1024,
+                                                        "height": 872,
+                                                        "sizes": [
+                                                                {
+                                                                        "width": 1024,
+                                                                        "height": 872
+                                                                },
+                                                                {
+                                                                        "width": 400,
+                                                                        "height": 340
+                                                                },
+                                                                {
+                                                                        "width": 200,
+                                                                        "height": 170
+                                                                },
+                                                                {
+                                                                        "width": 100,
+                                                                        "height": 85
+                                                                }
+                                                        ]
+                                                }
+                                        },
+                                        "height": 7832,
+                                        "width": 9202,
+                                        "images": [
+                                                {
+                                                        "@id": "https://dlc.services/iiif-img/7/14/2bea1e4a-0073-4189-9cce-7bdce5419334/anno",
+                                                        "@type": "oa:Annotation",
+                                                        "motivation": "sc:painting",
+                                                        "resource": {
+                                                                "@id": "https://dlc.services/iiif-img/7/14/2bea1e4a-0073-4189-9cce-7bdce5419334/full/!2000,2000/0/default.jpg",
+                                                                "@type": "dctypes:Image",
+                                                                "height": 7832,
+                                                                "width": 9202,
+                                                                "service": {
+                                                                        "@id": "https://dlc.services/iiif-img/7/14/2bea1e4a-0073-4189-9cce-7bdce5419334",
+                                                                        "protocol": "http://iiif.io/api/image",
+                                                                        "height": 7832,
+                                                                        "width": 9202,
+                                                                        "profile": "http://iiif.io/api/image/2/level1.json"
+                                                                }
+                                                        },
+                                                        "on": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=kalktekeningen&n1=&n2=1957"
+                                                }
+                                        ],
+                                        "label": "Opmeting kabinet hoogleraard zolder decoratieve kunst"
+                                }
+                        ]
+                }
+        ]
+}

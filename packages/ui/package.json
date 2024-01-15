@@ -7,6 +7,13 @@
     "./card": "./src/card.tsx",
     "./code": "./src/code.tsx"
   },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "src/*"
+      ]
+    }
+  },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
     "generate:component": "turbo gen react-component"

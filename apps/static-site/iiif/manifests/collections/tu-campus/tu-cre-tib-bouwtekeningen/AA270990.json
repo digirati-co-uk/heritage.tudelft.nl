@@ -1,0 +1,98 @@
+{
+        "@context": "http://iiif.io/api/presentation/2/context.json",
+        "@id": "https://dlc.services/iiif-resource/7/string1string2string3/kalktekeningen/AA270990",
+        "@type": "sc:Manifest",
+        "metadata": [
+                {
+                        "label": "Titel",
+                        "value": "IRI diverse"
+                },
+                {
+                        "label": "Koker",
+                        "value": "AA270990"
+                },
+                {
+                        "label": "Gebouw",
+                        "value": "Reactor Instituut Delft"
+                }
+        ],
+        "sequences": [
+                {
+                        "@id": "https://dlc.services/iiif-query/7/?sequence=n1&manifest=s1&canvas=n2&s1=kalktekeningen&n1=",
+                        "@type": "sc:Sequence",
+                        "label": "Sequence 0",
+                        "canvases": [
+                                {
+                                        "@id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=kalktekeningen&n1=&n2=3481",
+                                        "@type": "sc:Canvas",
+                                        "thumbnail": {
+                                                "@id": "https://dlc.services/thumbs/7/14/c31695fc-f233-477a-a150-0cc2b37e3b14/full/full/0/default.jpg",
+                                                "@type": "dctypes:Image",
+                                                "service": {
+                                                        "@context": "http://iiif.io/api/image/2/context.json",
+                                                        "@id": "https://apex.dlc.services/thumbs/7/14/c31695fc-f233-477a-a150-0cc2b37e3b14",
+                                                        "profile": [
+                                                                "http://iiif.io/api/image/2/level0.json",
+                                                                {
+                                                                        "formats": [
+                                                                                "jpg"
+                                                                        ],
+                                                                        "qualities": [
+                                                                                "color"
+                                                                        ],
+                                                                        "supports": [
+                                                                                "sizeByWhListed"
+                                                                        ]
+                                                                }
+                                                        ],
+                                                        "width": 1024,
+                                                        "height": 727,
+                                                        "sizes": [
+                                                                {
+                                                                        "width": 1024,
+                                                                        "height": 727
+                                                                },
+                                                                {
+                                                                        "width": 400,
+                                                                        "height": 284
+                                                                },
+                                                                {
+                                                                        "width": 200,
+                                                                        "height": 142
+                                                                },
+                                                                {
+                                                                        "width": 100,
+                                                                        "height": 71
+                                                                }
+                                                        ]
+                                                }
+                                        },
+                                        "height": 10346,
+                                        "width": 14576,
+                                        "images": [
+                                                {
+                                                        "@id": "https://dlc.services/iiif-img/7/14/c31695fc-f233-477a-a150-0cc2b37e3b14/anno",
+                                                        "@type": "oa:Annotation",
+                                                        "motivation": "sc:painting",
+                                                        "resource": {
+                                                                "@id": "https://dlc.services/iiif-img/7/14/c31695fc-f233-477a-a150-0cc2b37e3b14/full/!2000,2000/0/default.jpg",
+                                                                "@type": "dctypes:Image",
+                                                                "height": 10346,
+                                                                "width": 14576,
+                                                                "service": {
+                                                                        "@id": "https://dlc.services/iiif-img/7/14/c31695fc-f233-477a-a150-0cc2b37e3b14",
+                                                                        "protocol": "http://iiif.io/api/image",
+                                                                        "height": 10346,
+                                                                        "width": 14576,
+                                                                        "profile": "http://iiif.io/api/image/2/level1.json"
+                                                                }
+                                                        },
+                                                        "on": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=kalktekeningen&n1=&n2=3481"
+                                                }
+                                        ],
+                                        "label": "Doorvoeringen in realtorhal"
+                                }
+                        ]
+                }
+        ]
+}
