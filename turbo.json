@@ -9,9 +9,14 @@
     "lint": {
       "dependsOn": ["^lint"]
     },
+    "build-iiif": {
+      "inputs": ["iiif/**"],
+      "outputs": [".iiif/**", "public/iiif/**"]
+    },
     "dev": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "dependsOn": ["build-iiif"]
     }
   }
 }
