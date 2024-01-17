@@ -122,6 +122,7 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
         type: "manifest",
         title: label,
         link: `/${fullSlug}`,
+        thumbnail: getThumb(item),
       });
     }
 
