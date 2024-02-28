@@ -8,14 +8,16 @@ run:
   - extract-remote-source
   - extract-slug-source
   - extract-label-string
+  - extract-part-of-collection
   - extract-thumbnail
   - manifest-sqlite
   - metadata-analysis
   - folder-collections
   - site-collections
+  - delft-image-source
+  - typesense-manifests
 
 stores:
-
   manifests:
     type: iiif-json
     path: ./iiif/manifests
@@ -28,16 +30,15 @@ stores:
     pattern: "**/*.json"
     run:
       - extract-topics
-      - delft-image-source
       - delft-related
     config:
       extract-topics:
-        commaSeparated: ['material']
+        commaSeparated: ["material"]
         topicTypes:
-          material: [ 'Materiaal', 'Material' ]
-          date: [ 'Date', 'Datering' ]
-          Maker: [ 'Maker' ]
-          Publisher: [ 'Publisher' ]
+          material: ["Materiaal", "Material"]
+          date: ["Date", "Datering"]
+          Maker: ["Maker"]
+          Publisher: ["Publisher"]
 
   libis-collections:
     type: iiif-json
