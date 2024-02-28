@@ -1,34 +1,55 @@
 import { Manifest } from "@iiif/presentation-3";
-import { AutoLanguage } from "@/components/pages/AutoLanguage";
-import { Exhibition } from "@repo/exhibition-viewer";
+import { createPaintingAnnotationsHelper } from "@iiif/helpers/painting-annotations";
+import { getRenderingStrategy } from "react-iiif-vault/utils";
+import { TitlePanel } from "../exhibitions/TitleBlock";
+import { InfoBlock } from "../exhibitions/InfoBlock";
+import { ImageBlock } from "../exhibitions/ImageBlock";
+import { MediaBlock } from "../exhibitions/MediaBlock";
 
 export interface ExhibitionPageProps {
   manifest: Manifest;
   meta: {};
   slug: string;
+  viewObjectLinks: Array<{ service: string; slug: string; canvasId: string; targetCanvasId: string }>;
 }
 
-export function ExhibitionPage(props: ExhibitionPageProps) {
+export async function ExhibitionPage(props: ExhibitionPageProps) {
+  const helper = createPaintingAnnotationsHelper();
+  const canvas: any = props.manifest.items[0];
+
+  if (!canvas) return null;
+
   return (
-    <div>
-      <h1 className="text-3xl font-bold underline my-4">
-        <AutoLanguage>{props.manifest.label}</AutoLanguage>
-      </h1>
-      <div>
-        <AutoLanguage lines className="mb-3">
-          {props.manifest.summary}
-        </AutoLanguage>
-        <AutoLanguage lines className="mb-3">
-          {props.manifest.requiredStatement?.label}
-        </AutoLanguage>
-        <AutoLanguage lines className="mb-3 font-bold italic">
-          {props.manifest.requiredStatement?.value}
-        </AutoLanguage>
+    <>
+      <div className="mt-12 auto-rows-auto grid-cols-12 content-center justify-center lg:grid">
+        <TitlePanel manifest={props.manifest} />
+
+        {props.manifest.items.map((canvas: any, idx) => {
+          const paintables = helper.getPaintables(canvas);
+          const strategy = getRenderingStrategy({
+            canvas,
+            loadImageService: () => void 0,
+            paintables,
+            supports: ["empty", "images", "media", "3d-model", "textual-content", "complex-timeline"],
+          });
+
+          const foundLinks = props.viewObjectLinks.filter((link) => link.canvasId === canvas.id);
+
+          if (strategy.type === "textual-content") {
+            return <InfoBlock canvas={canvas} strategy={strategy} />;
+          }
+
+          if (strategy.type === "images") {
+            return <ImageBlock canvas={canvas} index={idx} objectLinks={foundLinks} />;
+          }
+
+          if (strategy.type === "media") {
+            return <MediaBlock canvas={canvas} strategy={strategy} index={idx} />;
+          }
+
+          return null;
+        })}
       </div>
-      <div>
-        <pre>{props.manifest.id}</pre>
-      </div>
-      <Exhibition manifest={props.manifest} />
-    </div>
+    </>
   );
 }

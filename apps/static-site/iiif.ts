@@ -6,7 +6,19 @@ import { readFile } from "fs/promises";
 import { Database, open } from "sqlite";
 import sqlite3 from "sqlite3";
 
-export const client = create(join(cwd(), "public/iiif"));
+const iiifPath = join(cwd(), "public/iiif");
+
+export const client = create(iiifPath);
+
+export function loadRelated(): Promise<Record<string, string[]>> {
+  return loadJson(join(iiifPath, "meta/related-objects.json"));
+}
+
+export function loadImageServiceLinks(): Promise<
+  Record<string, Array<{ service: string; slug: string; canvasId: string; targetCanvasId: string }>>
+> {
+  return loadJson(join(iiifPath, "meta/image-service-links.json"));
+}
 
 export async function loadJson<T>(name: string): Promise<T> {
   const text = await readFile(name, "utf8");
@@ -73,21 +85,17 @@ export async function getSearchQuery() {
           or t.label LIKE '%' || $search || '%'
        group by m.id
        order by hits desc
-       limit 50`,
+       limit 50`
   );
 }
 
 export async function getExhibitions(): Promise<any> {
-  const { collection, meta, id } = await client.loadCollection(
-    "collections/exhibitions",
-  );
+  const { collection, meta, id } = await client.loadCollection("collections/exhibitions");
   return await loadJson(collection);
 }
 
 export async function loadCollection(slug: string) {
-  const { collection, meta, id } = await client.loadCollection(
-    "collections/" + slug,
-  );
+  const { collection, meta, id } = await client.loadCollection("collections/" + slug);
   return {
     collection: await loadJson(collection),
     // meta: await loadJson(meta),

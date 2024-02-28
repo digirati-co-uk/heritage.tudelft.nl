@@ -1,10 +1,5 @@
 import { createDirectory } from "@page-blocks/react";
-import {
-  CollectionBox,
-  ManifestBox,
-  PublicationBox,
-  ExhibitionBox,
-} from "@/components/blocks/Box";
+import { CollectionBox, ManifestBox, PublicationBox, ExhibitionBox } from "@/components/blocks/Box";
 import { HeadingParagraph } from "@/components/blocks/HeadingParagraph";
 import { CardGrid } from "@/components/blocks/CardGrid";
 

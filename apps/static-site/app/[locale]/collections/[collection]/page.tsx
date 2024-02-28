@@ -3,13 +3,9 @@ import { loadCollection } from "@/iiif";
 import { Page } from "@/components/Page";
 import { unstable_setRequestLocale } from "next-intl/server";
 
-export default async function Collection({
-  params,
-}: {
-  params: { collection: string; locale: string };
-}) {
+export default async function Collection({ params }: { params: { collection: string; locale: string } }) {
   unstable_setRequestLocale(params.locale);
-  const { collection, meta, id } = await loadCollection(params.collection);
+  const { collection, meta } = await loadCollection(params.collection);
 
   return (
     <Page>

@@ -1,7 +1,10 @@
-import { client, getExhibitions, loadJson } from "@/iiif";
+import { client, getExhibitions, loadImageServiceLinks, loadJson, loadRelated } from "@/iiif";
 import { Page } from "@/components/Page";
 import { ExhibitionPage } from "@/components/pages/ExhibitionPage";
 import { unstable_setRequestLocale } from "next-intl/server";
+import { ManifestLoader } from "@/app/provider";
+
+const imageServiceLinks = await loadImageServiceLinks();
 
 export const generateStaticParams = async () => {
   const exhibitions = [];
@@ -20,23 +23,24 @@ export const generateStaticParams = async () => {
   return exhibitions;
 };
 
-export default async function Exhibition({
-  params,
-}: {
-  params: { exhibition: string; locale: string };
-}) {
+export default async function Exhibition({ params }: { params: { exhibition: string; locale: string } }) {
   unstable_setRequestLocale(params.locale);
-  const data = await client.loadManifest(`/manifests/${params.exhibition}`);
+  const manifestSlug = `manifests/${params.exhibition}`;
+  const data = await client.loadManifest(`/${manifestSlug}`);
   const meta = await loadJson(data.meta);
   const manifest = await loadJson(data.manifest);
+  const viewObjectLinks = imageServiceLinks[manifestSlug] || [];
 
   return (
     <Page>
-      <ExhibitionPage
-        manifest={manifest as any}
-        meta={meta as any}
-        slug={params.exhibition}
-      />
+      <ManifestLoader manifest={manifest}>
+        <ExhibitionPage
+          manifest={manifest as any}
+          meta={meta as any}
+          slug={params.exhibition}
+          viewObjectLinks={viewObjectLinks}
+        />
+      </ManifestLoader>
     </Page>
   );
 }
