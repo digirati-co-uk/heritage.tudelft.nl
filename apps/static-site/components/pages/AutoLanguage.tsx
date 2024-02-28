@@ -5,7 +5,9 @@ export function AutoLanguage({
   className,
   children,
   lines,
+  html,
 }: {
+  html?: boolean;
   lines?: boolean;
   className?: string;
   children: InternationalString | string | null | undefined;
@@ -15,16 +17,24 @@ export function AutoLanguage({
     return null;
   }
   if (typeof children === "string") {
+    if (html) {
+      return <span dangerouslySetInnerHTML={{ __html: children }} />;
+    }
     return <>{children}</>;
   }
 
   let value = children[locale];
 
-  if (!value) {
-    const fallback = Object.keys(children)[0];
-    if (fallback) {
-      value = children[fallback];
+  if (!value || value[0] === "") {
+    for (const fallback of Object.keys(children)) {
+      if (fallback && fallback[0] !== "") {
+        value = children[fallback];
+      }
     }
+  }
+
+  if (typeof value === "string") {
+    value = [value];
   }
 
   if (value) {
@@ -33,11 +43,18 @@ export function AutoLanguage({
       if (lines) {
         return (
           <>
-            {filtered.map((line) => (
-              <p className={className}>{line}</p>
-            ))}
+            {filtered.map((line) =>
+              html ? (
+                <p className={className} dangerouslySetInnerHTML={{ __html: line }} />
+              ) : (
+                <p className={className}>{line}</p>
+              )
+            )}
           </>
         );
+      }
+      if (html) {
+        return <span className={className} dangerouslySetInnerHTML={{ __html: filtered.join(" ") }} />;
       }
       return <>{filtered.join(" ")}</>;
     }
