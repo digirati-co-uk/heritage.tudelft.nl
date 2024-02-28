@@ -7,6 +7,7 @@ import {
   boxManifestSource,
   boxPublicationSource,
 } from "@/blocks/sources/box-source";
+import { twMerge } from "tailwind-merge";
 
 const boxProps = z.object({
   title: z.string(),
@@ -26,39 +27,38 @@ const boxProps = z.object({
     .optional(),
   backgroundImage: z.string().optional(),
   dark: z.boolean().optional(),
+  small: z.boolean().optional(),
   unfiltered: z.boolean().optional(),
+  className: z.string().optional(),
 });
 
 export function Box(props: z.infer<typeof boxProps>) {
   const filters = props.unfiltered ? "" : "grayscale";
+
+  const titleSize = props.small ? "text-xl" : "text-4xl";
+
   return (
-    <div className="aspect-square cut-corners relative flex group">
-      <div className="bg-yellow-400 absolute inset-0 z-1 overflow-hidden">
+    <div className={twMerge(`cut-corners group relative flex aspect-square`, props.className)}>
+      <div className="z-1 absolute inset-0 overflow-hidden bg-yellow-400">
         {props.backgroundImage ? (
           <img
             alt=""
-            className={`object-cover w-full h-full ${filters} group-hover:scale-110 scale-105 transition-transform duration-1000 ease-in-out`}
+            className={`h-full w-full object-cover ${filters} scale-105 transition-transform duration-1000 ease-in-out group-hover:scale-110`}
             src={props.backgroundImage}
           />
         ) : null}
         {props.backgroundColor ? (
-          <div
-            className={`mix-blend-multiply absolute inset-0 ${props.backgroundColor} pointer-events-none`}
-          ></div>
+          <div className={`absolute inset-0 mix-blend-multiply ${props.backgroundColor} pointer-events-none`}></div>
         ) : null}
       </div>
       <Link
         href={props.link || "/"}
-        className={`relative z-2 p-5 ${
+        className={`z-2 relative p-5 ${
           props.dark ? "text-black" : "text-white"
-        }  flex gap-3 flex-col h-full justify-between w-full no-underline`}
+        }  flex h-full w-full flex-col justify-between gap-3 no-underline`}
       >
-        <div className="font-mono uppercase text-md text-center">
-          {props.type}
-        </div>
-        <div className="mx-auto text-4xl  font-bold text-center">
-          {props.title}
-        </div>
+        <div className="text-md text-center font-mono uppercase">{props.type}</div>
+        <div className={`mx-auto text-center ${titleSize} font-bold`}>{props.title}</div>
         <div className="text-center">{props.subtitle || " "}</div>
       </Link>
     </div>
@@ -86,7 +86,7 @@ export const PublicationBox = block(
       },
     ],
   },
-  Box.bind(null),
+  Box.bind(null)
 );
 
 export const CollectionBox = block(
@@ -110,7 +110,7 @@ export const CollectionBox = block(
       },
     ],
   },
-  Box.bind(null),
+  Box.bind(null)
 );
 
 export const ManifestBox = block(
@@ -134,7 +134,7 @@ export const ManifestBox = block(
       },
     ],
   },
-  Box.bind(null),
+  Box.bind(null)
 );
 
 export const ExhibitionBox = block(
@@ -158,5 +158,5 @@ export const ExhibitionBox = block(
       },
     ],
   },
-  Box.bind(null),
+  Box.bind(null)
 );
