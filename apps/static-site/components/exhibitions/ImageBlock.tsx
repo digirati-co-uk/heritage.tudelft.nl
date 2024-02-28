@@ -33,10 +33,21 @@ export async function ImageBlock({
     <div className={twMerge(className, "cut-corners relative", !showSummary && "aspect-square md:aspect-auto")}>
       {showSummary ? (
         <div className={twMerge("h-full md:flex", isLeft && "flex-row-reverse", isBottom && "flex-col")}>
-          <div className={twMerge("cut-corners flex-1 md:w-2/3", isBottom && "w-full", "aspect-square md:aspect-auto")}>
+          <div
+            className={twMerge(
+              "cut-corners flex-1 md:w-2/3",
+              isBottom && "w-full md:w-full",
+              "aspect-square md:aspect-auto"
+            )}
+          >
             {canvasViewer}
           </div>
-          <div className={twMerge("cut-corners flex flex-col bg-black p-5 text-white md:w-1/3", isBottom && "w-full")}>
+          <div
+            className={twMerge(
+              "cut-corners flex flex-col bg-black p-5 text-white md:w-1/3",
+              isBottom && "w-full md:w-full"
+            )}
+          >
             <div className={twMerge("mb-4", isLeft && "place-self-end md:rotate-180")}>
               <svg
                 className={twMerge(isBottom ? "rotate-90" : "rotate-90 md:rotate-0")}
