@@ -9,7 +9,7 @@ export default async function Collection({ params }: { params: { collection: str
 
   return (
     <Page>
-      <CollectionPage collection={collection as any} meta={meta as any} />
+      <CollectionPage collection={collection as any} meta={meta as any} slug={`collections/${params.collection}`} />
     </Page>
   );
 }

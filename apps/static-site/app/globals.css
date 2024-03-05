@@ -119,3 +119,40 @@ div[data-textual-content="true"] {
     font-size: 1.25rem;
   }
 }
+
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+
+/** Quirk of styling instantsearch **/
+.facet-search {
+  width: 100%;
+}
+.facet-search .ais-SearchBox {
+  width: 100%;
+}
+.facet-search .ais-SearchBox-form {
+  display: flex;
+}
+
+.facet-search .ais-SearchBox-input {
+  flex: 1;
+  padding: 4px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.4);
+  margin-bottom: 10px;
+}
+
+.facet-search .ais-SearchBox-input:focus {
+  outline: none;
+  border: 1px solid #000;
+  background: #fff;
+}
+
+.facet-search .ais-SearchBox-submit {
+  display: none;
+}
+
+.facet-search .ais-SearchBox-reset {
+  display: none;
+}

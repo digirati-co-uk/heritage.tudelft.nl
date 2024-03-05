@@ -6,11 +6,13 @@ export function AutoLanguage({
   children,
   lines,
   html,
+  mapString: m = (text) => text,
 }: {
   html?: boolean;
   lines?: boolean;
   className?: string;
   children: InternationalString | string | null | undefined;
+  mapString?: (text: string) => string;
 }) {
   const locale = useLocale();
   if (!children) {
@@ -18,9 +20,9 @@ export function AutoLanguage({
   }
   if (typeof children === "string") {
     if (html) {
-      return <span dangerouslySetInnerHTML={{ __html: children }} />;
+      return <span dangerouslySetInnerHTML={{ __html: m(children) }} />;
     }
-    return <>{children}</>;
+    return <>{m(children)}</>;
   }
 
   let value = children[locale];
@@ -45,18 +47,18 @@ export function AutoLanguage({
           <>
             {filtered.map((line) =>
               html ? (
-                <p className={className} dangerouslySetInnerHTML={{ __html: line }} />
+                <p className={className} dangerouslySetInnerHTML={{ __html: m(line) }} />
               ) : (
-                <p className={className}>{line}</p>
+                <p className={className}>{m(line)}</p>
               )
             )}
           </>
         );
       }
       if (html) {
-        return <span className={className} dangerouslySetInnerHTML={{ __html: filtered.join(" ") }} />;
+        return <span className={className} dangerouslySetInnerHTML={{ __html: m(filtered.join(" ")) }} />;
       }
-      return <>{filtered.join(" ")}</>;
+      return <>{m(filtered.join(" "))}</>;
     }
   }
 
