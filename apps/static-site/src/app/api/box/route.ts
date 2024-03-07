@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { allPublications } from "contentlayer/generated";
 import { getValue } from "@iiif/helpers";
+import { loadCollection } from "@/iiif";
+
+import siteCollections from "@repo/iiif/build/collections/site/collection.json";
+import allCollections from "@repo/iiif/build/collections/collection.json";
+import exhibitions from "@repo/iiif/build/collections/exhibitions/collection.json";
+import manifests from "@repo/iiif/build/manifests/collection.json";
 
 function getThumb(item: any) {
   if (!item.thumbnail || item.thumbnail.length === 0) return;
@@ -38,13 +44,12 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
 
   if (type === "collection") {
     const results = [];
+    const collectionItems = [...siteCollections.items, ...allCollections.items];
 
-    const collection = await import("../../../../public/iiif/collections/site/collection.json");
-
-    for (const item of collection.items) {
+    for (const item of collectionItems) {
       let label = getValue(item.label, { fallbackLanguages: ["nl", "en"] });
       if (!label) {
-        label = (item.label.nl || ["Untitled Collection"])[0] as string;
+        label = ((item.label && item.label.nl) || ["Untitled Collection"])[0] as string;
       }
       const fullSlug = item["hss:slug"].replace("iiif/", "/");
       if (search && !label.toLowerCase().includes(search.toLowerCase())) continue;
@@ -67,13 +72,12 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
 
   if (type === "exhibition") {
     const results = [];
-
-    const collection = await import("../../../../public/iiif/collections/exhibitions/collection.json");
+    const collection = exhibitions;
 
     for (const item of collection.items) {
       let label = getValue(item.label, { fallbackLanguages: ["nl", "en"] });
       if (!label) {
-        label = (item.label.nl || ["Untitled Exhibition"])[0] as string;
+        label = ((item.label && item.label.nl) || ["Untitled Exhibition"])[0] as string;
       }
       const fullSlug = item["hss:slug"].replace("iiif/", "/");
       if (search && !label.toLowerCase().includes(search.toLowerCase())) continue;
@@ -98,17 +102,20 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
   if (type === "manifest") {
     const results = [];
 
-    const collection = await import("../../../../public/iiif/manifests/collection.json");
+    const collection = manifests;
+    let total = 0;
 
     for (const item of collection.items) {
       if (item.type !== "Manifest") continue;
 
       let label = getValue(item.label, { fallbackLanguages: ["nl", "en"] });
       if (!label) {
-        label = (item.label.nl || ["Untitled Manifest"])[0] as string;
+        label = ((item.label && item.label.nl) || ["Untitled Manifest"])[0] as string;
       }
       const fullSlug = item["hss:slug"].replace("iiif/", "/");
       if (search && !label.toLowerCase().includes(search.toLowerCase())) continue;
+      total++;
+      if (total > maxResults) break;
       results.push({
         type: "manifest",
         title: label,

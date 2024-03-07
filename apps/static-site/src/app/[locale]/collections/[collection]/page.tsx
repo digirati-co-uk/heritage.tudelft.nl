@@ -16,36 +16,37 @@ export default async function Collection({ params }: { params: { collection: str
   );
 }
 
-// Which collections should be generated at build time?
-export function getStaticPaths() {
-  const collections = Object.entries(siteMap)
-    .filter(([slug, obj]) => obj.type === "Collection")
-    .map(([slug, obj]) => {
-      return {
-        params: {
-          slug: slug.replace("collections/", ""),
-        },
-      };
-    });
+// // Which collections should be generated at build time?
+// This doesn't work locally unless you have the test server loaded. Leaving this off for now.
+// export function getStaticPaths() {
+//   const collections = Object.entries(siteMap)
+//     .filter(([slug, obj]) => obj.type === "Collection")
+//     .map(([slug, obj]) => {
+//       return {
+//         params: {
+//           slug: slug.replace("collections/", ""),
+//         },
+//       };
+//     });
 
-  const paths = [];
-  for (const collection of collections) {
-    paths.push({
-      params: {
-        collection: collection.params.slug,
-        locale: "en",
-      },
-    });
-    paths.push({
-      params: {
-        collection: collection.params.slug,
-        locale: "nl",
-      },
-    });
-  }
+//   const paths = [];
+//   for (const collection of collections) {
+//     paths.push({
+//       params: {
+//         collection: collection.params.slug,
+//         locale: "en",
+//       },
+//     });
+//     paths.push({
+//       params: {
+//         collection: collection.params.slug,
+//         locale: "nl",
+//       },
+//     });
+//   }
 
-  return {
-    paths,
-    fallback: true,
-  };
-}
+//   return {
+//     paths,
+//     fallback: true,
+//   };
+// }
