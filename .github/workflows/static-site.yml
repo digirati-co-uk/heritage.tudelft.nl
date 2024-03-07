@@ -58,6 +58,7 @@ jobs:
           deploy_json=$(netlify deploy \
             --build \
             --alias=deploy-preview-${{ github.event.number }} \
+            --json \
             --filter=iiif \
             --message="Deploy preview from GitHub Actions")
           preview_url=$(echo $deploy_json | jq -r '.deploy_url')
