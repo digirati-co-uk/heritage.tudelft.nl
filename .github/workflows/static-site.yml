@@ -51,7 +51,6 @@ jobs:
       #   run: bun run build --filter=iiif
 
       - name: Netlify deploy (preview)
-        id: netlify-preview
         if: (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy-preview'))
         working-directory: apps/iiif
         run: |
@@ -61,13 +60,17 @@ jobs:
             --filter=iiif \
             --json \
             --dir=apps/iiif/.next/ > deploy_output.txt
-          output=$(cat deploy_output.txt)
-          echo "NETLIFY_OUTPUT=$output" >> "$GITHUB_OUTPUT"
-
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_IIIF_SITE_ID }}
           IIIF_PREVIEW_URL: https://deploy-preview-${{ github.event.number }}--delft-iiif.netlify.app
+
+      - name: Get NETLIFY_OUTPUT
+        id: netlify
+        run: |
+          output=$(cat deploy_output.txt)
+          echo "NETLIFY_OUTPUT=$output" >> "$GITHUB_OUTPUT"
+
       - name: Parse NETLIFY_OUTPUT JSON
         run: |
           echo "The URL where the logs from the deploy can be found"
