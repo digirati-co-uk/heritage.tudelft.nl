@@ -54,7 +54,9 @@ jobs:
           publish-dir: "./apps/static-site/.next"
           production-branch: main
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          netlify-config-path: "./apps/static-site/netlify.toml"
           deploy-message: "Deploy from GitHub Actions"
+          github-deployment-environment: "heritage.tudelft.nl"
           enable-commit-comment: ${{ github.event_name == 'pull_request' }}
           overwrites-pull-request-comment: true
         env:
