@@ -35,6 +35,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-iiif-cache-
 
+      - name: Cache Next.js build cache
+        uses: actions/cache@v4
+        with:
+          path: apps/static-site/.next/cache
+          key: ${{ runner.os }}-iiif-cache-${{ hashFiles('**/bun.lockb') }}--${{ hashFiles('app/static-site/src/**/*.ts', 'app/static-site/src/**/*.tsx') }}
+          restore-keys: |
+            ${{ runner.os }}-iiif-cache-${{ hashFiles('**/bun.lockb') }}
+
       - name: IIIF Netlify deploy (preview)
         id: netlify_iiif
         if: (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy-preview'))
