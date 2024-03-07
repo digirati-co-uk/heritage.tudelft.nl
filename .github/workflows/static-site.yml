@@ -53,7 +53,7 @@ jobs:
         if: github.ref == 'refs/heads/main' || (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy-preview'))
         uses: nwtgck/actions-netlify@v2.0
         with:
-          publish-dir: "./apps/static-site/.next"
+          publish-dir: "./apps/static-site/.next/"
           production-branch: main
           github-token: ${{ secrets.GITHUB_TOKEN }}
           # netlify-config-path: "./apps/static-site/netlify.toml"
