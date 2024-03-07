@@ -81,6 +81,7 @@ jobs:
           comment-id: ${{ steps.fc.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
+            ## Netlify output
             Preview URL (IIIF): ${{ steps.netlify_iiif.outputs.preview_url }}
           edit-mode: replace
 
