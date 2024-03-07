@@ -56,10 +56,10 @@ jobs:
         working-directory: apps/iiif
         run: |
           netlify deploy \
-            --build
+            --build \
             --alias=deploy-preview-${{ github.event.number }} \
             --filter=iiif \
-            --json
+            --json \
             --dir=apps/iiif/.next/ >> NETLIFY_OUTPUT
 
         env:
