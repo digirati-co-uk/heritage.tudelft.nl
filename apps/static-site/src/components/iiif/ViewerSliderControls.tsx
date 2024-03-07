@@ -28,7 +28,7 @@ export function ViewerSliderControls() {
                 <path
                   d="M70.173 12.294L57.446.174l-47.62 50 47.62 50 12.727-12.122-36.075-37.879z"
                   fill="currentColor"
-                  fill-rule="nonzero"
+                  fillRule="nonzero"
                 ></path>
               </g>
             </svg>
@@ -52,7 +52,7 @@ export function ViewerSliderControls() {
                 <path
                   d="M70.173 12.294L57.446.174l-47.62 50 47.62 50 12.727-12.122-36.075-37.879z"
                   fill="currentColor"
-                  fill-rule="nonzero"
+                  fillRule="nonzero"
                 ></path>
               </g>
             </svg>
