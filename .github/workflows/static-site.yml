@@ -51,34 +51,32 @@ jobs:
       #   run: bun run build --filter=iiif
 
       - name: Netlify deploy (preview)
+        id: netlify_iiif
         if: (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy-preview'))
         working-directory: apps/iiif
         run: |
-          netlify deploy \
+          output=$(netlify deploy \
             --build \
             --alias=deploy-preview-${{ github.event.number }} \
-            --filter=iiif
+            --filter=iiif \
+            --json \
+            --message="Deploy preview from GitHub Actions")
+          echo "NETLIFY_OUTPUT=$output" >> $GITHUB_OUTPUT
+
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_IIIF_SITE_ID }}
           IIIF_PREVIEW_URL: https://deploy-preview-${{ github.event.number }}--delft-iiif.netlify.app
-
-      # - name: Get NETLIFY_OUTPUT
-      #   id: netlify
-      #   run: |
-      #     output=$(cat deploy_output.txt)
-      #     echo "NETLIFY_OUTPUT=$output" >> "$GITHUB_OUTPUT"
-
-      # - name: Parse NETLIFY_OUTPUT JSON
-      #   run: |
-      #     echo "The URL where the logs from the deploy can be found"
-      #     echo "${{ fromJson(steps.netlify.outputs.NETLIFY_OUTPUT).logs }}"
-      #     echo ""
-      #     echo "the URL of the draft site that Netlify provides"
-      #     echo "${{ fromJson(steps.netlify.outputs.NETLIFY_OUTPUT).deploy_url }}"
-      #     echo ""
-      #     echo "the URL of the "real" site, set only if `--prod` was passed"
-      #     echo "${{ fromJson(steps.netlify.outputs.NETLIFY_OUTPUT).url }}"
+      - name: Parse NETLIFY_OUTPUT JSON
+        run: |
+          echo "The URL where the logs from the deploy can be found"
+          echo "${{ fromJson(steps.netlify_iiif.outputs.NETLIFY_OUTPUT).logs }}"
+          echo ""
+          echo "the URL of the draft site that Netlify provides"
+          echo "${{ fromJson(steps.netlify_iiif.outputs.NETLIFY_OUTPUT).deploy_url }}"
+          echo ""
+          echo "the URL of the "real" site, set only if `--prod` was passed"
+          echo "${{ fromJson(steps.netlify_iiif.outputs.NETLIFY_OUTPUT).url }}"
       # - name: Run bun build
       #   run: bun run build --filter=static-site
 
