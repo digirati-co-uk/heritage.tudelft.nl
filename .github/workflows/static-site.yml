@@ -57,8 +57,7 @@ jobs:
           netlify deploy \
             --build \
             --alias=deploy-preview-${{ github.event.number }} \
-            --filter=iiif \
-            --dir=apps/iiif/.next/
+            --filter=iiif
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_IIIF_SITE_ID }}
