@@ -68,7 +68,7 @@ jobs:
           echo "preview_url=$preview_url" >> $GITHUB_OUTPUT
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_IIIF_SITE_ID }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           IIIF_URL: https://deploy-preview-${{ github.event.number }}--delft-iiif.netlify.app
 
       - name: Find Comment

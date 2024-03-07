@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { allPublications } from "contentlayer/generated";
 import { getValue } from "@iiif/helpers";
-import { loadCollection } from "@/iiif";
 
 import siteCollections from "@repo/iiif/build/collections/site/collection.json";
 import allCollections from "@repo/iiif/build/collections/collection.json";

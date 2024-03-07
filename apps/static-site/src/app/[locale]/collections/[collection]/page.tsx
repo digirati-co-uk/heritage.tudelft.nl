@@ -2,7 +2,7 @@ import { CollectionPage } from "@/components/pages/CollectionPage";
 import { loadCollection } from "@/iiif";
 import { Page } from "@/components/Page";
 import { unstable_setRequestLocale } from "next-intl/server";
-import siteMap from "@repo/iiif/build/meta/sitemap.json";
+// import siteMap from "@repo/iiif/build/meta/sitemap.json";
 
 export default async function Collection({ params }: { params: { collection: string; locale: string } }) {
   unstable_setRequestLocale(params.locale);
