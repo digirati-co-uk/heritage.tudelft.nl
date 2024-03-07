@@ -1,9 +1,15 @@
 "use client";
 
 import { create } from "iiif-hss/client";
-import slugs from "../public/iiif/config/slugs.json";
+import slugs from "@repo/iiif/build/config/slugs.json";
 
-export const client = create(`http://localhost:3000/`);
+let IIIF_URL = process.env["IIIF_PREVIEW_URL"] || "http://localhost:7111/";
+
+if (!IIIF_URL.endsWith("/")) {
+  IIIF_URL += "/";
+}
+
+export const client = create(IIIF_URL);
 
 export function getManifestUrl(manifestSlug: string) {
   const resp = client.resolveFromSlug(manifestSlug, "Manifest", slugs as any);

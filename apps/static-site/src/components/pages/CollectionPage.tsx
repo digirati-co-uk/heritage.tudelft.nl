@@ -10,6 +10,22 @@ export interface CollectionPageProps {
   meta: {};
 }
 
+// @todo this is a bug with HSS not providing a slug on all collections. This can be removed once fixed.
+function getSlugFromId(id: string) {
+  if (id.includes("/collections/")) {
+    const parts = id.split("/collections/")[1];
+    return `collections/${parts?.replace("/collection.json", "")}`;
+  }
+  if (id.includes("/manifests/")) {
+    const parts = id.split("/manifests/")[1];
+    return `manifests/${parts?.replace("/manifest.json", "")}`;
+  }
+
+  // http://localhost:3000/en/collections/delta/manifest.json
+
+  return "#";
+}
+
 export function CollectionPage(props: CollectionPageProps) {
   return (
     <div className="py-8">
@@ -41,19 +57,18 @@ export function CollectionPage(props: CollectionPageProps) {
           <div id="search-results"></div>
           <div className=",b=9 grid grid-cols-1 gap-4 md:grid-cols-2">
             {props.collection.items.map((manifest) => {
-              const id = (manifest.id.split("/iiif/").pop() || "")
-                .replace("/manifest.json", "")
-                .replace("/collection.json", "");
+              // @todo fix the bug in hss.
+              const slug = manifest["hss:slug"] || getSlugFromId(manifest.id);
 
               let thumbnail = (manifest.thumbnail || [])[0]?.id;
               if (thumbnail) {
                 thumbnail.replace("/200,/", "/400,/");
               }
               return (
-                <div key={id} className="mb-4">
+                <div key={slug} className="mb-4">
                   <div className="group">
                     <div className="cut-corners aspect-square bg-cyan-500">
-                      <Link href={`/${id}`}>
+                      <Link href={`/${slug}`}>
                         <img
                           src={thumbnail}
                           alt=""
@@ -62,7 +77,7 @@ export function CollectionPage(props: CollectionPageProps) {
                       </Link>
                     </div>
                     <h4 className="p-4 font-mono text-sm underline-offset-2 group-hover:underline">
-                      <Link href={`/${id}`}>
+                      <Link href={`/${slug}`}>
                         <AutoLanguage>{manifest.label}</AutoLanguage>
                       </Link>
                     </h4>

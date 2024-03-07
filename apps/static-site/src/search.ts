@@ -1,5 +1,5 @@
 import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter";
-import manifestSchema from "../public/iiif/meta/typesense/manifests.schema.json";
+import manifestSchema from "@repo/iiif/build/meta/typesense/manifests.schema.json";
 
 const TYPESENSE_API_KEY = process.env["TYPESENSE_API_KEY"] || "xyz";
 const TYPESENSE_HOST = process.env["TYPESENSE_HOST"] || "localhost";

@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { SimpleViewerProvider, VaultProvider } from "react-iiif-vault";
 import { Vault } from "@iiif/helpers/vault";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
 export const queryClient = new QueryClient();
 
@@ -16,7 +17,7 @@ export function Provider({ children }: any) {
   );
 }
 
-export function ManifestLoader(props: { manifest: any; children: any }) {
+export function ManifestLoaderInner(props: { manifest: any; children: any }) {
   const searchParams = useSearchParams();
   const canvasIdEnc = searchParams.get("canvasId");
   const canvasId = canvasIdEnc ? atob(canvasIdEnc) : undefined;
@@ -29,5 +30,13 @@ export function ManifestLoader(props: { manifest: any; children: any }) {
     <SimpleViewerProvider manifest={props.manifest} pagingEnabled={false} startCanvas={canvasId}>
       {props.children}
     </SimpleViewerProvider>
+  );
+}
+
+export function ManifestLoader(props: { manifest: any; children: any }) {
+  return (
+    <Suspense>
+      <ManifestLoaderInner manifest={props.manifest}>{props.children}</ManifestLoaderInner>
+    </Suspense>
   );
 }

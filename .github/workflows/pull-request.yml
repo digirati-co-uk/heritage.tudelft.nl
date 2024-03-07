@@ -1,18 +1,7 @@
-name: Build and Deploy Static Site
+name: Build and Deploy Static Site Preview
 
 on:
-  push:
-    branches:
-      - main
-    # paths:
-    #   - "apps/iiif/**"
-    #   - "turbo.json"
-    #   - ".github/workflows/static-site.yml"
   pull_request:
-    # paths:
-    #   - "apps/static-site/**"
-    #   - "turbo.json"
-    #   - ".github/workflows/static-site.yml"
 
 jobs:
   build:
@@ -46,10 +35,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-iiif-cache-
 
-      ## Build and deploy IIIF first.
-      # - name: Run bun build
-      #   run: bun run build --filter=iiif
-
       - name: IIIF Netlify deploy (preview)
         id: netlify_iiif
         if: (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy-preview'))
@@ -68,6 +53,24 @@ jobs:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_IIIF_SITE_ID }}
           IIIF_PREVIEW_URL: https://deploy-preview-${{ github.event.number }}--delft-iiif.netlify.app
 
+      - name: Static site Netlify deploy (preview)
+        id: netlify_static_site
+        if: (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy-preview'))
+        working-directory: apps/static-site
+        run: |
+          deploy_json=$(netlify deploy \
+            --build \
+            --alias=deploy-preview-${{ github.event.number }} \
+            --json \
+            --filter=static-site \
+            --message="Deploy preview from GitHub Actions")
+          preview_url=$(echo $deploy_json | jq -r '.deploy_url')
+          echo "preview_url=$preview_url" >> $GITHUB_OUTPUT
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_IIIF_SITE_ID }}
+          IIIF_URL: https://deploy-preview-${{ github.event.number }}--delft-iiif.netlify.app
+
       - name: Find Comment
         uses: peter-evans/find-comment@v3
         id: fc
@@ -77,13 +80,15 @@ jobs:
           body-includes: Netlify output
 
       - name: Create or update comment
+        if: (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy-preview'))
         uses: peter-evans/create-or-update-comment@v4
         with:
           comment-id: ${{ steps.fc.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
             ## Netlify output
-            Preview URL (IIIF): ${{ steps.netlify_iiif.outputs.preview_url }}
+            Static site (preview): ${{ steps.netlify_static_site.outputs.preview_url }}
+            IIIF (preview): ${{ steps.netlify_iiif.outputs.preview_url }}
           edit-mode: replace
 
       # - name: Static Site Netlify deploy (preview)

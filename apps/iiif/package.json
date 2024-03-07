@@ -5,7 +5,8 @@
     "./build/*": "./build/*"
   },
   "scripts": {
-    "build": "iiif-hss build --out ./build --scripts ./scripts"
+    "build": "iiif-hss build --out ./build --scripts ./scripts",
+    "dev": "iiif-hss serve --scripts ./scripts"
   },
   "dependencies": {
     "iiif-hss": "^0.2.4"
