@@ -1,5 +1,5 @@
 import { existsSync } from "node:fs";
-import { readdir } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 import Typesense from "typesense";
 import { allPublications } from "contentlayer/generated";
 import { join } from "node:path";
@@ -17,9 +17,13 @@ const client = new Typesense.Client({
   connectionTimeoutSeconds: 2,
 });
 
+async function readJsonFile(path: string) {
+  return JSON.parse(await readFile(path, "utf-8"));
+}
+
 if (existsSync("./public/iiif/meta/typesense/manifests.schema.json")) {
-  const schema = await Bun.file("./public/iiif/meta/typesense/manifests.schema.json").json();
-  const data = await Bun.file("./public/iiif/meta/typesense/manifests.jsonl").text();
+  const schema = await readJsonFile("./public/iiif/meta/typesense/manifests.schema.json");
+  const data = (await readFile("./public/iiif/meta/typesense/manifests.jsonl")).toString();
 
   const jsonDocuments = data.split("\n").map((line) => JSON.parse(line));
 
@@ -51,8 +55,8 @@ if (existsSync("./public/iiif/meta/typesense/manifests.schema.json")) {
 }
 
 if (existsSync("./public/iiif/meta/typesense/manifest-plaintext.schema.json")) {
-  const schema = await Bun.file("./public/iiif/meta/typesense/manifest-plaintext.schema.json").json();
-  const data = await Bun.file("./public/iiif/meta/typesense/manifest-plaintext.jsonl").text();
+  const schema = await readJsonFile("./public/iiif/meta/typesense/manifest-plaintext.schema.json");
+  const data = (await readFile("./public/iiif/meta/typesense/manifest-plaintext.jsonl")).toString();
 
   const jsonDocuments = data.split("\n").map((line) => JSON.parse(line));
 
