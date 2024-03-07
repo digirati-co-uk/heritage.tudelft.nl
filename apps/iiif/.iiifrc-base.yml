@@ -20,12 +20,12 @@ run:
 stores:
   manifests:
     type: iiif-json
-    path: ./iiif/manifests
+    path: ./manifests
     pattern: "**/*.json"
 
   libis-objects:
     type: iiif-json
-    path: ./iiif/libis/objects
+    path: ./libis/objects
     destination: manifests
     pattern: "**/*.json"
     run:
@@ -42,18 +42,18 @@ stores:
 
   libis-collections:
     type: iiif-json
-    path: ./iiif/libis/collections
+    path: ./libis/collections
     destination: collections
     pattern: "**/*.json"
 
   delta-archief:
     type: iiif-json
-    path: ./iiif/delta-archief
+    path: ./delta-archief
     destination: manifests
     pattern: "**/*.json"
 
   map-series:
     type: iiif-json
-    path: ./iiif/map-series
+    path: ./map-series
     destination: manifests
     pattern: "**/*.json"
