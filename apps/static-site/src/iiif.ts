@@ -1,13 +1,13 @@
 // @ts-nocheck
 import { create } from "iiif-hss/node-client";
 import { join } from "node:path";
-import { cwd } from "process";
+import { cwd, env } from "process";
 import { readFile } from "fs/promises";
 import { Database, open } from "sqlite";
 import sqlite3 from "sqlite3";
 import { Collection } from "@iiif/presentation-3";
 
-const iiifPath = join(cwd(), "public/iiif");
+const iiifPath = join(cwd(), env["NEXT_RUNTIME"] === "true" ? "iiif" : "public/iiif");
 
 export const client = create(iiifPath);
 
