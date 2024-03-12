@@ -77,13 +77,13 @@ jobs:
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-          IIIF_URL: https://delft-iiif.netlify.app
           # This is a search-only API key (public)
-          TYPESENSE_API_KEY: 8EOitKCMTbxUKPZNqUEoQS9M2RGvpkZS
-          TYPESENSE_HOST: 63flhve71t2un5xgp.a1.typesense.net
-          TYPESENSE_PORT: 443
-          TYPESENSE_PROTOCOL: https
-          TYPESENSE_COLLECTION_NAME: production-manifests
+          NEXT_PUBLIC_IIIF_URL: https://delft-iiif.netlify.app
+          NEXT_PUBLIC_TYPESENSE_API_KEY: 8EOitKCMTbxUKPZNqUEoQS9M2RGvpkZS
+          NEXT_PUBLIC_TYPESENSE_HOST: 63flhve71t2un5xgp.a1.typesense.net
+          NEXT_PUBLIC_TYPESENSE_PORT: 443
+          NEXT_PUBLIC_TYPESENSE_PROTOCOL: https
+          NEXT_PUBLIC_TYPESENSE_COLLECTION_NAME: production-manifests
 
       - name: Build IIIF Search
         working-directory: apps/static-site
