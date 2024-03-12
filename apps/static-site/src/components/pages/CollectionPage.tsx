@@ -3,7 +3,7 @@ import { AutoLanguage } from "@/components/pages/AutoLanguage";
 import { Link } from "@/navigation";
 import { ManifestSearch } from "../search/ManifestSearch";
 import { renderCollectionLabel } from "@/helpers/collection-label";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
 export interface CollectionPageProps {
   slug: string;
@@ -28,7 +28,7 @@ function getSlugFromId(id: string) {
 }
 
 export async function CollectionPage(props: CollectionPageProps) {
-  const t = useTranslations();
+  const t = await getTranslations();
   return (
     <div className="py-8">
       <div className="grid-cols-1 gap-8 md:grid md:grid-cols-3">

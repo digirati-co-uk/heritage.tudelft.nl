@@ -1,9 +1,9 @@
-import { useTranslations } from "next-intl";
 import { Link } from "@/navigation";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { getTranslations } from "next-intl/server";
 
-export function GlobalHeader() {
-  const t = useTranslations();
+export async function GlobalHeader() {
+  const t = await getTranslations();
   return (
     <div className="flex justify-center bg-[#1D1F71] font-mono text-white">
       <div className="flex h-16 w-full max-w-screen-xl items-center px-10 py-2">

@@ -1,10 +1,10 @@
 import invariant from "tiny-invariant";
 import { AutoLanguage } from "../pages/AutoLanguage";
 import { Manifest } from "@iiif/presentation-3";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
-export function TitlePanel({ manifest }: { manifest: Manifest }) {
-  const t = useTranslations();
+export async function TitlePanel({ manifest }: { manifest: Manifest }) {
+  const t = await getTranslations();
   invariant(manifest, "Manifest not found");
 
   return (

@@ -1,12 +1,12 @@
-import { useLocale, useTranslations } from "next-intl";
-import { ReactNode, Suspense, useTransition } from "react";
+import { getTranslations } from "next-intl/server";
+import { ReactNode, Suspense } from "react";
 import { SocialIcon } from "react-social-icons";
 
 import "react-social-icons/twitter";
 
 export async function Page(props: { children: ReactNode }) {
-  const t = useTranslations();
-  const lang = useLocale();
+  const t = await getTranslations();
+
   return (
     <>
       <div className="min-h-[90vh] w-full max-w-screen-xl px-10">
@@ -59,7 +59,7 @@ export async function Page(props: { children: ReactNode }) {
             <address className="not-italic">
               <div>Postbus 5</div>
               <div>2600 AA Delft</div>
-              {lang === "en" ? <div>The Netherlands</div> : null}
+              <div>The Netherlands</div>
             </address>
             <div>
               <a

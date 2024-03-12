@@ -5,15 +5,16 @@ import { twMerge } from "tailwind-merge";
 import { AutoLanguage } from "../pages/AutoLanguage";
 import { Suspense } from "react";
 import { ReadMoreBlock } from "./ReadMore";
-import { useLocale, useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
 interface InfoBlockProps {
   canvas: Canvas;
   strategy: TextualContentStrategy;
 }
 
-export function InfoBlock({ canvas, strategy }: InfoBlockProps) {
-  const t = useTranslations();
+export async function InfoBlock({ canvas, strategy }: InfoBlockProps) {
+  const t = await getTranslations();
   const className = getClassName(canvas.behavior);
   const locale = useLocale();
   const items =
