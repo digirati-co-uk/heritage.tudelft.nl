@@ -3,7 +3,7 @@
 import { create } from "iiif-hss/client";
 import slugs from "@repo/iiif/build/config/slugs.json";
 
-let IIIF_URL = process.env["IIIF_URL"] || "http://localhost:7111/";
+let IIIF_URL = process.env["IIIF_URL"] || process.env["NEXT_PUBLIC_IIIF_URL"] || "http://localhost:7111/";
 
 if (!IIIF_URL.endsWith("/")) {
   IIIF_URL += "/";
