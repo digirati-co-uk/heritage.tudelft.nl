@@ -1,6 +1,6 @@
 import { Collection } from "@iiif/presentation-3";
 import { AutoLanguage } from "@/components/pages/AutoLanguage";
-import { Link } from "@/navigation";
+import { Link, getObjectSlug } from "@/navigation";
 import { ManifestSearch } from "../search/ManifestSearch";
 import { renderCollectionLabel } from "@/helpers/collection-label";
 import { getTranslations } from "next-intl/server";
@@ -19,7 +19,7 @@ function getSlugFromId(id: string) {
   }
   if (id.includes("/manifests/")) {
     const parts = id.split("/manifests/")[1];
-    return `manifests/${parts?.replace("/manifest.json", "")}`;
+    return `objects/${parts?.replace("/manifest.json", "")}`;
   }
 
   // http://localhost:3000/en/collections/delta/manifest.json
@@ -68,7 +68,7 @@ export async function CollectionPage(props: CollectionPageProps) {
           <div className="b=9 grid grid-cols-1 gap-4 md:grid-cols-2">
             {props.collection.items.map((manifest) => {
               // @todo fix the bug in hss.
-              const slug = manifest["hss:slug"] || getSlugFromId(manifest.id);
+              const slug = getObjectSlug(manifest["hss:slug"] || getSlugFromId(manifest.id));
 
               let thumbnail = (manifest.thumbnail || [])[0]?.id;
               if (thumbnail) {

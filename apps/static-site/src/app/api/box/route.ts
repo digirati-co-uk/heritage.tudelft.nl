@@ -118,7 +118,7 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
       results.push({
         type: "manifest",
         title: label,
-        link: `/${fullSlug}`,
+        link: `/${fullSlug.replace("manifests/", "objects/")}`,
         thumbnail: getThumb(item),
       });
     }

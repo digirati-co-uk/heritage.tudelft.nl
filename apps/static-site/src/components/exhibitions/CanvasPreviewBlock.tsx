@@ -11,7 +11,7 @@ import { CloseIcon } from "../atoms/CloseIcon";
 import { Canvas, Annotation } from "@iiif/presentation-3";
 import { expandTarget } from "@iiif/helpers";
 import { AnnotationPageNormalized } from "@iiif/presentation-3-normalized";
-import { Link } from "@/navigation";
+import { Link, getObjectSlug } from "@/navigation";
 
 function CanvasPreviewBlockInner({
   cover,
@@ -175,7 +175,7 @@ function CanvasPreviewBlockInner({
               </div>
               {!tour && objectLink ? (
                 <Link
-                  href={`/${objectLink.slug}${objectLink ? `?canvasId=${btoa(objectLink.targetCanvasId)}` : ""}`}
+                  href={`/${getObjectSlug(objectLink.slug)}${objectLink ? `?canvasId=${btoa(objectLink.targetCanvasId)}` : ""}`}
                   className="underline underline-offset-4"
                 >
                   View object
@@ -183,7 +183,7 @@ function CanvasPreviewBlockInner({
               ) : null}
               {tour && step && step.objectLink ? (
                 <Link
-                  href={`/${step.objectLink.slug}?canvasId=${btoa(step.objectLink.targetCanvasId)}`}
+                  href={`/${getObjectSlug(step.objectLink.slug)}?canvasId=${btoa(step.objectLink.targetCanvasId)}`}
                   className="font-mono underline underline-offset-4"
                 >
                   View object

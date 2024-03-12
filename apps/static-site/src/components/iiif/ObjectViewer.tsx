@@ -5,7 +5,7 @@ import { CanvasPanel, useManifest } from "react-iiif-vault";
 import { CloseIcon } from "../atoms/CloseIcon";
 import { useState } from "react";
 import { AutoLanguage } from "../pages/AutoLanguage";
-import { Link } from "@/navigation";
+import { Link, getObjectSlug } from "@/navigation";
 
 export function ObjectViewer({
   className,
@@ -26,7 +26,7 @@ export function ObjectViewer({
         <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
         <div className="fixed inset-0 flex h-screen w-screen flex-row items-center p-4">
           <button
-            className="absolute right-8 top-8 z-10 z-20 flex h-12 w-12 items-center justify-center rounded bg-slate-900 hover:bg-slate-800"
+            className="absolute right-8 top-8 z-20 flex h-12 w-12 items-center justify-center rounded bg-slate-900 hover:bg-slate-800"
             onClick={() => setIsOpen(false)}
           >
             <CloseIcon fill="#fff" />
@@ -44,7 +44,7 @@ export function ObjectViewer({
               </div>
               {objectLink ? (
                 <Link
-                  href={`/${objectLink}${objectCanvasId ? `?canvasId=${btoa(objectCanvasId)}` : ""}`}
+                  href={`/${getObjectSlug(objectLink)}${objectCanvasId ? `?canvasId=${btoa(objectCanvasId)}` : ""}`}
                   className="underline underline-offset-4"
                 >
                   View object

@@ -9,7 +9,7 @@ import { Box } from "../blocks/Box";
 import { AutoLanguage } from "./AutoLanguage";
 import { useEffect, useRef } from "react";
 import type { Preset } from "@atlas-viewer/atlas";
-import { Link } from "@/navigation";
+import { Link, getObjectSlug } from "@/navigation";
 
 interface ManifestPageProps {
   manifest: Manifest;
@@ -96,7 +96,7 @@ export function ManifestPage({ related, manifest, meta, content }: ManifestPageP
                       unfiltered
                       small
                       backgroundImage={item.thumbnail}
-                      link={`/${item.slug}`}
+                      link={`/${getObjectSlug(item.slug)}`}
                       type="Object"
                     />
                   );

@@ -57,6 +57,12 @@ if (existsSync(join(IIIF_DIRECTORY, "meta/typesense/manifests.schema.json"))) {
         type: "Exhibition",
       };
     }
+    if (document.slug.includes("manifests/")) {
+      return {
+        ...document,
+        slug: document.slug.replace("manifests/", "objects/"),
+      };
+    }
 
     return document;
   });
