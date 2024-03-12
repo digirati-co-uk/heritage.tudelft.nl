@@ -78,6 +78,24 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           IIIF_URL: https://deploy-preview-${{ github.event.number }}--delft-iiif.netlify.app
+          # This is a search-only API key (public)
+          TYPESENSE_API_KEY: 8EOitKCMTbxUKPZNqUEoQS9M2RGvpkZS
+          TYPESENSE_URL: 63flhve71t2un5xgp.a1.typesense.net
+          TYPESENSE_PORT: 443
+          TYPESENSE_PROTOCOL: https
+          TYPESENSE_COLLECTION_NAME: preview-manifests
+
+      - name: Build IIIF Search
+        if: (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy-preview'))
+        working-directory: apps/static-site
+        run: |
+          bun run ./typesense-update.ts
+        env:
+          TYPESENSE_API_KEY: ${{ secrets.TYPESENSE_ADMIN_API_KEY }}
+          TYPESENSE_URL: 63flhve71t2un5xgp.a1.typesense.net
+          TYPESENSE_PORT: 443
+          TYPESENSE_PROTOCOL: https
+          TYPESENSE_COLLECTION_NAME: preview-manifests
 
       - name: Find Comment
         uses: peter-evans/find-comment@v3
@@ -98,36 +116,3 @@ jobs:
             Static site (preview): ${{ steps.netlify_static_site.outputs.preview_url }}
             IIIF (preview): ${{ steps.netlify_iiif.outputs.preview_url }}
           edit-mode: replace
-
-      # - name: Static Site Netlify deploy (preview)
-      #   id: netlify_static_site
-      #   if: (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy-preview'))
-      #   working-directory: apps/static-site
-      #   run: |
-      #     netlify deploy \
-      #       --build \
-      #       --alias=deploy-preview-${{ github.event.number }} \
-      #       --filter=iiif \
-      #       --message="Deploy preview from GitHub Actions"
-      #   env:
-      #     NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-      #     NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-      #     IIIF_PREVIEW_URL: https://deploy-preview-${{ github.event.number }}--delft-iiif.netlify.app
-
-      # - name: Deploy to Netlify
-      #   if: github.ref == 'refs/heads/main' || (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy-preview'))
-      #   uses: nwtgck/actions-netlify@v2.0
-      #   with:
-      #     publish-dir: "./apps/static-site/.next/"
-      #     production-branch: main
-      #     github-token: ${{ secrets.GITHUB_TOKEN }}
-      #     # netlify-config-path: "./apps/static-site/netlify.toml"
-      #     deploy-message: "Deploy from GitHub Actions"
-      #     github-deployment-environment: "heritage.tudelft.nl"
-      #     alias: deploy-preview-${{ github.event.number }}
-      #     enable-commit-comment: ${{ github.event_name == 'pull_request' }}
-      #     overwrites-pull-request-comment: true
-      #   env:
-      #     NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-      #     NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-      #   timeout-minutes: 1

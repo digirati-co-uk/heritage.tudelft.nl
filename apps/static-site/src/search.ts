@@ -5,8 +5,9 @@ const TYPESENSE_API_KEY = process.env["TYPESENSE_API_KEY"] || "xyz";
 const TYPESENSE_HOST = process.env["TYPESENSE_HOST"] || "localhost";
 const TYPESENSE_PORT = process.env["TYPESENSE_PORT"] ? parseInt(process.env["TYPESENSE_PORT"]) : 8108;
 const TYPESENSE_PROTOCOL = process.env["TYPESENSE_PROTOCOL"] || "http";
+const TYPESENSE_COLLECTION_NAME = process.env["TYPESENSE_COLLECTION_NAME"] || "manifests";
 
-const typesenseServerConfig = {
+export const typesenseServerConfig = {
   apiKey: TYPESENSE_API_KEY,
   nodes: [
     {
@@ -38,6 +39,6 @@ export function createTypesense() {
   return {
     facets,
     client,
-    index: manifestSchema.name,
+    index: TYPESENSE_COLLECTION_NAME,
   };
 }
