@@ -75,7 +75,7 @@ if (existsSync(join(IIIF_DIRECTORY, "meta/typesense/manifests.schema.json"))) {
     const jsonDocuments: any[] = [];
     for (const publication of allPublications) {
       jsonDocuments.push({
-        id: publication.id,
+        id: `${publication.lang}/${publication.id}`,
         label: publication.title,
         type: "publication",
         thumbnail: publication.image,
