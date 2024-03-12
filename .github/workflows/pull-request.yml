@@ -80,7 +80,7 @@ jobs:
           IIIF_URL: https://deploy-preview-${{ github.event.number }}--delft-iiif.netlify.app
           # This is a search-only API key (public)
           TYPESENSE_API_KEY: 8EOitKCMTbxUKPZNqUEoQS9M2RGvpkZS
-          TYPESENSE_URL: 63flhve71t2un5xgp.a1.typesense.net
+          TYPESENSE_HOST: 63flhve71t2un5xgp.a1.typesense.net
           TYPESENSE_PORT: 443
           TYPESENSE_PROTOCOL: https
           TYPESENSE_COLLECTION_NAME: preview-manifests
@@ -89,10 +89,10 @@ jobs:
         if: (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy-preview'))
         working-directory: apps/static-site
         run: |
-          bun run ./typesense-update.ts
+          bun run ./typesense-update.ts --recreate-index
         env:
           TYPESENSE_API_KEY: ${{ secrets.TYPESENSE_ADMIN_API_KEY }}
-          TYPESENSE_URL: 63flhve71t2un5xgp.a1.typesense.net
+          TYPESENSE_HOST: 63flhve71t2un5xgp.a1.typesense.net
           TYPESENSE_PORT: 443
           TYPESENSE_PROTOCOL: https
           TYPESENSE_COLLECTION_NAME: preview-manifests
