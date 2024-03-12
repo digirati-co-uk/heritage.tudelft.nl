@@ -4,13 +4,15 @@ import { Box } from "../blocks/Box";
 import { AutoLanguage } from "./AutoLanguage";
 import siteCollections from "@repo/iiif/build/collections/site/collection.json";
 import allCollections from "@repo/iiif/build/collections/collection.json";
+import { getTranslations } from "next-intl/server";
 
 export async function CollectionListing() {
+  const t = await getTranslations();
   const fallbackBg = "bg-cyan-500 group-hover:bg-cyan-600 transition-background duration-500 ease-in-out";
 
   return (
     <>
-      <h2 className="my-5 text-2xl font-bold">Curated collections</h2>
+      <h2 className="my-5 text-2xl font-bold">{t("Curated collections")}</h2>
 
       <div className="mb-8 grid-cols-1 gap-0.5 md:grid md:grid-cols-4">
         {siteCollections.items.map((collection) => {
@@ -25,7 +27,7 @@ export async function CollectionListing() {
                 (<AutoLanguage mapString={renderCollectionLabel}>{collection.label}</AutoLanguage>) as any as string
               }
               fallbackBackgroundColor={fallbackBg}
-              type="collection"
+              type={t("Collection")}
               backgroundColor={thumbnail ? "bg-indigo-500" : undefined}
               unfiltered={!thumbnail}
               small
@@ -36,7 +38,7 @@ export async function CollectionListing() {
         })}
       </div>
 
-      <h2 className="my-5 text-2xl font-bold">All Collections</h2>
+      <h2 className="my-5 text-2xl font-bold">{t("All Collections")}</h2>
 
       <div className="mb-8 grid-cols-1 gap-0.5 md:grid md:grid-cols-4">
         {allCollections.items.map((collection) => {
@@ -53,7 +55,7 @@ export async function CollectionListing() {
                 (<AutoLanguage mapString={renderCollectionLabel}>{collection.label}</AutoLanguage>) as any as string
               }
               fallbackBackgroundColor={fallbackBg}
-              type="collection"
+              type={t("Collection")}
               backgroundColor={thumbnail ? "bg-cyan-500" : undefined}
               unfiltered={!thumbnail}
               small

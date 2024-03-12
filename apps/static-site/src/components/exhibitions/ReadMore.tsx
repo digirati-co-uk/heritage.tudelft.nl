@@ -7,7 +7,11 @@ import { CanvasContext, useCanvas, useVault } from "react-iiif-vault";
 import { CloseIcon } from "../atoms/CloseIcon";
 import { useLocale } from "next-intl";
 
-function ReadMoreBlockInner() {
+type Content = {
+  readMore: string;
+};
+
+function ReadMoreBlockInner({ content }: { content: Content }) {
   const canvas = useCanvas();
   const vault = useVault();
   const locale = useLocale();
@@ -52,16 +56,16 @@ function ReadMoreBlockInner() {
         </div>
       </Dialog>
       <button onClick={() => setIsOpen(true)} className="underline underline-offset-4">
-        Read more
+        {content.readMore}
       </button>
     </>
   );
 }
 
-export function ReadMoreBlock(props: { canvasId: string }) {
+export function ReadMoreBlock(props: { content: { readMore: string }; canvasId: string }) {
   return (
     <CanvasContext canvas={props.canvasId}>
-      <ReadMoreBlockInner />
+      <ReadMoreBlockInner content={props.content} />
     </CanvasContext>
   );
 }

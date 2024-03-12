@@ -5,8 +5,48 @@
       "id": "aivlxp",
       "type": "CardGrid",
       "data": {
-        "title": "",
+        "title": "Featured exhibitions",
         "columns": 3
+      },
+      "slots": {
+        "gridItems": {
+          "slot_id": "gridItems",
+          "blocks": [
+            {
+              "id": "t55lhc",
+              "type": "ExhibitionBox",
+              "data": {
+                "type": "exhibition",
+                "title": "Rise of a Campus",
+                "link": "/exhibitions/rise-of-a-campus",
+                "backgroundImage": "https://dlc.services/thumbs/7/17/b9a7d3c2-35a3-447c-9191-bef328ee312d/full/400,/0/default.jpg",
+                "backgroundColor": "bg-yellow-400"
+              }
+            },
+            {
+              "id": "2l1ggw",
+              "type": "ExhibitionBox",
+              "data": {
+                "type": "exhibition",
+                "title": "Voices of Women in Science ",
+                "link": "/exhibitions/voices-of-wis",
+                "backgroundImage": "https://dlc.services/thumbs/7/24/14204410-74cc-5796-04f2-a59eeaa8ab44/full/400,/0/default.jpg",
+                "backgroundColor": "bg-yellow-400"
+              }
+            },
+            {
+              "id": "0zw2p8",
+              "type": "ExhibitionBox",
+              "data": {
+                "type": "exhibition",
+                "title": "Irrigation knowledge",
+                "link": "/exhibitions/irrigation-knowledge",
+                "backgroundImage": "https://dlc.services/thumbs/7/21/17da5645-e7b1-8870-1de4-ac34fa58420a/full/400,/0/default.jpg",
+                "backgroundColor": "bg-yellow-400"
+              }
+            }
+          ]
+        }
       }
     }
   ]

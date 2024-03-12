@@ -3,6 +3,7 @@ import { AutoLanguage } from "@/components/pages/AutoLanguage";
 import { Link } from "@/navigation";
 import { ManifestSearch } from "../search/ManifestSearch";
 import { renderCollectionLabel } from "@/helpers/collection-label";
+import { useTranslations } from "next-intl";
 
 export interface CollectionPageProps {
   slug: string;
@@ -26,36 +27,45 @@ function getSlugFromId(id: string) {
   return "#";
 }
 
-export function CollectionPage(props: CollectionPageProps) {
+export async function CollectionPage(props: CollectionPageProps) {
+  const t = useTranslations();
   return (
     <div className="py-8">
       <div className="grid-cols-1 gap-8 md:grid md:grid-cols-3">
         <div className="col-span-1">
           <div className="cut-corners mb-8 flex w-full flex-col justify-between bg-cyan-500 p-4 md:aspect-square">
-            <div className="text-center font-mono text-sm uppercase">Collection</div>
+            <div className="text-center font-mono text-sm uppercase">{t("Collection")}</div>
             <div className="flex flex-col items-center justify-center gap-4">
               <h1 className="text-center text-3xl font-bold">
                 <AutoLanguage mapString={renderCollectionLabel}>{props.collection.label}</AutoLanguage>
               </h1>
               <div className="github-link-wrapper">
                 <a className="font-mono text-xs underline underline-offset-4" href="#">
-                  View source on GitHub
+                  {t("View source on GitHub")}
                 </a>
               </div>
               <div className="iiif-link-wrapper">
-                <a href={`${props.collection.id}`} target="_blank" title="Drag and Drop IIIF Resource"></a>
+                <a href={`${props.collection.id}`} target="_blank" title={t("Drag and Drop IIIF Resource")}></a>
               </div>
             </div>
             <div />
           </div>
 
           <div className="p-4">
-            <ManifestSearch collectionSlug={props.slug} />
+            <ManifestSearch
+              collectionSlug={props.slug}
+              content={{
+                allItems: t("All items"),
+                searchBoxPlaceholder: t("Search collection"),
+                searchResults: t("Search results"),
+                noResultsFound: t("No results found"),
+              }}
+            />
           </div>
         </div>
         <div className={`col-span-2`}>
           <div id="search-results"></div>
-          <div className=",b=9 grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div className="b=9 grid grid-cols-1 gap-4 md:grid-cols-2">
             {props.collection.items.map((manifest) => {
               // @todo fix the bug in hss.
               const slug = manifest["hss:slug"] || getSlugFromId(manifest.id);

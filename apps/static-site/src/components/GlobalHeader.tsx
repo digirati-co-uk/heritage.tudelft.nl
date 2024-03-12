@@ -13,12 +13,12 @@ export function GlobalHeader() {
         <ul className="ml-auto flex items-center gap-5">
           <li>
             <Link className="text-md uppercase underline-offset-4 hover:underline" href="/exhibitions">
-              {"Exhibitions"}
+              {t("Exhibitions")}
             </Link>
           </li>
           <li>
             <Link className="text-md uppercase underline-offset-4 hover:underline" href="/collections">
-              {"Collections"}
+              {t("Collections")}
             </Link>
           </li>
           <li>

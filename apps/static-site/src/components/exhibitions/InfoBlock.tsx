@@ -5,7 +5,7 @@ import { twMerge } from "tailwind-merge";
 import { AutoLanguage } from "../pages/AutoLanguage";
 import { Suspense } from "react";
 import { ReadMoreBlock } from "./ReadMore";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 interface InfoBlockProps {
   canvas: Canvas;
@@ -13,6 +13,7 @@ interface InfoBlockProps {
 }
 
 export function InfoBlock({ canvas, strategy }: InfoBlockProps) {
+  const t = useTranslations();
   const className = getClassName(canvas.behavior);
   const locale = useLocale();
   const items =
@@ -28,8 +29,8 @@ export function InfoBlock({ canvas, strategy }: InfoBlockProps) {
         ))}
 
         <p>
-          <Suspense fallback={<div className="underline underline-offset-4">Read more</div>}>
-            <ReadMoreBlock canvasId={canvas.id} />
+          <Suspense fallback={<div className="underline underline-offset-4">{t("Read more")}</div>}>
+            <ReadMoreBlock content={{ readMore: t("Read more") }} canvasId={canvas.id} />
           </Suspense>
         </p>
       </div>

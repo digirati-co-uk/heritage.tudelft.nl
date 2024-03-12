@@ -28,11 +28,17 @@ interface ManifestPageProps {
     slug: string;
     thumbnail?: string;
   }>;
+
+  content: {
+    untitled: string;
+    relatedObjects: string;
+    partOfCollections: string;
+  };
 }
 
 const runtimeOptions = { maxOverZoom: 2 };
 
-export function ManifestPage({ related, manifest, meta }: ManifestPageProps) {
+export function ManifestPage({ related, manifest, meta, content }: ManifestPageProps) {
   const { currentSequenceIndex } = useSimpleViewer();
 
   const atlas = useRef<Preset>();
@@ -46,7 +52,7 @@ export function ManifestPage({ related, manifest, meta }: ManifestPageProps) {
   return (
     <div>
       <h1 className="my-4 text-4xl">
-        <AutoLanguage>{manifest.label || "Untitled"}</AutoLanguage>
+        <AutoLanguage>{manifest.label || content.untitled}</AutoLanguage>
       </h1>
       {manifest.requiredStatement ? (
         <p>
@@ -78,7 +84,7 @@ export function ManifestPage({ related, manifest, meta }: ManifestPageProps) {
 
           {related.length !== 0 && (
             <>
-              <h3 className="mb-5 mt-10 text-3xl font-bold">{"Related objects"}</h3>
+              <h3 className="mb-5 mt-10 text-3xl font-bold">{content.relatedObjects}</h3>
               <div className="mb-4 grid md:grid-cols-3">
                 {related.map((item, i) => {
                   if (item === null) return null;
@@ -102,7 +108,7 @@ export function ManifestPage({ related, manifest, meta }: ManifestPageProps) {
         {(meta.partOfCollections || []).length === 0 ? null : (
           <div className="col-span-1 overflow-hidden">
             <div className="cut-corners aspect-square place-self-start bg-black p-8 text-white">
-              <h3 className="mb-2 text-2xl font-bold">Part of collections</h3>
+              <h3 className="mb-2 text-2xl font-bold">{content.partOfCollections}</h3>
               <ul className="text-md ml-4 list-disc underline underline-offset-4">
                 {(meta.partOfCollections || []).map((collection, i) => (
                   <li key={i}>

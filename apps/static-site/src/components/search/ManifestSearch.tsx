@@ -7,7 +7,20 @@ import { useEffect, useState } from "react";
 import { FacetList } from "./FacetList";
 import { CollectionItemHit } from "./CollectionItemHit";
 
-export function ManifestSearch({ collectionSlug }: { collectionSlug: string }) {
+type ManifestSearchContent = {
+  searchBoxPlaceholder: string;
+  searchResults: string;
+  noResultsFound: string;
+  allItems: string;
+};
+
+export function ManifestSearch({
+  collectionSlug,
+  content,
+}: {
+  collectionSlug: string;
+  content: ManifestSearchContent;
+}) {
   const [dom, setDom] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -23,20 +36,20 @@ export function ManifestSearch({ collectionSlug }: { collectionSlug: string }) {
           return <FacetList key={facet} facet={facet} />;
         })}
 
-        {dom && createPortal(<ManifestHits />, dom)}
+        {dom && createPortal(<ManifestHits content={content} />, dom)}
       </SearchWrapper>
     </div>
   );
 }
 
-function ManifestHits() {
+function ManifestHits({ content }: { content: ManifestSearchContent }) {
   const { query } = useSearchBox();
   const { hits } = useHits();
   const { items } = useCurrentRefinements();
 
   const searchBox = (
     <SearchBox
-      placeholder="Search collection..."
+      placeholder={content.searchBoxPlaceholder}
       classNames={{
         reset: "hidden",
         submit: "hidden",
@@ -56,11 +69,11 @@ function ManifestHits() {
     <div>
       {searchBox}
 
-      <h3 className="mb-8 text-3xl font-bold leading-tight text-gray-900">Search results</h3>
+      <h3 className="mb-8 text-3xl font-bold leading-tight text-gray-900">{content.searchResults}</h3>
 
       {hits.length === 0 ? (
         <div className="p-16 text-center font-mono text-xl text-gray-500">
-          <p>No results found.</p>
+          <p>{content.noResultsFound}</p>
         </div>
       ) : (
         <InfiniteHits
@@ -74,7 +87,7 @@ function ManifestHits() {
       )}
 
       <hr className="my-8 border-b-2 border-slate-400" />
-      <h3 className="mb-8 text-3xl font-bold leading-tight text-gray-900">All items</h3>
+      <h3 className="mb-8 text-3xl font-bold leading-tight text-gray-900">{content.allItems}</h3>
     </div>
   );
 }

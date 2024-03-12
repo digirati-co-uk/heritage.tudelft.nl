@@ -9,7 +9,11 @@ export default function Homepage({ params }: { params: { locale: string } }): JS
     <Page>
       <h1 className="my-8 text-4xl font-bold">TUDelft</h1>
 
-      <Slot className="md:grid-col-1 grid grid-cols-3 gap-0.5" context={{ locale: params.locale }} name="homepage" />
+      <Slot
+        className="md:grid-col-1 mb-16 grid grid-cols-3 gap-0.5"
+        context={{ locale: params.locale }}
+        name="homepage"
+      />
     </Page>
   );
 }
