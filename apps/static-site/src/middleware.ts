@@ -4,11 +4,11 @@ import createMiddleware from "next-intl/middleware";
 // - https://next-intl-docs.vercel.app/docs/routing/middleware
 export default createMiddleware({
   locales: ["en", "nl"],
-  defaultLocale: "en",
+  defaultLocale: "nl",
   localePrefix: "always",
 });
 
 export const config = {
   // Match only internationalized pathnames
-  matcher: ["/", "/(nl|en)/:path*"],
+  matcher: ["/", "/((?!api|_next|_vercel|.*\\..*).*)"],
 };
