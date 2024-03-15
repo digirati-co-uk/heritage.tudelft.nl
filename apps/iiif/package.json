@@ -6,9 +6,9 @@
   },
   "scripts": {
     "build": "iiif-hss build --out ./build --scripts ./scripts",
-    "dev": "iiif-hss serve --scripts ./scripts"
+    "dev": "iiif-hss build --out ./build --scripts ./scripts && iiif-hss serve --scripts ./scripts"
   },
   "dependencies": {
-    "iiif-hss": "^0.2.4"
+    "iiif-hss": "^0.2.6"
   }
 }

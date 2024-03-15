@@ -21,13 +21,13 @@ stores:
   manifests:
     type: iiif-json
     path: ./manifests
-    pattern: "**/*.json"
+    pattern: "**/*.{json,yaml,yml}"
 
   libis-objects:
     type: iiif-json
     path: ./libis/objects
     destination: manifests
-    pattern: "**/*.json"
+    pattern: "**/*.{json,yaml,yml}"
     run:
       - extract-topics
       - delft-related
@@ -50,10 +50,10 @@ stores:
     type: iiif-json
     path: ./delta-archief
     destination: manifests
-    pattern: "**/*.json"
+    pattern: "**/*.{json,yaml,yml}"
 
   map-series:
     type: iiif-json
     path: ./map-series
     destination: manifests
-    pattern: "**/*.json"
+    pattern: "**/*.{json,yml}"

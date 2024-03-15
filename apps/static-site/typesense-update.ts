@@ -54,6 +54,7 @@ if (existsSync(join(IIIF_DIRECTORY, "meta/typesense/manifests.schema.json"))) {
     if (exhibitions.includes(document.slug)) {
       return {
         ...document,
+        slug: document.slug.replace("manifests/", "exhibitions/"),
         type: "Exhibition",
       };
     }
