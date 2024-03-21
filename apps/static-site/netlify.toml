@@ -4,3 +4,11 @@ package = "@netlify/plugin-nextjs"
 [build]
 publish = ".next"
 command = "bun run build"
+
+
+[[redirects]]
+  from = "/iiif"
+  to = "https://deploy-preview-1--delft-iiif.netlify.app"
+  status = 200
+  force = true
+  headers = {X-From = "Netlify"}
