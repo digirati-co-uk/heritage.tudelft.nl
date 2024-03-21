@@ -1,0 +1,118 @@
+name: Build and Deploy Static Site Preview
+
+on:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup bun.sh environment
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Cache buns dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+
+      - name: Run bun install
+        run: bun install --frozen-lockfile
+
+      - name: Cache .iiif/cache
+        uses: actions/cache@v4
+        with:
+          path: apps/iiif/.iiif/cache
+          key: ${{ runner.os }}-iiif-cache-${{ hashFiles('apps/iiif/.iiifrc.yml') }}
+          restore-keys: |
+            ${{ runner.os }}-iiif-cache-
+
+      - name: Cache Next.js build cache
+        uses: actions/cache@v4
+        with:
+          path: apps/static-site/.next/cache
+          key: ${{ runner.os }}-iiif-cache-${{ hashFiles('**/bun.lockb') }}--${{ hashFiles('app/static-site/src/**/*.ts', 'app/static-site/src/**/*.tsx') }}
+          restore-keys: |
+            ${{ runner.os }}-iiif-cache-${{ hashFiles('**/bun.lockb') }}
+
+      - name: IIIF Netlify deploy (preview)
+        id: netlify_iiif
+        if: (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy-preview'))
+        working-directory: apps/iiif
+        run: |
+          deploy_json=$(netlify deploy \
+            --build \
+            --alias=deploy-preview-${{ github.event.number }} \
+            --json \
+            --filter=iiif \
+            --message="Deploy preview from GitHub Actions")
+          preview_url=$(echo $deploy_json | jq -r '.deploy_url')
+          echo "preview_url=$preview_url" >> $GITHUB_OUTPUT
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_IIIF_SITE_ID }}
+          IIIF_PREVIEW_URL: https://deploy-preview-${{ github.event.number }}--delft-iiif.netlify.app
+
+      - name: Static site Netlify deploy (preview)
+        id: netlify_static_site
+        if: (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy-preview'))
+        working-directory: apps/static-site
+        run: |
+          deploy_json=$(netlify deploy \
+            --build \
+            --alias=deploy-preview-${{ github.event.number }} \
+            --json \
+            --filter=static-site \
+            --message="Deploy preview from GitHub Actions")
+          preview_url=$(echo $deploy_json | jq -r '.deploy_url')
+          echo "preview_url=$preview_url" >> $GITHUB_OUTPUT
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          # This is a search-only API key (public)
+          NEXT_PUBLIC_IIIF_URL: https://deploy-preview-${{ github.event.number }}--delft-iiif.netlify.app
+          NEXT_PUBLIC_TYPESENSE_API_KEY: 8EOitKCMTbxUKPZNqUEoQS9M2RGvpkZS
+          NEXT_PUBLIC_TYPESENSE_HOST: 63flhve71t2un5xgp.a1.typesense.net
+          NEXT_PUBLIC_TYPESENSE_PORT: 443
+          NEXT_PUBLIC_TYPESENSE_PROTOCOL: https
+          NEXT_PUBLIC_TYPESENSE_COLLECTION_NAME: preview-manifests
+
+      - name: Build IIIF Search
+        if: (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy-preview'))
+        working-directory: apps/static-site
+        run: |
+          bun run ./typesense-update.ts --recreate-index
+        env:
+          TYPESENSE_API_KEY: ${{ secrets.TYPESENSE_ADMIN_API_KEY }}
+          TYPESENSE_HOST: 63flhve71t2un5xgp.a1.typesense.net
+          TYPESENSE_PORT: 443
+          TYPESENSE_PROTOCOL: https
+          TYPESENSE_COLLECTION_NAME: preview-manifests
+
+      - name: Find Comment
+        uses: peter-evans/find-comment@v3
+        id: fc
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: "github-actions[bot]"
+          body-includes: Netlify output
+
+      - name: Create or update comment
+        if: (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy-preview'))
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ## Netlify output
+            Static site (preview): ${{ steps.netlify_static_site.outputs.preview_url }}
+            IIIF (preview): ${{ steps.netlify_iiif.outputs.preview_url }}
+          edit-mode: replace
