@@ -35,9 +35,6 @@ export async function PublicationPage(props: PublicationPageProps) {
             <div className="text-md font-mono uppercase">{t("Article")}</div>
             <div>
               <h1 className="text-xl font-bold leading-snug md:text-4xl">{props.publication.title}</h1>
-              {/*<a className="font-mono underline pt-4 block" href="#">*/}
-              {/*  View source on GitHub*/}
-              {/*</a>*/}
             </div>
             <div className="font-mono">{props.publication.author}</div>
           </div>

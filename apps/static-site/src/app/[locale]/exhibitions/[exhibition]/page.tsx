@@ -4,6 +4,7 @@ import { unstable_setRequestLocale } from "next-intl/server";
 import { ManifestLoader } from "@/app/provider";
 import imageServiceLinks from "@repo/iiif/build/meta/image-service-links.json";
 import allExhibitions from "@repo/iiif/build/collections/exhibitions/collection.json";
+import { SlotContext } from "@/blocks/slot-context";
 
 export const generateStaticParams = async () => {
   const exhibitions = [];
@@ -30,14 +31,17 @@ export default async function Exhibition({ params }: { params: { exhibition: str
 
   return (
     <Page>
-      <ManifestLoader manifest={{ ...manifest }}>
-        <ExhibitionPage
-          manifest={{ ...manifest }}
-          meta={meta as any}
-          slug={params.exhibition}
-          viewObjectLinks={viewObjectLinks}
-        />
-      </ManifestLoader>
+      <SlotContext name="exhibition" value={params.exhibition}>
+        <ManifestLoader manifest={{ ...manifest }}>
+          <ExhibitionPage
+            manifest={{ ...manifest }}
+            meta={meta as any}
+            slug={params.exhibition}
+            viewObjectLinks={viewObjectLinks}
+            locale={params.locale}
+          />
+        </ManifestLoader>
+      </SlotContext>
     </Page>
   );
 }

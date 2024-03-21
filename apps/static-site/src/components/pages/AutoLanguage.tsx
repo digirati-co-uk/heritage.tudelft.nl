@@ -6,11 +6,13 @@ export function AutoLanguage({
   children,
   lines,
   html,
+  first = false,
   mapString: m = (text) => text,
 }: {
   html?: boolean;
   lines?: boolean;
   className?: string;
+  first?: boolean;
   children: InternationalString | string | null | undefined;
   mapString?: (text: string) => string;
 }) {
@@ -20,7 +22,10 @@ export function AutoLanguage({
   }
   if (typeof children === "string") {
     if (html) {
-      return <span dangerouslySetInnerHTML={{ __html: m(children) }} />;
+      return <span className={className} dangerouslySetInnerHTML={{ __html: m(children) }} />;
+    }
+    if (className) {
+      return <span className={className}>{m(children)}</span>;
     }
     return <>{m(children)}</>;
   }
@@ -37,6 +42,10 @@ export function AutoLanguage({
 
   if (typeof value === "string") {
     value = [value];
+  }
+
+  if (first && value && value[0]) {
+    value = [value[0] || ""];
   }
 
   if (value) {
@@ -57,6 +66,9 @@ export function AutoLanguage({
       }
       if (html) {
         return <span className={className} dangerouslySetInnerHTML={{ __html: m(filtered.join(" ")) }} />;
+      }
+      if (className) {
+        return <span className={className}>{m(filtered.join(" "))}</span>;
       }
       return <>{m(filtered.join(" "))}</>;
     }

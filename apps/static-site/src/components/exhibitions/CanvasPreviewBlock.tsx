@@ -82,7 +82,6 @@ function CanvasPreviewBlockInner({
       let imageService: null | string = null;
       if (target.body) {
         const body = vault.get(target.body);
-        console.log(body);
         if (body[0] && body[0].service && body[0].service[0]) {
           imageService = body[0].service[0].id || body[0].service[0]["@id"];
         }

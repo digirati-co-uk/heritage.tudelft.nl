@@ -4,6 +4,7 @@ import { Link, getObjectSlug } from "@/navigation";
 import { ManifestSearch } from "../search/ManifestSearch";
 import { renderCollectionLabel } from "@/helpers/collection-label";
 import { getTranslations } from "next-intl/server";
+import { CollectionMetadata } from "../iiif/CollectionMetadata";
 
 export interface CollectionPageProps {
   slug: string;
@@ -29,6 +30,9 @@ function getSlugFromId(id: string) {
 
 export async function CollectionPage(props: CollectionPageProps) {
   const t = await getTranslations();
+
+  console.log(props.collection);
+
   return (
     <div className="py-8">
       <div className="grid-cols-1 gap-8 md:grid md:grid-cols-3">
@@ -39,16 +43,23 @@ export async function CollectionPage(props: CollectionPageProps) {
               <h1 className="text-center text-3xl font-bold">
                 <AutoLanguage mapString={renderCollectionLabel}>{props.collection.label}</AutoLanguage>
               </h1>
-              <div className="github-link-wrapper">
-                <a className="font-mono text-xs underline underline-offset-4" href="#">
-                  {t("View source on GitHub")}
-                </a>
-              </div>
               <div className="iiif-link-wrapper">
                 <a href={`${props.collection.id}`} target="_blank" title={t("Drag and Drop IIIF Resource")}></a>
               </div>
             </div>
             <div />
+          </div>
+          <div>
+            {props.collection.metadata || props.collection.summary ? (
+              <CollectionMetadata
+                content={{
+                  summary: t("Summary"),
+                  readMore: t("Read more"),
+                }}
+                summary={props.collection.summary}
+                metadata={props.collection.metadata}
+              />
+            ) : null}
           </div>
 
           <div className="p-4">

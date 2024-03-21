@@ -13,7 +13,7 @@ export function LanguageSwitcher({ oldStyle }: { oldStyle?: boolean }) {
   if (!oldStyle) {
     return (
       <Link
-        className="group flex h-10 w-10 items-center justify-center rounded-full border border-white"
+        className="group flex h-10 w-10 items-center justify-center rounded-full border border-white "
         href={pathname}
         locale={locale === "en" ? "nl" : "en"}
       >

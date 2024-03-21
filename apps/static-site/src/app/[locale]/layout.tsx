@@ -7,6 +7,7 @@ import { unstable_setRequestLocale } from "next-intl/server";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import localFont from "next/font/local";
 import { SlotContext } from "@/blocks/slot-context";
+import { GlobalFooter } from "@/components/GlobalFooter";
 
 export const metadata: Metadata = {
   title: "TUDelft",
@@ -86,6 +87,7 @@ export default function RootLayout({
             <GlobalHeader />
             <main className="flex w-full flex-col items-center">{children}</main>
             {process.env.NODE_ENV !== "production" ? <BlockEditor showToggle rsc /> : null}
+            <GlobalFooter />
           </SlotContext>
         </Provider>
       </body>

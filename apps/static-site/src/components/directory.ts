@@ -2,6 +2,7 @@ import { createDirectory } from "@page-blocks/react";
 import { CollectionBox, ManifestBox, PublicationBox, ExhibitionBox } from "@/components/blocks/Box";
 import { HeadingParagraph } from "@/components/blocks/HeadingParagraph";
 import { CardGrid } from "@/components/blocks/CardGrid";
+import * as FramePanel from "./blocks/FramePanel";
 
 export const directory = createDirectory({
   context: {},
@@ -17,6 +18,7 @@ export const directory = createDirectory({
     HeadingParagraph,
     ExhibitionBox,
     CardGrid,
+    FramePanel: FramePanel.default,
   },
 });
 

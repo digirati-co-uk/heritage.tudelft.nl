@@ -80,6 +80,16 @@ export function ManifestPage({ related, manifest, meta, content }: ManifestPageP
       </div>
       <div className="grid-cols-3 md:grid">
         <div className="col-span-2">
+          <div>
+            <div className="iiif-link-wrapper m-4">
+              <a
+                href={`${manifest.id}?manifest=${manifest.id}`}
+                target="_blank"
+                title="Drag and Drop IIIF Resource"
+              ></a>
+            </div>
+          </div>
+
           <ObjectMetadata />
 
           {related.length !== 0 && (

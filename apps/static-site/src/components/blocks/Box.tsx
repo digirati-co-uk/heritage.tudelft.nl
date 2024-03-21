@@ -37,7 +37,7 @@ const boxProps = z.object({
 export function Box(props: z.infer<typeof boxProps>) {
   const filters = props.unfiltered ? "" : "grayscale";
   const fallbackBackground = props.fallbackBackgroundColor || "bg-yellow-400";
-  const titleSize = props.small ? "text-xl" : "text-4xl";
+  const titleSize = props.small ? "md:text-xl" : "text-2xl md:text-4xl";
 
   return (
     <div className={twMerge(`cut-corners group relative flex aspect-square`, props.className)}>

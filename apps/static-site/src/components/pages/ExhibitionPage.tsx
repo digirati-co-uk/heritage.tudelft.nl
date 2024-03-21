@@ -5,8 +5,10 @@ import { TitlePanel } from "../exhibitions/TitleBlock";
 import { InfoBlock } from "../exhibitions/InfoBlock";
 import { ImageBlock } from "../exhibitions/ImageBlock";
 import { MediaBlock } from "../exhibitions/MediaBlock";
+import { Slot } from "@/blocks/slot";
 
 export interface ExhibitionPageProps {
+  locale: string;
   manifest: Manifest;
   meta: {};
   slug: string;
@@ -21,7 +23,7 @@ export async function ExhibitionPage(props: ExhibitionPageProps) {
 
   return (
     <>
-      <div className="mt-12 auto-rows-auto grid-cols-12 content-center justify-center lg:grid">
+      <div className="mb-12 mt-12 auto-rows-auto grid-cols-12 content-center justify-center lg:grid">
         <TitlePanel manifest={props.manifest} />
 
         {props.manifest.items.map((canvas: any, idx) => {
@@ -50,6 +52,8 @@ export async function ExhibitionPage(props: ExhibitionPageProps) {
           return null;
         })}
       </div>
+
+      <Slot name="exhibition" context={{ locale: props.locale, exhibition: props.slug }} />
     </>
   );
 }

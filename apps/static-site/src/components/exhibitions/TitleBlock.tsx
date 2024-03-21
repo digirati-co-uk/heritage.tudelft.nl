@@ -14,11 +14,6 @@ export async function TitlePanel({ manifest }: { manifest: Manifest }) {
         <h1 className="text-center text-3xl font-bold">
           <AutoLanguage>{manifest.label}</AutoLanguage>
         </h1>
-        <div className="github-link-wrapper">
-          <a className="font-mono text-xs underline underline-offset-4" href="#">
-            {t("View source on Github")}
-          </a>
-        </div>
         <div className="iiif-link-wrapper">
           <a href={`${manifest.id}?manifest=${manifest.id}`} target="_blank" title="Drag and Drop IIIF Resource"></a>
         </div>

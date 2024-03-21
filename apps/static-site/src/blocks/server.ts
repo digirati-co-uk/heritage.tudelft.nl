@@ -11,14 +11,5 @@ export const generateScreenshots = createScreenshotGenerator({
 
 export const fileSystemLoader = createFileSystemLoader({
   path: join(cwd(), "slots"),
-  contexts: [
-    "locale",
-    "publication",
-    "exhibition",
-    "manifest",
-    "page",
-    "collection",
-    "canvas",
-    "article",
-  ],
+  contexts: ["locale", "publication", "exhibition", "manifest", "page", "collection", "canvas", "article"],
 });

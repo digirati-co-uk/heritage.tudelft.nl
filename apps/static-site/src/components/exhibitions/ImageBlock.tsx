@@ -30,7 +30,7 @@ export async function ImageBlock({
   );
 
   return (
-    <div className={twMerge(className, "cut-corners relative", !showSummary && "aspect-square md:aspect-auto")}>
+    <div className={twMerge(className, "cut-corners relative", !showSummary && "aspect-square lg:aspect-auto")}>
       {showSummary ? (
         <div className={twMerge("h-full md:flex", isLeft && "flex-row-reverse", isBottom && "flex-col")}>
           <div
