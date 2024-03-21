@@ -7,8 +7,8 @@ command = "bun run build"
 
 
 [[redirects]]
-  from = "/iiif"
-  to = "https://deploy-preview-1--delft-iiif.netlify.app"
+  from = "/iiif/*"
+  to = "https://deploy-preview-1--delft-iiif.netlify.app/:splat"
   status = 200
   force = true
   headers = {X-From = "Netlify"}
