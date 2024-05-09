@@ -46,7 +46,7 @@ if (existsSync(join(IIIF_DIRECTORY, "meta/typesense/manifests.schema.json"))) {
     await client.collections(INDEX_NAME).delete();
   }
 
-  const exhibitions = (await readdir(join(cwd(), "../iiif", "manifests", "exhibitions"))).map(
+  const exhibitions = (await readdir(join(cwd(), "../iiif", "manifests", "manifest-editor", "exhibitions"))).map(
     (name: string) => `manifests/${name.replace(".json", "")}`
   );
 
