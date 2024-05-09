@@ -12,7 +12,7 @@ export default async function ExhibitionsPage({ params }: { params: { locale: st
       <h1 className="my-5 text-4xl font-bold">{t("Exhibitions")}</h1>
       <Slot name="main-exhibitions" context={{ locale: params.locale }} />
       {/* Turn off default listing here. */}
-      <ExhibitionListing content={{ exhibition: t("Exhibition") }} exhibitions={exhibitions.items as any} />
+      {/* <ExhibitionListing content={{ exhibition: t("Exhibition") }} exhibitions={exhibitions.items as any} /> */}
     </Page>
   );
 }

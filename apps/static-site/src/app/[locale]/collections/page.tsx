@@ -13,7 +13,7 @@ export default async function Collections(props: { params: { locale: string } })
 
       <Slot name="main-collections" context={{ locale: props.params.locale }} />
 
-      <CollectionListing />
+      {/* <CollectionListing /> */}
     </Page>
   );
 }
