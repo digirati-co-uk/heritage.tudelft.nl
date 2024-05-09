@@ -33,6 +33,7 @@ const Publication = defineDocumentType(() => ({
     image: { type: "string", required: false },
     hero: { type: "string", required: false },
     toc: { type: "boolean", default: false },
+    depth: { type: "number", default: 3 },
   },
   computedFields: {
     lang: {

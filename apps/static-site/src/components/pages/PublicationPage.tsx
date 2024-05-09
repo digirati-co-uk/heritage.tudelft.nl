@@ -42,9 +42,10 @@ export async function PublicationPage(props: PublicationPageProps) {
             <div className="cut-corners bg-black p-5 text-white">
               <h3 className="mb-4 text-center font-mono text-sm">{t("Table of contents")}</h3>
               <ul className="pl-4 font-mono">
-                {props.publication.headings.map((heading: any) => {
+                {props.publication.headings.filter((heading: any) => heading.level <= props.publication.depth).map((heading: any) => {
+                  const margin = (heading.level - 1) * 4
                   return (
-                    <li key={heading.id} className="mb-3 list-disc text-sm underline">
+                    <li key={heading.id} className={"mb-3 list-disc text-sm underline ml-" + margin}>
                       <a href={`#${heading.id}`}>{heading.heading}</a>
                     </li>
                   );
