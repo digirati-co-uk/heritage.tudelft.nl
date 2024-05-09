@@ -26,6 +26,7 @@ export const typesenseServerConfig = {
 const client = new Typesense.Client(typesenseServerConfig);
 
 const recreateIndex = argv.includes("--recreate-index");
+const allowErrors = argv.includes("--allow-errors");
 
 const IIIF_DIRECTORY = resolve(cwd(), "../iiif/build");
 
@@ -73,7 +74,30 @@ if (existsSync(join(IIIF_DIRECTORY, "meta/typesense/manifests.schema.json"))) {
     console.log("Creating collection", INDEX_NAME);
     await client.collections().create(schema);
   }
-  await client.collections(INDEX_NAME).documents().import(processedDocuments, { action: "upsert" });
+
+  try {
+    await client.collections(INDEX_NAME).documents().import(processedDocuments, { action: "upsert" });
+  } catch (err) {
+    if (err) {
+      console.log("Import failed", err);
+
+      if ((err as any).importResults) {
+        const failedDocuments = (err as any).importResults.filter((result: any) => result.success === false);
+
+        for (const failed of failedDocuments) {
+          //
+          const doc = JSON.parse(failed.document);
+          console.log("Failed to import", doc.type, doc.slug);
+          console.log("Reason", failed.error);
+          console.log("");
+        }
+
+        if (!allowErrors) {
+          throw new Error("Import failed");
+        }
+      }
+    }
+  }
 
   console.log(`Imported ${jsonDocuments.length} documents into the '${INDEX_NAME}' collection`);
 
