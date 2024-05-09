@@ -12,20 +12,14 @@ run:
   - extract-thumbnail
   - manifest-sqlite
   - metadata-analysis
-  - folder-collections
   - site-collections
   - delft-image-source
   - typesense-manifests
 
 stores:
-  manifests:
+  collective-access:
     type: iiif-json
-    path: ./manifests
-    pattern: "**/*.{json,yaml,yml}"
-
-  libis-objects:
-    type: iiif-json
-    path: ./libis/objects
+    path: ./manifests/collective-access
     destination: manifests
     pattern: "**/*.{json,yaml,yml}"
     run:
@@ -37,23 +31,36 @@ stores:
         topicTypes:
           material: ["Materiaal", "Material"]
           date: ["Date", "Datering"]
-          Maker: ["Maker"]
-          Publisher: ["Publisher"]
+          contributor: ["Maker"]
+          format: ["Objectnaam"]
 
-  libis-collections:
+  dlcs:
     type: iiif-json
-    path: ./libis/collections
-    destination: collections
-    pattern: "**/*.json"
-
-  delta-archief:
-    type: iiif-json
-    path: ./delta-archief
+    path: ./manifests/dlcs
     destination: manifests
     pattern: "**/*.{json,yaml,yml}"
+    run:
+      - extract-topics
+      - folder-collections
+    config:
+      extract-topics:
+        topicTypes:
+          date: ["Year"]
+          format: ["Format"]
+          contributor: ["Contributor", "Contributors"]
 
-  map-series:
+  manifest-editor:
     type: iiif-json
-    path: ./map-series
+    path: ./manifests/manifest-editor
     destination: manifests
-    pattern: "**/*.{json,yml}"
+    pattern: "**/*.{json,yaml,yml}"
+    run:
+      - folder-collections
+
+  projects:
+    type: iiif-json
+    path: ./manifests/projects
+    destination: manifests
+    pattern: "**/*.{json,yaml,yml}"
+    run:
+      - folder-collections
