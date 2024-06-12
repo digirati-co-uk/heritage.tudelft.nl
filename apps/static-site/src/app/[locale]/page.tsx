@@ -7,10 +7,8 @@ export default function Homepage({ params }: { params: { locale: string } }): JS
   unstable_setRequestLocale(params.locale);
   return (
     <Page>
-      <h1 className="my-8 text-4xl font-bold">TUDelft</h1>
-
       <Slot
-        className="pb-grid-slot grid grid-cols-1 gap-0.5 sm:grid-cols-2 lg:grid-cols-3"
+        className="mt-8"
         context={{ locale: params.locale }}
         name="homepage"
       />

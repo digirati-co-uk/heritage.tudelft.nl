@@ -38,7 +38,7 @@ export function SearchTabs() {
             }}
           >
             <span>{item.label}</span>
-            <span className="rounded-full bg-slate-400 px-3 py-0.5 text-xs font-bold text-slate-100">{item.count}</span>
+            <span className="rounded-full bg-slate-400 px-3 py-0.5 text-xs font-medium text-slate-100">{item.count}</span>
           </a>
         </li>
       ))}

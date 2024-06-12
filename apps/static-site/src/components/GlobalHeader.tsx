@@ -45,7 +45,7 @@ export async function GlobalHeader() {
         <LanguageSwitcher />
       </li>
       <li className="hidden md:block">
-        <a href="https://www.tudelft.nl/">
+        <a href="https://www.tudelft.nl/library">
           <svg
             className="-translate-y-1.5"
             viewBox="0 0 105 41"
@@ -68,7 +68,7 @@ export async function GlobalHeader() {
     <div className="flex justify-center bg-[#1D1F71] font-mono text-white">
       <div className="flex h-16 w-full max-w-screen-xl items-center gap-5 px-5 py-2 md:px-10">
         <MobileMenu>{menu}</MobileMenu>
-        <div className="font-sans text-xl max-sm:ml-auto max-sm:mr-auto md:text-2xl">
+        <div className="font-mono uppercase max-sm:ml-auto max-sm:mr-auto md:text-base">
           <Link href="/">{t("Academic Heritage")}</Link>
         </div>
         <ul className="ml-auto hidden items-center text-xs md:gap-2 md:text-base lg:flex lg:gap-5">{menu}</ul>

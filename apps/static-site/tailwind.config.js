@@ -11,6 +11,25 @@ module.exports = {
         normal: "400",
         bold: "500",
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            a: {
+              "text-decoration": "none",
+              "font-weight": "500",
+            },
+            "h1, h2, h3, h4, h5": {
+              "font-weight": "500",
+            },
+            strong: {
+              "font-weight": "500",
+            },
+            blockquote: {
+              "font-weight": "normal",
+            },
+          },
+        },
+      },
     },
   },
   plugins: [require("@tailwindcss/typography")],

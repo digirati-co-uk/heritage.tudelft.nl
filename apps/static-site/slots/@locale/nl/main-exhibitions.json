@@ -2,9 +2,129 @@
   "name": "main-exhibitions",
   "blocks": [
     {
-      "id": "nqhwy",
+      "id": "r9v15",
+      "type": "HeadingParagraph",
+      "data": {
+        "heading": "Tentoonstellingen",
+        "paragraph": "",
+        "align": "left",
+        "level": 2
+      }
+    },
+    {
+      "id": "29s39c",
+      "type": "HeadingParagraph",
+      "data": {
+        "heading": "",
+        "paragraph": "<i>Nederlandstalig</i>",
+        "html": true,
+        "align": "left"
+      }
+    },
+    {
+      "id": "0pnlgd",
       "type": "CardGrid",
-      "data": {}
+      "data": {
+        "title": ""
+      },
+      "slots": {
+        "gridItems": {
+          "slot_id": "gridItems",
+          "blocks": [
+            {
+              "id": "863x5",
+              "type": "ExhibitionBox",
+              "data": {
+                "type": "exhibition",
+                "title": "Novieten",
+                "link": "/exhibitions/novieten",
+                "backgroundImage": "https://dlc.services/thumbs/7/21/e16c7a6b-9672-d551-70d7-08c88609efb1/full/400,/0/default.jpg",
+                "backgroundColor": "bg-yellow-400"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "3j3uil",
+      "type": "HeadingParagraph",
+      "data": {
+        "heading": "",
+        "paragraph": "<i>Alleen Engelstalig</i>",
+        "html": true
+      }
+    },
+    {
+      "id": "aivlxp",
+      "type": "CardGrid",
+      "data": {
+        "title": "",
+        "columns": 3
+      },
+      "slots": {
+        "gridItems": {
+          "slot_id": "gridItems",
+          "blocks": [
+            {
+              "id": "0zw2p8",
+              "type": "ExhibitionBox",
+              "data": {
+                "type": "exhibition",
+                "title": "Irrigation knowledge",
+                "link": "/exhibitions/irrigation-knowledge",
+                "backgroundImage": "https://dlc.services/thumbs/7/21/17da5645-e7b1-8870-1de4-ac34fa58420a/full/400,/0/default.jpg",
+                "backgroundColor": "bg-yellow-400"
+              }
+            },
+            {
+              "id": "2l1ggw",
+              "type": "ExhibitionBox",
+              "data": {
+                "type": "exhibition",
+                "title": "Voices of Women in Science ",
+                "link": "/exhibitions/voices-of-wis",
+                "backgroundImage": "https://dlc.services/thumbs/7/24/14204410-74cc-5796-04f2-a59eeaa8ab44/full/400,/0/default.jpg",
+                "backgroundColor": "bg-yellow-400"
+              }
+            },
+            {
+              "id": "m1zfvi",
+              "type": "ExhibitionBox",
+              "data": {
+                "type": "exhibition",
+                "title": "Places of Commemoration",
+                "link": "/exhibitions/places-of-commemoration",
+                "backgroundImage": "https://dlc.services/thumbs/7/21/20afde89-6154-4843-974c-388f972b76f4/full/323,/0/default.jpg",
+                "backgroundColor": "bg-yellow-400"
+              }
+            },
+            {
+              "id": "ouxt3j",
+              "type": "ExhibitionBox",
+              "data": {
+                "type": "exhibition",
+                "title": "Corona Chronicles",
+                "link": "/exhibitions/corona-chronicles",
+                "backgroundColor": "bg-yellow-400",
+                "dark": false,
+                "backgroundImage": "https://dlc.services/thumbs/7/19/f5b3688b-d758-4e03-7458-47135e1e9dc8/full/full/0/default.jpg"
+              }
+            },
+            {
+              "id": "t55lhc",
+              "type": "ExhibitionBox",
+              "data": {
+                "type": "exhibition",
+                "title": "Rise of a Campus",
+                "link": "/exhibitions/rise-of-a-campus",
+                "backgroundImage": "https://dlc.services/thumbs/7/17/b9a7d3c2-35a3-447c-9191-bef328ee312d/full/400,/0/default.jpg",
+                "backgroundColor": "bg-yellow-400"
+              }
+            }
+          ]
+        }
+      }
     }
   ]
 }

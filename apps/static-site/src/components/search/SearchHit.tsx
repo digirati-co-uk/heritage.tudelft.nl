@@ -26,7 +26,7 @@ export function SearchHit({
         <header className="mb-2 w-full border-b border-slate-400 pb-2">
           <Link href={url}>
             <h3
-              className="text-2xl font-bold leading-tight text-gray-900 underline-offset-2 hover:underline"
+              className="text-2xl font-medium leading-tight text-gray-900 underline-offset-2 hover:underline"
               dangerouslySetInnerHTML={{ __html: result.label.value }}
             />
           </Link>

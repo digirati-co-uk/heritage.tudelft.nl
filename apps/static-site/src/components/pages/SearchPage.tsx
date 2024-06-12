@@ -9,7 +9,7 @@ import { SearchWrapper, getFacets } from "../search/SearchWrapper";
 export function SearchPage() {
   return (
     <div>
-      <h1 className="mb-4 mt-6 text-3xl font-bold leading-tight text-gray-900">Search</h1>
+      <h1 className="mb-4 mt-6 text-3xl font-medium leading-tight text-gray-900">Search</h1>
 
       <SearchWrapper routing>
         <SearchBox

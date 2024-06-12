@@ -18,8 +18,9 @@ export default async function AboutPage({ params }: { params: { locale: string }
 
   return (
     <Page>
+      <h1 className="my-8 text-4xl font-medium">{aboutPage.title}</h1>
       <div className="mb-32 mt-8 h-full lg:col-span-2">
-        <article className="prose lg:prose-2xl prose-lg max-w-full leading-snug md:leading-snug">
+        <article className="prose md:prose-xl prose-lg max-w-full leading-snug md:leading-snug">
           <SlotContext name="page" value={"about"}>
             <MDXContent components={{ Slot: CustomSlot, Illustration }} />
           </SlotContext>

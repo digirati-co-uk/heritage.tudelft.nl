@@ -12,7 +12,7 @@ export async function CollectionListing() {
 
   return (
     <>
-      <h2 className="my-5 text-2xl font-bold">{t("Curated collections")}</h2>
+      <h2 className="my-5 text-2xl font-medium">{t("Curated collections")}</h2>
 
       <div className="mb-8 grid-cols-1 gap-0.5 md:grid md:grid-cols-4">
         {siteCollections.items.map((collection) => {
@@ -38,7 +38,7 @@ export async function CollectionListing() {
         })}
       </div>
 
-      <h2 className="my-5 text-2xl font-bold">{t("All Collections")}</h2>
+      <h2 className="my-5 text-2xl font-medium">{t("All Collections")}</h2>
 
       <div className="mb-8 grid-cols-1 gap-0.5 md:grid md:grid-cols-4">
         {allCollections.items.map((collection) => {

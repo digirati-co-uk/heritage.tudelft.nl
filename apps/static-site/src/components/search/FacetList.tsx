@@ -8,7 +8,7 @@ export function FacetList({ facet }: { facet: string }) {
   }
   return (
     <div className="mb-8">
-      <h3 className="mb-3 text-xl font-bold capitalize leading-tight text-gray-900">{label}</h3>
+      <h3 className="mb-3 text-xl font-medium capitalize leading-tight text-gray-900">{label}</h3>
       <RefinementList
         searchable
         autoCapitalize="on"

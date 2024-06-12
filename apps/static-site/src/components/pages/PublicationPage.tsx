@@ -10,6 +10,12 @@ export interface PublicationPageProps {
   locale: string;
 }
 
+interface PublicationHeading {
+  id: string;
+  heading: string;
+  level: number
+}
+
 export async function PublicationPage(props: PublicationPageProps) {
   const MDXContent = useMDXComponent(props.publication.body.code);
   const CustomSlot = (inner: any) => {
@@ -21,6 +27,8 @@ export async function PublicationPage(props: PublicationPageProps) {
   };
 
   const t = await getTranslations();
+
+  const depth = props.publication.depth > 4 ? 4 : props.publication.depth < 1 ? 1 : props.publication.depth
 
   return (
     <div>
@@ -34,7 +42,7 @@ export async function PublicationPage(props: PublicationPageProps) {
           <div className="cut-corners flex flex-col justify-between bg-orange-500 p-5 text-center text-black lg:aspect-square">
             <div className="text-md font-mono uppercase">{t("Article")}</div>
             <div>
-              <h1 className="text-xl font-bold leading-snug md:text-4xl">{props.publication.title}</h1>
+              <h1 className="text-xl font-medium leading-snug md:text-4xl">{props.publication.title}</h1>
             </div>
             <div className="font-mono">{props.publication.author}</div>
           </div>
@@ -42,10 +50,17 @@ export async function PublicationPage(props: PublicationPageProps) {
             <div className="cut-corners bg-black p-5 text-white">
               <h3 className="mb-4 text-center font-mono text-sm">{t("Table of contents")}</h3>
               <ul className="pl-4 font-mono">
-                {props.publication.headings.filter((heading: any) => heading.level <= props.publication.depth).map((heading: any) => {
-                  const margin = (heading.level - 1) * 4
+                {props.publication.headings.filter((heading: PublicationHeading) => heading.level <= depth).map((heading: PublicationHeading) => {
+                  const leftMargins: {
+                    [index: number]: string
+                  } = {
+                    1: "ml-0",
+                    2: "ml-4",
+                    3: "ml-8",
+                    4: "ml-12"
+                  }
                   return (
-                    <li key={heading.id} className={"mb-3 list-disc text-sm underline ml-" + margin}>
+                    <li key={heading.id} className={`mb-3 list-disc text-sm underline ${leftMargins[heading.level]}`}>
                       <a href={`#${heading.id}`}>{heading.heading}</a>
                     </li>
                   );
@@ -55,7 +70,7 @@ export async function PublicationPage(props: PublicationPageProps) {
           ) : null}
         </div>
         <div className="h-full lg:col-span-2">
-          <article className="prose lg:prose-2xl prose-lg max-w-full leading-snug md:leading-normal">
+          <article className="prose md:prose-xl max-w-full leading-snug md:leading-normal">
             <SlotContext name="publication" value={props.publication.id}>
               <MDXContent components={{ Slot: CustomSlot, Illustration, Small }} />
             </SlotContext>

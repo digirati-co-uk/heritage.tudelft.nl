@@ -60,7 +60,7 @@ export function Box(props: z.infer<typeof boxProps>) {
         }  flex h-full w-full flex-col justify-between gap-3 no-underline`}
       >
         <div className="text-md text-center font-mono uppercase">{props.type}</div>
-        <div className={`mx-auto text-center ${titleSize} font-bold`}>{props.title}</div>
+        <div className={`mx-auto text-center ${titleSize} font-medium`}>{props.title}</div>
         <div className="text-center">{props.subtitle || " "}</div>
       </Link>
     </div>

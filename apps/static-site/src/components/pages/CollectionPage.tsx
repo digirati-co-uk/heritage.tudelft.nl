@@ -40,7 +40,7 @@ export async function CollectionPage(props: CollectionPageProps) {
           <div className="cut-corners mb-8 flex w-full flex-col justify-between bg-cyan-500 p-4 md:aspect-square">
             <div className="text-center font-mono text-sm uppercase">{t("Collection")}</div>
             <div className="flex flex-col items-center justify-center gap-4">
-              <h1 className="text-center text-3xl font-bold">
+              <h1 className="text-center text-3xl font-medium">
                 <AutoLanguage mapString={renderCollectionLabel}>{props.collection.label}</AutoLanguage>
               </h1>
               <div className="iiif-link-wrapper">

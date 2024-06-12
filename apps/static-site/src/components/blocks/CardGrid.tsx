@@ -19,7 +19,7 @@ export const CardGrid = block(
   },
   function CardGrid(props) {
     const cols = columns[props.columns || 3] || columns[3];
-    const gridClassName = `grid grid-cols-1 sm:grid-cols-2 ${cols} gap-0.5 pb-grid-slot`;
+    const gridClassName = `grid grid-cols-1 sm:grid-cols-2 ${cols} pb-grid-slot`;
     return (
       <div className="mb-12 mt-6">
         {props.title ? (

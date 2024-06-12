@@ -94,7 +94,7 @@ export function ManifestPage({ related, manifest, meta, content }: ManifestPageP
 
           {related.length !== 0 && (
             <>
-              <h3 className="mb-5 mt-10 text-3xl font-bold">{content.relatedObjects}</h3>
+              <h3 className="mb-5 mt-10 text-3xl font-medium">{content.relatedObjects}</h3>
               <div className="mb-4 grid md:grid-cols-3">
                 {related.map((item, i) => {
                   if (item === null) return null;
@@ -118,7 +118,7 @@ export function ManifestPage({ related, manifest, meta, content }: ManifestPageP
         {(meta.partOfCollections || []).length === 0 ? null : (
           <div className="col-span-1 overflow-hidden">
             <div className="cut-corners aspect-square place-self-start bg-black p-8 text-white">
-              <h3 className="mb-2 text-2xl font-bold">{content.partOfCollections}</h3>
+              <h3 className="mb-2 text-2xl font-medium">{content.partOfCollections}</h3>
               <ul className="text-md ml-4 list-disc underline underline-offset-4">
                 {(meta.partOfCollections || []).map((collection, i) => (
                   <li key={i}>

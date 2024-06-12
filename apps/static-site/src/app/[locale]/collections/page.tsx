@@ -9,9 +9,8 @@ export default async function Collections(props: { params: { locale: string } })
   // List of collections.
   return (
     <Page>
-      <h1 className="my-5 text-4xl font-bold">{t("Digital Collections")}</h1>
 
-      <Slot name="main-collections" context={{ locale: props.params.locale }} />
+      <Slot className="mt-8" name="main-collections" context={{ locale: props.params.locale }} />
 
       {/* <CollectionListing /> */}
     </Page>

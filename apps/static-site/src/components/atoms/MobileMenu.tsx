@@ -48,7 +48,7 @@ export function MobileMenu({ children }: { children: ReactNode }) {
             <CloseIcon fill="#fff" />
           </button>
         </div>
-        <ul className="flex flex-col items-center gap-5 text-2xl text-white">{children}</ul>
+        <ul className="flex flex-col items-center gap-5 text-xl text-white">{children}</ul>
       </dialog>
     </>
   );

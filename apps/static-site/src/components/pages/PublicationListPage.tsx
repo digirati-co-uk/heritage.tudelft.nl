@@ -38,7 +38,7 @@ export async function PublicationListPage(props: PublicationListPageProps) {
 
   return (
     <>
-      <div className="mb-8 grid-cols-1 gap-0.5 md:grid md:grid-cols-3">
+      <div className="mb-8 grid-cols-1 md:grid md:grid-cols-3">
         {publications.map((_publication) => {
           const publication = (articleMap[_publication.id] || {})[props.locale] || _publication;
           return (

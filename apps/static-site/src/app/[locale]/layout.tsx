@@ -10,7 +10,7 @@ import { SlotContext } from "@/blocks/slot-context";
 import { GlobalFooter } from "@/components/GlobalFooter";
 
 export const metadata: Metadata = {
-  title: "TUDelft",
+  title: "TU Delft",
   description: "",
 };
 

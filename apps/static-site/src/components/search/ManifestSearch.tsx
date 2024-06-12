@@ -69,7 +69,7 @@ function ManifestHits({ content }: { content: ManifestSearchContent }) {
     <div>
       {searchBox}
 
-      <h3 className="mb-8 text-3xl font-bold leading-tight text-gray-900">{content.searchResults}</h3>
+      <h3 className="mb-8 text-3xl font-medium leading-tight text-gray-900">{content.searchResults}</h3>
 
       {hits.length === 0 ? (
         <div className="p-16 text-center font-mono text-xl text-gray-500">
@@ -87,7 +87,7 @@ function ManifestHits({ content }: { content: ManifestSearchContent }) {
       )}
 
       <hr className="my-8 border-b-2 border-slate-400" />
-      <h3 className="mb-8 text-3xl font-bold leading-tight text-gray-900">{content.allItems}</h3>
+      <h3 className="mb-8 text-3xl font-medium leading-tight text-gray-900">{content.allItems}</h3>
     </div>
   );
 }
