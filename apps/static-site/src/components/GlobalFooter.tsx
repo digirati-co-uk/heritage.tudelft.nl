@@ -10,7 +10,7 @@ export async function GlobalFooter() {
     <footer className="mt-8 w-full bg-[#1D1F71] p-8 text-white">
       <div className="mx-auto flex max-w-screen-xl flex-col justify-between sm:flex-row ">
         <div>
-          <h2 className="mb-12 max-w-96 font-sans text-4xl">"TU Delft Library"</h2>
+          <h2 className="mb-12 max-w-96 font-sans text-4xl">TU Delft Library</h2>
           <div className="mb-8 flex gap-2 max-sm:flex-wrap max-sm:gap-1">
             {/* <div>
               <SocialIcon url="https://www.facebook.com/tudelft" bgColor="#fff" color="#000" fgColor="#1D1F71" />
