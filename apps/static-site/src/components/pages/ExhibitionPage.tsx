@@ -23,7 +23,7 @@ export async function ExhibitionPage(props: ExhibitionPageProps) {
 
   return (
     <>
-      <div className="mb-12 mt-12 auto-rows-auto grid-cols-12 content-center justify-center lg:grid">
+      <div className="mb-12 auto-rows-auto grid-cols-12 content-center justify-center lg:grid">
         <TitlePanel manifest={props.manifest} />
 
         {props.manifest.items.map((canvas: any, idx) => {

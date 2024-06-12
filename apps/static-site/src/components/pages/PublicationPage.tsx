@@ -37,7 +37,7 @@ export async function PublicationPage(props: PublicationPageProps) {
           <img src={props.publication.hero} alt="" className="h-full w-full object-cover" />
         </div>
       ) : null}
-      <div className="mx-auto grid max-w-xl grid-cols-1 gap-12 py-12 lg:max-w-full lg:grid-cols-3">
+      <div className="mx-auto grid max-w-xl grid-cols-1 gap-12 lg:max-w-full lg:grid-cols-3">
         <div className="sticky top-0 self-start">
           <div className="cut-corners flex flex-col justify-between bg-orange-500 p-5 text-center text-black lg:aspect-square">
             <div className="text-md font-mono uppercase">{t("Article")}</div>

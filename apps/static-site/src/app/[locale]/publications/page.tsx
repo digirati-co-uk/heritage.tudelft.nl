@@ -9,7 +9,7 @@ export default async function PublicationsList({ params }: { params: { locale: s
 
   return (
     <Page>
-      <h1 className="my-8 text-4xl font-medium">{t("Publications")}</h1>
+      <h1 className="mb-8 text-4xl font-medium">{t("Publications")}</h1>
       <PublicationListPage locale={params.locale} publications={allPublications} />
     </Page>
   );

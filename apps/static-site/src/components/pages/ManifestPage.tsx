@@ -51,7 +51,7 @@ export function ManifestPage({ related, manifest, meta, content }: ManifestPageP
 
   return (
     <div>
-      <h1 className="my-4 text-4xl">
+      <h1 className="mb-4 text-4xl font-medium">
         <AutoLanguage>{manifest.label || content.untitled}</AutoLanguage>
       </h1>
       {manifest.requiredStatement ? (

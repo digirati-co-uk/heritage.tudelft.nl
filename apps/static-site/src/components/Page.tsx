@@ -8,7 +8,7 @@ export async function Page(props: { children: ReactNode }) {
 
   return (
     <>
-      <div className="min-h-[90vh] w-full max-w-screen-xl px-5 lg:px-10">
+      <div className="min-h-[90vh] w-full max-w-screen-xl px-5 py-10 lg:px-10">
         <Suspense fallback="Loading...">{props.children}</Suspense>
       </div>
     </>

@@ -8,7 +8,6 @@ export default function Homepage({ params }: { params: { locale: string } }): JS
   return (
     <Page>
       <Slot
-        className="mt-8"
         context={{ locale: params.locale }}
         name="homepage"
       />

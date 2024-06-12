@@ -34,7 +34,6 @@ export async function CollectionPage(props: CollectionPageProps) {
   console.log(props.collection);
 
   return (
-    <div className="py-8">
       <div className="grid-cols-1 gap-8 md:grid md:grid-cols-3">
         <div className="col-span-1">
           <div className="cut-corners mb-8 flex w-full flex-col justify-between bg-cyan-500 p-4 md:aspect-square">
@@ -109,6 +108,5 @@ export async function CollectionPage(props: CollectionPageProps) {
           </div>
         </div>
       </div>
-    </div>
   );
 }
