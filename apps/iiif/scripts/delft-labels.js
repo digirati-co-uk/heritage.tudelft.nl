@@ -1,4 +1,5 @@
 import { enrich } from "iiif-hss";
+import { getValue } from "@iiif/helpers";
 
 enrich(
   {
@@ -37,6 +38,6 @@ enrich(
       }
     });
 
-    return { didChange, meta: { label: changedLabel } };
+    return { didChange, meta: { label: getValue(changedLabel) } };
   }
 );
