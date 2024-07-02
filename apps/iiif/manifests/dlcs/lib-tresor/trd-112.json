@@ -1,12 +1,45 @@
 {
     "@context": "http://iiif.io/api/presentation/3/context.json",
-    "id": "https://dlc.services/iiif-resource/7/string1string2string3/technische-hogeschool-delft-aula",
+    "id": "https://dlc.services/iiif-resource/v3/7/string1string2string3/technische-hogeschool-delft-aula",
     "type": "Manifest",
     "label": {
         "none": [
             "[Doos met verschillende publicaties van en over de Technische Hogeschool]"
         ]
     },
+    "thumbnail": [
+        {
+            "id": "https://dlc.services/thumbs/7/6/f7e7b0d1-52bb-4bf0-908b-d739d95997a1/full/200,74/0/default.jpg",
+            "type": "Image",
+            "format": "image/jpeg",
+            "service": [
+                {
+                    "@context": "http://iiif.io/api/image/3/context.json",
+                    "id": "https://dlc.services/thumbs/v3/7/6/f7e7b0d1-52bb-4bf0-908b-d739d95997a1",
+                    "type": "ImageService3",
+                    "profile": "level0",
+                    "sizes": [
+                        {
+                            "width": 1024,
+                            "height": 378
+                        },
+                        {
+                            "width": 400,
+                            "height": 148
+                        },
+                        {
+                            "width": 200,
+                            "height": 74
+                        },
+                        {
+                            "width": 100,
+                            "height": 37
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
     "metadata": [
         {
             "label": {
@@ -146,21 +179,26 @@
     ],
     "items": [
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=technische-hogeschool-delft-aula&n1=&n2=0",
+            "id": "https://dlc.services/iiif-img/7/6/f7e7b0d1-52bb-4bf0-908b-d739d95997a1/canvas/c/1",
             "type": "Canvas",
-            "height": 2607,
+            "label": {
+                "en": [
+                    "Canvas 1"
+                ]
+            },
             "width": 7066,
+            "height": 2607,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/f7e7b0d1-52bb-4bf0-908b-d739d95997a1/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/f7e7b0d1-52bb-4bf0-908b-d739d95997a1/full/200,74/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/f7e7b0d1-52bb-4bf0-908b-d739d95997a1",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/f7e7b0d1-52bb-4bf0-908b-d739d95997a1",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 378,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -185,51 +223,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=technische-hogeschool-delft-aula&n1=&n2=0/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/f7e7b0d1-52bb-4bf0-908b-d739d95997a1/canvas/c/1/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/f7e7b0d1-52bb-4bf0-908b-d739d95997a1/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/f7e7b0d1-52bb-4bf0-908b-d739d95997a1/canvas/c/1/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=technische-hogeschool-delft-aula&n1=&n2=0",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/f7e7b0d1-52bb-4bf0-908b-d739d95997a1/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/f7e7b0d1-52bb-4bf0-908b-d739d95997a1/full/1024,378/0/default.jpg",
                                 "type": "Image",
-                                "height": 2607,
-                                "width": 7066,
+                                "width": 1024,
+                                "height": 378,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/f7e7b0d1-52bb-4bf0-908b-d739d95997a1",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 2607,
-                                        "width": 7066
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/f7e7b0d1-52bb-4bf0-908b-d739d95997a1",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 7066,
+                                        "height": 2607
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/f7e7b0d1-52bb-4bf0-908b-d739d95997a1/canvas/c/1"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=technische-hogeschool-delft-aula&n1=&n2=1",
+            "id": "https://dlc.services/iiif-img/7/6/290268dc-5abd-46f9-8d0c-ad19fd0a9d48/canvas/c/2",
             "type": "Canvas",
-            "height": 4619,
+            "label": {
+                "en": [
+                    "Canvas 2"
+                ]
+            },
             "width": 6907,
+            "height": 4619,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/290268dc-5abd-46f9-8d0c-ad19fd0a9d48/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/290268dc-5abd-46f9-8d0c-ad19fd0a9d48/full/200,134/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/290268dc-5abd-46f9-8d0c-ad19fd0a9d48",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/290268dc-5abd-46f9-8d0c-ad19fd0a9d48",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 685,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -254,51 +298,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=technische-hogeschool-delft-aula&n1=&n2=1/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/290268dc-5abd-46f9-8d0c-ad19fd0a9d48/canvas/c/2/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/290268dc-5abd-46f9-8d0c-ad19fd0a9d48/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/290268dc-5abd-46f9-8d0c-ad19fd0a9d48/canvas/c/2/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=technische-hogeschool-delft-aula&n1=&n2=1",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/290268dc-5abd-46f9-8d0c-ad19fd0a9d48/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/290268dc-5abd-46f9-8d0c-ad19fd0a9d48/full/1024,685/0/default.jpg",
                                 "type": "Image",
-                                "height": 4619,
-                                "width": 6907,
+                                "width": 1024,
+                                "height": 685,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/290268dc-5abd-46f9-8d0c-ad19fd0a9d48",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 4619,
-                                        "width": 6907
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/290268dc-5abd-46f9-8d0c-ad19fd0a9d48",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 6907,
+                                        "height": 4619
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/290268dc-5abd-46f9-8d0c-ad19fd0a9d48/canvas/c/2"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=technische-hogeschool-delft-aula&n1=&n2=2",
+            "id": "https://dlc.services/iiif-img/7/6/360bfd62-4332-468a-8802-fa665d62741c/canvas/c/3",
             "type": "Canvas",
-            "height": 2343,
+            "label": {
+                "en": [
+                    "Canvas 3"
+                ]
+            },
             "width": 6912,
+            "height": 2343,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/360bfd62-4332-468a-8802-fa665d62741c/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/360bfd62-4332-468a-8802-fa665d62741c/full/200,68/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/360bfd62-4332-468a-8802-fa665d62741c",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/360bfd62-4332-468a-8802-fa665d62741c",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 347,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -323,30 +373,31 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=technische-hogeschool-delft-aula&n1=&n2=2/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/360bfd62-4332-468a-8802-fa665d62741c/canvas/c/3/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/360bfd62-4332-468a-8802-fa665d62741c/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/360bfd62-4332-468a-8802-fa665d62741c/canvas/c/3/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=technische-hogeschool-delft-aula&n1=&n2=2",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/360bfd62-4332-468a-8802-fa665d62741c/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/360bfd62-4332-468a-8802-fa665d62741c/full/1024,347/0/default.jpg",
                                 "type": "Image",
-                                "height": 2343,
-                                "width": 6912,
+                                "width": 1024,
+                                "height": 347,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/360bfd62-4332-468a-8802-fa665d62741c",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 2343,
-                                        "width": 6912
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/360bfd62-4332-468a-8802-fa665d62741c",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 6912,
+                                        "height": 2343
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/360bfd62-4332-468a-8802-fa665d62741c/canvas/c/3"
                         }
                     ]
                 }

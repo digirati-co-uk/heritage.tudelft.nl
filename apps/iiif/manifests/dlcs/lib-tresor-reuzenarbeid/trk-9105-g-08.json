@@ -1,12 +1,45 @@
 {
     "@context": "http://iiif.io/api/presentation/3/context.json",
-    "id": "https://dlc.services/iiif-resource/7/string1string2string3/reuzenarbeid/TRK-9105-G-08",
+    "id": "https://dlc.services/iiif-resource/v3/7/string1string2string3/reuzenarbeid/TRK-9105-G-08",
     "type": "Manifest",
     "label": {
         "none": [
             "Bruggen tusschen de Boompjes en de Wynstraat te Rotterdam 1877"
         ]
     },
+    "thumbnail": [
+        {
+            "id": "https://dlc.services/thumbs/7/6/d8c3eeb5-ee8c-4453-907b-08b16d458ae4/full/200,153/0/default.jpg",
+            "type": "Image",
+            "format": "image/jpeg",
+            "service": [
+                {
+                    "@context": "http://iiif.io/api/image/3/context.json",
+                    "id": "https://dlc.services/thumbs/v3/7/6/d8c3eeb5-ee8c-4453-907b-08b16d458ae4",
+                    "type": "ImageService3",
+                    "profile": "level0",
+                    "sizes": [
+                        {
+                            "width": 1024,
+                            "height": 782
+                        },
+                        {
+                            "width": 400,
+                            "height": 306
+                        },
+                        {
+                            "width": 200,
+                            "height": 153
+                        },
+                        {
+                            "width": 100,
+                            "height": 76
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
     "metadata": [
         {
             "label": {
@@ -165,21 +198,26 @@
     ],
     "items": [
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=420",
+            "id": "https://dlc.services/iiif-img/7/6/d8c3eeb5-ee8c-4453-907b-08b16d458ae4/canvas/c/1",
             "type": "Canvas",
-            "height": 6360,
+            "label": {
+                "en": [
+                    "Canvas 1"
+                ]
+            },
             "width": 8326,
+            "height": 6360,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/d8c3eeb5-ee8c-4453-907b-08b16d458ae4/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/d8c3eeb5-ee8c-4453-907b-08b16d458ae4/full/200,153/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/d8c3eeb5-ee8c-4453-907b-08b16d458ae4",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/d8c3eeb5-ee8c-4453-907b-08b16d458ae4",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 782,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -204,51 +242,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=420/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/d8c3eeb5-ee8c-4453-907b-08b16d458ae4/canvas/c/1/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/d8c3eeb5-ee8c-4453-907b-08b16d458ae4/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/d8c3eeb5-ee8c-4453-907b-08b16d458ae4/canvas/c/1/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=420",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/d8c3eeb5-ee8c-4453-907b-08b16d458ae4/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/d8c3eeb5-ee8c-4453-907b-08b16d458ae4/full/1024,782/0/default.jpg",
                                 "type": "Image",
-                                "height": 6360,
-                                "width": 8326,
+                                "width": 1024,
+                                "height": 782,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/d8c3eeb5-ee8c-4453-907b-08b16d458ae4",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 6360,
-                                        "width": 8326
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/d8c3eeb5-ee8c-4453-907b-08b16d458ae4",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 8326,
+                                        "height": 6360
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/d8c3eeb5-ee8c-4453-907b-08b16d458ae4/canvas/c/1"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=421",
+            "id": "https://dlc.services/iiif-img/7/6/67d959d3-e6b5-41c8-82fa-1c9d1d4a83d8/canvas/c/2",
             "type": "Canvas",
-            "height": 8390,
+            "label": {
+                "en": [
+                    "Canvas 2"
+                ]
+            },
             "width": 6456,
+            "height": 8390,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/67d959d3-e6b5-41c8-82fa-1c9d1d4a83d8/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/67d959d3-e6b5-41c8-82fa-1c9d1d4a83d8/full/154,200/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/67d959d3-e6b5-41c8-82fa-1c9d1d4a83d8",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/67d959d3-e6b5-41c8-82fa-1c9d1d4a83d8",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 788,
-                            "height": 1024,
                             "sizes": [
                                 {
                                     "width": 788,
@@ -273,51 +317,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=421/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/67d959d3-e6b5-41c8-82fa-1c9d1d4a83d8/canvas/c/2/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/67d959d3-e6b5-41c8-82fa-1c9d1d4a83d8/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/67d959d3-e6b5-41c8-82fa-1c9d1d4a83d8/canvas/c/2/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=421",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/67d959d3-e6b5-41c8-82fa-1c9d1d4a83d8/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/67d959d3-e6b5-41c8-82fa-1c9d1d4a83d8/full/788,1024/0/default.jpg",
                                 "type": "Image",
-                                "height": 8390,
-                                "width": 6456,
+                                "width": 788,
+                                "height": 1024,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/67d959d3-e6b5-41c8-82fa-1c9d1d4a83d8",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 8390,
-                                        "width": 6456
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/67d959d3-e6b5-41c8-82fa-1c9d1d4a83d8",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 6456,
+                                        "height": 8390
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/67d959d3-e6b5-41c8-82fa-1c9d1d4a83d8/canvas/c/2"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=422",
+            "id": "https://dlc.services/iiif-img/7/6/c428c1d8-82c8-40de-9f26-2278b3878b05/canvas/c/3",
             "type": "Canvas",
-            "height": 6465,
+            "label": {
+                "en": [
+                    "Canvas 3"
+                ]
+            },
             "width": 8442,
+            "height": 6465,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/c428c1d8-82c8-40de-9f26-2278b3878b05/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/c428c1d8-82c8-40de-9f26-2278b3878b05/full/200,153/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/c428c1d8-82c8-40de-9f26-2278b3878b05",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/c428c1d8-82c8-40de-9f26-2278b3878b05",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 784,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -342,51 +392,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=422/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/c428c1d8-82c8-40de-9f26-2278b3878b05/canvas/c/3/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/c428c1d8-82c8-40de-9f26-2278b3878b05/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/c428c1d8-82c8-40de-9f26-2278b3878b05/canvas/c/3/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=422",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/c428c1d8-82c8-40de-9f26-2278b3878b05/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/c428c1d8-82c8-40de-9f26-2278b3878b05/full/1024,784/0/default.jpg",
                                 "type": "Image",
-                                "height": 6465,
-                                "width": 8442,
+                                "width": 1024,
+                                "height": 784,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/c428c1d8-82c8-40de-9f26-2278b3878b05",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 6465,
-                                        "width": 8442
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/c428c1d8-82c8-40de-9f26-2278b3878b05",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 8442,
+                                        "height": 6465
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/c428c1d8-82c8-40de-9f26-2278b3878b05/canvas/c/3"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=423",
+            "id": "https://dlc.services/iiif-img/7/6/9bc62797-bb63-4962-8628-25ac8c553b27/canvas/c/4",
             "type": "Canvas",
-            "height": 6396,
+            "label": {
+                "en": [
+                    "Canvas 4"
+                ]
+            },
             "width": 8398,
+            "height": 6396,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/9bc62797-bb63-4962-8628-25ac8c553b27/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/9bc62797-bb63-4962-8628-25ac8c553b27/full/200,152/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/9bc62797-bb63-4962-8628-25ac8c553b27",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/9bc62797-bb63-4962-8628-25ac8c553b27",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 780,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -411,51 +467,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=423/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/9bc62797-bb63-4962-8628-25ac8c553b27/canvas/c/4/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/9bc62797-bb63-4962-8628-25ac8c553b27/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/9bc62797-bb63-4962-8628-25ac8c553b27/canvas/c/4/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=423",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/9bc62797-bb63-4962-8628-25ac8c553b27/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/9bc62797-bb63-4962-8628-25ac8c553b27/full/1024,780/0/default.jpg",
                                 "type": "Image",
-                                "height": 6396,
-                                "width": 8398,
+                                "width": 1024,
+                                "height": 780,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/9bc62797-bb63-4962-8628-25ac8c553b27",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 6396,
-                                        "width": 8398
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/9bc62797-bb63-4962-8628-25ac8c553b27",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 8398,
+                                        "height": 6396
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/9bc62797-bb63-4962-8628-25ac8c553b27/canvas/c/4"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=424",
+            "id": "https://dlc.services/iiif-img/7/6/587bfdb8-7a04-40db-b891-c24359702049/canvas/c/5",
             "type": "Canvas",
-            "height": 8372,
+            "label": {
+                "en": [
+                    "Canvas 5"
+                ]
+            },
             "width": 6425,
+            "height": 8372,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/587bfdb8-7a04-40db-b891-c24359702049/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/587bfdb8-7a04-40db-b891-c24359702049/full/153,200/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/587bfdb8-7a04-40db-b891-c24359702049",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/587bfdb8-7a04-40db-b891-c24359702049",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 786,
-                            "height": 1024,
                             "sizes": [
                                 {
                                     "width": 786,
@@ -480,51 +542,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=424/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/587bfdb8-7a04-40db-b891-c24359702049/canvas/c/5/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/587bfdb8-7a04-40db-b891-c24359702049/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/587bfdb8-7a04-40db-b891-c24359702049/canvas/c/5/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=424",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/587bfdb8-7a04-40db-b891-c24359702049/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/587bfdb8-7a04-40db-b891-c24359702049/full/786,1024/0/default.jpg",
                                 "type": "Image",
-                                "height": 8372,
-                                "width": 6425,
+                                "width": 786,
+                                "height": 1024,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/587bfdb8-7a04-40db-b891-c24359702049",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 8372,
-                                        "width": 6425
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/587bfdb8-7a04-40db-b891-c24359702049",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 6425,
+                                        "height": 8372
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/587bfdb8-7a04-40db-b891-c24359702049/canvas/c/5"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=425",
+            "id": "https://dlc.services/iiif-img/7/6/eb005764-794b-4edb-9960-403e83781b5b/canvas/c/6",
             "type": "Canvas",
-            "height": 6425,
+            "label": {
+                "en": [
+                    "Canvas 6"
+                ]
+            },
             "width": 8333,
+            "height": 6425,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/eb005764-794b-4edb-9960-403e83781b5b/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/eb005764-794b-4edb-9960-403e83781b5b/full/200,154/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/eb005764-794b-4edb-9960-403e83781b5b",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/eb005764-794b-4edb-9960-403e83781b5b",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 790,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -549,51 +617,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=425/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/eb005764-794b-4edb-9960-403e83781b5b/canvas/c/6/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/eb005764-794b-4edb-9960-403e83781b5b/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/eb005764-794b-4edb-9960-403e83781b5b/canvas/c/6/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=425",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/eb005764-794b-4edb-9960-403e83781b5b/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/eb005764-794b-4edb-9960-403e83781b5b/full/1024,790/0/default.jpg",
                                 "type": "Image",
-                                "height": 6425,
-                                "width": 8333,
+                                "width": 1024,
+                                "height": 790,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/eb005764-794b-4edb-9960-403e83781b5b",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 6425,
-                                        "width": 8333
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/eb005764-794b-4edb-9960-403e83781b5b",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 8333,
+                                        "height": 6425
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/eb005764-794b-4edb-9960-403e83781b5b/canvas/c/6"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=426",
+            "id": "https://dlc.services/iiif-img/7/6/7a77c888-f9aa-4125-bad1-0583c9ead825/canvas/c/7",
             "type": "Canvas",
-            "height": 8386,
+            "label": {
+                "en": [
+                    "Canvas 7"
+                ]
+            },
             "width": 6438,
+            "height": 8386,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/7a77c888-f9aa-4125-bad1-0583c9ead825/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/7a77c888-f9aa-4125-bad1-0583c9ead825/full/154,200/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/7a77c888-f9aa-4125-bad1-0583c9ead825",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/7a77c888-f9aa-4125-bad1-0583c9ead825",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 786,
-                            "height": 1024,
                             "sizes": [
                                 {
                                     "width": 786,
@@ -618,51 +692,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=426/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/7a77c888-f9aa-4125-bad1-0583c9ead825/canvas/c/7/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/7a77c888-f9aa-4125-bad1-0583c9ead825/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/7a77c888-f9aa-4125-bad1-0583c9ead825/canvas/c/7/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=426",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/7a77c888-f9aa-4125-bad1-0583c9ead825/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/7a77c888-f9aa-4125-bad1-0583c9ead825/full/786,1024/0/default.jpg",
                                 "type": "Image",
-                                "height": 8386,
-                                "width": 6438,
+                                "width": 786,
+                                "height": 1024,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/7a77c888-f9aa-4125-bad1-0583c9ead825",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 8386,
-                                        "width": 6438
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/7a77c888-f9aa-4125-bad1-0583c9ead825",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 6438,
+                                        "height": 8386
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/7a77c888-f9aa-4125-bad1-0583c9ead825/canvas/c/7"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=427",
+            "id": "https://dlc.services/iiif-img/7/6/c5c650c7-1966-4bb1-bc9d-a872ff3a9847/canvas/c/8",
             "type": "Canvas",
-            "height": 8376,
+            "label": {
+                "en": [
+                    "Canvas 8"
+                ]
+            },
             "width": 6436,
+            "height": 8376,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/c5c650c7-1966-4bb1-bc9d-a872ff3a9847/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/c5c650c7-1966-4bb1-bc9d-a872ff3a9847/full/154,200/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/c5c650c7-1966-4bb1-bc9d-a872ff3a9847",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/c5c650c7-1966-4bb1-bc9d-a872ff3a9847",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 787,
-                            "height": 1024,
                             "sizes": [
                                 {
                                     "width": 787,
@@ -687,51 +767,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=427/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/c5c650c7-1966-4bb1-bc9d-a872ff3a9847/canvas/c/8/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/c5c650c7-1966-4bb1-bc9d-a872ff3a9847/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/c5c650c7-1966-4bb1-bc9d-a872ff3a9847/canvas/c/8/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=427",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/c5c650c7-1966-4bb1-bc9d-a872ff3a9847/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/c5c650c7-1966-4bb1-bc9d-a872ff3a9847/full/787,1024/0/default.jpg",
                                 "type": "Image",
-                                "height": 8376,
-                                "width": 6436,
+                                "width": 787,
+                                "height": 1024,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/c5c650c7-1966-4bb1-bc9d-a872ff3a9847",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 8376,
-                                        "width": 6436
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/c5c650c7-1966-4bb1-bc9d-a872ff3a9847",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 6436,
+                                        "height": 8376
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/c5c650c7-1966-4bb1-bc9d-a872ff3a9847/canvas/c/8"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=428",
+            "id": "https://dlc.services/iiif-img/7/6/d23f7dfb-08bb-4c7c-a9a5-5faca2791c3a/canvas/c/9",
             "type": "Canvas",
-            "height": 6504,
+            "label": {
+                "en": [
+                    "Canvas 9"
+                ]
+            },
             "width": 8298,
+            "height": 6504,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/d23f7dfb-08bb-4c7c-a9a5-5faca2791c3a/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/d23f7dfb-08bb-4c7c-a9a5-5faca2791c3a/full/200,157/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/d23f7dfb-08bb-4c7c-a9a5-5faca2791c3a",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/d23f7dfb-08bb-4c7c-a9a5-5faca2791c3a",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 803,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -756,51 +842,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=428/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/d23f7dfb-08bb-4c7c-a9a5-5faca2791c3a/canvas/c/9/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/d23f7dfb-08bb-4c7c-a9a5-5faca2791c3a/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/d23f7dfb-08bb-4c7c-a9a5-5faca2791c3a/canvas/c/9/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=428",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/d23f7dfb-08bb-4c7c-a9a5-5faca2791c3a/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/d23f7dfb-08bb-4c7c-a9a5-5faca2791c3a/full/1024,803/0/default.jpg",
                                 "type": "Image",
-                                "height": 6504,
-                                "width": 8298,
+                                "width": 1024,
+                                "height": 803,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/d23f7dfb-08bb-4c7c-a9a5-5faca2791c3a",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 6504,
-                                        "width": 8298
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/d23f7dfb-08bb-4c7c-a9a5-5faca2791c3a",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 8298,
+                                        "height": 6504
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/d23f7dfb-08bb-4c7c-a9a5-5faca2791c3a/canvas/c/9"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=429",
+            "id": "https://dlc.services/iiif-img/7/6/41eabf6d-b7c8-4601-b931-c8a24ccad468/canvas/c/10",
             "type": "Canvas",
-            "height": 8422,
+            "label": {
+                "en": [
+                    "Canvas 10"
+                ]
+            },
             "width": 6420,
+            "height": 8422,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/41eabf6d-b7c8-4601-b931-c8a24ccad468/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/41eabf6d-b7c8-4601-b931-c8a24ccad468/full/152,200/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/41eabf6d-b7c8-4601-b931-c8a24ccad468",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/41eabf6d-b7c8-4601-b931-c8a24ccad468",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 781,
-                            "height": 1024,
                             "sizes": [
                                 {
                                     "width": 781,
@@ -825,51 +917,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=429/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/41eabf6d-b7c8-4601-b931-c8a24ccad468/canvas/c/10/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/41eabf6d-b7c8-4601-b931-c8a24ccad468/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/41eabf6d-b7c8-4601-b931-c8a24ccad468/canvas/c/10/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=429",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/41eabf6d-b7c8-4601-b931-c8a24ccad468/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/41eabf6d-b7c8-4601-b931-c8a24ccad468/full/781,1024/0/default.jpg",
                                 "type": "Image",
-                                "height": 8422,
-                                "width": 6420,
+                                "width": 781,
+                                "height": 1024,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/41eabf6d-b7c8-4601-b931-c8a24ccad468",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 8422,
-                                        "width": 6420
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/41eabf6d-b7c8-4601-b931-c8a24ccad468",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 6420,
+                                        "height": 8422
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/41eabf6d-b7c8-4601-b931-c8a24ccad468/canvas/c/10"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=430",
+            "id": "https://dlc.services/iiif-img/7/6/b550952e-07eb-4890-8726-e78fa35425f4/canvas/c/11",
             "type": "Canvas",
-            "height": 6397,
+            "label": {
+                "en": [
+                    "Canvas 11"
+                ]
+            },
             "width": 9457,
+            "height": 6397,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/b550952e-07eb-4890-8726-e78fa35425f4/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/b550952e-07eb-4890-8726-e78fa35425f4/full/200,135/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/b550952e-07eb-4890-8726-e78fa35425f4",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/b550952e-07eb-4890-8726-e78fa35425f4",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 693,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -894,51 +992,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=430/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/b550952e-07eb-4890-8726-e78fa35425f4/canvas/c/11/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/b550952e-07eb-4890-8726-e78fa35425f4/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/b550952e-07eb-4890-8726-e78fa35425f4/canvas/c/11/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=430",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/b550952e-07eb-4890-8726-e78fa35425f4/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/b550952e-07eb-4890-8726-e78fa35425f4/full/1024,693/0/default.jpg",
                                 "type": "Image",
-                                "height": 6397,
-                                "width": 9457,
+                                "width": 1024,
+                                "height": 693,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/b550952e-07eb-4890-8726-e78fa35425f4",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 6397,
-                                        "width": 9457
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/b550952e-07eb-4890-8726-e78fa35425f4",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 9457,
+                                        "height": 6397
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/b550952e-07eb-4890-8726-e78fa35425f4/canvas/c/11"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=431",
+            "id": "https://dlc.services/iiif-img/7/6/0285985a-fdad-4e92-b9de-9d6a5b5f88ad/canvas/c/12",
             "type": "Canvas",
-            "height": 7095,
+            "label": {
+                "en": [
+                    "Canvas 12"
+                ]
+            },
             "width": 9479,
+            "height": 7095,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/0285985a-fdad-4e92-b9de-9d6a5b5f88ad/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/0285985a-fdad-4e92-b9de-9d6a5b5f88ad/full/200,150/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/0285985a-fdad-4e92-b9de-9d6a5b5f88ad",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/0285985a-fdad-4e92-b9de-9d6a5b5f88ad",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 766,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -963,51 +1067,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=431/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/0285985a-fdad-4e92-b9de-9d6a5b5f88ad/canvas/c/12/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/0285985a-fdad-4e92-b9de-9d6a5b5f88ad/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/0285985a-fdad-4e92-b9de-9d6a5b5f88ad/canvas/c/12/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=431",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/0285985a-fdad-4e92-b9de-9d6a5b5f88ad/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/0285985a-fdad-4e92-b9de-9d6a5b5f88ad/full/1024,766/0/default.jpg",
                                 "type": "Image",
-                                "height": 7095,
-                                "width": 9479,
+                                "width": 1024,
+                                "height": 766,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/0285985a-fdad-4e92-b9de-9d6a5b5f88ad",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 7095,
-                                        "width": 9479
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/0285985a-fdad-4e92-b9de-9d6a5b5f88ad",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 9479,
+                                        "height": 7095
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/0285985a-fdad-4e92-b9de-9d6a5b5f88ad/canvas/c/12"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=432",
+            "id": "https://dlc.services/iiif-img/7/6/9a608086-9cbb-411b-88b7-1392feeb26bb/canvas/c/13",
             "type": "Canvas",
-            "height": 6269,
+            "label": {
+                "en": [
+                    "Canvas 13"
+                ]
+            },
             "width": 9334,
+            "height": 6269,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/9a608086-9cbb-411b-88b7-1392feeb26bb/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/9a608086-9cbb-411b-88b7-1392feeb26bb/full/200,134/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/9a608086-9cbb-411b-88b7-1392feeb26bb",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/9a608086-9cbb-411b-88b7-1392feeb26bb",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 688,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -1032,51 +1142,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=432/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/9a608086-9cbb-411b-88b7-1392feeb26bb/canvas/c/13/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/9a608086-9cbb-411b-88b7-1392feeb26bb/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/9a608086-9cbb-411b-88b7-1392feeb26bb/canvas/c/13/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=432",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/9a608086-9cbb-411b-88b7-1392feeb26bb/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/9a608086-9cbb-411b-88b7-1392feeb26bb/full/1024,688/0/default.jpg",
                                 "type": "Image",
-                                "height": 6269,
-                                "width": 9334,
+                                "width": 1024,
+                                "height": 688,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/9a608086-9cbb-411b-88b7-1392feeb26bb",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 6269,
-                                        "width": 9334
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/9a608086-9cbb-411b-88b7-1392feeb26bb",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 9334,
+                                        "height": 6269
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/9a608086-9cbb-411b-88b7-1392feeb26bb/canvas/c/13"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=433",
+            "id": "https://dlc.services/iiif-img/7/6/a73666a5-16b4-48e1-92e2-842a567ecf9d/canvas/c/14",
             "type": "Canvas",
-            "height": 6367,
+            "label": {
+                "en": [
+                    "Canvas 14"
+                ]
+            },
             "width": 9339,
+            "height": 6367,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/a73666a5-16b4-48e1-92e2-842a567ecf9d/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/a73666a5-16b4-48e1-92e2-842a567ecf9d/full/200,136/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/a73666a5-16b4-48e1-92e2-842a567ecf9d",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/a73666a5-16b4-48e1-92e2-842a567ecf9d",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 698,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -1101,51 +1217,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=433/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/a73666a5-16b4-48e1-92e2-842a567ecf9d/canvas/c/14/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/a73666a5-16b4-48e1-92e2-842a567ecf9d/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/a73666a5-16b4-48e1-92e2-842a567ecf9d/canvas/c/14/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=433",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/a73666a5-16b4-48e1-92e2-842a567ecf9d/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/a73666a5-16b4-48e1-92e2-842a567ecf9d/full/1024,698/0/default.jpg",
                                 "type": "Image",
-                                "height": 6367,
-                                "width": 9339,
+                                "width": 1024,
+                                "height": 698,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/a73666a5-16b4-48e1-92e2-842a567ecf9d",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 6367,
-                                        "width": 9339
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/a73666a5-16b4-48e1-92e2-842a567ecf9d",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 9339,
+                                        "height": 6367
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/a73666a5-16b4-48e1-92e2-842a567ecf9d/canvas/c/14"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=434",
+            "id": "https://dlc.services/iiif-img/7/6/0b3c3ece-7bbf-4850-8854-51689bacf4c0/canvas/c/15",
             "type": "Canvas",
-            "height": 7824,
+            "label": {
+                "en": [
+                    "Canvas 15"
+                ]
+            },
             "width": 9460,
+            "height": 7824,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/0b3c3ece-7bbf-4850-8854-51689bacf4c0/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/0b3c3ece-7bbf-4850-8854-51689bacf4c0/full/200,165/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/0b3c3ece-7bbf-4850-8854-51689bacf4c0",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/0b3c3ece-7bbf-4850-8854-51689bacf4c0",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 847,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -1170,51 +1292,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=434/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/0b3c3ece-7bbf-4850-8854-51689bacf4c0/canvas/c/15/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/0b3c3ece-7bbf-4850-8854-51689bacf4c0/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/0b3c3ece-7bbf-4850-8854-51689bacf4c0/canvas/c/15/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=434",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/0b3c3ece-7bbf-4850-8854-51689bacf4c0/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/0b3c3ece-7bbf-4850-8854-51689bacf4c0/full/1024,847/0/default.jpg",
                                 "type": "Image",
-                                "height": 7824,
-                                "width": 9460,
+                                "width": 1024,
+                                "height": 847,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/0b3c3ece-7bbf-4850-8854-51689bacf4c0",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 7824,
-                                        "width": 9460
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/0b3c3ece-7bbf-4850-8854-51689bacf4c0",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 9460,
+                                        "height": 7824
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/0b3c3ece-7bbf-4850-8854-51689bacf4c0/canvas/c/15"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=435",
+            "id": "https://dlc.services/iiif-img/7/6/95af7f48-cf38-42b3-b316-02fc1aaa2895/canvas/c/16",
             "type": "Canvas",
-            "height": 7857,
+            "label": {
+                "en": [
+                    "Canvas 16"
+                ]
+            },
             "width": 9437,
+            "height": 7857,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/95af7f48-cf38-42b3-b316-02fc1aaa2895/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/95af7f48-cf38-42b3-b316-02fc1aaa2895/full/200,167/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/95af7f48-cf38-42b3-b316-02fc1aaa2895",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/95af7f48-cf38-42b3-b316-02fc1aaa2895",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 853,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -1239,51 +1367,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=435/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/95af7f48-cf38-42b3-b316-02fc1aaa2895/canvas/c/16/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/95af7f48-cf38-42b3-b316-02fc1aaa2895/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/95af7f48-cf38-42b3-b316-02fc1aaa2895/canvas/c/16/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=435",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/95af7f48-cf38-42b3-b316-02fc1aaa2895/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/95af7f48-cf38-42b3-b316-02fc1aaa2895/full/1024,853/0/default.jpg",
                                 "type": "Image",
-                                "height": 7857,
-                                "width": 9437,
+                                "width": 1024,
+                                "height": 853,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/95af7f48-cf38-42b3-b316-02fc1aaa2895",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 7857,
-                                        "width": 9437
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/95af7f48-cf38-42b3-b316-02fc1aaa2895",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 9437,
+                                        "height": 7857
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/95af7f48-cf38-42b3-b316-02fc1aaa2895/canvas/c/16"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=436",
+            "id": "https://dlc.services/iiif-img/7/6/948ea4e5-958c-4b95-89f6-ab38ea950499/canvas/c/17",
             "type": "Canvas",
-            "height": 6213,
+            "label": {
+                "en": [
+                    "Canvas 17"
+                ]
+            },
             "width": 9385,
+            "height": 6213,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/948ea4e5-958c-4b95-89f6-ab38ea950499/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/948ea4e5-958c-4b95-89f6-ab38ea950499/full/200,132/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/948ea4e5-958c-4b95-89f6-ab38ea950499",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/948ea4e5-958c-4b95-89f6-ab38ea950499",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 678,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -1308,51 +1442,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=436/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/948ea4e5-958c-4b95-89f6-ab38ea950499/canvas/c/17/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/948ea4e5-958c-4b95-89f6-ab38ea950499/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/948ea4e5-958c-4b95-89f6-ab38ea950499/canvas/c/17/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=436",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/948ea4e5-958c-4b95-89f6-ab38ea950499/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/948ea4e5-958c-4b95-89f6-ab38ea950499/full/1024,678/0/default.jpg",
                                 "type": "Image",
-                                "height": 6213,
-                                "width": 9385,
+                                "width": 1024,
+                                "height": 678,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/948ea4e5-958c-4b95-89f6-ab38ea950499",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 6213,
-                                        "width": 9385
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/948ea4e5-958c-4b95-89f6-ab38ea950499",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 9385,
+                                        "height": 6213
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/948ea4e5-958c-4b95-89f6-ab38ea950499/canvas/c/17"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=437",
+            "id": "https://dlc.services/iiif-img/7/6/f4637de6-e44d-4fd2-a1a2-6eee1ecd47d6/canvas/c/18",
             "type": "Canvas",
-            "height": 6240,
+            "label": {
+                "en": [
+                    "Canvas 18"
+                ]
+            },
             "width": 9433,
+            "height": 6240,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/f4637de6-e44d-4fd2-a1a2-6eee1ecd47d6/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/f4637de6-e44d-4fd2-a1a2-6eee1ecd47d6/full/200,132/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/f4637de6-e44d-4fd2-a1a2-6eee1ecd47d6",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/f4637de6-e44d-4fd2-a1a2-6eee1ecd47d6",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 677,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -1377,51 +1517,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=437/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/f4637de6-e44d-4fd2-a1a2-6eee1ecd47d6/canvas/c/18/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/f4637de6-e44d-4fd2-a1a2-6eee1ecd47d6/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/f4637de6-e44d-4fd2-a1a2-6eee1ecd47d6/canvas/c/18/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=437",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/f4637de6-e44d-4fd2-a1a2-6eee1ecd47d6/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/f4637de6-e44d-4fd2-a1a2-6eee1ecd47d6/full/1024,677/0/default.jpg",
                                 "type": "Image",
-                                "height": 6240,
-                                "width": 9433,
+                                "width": 1024,
+                                "height": 677,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/f4637de6-e44d-4fd2-a1a2-6eee1ecd47d6",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 6240,
-                                        "width": 9433
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/f4637de6-e44d-4fd2-a1a2-6eee1ecd47d6",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 9433,
+                                        "height": 6240
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/f4637de6-e44d-4fd2-a1a2-6eee1ecd47d6/canvas/c/18"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=438",
+            "id": "https://dlc.services/iiif-img/7/6/8a58a931-d751-4f77-85fc-746c546c2754/canvas/c/19",
             "type": "Canvas",
-            "height": 6398,
+            "label": {
+                "en": [
+                    "Canvas 19"
+                ]
+            },
             "width": 9384,
+            "height": 6398,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/8a58a931-d751-4f77-85fc-746c546c2754/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/8a58a931-d751-4f77-85fc-746c546c2754/full/200,136/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/8a58a931-d751-4f77-85fc-746c546c2754",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/8a58a931-d751-4f77-85fc-746c546c2754",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 698,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -1446,51 +1592,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=438/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/8a58a931-d751-4f77-85fc-746c546c2754/canvas/c/19/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/8a58a931-d751-4f77-85fc-746c546c2754/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/8a58a931-d751-4f77-85fc-746c546c2754/canvas/c/19/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=438",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/8a58a931-d751-4f77-85fc-746c546c2754/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/8a58a931-d751-4f77-85fc-746c546c2754/full/1024,698/0/default.jpg",
                                 "type": "Image",
-                                "height": 6398,
-                                "width": 9384,
+                                "width": 1024,
+                                "height": 698,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/8a58a931-d751-4f77-85fc-746c546c2754",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 6398,
-                                        "width": 9384
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/8a58a931-d751-4f77-85fc-746c546c2754",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 9384,
+                                        "height": 6398
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/8a58a931-d751-4f77-85fc-746c546c2754/canvas/c/19"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=439",
+            "id": "https://dlc.services/iiif-img/7/6/3fa3abd5-d483-409c-9d99-2692906544b0/canvas/c/20",
             "type": "Canvas",
-            "height": 7667,
+            "label": {
+                "en": [
+                    "Canvas 20"
+                ]
+            },
             "width": 9393,
+            "height": 7667,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/3fa3abd5-d483-409c-9d99-2692906544b0/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/3fa3abd5-d483-409c-9d99-2692906544b0/full/200,163/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/3fa3abd5-d483-409c-9d99-2692906544b0",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/3fa3abd5-d483-409c-9d99-2692906544b0",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 836,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -1515,51 +1667,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=439/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/3fa3abd5-d483-409c-9d99-2692906544b0/canvas/c/20/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/3fa3abd5-d483-409c-9d99-2692906544b0/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/3fa3abd5-d483-409c-9d99-2692906544b0/canvas/c/20/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=439",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/3fa3abd5-d483-409c-9d99-2692906544b0/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/3fa3abd5-d483-409c-9d99-2692906544b0/full/1024,836/0/default.jpg",
                                 "type": "Image",
-                                "height": 7667,
-                                "width": 9393,
+                                "width": 1024,
+                                "height": 836,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/3fa3abd5-d483-409c-9d99-2692906544b0",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 7667,
-                                        "width": 9393
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/3fa3abd5-d483-409c-9d99-2692906544b0",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 9393,
+                                        "height": 7667
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/3fa3abd5-d483-409c-9d99-2692906544b0/canvas/c/20"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=440",
+            "id": "https://dlc.services/iiif-img/7/6/2312b1a5-ab7f-4347-b82b-c7409b6770b4/canvas/c/21",
             "type": "Canvas",
-            "height": 7848,
+            "label": {
+                "en": [
+                    "Canvas 21"
+                ]
+            },
             "width": 9377,
+            "height": 7848,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/2312b1a5-ab7f-4347-b82b-c7409b6770b4/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/2312b1a5-ab7f-4347-b82b-c7409b6770b4/full/200,167/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/2312b1a5-ab7f-4347-b82b-c7409b6770b4",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/2312b1a5-ab7f-4347-b82b-c7409b6770b4",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 857,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -1584,51 +1742,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=440/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/2312b1a5-ab7f-4347-b82b-c7409b6770b4/canvas/c/21/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/2312b1a5-ab7f-4347-b82b-c7409b6770b4/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/2312b1a5-ab7f-4347-b82b-c7409b6770b4/canvas/c/21/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=440",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/2312b1a5-ab7f-4347-b82b-c7409b6770b4/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/2312b1a5-ab7f-4347-b82b-c7409b6770b4/full/1024,857/0/default.jpg",
                                 "type": "Image",
-                                "height": 7848,
-                                "width": 9377,
+                                "width": 1024,
+                                "height": 857,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/2312b1a5-ab7f-4347-b82b-c7409b6770b4",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 7848,
-                                        "width": 9377
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/2312b1a5-ab7f-4347-b82b-c7409b6770b4",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 9377,
+                                        "height": 7848
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/2312b1a5-ab7f-4347-b82b-c7409b6770b4/canvas/c/21"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=441",
+            "id": "https://dlc.services/iiif-img/7/6/8503767f-4f5c-471b-bc50-5c34e635082e/canvas/c/22",
             "type": "Canvas",
-            "height": 7783,
+            "label": {
+                "en": [
+                    "Canvas 22"
+                ]
+            },
             "width": 9376,
+            "height": 7783,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/8503767f-4f5c-471b-bc50-5c34e635082e/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/8503767f-4f5c-471b-bc50-5c34e635082e/full/200,166/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/8503767f-4f5c-471b-bc50-5c34e635082e",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/8503767f-4f5c-471b-bc50-5c34e635082e",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 850,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -1653,51 +1817,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=441/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/8503767f-4f5c-471b-bc50-5c34e635082e/canvas/c/22/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/8503767f-4f5c-471b-bc50-5c34e635082e/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/8503767f-4f5c-471b-bc50-5c34e635082e/canvas/c/22/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=441",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/8503767f-4f5c-471b-bc50-5c34e635082e/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/8503767f-4f5c-471b-bc50-5c34e635082e/full/1024,850/0/default.jpg",
                                 "type": "Image",
-                                "height": 7783,
-                                "width": 9376,
+                                "width": 1024,
+                                "height": 850,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/8503767f-4f5c-471b-bc50-5c34e635082e",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 7783,
-                                        "width": 9376
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/8503767f-4f5c-471b-bc50-5c34e635082e",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 9376,
+                                        "height": 7783
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/8503767f-4f5c-471b-bc50-5c34e635082e/canvas/c/22"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=442",
+            "id": "https://dlc.services/iiif-img/7/6/debf0ca7-2c89-4c00-a26d-a91c6e91ab9e/canvas/c/23",
             "type": "Canvas",
-            "height": 7896,
+            "label": {
+                "en": [
+                    "Canvas 23"
+                ]
+            },
             "width": 9401,
+            "height": 7896,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/debf0ca7-2c89-4c00-a26d-a91c6e91ab9e/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/debf0ca7-2c89-4c00-a26d-a91c6e91ab9e/full/200,168/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/debf0ca7-2c89-4c00-a26d-a91c6e91ab9e",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/debf0ca7-2c89-4c00-a26d-a91c6e91ab9e",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 860,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -1722,51 +1892,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=442/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/debf0ca7-2c89-4c00-a26d-a91c6e91ab9e/canvas/c/23/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/debf0ca7-2c89-4c00-a26d-a91c6e91ab9e/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/debf0ca7-2c89-4c00-a26d-a91c6e91ab9e/canvas/c/23/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=442",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/debf0ca7-2c89-4c00-a26d-a91c6e91ab9e/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/debf0ca7-2c89-4c00-a26d-a91c6e91ab9e/full/1024,860/0/default.jpg",
                                 "type": "Image",
-                                "height": 7896,
-                                "width": 9401,
+                                "width": 1024,
+                                "height": 860,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/debf0ca7-2c89-4c00-a26d-a91c6e91ab9e",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 7896,
-                                        "width": 9401
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/debf0ca7-2c89-4c00-a26d-a91c6e91ab9e",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 9401,
+                                        "height": 7896
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/debf0ca7-2c89-4c00-a26d-a91c6e91ab9e/canvas/c/23"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=443",
+            "id": "https://dlc.services/iiif-img/7/6/02cc8423-2621-4b12-9482-ee18995db31e/canvas/c/24",
             "type": "Canvas",
-            "height": 7824,
+            "label": {
+                "en": [
+                    "Canvas 24"
+                ]
+            },
             "width": 9473,
+            "height": 7824,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/02cc8423-2621-4b12-9482-ee18995db31e/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/02cc8423-2621-4b12-9482-ee18995db31e/full/200,165/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/02cc8423-2621-4b12-9482-ee18995db31e",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/02cc8423-2621-4b12-9482-ee18995db31e",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 846,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -1791,51 +1967,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=443/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/02cc8423-2621-4b12-9482-ee18995db31e/canvas/c/24/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/02cc8423-2621-4b12-9482-ee18995db31e/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/02cc8423-2621-4b12-9482-ee18995db31e/canvas/c/24/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=443",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/02cc8423-2621-4b12-9482-ee18995db31e/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/02cc8423-2621-4b12-9482-ee18995db31e/full/1024,846/0/default.jpg",
                                 "type": "Image",
-                                "height": 7824,
-                                "width": 9473,
+                                "width": 1024,
+                                "height": 846,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/02cc8423-2621-4b12-9482-ee18995db31e",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 7824,
-                                        "width": 9473
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/02cc8423-2621-4b12-9482-ee18995db31e",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 9473,
+                                        "height": 7824
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/02cc8423-2621-4b12-9482-ee18995db31e/canvas/c/24"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=444",
+            "id": "https://dlc.services/iiif-img/7/6/285406a5-86c1-46bc-91b2-b2a487cc9e63/canvas/c/25",
             "type": "Canvas",
-            "height": 7848,
+            "label": {
+                "en": [
+                    "Canvas 25"
+                ]
+            },
             "width": 9457,
+            "height": 7848,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/285406a5-86c1-46bc-91b2-b2a487cc9e63/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/285406a5-86c1-46bc-91b2-b2a487cc9e63/full/200,166/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/285406a5-86c1-46bc-91b2-b2a487cc9e63",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/285406a5-86c1-46bc-91b2-b2a487cc9e63",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 850,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -1860,51 +2042,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=444/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/285406a5-86c1-46bc-91b2-b2a487cc9e63/canvas/c/25/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/285406a5-86c1-46bc-91b2-b2a487cc9e63/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/285406a5-86c1-46bc-91b2-b2a487cc9e63/canvas/c/25/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=444",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/285406a5-86c1-46bc-91b2-b2a487cc9e63/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/285406a5-86c1-46bc-91b2-b2a487cc9e63/full/1024,850/0/default.jpg",
                                 "type": "Image",
-                                "height": 7848,
-                                "width": 9457,
+                                "width": 1024,
+                                "height": 850,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/285406a5-86c1-46bc-91b2-b2a487cc9e63",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 7848,
-                                        "width": 9457
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/285406a5-86c1-46bc-91b2-b2a487cc9e63",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 9457,
+                                        "height": 7848
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/285406a5-86c1-46bc-91b2-b2a487cc9e63/canvas/c/25"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=445",
+            "id": "https://dlc.services/iiif-img/7/6/98ba7158-80d0-4695-94b2-1c4a340462e7/canvas/c/26",
             "type": "Canvas",
-            "height": 7776,
+            "label": {
+                "en": [
+                    "Canvas 26"
+                ]
+            },
             "width": 9409,
+            "height": 7776,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/98ba7158-80d0-4695-94b2-1c4a340462e7/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/98ba7158-80d0-4695-94b2-1c4a340462e7/full/200,165/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/98ba7158-80d0-4695-94b2-1c4a340462e7",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/98ba7158-80d0-4695-94b2-1c4a340462e7",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 846,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -1929,51 +2117,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=445/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/98ba7158-80d0-4695-94b2-1c4a340462e7/canvas/c/26/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/98ba7158-80d0-4695-94b2-1c4a340462e7/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/98ba7158-80d0-4695-94b2-1c4a340462e7/canvas/c/26/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=445",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/98ba7158-80d0-4695-94b2-1c4a340462e7/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/98ba7158-80d0-4695-94b2-1c4a340462e7/full/1024,846/0/default.jpg",
                                 "type": "Image",
-                                "height": 7776,
-                                "width": 9409,
+                                "width": 1024,
+                                "height": 846,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/98ba7158-80d0-4695-94b2-1c4a340462e7",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 7776,
-                                        "width": 9409
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/98ba7158-80d0-4695-94b2-1c4a340462e7",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 9409,
+                                        "height": 7776
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/98ba7158-80d0-4695-94b2-1c4a340462e7/canvas/c/26"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=446",
+            "id": "https://dlc.services/iiif-img/7/6/4b6a0e31-997b-4489-9051-e5d4fc1791d4/canvas/c/27",
             "type": "Canvas",
-            "height": 7800,
+            "label": {
+                "en": [
+                    "Canvas 27"
+                ]
+            },
             "width": 9393,
+            "height": 7800,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/4b6a0e31-997b-4489-9051-e5d4fc1791d4/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/4b6a0e31-997b-4489-9051-e5d4fc1791d4/full/200,166/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/4b6a0e31-997b-4489-9051-e5d4fc1791d4",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/4b6a0e31-997b-4489-9051-e5d4fc1791d4",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 850,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -1998,51 +2192,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=446/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/4b6a0e31-997b-4489-9051-e5d4fc1791d4/canvas/c/27/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/4b6a0e31-997b-4489-9051-e5d4fc1791d4/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/4b6a0e31-997b-4489-9051-e5d4fc1791d4/canvas/c/27/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=446",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/4b6a0e31-997b-4489-9051-e5d4fc1791d4/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/4b6a0e31-997b-4489-9051-e5d4fc1791d4/full/1024,850/0/default.jpg",
                                 "type": "Image",
-                                "height": 7800,
-                                "width": 9393,
+                                "width": 1024,
+                                "height": 850,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/4b6a0e31-997b-4489-9051-e5d4fc1791d4",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 7800,
-                                        "width": 9393
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/4b6a0e31-997b-4489-9051-e5d4fc1791d4",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 9393,
+                                        "height": 7800
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/4b6a0e31-997b-4489-9051-e5d4fc1791d4/canvas/c/27"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=447",
+            "id": "https://dlc.services/iiif-img/7/6/9ab88b2b-8630-4d46-901b-1d5b0ee5a222/canvas/c/28",
             "type": "Canvas",
-            "height": 7808,
+            "label": {
+                "en": [
+                    "Canvas 28"
+                ]
+            },
             "width": 9385,
+            "height": 7808,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/9ab88b2b-8630-4d46-901b-1d5b0ee5a222/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/9ab88b2b-8630-4d46-901b-1d5b0ee5a222/full/200,166/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/9ab88b2b-8630-4d46-901b-1d5b0ee5a222",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/9ab88b2b-8630-4d46-901b-1d5b0ee5a222",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 852,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -2067,51 +2267,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=447/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/9ab88b2b-8630-4d46-901b-1d5b0ee5a222/canvas/c/28/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/9ab88b2b-8630-4d46-901b-1d5b0ee5a222/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/9ab88b2b-8630-4d46-901b-1d5b0ee5a222/canvas/c/28/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=447",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/9ab88b2b-8630-4d46-901b-1d5b0ee5a222/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/9ab88b2b-8630-4d46-901b-1d5b0ee5a222/full/1024,852/0/default.jpg",
                                 "type": "Image",
-                                "height": 7808,
-                                "width": 9385,
+                                "width": 1024,
+                                "height": 852,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/9ab88b2b-8630-4d46-901b-1d5b0ee5a222",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 7808,
-                                        "width": 9385
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/9ab88b2b-8630-4d46-901b-1d5b0ee5a222",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 9385,
+                                        "height": 7808
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/9ab88b2b-8630-4d46-901b-1d5b0ee5a222/canvas/c/28"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=448",
+            "id": "https://dlc.services/iiif-img/7/6/957579b5-7d67-4992-a473-05da4d3acab4/canvas/c/29",
             "type": "Canvas",
-            "height": 7824,
+            "label": {
+                "en": [
+                    "Canvas 29"
+                ]
+            },
             "width": 9417,
+            "height": 7824,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/957579b5-7d67-4992-a473-05da4d3acab4/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/957579b5-7d67-4992-a473-05da4d3acab4/full/200,166/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/957579b5-7d67-4992-a473-05da4d3acab4",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/957579b5-7d67-4992-a473-05da4d3acab4",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 851,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -2136,51 +2342,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=448/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/957579b5-7d67-4992-a473-05da4d3acab4/canvas/c/29/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/957579b5-7d67-4992-a473-05da4d3acab4/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/957579b5-7d67-4992-a473-05da4d3acab4/canvas/c/29/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=448",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/957579b5-7d67-4992-a473-05da4d3acab4/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/957579b5-7d67-4992-a473-05da4d3acab4/full/1024,851/0/default.jpg",
                                 "type": "Image",
-                                "height": 7824,
-                                "width": 9417,
+                                "width": 1024,
+                                "height": 851,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/957579b5-7d67-4992-a473-05da4d3acab4",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 7824,
-                                        "width": 9417
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/957579b5-7d67-4992-a473-05da4d3acab4",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 9417,
+                                        "height": 7824
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/957579b5-7d67-4992-a473-05da4d3acab4/canvas/c/29"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=449",
+            "id": "https://dlc.services/iiif-img/7/6/0f1b3c7c-ec12-4761-aea0-f5d87276a0bb/canvas/c/30",
             "type": "Canvas",
-            "height": 7949,
+            "label": {
+                "en": [
+                    "Canvas 30"
+                ]
+            },
             "width": 9459,
+            "height": 7949,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/0f1b3c7c-ec12-4761-aea0-f5d87276a0bb/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/0f1b3c7c-ec12-4761-aea0-f5d87276a0bb/full/200,168/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/0f1b3c7c-ec12-4761-aea0-f5d87276a0bb",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/0f1b3c7c-ec12-4761-aea0-f5d87276a0bb",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 861,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -2205,51 +2417,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=449/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/0f1b3c7c-ec12-4761-aea0-f5d87276a0bb/canvas/c/30/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/0f1b3c7c-ec12-4761-aea0-f5d87276a0bb/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/0f1b3c7c-ec12-4761-aea0-f5d87276a0bb/canvas/c/30/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=449",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/0f1b3c7c-ec12-4761-aea0-f5d87276a0bb/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/0f1b3c7c-ec12-4761-aea0-f5d87276a0bb/full/1024,861/0/default.jpg",
                                 "type": "Image",
-                                "height": 7949,
-                                "width": 9459,
+                                "width": 1024,
+                                "height": 861,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/0f1b3c7c-ec12-4761-aea0-f5d87276a0bb",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 7949,
-                                        "width": 9459
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/0f1b3c7c-ec12-4761-aea0-f5d87276a0bb",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 9459,
+                                        "height": 7949
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/0f1b3c7c-ec12-4761-aea0-f5d87276a0bb/canvas/c/30"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=450",
+            "id": "https://dlc.services/iiif-img/7/6/252126e2-4b11-4432-a6e7-b871d29eb771/canvas/c/31",
             "type": "Canvas",
-            "height": 7888,
+            "label": {
+                "en": [
+                    "Canvas 31"
+                ]
+            },
             "width": 9485,
+            "height": 7888,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/252126e2-4b11-4432-a6e7-b871d29eb771/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/252126e2-4b11-4432-a6e7-b871d29eb771/full/200,166/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/252126e2-4b11-4432-a6e7-b871d29eb771",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/252126e2-4b11-4432-a6e7-b871d29eb771",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 852,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -2274,51 +2492,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=450/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/252126e2-4b11-4432-a6e7-b871d29eb771/canvas/c/31/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/252126e2-4b11-4432-a6e7-b871d29eb771/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/252126e2-4b11-4432-a6e7-b871d29eb771/canvas/c/31/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=450",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/252126e2-4b11-4432-a6e7-b871d29eb771/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/252126e2-4b11-4432-a6e7-b871d29eb771/full/1024,852/0/default.jpg",
                                 "type": "Image",
-                                "height": 7888,
-                                "width": 9485,
+                                "width": 1024,
+                                "height": 852,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/252126e2-4b11-4432-a6e7-b871d29eb771",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 7888,
-                                        "width": 9485
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/252126e2-4b11-4432-a6e7-b871d29eb771",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 9485,
+                                        "height": 7888
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/252126e2-4b11-4432-a6e7-b871d29eb771/canvas/c/31"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=451",
+            "id": "https://dlc.services/iiif-img/7/6/c7e8da96-94f2-48ea-a31f-5b647917e53f/canvas/c/32",
             "type": "Canvas",
-            "height": 7888,
+            "label": {
+                "en": [
+                    "Canvas 32"
+                ]
+            },
             "width": 9385,
+            "height": 7888,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/c7e8da96-94f2-48ea-a31f-5b647917e53f/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/c7e8da96-94f2-48ea-a31f-5b647917e53f/full/200,168/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/c7e8da96-94f2-48ea-a31f-5b647917e53f",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/c7e8da96-94f2-48ea-a31f-5b647917e53f",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 861,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -2343,51 +2567,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=451/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/c7e8da96-94f2-48ea-a31f-5b647917e53f/canvas/c/32/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/c7e8da96-94f2-48ea-a31f-5b647917e53f/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/c7e8da96-94f2-48ea-a31f-5b647917e53f/canvas/c/32/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=451",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/c7e8da96-94f2-48ea-a31f-5b647917e53f/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/c7e8da96-94f2-48ea-a31f-5b647917e53f/full/1024,861/0/default.jpg",
                                 "type": "Image",
-                                "height": 7888,
-                                "width": 9385,
+                                "width": 1024,
+                                "height": 861,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/c7e8da96-94f2-48ea-a31f-5b647917e53f",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 7888,
-                                        "width": 9385
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/c7e8da96-94f2-48ea-a31f-5b647917e53f",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 9385,
+                                        "height": 7888
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/c7e8da96-94f2-48ea-a31f-5b647917e53f/canvas/c/32"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=452",
+            "id": "https://dlc.services/iiif-img/7/6/51b81cc8-7f86-49e5-a5a4-c1c20eb3c28b/canvas/c/33",
             "type": "Canvas",
-            "height": 7888,
+            "label": {
+                "en": [
+                    "Canvas 33"
+                ]
+            },
             "width": 9425,
+            "height": 7888,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/51b81cc8-7f86-49e5-a5a4-c1c20eb3c28b/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/51b81cc8-7f86-49e5-a5a4-c1c20eb3c28b/full/200,167/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/51b81cc8-7f86-49e5-a5a4-c1c20eb3c28b",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/51b81cc8-7f86-49e5-a5a4-c1c20eb3c28b",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 857,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -2412,51 +2642,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=452/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/51b81cc8-7f86-49e5-a5a4-c1c20eb3c28b/canvas/c/33/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/51b81cc8-7f86-49e5-a5a4-c1c20eb3c28b/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/51b81cc8-7f86-49e5-a5a4-c1c20eb3c28b/canvas/c/33/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=452",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/51b81cc8-7f86-49e5-a5a4-c1c20eb3c28b/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/51b81cc8-7f86-49e5-a5a4-c1c20eb3c28b/full/1024,857/0/default.jpg",
                                 "type": "Image",
-                                "height": 7888,
-                                "width": 9425,
+                                "width": 1024,
+                                "height": 857,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/51b81cc8-7f86-49e5-a5a4-c1c20eb3c28b",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 7888,
-                                        "width": 9425
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/51b81cc8-7f86-49e5-a5a4-c1c20eb3c28b",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 9425,
+                                        "height": 7888
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/51b81cc8-7f86-49e5-a5a4-c1c20eb3c28b/canvas/c/33"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=453",
+            "id": "https://dlc.services/iiif-img/7/6/3f210284-0d3e-4bfe-a5cc-ff1aa0601150/canvas/c/34",
             "type": "Canvas",
-            "height": 7824,
+            "label": {
+                "en": [
+                    "Canvas 34"
+                ]
+            },
             "width": 9436,
+            "height": 7824,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/3f210284-0d3e-4bfe-a5cc-ff1aa0601150/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/3f210284-0d3e-4bfe-a5cc-ff1aa0601150/full/200,166/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/3f210284-0d3e-4bfe-a5cc-ff1aa0601150",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/3f210284-0d3e-4bfe-a5cc-ff1aa0601150",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 849,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -2481,51 +2717,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=453/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/3f210284-0d3e-4bfe-a5cc-ff1aa0601150/canvas/c/34/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/3f210284-0d3e-4bfe-a5cc-ff1aa0601150/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/3f210284-0d3e-4bfe-a5cc-ff1aa0601150/canvas/c/34/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=453",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/3f210284-0d3e-4bfe-a5cc-ff1aa0601150/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/3f210284-0d3e-4bfe-a5cc-ff1aa0601150/full/1024,849/0/default.jpg",
                                 "type": "Image",
-                                "height": 7824,
-                                "width": 9436,
+                                "width": 1024,
+                                "height": 849,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/3f210284-0d3e-4bfe-a5cc-ff1aa0601150",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 7824,
-                                        "width": 9436
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/3f210284-0d3e-4bfe-a5cc-ff1aa0601150",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 9436,
+                                        "height": 7824
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/3f210284-0d3e-4bfe-a5cc-ff1aa0601150/canvas/c/34"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=454",
+            "id": "https://dlc.services/iiif-img/7/6/2d5e1d90-0791-41d5-9418-c0873d5ff077/canvas/c/35",
             "type": "Canvas",
-            "height": 7824,
+            "label": {
+                "en": [
+                    "Canvas 35"
+                ]
+            },
             "width": 9401,
+            "height": 7824,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/2d5e1d90-0791-41d5-9418-c0873d5ff077/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/2d5e1d90-0791-41d5-9418-c0873d5ff077/full/200,166/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/2d5e1d90-0791-41d5-9418-c0873d5ff077",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/2d5e1d90-0791-41d5-9418-c0873d5ff077",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 852,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -2550,51 +2792,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=454/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/2d5e1d90-0791-41d5-9418-c0873d5ff077/canvas/c/35/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/2d5e1d90-0791-41d5-9418-c0873d5ff077/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/2d5e1d90-0791-41d5-9418-c0873d5ff077/canvas/c/35/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=454",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/2d5e1d90-0791-41d5-9418-c0873d5ff077/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/2d5e1d90-0791-41d5-9418-c0873d5ff077/full/1024,852/0/default.jpg",
                                 "type": "Image",
-                                "height": 7824,
-                                "width": 9401,
+                                "width": 1024,
+                                "height": 852,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/2d5e1d90-0791-41d5-9418-c0873d5ff077",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 7824,
-                                        "width": 9401
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/2d5e1d90-0791-41d5-9418-c0873d5ff077",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 9401,
+                                        "height": 7824
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/2d5e1d90-0791-41d5-9418-c0873d5ff077/canvas/c/35"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=455",
+            "id": "https://dlc.services/iiif-img/7/6/9c6a474b-e314-4898-858a-656dfbe1d75a/canvas/c/36",
             "type": "Canvas",
-            "height": 7879,
+            "label": {
+                "en": [
+                    "Canvas 36"
+                ]
+            },
             "width": 9373,
+            "height": 7879,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/9c6a474b-e314-4898-858a-656dfbe1d75a/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/9c6a474b-e314-4898-858a-656dfbe1d75a/full/200,168/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/9c6a474b-e314-4898-858a-656dfbe1d75a",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/9c6a474b-e314-4898-858a-656dfbe1d75a",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 861,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -2619,51 +2867,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=455/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/9c6a474b-e314-4898-858a-656dfbe1d75a/canvas/c/36/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/9c6a474b-e314-4898-858a-656dfbe1d75a/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/9c6a474b-e314-4898-858a-656dfbe1d75a/canvas/c/36/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=455",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/9c6a474b-e314-4898-858a-656dfbe1d75a/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/9c6a474b-e314-4898-858a-656dfbe1d75a/full/1024,861/0/default.jpg",
                                 "type": "Image",
-                                "height": 7879,
-                                "width": 9373,
+                                "width": 1024,
+                                "height": 861,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/9c6a474b-e314-4898-858a-656dfbe1d75a",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 7879,
-                                        "width": 9373
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/9c6a474b-e314-4898-858a-656dfbe1d75a",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 9373,
+                                        "height": 7879
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/9c6a474b-e314-4898-858a-656dfbe1d75a/canvas/c/36"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=456",
+            "id": "https://dlc.services/iiif-img/7/6/096c76e9-27be-4e0d-88be-927a2bc16750/canvas/c/37",
             "type": "Canvas",
-            "height": 7850,
+            "label": {
+                "en": [
+                    "Canvas 37"
+                ]
+            },
             "width": 9409,
+            "height": 7850,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/096c76e9-27be-4e0d-88be-927a2bc16750/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/096c76e9-27be-4e0d-88be-927a2bc16750/full/200,167/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/096c76e9-27be-4e0d-88be-927a2bc16750",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/096c76e9-27be-4e0d-88be-927a2bc16750",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 854,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -2688,51 +2942,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=456/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/096c76e9-27be-4e0d-88be-927a2bc16750/canvas/c/37/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/096c76e9-27be-4e0d-88be-927a2bc16750/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/096c76e9-27be-4e0d-88be-927a2bc16750/canvas/c/37/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=456",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/096c76e9-27be-4e0d-88be-927a2bc16750/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/096c76e9-27be-4e0d-88be-927a2bc16750/full/1024,854/0/default.jpg",
                                 "type": "Image",
-                                "height": 7850,
-                                "width": 9409,
+                                "width": 1024,
+                                "height": 854,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/096c76e9-27be-4e0d-88be-927a2bc16750",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 7850,
-                                        "width": 9409
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/096c76e9-27be-4e0d-88be-927a2bc16750",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 9409,
+                                        "height": 7850
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/096c76e9-27be-4e0d-88be-927a2bc16750/canvas/c/37"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=457",
+            "id": "https://dlc.services/iiif-img/7/6/abbbb024-046c-4a9d-8989-9e8fb3938e47/canvas/c/38",
             "type": "Canvas",
-            "height": 7848,
+            "label": {
+                "en": [
+                    "Canvas 38"
+                ]
+            },
             "width": 9491,
+            "height": 7848,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/abbbb024-046c-4a9d-8989-9e8fb3938e47/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/abbbb024-046c-4a9d-8989-9e8fb3938e47/full/200,165/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/abbbb024-046c-4a9d-8989-9e8fb3938e47",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/abbbb024-046c-4a9d-8989-9e8fb3938e47",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 847,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -2757,51 +3017,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=457/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/abbbb024-046c-4a9d-8989-9e8fb3938e47/canvas/c/38/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/abbbb024-046c-4a9d-8989-9e8fb3938e47/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/abbbb024-046c-4a9d-8989-9e8fb3938e47/canvas/c/38/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=457",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/abbbb024-046c-4a9d-8989-9e8fb3938e47/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/abbbb024-046c-4a9d-8989-9e8fb3938e47/full/1024,847/0/default.jpg",
                                 "type": "Image",
-                                "height": 7848,
-                                "width": 9491,
+                                "width": 1024,
+                                "height": 847,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/abbbb024-046c-4a9d-8989-9e8fb3938e47",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 7848,
-                                        "width": 9491
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/abbbb024-046c-4a9d-8989-9e8fb3938e47",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 9491,
+                                        "height": 7848
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/abbbb024-046c-4a9d-8989-9e8fb3938e47/canvas/c/38"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=458",
+            "id": "https://dlc.services/iiif-img/7/6/9efc0a32-bfdf-4ac9-a3d4-c06290c81baf/canvas/c/39",
             "type": "Canvas",
-            "height": 7850,
+            "label": {
+                "en": [
+                    "Canvas 39"
+                ]
+            },
             "width": 9550,
+            "height": 7850,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/9efc0a32-bfdf-4ac9-a3d4-c06290c81baf/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/9efc0a32-bfdf-4ac9-a3d4-c06290c81baf/full/200,164/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/9efc0a32-bfdf-4ac9-a3d4-c06290c81baf",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/9efc0a32-bfdf-4ac9-a3d4-c06290c81baf",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 842,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -2826,51 +3092,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=458/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/9efc0a32-bfdf-4ac9-a3d4-c06290c81baf/canvas/c/39/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/9efc0a32-bfdf-4ac9-a3d4-c06290c81baf/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/9efc0a32-bfdf-4ac9-a3d4-c06290c81baf/canvas/c/39/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=458",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/9efc0a32-bfdf-4ac9-a3d4-c06290c81baf/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/9efc0a32-bfdf-4ac9-a3d4-c06290c81baf/full/1024,842/0/default.jpg",
                                 "type": "Image",
-                                "height": 7850,
-                                "width": 9550,
+                                "width": 1024,
+                                "height": 842,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/9efc0a32-bfdf-4ac9-a3d4-c06290c81baf",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 7850,
-                                        "width": 9550
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/9efc0a32-bfdf-4ac9-a3d4-c06290c81baf",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 9550,
+                                        "height": 7850
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/9efc0a32-bfdf-4ac9-a3d4-c06290c81baf/canvas/c/39"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=459",
+            "id": "https://dlc.services/iiif-img/7/6/25dd93e4-ce26-4cac-8299-3bc65ed024fb/canvas/c/40",
             "type": "Canvas",
-            "height": 7800,
+            "label": {
+                "en": [
+                    "Canvas 40"
+                ]
+            },
             "width": 9417,
+            "height": 7800,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/25dd93e4-ce26-4cac-8299-3bc65ed024fb/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/25dd93e4-ce26-4cac-8299-3bc65ed024fb/full/200,166/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/25dd93e4-ce26-4cac-8299-3bc65ed024fb",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/25dd93e4-ce26-4cac-8299-3bc65ed024fb",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 1024,
-                            "height": 848,
                             "sizes": [
                                 {
                                     "width": 1024,
@@ -2895,30 +3167,31 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=459/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/25dd93e4-ce26-4cac-8299-3bc65ed024fb/canvas/c/40/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/25dd93e4-ce26-4cac-8299-3bc65ed024fb/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/25dd93e4-ce26-4cac-8299-3bc65ed024fb/canvas/c/40/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=reuzenarbeid&n1=&n2=459",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/25dd93e4-ce26-4cac-8299-3bc65ed024fb/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/25dd93e4-ce26-4cac-8299-3bc65ed024fb/full/1024,848/0/default.jpg",
                                 "type": "Image",
-                                "height": 7800,
-                                "width": 9417,
+                                "width": 1024,
+                                "height": 848,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/25dd93e4-ce26-4cac-8299-3bc65ed024fb",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 7800,
-                                        "width": 9417
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/25dd93e4-ce26-4cac-8299-3bc65ed024fb",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 9417,
+                                        "height": 7800
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/25dd93e4-ce26-4cac-8299-3bc65ed024fb/canvas/c/40"
                         }
                     ]
                 }

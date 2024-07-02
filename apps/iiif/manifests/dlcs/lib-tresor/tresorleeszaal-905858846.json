@@ -1,12 +1,45 @@
 {
     "@context": "http://iiif.io/api/presentation/3/context.json",
-    "id": "https://dlc.services/iiif-resource/7/string1string2string3/905858846",
+    "id": "https://dlc.services/iiif-resource/v3/7/string1string2string3/905858846",
     "type": "Manifest",
     "label": {
         "none": [
             "De Technische Hoogeschool te Delft : het gebouw der Bouwkunde in gebruik genomen 21 september 1932"
         ]
     },
+    "thumbnail": [
+        {
+            "id": "https://dlc.services/thumbs/7/6/5be78dd7-f59a-4dd9-921a-3b0a23a12497/full/133,200/0/default.jpg",
+            "type": "Image",
+            "format": "image/jpeg",
+            "service": [
+                {
+                    "@context": "http://iiif.io/api/image/3/context.json",
+                    "id": "https://dlc.services/thumbs/v3/7/6/5be78dd7-f59a-4dd9-921a-3b0a23a12497",
+                    "type": "ImageService3",
+                    "profile": "level0",
+                    "sizes": [
+                        {
+                            "width": 680,
+                            "height": 1024
+                        },
+                        {
+                            "width": 266,
+                            "height": 400
+                        },
+                        {
+                            "width": 133,
+                            "height": 200
+                        },
+                        {
+                            "width": 66,
+                            "height": 100
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
     "metadata": [
         {
             "label": {
@@ -147,21 +180,26 @@
     ],
     "items": [
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=0",
+            "id": "https://dlc.services/iiif-img/7/6/5be78dd7-f59a-4dd9-921a-3b0a23a12497/canvas/c/1",
             "type": "Canvas",
-            "height": 2958,
+            "label": {
+                "en": [
+                    "Canvas 1"
+                ]
+            },
             "width": 1964,
+            "height": 2958,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/5be78dd7-f59a-4dd9-921a-3b0a23a12497/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/5be78dd7-f59a-4dd9-921a-3b0a23a12497/full/133,200/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/5be78dd7-f59a-4dd9-921a-3b0a23a12497",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/5be78dd7-f59a-4dd9-921a-3b0a23a12497",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 680,
-                            "height": 1024,
                             "sizes": [
                                 {
                                     "width": 680,
@@ -186,120 +224,132 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=0/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/5be78dd7-f59a-4dd9-921a-3b0a23a12497/canvas/c/1/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/5be78dd7-f59a-4dd9-921a-3b0a23a12497/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/5be78dd7-f59a-4dd9-921a-3b0a23a12497/canvas/c/1/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=0",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/5be78dd7-f59a-4dd9-921a-3b0a23a12497/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/5be78dd7-f59a-4dd9-921a-3b0a23a12497/full/680,1024/0/default.jpg",
                                 "type": "Image",
-                                "height": 2958,
-                                "width": 1964,
+                                "width": 680,
+                                "height": 1024,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/5be78dd7-f59a-4dd9-921a-3b0a23a12497",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 2958,
-                                        "width": 1964
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/5be78dd7-f59a-4dd9-921a-3b0a23a12497",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 1964,
+                                        "height": 2958
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/5be78dd7-f59a-4dd9-921a-3b0a23a12497/canvas/c/1"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=1",
+            "id": "https://dlc.services/iiif-img/7/6/325355d8-cc88-453f-b5d1-59903c924c01/canvas/c/2",
             "type": "Canvas",
-            "height": 3576,
+            "label": {
+                "en": [
+                    "Canvas 2"
+                ]
+            },
             "width": 2318,
-            "thumbnail": [
-                {
-                    "id": "https://dlc.services/thumbs/7/6/325355d8-cc88-453f-b5d1-59903c924c01/full/full/0/default.jpg",
-                    "type": "Image",
-                    "service": [
-                        {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/325355d8-cc88-453f-b5d1-59903c924c01",
-                            "@type": "ImageService2",
-                            "profile": "level0",
-                            "width": 664,
-                            "height": 1024,
-                            "sizes": [
-                                {
-                                    "width": 664,
-                                    "height": 1024
-                                },
-                                {
-                                    "width": 259,
-                                    "height": 400
-                                },
-                                {
-                                    "width": 130,
-                                    "height": 200
-                                },
-                                {
-                                    "width": 65,
-                                    "height": 100
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ],
-            "items": [
-                {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=1/annotation-page",
-                    "type": "AnnotationPage",
-                    "items": [
-                        {
-                            "id": "https://dlc.services/iiif-img/7/6/325355d8-cc88-453f-b5d1-59903c924c01/anno",
-                            "type": "Annotation",
-                            "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=1",
-                            "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/325355d8-cc88-453f-b5d1-59903c924c01/full/!2000,2000/0/default.jpg",
-                                "type": "Image",
-                                "height": 3576,
-                                "width": 2318,
-                                "service": [
-                                    {
-                                        "@id": "https://dlc.services/iiif-img/7/6/325355d8-cc88-453f-b5d1-59903c924c01",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 3576,
-                                        "width": 2318
-                                    }
-                                ]
-                            }
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=2",
-            "type": "Canvas",
             "height": 3576,
+            "thumbnail": [
+                {
+                    "id": "https://dlc.services/thumbs/7/6/325355d8-cc88-453f-b5d1-59903c924c01/full/130,200/0/default.jpg",
+                    "type": "Image",
+                    "format": "image/jpeg",
+                    "service": [
+                        {
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/325355d8-cc88-453f-b5d1-59903c924c01",
+                            "type": "ImageService3",
+                            "profile": "level0",
+                            "sizes": [
+                                {
+                                    "width": 664,
+                                    "height": 1024
+                                },
+                                {
+                                    "width": 259,
+                                    "height": 400
+                                },
+                                {
+                                    "width": 130,
+                                    "height": 200
+                                },
+                                {
+                                    "width": 65,
+                                    "height": 100
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "items": [
+                {
+                    "id": "https://dlc.services/iiif-img/7/6/325355d8-cc88-453f-b5d1-59903c924c01/canvas/c/2/page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://dlc.services/iiif-img/7/6/325355d8-cc88-453f-b5d1-59903c924c01/canvas/c/2/page/image",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "body": {
+                                "id": "https://dlc.services/iiif-img/7/6/325355d8-cc88-453f-b5d1-59903c924c01/full/664,1024/0/default.jpg",
+                                "type": "Image",
+                                "width": 664,
+                                "height": 1024,
+                                "format": "image/jpeg",
+                                "service": [
+                                    {
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/325355d8-cc88-453f-b5d1-59903c924c01",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 2318,
+                                        "height": 3576
+                                    }
+                                ]
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/325355d8-cc88-453f-b5d1-59903c924c01/canvas/c/2"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "https://dlc.services/iiif-img/7/6/10e3a584-0674-402f-a0c3-27bc901be497/canvas/c/3",
+            "type": "Canvas",
+            "label": {
+                "en": [
+                    "Canvas 3"
+                ]
+            },
             "width": 2318,
+            "height": 3576,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/10e3a584-0674-402f-a0c3-27bc901be497/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/10e3a584-0674-402f-a0c3-27bc901be497/full/130,200/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/10e3a584-0674-402f-a0c3-27bc901be497",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/10e3a584-0674-402f-a0c3-27bc901be497",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 664,
-                            "height": 1024,
                             "sizes": [
                                 {
                                     "width": 664,
@@ -324,120 +374,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=2/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/10e3a584-0674-402f-a0c3-27bc901be497/canvas/c/3/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/10e3a584-0674-402f-a0c3-27bc901be497/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/10e3a584-0674-402f-a0c3-27bc901be497/canvas/c/3/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=2",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/10e3a584-0674-402f-a0c3-27bc901be497/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/10e3a584-0674-402f-a0c3-27bc901be497/full/664,1024/0/default.jpg",
                                 "type": "Image",
-                                "height": 3576,
-                                "width": 2318,
+                                "width": 664,
+                                "height": 1024,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/10e3a584-0674-402f-a0c3-27bc901be497",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 3576,
-                                        "width": 2318
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/10e3a584-0674-402f-a0c3-27bc901be497",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 2318,
+                                        "height": 3576
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/10e3a584-0674-402f-a0c3-27bc901be497/canvas/c/3"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=3",
+            "id": "https://dlc.services/iiif-img/7/6/b0063a8d-7722-4760-8b0b-c557e9544dd7/canvas/c/4",
             "type": "Canvas",
-            "height": 3563,
+            "label": {
+                "en": [
+                    "Canvas 4"
+                ]
+            },
             "width": 2311,
-            "thumbnail": [
-                {
-                    "id": "https://dlc.services/thumbs/7/6/b0063a8d-7722-4760-8b0b-c557e9544dd7/full/full/0/default.jpg",
-                    "type": "Image",
-                    "service": [
-                        {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/b0063a8d-7722-4760-8b0b-c557e9544dd7",
-                            "@type": "ImageService2",
-                            "profile": "level0",
-                            "width": 664,
-                            "height": 1024,
-                            "sizes": [
-                                {
-                                    "width": 664,
-                                    "height": 1024
-                                },
-                                {
-                                    "width": 259,
-                                    "height": 400
-                                },
-                                {
-                                    "width": 130,
-                                    "height": 200
-                                },
-                                {
-                                    "width": 65,
-                                    "height": 100
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ],
-            "items": [
-                {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=3/annotation-page",
-                    "type": "AnnotationPage",
-                    "items": [
-                        {
-                            "id": "https://dlc.services/iiif-img/7/6/b0063a8d-7722-4760-8b0b-c557e9544dd7/anno",
-                            "type": "Annotation",
-                            "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=3",
-                            "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/b0063a8d-7722-4760-8b0b-c557e9544dd7/full/!2000,2000/0/default.jpg",
-                                "type": "Image",
-                                "height": 3563,
-                                "width": 2311,
-                                "service": [
-                                    {
-                                        "@id": "https://dlc.services/iiif-img/7/6/b0063a8d-7722-4760-8b0b-c557e9544dd7",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 3563,
-                                        "width": 2311
-                                    }
-                                ]
-                            }
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=4",
-            "type": "Canvas",
             "height": 3563,
-            "width": 2311,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/90ddd96f-4b30-469d-aa1c-9bbeb093bed2/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/b0063a8d-7722-4760-8b0b-c557e9544dd7/full/130,200/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/90ddd96f-4b30-469d-aa1c-9bbeb093bed2",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/b0063a8d-7722-4760-8b0b-c557e9544dd7",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 664,
-                            "height": 1024,
                             "sizes": [
                                 {
                                     "width": 664,
@@ -462,51 +449,132 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=4/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/b0063a8d-7722-4760-8b0b-c557e9544dd7/canvas/c/4/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/90ddd96f-4b30-469d-aa1c-9bbeb093bed2/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/b0063a8d-7722-4760-8b0b-c557e9544dd7/canvas/c/4/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=4",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/90ddd96f-4b30-469d-aa1c-9bbeb093bed2/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/b0063a8d-7722-4760-8b0b-c557e9544dd7/full/664,1024/0/default.jpg",
                                 "type": "Image",
-                                "height": 3563,
-                                "width": 2311,
+                                "width": 664,
+                                "height": 1024,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/90ddd96f-4b30-469d-aa1c-9bbeb093bed2",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 3563,
-                                        "width": 2311
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/b0063a8d-7722-4760-8b0b-c557e9544dd7",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 2311,
+                                        "height": 3563
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/b0063a8d-7722-4760-8b0b-c557e9544dd7/canvas/c/4"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=5",
+            "id": "https://dlc.services/iiif-img/7/6/90ddd96f-4b30-469d-aa1c-9bbeb093bed2/canvas/c/5",
             "type": "Canvas",
-            "height": 2968,
+            "label": {
+                "en": [
+                    "Canvas 5"
+                ]
+            },
+            "width": 2311,
+            "height": 3563,
+            "thumbnail": [
+                {
+                    "id": "https://dlc.services/thumbs/7/6/90ddd96f-4b30-469d-aa1c-9bbeb093bed2/full/130,200/0/default.jpg",
+                    "type": "Image",
+                    "format": "image/jpeg",
+                    "service": [
+                        {
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/90ddd96f-4b30-469d-aa1c-9bbeb093bed2",
+                            "type": "ImageService3",
+                            "profile": "level0",
+                            "sizes": [
+                                {
+                                    "width": 664,
+                                    "height": 1024
+                                },
+                                {
+                                    "width": 259,
+                                    "height": 400
+                                },
+                                {
+                                    "width": 130,
+                                    "height": 200
+                                },
+                                {
+                                    "width": 65,
+                                    "height": 100
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "items": [
+                {
+                    "id": "https://dlc.services/iiif-img/7/6/90ddd96f-4b30-469d-aa1c-9bbeb093bed2/canvas/c/5/page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://dlc.services/iiif-img/7/6/90ddd96f-4b30-469d-aa1c-9bbeb093bed2/canvas/c/5/page/image",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "body": {
+                                "id": "https://dlc.services/iiif-img/7/6/90ddd96f-4b30-469d-aa1c-9bbeb093bed2/full/664,1024/0/default.jpg",
+                                "type": "Image",
+                                "width": 664,
+                                "height": 1024,
+                                "format": "image/jpeg",
+                                "service": [
+                                    {
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/90ddd96f-4b30-469d-aa1c-9bbeb093bed2",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 2311,
+                                        "height": 3563
+                                    }
+                                ]
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/90ddd96f-4b30-469d-aa1c-9bbeb093bed2/canvas/c/5"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "https://dlc.services/iiif-img/7/6/30252068-ed17-4b9a-9859-9347ef6afbfc/canvas/c/6",
+            "type": "Canvas",
+            "label": {
+                "en": [
+                    "Canvas 6"
+                ]
+            },
             "width": 2004,
+            "height": 2968,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/30252068-ed17-4b9a-9859-9347ef6afbfc/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/30252068-ed17-4b9a-9859-9347ef6afbfc/full/135,200/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/30252068-ed17-4b9a-9859-9347ef6afbfc",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/30252068-ed17-4b9a-9859-9347ef6afbfc",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 691,
-                            "height": 1024,
                             "sizes": [
                                 {
                                     "width": 691,
@@ -531,51 +599,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=5/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/30252068-ed17-4b9a-9859-9347ef6afbfc/canvas/c/6/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/30252068-ed17-4b9a-9859-9347ef6afbfc/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/30252068-ed17-4b9a-9859-9347ef6afbfc/canvas/c/6/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=5",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/30252068-ed17-4b9a-9859-9347ef6afbfc/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/30252068-ed17-4b9a-9859-9347ef6afbfc/full/691,1024/0/default.jpg",
                                 "type": "Image",
-                                "height": 2968,
-                                "width": 2004,
+                                "width": 691,
+                                "height": 1024,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/30252068-ed17-4b9a-9859-9347ef6afbfc",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 2968,
-                                        "width": 2004
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/30252068-ed17-4b9a-9859-9347ef6afbfc",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 2004,
+                                        "height": 2968
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/30252068-ed17-4b9a-9859-9347ef6afbfc/canvas/c/6"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=6",
+            "id": "https://dlc.services/iiif-img/7/6/cab78c97-3aa5-437d-93f2-f388aa41ed11/canvas/c/7",
             "type": "Canvas",
-            "height": 2968,
+            "label": {
+                "en": [
+                    "Canvas 7"
+                ]
+            },
             "width": 2004,
+            "height": 2968,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/cab78c97-3aa5-437d-93f2-f388aa41ed11/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/cab78c97-3aa5-437d-93f2-f388aa41ed11/full/135,200/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/cab78c97-3aa5-437d-93f2-f388aa41ed11",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/cab78c97-3aa5-437d-93f2-f388aa41ed11",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 691,
-                            "height": 1024,
                             "sizes": [
                                 {
                                     "width": 691,
@@ -600,51 +674,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=6/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/cab78c97-3aa5-437d-93f2-f388aa41ed11/canvas/c/7/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/cab78c97-3aa5-437d-93f2-f388aa41ed11/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/cab78c97-3aa5-437d-93f2-f388aa41ed11/canvas/c/7/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=6",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/cab78c97-3aa5-437d-93f2-f388aa41ed11/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/cab78c97-3aa5-437d-93f2-f388aa41ed11/full/691,1024/0/default.jpg",
                                 "type": "Image",
-                                "height": 2968,
-                                "width": 2004,
+                                "width": 691,
+                                "height": 1024,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/cab78c97-3aa5-437d-93f2-f388aa41ed11",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 2968,
-                                        "width": 2004
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/cab78c97-3aa5-437d-93f2-f388aa41ed11",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 2004,
+                                        "height": 2968
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/cab78c97-3aa5-437d-93f2-f388aa41ed11/canvas/c/7"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=7",
+            "id": "https://dlc.services/iiif-img/7/6/29c12649-e060-4e38-8b97-fefdd1b6d8c9/canvas/c/8",
             "type": "Canvas",
-            "height": 2961,
+            "label": {
+                "en": [
+                    "Canvas 8"
+                ]
+            },
             "width": 2003,
+            "height": 2961,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/29c12649-e060-4e38-8b97-fefdd1b6d8c9/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/29c12649-e060-4e38-8b97-fefdd1b6d8c9/full/135,200/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/29c12649-e060-4e38-8b97-fefdd1b6d8c9",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/29c12649-e060-4e38-8b97-fefdd1b6d8c9",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 693,
-                            "height": 1024,
                             "sizes": [
                                 {
                                     "width": 693,
@@ -669,51 +749,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=7/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/29c12649-e060-4e38-8b97-fefdd1b6d8c9/canvas/c/8/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/29c12649-e060-4e38-8b97-fefdd1b6d8c9/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/29c12649-e060-4e38-8b97-fefdd1b6d8c9/canvas/c/8/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=7",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/29c12649-e060-4e38-8b97-fefdd1b6d8c9/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/29c12649-e060-4e38-8b97-fefdd1b6d8c9/full/693,1024/0/default.jpg",
                                 "type": "Image",
-                                "height": 2961,
-                                "width": 2003,
+                                "width": 693,
+                                "height": 1024,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/29c12649-e060-4e38-8b97-fefdd1b6d8c9",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 2961,
-                                        "width": 2003
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/29c12649-e060-4e38-8b97-fefdd1b6d8c9",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 2003,
+                                        "height": 2961
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/29c12649-e060-4e38-8b97-fefdd1b6d8c9/canvas/c/8"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=8",
+            "id": "https://dlc.services/iiif-img/7/6/d82984f9-6afc-4f41-a97b-7100ff8f9f6b/canvas/c/9",
             "type": "Canvas",
-            "height": 2961,
+            "label": {
+                "en": [
+                    "Canvas 9"
+                ]
+            },
             "width": 2003,
+            "height": 2961,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/d82984f9-6afc-4f41-a97b-7100ff8f9f6b/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/d82984f9-6afc-4f41-a97b-7100ff8f9f6b/full/135,200/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/d82984f9-6afc-4f41-a97b-7100ff8f9f6b",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/d82984f9-6afc-4f41-a97b-7100ff8f9f6b",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 693,
-                            "height": 1024,
                             "sizes": [
                                 {
                                     "width": 693,
@@ -738,51 +824,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=8/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/d82984f9-6afc-4f41-a97b-7100ff8f9f6b/canvas/c/9/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/d82984f9-6afc-4f41-a97b-7100ff8f9f6b/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/d82984f9-6afc-4f41-a97b-7100ff8f9f6b/canvas/c/9/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=8",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/d82984f9-6afc-4f41-a97b-7100ff8f9f6b/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/d82984f9-6afc-4f41-a97b-7100ff8f9f6b/full/693,1024/0/default.jpg",
                                 "type": "Image",
-                                "height": 2961,
-                                "width": 2003,
+                                "width": 693,
+                                "height": 1024,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/d82984f9-6afc-4f41-a97b-7100ff8f9f6b",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 2961,
-                                        "width": 2003
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/d82984f9-6afc-4f41-a97b-7100ff8f9f6b",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 2003,
+                                        "height": 2961
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/d82984f9-6afc-4f41-a97b-7100ff8f9f6b/canvas/c/9"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=9",
+            "id": "https://dlc.services/iiif-img/7/6/b199f29b-c7cd-4446-95f4-754e679b9135/canvas/c/10",
             "type": "Canvas",
-            "height": 2964,
+            "label": {
+                "en": [
+                    "Canvas 10"
+                ]
+            },
             "width": 2003,
+            "height": 2964,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/b199f29b-c7cd-4446-95f4-754e679b9135/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/b199f29b-c7cd-4446-95f4-754e679b9135/full/135,200/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/b199f29b-c7cd-4446-95f4-754e679b9135",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/b199f29b-c7cd-4446-95f4-754e679b9135",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 692,
-                            "height": 1024,
                             "sizes": [
                                 {
                                     "width": 692,
@@ -807,51 +899,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=9/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/b199f29b-c7cd-4446-95f4-754e679b9135/canvas/c/10/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/b199f29b-c7cd-4446-95f4-754e679b9135/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/b199f29b-c7cd-4446-95f4-754e679b9135/canvas/c/10/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=9",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/b199f29b-c7cd-4446-95f4-754e679b9135/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/b199f29b-c7cd-4446-95f4-754e679b9135/full/692,1024/0/default.jpg",
                                 "type": "Image",
-                                "height": 2964,
-                                "width": 2003,
+                                "width": 692,
+                                "height": 1024,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/b199f29b-c7cd-4446-95f4-754e679b9135",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 2964,
-                                        "width": 2003
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/b199f29b-c7cd-4446-95f4-754e679b9135",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 2003,
+                                        "height": 2964
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/b199f29b-c7cd-4446-95f4-754e679b9135/canvas/c/10"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=10",
+            "id": "https://dlc.services/iiif-img/7/6/cc733688-6c75-412e-9449-c5bb5ea47d5d/canvas/c/11",
             "type": "Canvas",
-            "height": 2964,
+            "label": {
+                "en": [
+                    "Canvas 11"
+                ]
+            },
             "width": 2003,
+            "height": 2964,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/cc733688-6c75-412e-9449-c5bb5ea47d5d/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/cc733688-6c75-412e-9449-c5bb5ea47d5d/full/135,200/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/cc733688-6c75-412e-9449-c5bb5ea47d5d",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/cc733688-6c75-412e-9449-c5bb5ea47d5d",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 692,
-                            "height": 1024,
                             "sizes": [
                                 {
                                     "width": 692,
@@ -876,51 +974,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=10/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/cc733688-6c75-412e-9449-c5bb5ea47d5d/canvas/c/11/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/cc733688-6c75-412e-9449-c5bb5ea47d5d/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/cc733688-6c75-412e-9449-c5bb5ea47d5d/canvas/c/11/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=10",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/cc733688-6c75-412e-9449-c5bb5ea47d5d/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/cc733688-6c75-412e-9449-c5bb5ea47d5d/full/692,1024/0/default.jpg",
                                 "type": "Image",
-                                "height": 2964,
-                                "width": 2003,
+                                "width": 692,
+                                "height": 1024,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/cc733688-6c75-412e-9449-c5bb5ea47d5d",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 2964,
-                                        "width": 2003
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/cc733688-6c75-412e-9449-c5bb5ea47d5d",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 2003,
+                                        "height": 2964
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/cc733688-6c75-412e-9449-c5bb5ea47d5d/canvas/c/11"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=11",
+            "id": "https://dlc.services/iiif-img/7/6/8a9c10f4-a244-44ed-84ac-ecc00939fdfd/canvas/c/12",
             "type": "Canvas",
-            "height": 2975,
+            "label": {
+                "en": [
+                    "Canvas 12"
+                ]
+            },
             "width": 2004,
+            "height": 2975,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/8a9c10f4-a244-44ed-84ac-ecc00939fdfd/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/8a9c10f4-a244-44ed-84ac-ecc00939fdfd/full/135,200/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/8a9c10f4-a244-44ed-84ac-ecc00939fdfd",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/8a9c10f4-a244-44ed-84ac-ecc00939fdfd",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 690,
-                            "height": 1024,
                             "sizes": [
                                 {
                                     "width": 690,
@@ -945,51 +1049,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=11/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/8a9c10f4-a244-44ed-84ac-ecc00939fdfd/canvas/c/12/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/8a9c10f4-a244-44ed-84ac-ecc00939fdfd/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/8a9c10f4-a244-44ed-84ac-ecc00939fdfd/canvas/c/12/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=11",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/8a9c10f4-a244-44ed-84ac-ecc00939fdfd/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/8a9c10f4-a244-44ed-84ac-ecc00939fdfd/full/690,1024/0/default.jpg",
                                 "type": "Image",
-                                "height": 2975,
-                                "width": 2004,
+                                "width": 690,
+                                "height": 1024,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/8a9c10f4-a244-44ed-84ac-ecc00939fdfd",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 2975,
-                                        "width": 2004
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/8a9c10f4-a244-44ed-84ac-ecc00939fdfd",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 2004,
+                                        "height": 2975
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/8a9c10f4-a244-44ed-84ac-ecc00939fdfd/canvas/c/12"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=12",
+            "id": "https://dlc.services/iiif-img/7/6/45535d3d-cb57-430f-8c68-8a7ae59b7bdd/canvas/c/13",
             "type": "Canvas",
-            "height": 2975,
+            "label": {
+                "en": [
+                    "Canvas 13"
+                ]
+            },
             "width": 2004,
+            "height": 2975,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/45535d3d-cb57-430f-8c68-8a7ae59b7bdd/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/45535d3d-cb57-430f-8c68-8a7ae59b7bdd/full/135,200/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/45535d3d-cb57-430f-8c68-8a7ae59b7bdd",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/45535d3d-cb57-430f-8c68-8a7ae59b7bdd",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 690,
-                            "height": 1024,
                             "sizes": [
                                 {
                                     "width": 690,
@@ -1014,51 +1124,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=12/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/45535d3d-cb57-430f-8c68-8a7ae59b7bdd/canvas/c/13/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/45535d3d-cb57-430f-8c68-8a7ae59b7bdd/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/45535d3d-cb57-430f-8c68-8a7ae59b7bdd/canvas/c/13/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=12",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/45535d3d-cb57-430f-8c68-8a7ae59b7bdd/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/45535d3d-cb57-430f-8c68-8a7ae59b7bdd/full/690,1024/0/default.jpg",
                                 "type": "Image",
-                                "height": 2975,
-                                "width": 2004,
+                                "width": 690,
+                                "height": 1024,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/45535d3d-cb57-430f-8c68-8a7ae59b7bdd",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 2975,
-                                        "width": 2004
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/45535d3d-cb57-430f-8c68-8a7ae59b7bdd",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 2004,
+                                        "height": 2975
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/45535d3d-cb57-430f-8c68-8a7ae59b7bdd/canvas/c/13"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=13",
+            "id": "https://dlc.services/iiif-img/7/6/268fef1b-fc68-40fd-ac74-9c8ac1a09910/canvas/c/14",
             "type": "Canvas",
-            "height": 2986,
+            "label": {
+                "en": [
+                    "Canvas 14"
+                ]
+            },
             "width": 2007,
+            "height": 2986,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/268fef1b-fc68-40fd-ac74-9c8ac1a09910/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/268fef1b-fc68-40fd-ac74-9c8ac1a09910/full/134,200/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/268fef1b-fc68-40fd-ac74-9c8ac1a09910",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/268fef1b-fc68-40fd-ac74-9c8ac1a09910",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 688,
-                            "height": 1024,
                             "sizes": [
                                 {
                                     "width": 688,
@@ -1083,51 +1199,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=13/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/268fef1b-fc68-40fd-ac74-9c8ac1a09910/canvas/c/14/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/268fef1b-fc68-40fd-ac74-9c8ac1a09910/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/268fef1b-fc68-40fd-ac74-9c8ac1a09910/canvas/c/14/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=13",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/268fef1b-fc68-40fd-ac74-9c8ac1a09910/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/268fef1b-fc68-40fd-ac74-9c8ac1a09910/full/688,1024/0/default.jpg",
                                 "type": "Image",
-                                "height": 2986,
-                                "width": 2007,
+                                "width": 688,
+                                "height": 1024,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/268fef1b-fc68-40fd-ac74-9c8ac1a09910",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 2986,
-                                        "width": 2007
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/268fef1b-fc68-40fd-ac74-9c8ac1a09910",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 2007,
+                                        "height": 2986
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/268fef1b-fc68-40fd-ac74-9c8ac1a09910/canvas/c/14"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=14",
+            "id": "https://dlc.services/iiif-img/7/6/05cce680-13d0-44b1-a342-1a8b460ec31c/canvas/c/15",
             "type": "Canvas",
-            "height": 2986,
+            "label": {
+                "en": [
+                    "Canvas 15"
+                ]
+            },
             "width": 2007,
+            "height": 2986,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/05cce680-13d0-44b1-a342-1a8b460ec31c/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/05cce680-13d0-44b1-a342-1a8b460ec31c/full/134,200/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/05cce680-13d0-44b1-a342-1a8b460ec31c",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/05cce680-13d0-44b1-a342-1a8b460ec31c",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 688,
-                            "height": 1024,
                             "sizes": [
                                 {
                                     "width": 688,
@@ -1152,51 +1274,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=14/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/05cce680-13d0-44b1-a342-1a8b460ec31c/canvas/c/15/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/05cce680-13d0-44b1-a342-1a8b460ec31c/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/05cce680-13d0-44b1-a342-1a8b460ec31c/canvas/c/15/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=14",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/05cce680-13d0-44b1-a342-1a8b460ec31c/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/05cce680-13d0-44b1-a342-1a8b460ec31c/full/688,1024/0/default.jpg",
                                 "type": "Image",
-                                "height": 2986,
-                                "width": 2007,
+                                "width": 688,
+                                "height": 1024,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/05cce680-13d0-44b1-a342-1a8b460ec31c",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 2986,
-                                        "width": 2007
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/05cce680-13d0-44b1-a342-1a8b460ec31c",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 2007,
+                                        "height": 2986
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/05cce680-13d0-44b1-a342-1a8b460ec31c/canvas/c/15"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=15",
+            "id": "https://dlc.services/iiif-img/7/6/34569c3a-3975-4e4c-a4d6-332d8cf23522/canvas/c/16",
             "type": "Canvas",
-            "height": 2989,
+            "label": {
+                "en": [
+                    "Canvas 16"
+                ]
+            },
             "width": 2010,
+            "height": 2989,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/34569c3a-3975-4e4c-a4d6-332d8cf23522/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/34569c3a-3975-4e4c-a4d6-332d8cf23522/full/134,200/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/34569c3a-3975-4e4c-a4d6-332d8cf23522",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/34569c3a-3975-4e4c-a4d6-332d8cf23522",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 689,
-                            "height": 1024,
                             "sizes": [
                                 {
                                     "width": 689,
@@ -1221,51 +1349,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=15/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/34569c3a-3975-4e4c-a4d6-332d8cf23522/canvas/c/16/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/34569c3a-3975-4e4c-a4d6-332d8cf23522/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/34569c3a-3975-4e4c-a4d6-332d8cf23522/canvas/c/16/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=15",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/34569c3a-3975-4e4c-a4d6-332d8cf23522/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/34569c3a-3975-4e4c-a4d6-332d8cf23522/full/689,1024/0/default.jpg",
                                 "type": "Image",
-                                "height": 2989,
-                                "width": 2010,
+                                "width": 689,
+                                "height": 1024,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/34569c3a-3975-4e4c-a4d6-332d8cf23522",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 2989,
-                                        "width": 2010
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/34569c3a-3975-4e4c-a4d6-332d8cf23522",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 2010,
+                                        "height": 2989
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/34569c3a-3975-4e4c-a4d6-332d8cf23522/canvas/c/16"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=16",
+            "id": "https://dlc.services/iiif-img/7/6/cc546c73-d040-44f6-ae5f-4ddfe4d37a38/canvas/c/17",
             "type": "Canvas",
-            "height": 2989,
+            "label": {
+                "en": [
+                    "Canvas 17"
+                ]
+            },
             "width": 2010,
+            "height": 2989,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/cc546c73-d040-44f6-ae5f-4ddfe4d37a38/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/cc546c73-d040-44f6-ae5f-4ddfe4d37a38/full/134,200/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/cc546c73-d040-44f6-ae5f-4ddfe4d37a38",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/cc546c73-d040-44f6-ae5f-4ddfe4d37a38",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 689,
-                            "height": 1024,
                             "sizes": [
                                 {
                                     "width": 689,
@@ -1290,51 +1424,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=16/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/cc546c73-d040-44f6-ae5f-4ddfe4d37a38/canvas/c/17/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/cc546c73-d040-44f6-ae5f-4ddfe4d37a38/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/cc546c73-d040-44f6-ae5f-4ddfe4d37a38/canvas/c/17/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=16",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/cc546c73-d040-44f6-ae5f-4ddfe4d37a38/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/cc546c73-d040-44f6-ae5f-4ddfe4d37a38/full/689,1024/0/default.jpg",
                                 "type": "Image",
-                                "height": 2989,
-                                "width": 2010,
+                                "width": 689,
+                                "height": 1024,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/cc546c73-d040-44f6-ae5f-4ddfe4d37a38",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 2989,
-                                        "width": 2010
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/cc546c73-d040-44f6-ae5f-4ddfe4d37a38",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 2010,
+                                        "height": 2989
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/cc546c73-d040-44f6-ae5f-4ddfe4d37a38/canvas/c/17"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=17",
+            "id": "https://dlc.services/iiif-img/7/6/6f086375-ee73-47c7-a7ab-297632b34aab/canvas/c/18",
             "type": "Canvas",
-            "height": 2997,
+            "label": {
+                "en": [
+                    "Canvas 18"
+                ]
+            },
             "width": 2012,
+            "height": 2997,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/6f086375-ee73-47c7-a7ab-297632b34aab/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/6f086375-ee73-47c7-a7ab-297632b34aab/full/134,200/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/6f086375-ee73-47c7-a7ab-297632b34aab",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/6f086375-ee73-47c7-a7ab-297632b34aab",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 687,
-                            "height": 1024,
                             "sizes": [
                                 {
                                     "width": 687,
@@ -1359,51 +1499,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=17/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/6f086375-ee73-47c7-a7ab-297632b34aab/canvas/c/18/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/6f086375-ee73-47c7-a7ab-297632b34aab/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/6f086375-ee73-47c7-a7ab-297632b34aab/canvas/c/18/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=17",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/6f086375-ee73-47c7-a7ab-297632b34aab/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/6f086375-ee73-47c7-a7ab-297632b34aab/full/687,1024/0/default.jpg",
                                 "type": "Image",
-                                "height": 2997,
-                                "width": 2012,
+                                "width": 687,
+                                "height": 1024,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/6f086375-ee73-47c7-a7ab-297632b34aab",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 2997,
-                                        "width": 2012
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/6f086375-ee73-47c7-a7ab-297632b34aab",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 2012,
+                                        "height": 2997
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/6f086375-ee73-47c7-a7ab-297632b34aab/canvas/c/18"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=18",
+            "id": "https://dlc.services/iiif-img/7/6/fd12c3e5-5a85-4fc6-8b29-02534db2f76c/canvas/c/19",
             "type": "Canvas",
-            "height": 2997,
+            "label": {
+                "en": [
+                    "Canvas 19"
+                ]
+            },
             "width": 2012,
+            "height": 2997,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/fd12c3e5-5a85-4fc6-8b29-02534db2f76c/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/fd12c3e5-5a85-4fc6-8b29-02534db2f76c/full/134,200/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/fd12c3e5-5a85-4fc6-8b29-02534db2f76c",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/fd12c3e5-5a85-4fc6-8b29-02534db2f76c",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 687,
-                            "height": 1024,
                             "sizes": [
                                 {
                                     "width": 687,
@@ -1428,51 +1574,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=18/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/fd12c3e5-5a85-4fc6-8b29-02534db2f76c/canvas/c/19/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/fd12c3e5-5a85-4fc6-8b29-02534db2f76c/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/fd12c3e5-5a85-4fc6-8b29-02534db2f76c/canvas/c/19/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=18",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/fd12c3e5-5a85-4fc6-8b29-02534db2f76c/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/fd12c3e5-5a85-4fc6-8b29-02534db2f76c/full/687,1024/0/default.jpg",
                                 "type": "Image",
-                                "height": 2997,
-                                "width": 2012,
+                                "width": 687,
+                                "height": 1024,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/fd12c3e5-5a85-4fc6-8b29-02534db2f76c",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 2997,
-                                        "width": 2012
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/fd12c3e5-5a85-4fc6-8b29-02534db2f76c",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 2012,
+                                        "height": 2997
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/fd12c3e5-5a85-4fc6-8b29-02534db2f76c/canvas/c/19"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=19",
+            "id": "https://dlc.services/iiif-img/7/6/d9269140-6bf7-4432-adf6-49d43414d4e3/canvas/c/20",
             "type": "Canvas",
-            "height": 2990,
+            "label": {
+                "en": [
+                    "Canvas 20"
+                ]
+            },
             "width": 2011,
+            "height": 2990,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/d9269140-6bf7-4432-adf6-49d43414d4e3/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/d9269140-6bf7-4432-adf6-49d43414d4e3/full/135,200/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/d9269140-6bf7-4432-adf6-49d43414d4e3",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/d9269140-6bf7-4432-adf6-49d43414d4e3",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 689,
-                            "height": 1024,
                             "sizes": [
                                 {
                                     "width": 689,
@@ -1497,51 +1649,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=19/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/d9269140-6bf7-4432-adf6-49d43414d4e3/canvas/c/20/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/d9269140-6bf7-4432-adf6-49d43414d4e3/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/d9269140-6bf7-4432-adf6-49d43414d4e3/canvas/c/20/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=19",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/d9269140-6bf7-4432-adf6-49d43414d4e3/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/d9269140-6bf7-4432-adf6-49d43414d4e3/full/689,1024/0/default.jpg",
                                 "type": "Image",
-                                "height": 2990,
-                                "width": 2011,
+                                "width": 689,
+                                "height": 1024,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/d9269140-6bf7-4432-adf6-49d43414d4e3",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 2990,
-                                        "width": 2011
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/d9269140-6bf7-4432-adf6-49d43414d4e3",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 2011,
+                                        "height": 2990
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/d9269140-6bf7-4432-adf6-49d43414d4e3/canvas/c/20"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=20",
+            "id": "https://dlc.services/iiif-img/7/6/083d3008-5a1c-4d34-b2e8-a11dd3f93185/canvas/c/21",
             "type": "Canvas",
-            "height": 2990,
+            "label": {
+                "en": [
+                    "Canvas 21"
+                ]
+            },
             "width": 2011,
+            "height": 2990,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/083d3008-5a1c-4d34-b2e8-a11dd3f93185/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/083d3008-5a1c-4d34-b2e8-a11dd3f93185/full/135,200/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/083d3008-5a1c-4d34-b2e8-a11dd3f93185",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/083d3008-5a1c-4d34-b2e8-a11dd3f93185",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 689,
-                            "height": 1024,
                             "sizes": [
                                 {
                                     "width": 689,
@@ -1566,51 +1724,57 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=20/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/083d3008-5a1c-4d34-b2e8-a11dd3f93185/canvas/c/21/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/083d3008-5a1c-4d34-b2e8-a11dd3f93185/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/083d3008-5a1c-4d34-b2e8-a11dd3f93185/canvas/c/21/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=20",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/083d3008-5a1c-4d34-b2e8-a11dd3f93185/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/083d3008-5a1c-4d34-b2e8-a11dd3f93185/full/689,1024/0/default.jpg",
                                 "type": "Image",
-                                "height": 2990,
-                                "width": 2011,
+                                "width": 689,
+                                "height": 1024,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/083d3008-5a1c-4d34-b2e8-a11dd3f93185",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 2990,
-                                        "width": 2011
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/083d3008-5a1c-4d34-b2e8-a11dd3f93185",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 2011,
+                                        "height": 2990
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/083d3008-5a1c-4d34-b2e8-a11dd3f93185/canvas/c/21"
                         }
                     ]
                 }
             ]
         },
         {
-            "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=21",
+            "id": "https://dlc.services/iiif-img/7/6/b00333a5-13f1-43a9-a622-0798b14c867c/canvas/c/22",
             "type": "Canvas",
-            "height": 2970,
+            "label": {
+                "en": [
+                    "Canvas 22"
+                ]
+            },
             "width": 1963,
+            "height": 2970,
             "thumbnail": [
                 {
-                    "id": "https://dlc.services/thumbs/7/6/b00333a5-13f1-43a9-a622-0798b14c867c/full/full/0/default.jpg",
+                    "id": "https://dlc.services/thumbs/7/6/b00333a5-13f1-43a9-a622-0798b14c867c/full/132,200/0/default.jpg",
                     "type": "Image",
+                    "format": "image/jpeg",
                     "service": [
                         {
-                            "@id": "https://apex.dlc.services/thumbs/7/6/b00333a5-13f1-43a9-a622-0798b14c867c",
-                            "@type": "ImageService2",
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/6/b00333a5-13f1-43a9-a622-0798b14c867c",
+                            "type": "ImageService3",
                             "profile": "level0",
-                            "width": 677,
-                            "height": 1024,
                             "sizes": [
                                 {
                                     "width": 677,
@@ -1635,30 +1799,31 @@
             ],
             "items": [
                 {
-                    "id": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=21/annotation-page",
+                    "id": "https://dlc.services/iiif-img/7/6/b00333a5-13f1-43a9-a622-0798b14c867c/canvas/c/22/page",
                     "type": "AnnotationPage",
                     "items": [
                         {
-                            "id": "https://dlc.services/iiif-img/7/6/b00333a5-13f1-43a9-a622-0798b14c867c/anno",
+                            "id": "https://dlc.services/iiif-img/7/6/b00333a5-13f1-43a9-a622-0798b14c867c/canvas/c/22/page/image",
                             "type": "Annotation",
                             "motivation": "painting",
-                            "target": "https://dlc.services/iiif-query/7/?canvas=n2&manifest=s1&sequence=n1&s1=905858846&n1=&n2=21",
                             "body": {
-                                "id": "https://dlc.services/iiif-img/7/6/b00333a5-13f1-43a9-a622-0798b14c867c/full/!2000,2000/0/default.jpg",
+                                "id": "https://dlc.services/iiif-img/7/6/b00333a5-13f1-43a9-a622-0798b14c867c/full/677,1024/0/default.jpg",
                                 "type": "Image",
-                                "height": 2970,
-                                "width": 1963,
+                                "width": 677,
+                                "height": 1024,
+                                "format": "image/jpeg",
                                 "service": [
                                     {
-                                        "@id": "https://dlc.services/iiif-img/7/6/b00333a5-13f1-43a9-a622-0798b14c867c",
-                                        "@type": "ImageService2",
-                                        "profile": "level1",
-                                        "protocol": "http://iiif.io/api/image",
-                                        "height": 2970,
-                                        "width": 1963
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/6/b00333a5-13f1-43a9-a622-0798b14c867c",
+                                        "type": "ImageService3",
+                                        "profile": "level2",
+                                        "width": 1963,
+                                        "height": 2970
                                     }
                                 ]
-                            }
+                            },
+                            "target": "https://dlc.services/iiif-img/7/6/b00333a5-13f1-43a9-a622-0798b14c867c/canvas/c/22"
                         }
                     ]
                 }
