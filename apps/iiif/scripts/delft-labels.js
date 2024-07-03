@@ -32,7 +32,6 @@ enrich(
             manifest.setLabel(m.value);
             changedLabel = m.value;
             didChange = true;
-            return;
           }
         }
       }
