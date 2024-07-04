@@ -6,4 +6,8 @@ module.exports = {
   parserOptions: {
     project: true,
   },
+  rules: {
+    "@next/next/no-img-element": "off",
+    "no-unused-vars": "off",
+  },
 };

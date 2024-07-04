@@ -1,0 +1,14 @@
+{
+  "name": "@repo/iiif",
+  "type": "module",
+  "exports": {
+    "./build/*": "./build/*"
+  },
+  "scripts": {
+    "build": "iiif-hss build --out ./build --scripts ./scripts",
+    "dev": "iiif-hss build --out ./build --scripts ./scripts && iiif-hss serve --scripts ./scripts"
+  },
+  "dependencies": {
+    "iiif-hss": "^0.2.6"
+  }
+}

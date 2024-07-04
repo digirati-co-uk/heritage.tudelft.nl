@@ -1,0 +1,63 @@
+{
+  "name": "homepage",
+  "blocks": [
+    {
+      "id": "eze85",
+      "type": "HeadingParagraph",
+      "data": {
+        "heading": "",
+        "paragraph": "Dit is het digitale portaal voor het academisch erfgoed van de TU Delft en de digitale bijzondere collecties van de TU Delft Library. Bezoek <a href=\"/exhibitions\">online tentoonstellingen</a>, verken de <a href=\"/collections\">digitale bijzondere collecties</a>, lees meer over de <a href=\"/publications\">geschiedenis van de universiteit</a> of neem <a href=\"/about\">contact</a> op met het Team Academisch Erfgoed.",
+        "html": true,
+        "align": "center"
+      }
+    },
+    {
+      "id": "tahrtf",
+      "type": "CardGrid",
+      "data": {},
+      "slots": {
+        "gridItems": {
+          "slot_id": "gridItems",
+          "blocks": [
+            {
+              "id": "7230r",
+              "type": "PublicationBox",
+              "data": {
+                "type": "publication",
+                "title": "The Shared History of TU Delft and Bandung Institute of Technology",
+                "link": "/publications/tu-itb",
+                "subtitle": "Abel Streefland",
+                "backgroundImage": "https://dlc.services/thumbs/7/20/76ac865a-099b-43ca-9040-74872c687fff/full/full/0/default.jpg",
+                "backgroundColor": "bg-blue-500"
+              }
+            },
+            {
+              "id": "gzpdof",
+              "type": "CollectionBox",
+              "data": {
+                "type": "collection",
+                "title": "Piranesi",
+                "link": "/collections/ib-tresor-piranesi",
+                "backgroundImage": "https://apex.dlc.services/thumbs/7/6/52816b69-612d-4e55-b2bc-76aa2aa0fd5d/full/full/0/default.jpg",
+                "backgroundColor": "bg-orange-400",
+                "subtitle": "Trésor"
+              }
+            },
+            {
+              "id": "sskd4d",
+              "type": "ExhibitionBox",
+              "data": {
+                "type": "exhibition",
+                "title": "Novieten",
+                "link": "/exhibitions/novieten",
+                "backgroundImage": "https://dlc.services/thumbs/7/21/e16c7a6b-9672-d551-70d7-08c88609efb1/full/400,/0/default.jpg",
+                "backgroundColor": "bg-yellow-400",
+                "subtitle": "DVSV"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["**/.env.*local"],
+  "globalEnv": ["TYPESENSE_API_KEY"],
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
@@ -9,14 +10,9 @@
     "lint": {
       "dependsOn": ["^lint"]
     },
-    "build-iiif": {
-      "inputs": ["iiif/**"],
-      "outputs": [".iiif/**", "public/iiif/**"]
-    },
     "dev": {
       "cache": false,
-      "persistent": true,
-      "dependsOn": ["build-iiif"]
+      "persistent": true
     }
   }
 }

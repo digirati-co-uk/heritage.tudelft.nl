@@ -1,0 +1,162 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  font-feature-settings: "kern", "liga", "clig", "calt";
+  font-kerning: normal;
+  scroll-behavior: smooth;
+}
+
+.cut-corners {
+  -webkit-clip-path: polygon(
+    1rem 0,
+    calc(100% - 1rem) 0,
+    100% 1rem,
+    100% calc(100% - 1rem),
+    calc(100% - 1rem) 100%,
+    1rem 100%,
+    0 calc(100% - 1rem),
+    0 1rem
+  );
+  clip-path: polygon(
+    1rem 0,
+    calc(100% - 1rem) 0,
+    100% 1rem,
+    100% calc(100% - 1rem),
+    calc(100% - 1rem) 100%,
+    1rem 100%,
+    0 calc(100% - 1rem),
+    0 1rem
+  );
+}
+
+pb-slot.grid::part(slot-bar) {
+  position: absolute;
+  top: -40px;
+  z-index: 4;
+  left: 0;
+  right: 0;
+}
+
+/* Markdown customisations */
+
+.footnotes {
+  font-size: 0.7em;
+}
+
+.with-link a {
+  text-decoration: underline;
+}
+
+.prose hr {
+  background: rgba(0, 0, 0, 0.2);
+  border: none;
+  height: 1px;
+  margin: 0 0 calc(1.45rem - 1px);
+  padding: 0;
+}
+
+.iiif-link-wrapper a {
+  display: block;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAeCAYAAABJ/8wUAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpDRkQyMTBBMDMyNjIxMUUzQkJBM0QwRjI2NzMyQkY5MSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpDRkQyMTBBMTMyNjIxMUUzQkJBM0QwRjI2NzMyQkY5MSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkNGRDIxMDlFMzI2MjExRTNCQkEzRDBGMjY3MzJCRjkxIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkNGRDIxMDlGMzI2MjExRTNCQkEzRDBGMjY3MzJCRjkxIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+fU0zWQAABNFJREFUeNrEV79bHDcQnaePIuWdK5dHE1JCg10eVbqA21Dk+A9wYZzOn0s7Bc5fcLiAlJAyFS4dGlMGN1CmClu60uSNfq20e7j1wt5qJc1o5s3Mk3ZNVeVbXd3G04WK3xXBfO3bGPBk7kWXEJkZDBCVYAhenM0FumRzBsEdR94TqHf69ueuVnC/8WTCxyEV/EIFM8pzrj6b3lxd4+jsWFQPxXFU5YI/v+vb/Q9DI6hjwTFbSywYCAbw30KDl2f34nUSu/OoXNOoHZ+Muf9+e8L+S/Zt0pswBeLY8t2jnw53+PIpyGrQylfzUw7ozEk24r+N7T32n4uU8bSUUFM0bQLnYi8QJvHapJHnWQmFLvkTjHCCpMjbkwaaE5pdi/ZEsSWOTn+QshiOoxFOfJih5S8YAi5eJ21UCeufM2yLoATYtHVcMEDTQkgtNJLmTELcdPwYQ7JtembRSM3ORh2aEGHjQ+zXcttgCJuTXZFeuF44hgeWB/8gqEKvA8lfQ/vo9DGbu0EfehPS9auDm7rkyWvmSHIoTUPJpEmPlFaea4CXf8+ZB//y7SKsj4SIJlyjvu/YnCt6PTnHpjd/v5ncfOwiIpbdkIPoRoxh9le93knxv724zIFVTArvATuuNULZGxxWxxdzyLDwGpH1VYD7ZI3GnBCFHasW8zV5beX5Os24q2LKxbFDb0pF+DdWXbpDJ2x+16PoPxpi+S2AFRO3ca0Y4l7+YbXd0aAtzp6yvcX2Ou9gAD1fp+gWvZg++ny1RSUdiWmZklCYB5d87Kl68s9+kGfvlO2/mkQu7UJuanePiKop/IQXp7ecd8i7G4aCSHRQLEhKtzSIvCELGjdLw3O2l3TinjqWlJ/VhIiAQc5j12Rbg0jpgpjiV3zempe8Z4mMLq2PoTqOiyNxQZUOvY4F73PKmlFP+xSNBeBL6FOdaWMIWuiCDHlE3CyNzmtIS7XnUkaS15ojxNh6o9aPhE2TsNABIsjli6SzzWxJ9ZcL1wHFs1ItDr1EovuqymJiJwOQGZpT1hpEUu2X3WhYsUUpKlbRCiJkhu8Dr6V6Ck/lTcQ0TG6uMMoRNJtehrr2ZkDlA1aRATfY2ih0j8K2Mp5ZG1KQH1C1jthQqu2qcQTDPUebPaxljgd4JNdn85S2poZV0oNsnru0KFYehrTkxSo8akPyfgcMdPXQQmLphbxPZeM1J6tvaSA7k1BqmF9GG19lSIZVtTeqmd73p3NIIzaCD3UBxFxBPuusQM6NlaCqmLoE4q7qgHJEWCUbcggyCnETEuAroUkT6rofhykJwVXhQhuCwJoIOdNX3xhdDFJxNSKCB6o0J5mWyi66vDZzNbMzciX7pl40nvq+UjWo8sPe/XB7QsMFDaEV2ZiZ9REUlRm+Oe3Fa22UG8WN1sPshTTnzbacoyMYoIJBDmuKvtZDddXUivWBchjGus4R6c+jNQlX24Kr82mQfrUhXdnwioeo9oqWiNJvp+XkFo+JYdzrClIck9hDhLZOYZ6q7Cstb8ItbWufBjbngP6v8+R2ko6aW/FUJu846Q5wK6il8Agd4Dye+EY5kk5TdhB+5o7O7PtjT+zTUgsCNvaewhc8q96tpPHf9q+TjufUYfL2KfIlfVyZK2b0n9PPVxdD2f8FGABRh3uKJmT1VAAAAABJRU5ErkJggg==);
+  background-repeat: no-repeat;
+  background-size: 23px 20px;
+  cursor: pointer;
+  width: 23px;
+  height: 20px;
+}
+
+/* Exhibition editorial */
+
+.exhibition-info-block h2 {
+  @apply mb-4 text-center font-mono uppercase;
+}
+.exhibition-info-block p {
+  @apply my-4;
+}
+
+/* Atlas styling */
+.atlas-container {
+  min-width: 0;
+  min-height: 0;
+  --atlas-container-flex: 1 1 0px;
+  --atlas-background: #373737;
+  --atlas-container-height: 100%;
+}
+
+.canvas-preview {
+  --atlas-container-flex: 1;
+}
+
+div:has(> div[data-textual-content="true"]) {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  height: 100%;
+}
+div[data-textual-content="true"] {
+  color: #fff;
+  padding: 30px;
+  width: 100%;
+  height: 100%;
+}
+div[data-textual-content="true"] h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+div[data-textual-content="true"] h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+div[data-textual-content="true"] p {
+  font-size: 1.25rem;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+
+/** Quirk of styling instantsearch **/
+.facet-search {
+  width: 100%;
+}
+.facet-search .ais-SearchBox {
+  width: 100%;
+}
+.facet-search .ais-SearchBox-form {
+  display: flex;
+}
+
+.facet-search .ais-SearchBox-input {
+  flex: 1;
+  padding: 4px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.4);
+  margin-bottom: 10px;
+}
+
+.facet-search .ais-SearchBox-input:focus {
+  outline: none;
+  border: 1px solid #000;
+  background: #fff;
+}
+
+.facet-search .ais-SearchBox-submit {
+  display: none;
+}
+
+.facet-search .ais-SearchBox-reset {
+  display: none;
+}

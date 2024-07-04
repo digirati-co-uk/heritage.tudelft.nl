@@ -1,0 +1,66 @@
+server:
+  url: http://localhost:3000/iiif
+
+# Run these everywhere.
+run:
+  - flat-manifests
+  - delft-labels
+  - extract-remote-source
+  - extract-slug-source
+  - extract-label-string
+  - extract-part-of-collection
+  - extract-thumbnail
+  - manifest-sqlite
+  - metadata-analysis
+  - site-collections
+  - delft-image-source
+  - typesense-manifests
+
+stores:
+  collective-access:
+    type: iiif-json
+    path: ./manifests/collective-access
+    destination: manifests
+    pattern: "**/*.{json,yaml,yml}"
+    run:
+      - extract-topics
+      - delft-related
+    config:
+      extract-topics:
+        commaSeparated: ["material"]
+        topicTypes:
+          material: ["Materiaal", "Material"]
+          date: ["Date", "Datering"]
+          contributor: ["Maker"]
+          format: ["Objectnaam"]
+
+  dlcs:
+    type: iiif-json
+    path: ./manifests/dlcs
+    destination: manifests
+    pattern: "**/*.{json,yaml,yml}"
+    run:
+      - extract-topics
+      - folder-collections
+    config:
+      extract-topics:
+        topicTypes:
+          date: ["Year"]
+          format: ["Format"]
+          contributor: ["Contributor", "Contributors"]
+
+  manifest-editor:
+    type: iiif-json
+    path: ./manifests/manifest-editor
+    destination: manifests
+    pattern: "**/*.{json,yaml,yml}"
+    run:
+      - folder-collections
+
+  projects:
+    type: iiif-json
+    path: ./manifests/projects
+    destination: manifests
+    pattern: "**/*.{json,yaml,yml}"
+    run:
+      - folder-collections
