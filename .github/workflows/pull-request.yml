@@ -115,4 +115,5 @@ jobs:
             ## Netlify output
             Static site (preview): ${{ steps.netlify_static_site.outputs.preview_url }}
             IIIF (preview): ${{ steps.netlify_iiif.outputs.preview_url }}
+            IIIF Collection (preview): [Theseus](https://theseus-viewer.netlify.app/?iiif-content=${{ steps.netlify_iiif.outputs.preview_url }})
           edit-mode: replace

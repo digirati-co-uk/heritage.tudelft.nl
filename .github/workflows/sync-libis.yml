@@ -1,0 +1,36 @@
+name: Sync Libis
+
+on:
+  schedule:
+    # Daily schedule
+    - cron: "0 3 * * *"
+
+  workflow_dispatch: {}
+
+jobs:
+  copy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup bun.sh environment
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - run: |
+          git clone --depth=1 --branch=main https://github.com/libis/ca_tudelft_iiif
+          pwd
+          ls
+          rm -r apps/iiif/manifests/collective-access/objects
+          rm -rf apps/iiif/manifests/collective-access/collections
+          cp -a ca_tudelft_iiif/objects/. apps/iiif/manifests/collective-access/objects
+          cp -a ca_tudelft_iiif/collections/. apps/iiif/manifests/collective-access/collections
+          rm -r ca_tudelft_iiif
+          bun run ./process-libis.mts
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git diff-index --quiet HEAD || git commit -m "Automatic publish from github.com/libis/ca_tudelft_iiif"
+
+      - run: git push origin main --force-with-lease
