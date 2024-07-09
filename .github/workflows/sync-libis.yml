@@ -13,6 +13,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Setup bun.sh environment
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
       - run: |
           git clone --depth=1 --branch=main https://github.com/libis/ca_tudelft_iiif
           pwd
@@ -22,6 +27,7 @@ jobs:
           cp -a ca_tudelft_iiif/objects/. apps/iiif/manifests/collective-access/objects
           cp -a ca_tudelft_iiif/collections/. apps/iiif/manifests/collective-access/collections
           rm -r ca_tudelft_iiif
+          bun run ./process-libis.mts
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
