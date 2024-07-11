@@ -63,6 +63,7 @@ if (existsSync(join(IIIF_DIRECTORY, "meta/typesense/manifests.schema.json"))) {
       return {
         ...document,
         slug: document.slug.replace("manifests/", "objects/"),
+        type: "Object",
       };
     }
 
@@ -108,7 +109,7 @@ if (existsSync(join(IIIF_DIRECTORY, "meta/typesense/manifests.schema.json"))) {
       jsonDocuments.push({
         id: `${publication.lang}/${publication.id}`,
         label: publication.title,
-        type: "publication",
+        type: "Publication",
         thumbnail: publication.image,
         slug: `publications/${publication.id}`,
         plaintext: publication.body.raw,

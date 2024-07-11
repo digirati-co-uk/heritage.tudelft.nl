@@ -31,7 +31,7 @@ export function createTypesense() {
   const client = new TypesenseInstantSearchAdapter({
     server: typesenseServerConfig,
     additionalSearchParameters: {
-      query_by: `label,summary,type,${facets.join(",")}`,
+      query_by: `label,summary,type,plaintext,${facets.join(",")}`,
       highlight_fields: "label,summary,plaintext",
       highlight_start_tag: "<mark>",
       highlight_end_tag: "</mark>",
