@@ -32,7 +32,7 @@ export function createTypesense() {
     server: typesenseServerConfig,
     additionalSearchParameters: {
       query_by: `label,summary,type,plaintext,${facets.join(",")}`,
-      highlight_fields: "label,summary,plaintext",
+      highlight_fields: "label,summary",
       highlight_start_tag: "<mark>",
       highlight_end_tag: "</mark>",
     },
