@@ -13,6 +13,7 @@ enrich(
   async (resource, api) => {
     let didChange = false;
     let changedLabel = null;
+    let textLabel = "";
     api.builder.editManifest(resource.id, (manifest) => {
       // const label = manifest.entity.label || {};
       // if (label.en[0] === "") {
@@ -29,14 +30,23 @@ enrich(
           const none = (m.label.none || [])[0];
 
           if (nl === "Titel" || en === "Title" || none === "Title" || none === "Titel") {
-            manifest.setLabel(m.value);
-            changedLabel = m.value;
-            didChange = true;
+            const asText = getValue(m.value);
+            if (asText) {
+              textLabel = asText;
+              manifest.setLabel(m.value);
+              changedLabel = m.value;
+              didChange = true;
+              return;
+            }
           }
         }
       }
     });
 
-    return { didChange, meta: { label: getValue(changedLabel) } };
+    if (!didChange) {
+      return { didChange };
+    }
+
+    return { didChange, meta: { label: textLabel } };
   }
 );
