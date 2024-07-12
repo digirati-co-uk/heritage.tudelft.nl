@@ -10,8 +10,8 @@ import { SlotContext } from "@/blocks/slot-context";
 import { GlobalFooter } from "@/components/GlobalFooter";
 
 export const metadata: Metadata = {
-  title: "TU Delft",
-  description: "",
+  title: "TU Delft Academic Heritage",
+  description: "TU Delft Library's Special Collections portal"
 };
 
 if (process.env.NODE_ENV !== "production") {
