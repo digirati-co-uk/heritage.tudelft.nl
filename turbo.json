@@ -1,7 +1,15 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["**/.env.*local"],
-  "globalEnv": ["TYPESENSE_API_KEY"],
+  "globalEnv": [
+    "NEXT_PUBLIC_TYPESENSE_API_KEY",
+    "NEXT_PUBLIC_TYPESENSE_HOST",
+    "NEXT_PUBLIC_TYPESENSE_PORT",
+    "NEXT_PUBLIC_TYPESENSE_PORT",
+    "NEXT_PUBLIC_TYPESENSE_PROTOCOL",
+    "NEXT_PUBLIC_TYPESENSE_COLLECTION_NAME",
+    "TYPESENSE_API_KEY"
+  ],
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
