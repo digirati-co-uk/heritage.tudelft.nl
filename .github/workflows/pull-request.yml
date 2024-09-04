@@ -49,15 +49,62 @@ jobs:
           ls -la ./.netlify || true
           rm -rf ./.netlify || true
 
+      # This is a debug versino of the normal build.
+      - name: IIIF Netlify deploy (debug build)
+        id: netlify_iiif
+        if: (contains(github.event.pull_request.labels.*.name, 'debug-build'))
+        working-directory: apps/iiif
+        run: |
+          netlify deploy \
+            --build \
+            --alias=deploy-debug-${{ github.event.number }} \
+            --json \
+            --message="Deploy preview from GitHub Actions (debug)"
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_IIIF_SITE_ID }}
+          IIIF_PREVIEW_URL: https://deploy-debug-${{ github.event.number }}--delft-iiif.netlify.app
+
+      - name: "Cleanup Netlify folder"
+        run: |
+          ls -la ./.netlify || true
+          rm -rf ./.netlify || true
+
+      # This is the debug static site build.
+      - name: Static site Netlify deploy (debug)
+        id: netlify_static_site
+        if: (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy-preview'))
+        working-directory: apps/static-site
+        run: |
+          netlify deploy \
+            --build \
+            --alias=deploy-debug-${{ github.event.number }} \
+            --json \
+            --message="Deploy debug from GitHub Actions"
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          # This is a search-only API key (public)
+          NEXT_PUBLIC_IIIF_URL: https://deploy-debug-${{ github.event.number }}--delft-iiif.netlify.app
+          NEXT_PUBLIC_TYPESENSE_API_KEY: 8EOitKCMTbxUKPZNqUEoQS9M2RGvpkZS
+          NEXT_PUBLIC_TYPESENSE_HOST: 63flhve71t2un5xgp.a1.typesense.net
+          NEXT_PUBLIC_TYPESENSE_PORT: 443
+          NEXT_PUBLIC_TYPESENSE_PROTOCOL: https
+          NEXT_PUBLIC_TYPESENSE_COLLECTION_NAME: preview-manifests
+
+      # This is the actual IIIF build.
       - name: IIIF Netlify deploy (preview)
         id: netlify_iiif
         if: (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy-preview'))
         working-directory: apps/iiif
         run: |
-          netlify deploy \
+          deploy_json=$(netlify deploy \
             --build \
             --alias=deploy-preview-${{ github.event.number }} \
-            --message="Deploy preview from GitHub Actions"
+            --json \
+            --message="Deploy preview from GitHub Actions")
+          preview_url=$(echo $deploy_json | jq -r '.deploy_url')
+          echo "preview_url=$preview_url" >> $GITHUB_OUTPUT
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_IIIF_SITE_ID }}
@@ -68,6 +115,7 @@ jobs:
           ls -la ./.netlify || true
           rm -rf ./.netlify || true
 
+      # This is the actual static site build.
       - name: Static site Netlify deploy (preview)
         id: netlify_static_site
         if: (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy-preview'))

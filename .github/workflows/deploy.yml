@@ -45,14 +45,13 @@ jobs:
             --build \
             --prod \
             --json \
-            --filter=iiif \
             --message="Deploy from GitHub Actions")
           preview_url=$(echo $deploy_json | jq -r '.deploy_url')
           echo "preview_url=$preview_url" >> $GITHUB_OUTPUT
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_IIIF_SITE_ID }}
-          IIIF_PREVIEW_URL: https://delft-iiif.netlify.app
+          IIIF_PREVIEW_URL: https://heritage.tudelft.nl/iiif
 
       - name: "Cleanup Netlify folder"
         run: |
@@ -67,7 +66,6 @@ jobs:
             --build \
             --json \
             --prod \
-            --filter=static-site \
             --message="Deploy from GitHub Actions")
           preview_url=$(echo $deploy_json | jq -r '.deploy_url')
           echo "preview_url=$preview_url" >> $GITHUB_OUTPUT
@@ -75,7 +73,7 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           # This is a search-only API key (public)
-          NEXT_PUBLIC_IIIF_URL: https://delft-iiif.netlify.app
+          NEXT_PUBLIC_IIIF_URL: https://heritage.tudelft.nl/iiif
           NEXT_PUBLIC_TYPESENSE_API_KEY: 8EOitKCMTbxUKPZNqUEoQS9M2RGvpkZS
           NEXT_PUBLIC_TYPESENSE_HOST: 63flhve71t2un5xgp.a1.typesense.net
           NEXT_PUBLIC_TYPESENSE_PORT: 443
