@@ -41,7 +41,7 @@ jobs:
         id: netlify_iiif
         working-directory: apps/iiif
         run: |
-          deploy_json=$(netlify deploy \
+          deploy_json=$(npx netlify-cli@17.34.3 deploy \
             --build \
             --prod \
             --json \
@@ -53,29 +53,27 @@ jobs:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_IIIF_SITE_ID }}
           IIIF_PREVIEW_URL: https://heritage.tudelft.nl/iiif
 
-      # @todo possibly remove. This is already built from Netlify automatically.
-      #
-      # - name: Static site Netlify deploy (production)
-      #   id: netlify_static_site
-      #   working-directory: apps/static-site
-      #   run: |
-      #     deploy_json=$(netlify deploy \
-      #       --build \
-      #       --json \
-      #       --prod \
-      #       --message="Deploy from GitHub Actions")
-      #     preview_url=$(echo $deploy_json | jq -r '.deploy_url')
-      #     echo "preview_url=$preview_url" >> $GITHUB_OUTPUT
-      #   env:
-      #     NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-      #     NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-      #     # This is a search-only API key (public)
-      #     NEXT_PUBLIC_IIIF_URL: https://heritage.tudelft.nl/iiif
-      #     NEXT_PUBLIC_TYPESENSE_API_KEY: 8EOitKCMTbxUKPZNqUEoQS9M2RGvpkZS
-      #     NEXT_PUBLIC_TYPESENSE_HOST: 63flhve71t2un5xgp.a1.typesense.net
-      #     NEXT_PUBLIC_TYPESENSE_PORT: 443
-      #     NEXT_PUBLIC_TYPESENSE_PROTOCOL: https
-      #     NEXT_PUBLIC_TYPESENSE_COLLECTION_NAME: production-manifests
+      - name: Static site Netlify deploy (production)
+        id: netlify_static_site
+        working-directory: apps/static-site
+        run: |
+          deploy_json=$(npx netlify-cli@17.34.3 deploy \
+            --build \
+            --json \
+            --prod \
+            --message="Deploy from GitHub Actions")
+          preview_url=$(echo $deploy_json | jq -r '.deploy_url')
+          echo "preview_url=$preview_url" >> $GITHUB_OUTPUT
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          # This is a search-only API key (public)
+          NEXT_PUBLIC_IIIF_URL: https://heritage.tudelft.nl/iiif
+          NEXT_PUBLIC_TYPESENSE_API_KEY: 8EOitKCMTbxUKPZNqUEoQS9M2RGvpkZS
+          NEXT_PUBLIC_TYPESENSE_HOST: 63flhve71t2un5xgp.a1.typesense.net
+          NEXT_PUBLIC_TYPESENSE_PORT: 443
+          NEXT_PUBLIC_TYPESENSE_PROTOCOL: https
+          NEXT_PUBLIC_TYPESENSE_COLLECTION_NAME: production-manifests
 
       - name: Build IIIF Search
         working-directory: apps/static-site
