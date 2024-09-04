@@ -2,6 +2,7 @@ name: Build and Deploy Static Site Preview
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened, labeled]
 
 jobs:
   build:
@@ -43,6 +44,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-iiif-cache-${{ hashFiles('**/bun.lockb') }}
 
+      - name: "Cleanup Netlify folder"
+        run: |
+          ls -la ./.netlify
+          rm -rf ./.netlify || true
+
       - name: IIIF Netlify deploy (preview)
         id: netlify_iiif
         if: (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy-preview'))
@@ -60,6 +66,11 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_IIIF_SITE_ID }}
           IIIF_PREVIEW_URL: https://deploy-preview-${{ github.event.number }}--delft-iiif.netlify.app
+
+      - name: "Cleanup Netlify folder"
+        run: |
+          ls -la ./.netlify
+          rm -rf ./.netlify || true
 
       - name: Static site Netlify deploy (preview)
         id: netlify_static_site
