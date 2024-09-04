@@ -57,8 +57,10 @@ jobs:
           netlify deploy \
             --build \
             --alias=deploy-preview-${{ github.event.number }} \
-            --filter=iiif \
-            --message="Deploy preview from GitHub Actions"
+            --json \
+            --message="Deploy preview from GitHub Actions")
+          preview_url=$(echo $deploy_json | jq -r '.deploy_url')
+          echo "preview_url=$preview_url" >> $GITHUB_OUTPUT
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_IIIF_SITE_ID }}
@@ -78,7 +80,6 @@ jobs:
             --build \
             --alias=deploy-preview-${{ github.event.number }} \
             --json \
-            --filter=static-site \
             --message="Deploy preview from GitHub Actions")
           preview_url=$(echo $deploy_json | jq -r '.deploy_url')
           echo "preview_url=$preview_url" >> $GITHUB_OUTPUT
