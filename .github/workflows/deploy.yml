@@ -55,12 +55,12 @@ jobs:
 
       - name: Static site Netlify deploy (production)
         id: netlify_static_site
-        working-directory: apps/static-site
         run: |
           deploy_json=$(npx netlify-cli@17.34.3 deploy \
             --build \
             --json \
             --prod \
+            --filter=static-site \
             --message="Deploy from GitHub Actions")
           preview_url=$(echo $deploy_json | jq -r '.deploy_url')
           echo "preview_url=$preview_url" >> $GITHUB_OUTPUT
