@@ -46,7 +46,7 @@ jobs:
 
       - name: "Cleanup Netlify folder"
         run: |
-          ls -la ./.netlify
+          ls -la ./.netlify || true
           rm -rf ./.netlify || true
 
       - name: IIIF Netlify deploy (preview)
@@ -69,7 +69,7 @@ jobs:
 
       - name: "Cleanup Netlify folder"
         run: |
-          ls -la ./.netlify
+          ls -la ./.netlify || true
           rm -rf ./.netlify || true
 
       - name: Static site Netlify deploy (preview)

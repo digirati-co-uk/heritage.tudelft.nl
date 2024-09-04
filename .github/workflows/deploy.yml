@@ -56,7 +56,7 @@ jobs:
 
       - name: "Cleanup Netlify folder"
         run: |
-          ls -la ./.netlify
+          ls -la ./.netlify || true
           rm -rf ./.netlify || true
 
       - name: Static site Netlify deploy (production)
@@ -84,7 +84,7 @@ jobs:
 
       - name: "Cleanup Netlify folder"
         run: |
-          ls -la ./.netlify
+          ls -la ./.netlify || true
           rm -rf ./.netlify || true
 
       - name: Build IIIF Search
