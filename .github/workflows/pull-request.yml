@@ -51,7 +51,7 @@ jobs:
 
       # This is a debug versino of the normal build.
       - name: IIIF Netlify deploy (debug build)
-        id: netlify_iiif
+        id: netlify_iiif_debug
         if: (contains(github.event.pull_request.labels.*.name, 'debug-build'))
         working-directory: apps/iiif
         run: |
