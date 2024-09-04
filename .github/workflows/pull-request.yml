@@ -54,7 +54,7 @@ jobs:
         if: (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy-preview'))
         working-directory: apps/iiif
         run: |
-          netlify deploy \
+          deploy_json=$(netlify deploy \
             --build \
             --alias=deploy-preview-${{ github.event.number }} \
             --json \
