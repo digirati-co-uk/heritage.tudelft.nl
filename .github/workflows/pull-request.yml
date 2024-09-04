@@ -54,14 +54,11 @@ jobs:
         if: (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy-preview'))
         working-directory: apps/iiif
         run: |
-          deploy_json=$(netlify deploy \
+          netlify deploy \
             --build \
             --alias=deploy-preview-${{ github.event.number }} \
-            --json \
             --filter=iiif \
-            --message="Deploy preview from GitHub Actions")
-          preview_url=$(echo $deploy_json | jq -r '.deploy_url')
-          echo "preview_url=$preview_url" >> $GITHUB_OUTPUT
+            --message="Deploy preview from GitHub Actions"
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_IIIF_SITE_ID }}
