@@ -58,7 +58,6 @@ jobs:
           netlify deploy \
             --build \
             --alias=deploy-debug-${{ github.event.number }} \
-            --json \
             --message="Deploy preview from GitHub Actions (debug)"
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
@@ -79,7 +78,6 @@ jobs:
           netlify deploy \
             --build \
             --alias=deploy-debug-${{ github.event.number }} \
-            --json \
             --message="Deploy debug from GitHub Actions"
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
