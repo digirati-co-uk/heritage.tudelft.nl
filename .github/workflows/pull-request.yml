@@ -72,7 +72,7 @@ jobs:
       # This is the debug static site build.
       - name: Static site Netlify deploy (debug)
         id: netlify_static_site_debug
-        if: (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy-preview'))
+        if: (contains(github.event.pull_request.labels.*.name, 'debug-build'))
         working-directory: apps/static-site
         run: |
           netlify deploy \
