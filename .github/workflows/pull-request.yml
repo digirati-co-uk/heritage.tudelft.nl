@@ -73,11 +73,9 @@ jobs:
       - name: Static site Netlify deploy (debug)
         id: netlify_static_site_debug
         if: (contains(github.event.pull_request.labels.*.name, 'debug-build'))
-        working-directory: apps/static-site
         run: |
           netlify deploy \
             --build \
-            --filter=static-site \
             --alias=deploy-debug-${{ github.event.number }} \
             --message="Deploy debug from GitHub Actions"
         env:
@@ -101,7 +99,6 @@ jobs:
             --build \
             --alias=deploy-preview-${{ github.event.number }} \
             --json \
-            --filter=static-site \
             --message="Deploy preview from GitHub Actions")
           preview_url=$(echo $deploy_json | jq -r '.deploy_url')
           echo "preview_url=$preview_url" >> $GITHUB_OUTPUT
@@ -119,7 +116,6 @@ jobs:
       - name: Static site Netlify deploy (preview)
         id: netlify_static_site
         if: (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy-preview'))
-        working-directory: apps/static-site
         run: |
           deploy_json=$(netlify deploy \
             --build \
