@@ -10,11 +10,11 @@
     },
     {
       "label": "Inventarisnummer",
-      "value": "2011.0007.CVB"
+      "value": "2011.0007.cvb"
     },
     {
       "label": "Datering",
-      "value": "1937 - 1940"
+      "value": "1930 - 1935"
     },
     {
       "label": "Maker",
@@ -30,7 +30,7 @@
     },
     {
       "label": "Beschrijving",
-      "value": "Margaretha Livina (Margot) van Hasselt (1879–1935) maakte eind jaren ’30 dit portret van haar neef Johan Barthold Frans van Hasselt (1913–1942). </br>Op 23 november 1940 sprak Frans van Hasselt, destijds voorzitter van het gezelschap Practische Studie, een groep studenten toe die zich hadden verzameld uit protest tegen het gedwongen ontslag van Joodse docenten. Het leidde tot een spontane protestactie: een studentenstaking waarbij veel van het onderwijs niet door kon gaan. Als gevolg van de staking besloot de Duitse bezetter de Technische Hogeschool te sluiten. </br>Van Hasselt werd in de zomer van 1941 opgepakt en overleed, waarschijnlijk door uitputting, in het concentratiekamp Buchenwald op 10 september 1942."
+      "value": "Margaretha Livina (Margot) van Hasselt (1879–1935) maakte begin jaren ’30 dit portret van haar neef Johan Barthold Frans van Hasselt (1913–1942). </br>Op 23 november 1940 sprak Frans van Hasselt, destijds voorzitter van het gezelschap Practische Studie, een groep studenten toe die zich hadden verzameld uit protest tegen het gedwongen ontslag van Joodse docenten. Het leidde tot een spontane protestactie: een studentenstaking waarbij veel van het onderwijs niet door kon gaan. Als gevolg van de staking besloot de Duitse bezetter de Technische Hogeschool te sluiten. </br>Van Hasselt werd in de zomer van 1941 opgepakt en overleed, waarschijnlijk door uitputting, in het concentratiekamp Buchenwald op 10 september 1942."
     },
     {
       "label": "Voorstelling",
@@ -45,7 +45,7 @@
   "structures": [
     {
       "canvases": [
-        "https://dlc.services/iiif-img/7/18/85a2e601-fd3c-41a2-ace4-94038d05f9fe/canvas/c0"
+        "https://dlc.services/iiif-img/7/18/85a2e601-fd3c-41a2-ace4-94038d05f9fe/canvas/c/1"
       ],
       "within": "https://dlc.services/iiif-manifest/7/18/e605bf54-b5ac-4c33-aaec-3af71c4fa604/range/range-0.json",
       "@type": "sc:Range",
@@ -60,25 +60,59 @@
       "viewingHint": "paged",
       "canvases": [
         {
+          "metadata": [
+            {
+              "label": "String 1",
+              "value": ""
+            },
+            {
+              "label": "String 2",
+              "value": "9065"
+            },
+            {
+              "label": "String 3",
+              "value": "2011.0007.CVB.jpg"
+            },
+            {
+              "label": "Number 1",
+              "value": "0"
+            },
+            {
+              "label": "Number 2",
+              "value": "0"
+            },
+            {
+              "label": "Number 3",
+              "value": "0"
+            },
+            {
+              "label": "Tags",
+              "value": ""
+            },
+            {
+              "label": "Roles",
+              "value": ""
+            }
+          ],
           "images": [
             {
               "resource": {
                 "@type": "dctypes:Image",
                 "service": {
-                  "protocol": "http://iiif.io/api/image",
-                  "profile": "http://iiif.io/api/image/2/level1.json",
+                  "profile": "http://iiif.io/api/image/2/level2.json",
                   "width": 3928,
                   "@id": "https://dlc.services/iiif-img/7/18/85a2e601-fd3c-41a2-ace4-94038d05f9fe",
+                  "@context": "http://iiif.io/api/image/2/context.json",
                   "height": 5085
                 },
-                "width": 3928,
+                "width": 791,
                 "@id": "https://dlc.services/iiif-img/7/18/85a2e601-fd3c-41a2-ace4-94038d05f9fe/full/791,1024/0/default.jpg",
-                "height": 5085
+                "height": 1024
               },
               "@type": "oa:Annotation",
               "motivation": "sc:painting",
               "@id": "https://dlc.services/iiif-img/7/18/85a2e601-fd3c-41a2-ace4-94038d05f9fe/imageanno/0",
-              "on": "https://dlc.services/iiif-img/7/18/85a2e601-fd3c-41a2-ace4-94038d05f9fe/canvas/c0"
+              "on": "https://dlc.services/iiif-img/7/18/85a2e601-fd3c-41a2-ace4-94038d05f9fe/canvas/c/1"
             }
           ],
           "thumbnail": {
@@ -102,31 +136,16 @@
                   "height": 100
                 }
               ],
-              "profile": [
-                "http://iiif.io/api/image/2/level0.json",
-                {
-                  "formats": [
-                    "jpg"
-                  ],
-                  "qualities": [
-                    "color"
-                  ],
-                  "supports": [
-                    "sizeByWhListed"
-                  ]
-                }
-              ],
-              "width": 791,
+              "profile": "http://iiif.io/api/image/2/level0.json",
               "@id": "https://dlc.services/thumbs/7/18/85a2e601-fd3c-41a2-ace4-94038d05f9fe",
-              "@context": "http://iiif.io/api/image/2/context.json",
-              "height": 1024
+              "@context": "http://iiif.io/api/image/2/context.json"
             },
             "@id": "https://dlc.services/thumbs/7/18/85a2e601-fd3c-41a2-ace4-94038d05f9fe/full/full/0/default.jpg"
           },
           "@type": "sc:Canvas",
           "width": 3928,
-          "@id": "https://dlc.services/iiif-img/7/18/85a2e601-fd3c-41a2-ace4-94038d05f9fe/canvas/c0",
-          "label": "Image",
+          "@id": "https://dlc.services/iiif-img/7/18/85a2e601-fd3c-41a2-ace4-94038d05f9fe/canvas/c/1",
+          "label": "Canvas 1",
           "height": 5085
         }
       ],

@@ -6,7 +6,7 @@
     },
     {
       "label": "Objectnaam",
-      "value": "uurwerk"
+      "value": "klok (uurwerk)"
     },
     {
       "label": "Inventarisnummer",
@@ -49,7 +49,7 @@
   "structures": [
     {
       "canvases": [
-        "https://dlc.services/iiif-img/7/18/ba48f70b-04fc-455b-af8a-047c8fcc0a85/canvas/c0"
+        "https://dlc.services/iiif-img/7/18/ba48f70b-04fc-455b-af8a-047c8fcc0a85/canvas/c/1"
       ],
       "within": "https://dlc.services/iiif-manifest/7/18/686d7823-6545-432a-a5f2-179d95df2f5a/range/range-0.json",
       "@type": "sc:Range",
@@ -64,25 +64,59 @@
       "viewingHint": "paged",
       "canvases": [
         {
+          "metadata": [
+            {
+              "label": "String 1",
+              "value": "2000.0537.GEO"
+            },
+            {
+              "label": "String 2",
+              "value": "3107"
+            },
+            {
+              "label": "String 3",
+              "value": "2000.0537.GEO.jpg"
+            },
+            {
+              "label": "Number 1",
+              "value": "0"
+            },
+            {
+              "label": "Number 2",
+              "value": "0"
+            },
+            {
+              "label": "Number 3",
+              "value": "0"
+            },
+            {
+              "label": "Tags",
+              "value": ""
+            },
+            {
+              "label": "Roles",
+              "value": ""
+            }
+          ],
           "images": [
             {
               "resource": {
                 "@type": "dctypes:Image",
                 "service": {
-                  "protocol": "http://iiif.io/api/image",
-                  "profile": "http://iiif.io/api/image/2/level1.json",
+                  "profile": "http://iiif.io/api/image/2/level2.json",
                   "width": 2808,
                   "@id": "https://dlc.services/iiif-img/7/18/ba48f70b-04fc-455b-af8a-047c8fcc0a85",
+                  "@context": "http://iiif.io/api/image/2/context.json",
                   "height": 3502
                 },
-                "width": 2808,
+                "width": 821,
                 "@id": "https://dlc.services/iiif-img/7/18/ba48f70b-04fc-455b-af8a-047c8fcc0a85/full/821,1024/0/default.jpg",
-                "height": 3502
+                "height": 1024
               },
               "@type": "oa:Annotation",
               "motivation": "sc:painting",
               "@id": "https://dlc.services/iiif-img/7/18/ba48f70b-04fc-455b-af8a-047c8fcc0a85/imageanno/0",
-              "on": "https://dlc.services/iiif-img/7/18/ba48f70b-04fc-455b-af8a-047c8fcc0a85/canvas/c0"
+              "on": "https://dlc.services/iiif-img/7/18/ba48f70b-04fc-455b-af8a-047c8fcc0a85/canvas/c/1"
             }
           ],
           "thumbnail": {
@@ -106,31 +140,16 @@
                   "height": 100
                 }
               ],
-              "profile": [
-                "http://iiif.io/api/image/2/level0.json",
-                {
-                  "formats": [
-                    "jpg"
-                  ],
-                  "qualities": [
-                    "color"
-                  ],
-                  "supports": [
-                    "sizeByWhListed"
-                  ]
-                }
-              ],
-              "width": 821,
+              "profile": "http://iiif.io/api/image/2/level0.json",
               "@id": "https://dlc.services/thumbs/7/18/ba48f70b-04fc-455b-af8a-047c8fcc0a85",
-              "@context": "http://iiif.io/api/image/2/context.json",
-              "height": 1024
+              "@context": "http://iiif.io/api/image/2/context.json"
             },
             "@id": "https://dlc.services/thumbs/7/18/ba48f70b-04fc-455b-af8a-047c8fcc0a85/full/full/0/default.jpg"
           },
           "@type": "sc:Canvas",
           "width": 2808,
-          "@id": "https://dlc.services/iiif-img/7/18/ba48f70b-04fc-455b-af8a-047c8fcc0a85/canvas/c0",
-          "label": "Image",
+          "@id": "https://dlc.services/iiif-img/7/18/ba48f70b-04fc-455b-af8a-047c8fcc0a85/canvas/c/1",
+          "label": "Canvas 1",
           "height": 3502
         }
       ],
