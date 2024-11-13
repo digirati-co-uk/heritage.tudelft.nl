@@ -36,7 +36,12 @@ export async function Illustration(props: { source: string }) {
           </ObjectViewer>
         </div>
         <div className="cut-corners col-span-3 bg-black p-8 text-white">
-          <AutoLanguage>{data.label}</AutoLanguage>
+          <div>
+            <AutoLanguage>{data.label}</AutoLanguage>
+          </div>
+          <div>
+            <AutoLanguage>{data.summary}</AutoLanguage>
+          </div>
         </div>
       </div>
     </ManifestLoader>
