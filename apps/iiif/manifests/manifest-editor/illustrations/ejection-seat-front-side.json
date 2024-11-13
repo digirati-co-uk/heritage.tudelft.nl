@@ -3,14 +3,10 @@
   "id": "https://example.org/22b5lvwtbjm-m2vn98ai",
   "type": "Manifest",
   "label": {
-    "en": [
-      "Front/Side view Ejection Seat"
-    ]
+    "en": ["Front/Side view Ejection Seat"]
   },
   "summary": {
-    "en": [
-      "credit: Jan van der Heul"
-    ]
+    "en": ["Credit: Jan van der Heul"]
   },
   "thumbnail": [
     {
@@ -20,7 +16,7 @@
         {
           "@id": "https://dlc.services/thumbs/7/37/e7154d7e15c435b7341bce58bc42b9ad",
           "@type": "ImageService2",
-          "profile": "level0",
+          "profile": "http://iiif.io/api/image/2/level0.json",
           "sizes": [
             {
               "width": 683,
@@ -47,103 +43,73 @@
     {
       "id": "https://dlc.services/iiif-img/7/37/e7154d7e15c435b7341bce58bc42b9ad/canvas/c/29",
       "type": "Canvas",
-      "height": 7521,
-      "width": 5014,
+      "height": 5000,
+      "width": 12000,
       "label": {
-        "none": [
-          "Front and Side view of the Ejection Seat"
-        ]
+        "none": ["Front and Side view of the Ejection Seat"]
       },
       "metadata": [
         {
           "label": {
-            "none": [
-              "String 1"
-            ]
+            "none": ["String 1"]
           },
           "value": {
-            "none": [
-              "maatwerk"
-            ]
+            "none": ["maatwerk"]
           }
         },
         {
           "label": {
-            "none": [
-              "String 2"
-            ]
+            "none": ["String 2"]
           },
           "value": {
-            "none": [
-              "ejection-seat"
-            ]
+            "none": ["ejection-seat"]
           }
         },
         {
           "label": {
-            "none": [
-              "String 3"
-            ]
+            "none": ["String 3"]
           },
           "value": {}
         },
         {
           "label": {
-            "none": [
-              "Number 1"
-            ]
+            "none": ["Number 1"]
           },
           "value": {
-            "none": [
-              "28"
-            ]
+            "none": ["28"]
           }
         },
         {
           "label": {
-            "none": [
-              "Number 2"
-            ]
+            "none": ["Number 2"]
           },
           "value": {
-            "none": [
-              "0"
-            ]
+            "none": ["0"]
           }
         },
         {
           "label": {
-            "none": [
-              "Number 3"
-            ]
+            "none": ["Number 3"]
           },
           "value": {
-            "none": [
-              "0"
-            ]
+            "none": ["0"]
           }
         },
         {
           "label": {
-            "none": [
-              "Tags"
-            ]
+            "none": ["Tags"]
           },
           "value": {}
         },
         {
           "label": {
-            "none": [
-              "Roles"
-            ]
+            "none": ["Roles"]
           },
           "value": {}
         }
       ],
       "summary": {
-        "en": [
-          "Credit: Jan van der Heul"
-        ]
+        "en": ["Credit: Jan van der Heul"]
       },
       "thumbnail": [
         {
@@ -182,41 +148,13 @@
           "type": "AnnotationPage",
           "items": [
             {
-              "id": "https://dlc.services/iiif-img/7/37/e7154d7e15c435b7341bce58bc42b9ad/imageanno/0",
-              "type": "Annotation",
-              "label": {
-                "en": [
-                  "Front view of the Ejection Seat"
-                ]
-              },
-              "motivation": "painting",
-              "target": "https://dlc.services/iiif-img/7/37/e7154d7e15c435b7341bce58bc42b9ad/canvas/c/29#xywh=1219,1625,1221,1831",
-              "body": {
-                "id": "https://dlc.services/iiif-img/7/37/e7154d7e15c435b7341bce58bc42b9ad/full/683,1024/0/default.jpg",
-                "type": "Image",
-                "height": 7521,
-                "width": 5014,
-                "service": [
-                  {
-                    "@id": "https://dlc.services/iiif-img/7/37/e7154d7e15c435b7341bce58bc42b9ad",
-                    "@type": "ImageService2",
-                    "profile": "level2",
-                    "width": 5014,
-                    "height": 7521
-                  }
-                ]
-              }
-            },
-            {
               "id": "https://dlc.services/iiif-img/7/37/f647706a9cafa953906ce2275c8cddf1/imageanno/0",
               "type": "Annotation",
               "label": {
-                "en": [
-                  "Side view of the Ejection Seat"
-                ]
+                "en": ["Side view of the Ejection Seat"]
               },
               "motivation": "painting",
-              "target": "https://dlc.services/iiif-img/7/37/e7154d7e15c435b7341bce58bc42b9ad/canvas/c/29#xywh=1,1624,1218,1829",
+              "target": "https://dlc.services/iiif-img/7/37/e7154d7e15c435b7341bce58bc42b9ad/canvas/c/29#xywh=426,442,2593,3896",
               "body": {
                 "id": "https://dlc.services/iiif-img/7/37/f647706a9cafa953906ce2275c8cddf1/full/683,1024/0/default.jpg",
                 "type": "Image",
@@ -228,34 +166,111 @@
                     "@type": "ImageService2",
                     "profile": "level2",
                     "width": 5504,
-                    "height": 8256
+                    "height": 8256,
+                    "id": "https://dlc.services/iiif-img/7/37/f647706a9cafa953906ce2275c8cddf1"
                   }
                 ]
               }
             },
             {
-              "id": "https://dlc.services/iiif-img/7/37/f9c4c8c4f6164ef649292465eee1da46/imageanno/0",
+              "id": "https://dlc.services/iiif-img/7/37/e7154d7e15c435b7341bce58bc42b9ad/imageanno/0",
               "type": "Annotation",
               "label": {
-                "en": [
-                  "Front/Side view of the Ejection Seat"
-                ]
+                "en": ["Front view of the Ejection Seat"]
               },
               "motivation": "painting",
-              "target": "https://dlc.services/iiif-img/7/37/e7154d7e15c435b7341bce58bc42b9ad/canvas/c/29#xywh=2443,1621,1220,2156",
+              "target": "https://dlc.services/iiif-img/7/37/e7154d7e15c435b7341bce58bc42b9ad/canvas/c/29#xywh=3371,836,2541,3812",
               "body": {
-                "id": "https://dlc.services/iiif-img/7/37/f9c4c8c4f6164ef649292465eee1da46/full/683,1024/0/default.jpg",
+                "id": "https://dlc.services/iiif-img/7/37/e7154d7e15c435b7341bce58bc42b9ad/full/683,1024/0/default.jpg",
                 "type": "Image",
+                "height": 7521,
+                "width": 5014,
+                "service": [
+                  {
+                    "@id": "https://dlc.services/iiif-img/7/37/e7154d7e15c435b7341bce58bc42b9ad",
+                    "@type": "ImageService2",
+                    "profile": "level2",
+                    "width": 5014,
+                    "height": 7521,
+                    "id": "https://dlc.services/iiif-img/7/37/e7154d7e15c435b7341bce58bc42b9ad"
+                  }
+                ]
+              }
+            },
+            {
+              "id": "https://dlc.services/iiif-img/7/37/e7154d7e15c435b7341bce58bc42b9ad/canvas/c/29/annotation-page/annotation/xhcrsqfnuxa-m3g4ly6a",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://dlc.services/iiif-img/7/37/e7154d7e15c435b7341bce58bc42b9ad/canvas/c/29#xywh=6234,549,2407,3615",
+              "body": {
+                "id": "https://dlc.services/iiif-img/7/37/f9c4c8c4f6164ef649292465eee1da46/full/max/0/default.jpg",
+                "type": "Image",
+                "format": "image/jpeg",
                 "height": 6659,
                 "width": 4439,
                 "service": [
                   {
+                    "@context": "http://iiif.io/api/image/2/context.json",
                     "@id": "https://dlc.services/iiif-img/7/37/f9c4c8c4f6164ef649292465eee1da46",
-                    "@type": "ImageService2",
-                    "profile": "level2",
+                    "@type": "iiif:Image",
+                    "profile": [
+                      "http://iiif.io/api/image/2/level2.json",
+                      {
+                        "formats": ["jpg", "tif", "gif", "png"],
+                        "qualities": ["bitonal", "default", "gray", "color"],
+                        "supports": [
+                          "regionByPx",
+                          "sizeByW",
+                          "sizeByWhListed",
+                          "cors",
+                          "regionSquare",
+                          "sizeByDistortedWh",
+                          "canonicalLinkHeader",
+                          "sizeByConfinedWh",
+                          "sizeByPct",
+                          "jsonldMediaType",
+                          "regionByPct",
+                          "rotationArbitrary",
+                          "sizeByH",
+                          "baseUriRedirect",
+                          "rotationBy90s",
+                          "profileLinkHeader",
+                          "sizeByForcedWh",
+                          "sizeByWh",
+                          "mirroring"
+                        ]
+                      }
+                    ],
+                    "protocol": "http://iiif.io/api/image",
                     "width": 4439,
                     "height": 6659,
-                    "id": "https://dlc.services/iiif-img/7/37/f9c4c8c4f6164ef649292465eee1da46"
+                    "sizes": [
+                      {
+                        "width": 683,
+                        "height": 1024
+                      },
+                      {
+                        "width": 267,
+                        "height": 400
+                      },
+                      {
+                        "width": 133,
+                        "height": 200
+                      },
+                      {
+                        "width": 67,
+                        "height": 100
+                      }
+                    ],
+                    "tiles": [
+                      {
+                        "width": 512,
+                        "height": 512,
+                        "scaleFactors": [1, 2, 4, 8, 16, 32, 64]
+                      }
+                    ],
+                    "id": "https://dlc.services/iiif-img/7/37/f9c4c8c4f6164ef649292465eee1da46",
+                    "type": "iiif:Image"
                   }
                 ]
               }
@@ -264,12 +279,10 @@
               "id": "https://dlc.services/iiif-img/7/37/710bedad6fbb2b1244b41a7f9cacfe25/imageanno/0",
               "type": "Annotation",
               "label": {
-                "en": [
-                  "Side view of the Ejection Seat"
-                ]
+                "en": ["Side view of the Ejection Seat"]
               },
               "motivation": "painting",
-              "target": "https://dlc.services/iiif-img/7/37/e7154d7e15c435b7341bce58bc42b9ad/canvas/c/29#xywh=3663,1623,1220,1831",
+              "target": "https://dlc.services/iiif-img/7/37/e7154d7e15c435b7341bce58bc42b9ad/canvas/c/29#xywh=8969,706,2569,3856",
               "body": {
                 "id": "https://dlc.services/iiif-img/7/37/710bedad6fbb2b1244b41a7f9cacfe25/full/683,1024/0/default.jpg",
                 "type": "Image",
@@ -306,16 +319,6 @@
               "body": []
             },
             {
-              "id": "https://dlc.services/iiif-img/7/37/e7154d7e15c435b7341bce58bc42b9ad/canvas/c/29/annotations/xnfjtn0fj3-m2xgjzg5/annotation/88t7ygzych-m2xgk49p",
-              "type": "Annotation",
-              "motivation": "describing",
-              "target": {
-                "id": "https://dlc.services/iiif-img/7/37/f9c4c8c4f6164ef649292465eee1da46/imageanno/0",
-                "type": "Annotation"
-              },
-              "body": []
-            },
-            {
               "id": "https://dlc.services/iiif-img/7/37/e7154d7e15c435b7341bce58bc42b9ad/canvas/c/29/annotations/xnfjtn0fj3-m2xgjzg5/annotation/cc7veyb34ir-m2xgk4xy",
               "type": "Annotation",
               "motivation": "describing",
@@ -331,6 +334,19 @@
               "motivation": "describing",
               "target": {
                 "id": "https://dlc.services/iiif-img/7/37/f647706a9cafa953906ce2275c8cddf1/imageanno/0",
+                "type": "Annotation"
+              },
+              "body": []
+            },
+            {
+              "id": "https://dlc.services/iiif-img/7/37/e7154d7e15c435b7341bce58bc42b9ad/canvas/c/29/annotations/xnfjtn0fj3-m2xgjzg5/annotation/bzika4o2qsu-m3g4njs5",
+              "type": "Annotation",
+              "label": {
+                "en": ["Front/Side view of the Ejection Seat"]
+              },
+              "motivation": "describing",
+              "target": {
+                "id": "https://dlc.services/iiif-img/7/37/e7154d7e15c435b7341bce58bc42b9ad/canvas/c/29/annotation-page/annotation/xhcrsqfnuxa-m3g4ly6a",
                 "type": "Annotation"
               },
               "body": []
