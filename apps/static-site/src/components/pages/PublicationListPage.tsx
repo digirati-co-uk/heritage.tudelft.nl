@@ -11,7 +11,7 @@ export async function PublicationListPage(props: PublicationListPageProps) {
   // Sort by date
   const sortedByDate = props.publications.sort((a, b) => {
     if (!a.date || !b.date) return 0;
-    return new Date(b.date).getDate() - new Date(a.date).getDate();
+    return new Date(b.date).getTime() - new Date(a.date).getTime();
   });
 
   // Group by id and language
