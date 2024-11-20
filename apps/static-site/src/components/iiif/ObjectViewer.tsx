@@ -40,7 +40,12 @@ export function ObjectViewer({
 
             <footer className="flex flex-col items-center gap-8 bg-black p-8 text-white md:min-h-32 md:flex-row">
               <div className="flex-1">
-                <AutoLanguage>{manifest?.label}</AutoLanguage>
+                <div>
+                  <AutoLanguage>{manifest?.label}</AutoLanguage>
+                </div>
+                <div>
+                  <AutoLanguage>{manifest?.summary}</AutoLanguage>
+                </div>
               </div>
               {objectLink ? (
                 <Link
