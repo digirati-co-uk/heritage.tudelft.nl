@@ -1,0 +1,180 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "https://example.org/63cdhpgonbh-m3r3yqgl",
+  "type": "Manifest",
+  "label": {
+    "en": [
+      "De collectie van het Henri Baudet Instituut in de faculteit Industrieel Ontwerpen"
+    ]
+  },
+  "summary": {
+    "en": [
+      "Credit: Geertje van Achterberg"
+    ]
+  },
+  "items": [
+    {
+      "id": "https://dlc.services/iiif-img/7/37/476584fe4b9d31eb40c5838c29bac2e6/canvas/c/5",
+      "type": "Canvas",
+      "height": 1057,
+      "width": 793,
+      "label": {
+        "none": [
+          "De collectie van het Henri Baudet Instituut in de faculteit Industrieel Ontwerpen"
+        ]
+      },
+      "metadata": [
+        {
+          "label": {
+            "none": [
+              "String 1"
+            ]
+          },
+          "value": {
+            "none": [
+              "maatwerk"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "String 2"
+            ]
+          },
+          "value": {
+            "none": [
+              "collectiebeschrijving"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "String 3"
+            ]
+          },
+          "value": {}
+        },
+        {
+          "label": {
+            "none": [
+              "Number 1"
+            ]
+          },
+          "value": {
+            "none": [
+              "4"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 2"
+            ]
+          },
+          "value": {
+            "none": [
+              "0"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 3"
+            ]
+          },
+          "value": {
+            "none": [
+              "0"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Tags"
+            ]
+          },
+          "value": {}
+        },
+        {
+          "label": {
+            "none": [
+              "Roles"
+            ]
+          },
+          "value": {}
+        }
+      ],
+      "summary": {
+        "en": [
+          "Credit: Geertje van Achterberg"
+        ]
+      },
+      "thumbnail": [
+        {
+          "id": "https://dlc.services/thumbs/7/37/476584fe4b9d31eb40c5838c29bac2e6/full/150,200/0/default.jpg",
+          "type": "Image",
+          "service": [
+            {
+              "@id": "https://dlc.services/thumbs/7/37/476584fe4b9d31eb40c5838c29bac2e6",
+              "@type": "ImageService2",
+              "profile": "level0",
+              "sizes": [
+                {
+                  "width": 768,
+                  "height": 1024
+                },
+                {
+                  "width": 301,
+                  "height": 400
+                },
+                {
+                  "width": 150,
+                  "height": 200
+                },
+                {
+                  "width": 75,
+                  "height": 100
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "items": [
+        {
+          "id": "https://dlc.services/iiif-img/7/37/476584fe4b9d31eb40c5838c29bac2e6/canvas/c/5/annotation-page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://dlc.services/iiif-img/7/37/476584fe4b9d31eb40c5838c29bac2e6/imageanno/0",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://dlc.services/iiif-img/7/37/476584fe4b9d31eb40c5838c29bac2e6/canvas/c/5",
+              "body": {
+                "id": "https://dlc.services/iiif-img/7/37/476584fe4b9d31eb40c5838c29bac2e6/full/768,1024/0/default.jpg",
+                "type": "Image",
+                "height": 1024,
+                "width": 768,
+                "service": [
+                  {
+                    "@id": "https://dlc.services/iiif-img/7/37/476584fe4b9d31eb40c5838c29bac2e6",
+                    "@type": "ImageService2",
+                    "profile": "level2",
+                    "width": 793,
+                    "height": 1057,
+                    "id": "https://dlc.services/iiif-img/7/37/476584fe4b9d31eb40c5838c29bac2e6"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
