@@ -1,6 +1,6 @@
-import { existsSync } from 'fs';
-import { join } from 'node:path';
-import { cwd } from 'node:process';
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+import { cwd } from "node:process";
 
 export function createFiletypeCache(cacheFile: string) {
   let isLoaded = false;
@@ -24,8 +24,8 @@ export function createFiletypeCache(cacheFile: string) {
       }
 
       if (existsSync(filePath)) {
-        if (filePath.endsWith('/_collection.yml') || filePath.endsWith('/_collection.yaml')) {
-          fileTypeCache[filePath] = 'Collection';
+        if (filePath.endsWith("/_collection.yml") || filePath.endsWith("/_collection.yaml")) {
+          fileTypeCache[filePath] = "Collection";
           didChange = true;
           return fileTypeCache[filePath];
         }
@@ -36,14 +36,14 @@ export function createFiletypeCache(cacheFile: string) {
           jsonResource = jsonResource.default;
         }
 
-        let type = jsonResource.type || jsonResource['@type'];
+        let type = jsonResource.type || jsonResource["@type"];
 
         switch (type) {
-          case 'sc:Manifest':
-            type = 'Manifest';
+          case "sc:Manifest":
+            type = "Manifest";
             break;
-          case 'sc:Collection':
-            type = 'Collection';
+          case "sc:Collection":
+            type = "Collection";
             break;
         }
 

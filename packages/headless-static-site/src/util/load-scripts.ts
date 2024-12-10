@@ -1,22 +1,20 @@
+import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { cwd } from "node:process";
-import { existsSync } from "fs";
-import { readAllFiles } from "./read-all-files.ts";
-import { pythonExtract } from "./python-api.ts";
 import chalk from "chalk";
+import { pythonExtract } from "./python-api.ts";
+import { readAllFiles } from "./read-all-files.ts";
 
 export async function loadScripts(
   options: { scripts?: string; python?: boolean; debug?: boolean },
-  log: (text: string) => void = () => void 0,
+  log: (text: string) => void = () => void 0
 ) {
   // Load external configs / scripts.
   if (options.scripts) {
     const scriptsPath = join(cwd(), options.scripts);
     let loaded = 0;
     if (existsSync(scriptsPath)) {
-      const allFiles = Array.from(readAllFiles(scriptsPath)).filter(
-        (s) => !s.endsWith("/hss.py"),
-      );
+      const allFiles = Array.from(readAllFiles(scriptsPath)).filter((s) => !s.endsWith("/hss.py"));
       log(`Loading ${allFiles.length} script(s)`);
       for (const file of allFiles) {
         if (file.endsWith("extract.py")) {

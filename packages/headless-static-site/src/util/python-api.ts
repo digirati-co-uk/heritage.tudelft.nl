@@ -1,6 +1,6 @@
+import { basename } from "node:path";
 import { extract } from "../../lib/scripts";
 import { runPython } from "./run-python.ts";
-import { basename } from "path/posix";
 
 export async function pythonExtract(pythonScript: string, log?: boolean) {
   const metaPython: any = await runPython(pythonScript, ["--meta"]);

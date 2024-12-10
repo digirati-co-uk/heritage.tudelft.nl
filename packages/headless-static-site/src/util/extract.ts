@@ -1,8 +1,8 @@
-import { LazyValue } from './lazy-value';
-import { ActiveResourceJson } from './store';
-import { BuildConfig } from '../commands/build.ts';
-import { IIIFRC } from './get-config.ts';
-import { createStoreRequestCache } from './store-request-cache.ts';
+import type { BuildConfig } from "../commands/build.ts";
+import type { IIIFRC } from "./get-config.ts";
+import type { LazyValue } from "./lazy-value";
+import type { ActiveResourceJson } from "./store";
+import type { createStoreRequestCache } from "./store-request-cache.ts";
 
 export interface ExtractionInvalidateApi {
   caches: LazyValue<Record<string, any>>;
@@ -33,7 +33,7 @@ export interface Extraction<Config = any, Temp = any, TempInject = any> {
     temp: Record<string, Temp>,
     api: ExtractionSetupApi,
     config: Partial<Config>
-  ) => Promise<void | { temp: TempInject }>;
+  ) => Promise<undefined | { temp: TempInject }>;
   collectManifest?: (
     resource: ActiveResourceJson,
     temp: Record<string, Temp>,

@@ -1,23 +1,23 @@
-import { Command } from "commander";
-import { supportedConfigFiles } from "../util/get-config.ts";
-import { cwd } from "process";
-import { join } from "path";
-import { existsSync } from "fs";
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+import { cwd } from "node:process";
+import type { Command } from "commander";
 import { mkdirp } from "mkdirp";
+import { supportedConfigFiles } from "../util/get-config.ts";
 
-interface InitOptions {}
+type InitOptions = unknown;
 
 export async function init(options: InitOptions, command: Command) {
   // Check if any of the supported configs exist.
   for (const config of supportedConfigFiles) {
     if (existsSync(join(cwd(), config))) {
-      console.log("Found config file: " + config);
+      console.log(`Found config file: ${config}`);
       return;
     }
   }
 
   const configFile = join(cwd(), ".iiifrc.yml");
-  console.log("Creating config file: " + configFile);
+  console.log(`Creating config file: ${configFile}`);
   // language=yaml
   await Bun.write(
     configFile,
@@ -32,7 +32,7 @@ stores:
     pattern: "**/*.json"
     destination: manifests
     base: ./content
-  
+
   cookbook-example:
     type: iiif-remote
     url: https://iiif.io/api/cookbook/recipe/0005-image-service/manifest.json
@@ -49,7 +49,7 @@ slugs:
     slugTemplate: manifests/:name
     examples:
       - https://iiif.io/api/cookbook/recipe/0001-mvm-image/manifest.json
-`,
+`
   );
 
   await mkdirp(join(cwd(), "content"));
@@ -96,7 +96,7 @@ slugs:
       ]
     }
   ]
-}`,
+}`
     );
   }
 
@@ -119,7 +119,7 @@ extract(
   },
 );
 
-`,
+`
   );
 
   console.log("Done!");

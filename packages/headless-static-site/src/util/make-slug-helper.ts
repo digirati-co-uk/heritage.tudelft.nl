@@ -1,5 +1,5 @@
-import { GenericStore } from "./get-config.ts";
-import { BuildConfig } from "../commands/build.ts";
+import type { BuildConfig } from "../commands/build.ts";
+import type { GenericStore } from "./get-config.ts";
 
 function getDefaultSlug(slug: string) {
   const url = new URL(slug);
@@ -16,10 +16,7 @@ function getDefaultSlug(slug: string) {
 
   return [path, `default:${url.hostname}/${extension}`] as const;
 }
-export function makeGetSlugHelper(
-  store: GenericStore,
-  slugs: BuildConfig["slugs"],
-) {
+export function makeGetSlugHelper(store: GenericStore, slugs: BuildConfig["slugs"]) {
   if (store.slugTemplates) {
     return (resource: { id: string; type: string }) => {
       const isManifest = resource.type === "Manifest";
@@ -31,20 +28,20 @@ export function makeGetSlugHelper(
           if (slug) {
             if (isManifest && slug.startsWith("manifests/")) {
               console.log(
-                'Warning: Manifest slug should not start with "manifests/". Consider adding it to the prefix in the slug config',
+                'Warning: Manifest slug should not start with "manifests/". Consider adding it to the prefix in the slug config'
               );
             }
             if (isCollection && slug.startsWith("collections/")) {
               console.log(
-                'Warning: Collection slug should not start with "collections/". Consider adding it to the prefix in the slug config',
+                'Warning: Collection slug should not start with "collections/". Consider adding it to the prefix in the slug config'
               );
             }
 
             if (isManifest && !slug.startsWith("manifests/")) {
-              slug = "manifests/" + slug;
+              slug = `manifests/${slug}`;
             }
             if (isCollection && !slug.startsWith("collections/")) {
-              slug = "collections/" + slug;
+              slug = `collections/${slug}`;
             }
 
             return [slug, slugTemplate] as const;

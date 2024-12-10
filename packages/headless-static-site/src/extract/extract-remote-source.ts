@@ -1,4 +1,4 @@
-import { Extraction } from "../util/extract.ts";
+import type { Extraction } from "../util/extract.ts";
 
 export const extractRemoteSource: Extraction = {
   id: "extract-remote-source",

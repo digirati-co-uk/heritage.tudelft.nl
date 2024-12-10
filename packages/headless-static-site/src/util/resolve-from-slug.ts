@@ -1,11 +1,7 @@
-import { compileReverseSlugConfig, SlugConfig } from "./slug-engine.ts";
+import { type SlugConfig, compileReverseSlugConfig } from "./slug-engine.ts";
 
-export function resolveFromSlug(
-  slug: string,
-  type: string,
-  config: Record<string, SlugConfig>,
-  quiet = true,
-) {
+export function resolveFromSlug(slug_: string, type: string, config: Record<string, SlugConfig>, quiet = true) {
+  let slug = slug_;
   const candidates = [];
   const keys = Object.keys(config);
   for (const key of keys) {
@@ -22,7 +18,7 @@ export function resolveFromSlug(
     const matchingPrefix = `${type.toLowerCase()}s${addedPrefix}`;
 
     if (matchingPrefix.startsWith("/") && !slug.startsWith("/")) {
-      slug = "/" + slug;
+      slug = `/${slug}`;
     }
     if (!matchingPrefix.startsWith("/") && slug.startsWith("/")) {
       slug = slug.slice(1);

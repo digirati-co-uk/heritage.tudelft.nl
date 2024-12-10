@@ -1,28 +1,28 @@
-import { mkdirp } from 'mkdirp';
-import { Enrichment } from '../util/enrich';
-import { getValue } from '@iiif/helpers';
-import { InternationalString } from '@iiif/presentation-3';
-import { join } from 'node:path';
-import { readFile, writeFile } from 'node:fs/promises';
-import { existsSync } from 'node:fs';
+import { existsSync } from "node:fs";
+import { readFile, writeFile } from "node:fs/promises";
+import { join } from "node:path";
+import { getValue } from "@iiif/helpers";
+import type { InternationalString } from "@iiif/presentation-3";
+import { mkdirp } from "mkdirp";
+import type { Enrichment } from "../util/enrich";
 
 const schema = {
-  name: 'manifests',
+  name: "manifests",
   enable_nested_fields: true,
   fields: [
-    { name: 'id', type: 'string' },
-    { name: 'type', type: 'string', facet: true },
-    { name: 'label', type: 'string' },
-    { name: 'full_label', type: 'object', optional: true },
-    { name: 'summary', type: 'string', optional: true },
-    { name: 'collections', type: 'string[]', facet: true, optional: true },
-    { name: 'plaintext', type: 'string', optional: true },
+    { name: "id", type: "string" },
+    { name: "type", type: "string", facet: true },
+    { name: "label", type: "string" },
+    { name: "full_label", type: "object", optional: true },
+    { name: "summary", type: "string", optional: true },
+    { name: "collections", type: "string[]", facet: true, optional: true },
+    { name: "plaintext", type: "string", optional: true },
 
     // other fields
-    { name: 'slug', type: 'string' },
-    { name: 'url', type: 'string', optional: true },
-    { name: 'totalItems', type: 'int32', optional: true },
-    { name: 'thumbnail', type: 'string', index: false, optional: true },
+    { name: "slug", type: "string" },
+    { name: "url", type: "string", optional: true },
+    { name: "totalItems", type: "int32", optional: true },
+    { name: "thumbnail", type: "string", index: false, optional: true },
   ],
 };
 
@@ -40,16 +40,16 @@ type SingleRecord = {
 
 type TopicRecord = Record<`topic_${string}`, string[]>;
 
-export const enrichTypesense: Enrichment<{}, { record: SingleRecord; foundTopics: string[] }> = {
-  id: 'typesense-manifests',
-  name: 'Typesense manifest collection',
-  types: ['Manifest', 'Collection'],
+export const enrichTypesense: Enrichment<unknown, { record: SingleRecord; foundTopics: string[] }> = {
+  id: "typesense-manifests",
+  name: "Typesense manifest collection",
+  types: ["Manifest", "Collection"],
   invalidate: async () => {
     return true;
   },
 
   async handler(resource, api) {
-    const id = resource.slug.replace('manifests/', '');
+    const id = resource.slug.replace("manifests/", "");
     const meta = await api.meta.value;
     const indices = await api.indices.value;
 
@@ -59,10 +59,10 @@ export const enrichTypesense: Enrichment<{}, { record: SingleRecord; foundTopics
       extraTopics[`topic_${k}`] = v;
     }
 
-    let plaintext = '';
-    const keywordsFile = join(api.files, 'keywords.txt');
+    let plaintext = "";
+    const keywordsFile = join(api.files, "keywords.txt");
     if (existsSync(keywordsFile)) {
-      plaintext = await readFile(keywordsFile, 'utf-8');
+      plaintext = await readFile(keywordsFile, "utf-8");
     }
     const collections = meta.partOfCollections || [];
 
@@ -93,9 +93,9 @@ export const enrichTypesense: Enrichment<{}, { record: SingleRecord; foundTopics
     }
 
     // Write the schema + the jsonl file with all the data.
-    const typeSenseDir = join(api.build.filesDir, 'meta', 'typesense');
-    const schemaFile = join(typeSenseDir, 'manifests.schema.json');
-    const dataFile = join(typeSenseDir, 'manifests.jsonl');
+    const typeSenseDir = join(api.build.filesDir, "meta", "typesense");
+    const schemaFile = join(typeSenseDir, "manifests.schema.json");
+    const dataFile = join(typeSenseDir, "manifests.jsonl");
 
     const foundTopics: string[] = [];
     const topicSchema: any[] = [];
@@ -103,7 +103,12 @@ export const enrichTypesense: Enrichment<{}, { record: SingleRecord; foundTopics
       for (const topic of record.foundTopics) {
         if (!foundTopics.includes(topic)) {
           foundTopics.push(topic);
-          topicSchema.push({ name: topic, type: 'string[]', facet: true, optional: true });
+          topicSchema.push({
+            name: topic,
+            type: "string[]",
+            facet: true,
+            optional: true,
+          });
         }
       }
     }
@@ -117,7 +122,7 @@ export const enrichTypesense: Enrichment<{}, { record: SingleRecord; foundTopics
       .map((record) => {
         return JSON.stringify(record.record);
       })
-      .join('\n');
+      .join("\n");
 
     await writeFile(dataFile, jsonList);
   },

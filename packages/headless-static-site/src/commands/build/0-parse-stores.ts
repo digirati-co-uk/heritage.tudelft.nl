@@ -1,10 +1,9 @@
-import { createStoreRequestCache } from "../../util/store-request-cache.ts";
-import { ParsedResource, Store } from "../../util/store.ts";
-import { BuildConfig } from "../build.ts";
+import { join } from "node:path";
 import { mkdirp } from "mkdirp";
 import { makeGetSlugHelper } from "../../util/make-slug-helper.ts";
-import { join } from "node:path";
-import { cwd } from "node:process";
+import { createStoreRequestCache } from "../../util/store-request-cache.ts";
+import type { ParsedResource, Store } from "../../util/store.ts";
+import type { BuildConfig } from "../build.ts";
 import { defaultCacheDir } from "../generate.ts";
 
 export async function parseStores(buildConfig: BuildConfig) {
@@ -35,7 +34,7 @@ export async function parseStores(buildConfig: BuildConfig) {
       stores.push(key);
       config.stores[key] = {
         type: "iiif-json",
-        path: "./" + join(defaultCacheDir, key, "build"),
+        path: `./${join(defaultCacheDir, key, "build")}`,
       };
     }
   }
@@ -47,7 +46,7 @@ export async function parseStores(buildConfig: BuildConfig) {
     const storeConfig = config.stores[storeId];
     const storeType: Store<any> = (storeTypes as any)[storeConfig.type];
     if (!storeType) {
-      throw new Error("Unknown store type: " + storeConfig.type);
+      throw new Error(`Unknown store type: ${storeConfig.type}`);
     }
 
     const getSlug = makeGetSlugHelper(storeConfig, slugs);
@@ -66,7 +65,7 @@ export async function parseStores(buildConfig: BuildConfig) {
       if (resource.type === "Manifest") {
         for (const rewrite of manifestRewrites) {
           if (rewrite.rewrite) {
-            let newSlug = await rewrite.rewrite(resource.slug, resource);
+            const newSlug = await rewrite.rewrite(resource.slug, resource);
             if (newSlug && typeof newSlug === "string") {
               resource.slug = newSlug;
             }
@@ -76,7 +75,7 @@ export async function parseStores(buildConfig: BuildConfig) {
       if (resource.type === "Collection") {
         for (const rewrite of collectionRewrites) {
           if (rewrite.rewrite) {
-            let newSlug = await rewrite.rewrite(resource.slug, resource);
+            const newSlug = await rewrite.rewrite(resource.slug, resource);
             if (newSlug && typeof newSlug === "string") {
               resource.slug = newSlug;
             }

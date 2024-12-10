@@ -1,5 +1,5 @@
 // Rewrite manifest paths to be flat.
-import { Rewrite } from "../util/rewrite.ts";
+import type { Rewrite } from "../util/rewrite.ts";
 
 export const flatManifests: Rewrite = {
   id: "flat-manifests",

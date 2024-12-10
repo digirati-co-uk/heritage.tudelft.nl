@@ -1,10 +1,7 @@
-import { Extraction } from "../util/extract.ts";
-import { DescriptiveProperties } from "@iiif/presentation-3";
-import { getValue } from "@iiif/helpers/i18n";
-import { mkdir } from "fs";
-import { mkdirp } from "mkdirp";
 import { join } from "node:path";
-import { cachedTranslate } from "../util/cached-translate.ts";
+import type { DescriptiveProperties } from "@iiif/presentation-3";
+import { mkdirp } from "mkdirp";
+import type { Extraction } from "../util/extract.ts";
 import { getSingleLabel } from "../util/get-single-label.ts";
 
 type ExtractFormat = {
@@ -28,10 +25,7 @@ type ExtractionConfig = {
   translate?: boolean;
 };
 
-export const extractMetadataAnalysis: Extraction<
-  ExtractionConfig,
-  ExtractFormat
-> = {
+export const extractMetadataAnalysis: Extraction<ExtractionConfig, ExtractFormat> = {
   id: "metadata-analysis",
   name: "Metadata Analysis",
   types: ["Manifest"],
@@ -116,10 +110,7 @@ export const extractMetadataAnalysis: Extraction<
     }
 
     await mkdirp(join(api.build.filesDir, "meta"));
-    await Bun.write(
-      join(api.build.filesDir, "meta", "metadata-analysis.json"),
-      JSON.stringify(analysisFile, null, 2),
-    );
+    await Bun.write(join(api.build.filesDir, "meta", "metadata-analysis.json"), JSON.stringify(analysisFile, null, 2));
   },
   handler: async (resource, api, config) => {
     const { language = "en", translate = true } = config || {};
@@ -129,7 +120,7 @@ export const extractMetadataAnalysis: Extraction<
     const foundLanguages: Set<string> = new Set();
 
     const fullResource = resource.vault?.get(api.resource);
-    if (fullResource && fullResource.metadata) {
+    if (fullResource?.metadata) {
       const metadata: DescriptiveProperties["metadata"] = fullResource.metadata;
       for (const entry of metadata) {
         const label = entry.label || {};
@@ -160,13 +151,13 @@ export const extractMetadataAnalysis: Extraction<
                   foundValues[primaryLabel] = [];
                 }
                 foundValues[primaryLabel].push(v);
-                v.split(",").forEach((v) => {
-                  const trimmed = v.trim();
+                for (const value of v.split(",")) {
+                  const trimmed = value.trim();
                   if (!foundValuesComma[primaryLabel]) {
                     foundValuesComma[primaryLabel] = [];
                   }
                   foundValuesComma[primaryLabel].push(trimmed);
-                });
+                }
               }
             }
           }

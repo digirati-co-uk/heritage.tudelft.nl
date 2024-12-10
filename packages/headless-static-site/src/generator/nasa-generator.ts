@@ -1,6 +1,6 @@
-import { GeneratorReference, IIIFGenerator } from "../util/iiif-generator.ts";
+import type { GeneratorReference, IIIFGenerator } from "../util/iiif-generator.ts";
 import { NASA } from "./nasa-generator/NASA.ts";
-import {
+import type {
   CollectionResponse,
   SearchCollectionItem,
 } from "./nasa-generator/NASA.types.ts";

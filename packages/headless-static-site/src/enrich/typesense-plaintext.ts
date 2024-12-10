@@ -1,15 +1,15 @@
-import { join } from 'path';
-import { Enrichment } from '../util/enrich';
-import { existsSync } from 'fs';
-import { readFile, readdir } from 'fs/promises';
+import { existsSync } from "node:fs";
+import { readFile, readdir } from "node:fs/promises";
+import { join } from "node:path";
+import type { Enrichment } from "../util/enrich";
 
 const plaintextSchema = {
-  name: 'manifest-plaintext',
+  name: "manifest-plaintext",
   fields: [
-    { name: 'id', type: 'string' },
-    { name: 'plaintext', type: 'string' },
-    { name: 'manifest', type: 'string' },
-    { name: 'canvasIndex', type: 'int32' },
+    { name: "id", type: "string" },
+    { name: "plaintext", type: "string" },
+    { name: "manifest", type: "string" },
+    { name: "canvasIndex", type: "int32" },
   ],
 };
 
@@ -21,14 +21,14 @@ type SingleRecord = {
 };
 
 export const typesensePlaintext: Enrichment = {
-  id: 'typesense-plaintext',
-  name: 'Typesense plaintext',
-  types: ['Manifest'],
+  id: "typesense-plaintext",
+  name: "Typesense plaintext",
+  types: ["Manifest"],
   async invalidate(resource, api, config) {
     return true;
   },
   async handler(resource, api, config) {
-    const plaintextPath = join(api.files, 'plaintext');
+    const plaintextPath = join(api.files, "plaintext");
 
     const pages: SingleRecord[] = [];
 
@@ -36,16 +36,16 @@ export const typesensePlaintext: Enrichment = {
       const files = await readdir(plaintextPath);
 
       for (const file of files) {
-        if (file.endsWith('.txt')) {
-          const fileName = file.replace('.txt', '');
-          const canvasIndex = parseInt(fileName);
-          if (isNaN(canvasIndex)) {
+        if (file.endsWith(".txt")) {
+          const fileName = file.replace(".txt", "");
+          const canvasIndex = Number.parseInt(fileName);
+          if (Number.isNaN(canvasIndex)) {
             continue;
           }
 
           pages.push({
             id: btoa(resource.id + canvasIndex),
-            plaintext: await readFile(join(plaintextPath, file), 'utf-8'),
+            plaintext: await readFile(join(plaintextPath, file), "utf-8"),
             manifest: resource.id,
             canvasIndex,
           });
@@ -61,9 +61,9 @@ export const typesensePlaintext: Enrichment = {
     if (!temp) {
       return;
     }
-    const typeSenseDir = join(api.build.filesDir, 'meta', 'typesense');
-    const schemaFile = join(typeSenseDir, 'manifest-plaintext.schema.json');
-    const dataFile = join(typeSenseDir, 'manifest-plaintext.jsonl');
+    const typeSenseDir = join(api.build.filesDir, "meta", "typesense");
+    const schemaFile = join(typeSenseDir, "manifest-plaintext.schema.json");
+    const dataFile = join(typeSenseDir, "manifest-plaintext.jsonl");
 
     await Bun.write(schemaFile, JSON.stringify(plaintextSchema, null, 2));
 
@@ -74,6 +74,6 @@ export const typesensePlaintext: Enrichment = {
       }
     }
 
-    await Bun.write(dataFile, jsonLines.join('\n'));
+    await Bun.write(dataFile, jsonLines.join("\n"));
   },
 };

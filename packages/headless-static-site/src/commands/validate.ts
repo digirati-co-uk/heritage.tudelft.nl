@@ -1,16 +1,14 @@
-import { Command } from "commander";
-import { getConfig } from "../util/get-config.ts";
-import {
-  compileReverseSlugConfig,
-  compileSlugConfig,
-} from "../util/slug-engine.ts";
-import chalk from "chalk";
-import { cwd } from "node:process";
+import { existsSync } from "node:fs";
 import { join } from "node:path";
-import { existsSync } from "fs";
+import { cwd } from "node:process";
+import chalk from "chalk";
+import type { Command } from "commander";
+import { getConfig } from "../util/get-config.ts";
 import { resolveFromSlug } from "../util/resolve-from-slug.ts";
+import { compileReverseSlugConfig, compileSlugConfig } from "../util/slug-engine.ts";
 
-interface ValidateOptions {}
+type ValidateOptions = unknown;
+
 export async function validate(options: ValidateOptions, command?: Command) {
   let didError = false;
   const config = await getConfig();
@@ -28,7 +26,7 @@ export async function validate(options: ValidateOptions, command?: Command) {
       const reverse = compileReverseSlugConfig(slug);
 
       for (const example of slug.examples) {
-        const prefix = chalk.gray(`[${slugName}]`) + ` ${example}`;
+        const prefix = `${chalk.gray(`[${slugName}]`)} ${example}`;
 
         const [result] = compiled(example);
         if (!result) {
@@ -40,9 +38,7 @@ export async function validate(options: ValidateOptions, command?: Command) {
         if (!reverseResult || reverseResult !== example) {
           didError = true;
           console.log(chalk.red(prefix), chalk.red`⨯ failed to reverse`);
-          console.log(
-            `\n    Found:    ${reverseResult}\n    Expected: ${example} \n`,
-          );
+          console.log(`\n    Found:    ${reverseResult}\n    Expected: ${example} \n`);
           continue;
         }
 
@@ -71,12 +67,7 @@ export async function validate(options: ValidateOptions, command?: Command) {
           }
         }
         if (item.type === "Collection") {
-          const expectedPath = join(
-            cwd(),
-            ".iiif/build",
-            key,
-            "collection.json",
-          );
+          const expectedPath = join(cwd(), ".iiif/build", key, "collection.json");
           if (!existsSync(expectedPath)) {
             console.log(chalk.red`  - Missing ${key} at ${expectedPath}`);
             didError = true;

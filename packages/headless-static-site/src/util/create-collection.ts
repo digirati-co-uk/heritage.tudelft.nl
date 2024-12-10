@@ -1,4 +1,4 @@
-import { Collection } from "@iiif/presentation-3";
+import type { Collection } from "@iiif/presentation-3";
 
 export function createCollection(opts: {
   configUrl?: string;

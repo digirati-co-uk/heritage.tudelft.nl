@@ -1,12 +1,12 @@
-import { BuildConfig } from '../build.ts';
-import { join } from 'node:path';
-import { mkdirp } from 'mkdirp';
-import { ActiveResourceJson } from '../../util/store.ts';
-import slug from 'slug';
-import { existsSync } from 'fs';
-import { Collection } from '@iiif/presentation-3';
-import { dump } from 'js-yaml';
-import { createCollection } from '../../util/create-collection.ts';
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+import type { Collection } from "@iiif/presentation-3";
+import { dump } from "js-yaml";
+import { mkdirp } from "mkdirp";
+import slug from "slug";
+import { createCollection } from "../../util/create-collection.ts";
+import type { ActiveResourceJson } from "../../util/store.ts";
+import type { BuildConfig } from "../build.ts";
 // import { macro } from "../../macro.ts" assert { type: "macro" };
 
 export async function indices(
@@ -36,14 +36,14 @@ export async function indices(
   }
 
   const topLevelCollection: any[] = [];
-  const configUrl = typeof server === 'string' ? server : server?.url;
+  const configUrl = typeof server === "string" ? server : server?.url;
 
   if (collections && indexCollection) {
     const collectionSlugs = Object.keys(collections);
-    for (let originalCollectionSlug of collectionSlugs) {
+    for (const originalCollectionSlug of collectionSlugs) {
       const manifestSlugs = collections[originalCollectionSlug];
       let collectionSlug = originalCollectionSlug; // @todo rewrite
-      if (!collectionSlug.startsWith('collections/')) {
+      if (!collectionSlug.startsWith("collections/")) {
         collectionSlug = `collections/${collectionSlug}`;
       }
 
@@ -51,7 +51,7 @@ export async function indices(
         if (rewrite.rewrite) {
           const newSlug = await rewrite.rewrite(collectionSlug, {
             id: collectionSlug,
-            type: 'Collection',
+            type: "Collection",
           });
           if (newSlug) {
             collectionSlug = newSlug;
@@ -74,8 +74,8 @@ export async function indices(
             .filter(Boolean),
         };
 
-        (collectionSnippet as any)['hss:totalItems'] = collection['items'].length;
-        await Bun.write(join(buildDir, collectionSlug, 'collection.json'), JSON.stringify(collection, null, 2));
+        (collectionSnippet as any)["hss:totalItems"] = collection.items.length;
+        await Bun.write(join(buildDir, collectionSlug, "collection.json"), JSON.stringify(collection, null, 2));
 
         topLevelCollection.push(collectionSnippet);
       }
@@ -84,7 +84,7 @@ export async function indices(
 
   const indexMap: Record<string, Record<string, string[]>> = {};
   for (const resource of allResources) {
-    const indices = join(cacheDir, resource.slug, 'indices.json');
+    const indices = join(cacheDir, resource.slug, "indices.json");
     const file = await Bun.file(indices).json();
     const subjectTypes = Object.keys(file);
     for (const subjectType of subjectTypes) {
@@ -105,8 +105,8 @@ export async function indices(
   if (indexCollection) {
     const baseTopicTypeCollectionSnippet = createCollection({
       configUrl,
-      slug: 'topics',
-      label: 'Topics',
+      slug: "topics",
+      label: "Topics",
     });
 
     topLevelCollection.push(baseTopicTypeCollectionSnippet);
@@ -121,7 +121,7 @@ export async function indices(
       const topicKeys = Object.keys(topicType);
 
       let baseTopicTypeMeta = {};
-      const topicTypeMetaDisk = join(topicsDir, topicTypeKey, `_meta.yaml`);
+      const topicTypeMetaDisk = join(topicsDir, topicTypeKey, "_meta.yaml");
       if (existsSync(topicTypeMetaDisk)) {
         baseTopicTypeMeta = (await import(topicTypeMetaDisk)) || {};
       }
@@ -129,7 +129,7 @@ export async function indices(
         {
           id: topicTypeId,
           label: topicTypeKey,
-          slug: 'topics/' + topicTypeId,
+          slug: `topics/${topicTypeId}`,
         },
         baseTopicTypeMeta
       );
@@ -162,7 +162,7 @@ export async function indices(
           {
             id: topicId,
             label: topicKey,
-            slug: 'topics/' + topicTypeKey + '/' + topicId,
+            slug: `topics/${topicTypeKey}/${topicId}`,
           },
           baseMeta
         );
@@ -185,7 +185,7 @@ export async function indices(
           (topicCollectionSnippet as any).thumbnail = [
             {
               id: topicMeta.thumbnail,
-              type: 'Image',
+              type: "Image",
             },
           ];
         }
@@ -199,62 +199,62 @@ export async function indices(
             .filter((e) => e),
         };
 
-        await mkdirp(join(buildDir, 'topics', topicTypeKey, topicId));
+        await mkdirp(join(buildDir, "topics", topicTypeKey, topicId));
 
-        (topicCollection as any)['hss:totalItems'] = topicCollection['items'].length;
-        (topicCollectionSnippet as any)['hss:totalItems'] = topicCollection['items'].length;
+        (topicCollection as any)["hss:totalItems"] = topicCollection.items.length;
+        (topicCollectionSnippet as any)["hss:totalItems"] = topicCollection.items.length;
         await Bun.write(
-          join(buildDir, 'topics', topicTypeKey, topicId, 'collection.json'),
+          join(buildDir, "topics", topicTypeKey, topicId, "collection.json"),
           JSON.stringify(topicCollection, null, 2)
         );
         await Bun.write(
-          join(buildDir, 'topics', topicTypeKey, topicId, 'meta.json'),
+          join(buildDir, "topics", topicTypeKey, topicId, "meta.json"),
           JSON.stringify(topicMeta, null, 2)
         );
       }
 
-      await mkdirp(join(buildDir, 'topics', topicTypeKey));
-      await Bun.write(join(buildDir, 'topics', 'collection.json'), JSON.stringify(baseTopicTypeCollection, null, 2));
-      (topicTypeCollection as any)['hss:totalItems'] = topicTypeCollection['items'].length;
-      (topicTypeCollectionSnippet as any)['hss:totalItems'] = topicTypeCollection['items'].length;
+      await mkdirp(join(buildDir, "topics", topicTypeKey));
+      await Bun.write(join(buildDir, "topics", "collection.json"), JSON.stringify(baseTopicTypeCollection, null, 2));
+      (topicTypeCollection as any)["hss:totalItems"] = topicTypeCollection.items.length;
+      (topicTypeCollectionSnippet as any)["hss:totalItems"] = topicTypeCollection.items.length;
       await Bun.write(
-        join(buildDir, 'topics', topicTypeKey, 'collection.json'),
+        join(buildDir, "topics", topicTypeKey, "collection.json"),
         JSON.stringify(topicTypeCollection, null, 2)
       );
-      await Bun.write(join(buildDir, 'topics', topicTypeKey, 'meta.json'), JSON.stringify(topicTypeMeta, null, 2));
+      await Bun.write(join(buildDir, "topics", topicTypeKey, "meta.json"), JSON.stringify(topicTypeMeta, null, 2));
     }
   }
 
-  await mkdirp(join(buildDir, 'meta'));
+  await mkdirp(join(buildDir, "meta"));
 
-  await Bun.write(join(buildDir, 'meta', 'indices.json'), JSON.stringify(indexMap, null, 2));
+  await Bun.write(join(buildDir, "meta", "indices.json"), JSON.stringify(indexMap, null, 2));
 
   if (indexCollection) {
     const indexCollectionJson = createCollection({
       configUrl,
-      slug: '',
-      label: 'Index',
+      slug: "",
+      label: "Index",
     }) as Collection;
 
     indexCollectionJson.items = Object.values(indexCollection);
 
-    await Bun.write(join(buildDir, 'collection.json'), JSON.stringify(indexCollectionJson, null, 2));
+    await Bun.write(join(buildDir, "collection.json"), JSON.stringify(indexCollectionJson, null, 2));
   }
 
   if (manifestCollection) {
     const manifestCollectionJson = createCollection({
       configUrl,
-      slug: 'manifests',
-      label: 'Manifests',
+      slug: "manifests",
+      label: "Manifests",
     }) as Collection;
 
     manifestCollectionJson.items = manifestCollection;
 
-    await Bun.write(join(buildDir, 'manifests', 'collection.json'), JSON.stringify(manifestCollectionJson, null, 2));
+    await Bun.write(join(buildDir, "manifests", "collection.json"), JSON.stringify(manifestCollectionJson, null, 2));
   }
 
   if (storeCollections) {
-    await mkdirp(join(buildDir, 'stores'));
+    await mkdirp(join(buildDir, "stores"));
     const storeCollectionsJson = Object.entries(storeCollections).map(async ([storeId, items]) => {
       const storeCollectionSnippet = createCollection({
         configUrl,
@@ -264,10 +264,10 @@ export async function indices(
 
       topLevelCollection.push(storeCollectionSnippet);
 
-      await mkdirp(join(buildDir, 'stores', storeId));
+      await mkdirp(join(buildDir, "stores", storeId));
 
       return Bun.write(
-        join(buildDir, 'stores', `${storeId}/collection.json`),
+        join(buildDir, "stores", `${storeId}/collection.json`),
         JSON.stringify(
           {
             ...storeCollectionSnippet,
@@ -281,32 +281,32 @@ export async function indices(
 
     const topLevelCollectionJson = createCollection({
       configUrl,
-      slug: 'collections',
-      label: 'Collections',
+      slug: "collections",
+      label: "Collections",
     }) as Collection;
     topLevelCollectionJson.items = topLevelCollection;
-    await mkdirp(join(buildDir, 'collections'));
-    await Bun.write(join(buildDir, 'collections/collection.json'), JSON.stringify(topLevelCollectionJson, null, 2));
+    await mkdirp(join(buildDir, "collections"));
+    await Bun.write(join(buildDir, "collections/collection.json"), JSON.stringify(topLevelCollectionJson, null, 2));
 
     await Promise.all(storeCollectionsJson);
   }
 
   // Standard files
-  await mkdirp(join(buildDir, 'config'));
-  await Bun.write(join(buildDir, 'config', 'slugs.json'), JSON.stringify(config.slugs || {}, null, 2));
+  await mkdirp(join(buildDir, "config"));
+  await Bun.write(join(buildDir, "config", "slugs.json"), JSON.stringify(config.slugs || {}, null, 2));
 
-  await Bun.write(join(buildDir, 'config', 'stores.json'), JSON.stringify(config.stores, null, 2));
+  await Bun.write(join(buildDir, "config", "stores.json"), JSON.stringify(config.stores, null, 2));
 
   if (siteMap) {
-    await Bun.write(join(buildDir, 'meta/sitemap.json'), JSON.stringify(siteMap, null, 2));
+    await Bun.write(join(buildDir, "meta/sitemap.json"), JSON.stringify(siteMap, null, 2));
   }
 
   if (editable) {
-    await Bun.write(join(buildDir, 'meta/editable.json'), JSON.stringify(editable, null, 2));
+    await Bun.write(join(buildDir, "meta/editable.json"), JSON.stringify(editable, null, 2));
   }
 
   if (overrides) {
-    await Bun.write(join(buildDir, 'meta/overrides.json'), JSON.stringify(overrides, null, 2));
+    await Bun.write(join(buildDir, "meta/overrides.json"), JSON.stringify(overrides, null, 2));
   }
 
   // if (options.client || options.html) {

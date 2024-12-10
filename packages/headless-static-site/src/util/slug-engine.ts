@@ -9,14 +9,12 @@ export interface SlugConfig {
   addedPrefix?: string;
 }
 
-export type CompiledSlugConfig = (
-  url: string,
-) => readonly [string, Record<string, string>] | readonly [null, null];
+export type CompiledSlugConfig = (url: string) => readonly [string, Record<string, string>] | readonly [null, null];
 
 const NO_MATCH = [null, null] as const;
 export function compileSlugConfig(config: SlugConfig): CompiledSlugConfig {
   if ((config as any).pattern) {
-    throw new Error(`config.pattern is no longer supported.`);
+    throw new Error("config.pattern is no longer supported.");
   }
 
   return (slug: string) => {
@@ -34,23 +32,16 @@ export function compileSlugConfig(config: SlugConfig): CompiledSlugConfig {
       return NO_MATCH;
     }
 
-    const pathWithoutPrefix = config.prefix
-      ? path.slice(config.prefix.length)
-      : path;
+    const pathWithoutPrefix = config.prefix ? path.slice(config.prefix.length) : path;
 
-    let pathWithoutSuffix = config.suffix
-      ? pathWithoutPrefix.slice(0, -config.suffix.length)
-      : pathWithoutPrefix;
+    let pathWithoutSuffix = config.suffix ? pathWithoutPrefix.slice(0, -config.suffix.length) : pathWithoutPrefix;
 
     if (pathWithoutSuffix.startsWith("/")) {
       pathWithoutSuffix = pathWithoutSuffix.slice(1);
     }
 
     if (config.pathSeparator) {
-      pathWithoutSuffix = pathWithoutSuffix.replaceAll(
-        "/",
-        config.pathSeparator,
-      );
+      pathWithoutSuffix = pathWithoutSuffix.replaceAll("/", config.pathSeparator);
     }
 
     if (config.addedPrefix) {
@@ -68,12 +59,8 @@ function removeTrailingSlash(str: string) {
   return str;
 }
 
-export function compileReverseSlugConfig(
-  config: SlugConfig,
-): CompiledSlugConfig {
-  const pathSeparator = config.pathSeparator
-    ? new RegExp(config.pathSeparator, "g")
-    : null;
+export function compileReverseSlugConfig(config: SlugConfig): CompiledSlugConfig {
+  const pathSeparator = config.pathSeparator ? new RegExp(config.pathSeparator, "g") : null;
   return (targetPath: string) => {
     const domain = removeTrailingSlash(config.domain);
     let path = removeTrailingSlash(targetPath);

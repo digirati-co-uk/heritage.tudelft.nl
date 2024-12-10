@@ -1,4 +1,4 @@
-import { Extraction } from "../util/extract.ts";
+import type { Extraction } from "../util/extract.ts";
 
 export const extractFolderCollections: Extraction = {
   id: "folder-collections",

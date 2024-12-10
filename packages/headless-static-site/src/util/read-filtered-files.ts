@@ -7,7 +7,7 @@ export function readFilteredFiles(store: {
   ignore?: string | string[];
 }) {
   const allStoreFiles = readAllFiles(store.path);
-  let allFiles = Array.from(allStoreFiles);
+  const allFiles = Array.from(allStoreFiles);
   if (store.pattern || store.ignore) {
     return micromatch(allFiles, store.pattern || "**/*", {
       ignore: store.ignore,

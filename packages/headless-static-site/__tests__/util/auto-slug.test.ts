@@ -15,7 +15,7 @@ describe("auto slug test", () => {
       const prefixParts = [];
 
       for (let i = 0; i < parts[0].length; i++) {
-        let firstPart = parts[0][i];
+        const firstPart = parts[0][i];
         const allPartsMatch = parts.every((p) => {
           return p[i] === firstPart;
         });
@@ -27,7 +27,7 @@ describe("auto slug test", () => {
 
       const suffixParts = [];
       for (let i = parts[0].length - 1; i >= 0; i--) {
-        let lastPart = parts[0][i];
+        const lastPart = parts[0][i];
         const allPartsMatch = parts.every((p) => {
           return p[i] === lastPart;
         });

@@ -1,18 +1,18 @@
 import { spawn } from "node:child_process";
+import { clearTimeout } from "node:timers";
 import PyDetect from "detect-python-interpreter";
-import { clearTimeout } from "timers";
 
 export function runPython<Output, Input>(
   scriptPath: string,
   args: string[],
   stdInput?: Input,
-  timeout?: number,
+  timeout?: number
 ): Promise<Output> {
   return new Promise((resolve, reject) => {
     const py = spawn(PyDetect.detect(), [scriptPath, ...args]);
     let dataString = "";
 
-    let time = setTimeout(() => {
+    const time = setTimeout(() => {
       py.kill();
       reject("Timeout");
     }, timeout || 30000);

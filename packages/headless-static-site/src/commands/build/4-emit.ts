@@ -1,16 +1,16 @@
-import { BuildConfig } from '../build.ts';
-import { loadJson } from '../../util/load-json.ts';
-import { join } from 'node:path';
-import { Vault, createThumbnailHelper } from '@iiif/helpers';
-import { mkdirp } from 'mkdirp';
-import { readFile } from 'node:fs/promises';
-import { existsSync, readdirSync } from 'fs';
-import { isEmpty } from '../../util/is-empty.ts';
-import { copy } from 'fs-extra/esm';
-import { ActiveResourceJson } from '../../util/store.ts';
-import { getValue } from '../../extract/extract-label-string.ts';
-import { makeProgressBar } from '../../util/make-progress-bar.ts';
-import { Collection, Manifest } from '@iiif/presentation-3';
+import { existsSync, readdirSync } from "node:fs";
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
+import { Vault, createThumbnailHelper } from "@iiif/helpers";
+import type { Collection, Manifest } from "@iiif/presentation-3";
+import { copy } from "fs-extra/esm";
+import { mkdirp } from "mkdirp";
+import { getValue } from "../../extract/extract-label-string.ts";
+import { isEmpty } from "../../util/is-empty.ts";
+import { loadJson } from "../../util/load-json.ts";
+import { makeProgressBar } from "../../util/make-progress-bar.ts";
+import type { ActiveResourceJson } from "../../util/store.ts";
+import type { BuildConfig } from "../build.ts";
 
 export async function emit(
   {
@@ -44,16 +44,16 @@ export async function emit(
     totalResources += resource.subResources || 0;
   }
 
-  const progress = makeProgressBar('Saving output', totalResources);
+  const progress = makeProgressBar("Saving output", totalResources);
 
   const resolveFullId = (id: string) => {
-    if (idsToSlugs && idsToSlugs[id]) {
+    if (idsToSlugs?.[id]) {
       const { slug, type } = idsToSlugs[id];
 
-      if (type === 'Manifest') {
+      if (type === "Manifest") {
         return `${configUrl}/${slug}/manifest.json`;
       }
-      if (type === 'Collection') {
+      if (type === "Collection") {
         return `${configUrl}/${slug}/collection.json`;
       }
     }
@@ -64,12 +64,12 @@ export async function emit(
     savingFiles.push(Bun.write(file, JSON.stringify(contents, null, 2)));
   };
 
-  const filesDir = join(cacheDir, 'files');
+  const filesDir = join(cacheDir, "files");
   if (existsSync(filesDir) && !isEmpty(filesDir)) {
     savingFiles.push(copy(filesDir, buildDir, { overwrite: true }));
   }
 
-  const configUrl = typeof server === 'string' ? server : server?.url;
+  const configUrl = typeof server === "string" ? server : server?.url;
   const indexCollection: Record<string, any> = {};
   const indexCollectionMap: Record<string, any> = {};
   const storeCollections: Record<string, Array<any>> = {};
@@ -79,30 +79,30 @@ export async function emit(
   for (let iteration = 0; iteration < 2; iteration++) {
     for (const manifest of allResources) {
       // Iteration 0: Skip collections.
-      if (manifest.type === 'Collection' && iteration === 0) {
+      if (manifest.type === "Collection" && iteration === 0) {
         continue;
       }
       // Iteration 1: Skip manifests.
-      if (manifest.type === 'Manifest' && iteration === 1) {
+      if (manifest.type === "Manifest" && iteration === 1) {
         continue;
       }
 
       const { slug } = manifest;
-      let url = manifest.saveToDisk ? `${configUrl}/${slug}/manifest.json` : manifest.path;
+      const url = manifest.saveToDisk ? `${configUrl}/${slug}/manifest.json` : manifest.path;
 
       const manifestBuildDirectory = join(buildDir, slug);
       const manifestCacheDirectory = join(cacheDir, slug);
       const cache = {
-        'vault.json': join(manifestCacheDirectory, 'vault.json'),
-        'meta.json': join(manifestCacheDirectory, 'meta.json'),
-        'indices.json': join(manifestCacheDirectory, 'indices.json'),
+        "vault.json": join(manifestCacheDirectory, "vault.json"),
+        "meta.json": join(manifestCacheDirectory, "meta.json"),
+        "indices.json": join(manifestCacheDirectory, "indices.json"),
       };
 
       // const folderPath = allPaths[manifest.path];
       // const source = manifest.source;
 
       // Still always load the resource.
-      const vaultJson = await loadJson(cache['vault.json']);
+      const vaultJson = await loadJson(cache["vault.json"]);
       const vault = new Vault();
       vault.getStore().setState(vaultJson);
 
@@ -113,7 +113,7 @@ export async function emit(
             return resource.thumbnail;
           }
 
-          const metaJson = await import(cache['meta.json']);
+          const metaJson = await import(cache["meta.json"]);
           return metaJson.thumbnail || metaJson.default.thumbnail || null;
         } catch (err) {
           return null;
@@ -132,7 +132,7 @@ export async function emit(
         label: getValue(resource.label),
       };
 
-      if (manifest.type === 'Manifest') {
+      if (manifest.type === "Manifest") {
         siteMap[manifest.slug].canvases = resource.items?.length;
       }
 
@@ -170,14 +170,14 @@ export async function emit(
         id: url,
         type: manifest.type,
         label: resource.label,
-        'hss:slug': manifest.slug,
+        "hss:slug": manifest.slug,
         thumbnail:
           resource.thumbnail ||
-          (thumbnail && thumbnail.best
+          (thumbnail?.best
             ? [
                 {
                   id: thumbnail.best.id,
-                  type: 'Image',
+                  type: "Image",
                   width: thumbnail.best.width,
                   height: thumbnail.best.height,
                 },
@@ -196,7 +196,7 @@ export async function emit(
       // Index collection.
       indexCollection[manifest.slug] = snippet;
 
-      if (manifest.type === 'Manifest') {
+      if (manifest.type === "Manifest") {
         manifestCollection.push(snippet);
       }
 
@@ -204,7 +204,7 @@ export async function emit(
       await mkdirp(manifestBuildDirectory);
 
       if (manifest.saveToDisk) {
-        const fileName = manifest.type === 'Manifest' ? 'manifest.json' : 'collection.json';
+        const fileName = manifest.type === "Manifest" ? "manifest.json" : "collection.json";
 
         // @todo allow raw preprocessing here.
         //   This is a weak part of the system for now.
@@ -212,20 +212,20 @@ export async function emit(
           resource.id = `${configUrl}/${manifest.slug}/${fileName}`;
         }
 
-        if (!(resource as any)['hss:slug']) {
-          (resource as any)['hss:slug'] = manifest.slug;
+        if (!(resource as any)["hss:slug"]) {
+          (resource as any)["hss:slug"] = manifest.slug;
         }
 
-        if (resource.type === 'Collection') {
+        if (resource.type === "Collection") {
           if (!allPaths) {
-            log(`WARNING: Skipping Collection generation`);
+            log("WARNING: Skipping Collection generation");
             continue;
           }
 
           if (resource.items) {
             resource.items = resource.items.map((item: any) => {
               if (allPaths[item.path]) {
-                if (item.type === 'Manifest') {
+                if (item.type === "Manifest") {
                   item.id = `${configUrl}/${allPaths[item.path]}/manifest.json`;
                 } else {
                   item.id = `${configUrl}/${allPaths[item.path]}/collection.json`;
@@ -237,12 +237,12 @@ export async function emit(
                 item.id = newId;
               }
 
-              if (item.type === 'Manifest') {
+              if (item.type === "Manifest") {
                 const hasSnippet = snippets[item.id];
                 if (hasSnippet) {
                   item.label = item.label || hasSnippet.label;
                   item.thumbnail = item.thumbnail || hasSnippet.thumbnail;
-                  item['hss:slug'] = hasSnippet['hss:slug'];
+                  item["hss:slug"] = hasSnippet["hss:slug"];
                 }
               }
 
@@ -255,14 +255,14 @@ export async function emit(
       }
 
       // 3. Save the meta file to disk
-      const meta = await readFile(join(cacheDir, manifest.slug, 'meta.json'));
-      savingFiles.push(Bun.write(join(manifestBuildDirectory, 'meta.json'), meta));
+      const meta = await readFile(join(cacheDir, manifest.slug, "meta.json"));
+      savingFiles.push(Bun.write(join(manifestBuildDirectory, "meta.json"), meta));
 
-      const indices = await readFile(join(cacheDir, manifest.slug, 'indices.json'));
-      savingFiles.push(Bun.write(join(manifestBuildDirectory, 'indices.json'), indices));
+      const indices = await readFile(join(cacheDir, manifest.slug, "indices.json"));
+      savingFiles.push(Bun.write(join(manifestBuildDirectory, "indices.json"), indices));
 
       // 4. Copy the contents of `files/`
-      const filesDir = join(cacheDir, manifest.slug, 'files');
+      const filesDir = join(cacheDir, manifest.slug, "files");
       if (existsSync(filesDir) && !isEmpty(filesDir)) {
         savingFiles.push(copy(filesDir, manifestBuildDirectory, { overwrite: true }));
       }
@@ -271,20 +271,20 @@ export async function emit(
       progress.increment();
 
       // Canvases.
-      const canvasesDir = join(cacheDir, manifest.slug, 'canvases');
+      const canvasesDir = join(cacheDir, manifest.slug, "canvases");
       if (existsSync(canvasesDir)) {
         siteMap[manifest.slug].hasCanvasData = true;
         const canvasList = readdirSync(canvasesDir);
         for (const canvasIndex of canvasList) {
           const canvasDir = join(canvasesDir, canvasIndex);
-          const metaFile = join(canvasDir, 'meta.json');
-          const canvasBuildDirectory = join(manifestBuildDirectory, 'canvases', canvasIndex);
+          const metaFile = join(canvasDir, "meta.json");
+          const canvasBuildDirectory = join(manifestBuildDirectory, "canvases", canvasIndex);
           await mkdirp(canvasBuildDirectory);
           if (existsSync(metaFile)) {
-            const meta = await readFile(join(canvasDir, 'meta.json'));
-            savingFiles.push(Bun.write(join(canvasBuildDirectory, 'meta.json'), meta));
+            const meta = await readFile(join(canvasDir, "meta.json"));
+            savingFiles.push(Bun.write(join(canvasBuildDirectory, "meta.json"), meta));
           }
-          const filesDir = join(canvasesDir, canvasIndex, 'files');
+          const filesDir = join(canvasesDir, canvasIndex, "files");
           if (existsSync(filesDir) && !isEmpty(filesDir)) {
             savingFiles.push(copy(filesDir, canvasBuildDirectory, { overwrite: true }));
           }

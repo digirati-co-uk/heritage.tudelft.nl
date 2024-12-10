@@ -1,7 +1,7 @@
-import { cwd } from "process";
-import { existsSync } from "fs";
+import { existsSync } from "node:fs";
 import { join } from "node:path";
-import { SlugConfig } from "./slug-engine.ts";
+import { cwd } from "node:process";
+import type { SlugConfig } from "./slug-engine.ts";
 
 export interface IIIFRC {
   server?: {
@@ -48,12 +48,7 @@ const DEFAULT_CONFIG: IIIFRC = {
 
 let config: IIIFRC | null = null;
 
-export const supportedConfigFiles = [
-  ".iiifrc.yml",
-  ".iiifrc.yaml",
-  "iiif.config.js",
-  "iiif.config.ts",
-];
+export const supportedConfigFiles = [".iiifrc.yml", ".iiifrc.yaml", "iiif.config.js", "iiif.config.ts"];
 
 export async function getConfig() {
   if (!config) {

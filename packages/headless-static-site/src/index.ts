@@ -1,13 +1,13 @@
 #!/usr/bin/env bun
 
 import "../bun.ts";
+import { argv } from "node:process";
 import { Command } from "commander";
-import { argv } from "process";
 import { build } from "./commands/build";
+import { generate } from "./commands/generate.ts";
+import { init } from "./commands/init.ts";
 import { serve } from "./commands/serve.ts";
 import { validate } from "./commands/validate.ts";
-import { init } from "./commands/init.ts";
-import { generate } from "./commands/generate.ts";
 
 const program = new Command();
 

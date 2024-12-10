@@ -1,4 +1,4 @@
-import { Extraction } from "../util/extract";
+import type { Extraction } from "../util/extract";
 
 export const extractSlugSource: Extraction = {
   id: "extract-slug-source",

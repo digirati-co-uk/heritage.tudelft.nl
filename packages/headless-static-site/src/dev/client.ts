@@ -1,5 +1,5 @@
-import { IIIFRC } from '../util/get-config.ts';
-import { resolveFromSlug } from '../util/resolve-from-slug.ts';
+import type { IIIFRC } from "../util/get-config.ts";
+import { resolveFromSlug } from "../util/resolve-from-slug.ts";
 
 export function create(url: string) {
   const endpoints = {
@@ -24,8 +24,8 @@ export function create(url: string) {
     return json;
   };
 
-  const getSlugs = () => cachedGet<IIIFRC['slugs']>(endpoints.slugs);
-  const getStores = () => cachedGet<IIIFRC['stores']>(endpoints.stores);
+  const getSlugs = () => cachedGet<IIIFRC["slugs"]>(endpoints.slugs);
+  const getStores = () => cachedGet<IIIFRC["stores"]>(endpoints.stores);
   const getManifests = () => cachedGet<any>(endpoints.manifests);
   const getTop = () => cachedGet<any>(endpoints.top);
   const getEditable = () => cachedGet<Record<string, string>>(endpoints.editable);
@@ -37,7 +37,7 @@ export function create(url: string) {
         string,
         {
           type: string;
-          source: { type: 'disk'; path: string } | { type: 'remote'; url: string };
+          source: { type: "disk"; path: string } | { type: "remote"; url: string };
         }
       >
     >(endpoints.sitemap);
@@ -47,38 +47,40 @@ export function create(url: string) {
     return resolveFromSlug(slug, type, slugs || {});
   }
 
-  async function getManifest(url: string) {
+  async function getManifest(url_: string) {
+    let url = url_;
     const overrides = await getOverrides();
-    const urlWithoutSlash = url.startsWith('/') ? url.slice(1) : url;
-    if (overrides && overrides[urlWithoutSlash]) {
-      return '/' + overrides[urlWithoutSlash];
+    const urlWithoutSlash = url.startsWith("/") ? url.slice(1) : url;
+    if (overrides?.[urlWithoutSlash]) {
+      return `/${overrides[urlWithoutSlash]}`;
     }
 
-    const remote = await getFromSlug(url, 'Manifest');
+    const remote = await getFromSlug(url, "Manifest");
     if (remote) {
       return remote.match;
     }
 
-    if (!url.startsWith('/')) {
+    if (!url.startsWith("/")) {
       url = `/${url}`;
     }
 
     return `${url}/manifest.json`;
   }
 
-  async function getCollection(url: string) {
+  async function getCollection(url_: string) {
+    let url = url_;
     const overrides = await getOverrides();
-    const urlWithoutSlash = url.startsWith('/') ? url.slice(1) : url;
-    if (overrides && overrides[urlWithoutSlash]) {
-      return '/' + overrides[urlWithoutSlash];
+    const urlWithoutSlash = url.startsWith("/") ? url.slice(1) : url;
+    if (overrides?.[urlWithoutSlash]) {
+      return `/${overrides[urlWithoutSlash]}`;
     }
 
-    const remote = await getFromSlug(url, 'Collection');
+    const remote = await getFromSlug(url, "Collection");
     if (remote) {
       return remote.match;
     }
 
-    if (!url.startsWith('/')) {
+    if (!url.startsWith("/")) {
       url = `/${url}`;
     }
 

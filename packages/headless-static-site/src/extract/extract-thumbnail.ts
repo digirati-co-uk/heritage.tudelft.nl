@@ -1,5 +1,5 @@
-import { Extraction } from '../util/extract.ts';
-import { createThumbnailHelper } from '@iiif/helpers';
+import { createThumbnailHelper } from "@iiif/helpers";
+import type { Extraction } from "../util/extract.ts";
 
 type ExtractThumbnailConfig = {
   width: number;
@@ -8,9 +8,9 @@ type ExtractThumbnailConfig = {
 };
 
 export const extractThumbnail: Extraction = {
-  id: 'extract-thumbnail',
-  name: 'Extract Thumbnail',
-  types: ['Manifest'],
+  id: "extract-thumbnail",
+  name: "Extract Thumbnail",
+  types: ["Manifest"],
   invalidate: async (resource, api, config) => {
     const cache = await api.caches.value;
     return !cache.extractThumbnail && cache.extractThumbnail !== false;
@@ -32,7 +32,7 @@ export const extractThumbnail: Extraction = {
       config.dereference || false
     );
 
-    if (thumbnail && thumbnail.best) {
+    if (thumbnail?.best) {
       return {
         meta: { thumbnail: thumbnail.best },
         caches: { extractThumbnail: true },

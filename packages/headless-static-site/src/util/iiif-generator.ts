@@ -1,5 +1,5 @@
-import { LazyValue } from "./lazy-value.ts";
-import { createStoreRequestCache } from "./store-request-cache.ts";
+import type { LazyValue } from "./lazy-value.ts";
+import type { createStoreRequestCache } from "./store-request-cache.ts";
 
 export type GeneratorReference<T = any> = {
   id: string;

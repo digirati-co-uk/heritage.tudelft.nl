@@ -1,4 +1,4 @@
-import { Enrichment } from "../util/enrich";
+import type { Enrichment } from "../util/enrich";
 
 export const homepageProperty: Enrichment = {
   id: "homepage-property",
@@ -6,10 +6,8 @@ export const homepageProperty: Enrichment = {
   types: ["Manifest"],
   async invalidate(resource, api) {
     if (resource.id && resource.type === "Manifest") {
-      const homepage = api.config.server?.url + "/" + resource.slug;
-      const existingHomepage = api.resource.homepage.find(
-        (h: any) => h.id === homepage,
-      );
+      const homepage = `${api.config.server?.url}/${resource.slug}`;
+      const existingHomepage = api.resource.homepage.find((h: any) => h.id === homepage);
       return !existingHomepage;
     }
 
@@ -25,7 +23,7 @@ export const homepageProperty: Enrichment = {
       api.builder.editManifest(resource.id, (m: any) => {
         if (m.entity.homepage) {
           m.setHomepage({
-            id: api.config.server?.url + "/" + resource.slug,
+            id: `${api.config.server?.url}/${resource.slug}`,
           });
         }
       });

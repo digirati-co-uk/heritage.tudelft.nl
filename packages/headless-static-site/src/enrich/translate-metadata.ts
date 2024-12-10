@@ -1,4 +1,4 @@
-import { Enrichment } from "../util/enrich";
+import type { Enrichment } from "../util/enrich";
 import { buildLocaleString } from "@iiif/helpers";
 import translate from "translate";
 import fetch from "node-fetch";

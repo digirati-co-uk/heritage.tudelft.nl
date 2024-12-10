@@ -1,5 +1,4 @@
-import { Extraction } from "../util/extract.ts";
-import { getValue } from "@iiif/helpers/i18n";
+import type { Extraction } from "../util/extract.ts";
 import { getSingleLabel } from "../util/get-single-label.ts";
 
 interface ExtractTopicsConfig {
@@ -19,20 +18,13 @@ export const extractTopics: Extraction<ExtractTopicsConfig> = {
   },
 
   handler: async (resource, api, config) => {
-    const {
-      commaSeparated = [],
-      translate = true,
-      topicTypes = {},
-      language = "en",
-    } = config;
+    const { commaSeparated = [], translate = true, topicTypes = {}, language = "en" } = config;
 
     const topicsToParse = Object.keys(topicTypes);
     const latestResource = resource.vault?.get(api.resource);
     const metadata = latestResource?.metadata || [];
     const metadataLabels: string[] = await Promise.all(
-      metadata.map((item: any) =>
-        getSingleLabel(item.label, { language, translate }),
-      ),
+      metadata.map((item: any) => getSingleLabel(item.label, { language, translate }))
     );
 
     const indices: Record<string, string[]> = {};
@@ -49,10 +41,10 @@ export const extractTopics: Extraction<ExtractTopicsConfig> = {
         const value = values[first] as string[];
         if (value) {
           if (commaSeparated.includes(topic)) {
-            value.forEach((v) => {
+            for (const v of value) {
               indices[topic] = indices[topic] || [];
               indices[topic].push(...v.split(",").map((t) => t.trim()));
-            });
+            }
           } else {
             indices[topic] = indices[topic] || [];
             indices[topic].push(...value);

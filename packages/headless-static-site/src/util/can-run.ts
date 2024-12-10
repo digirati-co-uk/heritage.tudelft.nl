@@ -1,8 +1,8 @@
-import { Extraction } from "./extract.ts";
-import { Enrichment } from "./enrich.ts";
-import { ActiveResourceJson } from "./store.ts";
+import type { Extraction } from "./extract.ts";
+import type { Enrichment } from "./enrich.ts";
+import type { ActiveResourceJson } from "./store.ts";
 import { IIIFRC } from "./get-config.ts";
-import { BuildConfig } from "../commands/build.ts";
+import type { BuildConfig } from "../commands/build.ts";
 
 export function canRun(
   extractionOrEnrichment: Extraction | Enrichment,

@@ -1,9 +1,9 @@
-import { InternationalString } from '@iiif/presentation-3';
+import type { InternationalString } from "@iiif/presentation-3";
 
 export function stringToLang(
-  input: string | string[] | InternationalString | Record<string, string>
+  input: string | string[] | InternationalString | Record<string, string>,
 ): InternationalString {
-  if (typeof input === 'string') {
+  if (typeof input === "string") {
     return { none: [input] };
   }
   if (Array.isArray(input)) {
@@ -18,7 +18,7 @@ export function stringToLang(
   const lang: InternationalString = {};
   for (const key of keys) {
     const value = input[key];
-    if (typeof value === 'string') {
+    if (typeof value === "string") {
       lang[key] = [value];
     } else {
       lang[key] = value;

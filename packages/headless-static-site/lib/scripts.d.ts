@@ -1,7 +1,7 @@
-import { Extraction } from "../src/util/extract.ts";
-import { Enrichment } from "../src/util/enrich.ts";
-import { Rewrite } from "../src/util/rewrite.ts";
-import { IIIFGenerator } from "../src/util/iiif-generator.ts";
+import type { Extraction } from "../src/util/extract.ts";
+import type { Enrichment } from "../src/util/enrich.ts";
+import type { Rewrite } from "../src/util/rewrite.ts";
+import type { IIIFGenerator } from "../src/util/iiif-generator.ts";
 
 declare global {
   namespace __hss {

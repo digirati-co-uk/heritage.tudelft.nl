@@ -1,14 +1,14 @@
-import fs from 'fs';
-import path from 'path';
+import { readdirSync } from "node:fs";
+import { join } from "node:path";
 
 export function* readAllFiles(dir: string): Generator<string> {
-  const files = fs.readdirSync(dir, { withFileTypes: true });
+  const files = readdirSync(dir, { withFileTypes: true });
 
   for (const file of files) {
     if (file.isDirectory()) {
-      yield* readAllFiles(path.join(dir, file.name));
+      yield* readAllFiles(join(dir, file.name));
     } else {
-      yield path.join(dir, file.name);
+      yield join(dir, file.name);
     }
   }
 }

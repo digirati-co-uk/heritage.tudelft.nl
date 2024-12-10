@@ -1,10 +1,10 @@
-import { BuildConfig } from '../build.ts';
-import { join } from 'node:path';
-import { ActiveResourceJson } from '../../util/store.ts';
-import { Enrichment } from '../../util/enrich.ts';
-import { makeProgressBar } from '../../util/make-progress-bar.ts';
-import { createStoreRequestCache } from '../../util/store-request-cache.ts';
-import { createCacheResource } from '../../util/cached-resource.ts';
+import { join } from "node:path";
+import { createCacheResource } from "../../util/cached-resource.ts";
+import type { Enrichment } from "../../util/enrich.ts";
+import { makeProgressBar } from "../../util/make-progress-bar.ts";
+import { createStoreRequestCache } from "../../util/store-request-cache.ts";
+import type { ActiveResourceJson } from "../../util/store.ts";
+import type { BuildConfig } from "../build.ts";
 
 export async function enrich({ allResources }: { allResources: Array<ActiveResourceJson> }, buildConfig: BuildConfig) {
   const {
@@ -27,10 +27,10 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
   const temp: Record<string, Record<string, any>> = {};
   for (const enrichment of allEnrichments) {
     if (enrichment.configure) {
-      const enrichmentConfig = (config.config || {})[enrichment.id];
+      const enrichmentConfig = config.config?.[enrichment.id];
       enrichmentConfigs[enrichment.id] = await enrichment.configure({ config, build: buildConfig }, enrichmentConfig);
     } else {
-      enrichmentConfigs[enrichment.id] = (config.config || {})[enrichment.id];
+      enrichmentConfigs[enrichment.id] = config.config?.[enrichment.id];
     }
   }
 
@@ -40,8 +40,8 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
     totalResources += resource.subResources || 0;
   }
 
-  const progress = makeProgressBar('Enrichment', totalResources);
-  const requestCache = createStoreRequestCache('_enrich', requestCacheDir);
+  const progress = makeProgressBar("Enrichment", totalResources);
+  const requestCache = createStoreRequestCache("_enrich", requestCacheDir);
 
   const processManifest = async (manifest: ActiveResourceJson) => {
     if (!manifest.vault) {
@@ -61,7 +61,7 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
     const resource = await cachedResource.attachVault();
     const builder = await cachedResource.getVaultBuilder();
 
-    let enrichmentList = manifest.type === 'Manifest' ? manifestEnrichment : collectionEnrichment;
+    let enrichmentList = manifest.type === "Manifest" ? manifestEnrichment : collectionEnrichment;
 
     // Add extra steps that might not be in already.
     if (runSteps) {
@@ -69,7 +69,7 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
       enrichmentList = [...enrichmentList];
       for (const step of runSteps) {
         const found = allEnrichments.find((e) => e.id === step);
-        if (found && found.types.includes(manifest.type) && !enrichmentList.includes(found)) {
+        if (found?.types.includes(manifest.type) && !enrichmentList.includes(found)) {
           enrichmentList.push(found);
         }
       }
@@ -92,12 +92,12 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
     }
 
     const runEnrichment = async (enrichment: Enrichment) => {
-      const filesDir = join(cacheDir, manifest.slug, 'files');
+      const filesDir = join(cacheDir, manifest.slug, "files");
       const storeConfig = enrichmentConfigs[enrichment.id] || {};
       const enrichmentConfig = Object.assign(
         {},
         storeConfig,
-        (config.stores[manifest.storeId].config || {})[enrichment.id] || {}
+        config.stores[manifest.storeId].config?.[enrichment.id] || {}
       );
 
       const valid =
@@ -144,13 +144,12 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
     }
 
     const results = await Promise.allSettled(processedEnrichments);
-    const errors = results.filter((r) => r.status === 'rejected');
+    const errors = results.filter((r) => r.status === "rejected");
     if (errors.length > 0) {
       throw new Error(
-        'Enrichment failed for ' +
-          errors.length +
-          ' manifest(s): \n \n' +
-          errors.map((e, n) => `  ${n + 1}) ` + (e as any)?.reason?.message).join(', ')
+        `Enrichment failed for ${errors.length} manifest(s):
+
+${errors.map((e, n) => `  ${n + 1})  ${(e as any)?.reason?.message}`).join(", ")}`
       );
     }
 
@@ -159,25 +158,25 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
     progress.increment();
 
     let canvasEnrichmentSteps = canvasEnrichment;
-    if (manifest.type === 'Manifest' && runSteps) {
+    if (manifest.type === "Manifest" && runSteps) {
       // Need to make a copy in this case.
       canvasEnrichmentSteps = [...canvasEnrichmentSteps];
       for (const step of runSteps) {
         const found = allEnrichments.find((e) => e.id === step);
-        if (found && found.types.includes('Canvas') && !canvasEnrichmentSteps.includes(found)) {
+        if (found?.types.includes("Canvas") && !canvasEnrichmentSteps.includes(found)) {
           canvasEnrichmentSteps.push(found);
         }
       }
     }
 
     // Canvases.
-    if (manifest.type === 'Manifest' && canvasEnrichmentSteps.length) {
+    if (manifest.type === "Manifest" && canvasEnrichmentSteps.length) {
       const canvases = resource.items || [];
       for (let canvasIndex = 0; canvasIndex < canvases.length; canvasIndex++) {
         const canvas = canvases[canvasIndex];
         const cachedCanvasResource = createCacheResource({
           resource: canvases[canvasIndex],
-          resourcePath: join(cacheDir, manifest.slug, 'canvases', canvasIndex.toString()),
+          resourcePath: join(cacheDir, manifest.slug, "canvases", canvasIndex.toString()),
           temp,
           collections: {},
           canvasIndex,
@@ -189,7 +188,7 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
           const enrichmentConfig = Object.assign(
             {},
             storeConfig,
-            (config.stores[manifest.storeId].config || {})[enrichment.id] || {}
+            config.stores[manifest.storeId].config?.[enrichment.id] || {}
           );
           const valid =
             !options.cache ||
@@ -205,9 +204,9 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
             ));
           const canvasResource: ActiveResourceJson = {
             id: canvas.id,
-            type: 'Canvas',
-            path: manifest.path + '/canvases/' + canvasIndex,
-            slug: manifest.slug + '/canvases/' + canvasIndex,
+            type: "Canvas",
+            path: `${manifest.path}/canvases/${canvasIndex}`,
+            slug: `${manifest.slug}/canvases/${canvasIndex}`,
             storeId: manifest.storeId,
             slugSource: manifest.slugSource,
             saveToDisk: false, // ?
@@ -246,13 +245,12 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
         }
 
         const results = await Promise.allSettled(processedEnrichments);
-        const errors = results.filter((r) => r.status === 'rejected');
+        const errors = results.filter((r) => r.status === "rejected");
         if (errors.length > 0) {
           throw new Error(
-            'Enrichment failed for ' +
-              errors.length +
-              ' manifest(s): \n \n' +
-              errors.map((e, n) => `  ${n + 1}) ` + (e as any)?.reason?.message).join(', ')
+            `Enrichment failed for ${errors.length} manifest(s):
+
+${errors.map((e, n) => `  ${n + 1}) ${(e as any)?.reason?.message}`).join(", ")}`
           );
         }
 
@@ -286,7 +284,7 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
 
   progress.stop();
 
-  log('Saving ' + savingFiles.length + ' files');
+  log(`Saving ${savingFiles.length} files`);
   await Promise.all(savingFiles);
   savingFiles = [];
 }

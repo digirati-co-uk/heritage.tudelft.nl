@@ -1,23 +1,23 @@
-import { join } from 'node:path';
-import { Extraction } from '../util/extract';
-import { mkdirp } from 'mkdirp';
-import keywordExtractor from 'keyword-extractor';
+import { join } from "node:path";
+import keywordExtractor from "keyword-extractor";
+import { mkdirp } from "mkdirp";
+import type { Extraction } from "../util/extract";
 
 type ExtractPlaintextConfig = {
   keywords: boolean;
 };
 
 export const extractPlaintext: Extraction<ExtractPlaintextConfig> = {
-  id: 'extract-plaintext',
-  name: 'Extract plaintext',
-  types: ['Canvas'],
+  id: "extract-plaintext",
+  name: "Extract plaintext",
+  types: ["Canvas"],
   invalidate: async () => {
     return true;
   },
   async collectManifest(manifest, temp, api, config) {
     if (temp.canvases) {
-      const filesDir = join(api.build.cacheDir, manifest.slug, 'files', 'plaintext');
-      const keywordsFile = join(api.build.cacheDir, manifest.slug, 'files', 'keywords.txt');
+      const filesDir = join(api.build.cacheDir, manifest.slug, "files", "plaintext");
+      const keywordsFile = join(api.build.cacheDir, manifest.slug, "files", "keywords.txt");
       await mkdirp(filesDir);
 
       const allText: string[] = [];
@@ -33,13 +33,13 @@ export const extractPlaintext: Extraction<ExtractPlaintextConfig> = {
       }
 
       const keywords = keywordExtractor
-        .extract(allText.join(' '), {
-          language: 'en',
+        .extract(allText.join(" "), {
+          language: "en",
           remove_digits: true,
           return_changed_case: true,
           remove_duplicates: true,
         })
-        .join(' ');
+        .join(" ");
 
       if (config.keywords && keywords) {
         await Bun.write(keywordsFile, keywords);
@@ -55,11 +55,11 @@ export const extractPlaintext: Extraction<ExtractPlaintextConfig> = {
 
     const result = await api.requestCache.fetch(first.id);
     const plaintextLines = [];
-    if (result && result.items?.length) {
+    if (result?.items?.length) {
       for (const item of result.items) {
         if (item.body) {
           const body = Array.isArray(item.body) ? item.body[0] : item.body;
-          if (body.type === 'TextualBody' && typeof body.value === 'string') {
+          if (body.type === "TextualBody" && typeof body.value === "string") {
             plaintextLines.push(body.value);
           }
         }
@@ -67,7 +67,7 @@ export const extractPlaintext: Extraction<ExtractPlaintextConfig> = {
 
       return {
         temp: {
-          plaintext: plaintextLines.join('\n'),
+          plaintext: plaintextLines.join("\n"),
         },
       };
     }

@@ -1,7 +1,6 @@
-import { readFile } from "node:fs/promises";
-import { lazyValue } from "./lazy-value.ts";
+import { existsSync } from "node:fs";
 import { join } from "node:path";
-import { existsSync } from "fs";
+import { lazyValue } from "./lazy-value.ts";
 
 export async function loadJson(filePath: string, allowEmpty = false) {
   if (allowEmpty) {

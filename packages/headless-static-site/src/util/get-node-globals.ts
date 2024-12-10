@@ -1,7 +1,7 @@
-import { Extraction } from "./extract";
-import { Enrichment } from "./enrich";
-import { Rewrite } from "./rewrite.ts";
-import { IIIFGenerator } from "./iiif-generator.ts";
+import type { Extraction } from "./extract";
+import type { Enrichment } from "./enrich";
+import type { Rewrite } from "./rewrite.ts";
+import type { IIIFGenerator } from "./iiif-generator.ts";
 
 declare interface Global {
   __hss?: {

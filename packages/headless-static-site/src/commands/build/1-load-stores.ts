@@ -1,28 +1,18 @@
-import { BuildConfig } from "../build.ts";
-import { ActiveResourceJson, ParsedResource, Store } from "../../util/store.ts";
-import { createStoreRequestCache } from "../../util/store-request-cache.ts";
+import { existsSync } from "node:fs";
 import { join } from "node:path";
-import { existsSync } from "fs";
-import { loadJson } from "../../util/load-json.ts";
 import { mkdirp } from "mkdirp";
-import { SingleBar } from "cli-progress";
+import { loadJson } from "../../util/load-json.ts";
 import { makeProgressBar } from "../../util/make-progress-bar.ts";
+import { createStoreRequestCache } from "../../util/store-request-cache.ts";
+import type { ActiveResourceJson, ParsedResource, Store } from "../../util/store.ts";
+import type { BuildConfig } from "../build.ts";
 
 export async function loadStores(
   { storeResources }: { storeResources: Record<string, ParsedResource[]> },
-  buildConfig: BuildConfig,
+  buildConfig: BuildConfig
 ) {
-  const {
-    options,
-    config,
-    stores,
-    cacheDir,
-    storeTypes,
-    requestCacheDir,
-    log,
-    canvasExtractions,
-    canvasEnrichment,
-  } = buildConfig;
+  const { options, config, stores, cacheDir, storeTypes, requestCacheDir, log, canvasExtractions, canvasEnrichment } =
+    buildConfig;
 
   const allResources: Array<ActiveResourceJson> = [];
   const allPaths: Record<string, string> = {};
@@ -40,22 +30,14 @@ export async function loadStores(
     const progress = makeProgressBar("Loading store", resources.length);
 
     for (const resource of resources) {
-      if (
-        options.exact &&
-        (resource.slug !== options.exact || resource.path !== options.exact)
-      ) {
+      if (options.exact && (resource.slug !== options.exact || resource.path !== options.exact)) {
         progress.increment();
         continue;
       }
 
       // Unique slug check. (NEEDS TO HAPPEN AFTER REWRITE)
       if (uniqueSlugs.includes(resource.slug)) {
-        log(
-          "WARNING: Duplicate slug found: " +
-            resource.slug +
-            " in resource: " +
-            resource.path,
-        );
+        log(`WARNING: Duplicate slug found: ${resource.slug} in resource: ${resource.path}`);
         continue;
       }
       uniqueSlugs.push(resource.slug);
@@ -65,19 +47,16 @@ export async function loadStores(
       const cachesFile = join(resourceDir, "caches.json");
       const caches = existsSync(cachesFile) ? await loadJson(cachesFile) : {};
       const storeType: Store<any> = (storeTypes as any)[storeConfig.type];
-      const valid =
-        !options.cache ||
-        (await storeType.invalidate(storeConfig as any, resource, caches));
+      const valid = !options.cache || (await storeType.invalidate(storeConfig as any, resource, caches));
 
       if (valid) {
-        log("Building " + resource.path);
+        log(`Building ${resource.path}`);
         await mkdirp(resourceDir);
-        const data = await storeType.load(
-          storeConfig as any,
-          resource,
-          resourceDir,
-          { requestCache, storeId: resource.storeId, build: buildConfig },
-        );
+        const data = await storeType.load(storeConfig as any, resource, resourceDir, {
+          requestCache,
+          storeId: resource.storeId,
+          build: buildConfig,
+        });
 
         if (data["resource.json"].id && data["resource.json"].saveToDisk) {
           idsToSlugs[data["resource.json"].id] = {
@@ -89,26 +68,11 @@ export async function loadStores(
         allResources.push(data["resource.json"]);
 
         await Promise.all([
-          Bun.write(
-            join(resourceDir, "resource.json"),
-            JSON.stringify(data["resource.json"], null, 2),
-          ),
-          Bun.write(
-            join(resourceDir, "vault.json"),
-            JSON.stringify(data["vault.json"], null, 2),
-          ),
-          Bun.write(
-            join(resourceDir, "meta.json"),
-            JSON.stringify(data["meta.json"], null, 2),
-          ),
-          Bun.write(
-            join(resourceDir, "caches.json"),
-            JSON.stringify(data["caches.json"], null, 2),
-          ),
-          Bun.write(
-            join(resourceDir, "indices.json"),
-            JSON.stringify(data["indices.json"], null, 2),
-          ),
+          Bun.write(join(resourceDir, "resource.json"), JSON.stringify(data["resource.json"], null, 2)),
+          Bun.write(join(resourceDir, "vault.json"), JSON.stringify(data["vault.json"], null, 2)),
+          Bun.write(join(resourceDir, "meta.json"), JSON.stringify(data["meta.json"], null, 2)),
+          Bun.write(join(resourceDir, "caches.json"), JSON.stringify(data["caches.json"], null, 2)),
+          Bun.write(join(resourceDir, "indices.json"), JSON.stringify(data["indices.json"], null, 2)),
         ]);
       } else {
         const data = await loadJson(join(resourceDir, "resource.json"));
@@ -127,10 +91,10 @@ export async function loadStores(
         editable[resource.slug] = resource.source.path;
       }
       if (resource.source.type === "disk" && resource.source.alias) {
-        overrides[resource.source.alias] = resource.slug + "/manifest.json";
+        overrides[resource.source.alias] = `${resource.slug}/manifest.json`;
       }
       if (resource.source.type === "remote" && resource.saveToDisk) {
-        overrides[resource.slug] = resource.slug + "/manifest.json";
+        overrides[resource.slug] = `${resource.slug}/manifest.json`;
       }
 
       allPaths[resource.path] = resource.slug;

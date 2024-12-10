@@ -1,14 +1,14 @@
-import { Enrichment } from "../util/enrich";
-import { convertManifest } from "pdiiif";
+import { createWriteStream, existsSync } from "node:fs";
 import { join } from "node:path";
-import { createWriteStream, existsSync } from "fs";
 import { mkdirp } from "mkdirp";
+import { convertManifest } from "pdiiif";
+import type { Enrichment } from "../util/enrich";
 export const pdiiif: Enrichment = {
   id: "pdiiif",
   name: "PDIIIF",
   types: ["Manifest"],
   async invalidate(resource, api) {
-    return !existsSync(join(api.files, `manifest.pdf`));
+    return !existsSync(join(api.files, "manifest.pdf"));
   },
   async handler(resource, api) {
     mkdirp.sync(api.files);
@@ -16,7 +16,7 @@ export const pdiiif: Enrichment = {
       id: resource.id,
       type: "Manifest",
     });
-    const buffer = createWriteStream(join(api.files, `manifest.pdf`));
+    const buffer = createWriteStream(join(api.files, "manifest.pdf"));
     await convertManifest(p3Manifest as any, buffer, {});
     return {};
   },

@@ -1,18 +1,18 @@
-import { getConfig } from '../util/get-config.ts';
-import { loadScripts } from '../util/load-scripts.ts';
-import { getNodeGlobals } from '../util/get-node-globals.ts';
-import { Command } from 'commander';
-import { IIIFGenerator } from '../util/iiif-generator.ts';
-import { nasaGenerator } from '../generator/nasa-generator.ts';
-import { join } from 'node:path';
-import { mkdirp } from 'mkdirp';
-import { loadJson } from '../util/load-json.ts';
-import { existsSync } from 'fs';
-import { lazyValue, LazyValue } from '../util/lazy-value.ts';
-import { IIIFBuilder } from '@iiif/builder';
-import { makeProgressBar } from '../util/make-progress-bar.ts';
-import { cwd } from 'node:process';
-import { createStoreRequestCache } from '../util/store-request-cache.ts';
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+import { cwd } from "node:process";
+import { IIIFBuilder } from "@iiif/builder";
+import type { Command } from "commander";
+import { mkdirp } from "mkdirp";
+import { nasaGenerator } from "../generator/nasa-generator.ts";
+import { getConfig } from "../util/get-config.ts";
+import { getNodeGlobals } from "../util/get-node-globals.ts";
+import type { IIIFGenerator } from "../util/iiif-generator.ts";
+import { type LazyValue, lazyValue } from "../util/lazy-value.ts";
+import { loadJson } from "../util/load-json.ts";
+import { loadScripts } from "../util/load-scripts.ts";
+import { makeProgressBar } from "../util/make-progress-bar.ts";
+import { createStoreRequestCache } from "../util/store-request-cache.ts";
 
 interface GenerateOptions {
   scripts?: string;
@@ -25,7 +25,7 @@ const defaultGenerators: IIIFGenerator[] = [
   nasaGenerator,
 ];
 
-export const defaultCacheDir = `./.iiif/_generator`;
+export const defaultCacheDir = "./.iiif/_generator";
 
 export async function generate(options: GenerateOptions, command?: Command) {
   const config = await getConfig();
@@ -62,15 +62,15 @@ export async function generate(options: GenerateOptions, command?: Command) {
 
       const buildDirectory = generator.output
         ? join(cwd(), generator.output)
-        : join(generatorDirectory, generatorName, 'build');
+        : join(generatorDirectory, generatorName, "build");
       const cacheDirectory = join(generatorDirectory, generatorName);
-      const resourcesDirectory = join(cacheDirectory, 'resources');
-      const requestCache = createStoreRequestCache(`requests`, cacheDirectory, !options.cache);
+      const resourcesDirectory = join(cacheDirectory, "resources");
+      const requestCache = createStoreRequestCache("requests", cacheDirectory, !options.cache);
 
       await mkdirp(cacheDirectory);
       await mkdirp(buildDirectory);
 
-      const globalCacheFile = join(cacheDirectory, 'cache.json');
+      const globalCacheFile = join(cacheDirectory, "cache.json");
       const globalCache = lazyValue(() => loadJson(globalCacheFile));
       const generatorApi = {
         config: generatorConfig,
@@ -90,7 +90,7 @@ export async function generate(options: GenerateOptions, command?: Command) {
 
       let globalInvalidate = false;
       // First check if we need to invalidate everything
-      let invalidate = foundGenerator.invalidate
+      const invalidate = foundGenerator.invalidate
         ? await foundGenerator.invalidate(resources, generatorApi)
         : !existsSync(globalCacheFile);
 
@@ -101,7 +101,7 @@ export async function generate(options: GenerateOptions, command?: Command) {
           if (!resource.id) {
             throw new Error(`Resource ${resource.type} has no id`);
           }
-          const resourceCacheFile = join(resourcesDirectory, resource.id, 'cache.json');
+          const resourceCacheFile = join(resourcesDirectory, resource.id, "cache.json");
           resourceCaches[resource.id] = lazyValue(() => loadJson(resourceCacheFile));
 
           invalidateMap[resource.id] = foundGenerator.invalidateEach
@@ -139,7 +139,7 @@ export async function generate(options: GenerateOptions, command?: Command) {
         const cache = response.cache || {};
 
         progress.increment();
-        saveJson(join(resourceDirectory, 'cache.json'), cache);
+        saveJson(join(resourceDirectory, "cache.json"), cache);
       }
       await waitSavingFiles();
 
@@ -151,7 +151,7 @@ export async function generate(options: GenerateOptions, command?: Command) {
         // @todo - do something with the store?
         const store = response.store || {};
 
-        saveJson(join(cacheDirectory, 'cache.json'), cache);
+        saveJson(join(cacheDirectory, "cache.json"), cache);
       }
       await waitSavingFiles();
 

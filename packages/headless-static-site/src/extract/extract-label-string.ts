@@ -1,5 +1,5 @@
 import { sha1 } from "object-hash";
-import { Extraction } from "../util/extract";
+import type { Extraction } from "../util/extract";
 
 export const extractLabelString: Extraction = {
   id: "extract-label-string",

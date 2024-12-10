@@ -1,13 +1,13 @@
-import { join } from 'node:path';
-import { loadJson } from './load-json';
-import { lazyValue } from './lazy-value';
-import { ActiveResourceJson } from './store';
-import { Vault } from '@iiif/helpers';
-import { ExtractionReturn } from './extract';
-import { mergeIndices } from './merge-indices';
-import { mkdirp } from 'mkdirp';
-import { EnrichmentResult } from './enrich';
-import { IIIFBuilder } from '@iiif/builder';
+import { join } from "node:path";
+import { IIIFBuilder } from "@iiif/builder";
+import { Vault } from "@iiif/helpers";
+import { mkdirp } from "mkdirp";
+import type { EnrichmentResult } from "./enrich";
+import type { ExtractionReturn } from "./extract";
+import { lazyValue } from "./lazy-value";
+import { loadJson } from "./load-json";
+import { mergeIndices } from "./merge-indices";
+import type { ActiveResourceJson } from "./store";
 
 interface CreateCacheResourceOptions<Temp = any> {
   resource: { id: string; slug: string; vault?: Vault };
@@ -30,16 +30,16 @@ export function createCacheResource({
   canvasIndex,
 }: CreateCacheResourceOptions) {
   const files = {
-    'vault.json': join(resourcePath, 'vault.json'),
-    'caches.json': join(resourcePath, 'caches.json'),
-    'meta.json': join(resourcePath, 'meta.json'),
-    'indices.json': join(resourcePath, 'indices.json'),
+    "vault.json": join(resourcePath, "vault.json"),
+    "caches.json": join(resourcePath, "caches.json"),
+    "meta.json": join(resourcePath, "meta.json"),
+    "indices.json": join(resourcePath, "indices.json"),
   };
-  const filesDir = join(resourcePath, 'files');
-  const vaultData = parentManifest ? null : loadJson(files['vault.json']);
-  const caches = lazyValue(() => loadJson(files['caches.json'], true));
-  const meta = lazyValue(() => loadJson(files['meta.json'], true));
-  const indices = lazyValue(() => loadJson(files['indices.json'], true));
+  const filesDir = join(resourcePath, "files");
+  const vaultData = parentManifest ? null : loadJson(files["vault.json"]);
+  const caches = lazyValue(() => loadJson(files["caches.json"], true));
+  const meta = lazyValue(() => loadJson(files["meta.json"], true));
+  const indices = lazyValue(() => loadJson(files["indices.json"], true));
   const newMeta = {};
   const newCaches = {};
   const newIndices = {};
@@ -53,14 +53,14 @@ export function createCacheResource({
 
     getCanvasResource(): ActiveResourceJson {
       if (!parentManifest) {
-        throw new Error('Parent manifest is required');
+        throw new Error("Parent manifest is required");
       }
 
       return {
         id: resource.id,
-        type: 'Canvas',
-        path: parentManifest.path + '/canvases/' + canvasIndex,
-        slug: parentManifest.slug + '/canvases/' + canvasIndex,
+        type: "Canvas",
+        path: `${parentManifest.path}/canvases/${canvasIndex}`,
+        slug: `${parentManifest.slug}/canvases/${canvasIndex}`,
         storeId: parentManifest.storeId,
         slugSource: parentManifest.slugSource,
         saveToDisk: false, // ?
@@ -71,7 +71,7 @@ export function createCacheResource({
 
     async attachVault(): Promise<any> {
       if (!vaultData) {
-        throw new Error('Can only load Manifest Vault');
+        throw new Error("Can only load Manifest Vault");
       }
       if (!resource.vault) {
         resource.vault = new Vault();
@@ -89,20 +89,20 @@ export function createCacheResource({
 
     async saveVault() {
       if (didChange && resource.vault) {
-        await Bun.write(files['vault.json'], JSON.stringify(resource.vault.getStore().getState(), null, 2));
+        await Bun.write(files["vault.json"], JSON.stringify(resource.vault.getStore().getState(), null, 2));
       }
     },
 
     didChange(value?: boolean) {
-      if (typeof value === 'undefined') return;
+      if (typeof value === "undefined") return;
       didChange = didChange || value;
     },
 
     handleResponse(result: Result<any>, extraction: any) {
       if (result.temp) {
         if (parentManifest) {
-          if (typeof canvasIndex === 'undefined') {
-            throw new Error('Canvas must have an index');
+          if (typeof canvasIndex === "undefined") {
+            throw new Error("Canvas must have an index");
           }
           temp[extraction.id] = temp[extraction.id] || {};
           temp[extraction.id][parentManifest.slug] = temp[extraction.id][parentManifest.slug] || {};
@@ -123,10 +123,10 @@ export function createCacheResource({
         mergeIndices(newIndices, result.indices);
       }
       if (result.collections) {
-        result.collections.forEach((collectionSlug) => {
+        for (const collectionSlug of result.collections) {
           collections[collectionSlug] = collections[collectionSlug] || [];
           collections[collectionSlug].push(resource.slug);
-        });
+        }
       }
       didChange = didChange || result.didChange || false;
     },
@@ -145,17 +145,17 @@ export function createCacheResource({
       const savingFiles = [];
       if (Object.keys(newMeta).length > 0) {
         savingFiles.push(
-          Bun.write(files['meta.json'], JSON.stringify(Object.assign(await meta.value, newMeta), null, 2))
+          Bun.write(files["meta.json"], JSON.stringify(Object.assign(await meta.value, newMeta), null, 2))
         );
       }
       if (Object.keys(newIndices).length > 0) {
         savingFiles.push(
-          Bun.write(files['indices.json'], JSON.stringify(mergeIndices(await indices.value, newIndices), null, 2))
+          Bun.write(files["indices.json"], JSON.stringify(mergeIndices(await indices.value, newIndices), null, 2))
         );
       }
       if (Object.keys(newCaches).length > 0) {
         savingFiles.push(
-          Bun.write(files['caches.json'], JSON.stringify(Object.assign(await caches.value, newCaches), null, 2))
+          Bun.write(files["caches.json"], JSON.stringify(Object.assign(await caches.value, newCaches), null, 2))
         );
       }
 

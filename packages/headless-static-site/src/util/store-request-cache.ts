@@ -1,10 +1,10 @@
-import { createHash } from 'crypto';
-import { join } from 'node:path';
-import { pathExists } from 'fs-extra/esm';
-import { writeFile } from 'fs/promises';
-import { mkdirp } from 'mkdirp';
-import objectHash from 'object-hash';
-import { readFile } from 'node:fs/promises';
+import { createHash } from "node:crypto";
+import { writeFile } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
+import { pathExists } from "fs-extra/esm";
+import { mkdirp } from "mkdirp";
+import objectHash from "object-hash";
 
 export function createStoreRequestCache(storeKey: string, cacheDir: string, noCache = false) {
   const cache = new Map<string, string>();
@@ -32,7 +32,7 @@ export function createStoreRequestCache(storeKey: string, cacheDir: string, noCa
         try {
           const rawData = await readFile(url);
           if (rawData.length) {
-            data = JSON.parse(rawData.toString('utf-8'));
+            data = JSON.parse(rawData.toString("utf-8"));
           }
         } catch (e) {
           // ignore.
@@ -54,7 +54,7 @@ export function createStoreRequestCache(storeKey: string, cacheDir: string, noCa
       return didChange;
     },
     async fetch(url: string, options?: FetchRequestInit) {
-      const hash = createHash('sha256').update(url).digest('hex');
+      const hash = createHash("sha256").update(url).digest("hex");
       const dir = join(cacheDir, storeKey);
       const cachePath = join(cacheDir, `${storeKey}/${hash}.json`);
 
@@ -75,7 +75,7 @@ export function createStoreRequestCache(storeKey: string, cacheDir: string, noCa
       }
 
       if ((await pathExists(cachePath)) && !noCache) {
-        const rawData = (await readFile(cachePath)).toString('utf-8');
+        const rawData = (await readFile(cachePath)).toString("utf-8");
         if (rawData.length) {
           try {
             const data = JSON.parse(rawData);
@@ -101,7 +101,7 @@ export function createStoreRequestCache(storeKey: string, cacheDir: string, noCa
         await writeFile(cachePath, JSON.stringify(cachedData));
         return data;
       } catch (e) {
-        console.log('Error fetching', url, (e as any).message);
+        console.log("Error fetching", url, (e as any).message);
         console.error(e);
         throw e;
       }

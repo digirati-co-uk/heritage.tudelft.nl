@@ -1,17 +1,12 @@
-import {
-  createProtoDirectory,
-  ParsedResource,
-  ProtoResourceDirectory,
-  Store,
-} from "../util/store";
-import { Vault } from "@iiif/helpers";
-import { join } from "node:path";
-import { existsSync } from "fs";
-import { cwd } from "process";
+import { existsSync } from "node:fs";
 import { stat } from "node:fs/promises";
+import { join } from "node:path";
+import { cwd } from "node:process";
+import { Vault } from "@iiif/helpers";
+import type { Manifest } from "@iiif/presentation-3";
 import { copy, pathExists } from "fs-extra/esm";
 import { isEmpty } from "../util/is-empty";
-import { Manifest } from "@iiif/presentation-3";
+import { type ParsedResource, type ProtoResourceDirectory, type Store, createProtoDirectory } from "../util/store";
 
 export interface IIIFRemoteStore {
   type: "iiif-remote";
@@ -26,12 +21,7 @@ export const IIIFRemoteStore: Store<IIIFRemoteStore> = {
     if (store.urls) {
       const toReturn = [];
       for (const url of store.urls) {
-        toReturn.push(
-          ...(await IIIFRemoteStore.parse(
-            { ...store, url, urls: undefined },
-            api,
-          )),
-        );
+        toReturn.push(...(await IIIFRemoteStore.parse({ ...store, url, urls: undefined }, api)));
       }
       return toReturn;
     }
@@ -41,25 +31,21 @@ export const IIIFRemoteStore: Store<IIIFRemoteStore> = {
 
     const collection = await api.requestCache.fetch(store.url);
     // We support v2 and v3 collections.
-    const identifier = collection["@id"] || collection["id"] || "";
-    const isCollection =
-      collection["@type"] === "sc:Collection" ||
-      collection["type"] === "Collection";
-    const isManifest =
-      collection["@type"] === "sc:Manifest" ||
-      collection["type"] === "Manifest";
+    const identifier = collection["@id"] || collection.id || "";
+    const isCollection = collection["@type"] === "sc:Collection" || collection.type === "Collection";
+    const isManifest = collection["@type"] === "sc:Manifest" || collection.type === "Manifest";
 
     if ((!isCollection && !isManifest) || !identifier) {
       console.log("ERROR: Could not parse collection", store.url);
       return [];
     }
 
-    let [slug, slugSource] = api.getSlug({
-      id: collection["@id"] || collection["id"] || "",
+    const [slug, slugSource] = api.getSlug({
+      id: collection["@id"] || collection.id || "",
       type: isManifest ? "Manifest" : "Collection",
     });
 
-    let override = store.overrides
+    const override = store.overrides
       ? `${store.overrides}/${
           slug.startsWith(isManifest ? "manifests/" : "collections/")
             ? slug.slice((isManifest ? "manifests/" : "collections/").length)
@@ -110,9 +96,7 @@ export const IIIFRemoteStore: Store<IIIFRemoteStore> = {
     }
     const loading = [];
     for (const manifestItem of collectionVault.items) {
-      loading.push(
-        IIIFRemoteStore.parse({ ...store, url: manifestItem.id }, api),
-      );
+      loading.push(IIIFRemoteStore.parse({ ...store, url: manifestItem.id }, api));
     }
 
     const results = await Promise.all(loading);
@@ -122,20 +106,18 @@ export const IIIFRemoteStore: Store<IIIFRemoteStore> = {
 
     return allResources;
   },
-  async invalidate(
-    store: IIIFRemoteStore,
-    resource: ParsedResource,
-    caches: ProtoResourceDirectory["caches.json"],
-  ) {
+  async invalidate(store: IIIFRemoteStore, resource: ParsedResource, caches: ProtoResourceDirectory["caches.json"]) {
     if (!caches.load && !caches.urls) {
       return true;
     }
 
     if (resource.source.type === "disk") {
       const file = await stat(resource.source.path);
-      const key = file.mtime + "-" + file.ctime + "-" + file.size;
+      const key = `${file.mtime}-${file.ctime}-${file.size}`;
       return key !== caches.load;
-    } else if (caches.urls && resource.source.url) {
+    }
+
+    if (caches.urls && resource.source.url) {
       return !caches.urls.includes(resource.source.url);
     }
 
@@ -161,16 +143,12 @@ export const IIIFRemoteStore: Store<IIIFRemoteStore> = {
     const caches: any = {};
     if (resource.source.type === "disk") {
       const file = await stat(resource.source.path);
-      caches.load = file.mtime + "-" + file.ctime + "-" + file.size;
+      caches.load = `${file.mtime}-${file.ctime}-${file.size}`;
 
       const pathWithoutExtension = resource.source.path.replace(".json", "");
       const subFilesFolder = existsSync(join(cwd(), pathWithoutExtension));
       if (subFilesFolder) {
-        if (
-          subFilesFolder &&
-          (await pathExists(resource.slug)) &&
-          !isEmpty(resource.slug)
-        ) {
+        if (subFilesFolder && (await pathExists(resource.slug)) && !isEmpty(resource.slug)) {
           const destination = join(cwd(), directory, "files");
           await copy(resource.slug, destination, { overwrite: true });
         }
@@ -190,12 +168,11 @@ export const IIIFRemoteStore: Store<IIIFRemoteStore> = {
         storeId: api.storeId,
         slugSource: resource.slugSource,
         subResources: (res?.items || []).length,
-        saveToDisk:
-          resource.source.type === "disk" || store.saveManifests || false,
+        saveToDisk: resource.source.type === "disk" || store.saveManifests || false,
         source: resource.source,
       },
       vault,
-      caches,
+      caches
     );
   },
 };

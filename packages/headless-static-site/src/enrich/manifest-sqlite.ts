@@ -2,7 +2,7 @@ import { mkdirp } from "mkdirp";
 import { join } from "node:path";
 import { Database } from "bun:sqlite";
 import { getValue } from "../extract/extract-label-string.ts";
-import { Enrichment } from "../util/enrich.ts";
+import type { Enrichment } from "../util/enrich.ts";
 import slug from "slug";
 
 export const manifestSqlite: Enrichment<{

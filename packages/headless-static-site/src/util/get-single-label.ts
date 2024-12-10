@@ -1,6 +1,6 @@
 import { getValue } from "@iiif/helpers/i18n";
 import { cachedTranslate } from "./cached-translate.ts";
-import { InternationalString } from "@iiif/presentation-3";
+import type { InternationalString } from "@iiif/presentation-3";
 
 export async function getSingleLabel(
   label: InternationalString | undefined,
