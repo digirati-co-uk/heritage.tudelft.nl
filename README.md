@@ -85,7 +85,7 @@ git remote add -f hss git@github.com:digirati-co-uk/headless-static-site.git
 Then you can pull changes using:
 
 ```sh
-git subtree pull --prefix=packages/headless-static-site hss main --squash
+git subtree pull --prefix=packages/headless-static-site hss main
 ```
 
 Or contribute changes back using:
