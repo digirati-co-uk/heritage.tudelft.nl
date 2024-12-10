@@ -85,13 +85,13 @@ git remote add -f hss git@github.com:digirati-co-uk/headless-static-site.git
 Then you can pull changes using:
 
 ```sh
-git subtree pull --prefix=apps/headless-static-site hss main --squash
+git subtree pull --prefix=packages/headless-static-site hss main --squash
 ```
 
 Or contribute changes back using:
 
 ```sh
-git subtree push --prefix=apps/headless-static-site hss feature/my-feature
+git subtree push --prefix=packages/headless-static-site hss feature/my-feature
 ```
 
 Where `feature/my-feature` is the name of a branch you want to push to the headless static site repository.
