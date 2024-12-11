@@ -1,0 +1,176 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "https://example.org/h8q9yw0k9hn-m3r3plc8",
+  "type": "Manifest",
+  "label": {
+    "en": [
+      "De stoelencollectie in de faculteit Bouwkunde"
+    ]
+  },
+  "summary": {
+    "en": [
+      "Credit: Geertje van Achterberg"
+    ]
+  },
+  "items": [
+    {
+      "id": "https://dlc.services/iiif-img/7/37/30a57057e55d327a78b1354877fdb23f/canvas/c/2",
+      "type": "Canvas",
+      "height": 602,
+      "width": 402,
+      "label": {
+        "none": [
+          "De stoelencollectie in de faculteit Bouwkunde"
+        ]
+      },
+      "metadata": [
+        {
+          "label": {
+            "none": [
+              "String 1"
+            ]
+          },
+          "value": {
+            "none": [
+              "maatwerk"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "String 2"
+            ]
+          },
+          "value": {
+            "none": [
+              "collectiebeschrijving"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "String 3"
+            ]
+          },
+          "value": {}
+        },
+        {
+          "label": {
+            "none": [
+              "Number 1"
+            ]
+          },
+          "value": {
+            "none": [
+              "1"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 2"
+            ]
+          },
+          "value": {
+            "none": [
+              "0"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 3"
+            ]
+          },
+          "value": {
+            "none": [
+              "0"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Tags"
+            ]
+          },
+          "value": {}
+        },
+        {
+          "label": {
+            "none": [
+              "Roles"
+            ]
+          },
+          "value": {}
+        }
+      ],
+      "summary": {
+        "en": [
+          "Credit: Geertje van Achterberg"
+        ]
+      },
+      "thumbnail": [
+        {
+          "id": "https://dlc.services/thumbs/7/37/30a57057e55d327a78b1354877fdb23f/full/134,200/0/default.jpg",
+          "type": "Image",
+          "service": [
+            {
+              "@id": "https://dlc.services/thumbs/7/37/30a57057e55d327a78b1354877fdb23f",
+              "@type": "ImageService2",
+              "profile": "level0",
+              "sizes": [
+                {
+                  "width": 267,
+                  "height": 400
+                },
+                {
+                  "width": 134,
+                  "height": 200
+                },
+                {
+                  "width": 67,
+                  "height": 100
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "items": [
+        {
+          "id": "https://dlc.services/iiif-img/7/37/30a57057e55d327a78b1354877fdb23f/canvas/c/2/annotation-page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://dlc.services/iiif-img/7/37/30a57057e55d327a78b1354877fdb23f/imageanno/0",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://dlc.services/iiif-img/7/37/30a57057e55d327a78b1354877fdb23f/canvas/c/2",
+              "body": {
+                "id": "https://dlc.services/iiif-img/7/37/30a57057e55d327a78b1354877fdb23f/full/267,400/0/default.jpg",
+                "type": "Image",
+                "height": 400,
+                "width": 267,
+                "service": [
+                  {
+                    "@id": "https://dlc.services/iiif-img/7/37/30a57057e55d327a78b1354877fdb23f",
+                    "@type": "ImageService2",
+                    "profile": "level2",
+                    "width": 402,
+                    "height": 602,
+                    "id": "https://dlc.services/iiif-img/7/37/30a57057e55d327a78b1354877fdb23f"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
