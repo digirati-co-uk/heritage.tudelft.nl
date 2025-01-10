@@ -6,7 +6,7 @@
   },
   "scripts": {
     "build": "iiif-hss build --out ./build --scripts ./scripts",
-    "dev": "iiif-hss build --out ./build --scripts ./scripts && iiif-hss serve --scripts ./scripts"
+    "dev": "IIIF_URL=http://localhost:7111 iiif-hss-dev"
   },
   "dependencies": {
     "@iiif/helpers": "^1.2.19",
