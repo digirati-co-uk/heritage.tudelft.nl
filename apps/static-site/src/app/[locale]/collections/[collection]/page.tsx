@@ -3,6 +3,25 @@ import { loadCollection } from "@/iiif";
 import { Page } from "@/components/Page";
 import { unstable_setRequestLocale } from "next-intl/server";
 // import siteMap from "@repo/iiif/build/meta/sitemap.json";
+import { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { collection: string; locale: string };
+}): Promise<Metadata> {
+  const slug = `collections/${params.collection}`;
+  const { collection } = await loadCollection(slug);
+  const locale = params.locale || "en";
+  const description = (collection.summary && collection.summary[locale]?.join(" ")) || "";
+  let meta: { [key: string]: string } = {
+    title: `Publications | ${collection.label}`,
+  };
+  if (description) {
+    meta["description"] = description;
+  }
+  return meta;
+}
 
 export default async function Collection({ params }: { params: { collection: string; locale: string } }) {
   unstable_setRequestLocale(params.locale);

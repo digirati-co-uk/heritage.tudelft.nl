@@ -4,6 +4,21 @@ import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import { ManifestPage } from "@/components/pages/ManifestPage";
 import { ManifestLoader } from "@/app/provider";
 import related from "@repo/iiif/build/meta/related-objects.json";
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { manifest: string; locale: string };
+}): Promise<Metadata> {
+  const manifestSlug = `manifests/${params.manifest}`;
+  const { manifest } = await loadManifest(manifestSlug);
+  const fallbackLocale = "en";
+  return {
+    title: `Collections | ${manifest.label[params.locale] || manifest.label[fallbackLocale]}`,
+    description: "Description",
+  };
+}
 
 export default async function ManifestP({ params }: { params: { locale: string; manifest: string } }) {
   unstable_setRequestLocale(params.locale);

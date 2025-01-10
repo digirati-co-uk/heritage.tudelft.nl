@@ -5,6 +5,22 @@ import { ManifestLoader } from "@/app/provider";
 import imageServiceLinks from "@repo/iiif/build/meta/image-service-links.json";
 import allExhibitions from "@repo/iiif/build/collections/exhibitions/collection.json";
 import { SlotContext } from "@/blocks/slot-context";
+import type { Metadata } from "next";
+import { loadManifest } from "@/iiif";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { exhibition: string; locale: string };
+}): Promise<Metadata> {
+  const manifestSlug = `manifests/${params.exhibition}`;
+  const { manifest } = await loadManifest(manifestSlug);
+  const fallbackLocale = "en";
+  return {
+    title: `Exhibitions | ${manifest.label[params.locale] || manifest.label[fallbackLocale]}`,
+    description: "Description",
+  };
+}
 
 export const generateStaticParams = async () => {
   const exhibitions = [];
