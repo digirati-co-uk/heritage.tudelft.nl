@@ -1,5 +1,6 @@
 import fs, { existsSync } from "node:fs";
 import { readFile, watch } from "node:fs/promises";
+import { createRequire } from "node:module";
 import { join } from "node:path";
 import { cwd } from "node:process";
 import { zValidator } from "@hono/zod-validator";
@@ -16,9 +17,11 @@ import { indexHtml } from "./server/index.html";
 import { FileHandler } from "./util/file-handler";
 import { getConfig } from "./util/get-config";
 
+const require = createRequire(import.meta.url);
+
 const app = new Hono();
 
-// app.use(cors());
+app.use(cors());
 
 const emitter = mitt<{
   "file-change": { path: string };

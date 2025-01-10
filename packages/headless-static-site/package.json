@@ -9,6 +9,7 @@
     "build",
     "lib"
   ],
+  "main": "lib/scripts.js",
   "module": "lib/scripts.js",
   "bin": {
     "iiif-hss": "build/index.js",
@@ -18,7 +19,7 @@
   "license": "MIT",
   "typings": "lib/scripts.d.ts",
   "scripts": {
-    "dev": "bun run ./src/entrypoint.ts",
+    "dev-server": "bun run ./src/entrypoint.ts",
     "dev-cli": "bun run ./src/index.ts",
     "build": "pnpm run build:cli && pnpm run build:server && pnpm run build:client && pnpm run build:node-client && pnpm run build:library",
     "build:cli": "tsup-node src/index.ts --no-splitting --outDir build --format esm --env.NODE_ENV production",
@@ -47,7 +48,8 @@
       "import": {
         "types": "./build/client.d.ts",
         "default": "./build/client.js"
-      }
+      },
+      "require": "./build/client.js"
     },
     "./node-client": {
       "import": {
