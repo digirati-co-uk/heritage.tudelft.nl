@@ -10,6 +10,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
   if (!locales.includes(locale as any)) notFound();
 
   return {
+    locale,
     messages: (await import(`../translations/${locale}.json`)).default,
   };
 });
