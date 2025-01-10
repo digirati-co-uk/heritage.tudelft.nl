@@ -1,10 +1,10 @@
-import { allPublications } from "contentlayer/generated";
-import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
-import { PublicationListPage } from "@/components/pages/PublicationListPage";
 import { Page } from "@/components/Page";
+import { PublicationListPage } from "@/components/pages/PublicationListPage";
+import { allPublications } from "contentlayer/generated";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 export default async function PublicationsList({ params }: { params: { locale: string } }) {
-  unstable_setRequestLocale(params.locale);
+  setRequestLocale(params.locale);
   const t = await getTranslations();
 
   return (

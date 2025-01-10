@@ -1,12 +1,12 @@
-import { Page } from "@/components/Page";
-import { loadManifest, loadManifestMeta } from "@/iiif";
-import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
-import { ManifestPage } from "@/components/pages/ManifestPage";
 import { ManifestLoader } from "@/app/provider";
+import { Page } from "@/components/Page";
+import { ManifestPage } from "@/components/pages/ManifestPage";
+import { loadManifest, loadManifestMeta } from "@/iiif";
 import related from "@repo/iiif/build/meta/related-objects.json";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 export default async function ManifestP({ params }: { params: { locale: string; manifest: string } }) {
-  unstable_setRequestLocale(params.locale);
+  setRequestLocale(params.locale);
   const t = await getTranslations();
 
   const manifestSlug = `manifests/${params.manifest}`;

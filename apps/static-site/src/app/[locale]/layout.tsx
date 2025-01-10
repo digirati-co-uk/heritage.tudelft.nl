@@ -1,17 +1,19 @@
 import "../globals.css";
-import type { Metadata } from "next";
-import BlockEditor from "../../blocks/block-editor";
-import { Provider } from "../provider";
-import { ReactNode } from "react";
-import { unstable_setRequestLocale } from "next-intl/server";
-import { GlobalHeader } from "@/components/GlobalHeader";
-import localFont from "next/font/local";
 import { SlotContext } from "@/blocks/slot-context";
 import { GlobalFooter } from "@/components/GlobalFooter";
+import { GlobalHeader } from "@/components/GlobalHeader";
+import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
+import localFont from "next/font/local";
+import { type ReactNode, lazy } from "react";
+import BlockEditor from "../../blocks/block-editor";
+import { Provider } from "../provider";
+
+const IIIFDevRefresh = lazy(() => import("../../components/IIIFDevRefresh"));
 
 export const metadata: Metadata = {
   title: "TU Delft Academic Heritage",
-  description: "TU Delft Library's Special Collections portal"
+  description: "TU Delft Library's Special Collections portal",
 };
 
 if (process.env.NODE_ENV !== "production") {
@@ -78,7 +80,7 @@ export default function RootLayout({
   children: ReactNode;
   params: { locale: string };
 }): JSX.Element {
-  unstable_setRequestLocale(params.locale);
+  setRequestLocale(params.locale);
   return (
     <html lang={params.locale}>
       <body className={`bg-gray-200 ${foundersGrotesk.variable} ${foundersGroteskMono.variable} font-sans`}>
@@ -86,7 +88,12 @@ export default function RootLayout({
           <SlotContext name="locale" value={params.locale}>
             <GlobalHeader />
             <main className="flex w-full flex-col items-center">{children}</main>
-            {process.env.NODE_ENV !== "production" ? <BlockEditor showToggle rsc /> : null}
+            {process.env.NODE_ENV !== "production" ? (
+              <>
+                <BlockEditor showToggle rsc />
+                <IIIFDevRefresh />
+              </>
+            ) : null}
             <GlobalFooter />
           </SlotContext>
         </Provider>
