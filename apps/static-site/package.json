@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "next dev -H 0.0.0.0",
     "build": "next build",
-    "start": "next start",
-    "lint": "eslint . --max-warnings 0"
+    "start": "next start"
   },
   "dependencies": {
     "@headlessui/react": "1.7.18",
@@ -37,16 +36,12 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "^14.0.2",
-    "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "@netlify/plugin-nextjs": "^4.41.3",
-    "@types/eslint": "^8.44.7",
     "@repo/iiif": "*",
     "@types/node": "^17.0.12",
     "@types/react": "^18.0.22",
     "@types/react-dom": "^18.0.7",
-    "eslint": "^8.53.0",
     "next-contentlayer": "^0.3.4",
     "typescript": "^5.2.2",
     "playwright": "^1.39.0"
