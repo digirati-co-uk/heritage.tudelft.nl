@@ -1,6 +1,6 @@
 "use client";
 
-import { DefaultPresetOptions, Preset } from "@atlas-viewer/atlas";
+import type { DefaultPresetOptions, Preset } from "@atlas-viewer/atlas";
 import { useState, useRef, useMemo, useEffect } from "react";
 import { Dialog } from "@headlessui/react";
 import { useCanvas, CanvasPanel, CanvasContext, useVault } from "react-iiif-vault";
@@ -8,9 +8,9 @@ import invariant from "tiny-invariant";
 import { AutoLanguage } from "../pages/AutoLanguage";
 import { LazyLoadComponent } from "react-lazy-load-image-component";
 import { CloseIcon } from "../atoms/CloseIcon";
-import { Canvas, Annotation } from "@iiif/presentation-3";
+import type { Canvas, Annotation } from "@iiif/presentation-3";
 import { expandTarget } from "@iiif/helpers";
-import { AnnotationPageNormalized } from "@iiif/presentation-3-normalized";
+import type { AnnotationPageNormalized } from "@iiif/presentation-3-normalized";
 import { Link, getObjectSlug } from "@/navigation";
 
 function CanvasPreviewBlockInner({
@@ -18,18 +18,19 @@ function CanvasPreviewBlockInner({
   objectLinks,
 }: {
   cover?: boolean;
-  objectLinks: Array<{ service: string; slug: string; canvasId: string; targetCanvasId: string }>;
+  objectLinks: Array<{
+    service: string;
+    slug: string;
+    canvasId: string;
+    targetCanvasId: string;
+  }>;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const vault = useVault();
   const canvas = useCanvas();
   const atlas = useRef<Preset | null>(null);
   const config = useMemo(
-    () =>
-      [
-        "default-preset",
-        { runtimeOptions: { visibilityRatio: 1.2, maxOverZoom: 2 }, interactive: isOpen } as DefaultPresetOptions,
-      ] as any,
+    () => ["default-preset", { runtimeOptions: {}, interactive: isOpen } as DefaultPresetOptions] as any,
     [isOpen]
   );
   const [stepIndex, setStepIndex] = useState(0);
@@ -120,7 +121,10 @@ function CanvasPreviewBlockInner({
     <>
       <div className="exhibition-canvas-panel z-10 h-full bg-[#373737]" onClick={() => setIsOpen(true)}>
         <CanvasPanel.Viewer
-          containerStyle={{ height: "100%", pointerEvents: isOpen ? undefined : "none" }}
+          containerStyle={{
+            height: "100%",
+            pointerEvents: isOpen ? undefined : "none",
+          }}
           renderPreset={config}
           homeOnResize
           homeCover={cover ? "start" : false}
@@ -198,7 +202,9 @@ function CanvasPreviewBlockInner({
                       <div className="absolute inset-0 bg-gray-800" />
                       <div
                         className="absolute inset-0 bg-slate-100"
-                        style={{ width: `${((stepIndex + 1) / tourSteps.length) * 100}%` }}
+                        style={{
+                          width: `${((stepIndex + 1) / tourSteps.length) * 100}%`,
+                        }}
                       />
                     </div>
                   </div>
@@ -275,7 +281,12 @@ export function CanvasPreviewBlock({
   canvasId: string;
   cover?: boolean;
   index: number;
-  objectLinks: Array<{ service: string; slug: string; canvasId: string; targetCanvasId: string }>;
+  objectLinks: Array<{
+    service: string;
+    slug: string;
+    canvasId: string;
+    targetCanvasId: string;
+  }>;
 }) {
   const inner = (
     <CanvasContext canvas={canvasId} key={canvasId}>

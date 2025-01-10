@@ -1,9 +1,9 @@
-import { CanvasPreviewBlock } from "./CanvasPreviewBlock";
-import { AutoLanguage } from "../pages/AutoLanguage";
 import { getClassName } from "@/helpers/exhibition";
-import { twMerge } from "tailwind-merge";
+import type { Canvas } from "@iiif/presentation-3";
 import { Suspense } from "react";
-import { Canvas } from "@iiif/presentation-3";
+import { twMerge } from "tailwind-merge";
+import { AutoLanguage } from "../pages/AutoLanguage";
+import { CanvasPreviewBlock } from "./CanvasPreviewBlock";
 
 export async function ImageBlock({
   index,

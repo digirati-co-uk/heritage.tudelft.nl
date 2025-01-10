@@ -1,4 +1,4 @@
-import { InternationalString } from "@iiif/presentation-3";
+import type { InternationalString } from "@iiif/presentation-3";
 import { useLocale } from "next-intl";
 
 export function AutoLanguage({
@@ -56,9 +56,9 @@ export function AutoLanguage({
           <>
             {filtered.map((line) =>
               html ? (
-                <p className={className} dangerouslySetInnerHTML={{ __html: m(line) }} />
+                <div className={className} dangerouslySetInnerHTML={{ __html: m(line) }} />
               ) : (
-                <p className={className}>{m(line)}</p>
+                <div className={className}>{m(line)}</div>
               )
             )}
           </>

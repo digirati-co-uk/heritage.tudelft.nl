@@ -1,18 +1,23 @@
-import { Manifest } from "@iiif/presentation-3";
-import { createPaintingAnnotationsHelper } from "@iiif/helpers/painting-annotations";
-import { getRenderingStrategy } from "react-iiif-vault/utils";
-import { TitlePanel } from "../exhibitions/TitleBlock";
-import { InfoBlock } from "../exhibitions/InfoBlock";
-import { ImageBlock } from "../exhibitions/ImageBlock";
-import { MediaBlock } from "../exhibitions/MediaBlock";
 import { Slot } from "@/blocks/slot";
+import { createPaintingAnnotationsHelper } from "@iiif/helpers/painting-annotations";
+import type { Manifest } from "@iiif/presentation-3";
+import { getRenderingStrategy } from "react-iiif-vault/utils";
+import { ImageBlock } from "../exhibitions/ImageBlock";
+import { InfoBlock } from "../exhibitions/InfoBlock";
+import { MediaBlock } from "../exhibitions/MediaBlock";
+import { TitlePanel } from "../exhibitions/TitleBlock";
 
 export interface ExhibitionPageProps {
   locale: string;
   manifest: Manifest;
   meta: {};
   slug: string;
-  viewObjectLinks: Array<{ service: string; slug: string; canvasId: string; targetCanvasId: string }>;
+  viewObjectLinks: Array<{
+    service: string;
+    slug: string;
+    canvasId: string;
+    targetCanvasId: string;
+  }>;
 }
 
 export async function ExhibitionPage(props: ExhibitionPageProps) {
@@ -38,7 +43,7 @@ export async function ExhibitionPage(props: ExhibitionPageProps) {
           const foundLinks = props.viewObjectLinks.filter((link) => link.canvasId === canvas.id);
 
           if (strategy.type === "textual-content") {
-            return <InfoBlock key={idx} canvas={canvas} strategy={strategy} />;
+            return <InfoBlock key={idx} canvas={canvas} strategy={strategy} locale={props.locale} />;
           }
 
           if (strategy.type === "images") {

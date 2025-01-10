@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import { Dialog } from "@headlessui/react";
-import { AutoLanguage } from "../pages/AutoLanguage";
+import { useLocale } from "next-intl";
+import { useState } from "react";
 import { CanvasContext, useCanvas, useVault } from "react-iiif-vault";
 import { CloseIcon } from "../atoms/CloseIcon";
-import { useLocale } from "next-intl";
+import { AutoLanguage } from "../pages/AutoLanguage";
 
 type Content = {
   readMore: string;
@@ -39,13 +39,13 @@ function ReadMoreBlockInner({ content }: { content: Content }) {
           </button>
           <Dialog.Panel className="relative flex h-full w-full justify-center overflow-y-auto overflow-x-hidden rounded bg-white">
             <article className="prose prose-lg h-fit max-w-2xl leading-snug md:leading-normal">
-              {annotations.map((annotation) => {
+              {annotations.map((annotation: any) => {
                 const bodies = vault.get(Array.isArray(annotation.body) ? annotation.body : [annotation.body]);
                 const toShow = bodies.length === 1 ? bodies : bodies.filter((t) => (t as any).language === locale);
 
-                return toShow.map((body: any, key) => {
+                return toShow.map((body: any, key: number) => {
                   return (
-                    <AutoLanguage key={key} lines html className="mb-3">
+                    <AutoLanguage key={annotation.id + key} lines html className="mb-3">
                       {body.value}
                     </AutoLanguage>
                   );
@@ -62,7 +62,7 @@ function ReadMoreBlockInner({ content }: { content: Content }) {
   );
 }
 
-export function ReadMoreBlock(props: { content: { readMore: string }; canvasId: string }) {
+export default function ReadMoreBlock(props: { content: { readMore: string }; canvasId: string }) {
   return (
     <CanvasContext canvas={props.canvasId}>
       <ReadMoreBlockInner content={props.content} />

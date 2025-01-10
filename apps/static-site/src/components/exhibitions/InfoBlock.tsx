@@ -1,24 +1,39 @@
 import { getClassName } from "@/helpers/exhibition";
-import { Canvas } from "@iiif/presentation-3";
-import { TextualContentStrategy } from "react-iiif-vault";
-import { twMerge } from "tailwind-merge";
-import { AutoLanguage } from "../pages/AutoLanguage";
-import { Suspense } from "react";
-import { ReadMoreBlock } from "./ReadMore";
+import type { Canvas } from "@iiif/presentation-3";
 import { useLocale } from "next-intl";
 import { getTranslations } from "next-intl/server";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
+import type { TextualContentStrategy } from "react-iiif-vault";
+import { twMerge } from "tailwind-merge";
+import { AutoLanguage } from "../pages/AutoLanguage";
+
+const ReadMoreBlock = dynamic(() => import("./ReadMore"));
 
 interface InfoBlockProps {
   canvas: Canvas;
   strategy: TextualContentStrategy;
+  locale: string;
 }
 
-export async function InfoBlock({ canvas, strategy }: InfoBlockProps) {
+function getItemsByLocale<T extends { text: any }>(items: T[], locale: string): T[] {
+  if (items.length === 1) return items;
+  const found = items.filter((t) => Object.keys(t.text).includes(locale));
+  if (found.length) {
+    return found;
+  }
+  const firstLang = Object.keys(items[0]?.text || {})[0];
+  if (firstLang) {
+    return items.filter((t) => Object.keys(t.text).includes(firstLang));
+  }
+
+  return items;
+}
+
+export async function InfoBlock({ canvas, strategy, locale }: InfoBlockProps) {
   const t = await getTranslations();
   const className = getClassName(canvas.behavior);
-  const locale = useLocale();
-  const items =
-    strategy.items.length === 1 ? strategy.items : strategy.items.filter((t) => Object.keys(t.text).includes(locale));
+  const items = getItemsByLocale(strategy.items, locale);
 
   return (
     <div className={twMerge("cut-corners bg-black p-6 text-white", className)}>
@@ -29,11 +44,9 @@ export async function InfoBlock({ canvas, strategy }: InfoBlockProps) {
           </AutoLanguage>
         ))}
 
-        <p>
-          <Suspense fallback={<div className="underline underline-offset-4">{t("Read more")}</div>}>
-            <ReadMoreBlock content={{ readMore: t("Read more") }} canvasId={canvas.id} />
-          </Suspense>
-        </p>
+        <Suspense fallback={<div className="underline underline-offset-4">{t("Read more")}</div>}>
+          <ReadMoreBlock content={{ readMore: t("Read more") }} canvasId={canvas.id} />
+        </Suspense>
       </div>
     </div>
   );
