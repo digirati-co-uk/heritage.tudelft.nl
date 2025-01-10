@@ -33,6 +33,9 @@ jobs:
         working-directory: packages/headless-static-site
         run: bun run build
 
+      - name: Link HSS CLI
+        run: bun install --frozen-lockfile
+
       - name: Cache Next.js build cache
         uses: actions/cache@v4
         with:
