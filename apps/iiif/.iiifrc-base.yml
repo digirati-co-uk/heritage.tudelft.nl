@@ -16,6 +16,10 @@ run:
   - delft-image-source
   - typesense-manifests
 
+collections:
+  index:
+    label: { "en": "TU Delft Academic Heritage", "nl": "Academisch Erfgoed TU Delft" }
+
 stores:
   collective-access:
     type: iiif-json
