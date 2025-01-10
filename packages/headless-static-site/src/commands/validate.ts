@@ -4,12 +4,13 @@ import { cwd } from "node:process";
 import chalk from "chalk";
 import type { Command } from "commander";
 import { getConfig } from "../util/get-config.ts";
+import { loadJson } from "../util/load-json.ts";
 import { resolveFromSlug } from "../util/resolve-from-slug.ts";
 import { compileReverseSlugConfig, compileSlugConfig } from "../util/slug-engine.ts";
 
 type ValidateOptions = unknown;
 
-export async function validate(options: ValidateOptions, command?: Command) {
+export async function validateCommand(options: ValidateOptions, command?: Command) {
   let didError = false;
   const config = await getConfig();
   if (config.slugs) {
@@ -51,7 +52,8 @@ export async function validate(options: ValidateOptions, command?: Command) {
   const buildMeta = join(cwd(), ".iiif/build/meta/sitemap.json");
   if (config.slugs && existsSync(buildMeta)) {
     console.log("Validating built site map");
-    const loaded = await Bun.file(buildMeta).json();
+    const loaded = await loadJson(buildMeta, true);
+    console.log(loaded);
     const keys = Object.keys(loaded);
     for (const key of keys) {
       const item = loaded[key];
@@ -63,13 +65,13 @@ export async function validate(options: ValidateOptions, command?: Command) {
         if (item.type === "Manifest") {
           const expectedPath = join(cwd(), ".iiif/build", key, "manifest.json");
           if (!existsSync(expectedPath)) {
-            console.log(chalk.red`  - Missing ${key} at ${expectedPath}`);
+            console.log(chalk.red`  - Missing ${chalk.white(key)} at ${expectedPath}`);
           }
         }
         if (item.type === "Collection") {
           const expectedPath = join(cwd(), ".iiif/build", key, "collection.json");
           if (!existsSync(expectedPath)) {
-            console.log(chalk.red`  - Missing ${key} at ${expectedPath}`);
+            console.log(chalk.red`  - Missing ${chalk.white(key)} at ${expectedPath}`);
             didError = true;
           }
         }

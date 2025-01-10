@@ -1,5 +1,4 @@
-import { existsSync } from "node:fs";
-import { stat } from "node:fs/promises";
+import fs from "node:fs";
 import { join } from "node:path";
 import { cwd } from "node:process";
 import { Vault } from "@iiif/helpers";
@@ -60,7 +59,7 @@ export const IIIFRemoteStore: Store<IIIFRemoteStore> = {
         overrides: store.overrides,
       };
 
-      if (override && existsSync(join(cwd(), override))) {
+      if (override && fs.existsSync(join(cwd(), override))) {
         source = { type: "disk", path: override, alias: slug };
       }
       // This is a manifest, probably shouldn't have requested it...
@@ -112,7 +111,7 @@ export const IIIFRemoteStore: Store<IIIFRemoteStore> = {
     }
 
     if (resource.source.type === "disk") {
-      const file = await stat(resource.source.path);
+      const file = await fs.promises.stat(resource.source.path);
       const key = `${file.mtime}-${file.ctime}-${file.size}`;
       return key !== caches.load;
     }
@@ -124,9 +123,11 @@ export const IIIFRemoteStore: Store<IIIFRemoteStore> = {
     return true;
   },
   async load(store: IIIFRemoteStore, resource: ParsedResource, directory, api) {
+    const files = api.files;
+
     const json =
       resource.source.type === "disk"
-        ? ((await Bun.file(resource.source.path).json()) as any)
+        ? ((await files.loadJson(resource.source.path)) as any)
         : await api.requestCache.fetch(resource.path);
 
     const id = json.id || json["@id"];
@@ -142,11 +143,11 @@ export const IIIFRemoteStore: Store<IIIFRemoteStore> = {
     // Copy any sub files.
     const caches: any = {};
     if (resource.source.type === "disk") {
-      const file = await stat(resource.source.path);
+      const file = await fs.promises.stat(resource.source.path);
       caches.load = `${file.mtime}-${file.ctime}-${file.size}`;
 
       const pathWithoutExtension = resource.source.path.replace(".json", "");
-      const subFilesFolder = existsSync(join(cwd(), pathWithoutExtension));
+      const subFilesFolder = fs.existsSync(join(cwd(), pathWithoutExtension));
       if (subFilesFolder) {
         if (subFilesFolder && (await pathExists(resource.slug)) && !isEmpty(resource.slug)) {
           const destination = join(cwd(), directory, "files");

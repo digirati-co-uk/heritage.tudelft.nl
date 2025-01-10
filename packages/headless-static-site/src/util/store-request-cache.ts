@@ -1,14 +1,22 @@
 import { createHash } from "node:crypto";
-import { writeFile } from "node:fs/promises";
-import { readFile } from "node:fs/promises";
+import nfs from "node:fs";
 import { join } from "node:path";
-import { pathExists } from "fs-extra/esm";
-import { mkdirp } from "mkdirp";
 import objectHash from "object-hash";
+import type { IFS } from "unionfs";
 
-export function createStoreRequestCache(storeKey: string, cacheDir: string, noCache = false) {
+export function createStoreRequestCache(storeKey: string, cacheDir: string, noCache = false, customFs?: IFS) {
+  const fs = customFs?.promises || nfs.promises;
   const cache = new Map<string, string>();
   const didChangeCache = new Map<string, string>();
+
+  async function pathExists(to: string) {
+    try {
+      await fs.stat(to);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 
   return {
     async getKey(url: string) {
@@ -17,7 +25,7 @@ export function createStoreRequestCache(storeKey: string, cacheDir: string, noCa
       }
       return null;
     },
-    async didChange(url: string, options?: FetchRequestInit) {
+    async didChange(url: string, options?: RequestInit) {
       let data = null;
 
       if (cache.has(url)) {
@@ -30,7 +38,7 @@ export function createStoreRequestCache(storeKey: string, cacheDir: string, noCa
 
       if (!data && (await pathExists(url))) {
         try {
-          const rawData = await readFile(url);
+          const rawData = await fs.readFile(url);
           if (rawData.length) {
             data = JSON.parse(rawData.toString("utf-8"));
           }
@@ -53,7 +61,7 @@ export function createStoreRequestCache(storeKey: string, cacheDir: string, noCa
 
       return didChange;
     },
-    async fetch(url: string, options?: FetchRequestInit) {
+    async fetch(url: string, options?: RequestInit) {
       const hash = createHash("sha256").update(url).digest("hex");
       const dir = join(cacheDir, storeKey);
       const cachePath = join(cacheDir, `${storeKey}/${hash}.json`);
@@ -63,8 +71,8 @@ export function createStoreRequestCache(storeKey: string, cacheDir: string, noCa
         didChangeCache.delete(url);
 
         // Also populate the cache.
-        await mkdirp(dir);
-        await writeFile(cachePath, JSON.stringify(data));
+        await fs.mkdir(dir, { recursive: true });
+        await fs.writeFile(cachePath, JSON.stringify(data));
         cache.set(cachePath, data as any);
 
         return data;
@@ -75,7 +83,7 @@ export function createStoreRequestCache(storeKey: string, cacheDir: string, noCa
       }
 
       if ((await pathExists(cachePath)) && !noCache) {
-        const rawData = (await readFile(cachePath)).toString("utf-8");
+        const rawData = (await fs.readFile(cachePath)).toString("utf-8");
         if (rawData.length) {
           try {
             const data = JSON.parse(rawData);
@@ -97,8 +105,8 @@ export function createStoreRequestCache(storeKey: string, cacheDir: string, noCa
         const data = await resp.json();
         const cachedData = { ...data, _cached: true };
         cache.set(url, cachedData as any);
-        await mkdirp(dir);
-        await writeFile(cachePath, JSON.stringify(cachedData));
+        await fs.mkdir(dir, { recursive: true });
+        await fs.writeFile(cachePath, JSON.stringify(cachedData));
         return data;
       } catch (e) {
         console.log("Error fetching", url, (e as any).message);

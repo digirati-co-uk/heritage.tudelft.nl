@@ -1,4 +1,5 @@
 import { join } from "node:path";
+import PQueue from "p-queue";
 import { createCacheResource } from "../../util/cached-resource.ts";
 import { makeProgressBar } from "../../util/make-progress-bar.ts";
 import { createStoreRequestCache } from "../../util/store-request-cache.ts";
@@ -19,6 +20,7 @@ export async function extract(
     cacheDir,
     log,
     extractions,
+    files,
     manifestExtractions,
     collectionExtractions,
     canvasExtractions,
@@ -30,20 +32,25 @@ export async function extract(
     return {};
   }
 
+  const startTime = Date.now();
   const requestCache = createStoreRequestCache("_extract", requestCacheDir);
-
   const extractionConfigs: Record<string, any> = {};
+  const stats: Record<string, number> = {};
   for (const extraction of allExtractions) {
     if (extraction.configure) {
       const extractionConfig = config.config?.[extraction.id];
-      extractionConfigs[extraction.id] = await extraction.configure({ config, build: buildConfig }, extractionConfig);
+      extractionConfigs[extraction.id] = await extraction.configure(
+        { config, build: buildConfig, fileHandler: files },
+        extractionConfig
+      );
     } else {
       extractionConfigs[extraction.id] = config.config?.[extraction.id];
     }
+    stats[extraction.id] = 0;
   }
 
   // Caches.
-  const savingFiles = [];
+  const savingFiles: Promise<any>[] = [];
   const temp: Record<string, Record<string, any>> = {};
 
   let totalResources = allResources.length;
@@ -54,169 +61,188 @@ export async function extract(
   // Found Collections
   const collections: Record<string, string[]> = {};
 
-  const progress = makeProgressBar("Extraction", totalResources);
+  const progress = makeProgressBar("Extraction", totalResources, options.ui);
+
+  const queue = new PQueue();
 
   for (const manifest of allResources) {
-    const skipSteps = config.stores[manifest.storeId]?.skip || [];
-    const runSteps = config.stores[manifest.storeId]?.run;
+    queue.add(async () => {
+      const skipSteps = config.stores[manifest.storeId]?.skip || [];
+      const runSteps = config.stores[manifest.storeId]?.run;
 
-    const cachedResource = createCacheResource({
-      resource: manifest,
-      temp,
-      resourcePath: join(cacheDir, manifest.slug),
-      collections,
-    });
+      const cachedResource = createCacheResource({
+        resource: manifest,
+        temp,
+        resourcePath: join(cacheDir, manifest.slug),
+        collections,
+        fileHandler: files,
+      });
 
-    const resource = await cachedResource.attachVault();
+      const resource = await cachedResource.attachVault();
 
-    let extractions = manifest.type === "Manifest" ? manifestExtractions : collectionExtractions;
+      let extractions = manifest.type === "Manifest" ? manifestExtractions : collectionExtractions;
 
-    // Add extra steps that might not be in already.
-    if (runSteps) {
-      // Need to make a copy in this case.
-      extractions = [...extractions];
-      for (const step of runSteps) {
-        const found = allExtractions.find((e) => e.id === step);
-        if (found?.types.includes(manifest.type) && !extractions.includes(found)) {
-          extractions.push(found);
+      // Add extra steps that might not be in already.
+      if (runSteps) {
+        // Need to make a copy in this case.
+        extractions = [...extractions];
+        for (const step of runSteps) {
+          const found = allExtractions.find((e) => e.id === step);
+          if (found?.types.includes(manifest.type) && !extractions.includes(found)) {
+            extractions.push(found);
+          }
         }
       }
-    }
 
-    for (const extraction of extractions) {
-      if (skipSteps.includes(extraction.id)) {
-        // log("Skipping " + extraction.id + " for " + manifest.slug);
-        continue;
-      }
-      const storeConfig = extractionConfigs[extraction.id] || {};
-      const extractConfig = Object.assign(
-        {},
-        storeConfig,
-        config.stores[manifest.storeId].config?.[extraction.id] || {}
-      );
-      const valid =
-        !options.cache ||
-        (await extraction.invalidate(
-          manifest,
-          {
-            caches: cachedResource.caches,
-            resource,
-            build: buildConfig,
-          },
-          extractConfig
-        ));
-      if (valid) {
-        log(`Running extract: ${extraction.name} for ${manifest.slug}`);
-        const result = await extraction.handler(
-          manifest,
-          {
-            resource,
-            meta: cachedResource.meta,
-            indices: cachedResource.indices,
-            caches: cachedResource.caches,
-            config,
-            build: buildConfig,
-            requestCache,
-          },
-          extractConfig
+      for (const extraction of extractions) {
+        if (skipSteps.includes(extraction.id)) {
+          // log(`Skipping ${extraction.id} for ${manifest.slug}`);
+          continue;
+        }
+        const storeConfig = extractionConfigs[extraction.id] || {};
+        const extractConfig = Object.assign(
+          {},
+          storeConfig,
+          config.stores[manifest.storeId].config?.[extraction.id] || {}
         );
-
-        cachedResource.handleResponse(result, extraction);
-      }
-
-      savingFiles.push(cachedResource.save());
-    }
-
-    progress.increment();
-
-    // Canvas extractions.
-    if (manifest.type === "Manifest" && canvasExtractions.length) {
-      // Canvas extractions
-      // These will have to be saved alongside the manifest in the same folder. We could do:
-      //  - manifest.json
-      //  - canvases/0/meta.json
-      //  - canvases/0/caches.json
-      //  - canvases/0/indices.json
-      //  - canvases/0/files/thumbnail.jpg
-      //
-      // Which would be translated to:
-      // - manifest.json
-      // - canvases/0/meta.json
-      // - canvases/0/thumbnail.jpg
-      const canvases = resource.items || [];
-      let canvasIndex = 0;
-      for (const canvas of canvases) {
-        const canvasCache = createCacheResource({
-          resource: canvas,
-          temp,
-          resourcePath: join(cacheDir, manifest.slug, "canvases", canvasIndex.toString()),
-          collections,
-          parentManifest: manifest,
-          canvasIndex,
-        });
-
-        const canvasResource = canvasCache.getCanvasResource();
-
-        for (const canvasExtraction of canvasExtractions) {
-          const storeConfig = extractionConfigs[canvasExtraction.id] || {};
-          const extractConfig = Object.assign(
-            {},
-            storeConfig,
-            config.stores[manifest.storeId].config?.[canvasExtraction.id] || {}
-          );
-          const valid =
-            !options.cache ||
-            (await canvasExtraction.invalidate(
-              canvasResource,
-              {
-                caches: canvasCache.caches,
-                resource: canvas,
-                build: buildConfig,
-              },
-              extractConfig
-            ));
-          if (!valid) {
-            continue;
-          }
-          const result = await canvasExtraction.handler(
-            canvasResource,
+        const valid =
+          !options.cache ||
+          (await extraction.invalidate(
+            manifest,
             {
-              resource: canvas,
-              meta: canvasCache.meta,
-              indices: canvasCache.indices,
-              caches: canvasCache.caches,
+              caches: cachedResource.caches,
+              resource,
+              build: buildConfig,
+              fileHandler: files,
+            },
+            extractConfig
+          ));
+        if (valid) {
+          log(`Running extract: ${extraction.name} for ${manifest.slug}`);
+          const startExtract = Date.now();
+          const result = await extraction.handler(
+            manifest,
+            {
+              resource,
+              meta: cachedResource.meta,
+              indices: cachedResource.indices,
+              caches: cachedResource.caches,
               config,
               build: buildConfig,
               requestCache,
             },
             extractConfig
           );
+          stats[extraction.id] = (stats[extraction.id] || 0) + Date.now() - startExtract;
 
-          canvasCache.handleResponse(result, canvasExtraction);
+          cachedResource.handleResponse(result, extraction);
         }
 
-        savingFiles.push(canvasCache.save());
-
-        progress.increment();
-        canvasIndex++;
+        savingFiles.push(cachedResource.save());
       }
 
-      for (const canvasExtraction of canvasExtractions) {
-        if (canvasExtraction.collectManifest && temp[canvasExtraction.id] && temp[canvasExtraction.id][manifest.slug]) {
-          const extractionConfig = extractionConfigs[canvasExtraction.id] || {};
-          await canvasExtraction.collectManifest(
-            manifest,
-            temp[canvasExtraction.id][manifest.slug],
-            { config, build: buildConfig },
-            extractionConfig
-          );
+      progress.increment();
+
+      // Canvas extractions.
+      if (manifest.type === "Manifest" && canvasExtractions.length) {
+        // Canvas extractions
+        // These will have to be saved alongside the manifest in the same folder. We could do:
+        //  - manifest.json
+        //  - canvases/0/meta.json
+        //  - canvases/0/caches.json
+        //  - canvases/0/indices.json
+        //  - canvases/0/files/thumbnail.jpg
+        //
+        // Which would be translated to:
+        // - manifest.json
+        // - canvases/0/meta.json
+        // - canvases/0/thumbnail.jpg
+        const canvases = resource.items || [];
+        let canvasIndex = 0;
+        for (const canvas of canvases) {
+          const canvasCache = createCacheResource({
+            resource: canvas,
+            temp,
+            resourcePath: join(cacheDir, manifest.slug, "canvases", canvasIndex.toString()),
+            collections,
+            parentManifest: manifest,
+            canvasIndex,
+            fileHandler: files,
+          });
+
+          const canvasResource = canvasCache.getCanvasResource();
+
+          for (const canvasExtraction of canvasExtractions) {
+            const storeConfig = extractionConfigs[canvasExtraction.id] || {};
+            const extractConfig = Object.assign(
+              {},
+              storeConfig,
+              config.stores[manifest.storeId].config?.[canvasExtraction.id] || {}
+            );
+            const valid =
+              !options.cache ||
+              (await canvasExtraction.invalidate(
+                canvasResource,
+                {
+                  caches: canvasCache.caches,
+                  resource: canvas,
+                  build: buildConfig,
+                  fileHandler: files,
+                },
+                extractConfig
+              ));
+            if (!valid) {
+              continue;
+            }
+            const startExtract = Date.now();
+            const result = await canvasExtraction.handler(
+              canvasResource,
+              {
+                resource: canvas,
+                meta: canvasCache.meta,
+                indices: canvasCache.indices,
+                caches: canvasCache.caches,
+                config,
+                build: buildConfig,
+                requestCache,
+              },
+              extractConfig
+            );
+            stats[canvasExtraction.id] = (stats[canvasExtraction.id] || 0) + Date.now() - startExtract;
+
+            canvasCache.handleResponse(result, canvasExtraction);
+          }
+
+          savingFiles.push(canvasCache.save());
+
+          progress.increment();
+          canvasIndex++;
         }
+
+        for (const canvasExtraction of canvasExtractions) {
+          if (
+            canvasExtraction.collectManifest &&
+            temp[canvasExtraction.id] &&
+            temp[canvasExtraction.id][manifest.slug]
+          ) {
+            const extractionConfig = extractionConfigs[canvasExtraction.id] || {};
+            const startExtract = Date.now();
+            await canvasExtraction.collectManifest(
+              manifest,
+              temp[canvasExtraction.id][manifest.slug],
+              { config, build: buildConfig, fileHandler: files },
+              extractionConfig
+            );
+            stats[canvasExtraction.id] = (stats[canvasExtraction.id] || 0) + Date.now() - startExtract;
+          }
+        }
+      } else {
+        progress.increment(manifest.subResources || 0);
       }
-    } else {
-      progress.increment(manifest.subResources || 0);
-    }
+    });
   }
 
+  await queue.onIdle();
   log(`Saving ${savingFiles.length} files`);
   await Promise.all(savingFiles);
 
@@ -227,28 +253,38 @@ export async function extract(
     }
     if (extraction.collect && temp[extraction.id]) {
       const extractionConfig = extractionConfigs[extraction.id] || {};
-      const resp = await extraction.collect(temp[extraction.id], { config, build: buildConfig }, extractionConfig);
+      const resp = await extraction.collect(
+        temp[extraction.id],
+        { config, build: buildConfig, fileHandler: files },
+        extractionConfig
+      );
       if (extraction.injectManifest && resp && resp.temp) {
+        const inject = extraction.injectManifest;
         for (const manifestSlug of Object.keys(resp.temp)) {
-          const extractionConfig = extractionConfigs[extraction.id] || {};
-          const foundManifest = allResources.find((r) => r.slug === manifestSlug);
-          if (!foundManifest) {
-            continue;
-          }
-          const manifestCache = createCacheResource({
-            resource: foundManifest,
-            temp,
-            resourcePath: join(cacheDir, manifestSlug),
-            collections,
+          queue.add(async () => {
+            const extractionConfig = extractionConfigs[extraction.id] || {};
+            const foundManifest = allResources.find((r) => r.slug === manifestSlug);
+            if (!foundManifest) {
+              return;
+            }
+            const manifestCache = createCacheResource({
+              resource: foundManifest,
+              temp,
+              resourcePath: join(cacheDir, manifestSlug),
+              collections,
+              fileHandler: files,
+            });
+            const startExtract = Date.now();
+            const manifestInjected = await inject(
+              foundManifest,
+              resp.temp[manifestSlug],
+              { config, build: buildConfig, fileHandler: files },
+              extractionConfig
+            );
+            stats[extraction.id] = (stats[extraction.id] || 0) + Date.now() - startExtract;
+            manifestCache.handleResponse(manifestInjected, extraction);
+            await manifestCache.save();
           });
-          const manifestInjected = await extraction.injectManifest(
-            foundManifest,
-            resp.temp[manifestSlug],
-            { config, build: buildConfig },
-            extractionConfig
-          );
-          manifestCache.handleResponse(manifestInjected, extraction);
-          await manifestCache.save();
         }
       }
     }
@@ -256,5 +292,7 @@ export async function extract(
 
   progress.stop();
 
-  return { collections };
+  stats._total = Date.now() - startTime;
+
+  return { collections, stats };
 }

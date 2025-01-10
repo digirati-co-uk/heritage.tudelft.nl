@@ -1,11 +1,10 @@
 import { join } from "node:path";
 import { IIIFBuilder } from "@iiif/builder";
 import { Vault } from "@iiif/helpers";
-import { mkdirp } from "mkdirp";
 import type { EnrichmentResult } from "./enrich";
 import type { ExtractionReturn } from "./extract";
+import type { FileHandler } from "./file-handler";
 import { lazyValue } from "./lazy-value";
-import { loadJson } from "./load-json";
 import { mergeIndices } from "./merge-indices";
 import type { ActiveResourceJson } from "./store";
 
@@ -16,6 +15,7 @@ interface CreateCacheResourceOptions<Temp = any> {
   collections: Record<string, string[]>;
   parentManifest?: ActiveResourceJson;
   canvasIndex?: number;
+  fileHandler: FileHandler;
 }
 
 type Result<Temp> = EnrichmentResult<Temp> | ExtractionReturn<Temp>;
@@ -28,7 +28,9 @@ export function createCacheResource({
   collections,
   parentManifest,
   canvasIndex,
+  fileHandler,
 }: CreateCacheResourceOptions) {
+  const fs = fileHandler;
   const files = {
     "vault.json": join(resourcePath, "vault.json"),
     "caches.json": join(resourcePath, "caches.json"),
@@ -36,10 +38,10 @@ export function createCacheResource({
     "indices.json": join(resourcePath, "indices.json"),
   };
   const filesDir = join(resourcePath, "files");
-  const vaultData = parentManifest ? null : loadJson(files["vault.json"]);
-  const caches = lazyValue(() => loadJson(files["caches.json"], true));
-  const meta = lazyValue(() => loadJson(files["meta.json"], true));
-  const indices = lazyValue(() => loadJson(files["indices.json"], true));
+  const vaultData = parentManifest ? null : fs.openJson(files["vault.json"]);
+  const caches = lazyValue(() => fs.loadJson(files["caches.json"]));
+  const meta = lazyValue(() => fs.loadJson(files["meta.json"]));
+  const indices = lazyValue(() => fs.loadJson(files["indices.json"]));
   const newMeta = {};
   const newCaches = {};
   const newIndices = {};
@@ -73,10 +75,11 @@ export function createCacheResource({
       if (!vaultData) {
         throw new Error("Can only load Manifest Vault");
       }
-      if (!resource.vault) {
+      if (!resource.vault || !(resource.vault instanceof Vault)) {
         resource.vault = new Vault();
         resource.vault.getStore().setState(await vaultData);
       }
+
       return resource.vault.getObject(resource.id);
     },
 
@@ -89,7 +92,7 @@ export function createCacheResource({
 
     async saveVault() {
       if (didChange && resource.vault) {
-        await Bun.write(files["vault.json"], JSON.stringify(resource.vault.getStore().getState(), null, 2));
+        await fs.saveJson(files["vault.json"], resource.vault.getStore().getState());
       }
     },
 
@@ -140,27 +143,16 @@ export function createCacheResource({
         return;
       }
 
-      await mkdirp(resourcePath);
+      await fs.mkdir(resourcePath);
 
-      const savingFiles = [];
       if (Object.keys(newMeta).length > 0) {
-        savingFiles.push(
-          Bun.write(files["meta.json"], JSON.stringify(Object.assign(await meta.value, newMeta), null, 2))
-        );
+        await fs.saveJson(files["meta.json"], Object.assign(await meta.value, newMeta));
       }
       if (Object.keys(newIndices).length > 0) {
-        savingFiles.push(
-          Bun.write(files["indices.json"], JSON.stringify(mergeIndices(await indices.value, newIndices), null, 2))
-        );
+        await fs.saveJson(files["indices.json"], mergeIndices(await indices.value, newIndices));
       }
       if (Object.keys(newCaches).length > 0) {
-        savingFiles.push(
-          Bun.write(files["caches.json"], JSON.stringify(Object.assign(await caches.value, newCaches), null, 2))
-        );
-      }
-
-      if (savingFiles.length > 0) {
-        await Promise.all(savingFiles);
+        await fs.saveJson(files["caches.json"], Object.assign(await caches.value, newCaches));
       }
     },
   };

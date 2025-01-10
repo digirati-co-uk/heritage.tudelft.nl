@@ -1,42 +1,69 @@
 {
   "name": "iiif-hss",
-  "version": "0.2.7",
+  "version": "1.0.0",
   "description": "IIIF Headless Static Site",
   "type": "module",
   "keywords": [],
-  "files": ["src", "build", "lib"],
+  "files": [
+    "src",
+    "build",
+    "lib"
+  ],
   "module": "lib/scripts.js",
-  "bin": "build/hss.js",
+  "bin": {
+    "iiif-hss": "build/index.js",
+    "iiif-hss-dev": "build/server/entrypoint.js"
+  },
   "author": "Stephen Fraser <stephen.fraser@digirati.com>",
   "license": "MIT",
   "typings": "lib/scripts.d.ts",
   "scripts": {
-    "dev": "bun run ./src/index.ts serve --scripts=./scripts",
-    "build": "bun build ./src/index.ts --target bun --outfile build/hss.js && bun build ./src/dev/node-client.ts --target node --outfile build/node-client.js && bun build ./src/bun.ts --target bun --outfile build/bun.js && bun build ./src/dev/client.ts --target browser --outfile build/client.js --minify ",
-    "prepack": "bun run build && bunx --bun dts-bundle-generator ./src/dev/client.ts -o ./build/client.d.ts && bunx --bun dts-bundle-generator ./src/bun.ts -o ./build/bun.d.ts && bunx --bun dts-bundle-generator ./src/dev/node-client.ts -o ./build/node-client.d.ts"
+    "dev": "bun run ./src/entrypoint.ts",
+    "dev-cli": "bun run ./src/index.ts",
+    "build": "pnpm run build:cli && pnpm run build:server && pnpm run build:client && pnpm run build:node-client && pnpm run build:library",
+    "build:cli": "tsup-node src/index.ts --no-splitting --outDir build --format esm --env.NODE_ENV production",
+    "build:server": "tsup-node src/entrypoint.ts --no-splitting --outDir build/server --format esm --env.NODE_ENV production",
+    "build:library": "tsup src/library.ts --outDir build",
+    "build:client": "tsup src/dev/client.ts --outDir build",
+    "build:node-client": "tsup src/dev/node-client.ts --outDir build",
+    "lint": "publint",
+    "test": "vitest",
+    "prepack": "pnpm run build"
   },
   "exports": {
     ".": {
-      "import": "./lib/scripts.js",
-      "types": "./lib/scripts.d.ts"
+      "import": {
+        "types": "./lib/scripts.d.ts",
+        "default": "./lib/scripts.js"
+      }
+    },
+    "./library": {
+      "import": {
+        "types": "./build/library.d.ts",
+        "default": "./build/library.js"
+      }
     },
     "./client": {
-      "import": "./build/client.js",
-      "types": "./build/client.d.ts"
+      "import": {
+        "types": "./build/client.d.ts",
+        "default": "./build/client.js"
+      }
     },
     "./node-client": {
-      "import": "./build/node-client.js",
-      "types": "./build/node-client.d.ts"
-    },
-    "./bun": {
-      "import": "./build/bun.js",
-      "types": "./build/bun.d.ts"
+      "import": {
+        "types": "./build/node-client.d.ts",
+        "default": "./build/node-client.js"
+      }
     }
   },
   "typesVersions": {
     "*": {
-      "*": ["lib/scripts.d.ts"],
-      "client": ["build/client.d.ts"]
+      "*": [
+        "lib/scripts.d.ts"
+      ],
+      "client": [
+        "build/client.d.ts"
+      ]
     }
   },
   "optionalDependencies": {
@@ -45,47 +72,53 @@
   "overrides": {
     "@iiif/parser": "^2.1.1"
   },
-  "devDependencies": {
-    "@atlas-viewer/iiif-image-api": "^2.1.1",
-    "@biomejs/biome": "1.9.4",
+  "dependencies": {
+    "@hono/node-server": "^1.13.7",
+    "@hono/node-ws": "^1.0.5",
+    "@hono/zod-validator": "^0.4.1",
     "@iiif/builder": "^2.0.1",
     "@iiif/helpers": "^1.0.6",
-    "@iiif/presentation-3": "^2.1.3",
-    "@types/chalk": "^2.2.0",
-    "@types/fs-extra": "^11.0.1",
-    "@types/glob-watcher": "^5.0.2",
-    "@types/micromatch": "^4.0.2",
-    "@types/node": "^20.5.9",
-    "@types/object-hash": "^3.0.4",
-    "bun-plugin-yaml": "^0.0.1",
-    "bun-types": "^1.0.1",
     "chalk": "^5.3.0",
-    "commander": "^11.0.0",
-    "cosmiconfig": "^8.3.4",
+    "cli-progress": "^3.12.0",
+    "commander": "^13.0.0",
     "detect-python-interpreter": "^1.0.0",
     "fs-extra": "^11.1.1",
-    "glob-watcher": "^6.0.0",
+    "hono": "^4.6.16",
     "js-yaml": "^4.1.0",
     "keyword-extractor": "^0.0.28",
     "micromatch": "^4.0.5",
-    "mkdirp": "^3.0.1",
-    "node-fetch": "^3.3.2",
+    "mitt": "^3.0.1",
     "object-hash": "^3.0.0",
-    "path-to-regexp": "^6.2.1",
+    "p-queue": "^8.0.1",
     "pdiiif": "^0.1.9",
-    "prettier": "^3.2.5",
-    "threads": "^1.7.0",
+    "slug": "^8.2.3",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7",
     "translate": "^2.0.2",
-    "tslib": "^2.6.2",
-    "typescript": "^5.2.2",
-    "typesense": "1.7.2"
+    "typesense": "1.7.2",
+    "unionfs": "^4.5.4",
+    "yaml": "^2.6.1",
+    "zod": "^3.24.1"
   },
-  "dependencies": {
+  "devDependencies": {
+    "@atlas-viewer/iiif-image-api": "^2.1.1",
+    "@biomejs/biome": "1.9.4",
+    "@iiif/presentation-3": "^2.1.3",
     "@inquirer/prompts": "^3.1.2",
+    "@types/chalk": "^2.2.0",
     "@types/cli-progress": "^3.11.3",
+    "@types/fs-extra": "^11.0.1",
     "@types/js-yaml": "^4.0.6",
+    "@types/micromatch": "^4.0.2",
+    "@types/node": "^20.5.9",
+    "@types/object-hash": "^3.0.4",
     "@types/slug": "^5.0.5",
-    "cli-progress": "^3.12.0",
-    "slug": "^8.2.3"
+    "bun-types": "^1.0.1",
+    "prettier": "^3.2.5",
+    "publint": "^0.2.12",
+    "tslib": "^2.6.2",
+    "tsup": "^8.3.5",
+    "typescript": "^5.2.2",
+    "vitest": "^2.1.8"
   }
 }

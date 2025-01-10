@@ -1,7 +1,6 @@
-import { existsSync } from "node:fs";
+import nfs from "node:fs";
 import { join } from "node:path";
-import { mkdirp } from "mkdirp";
-import { loadJson } from "../../util/load-json.ts";
+import type { IFS } from "unionfs";
 import { makeProgressBar } from "../../util/make-progress-bar.ts";
 import { createStoreRequestCache } from "../../util/store-request-cache.ts";
 import type { ActiveResourceJson, ParsedResource, Store } from "../../util/store.ts";
@@ -9,10 +8,23 @@ import type { BuildConfig } from "../build.ts";
 
 export async function loadStores(
   { storeResources }: { storeResources: Record<string, ParsedResource[]> },
-  buildConfig: BuildConfig
+  buildConfig: BuildConfig,
+  customFs?: IFS
 ) {
-  const { options, config, stores, cacheDir, storeTypes, requestCacheDir, log, canvasExtractions, canvasEnrichment } =
-    buildConfig;
+  const fss = customFs || nfs;
+  const fs = fss.promises;
+  const {
+    options,
+    config,
+    stores,
+    cacheDir,
+    storeTypes,
+    requestCacheDir,
+    log,
+    canvasExtractions,
+    canvasEnrichment,
+    files,
+  } = buildConfig;
 
   const allResources: Array<ActiveResourceJson> = [];
   const allPaths: Record<string, string> = {};
@@ -22,15 +34,18 @@ export async function loadStores(
   const idsToSlugs: Record<string, { slug: string; type: string }> = {};
   const uniqueSlugs: string[] = [];
 
+  let validCount = 0;
+  let invalidCount = 0;
+
   for (const store of stores) {
     const requestCache = createStoreRequestCache(store, requestCacheDir);
     const storeConfig = config.stores[store];
     const resources = storeResources[store];
 
-    const progress = makeProgressBar("Loading store", resources.length);
+    const progress = makeProgressBar("Loading store", resources.length, options.ui);
 
     for (const resource of resources) {
-      if (options.exact && (resource.slug !== options.exact || resource.path !== options.exact)) {
+      if (options.exact && resource.slug !== options.exact && resource.path !== options.exact) {
         progress.increment();
         continue;
       }
@@ -45,17 +60,19 @@ export async function loadStores(
       // Here we need to actually load the existing folder from the cache if possible.
       const resourceDir = join(cacheDir, resource.slug);
       const cachesFile = join(resourceDir, "caches.json");
-      const caches = existsSync(cachesFile) ? await loadJson(cachesFile) : {};
+      const caches = await files.loadJson(cachesFile);
       const storeType: Store<any> = (storeTypes as any)[storeConfig.type];
-      const valid = !options.cache || (await storeType.invalidate(storeConfig as any, resource, caches));
+      const shouldRebuild = !options.cache || (await storeType.invalidate(storeConfig as any, resource, caches));
 
-      if (valid) {
+      if (shouldRebuild) {
         log(`Building ${resource.path}`);
-        await mkdirp(resourceDir);
+        invalidCount++;
+        await files.mkdir(resourceDir);
         const data = await storeType.load(storeConfig as any, resource, resourceDir, {
           requestCache,
           storeId: resource.storeId,
           build: buildConfig,
+          files,
         });
 
         if (data["resource.json"].id && data["resource.json"].saveToDisk) {
@@ -68,14 +85,15 @@ export async function loadStores(
         allResources.push(data["resource.json"]);
 
         await Promise.all([
-          Bun.write(join(resourceDir, "resource.json"), JSON.stringify(data["resource.json"], null, 2)),
-          Bun.write(join(resourceDir, "vault.json"), JSON.stringify(data["vault.json"], null, 2)),
-          Bun.write(join(resourceDir, "meta.json"), JSON.stringify(data["meta.json"], null, 2)),
-          Bun.write(join(resourceDir, "caches.json"), JSON.stringify(data["caches.json"], null, 2)),
-          Bun.write(join(resourceDir, "indices.json"), JSON.stringify(data["indices.json"], null, 2)),
+          files.saveJson(join(resourceDir, "resource.json"), data["resource.json"]),
+          files.saveJson(join(resourceDir, "vault.json"), data["vault.json"]),
+          files.saveJson(join(resourceDir, "meta.json"), data["meta.json"]),
+          files.saveJson(join(resourceDir, "caches.json"), data["caches.json"]),
+          files.saveJson(join(resourceDir, "indices.json"), data["indices.json"]),
         ]);
       } else {
-        const data = await loadJson(join(resourceDir, "resource.json"));
+        validCount++;
+        const data = await files.loadJson(join(resourceDir, "resource.json"));
 
         if (data.id && data.saveToDisk) {
           idsToSlugs[data.id] = {
@@ -109,5 +127,16 @@ export async function loadStores(
     progress.stop();
   }
 
-  return { allResources, editable, allPaths, overrides, rewrites, idsToSlugs };
+  return {
+    allResources,
+    editable,
+    allPaths,
+    overrides,
+    rewrites,
+    idsToSlugs,
+    stats: {
+      validCount,
+      invalidCount,
+    },
+  };
 }

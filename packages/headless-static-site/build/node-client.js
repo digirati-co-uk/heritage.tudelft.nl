@@ -27,10 +27,14 @@ function makeGetSlugHelper(store, slugs) {
           let [slug] = compiled.compile(resource.id);
           if (slug) {
             if (isManifest && slug.startsWith("manifests/")) {
-              console.log('Warning: Manifest slug should not start with "manifests/". Consider adding it to the prefix in the slug config');
+              console.log(
+                'Warning: Manifest slug should not start with "manifests/". Consider adding it to the prefix in the slug config'
+              );
             }
             if (isCollection && slug.startsWith("collections/")) {
-              console.log('Warning: Collection slug should not start with "collections/". Consider adding it to the prefix in the slug config');
+              console.log(
+                'Warning: Collection slug should not start with "collections/". Consider adding it to the prefix in the slug config'
+              );
             }
             if (isManifest && !slug.startsWith("manifests/")) {
               slug = `manifests/${slug}`;
@@ -130,12 +134,14 @@ function create(folderPath) {
   const getSitemap = () => cachedGet(endpoints.sitemap);
   async function resolveFromSlug(slug, type) {
     const slugs = await getSlugs();
-    const slugFns = Object.fromEntries(Object.entries(slugs || {}).map(([key, value]) => {
-      if (type && value.type !== type) {
-        return null;
-      }
-      return [key, { info: value, matches: compileReverseSlugConfig(value) }];
-    }).filter((t) => t !== null));
+    const slugFns = Object.fromEntries(
+      Object.entries(slugs || {}).map(([key, value]) => {
+        if (type && value.type !== type) {
+          return null;
+        }
+        return [key, { info: value, matches: compileReverseSlugConfig(value) }];
+      }).filter((t) => t !== null)
+    );
     for (const slugFn of Object.values(slugFns || {})) {
       const [matches] = slugFn.matches(slug);
       if (matches) {
@@ -147,7 +153,10 @@ function create(folderPath) {
   async function getSlugHelper() {
     if (slugHelperCache.slugHelper) {
       const slugs = await getSlugs();
-      slugHelperCache.slugHelper = makeGetSlugHelper({ slugTemplates: Object.keys(slugs || {}) }, slugs || {});
+      slugHelperCache.slugHelper = makeGetSlugHelper(
+        { slugTemplates: Object.keys(slugs || {}) },
+        slugs || {}
+      );
     }
     return slugHelperCache.slugHelper;
   }
@@ -231,6 +240,7 @@ function create(folderPath) {
     loadManifest,
     loadTopicType,
     loadTopic,
+    // Helpers.
     urlToSlug,
     resolveFromSlug
   };

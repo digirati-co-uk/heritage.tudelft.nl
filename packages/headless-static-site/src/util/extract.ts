@@ -1,4 +1,5 @@
 import type { BuildConfig } from "../commands/build.ts";
+import type { FileHandler } from "./file-handler.ts";
 import type { IIIFRC } from "./get-config.ts";
 import type { LazyValue } from "./lazy-value";
 import type { ActiveResourceJson } from "./store";
@@ -8,11 +9,13 @@ export interface ExtractionInvalidateApi {
   caches: LazyValue<Record<string, any>>;
   resource: any;
   build: BuildConfig;
+  fileHandler: FileHandler;
 }
 
 interface ExtractionSetupApi {
   build: BuildConfig;
   config: IIIFRC;
+  fileHandler: FileHandler;
 }
 
 export interface ExtractionReturn<Temp = any> {

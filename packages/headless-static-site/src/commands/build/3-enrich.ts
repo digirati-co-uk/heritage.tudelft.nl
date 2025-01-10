@@ -1,4 +1,5 @@
 import { join } from "node:path";
+import PQueue from "p-queue";
 import { createCacheResource } from "../../util/cached-resource.ts";
 import type { Enrichment } from "../../util/enrich.ts";
 import { makeProgressBar } from "../../util/make-progress-bar.ts";
@@ -17,18 +18,32 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
     collectionEnrichment,
     allEnrichments,
     requestCacheDir,
+    files,
   } = buildConfig;
+
+  const start = Date.now();
+  const queue = new PQueue();
 
   if (!options.enrich) {
     return {};
   }
 
+  const stats = {
+    configiure: {} as Record<string, number>,
+    run: {} as Record<string, number>,
+    total: 0,
+  };
   const enrichmentConfigs: Record<string, any> = {};
   const temp: Record<string, Record<string, any>> = {};
   for (const enrichment of allEnrichments) {
     if (enrichment.configure) {
       const enrichmentConfig = config.config?.[enrichment.id];
-      enrichmentConfigs[enrichment.id] = await enrichment.configure({ config, build: buildConfig }, enrichmentConfig);
+      const start = Date.now();
+      enrichmentConfigs[enrichment.id] = await enrichment.configure(
+        { config, build: buildConfig, fileHandler: files },
+        enrichmentConfig
+      );
+      stats.configiure[enrichment.id] = Date.now() - start;
     } else {
       enrichmentConfigs[enrichment.id] = config.config?.[enrichment.id];
     }
@@ -40,7 +55,7 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
     totalResources += resource.subResources || 0;
   }
 
-  const progress = makeProgressBar("Enrichment", totalResources);
+  const progress = makeProgressBar("Enrichment", totalResources, options.ui);
   const requestCache = createStoreRequestCache("_enrich", requestCacheDir);
 
   const processManifest = async (manifest: ActiveResourceJson) => {
@@ -56,6 +71,7 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
       resourcePath: join(cacheDir, manifest.slug),
       temp,
       collections: {},
+      fileHandler: files,
     });
 
     const resource = await cachedResource.attachVault();
@@ -92,6 +108,7 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
     }
 
     const runEnrichment = async (enrichment: Enrichment) => {
+      const startTime = Date.now();
       const filesDir = join(cacheDir, manifest.slug, "files");
       const storeConfig = enrichmentConfigs[enrichment.id] || {};
       const enrichmentConfig = Object.assign(
@@ -128,11 +145,13 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
           resource,
           files: filesDir,
           requestCache,
+          fileHandler: files,
         },
         enrichmentConfig
       );
 
       cachedResource.handleResponse(result, enrichment);
+      stats.run[enrichment.id] = (stats.run[enrichment.id] || 0) + (Date.now() - startTime);
     };
 
     const processedEnrichments = [];
@@ -153,7 +172,8 @@ ${errors.map((e, n) => `  ${n + 1})  ${(e as any)?.reason?.message}`).join(", ")
       );
     }
 
-    savingFiles.push(cachedResource.save());
+    // savingFiles.push(cachedResource.save());
+    await cachedResource.save();
 
     progress.increment();
 
@@ -171,6 +191,7 @@ ${errors.map((e, n) => `  ${n + 1})  ${(e as any)?.reason?.message}`).join(", ")
 
     // Canvases.
     if (manifest.type === "Manifest" && canvasEnrichmentSteps.length) {
+      const manifestQueue = new PQueue();
       const canvases = resource.items || [];
       for (let canvasIndex = 0; canvasIndex < canvases.length; canvasIndex++) {
         const canvas = canvases[canvasIndex];
@@ -181,9 +202,11 @@ ${errors.map((e, n) => `  ${n + 1})  ${(e as any)?.reason?.message}`).join(", ")
           collections: {},
           canvasIndex,
           parentManifest: manifest,
+          fileHandler: files,
         });
 
         const runEnrichment = async (enrichment: Enrichment) => {
+          const startTime = Date.now();
           const storeConfig = enrichmentConfigs[enrichment.id] || {};
           const enrichmentConfig = Object.assign(
             {},
@@ -228,36 +251,43 @@ ${errors.map((e, n) => `  ${n + 1})  ${(e as any)?.reason?.message}`).join(", ")
               resource: canvas,
               files: cachedCanvasResource.filesDir,
               requestCache,
+              fileHandler: files,
             },
             enrichmentConfig
           );
 
           cachedCanvasResource.handleResponse(result, enrichment);
           cachedResource.didChange(result.didChange);
+          stats.run[enrichment.id] = (stats.run[enrichment.id] || 0) + (Date.now() - startTime);
         };
-
-        const processedEnrichments = [];
-        for (const enrichment of canvasEnrichmentSteps) {
-          if (skipSteps.includes(enrichment.id)) {
-            continue;
+        manifestQueue.add(async () => {
+          const processedEnrichments = [];
+          for (const enrichment of canvasEnrichmentSteps) {
+            if (skipSteps.includes(enrichment.id)) {
+              continue;
+            }
+            processedEnrichments.push(runEnrichment(enrichment));
           }
-          processedEnrichments.push(runEnrichment(enrichment));
-        }
 
-        const results = await Promise.allSettled(processedEnrichments);
-        const errors = results.filter((r) => r.status === "rejected");
-        if (errors.length > 0) {
-          throw new Error(
-            `Enrichment failed for ${errors.length} manifest(s):
+          const results = await Promise.allSettled(processedEnrichments);
+          const errors = results.filter((r) => r.status === "rejected");
+          if (errors.length > 0) {
+            console.log(errors);
+            throw new Error(
+              `Enrichment failed for ${errors.length} manifest(s):
 
 ${errors.map((e, n) => `  ${n + 1}) ${(e as any)?.reason?.message}`).join(", ")}`
-          );
-        }
+            );
+          }
 
-        savingFiles.push(cachedCanvasResource.save());
+          savingFiles.push(cachedCanvasResource.save());
 
-        progress.increment();
+          progress.increment();
+
+          return true;
+        });
       }
+      await manifestQueue.onIdle();
     } else {
       progress.increment(manifest.subResources || 0);
     }
@@ -265,26 +295,42 @@ ${errors.map((e, n) => `  ${n + 1}) ${(e as any)?.reason?.message}`).join(", ")}
     await cachedResource.saveVault();
   };
 
-  const allManifestProcesses = [];
   for (const manifest of allResources) {
-    allManifestProcesses.push(processManifest(manifest));
+    queue.add(async () => processManifest(manifest));
   }
-  await Promise.all(allManifestProcesses);
 
-  for (const extraction of allEnrichments) {
-    if (extraction.close) {
-      const extractionConfig = enrichmentConfigs[extraction.id] || {};
-      await extraction.close(extractionConfig);
-    }
-    if (extraction.collect) {
-      const extractionConfig = enrichmentConfigs[extraction.id] || {};
-      await extraction.collect(temp[extraction.id], { config, build: buildConfig }, extractionConfig);
-    }
+  await queue.onIdle();
+
+  for (const enrichment of allEnrichments) {
+    queue.add(async () => {
+      const startTime = Date.now();
+      if (enrichment.close) {
+        const enrichmentConfig = enrichmentConfigs[enrichment.id] || {};
+        await enrichment.close(enrichmentConfig);
+      }
+      if (enrichment.collect) {
+        const enrichmentConfig = enrichmentConfigs[enrichment.id] || {};
+        await enrichment.collect(
+          temp[enrichment.id],
+          { config, build: buildConfig, fileHandler: files },
+          enrichmentConfig
+        );
+        stats.run[enrichment.id] = (stats.run[enrichment.id] || 0) + (Date.now() - startTime);
+      }
+    });
   }
+
+  await queue.onIdle();
 
   progress.stop();
 
   log(`Saving ${savingFiles.length} files`);
   await Promise.all(savingFiles);
   savingFiles = [];
+
+  stats.total = Date.now() - start;
+
+  return {
+    stats,
+  };
 }

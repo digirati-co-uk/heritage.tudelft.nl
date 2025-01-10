@@ -1,7 +1,6 @@
-import { existsSync } from "node:fs";
+import fs from "node:fs";
 import { join } from "node:path";
 import { createThumbnailHelper } from "@iiif/helpers";
-import { mkdirp } from "mkdirp";
 import type { Enrichment } from "../util/enrich.ts";
 
 export const canvasThumbnail: Enrichment = {
@@ -10,7 +9,7 @@ export const canvasThumbnail: Enrichment = {
   types: ["Canvas"],
   async invalidate(resource, api) {
     // This will check if the image on disk.
-    return !existsSync(join(api.files, "thumb.jpg"));
+    return !fs.existsSync(join(api.files, "thumb.jpg"));
   },
   async handler(canvas, api) {
     try {
@@ -19,8 +18,8 @@ export const canvasThumbnail: Enrichment = {
 
       if (thumb.best?.id && (thumb.best.id.endsWith(".jpg") || thumb.best.id.endsWith(".jpeg"))) {
         const data = await fetch(thumb.best.id).then((r) => r.arrayBuffer());
-        mkdirp.sync(api.files);
-        await Bun.write(join(api.files, "thumb.jpg"), data);
+        await fs.promises.mkdir(api.files, { recursive: true });
+        await fs.promises.writeFile(join(api.files, "thumb.jpg"), data as any);
       }
     } catch (err) {
       // ignore.

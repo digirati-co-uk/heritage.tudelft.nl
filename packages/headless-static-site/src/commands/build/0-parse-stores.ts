@@ -1,12 +1,20 @@
 import { join } from "node:path";
-import { mkdirp } from "mkdirp";
+import type { IFS } from "unionfs";
 import { makeGetSlugHelper } from "../../util/make-slug-helper.ts";
 import { createStoreRequestCache } from "../../util/store-request-cache.ts";
 import type { ParsedResource, Store } from "../../util/store.ts";
 import type { BuildConfig } from "../build.ts";
 import { defaultCacheDir } from "../generate.ts";
 
-export async function parseStores(buildConfig: BuildConfig) {
+interface ParseStoresState {
+  storeRequestCaches: Record<string, ReturnType<typeof createStoreRequestCache>>;
+}
+
+const EMPTY_CACHE: ParseStoresState = {
+  storeRequestCaches: {},
+};
+
+export async function parseStores(buildConfig: BuildConfig, cache: ParseStoresState = EMPTY_CACHE, customFs?: IFS) {
   const {
     //
     config,
@@ -16,11 +24,11 @@ export async function parseStores(buildConfig: BuildConfig) {
     slugs,
     manifestRewrites,
     collectionRewrites,
+    files,
   } = buildConfig;
 
-  await mkdirp(requestCacheDir);
-
   const storeResources: Record<string, ParsedResource[]> = {};
+  const storeRequestCaches: Record<string, ReturnType<typeof createStoreRequestCache>> = {};
   const filesToWatch: string[] = [];
 
   // If there are generated stores, add them.
@@ -40,7 +48,9 @@ export async function parseStores(buildConfig: BuildConfig) {
   }
 
   for (const storeId of stores) {
-    const requestCache = createStoreRequestCache(storeId, requestCacheDir);
+    const requestCache =
+      cache.storeRequestCaches[storeId] || createStoreRequestCache(storeId, requestCacheDir, false, customFs);
+    storeRequestCaches[storeId] = requestCache;
     storeResources[storeId] = [];
 
     const storeConfig = config.stores[storeId];
@@ -57,6 +67,7 @@ export async function parseStores(buildConfig: BuildConfig) {
       requestCache,
       getSlug,
       build: buildConfig,
+      files: files,
     });
 
     // Loop through the resources.
@@ -83,13 +94,16 @@ export async function parseStores(buildConfig: BuildConfig) {
         }
       }
 
-      filesToWatch.push(resource.path);
+      if (resource.source?.type === "disk") {
+        filesToWatch.push(resource.path);
+      }
       storeResources[storeId].push(resource);
     }
   }
 
   return {
     storeResources,
+    storeRequestCaches,
     filesToWatch,
   };
 }

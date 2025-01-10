@@ -1,7 +1,14 @@
 import type { IIIFRC } from "../util/get-config.ts";
 import { resolveFromSlug } from "../util/resolve-from-slug.ts";
 
-export function create(url: string) {
+export function create(
+  url: string,
+  options: {
+    ws?: boolean;
+    onFullRebuild?: () => void;
+    onChangeFile?: () => void;
+  } = {}
+) {
   const endpoints = {
     slugs: `${url}/config/slugs.json`,
     stores: `${url}/config/stores.json`,
@@ -12,7 +19,33 @@ export function create(url: string) {
     overrides: `${url}/meta/overrides.json`,
   };
 
-  const cache: Record<string, any> = {};
+  let cache: Record<string, any> = {};
+
+  if (options.ws) {
+    const wsUrl = new URL(url);
+    wsUrl.protocol = wsUrl.protocol === "https:" ? "wss:" : "ws:";
+    wsUrl.pathname = "/ws";
+    const ws = new WebSocket(wsUrl.toString());
+    ws.onopen = () => ws.send("ping");
+    ws.onmessage = (event) => {
+      if (event.data === "file-refresh") {
+        clearCache();
+        if (options.onChangeFile) {
+          options.onChangeFile();
+        }
+      }
+      if (event.data === "full-rebuild") {
+        clearCache();
+        if (options.onFullRebuild) {
+          options.onFullRebuild();
+        }
+      }
+    };
+  }
+
+  const clearCache = () => {
+    cache = {};
+  };
 
   const cachedGet = async <T>(url: string): Promise<T> => {
     if (cache[url]) {

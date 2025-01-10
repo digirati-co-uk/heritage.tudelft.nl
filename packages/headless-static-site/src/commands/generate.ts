@@ -1,9 +1,8 @@
-import { existsSync } from "node:fs";
+import fs from "node:fs";
 import { join } from "node:path";
 import { cwd } from "node:process";
 import { IIIFBuilder } from "@iiif/builder";
 import type { Command } from "commander";
-import { mkdirp } from "mkdirp";
 import { nasaGenerator } from "../generator/nasa-generator.ts";
 import { getConfig } from "../util/get-config.ts";
 import { getNodeGlobals } from "../util/get-node-globals.ts";
@@ -18,6 +17,7 @@ interface GenerateOptions {
   scripts?: string;
   debug?: boolean;
   cache?: boolean;
+  ui?: boolean;
 }
 
 const defaultGenerators: IIIFGenerator[] = [
@@ -27,18 +27,19 @@ const defaultGenerators: IIIFGenerator[] = [
 
 export const defaultCacheDir = "./.iiif/_generator";
 
-export async function generate(options: GenerateOptions, command?: Command) {
+export async function generateCommand(options: GenerateOptions, command?: Command) {
   const config = await getConfig();
+  const { debug, ui } = options;
 
   await loadScripts(options);
   const globals = getNodeGlobals();
   const generatorDirectory = join(cwd(), defaultCacheDir);
   const allGenerators = [...defaultGenerators, ...globals.generators];
 
-  await mkdirp(generatorDirectory);
+  await fs.promises.mkdir(generatorDirectory, { recursive: true });
   let savingFiles: Promise<any>[] = [];
   const saveJson = (file: string, contents: any) => {
-    savingFiles.push(Bun.write(file, JSON.stringify(contents, null, 2)));
+    savingFiles.push(fs.promises.writeFile(file, JSON.stringify(contents, null, 2)));
   };
   const waitSavingFiles = async () => {
     await Promise.all(savingFiles);
@@ -67,8 +68,8 @@ export async function generate(options: GenerateOptions, command?: Command) {
       const resourcesDirectory = join(cacheDirectory, "resources");
       const requestCache = createStoreRequestCache("requests", cacheDirectory, !options.cache);
 
-      await mkdirp(cacheDirectory);
-      await mkdirp(buildDirectory);
+      await fs.promises.mkdir(cacheDirectory, { recursive: true });
+      await fs.promises.mkdir(buildDirectory, { recursive: true });
 
       const globalCacheFile = join(cacheDirectory, "cache.json");
       const globalCache = lazyValue(() => loadJson(globalCacheFile));
@@ -84,7 +85,11 @@ export async function generate(options: GenerateOptions, command?: Command) {
       const resourceCaches: Record<string, LazyValue<any>> = {};
       const invalidateMap: Record<string, boolean> = {};
 
-      const progress = makeProgressBar(`Generating ${generator.type} using ${foundGenerator.name}`, resources.length);
+      const progress = makeProgressBar(
+        `Generating ${generator.type} using ${foundGenerator.name}`,
+        resources.length,
+        options.ui
+      );
 
       totalResources += resources.length;
 
@@ -92,7 +97,7 @@ export async function generate(options: GenerateOptions, command?: Command) {
       // First check if we need to invalidate everything
       const invalidate = foundGenerator.invalidate
         ? await foundGenerator.invalidate(resources, generatorApi)
-        : !existsSync(globalCacheFile);
+        : !fs.existsSync(globalCacheFile);
 
       globalInvalidate = globalInvalidate || invalidate;
 
@@ -106,7 +111,7 @@ export async function generate(options: GenerateOptions, command?: Command) {
 
           invalidateMap[resource.id] = foundGenerator.invalidateEach
             ? await foundGenerator.invalidateEach(resource, generatorApi)
-            : existsSync(resourceCacheFile);
+            : fs.existsSync(resourceCacheFile);
 
           globalInvalidate = globalInvalidate || invalidateMap[resource.id];
         }
@@ -130,7 +135,7 @@ export async function generate(options: GenerateOptions, command?: Command) {
           requestCache,
         };
 
-        await mkdirp(resourceDirectory);
+        await fs.promises.mkdir(resourceDirectory, { recursive: true });
 
         const response = foundGenerator.generateEach
           ? await foundGenerator.generateEach(resource, buildDirectory, generateApi)
@@ -162,7 +167,8 @@ export async function generate(options: GenerateOptions, command?: Command) {
       await waitSavingFiles();
       progress.stop();
     }
-
-    console.log(`Generated ${totalResources} resources`);
+    if (debug) {
+      console.log(`Generated ${totalResources} resources`);
+    }
   }
 }

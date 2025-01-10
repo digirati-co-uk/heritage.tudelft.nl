@@ -8,24 +8,33 @@ run:
   - extract-slug-source
   - extract-label-string
   - extract-thumbnail
-  - extract-part-of-collection
+  # This is really slow.
+  # - extract-part-of-collection
   - manifest-sqlite
   - metadata-analysis
   - folder-collections
   - typesense-manifests
+
+collections:
+  index:
+    label: { "en": "My great top level collection" }
+    summary: { "en": "This is a summary of the collection" }
+  manifests:
+    label: { "en": "Manifests" }
+    summary: { "en": "A list of all manifests in the collection" }
 
 generators:
   sts-shuttles:
     type: nasa-generator
     config:
       label: STS Shuttles
-      query: 'sts orbit'
+      query: "sts orbit"
       maxResults: 50
   curiosity:
     type: nasa-generator
     config:
       label: Curiosity
-      query: 'curiosity rover'
+      query: "curiosity rover"
       maxResults: 10
 
 stores:
@@ -37,14 +46,14 @@ stores:
       - content/objects/**/*
       - content/manifests/*
       - content/topics/**/*
-    pattern: '**/*.json'
+    pattern: "**/*.json"
     destination: manifests
     base: ./content
 
   delft:
     type: iiif-json
     path: ./delft
-    pattern: '**/*.{json,yml}'
+    pattern: "**/*.{json,yml}"
     run:
       - delft-labels
       - extract-thumbnail
@@ -52,12 +61,12 @@ stores:
       - extract-topics
     config:
       extract-topics:
-        commaSeparated: ['material']
+        commaSeparated: ["material"]
         topicTypes:
-          material: ['Materiaal', 'Material']
-          date: ['Date', 'Datering']
-          Maker: ['Maker']
-          Publisher: ['Publisher']
+          material: ["Materiaal", "Material"]
+          date: ["Date", "Datering"]
+          Maker: ["Maker"]
+          Publisher: ["Publisher"]
 
   bridges:
     type: iiif-remote
@@ -97,8 +106,8 @@ stores:
     config:
       extract-topics:
         topicTypes:
-          technique: ['Type/technique']
-          subjects: ['Subjects']
+          technique: ["Type/technique"]
+          subjects: ["Subjects"]
 
   wellcomeBookVolume:
     type: iiif-remote
@@ -140,7 +149,7 @@ slugs:
     addedPrefix: nls-
     examples:
       - https://view.nls.uk/manifest/7446/74464117/manifest.json
-    pathSeparator: '-'
+    pathSeparator: "-"
 
   nls-collections:
     type: Collection

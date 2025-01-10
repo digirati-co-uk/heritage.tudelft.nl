@@ -1,9 +1,5 @@
-import { describe, test, expect } from "bun:test";
-import {
-  compileReverseSlugConfig,
-  compileSlugConfig,
-  SlugConfig,
-} from "../../src/util/slug-engine";
+import { describe, expect, test } from "vitest";
+import { SlugConfig, compileReverseSlugConfig, compileSlugConfig } from "../../src/util/slug-engine";
 
 describe("slug-engine", () => {
   // New strategy.

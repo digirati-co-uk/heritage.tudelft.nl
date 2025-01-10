@@ -1,5 +1,4 @@
-import { existsSync } from "node:fs";
-import { readFile, readdir } from "node:fs/promises";
+import fs from "node:fs";
 import { join } from "node:path";
 import type { Enrichment } from "../util/enrich";
 
@@ -32,8 +31,8 @@ export const typesensePlaintext: Enrichment = {
 
     const pages: SingleRecord[] = [];
 
-    if (existsSync(plaintextPath)) {
-      const files = await readdir(plaintextPath);
+    if (fs.existsSync(plaintextPath)) {
+      const files = await fs.promises.readdir(plaintextPath);
 
       for (const file of files) {
         if (file.endsWith(".txt")) {
@@ -45,7 +44,7 @@ export const typesensePlaintext: Enrichment = {
 
           pages.push({
             id: btoa(resource.id + canvasIndex),
-            plaintext: await readFile(join(plaintextPath, file), "utf-8"),
+            plaintext: await fs.promises.readFile(join(plaintextPath, file), "utf-8"),
             manifest: resource.id,
             canvasIndex,
           });
@@ -65,7 +64,7 @@ export const typesensePlaintext: Enrichment = {
     const schemaFile = join(typeSenseDir, "manifest-plaintext.schema.json");
     const dataFile = join(typeSenseDir, "manifest-plaintext.jsonl");
 
-    await Bun.write(schemaFile, JSON.stringify(plaintextSchema, null, 2));
+    await fs.promises.writeFile(schemaFile, JSON.stringify(plaintextSchema, null, 2));
 
     const jsonLines = [];
     for (const [manifest, { pages }] of Object.entries(temp)) {
@@ -74,6 +73,6 @@ export const typesensePlaintext: Enrichment = {
       }
     }
 
-    await Bun.write(dataFile, jsonLines.join("\n"));
+    await fs.promises.writeFile(dataFile, jsonLines.join("\n"));
   },
 };

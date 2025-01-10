@@ -1,8 +1,9 @@
-import type { LazyValue } from "./lazy-value";
-import type { IIIFRC } from "./get-config";
 import type { IIIFBuilder } from "@iiif/builder";
-import type { ActiveResourceJson } from "./store";
 import type { BuildConfig } from "../commands/build.ts";
+import type { FileHandler } from "./file-handler.ts";
+import type { IIIFRC } from "./get-config";
+import type { LazyValue } from "./lazy-value";
+import type { ActiveResourceJson } from "./store";
 import type { createStoreRequestCache } from "./store-request-cache.ts";
 
 export interface EnrichmentHandlerApi {
@@ -14,13 +15,14 @@ export interface EnrichmentHandlerApi {
   resource: any;
   files: string;
   requestCache: ReturnType<typeof createStoreRequestCache>;
+  fileHandler: FileHandler;
 }
 
 interface EnrichmentInvalidateApi {
   config: IIIFRC;
   resource: any;
   caches: LazyValue<Record<string, any>>;
-  files: string;
+  fileHandler: FileHandler;
 }
 
 export interface EnrichmentResult<Temp = any> {
@@ -35,6 +37,7 @@ export interface EnrichmentResult<Temp = any> {
 export interface EnrichmentSetupApi {
   build: BuildConfig;
   config: IIIFRC;
+  fileHandler: FileHandler;
 }
 
 export interface Enrichment<Config = any, Temp = any> {
@@ -42,23 +45,8 @@ export interface Enrichment<Config = any, Temp = any> {
   name: string;
   types: string[];
   close?: (config: Config) => Promise<void>;
-  collect?: (
-    temp: Record<string, Temp>,
-    api: EnrichmentSetupApi,
-    config: Partial<Config>,
-  ) => Promise<void>;
-  configure?: (
-    api: EnrichmentSetupApi,
-    config: Partial<Config>,
-  ) => Promise<Config>;
-  invalidate: (
-    resource: ActiveResourceJson,
-    api: EnrichmentInvalidateApi,
-    config: Config,
-  ) => Promise<boolean>;
-  handler(
-    resource: ActiveResourceJson,
-    api: EnrichmentHandlerApi,
-    config: Config,
-  ): Promise<EnrichmentResult<Temp>>;
+  collect?: (temp: Record<string, Temp>, api: EnrichmentSetupApi, config: Partial<Config>) => Promise<void>;
+  configure?: (api: EnrichmentSetupApi, config: Partial<Config>) => Promise<Config>;
+  invalidate: (resource: ActiveResourceJson, api: EnrichmentInvalidateApi, config: Config) => Promise<boolean>;
+  handler(resource: ActiveResourceJson, api: EnrichmentHandlerApi, config: Config): Promise<EnrichmentResult<Temp>>;
 }

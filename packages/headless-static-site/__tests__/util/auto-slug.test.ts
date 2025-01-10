@@ -1,14 +1,10 @@
-import { describe, test, expect } from "bun:test";
-import { compileSlugConfig } from "../../src/util/slug-engine.ts";
+import { describe, expect, test } from "vitest";
 
 describe("auto slug test", () => {
   test("can create a slug from multiple examples", () => {
     function createAutoSlug(
       samples: string[],
-      {
-        idSeparator = "-",
-        slugPrefix = "manifests/",
-      }: { idSeparator?: string; slugPrefix?: string } = {},
+      { idSeparator = "-", slugPrefix = "manifests/" }: { idSeparator?: string; slugPrefix?: string } = {}
     ) {
       // Find a prefix common to ALL samples
       const parts = samples.map((s) => s.split("/"));
@@ -38,11 +34,10 @@ describe("auto slug test", () => {
       }
 
       const maxSegments = Math.max(...parts.map((p) => p.length));
-      const variableSegments =
-        maxSegments - prefixParts.length - suffixParts.length;
+      const variableSegments = maxSegments - prefixParts.length - suffixParts.length;
 
       const prefix = prefixParts.join("/");
-      const suffix = "/" + suffixParts.reverse().join("/");
+      const suffix = `/${suffixParts.reverse().join("/")}`;
 
       let startLetter = "a";
 
@@ -59,7 +54,7 @@ describe("auto slug test", () => {
 
       return {
         prefix,
-        pattern: "/" + variableParts.join(idSeparator) + suffix,
+        pattern: `/${variableParts.join(idSeparator)}${suffix}`,
         slugTemplate: slugPrefix + variableParts.join(idSeparator),
       };
     }

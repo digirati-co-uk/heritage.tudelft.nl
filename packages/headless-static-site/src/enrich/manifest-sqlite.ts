@@ -1,23 +1,27 @@
-import { mkdirp } from "mkdirp";
+import { mkdir } from "node:fs/promises";
 import { join } from "node:path";
-import { Database } from "bun:sqlite";
+import slug from "slug";
+import { type Database, open } from "sqlite";
+import sqlite3 from "sqlite3";
 import { getValue } from "../extract/extract-label-string.ts";
 import type { Enrichment } from "../util/enrich.ts";
-import slug from "slug";
 
 export const manifestSqlite: Enrichment<{
-  db: Database;
+  db: Database<sqlite3.Database, sqlite3.Statement>;
   enableTopics?: boolean;
 }> = {
   name: "sqlite",
   id: "manifest-sqlite",
   types: ["Manifest"],
   configure: async (api, config = {}) => {
-    await mkdirp(api.build.filesDir);
+    await mkdir(api.build.filesDir, { recursive: true });
     const dbFile = join(api.build.filesDir, "meta", "manifests.db");
-    const db = new Database(dbFile, { create: true });
+    const db = await open({
+      filename: dbFile,
+      driver: sqlite3.Database,
+    });
 
-    db.query(
+    await db.exec(
       `
       CREATE TABLE IF NOT EXISTS manifests (
         id TEXT PRIMARY KEY,
@@ -25,11 +29,11 @@ export const manifestSqlite: Enrichment<{
         slug TEXT,
         thumbnail TEXT
       )
-    `,
-    ).run();
+    `
+    );
 
     if (config.enableTopics) {
-      db.query(
+      await db.exec(
         `
             CREATE TABLE IF NOT EXISTS topics
             (
@@ -39,10 +43,10 @@ export const manifestSqlite: Enrichment<{
                 label      TEXT,
                 slug       TEXT
             )
-        `,
-      ).run();
+        `
+      );
 
-      db.query(
+      await db.exec(
         `
             CREATE TABLE IF NOT EXISTS topics_manifests
             (
@@ -50,8 +54,8 @@ export const manifestSqlite: Enrichment<{
                 manifest_id TEXT,
                 PRIMARY KEY (topic_id, manifest_id)
             )
-        `,
-      ).run();
+        `
+      );
     }
     return {
       db,
@@ -67,22 +71,21 @@ export const manifestSqlite: Enrichment<{
       const current = resource.vault?.get(api.resource);
       const value = current ? getValue(current.label) : null;
       if (value) {
-        config.db
-          .query(
-            `
+        await config.db.run(
+          `
             INSERT INTO manifests (id, slug, label, thumbnail)
-            VALUES ($id, $slug, $name, $thumbnail)
-            ON CONFLICT (id) DO UPDATE SET label = $name,
-                                           slug = $slug,
-                                           thumbnail = $thumbnail
+            VALUES (:id, :slug, :name, :thumbnail)
+            ON CONFLICT (id) DO UPDATE SET label = :name,
+                                           slug = :slug,
+                                           thumbnail = :thumbnail
           `,
-          )
-          .all({
-            $id: resource.id,
-            $name: value,
-            $slug: resource.slug,
-            $thumbnail: meta.thumbnail?.id || "",
-          });
+          {
+            ":id": resource.id,
+            ":name": value,
+            ":slug": resource.slug,
+            ":thumbnail": meta.thumbnail?.id || "",
+          }
+        );
       }
 
       if (config.enableTopics) {
@@ -94,34 +97,32 @@ export const manifestSqlite: Enrichment<{
             const topicId = slug(topic);
             const topicLabel = topic;
 
-            config.db
-              .query(
-                `
+            await config.db.run(
+              `
                     INSERT INTO topics (id, topic, topic_type, label, slug)
-                    VALUES ($id, $topic, $topic_type, $label, $slug)
+                    VALUES (:id, :topic, :topic_type, :label, :slug)
                     ON CONFLICT (id) DO NOTHING
                 `,
-              )
-              .all({
-                $id: `${topicTypeKey}/${topicId}`,
-                $topic: topic,
-                $topic_type: topicTypeKey,
-                $label: topicLabel,
-                $slug: `topics/${topicTypeKey}/${topicId}`,
-              });
+              {
+                ":id": `${topicTypeKey}/${topicId}`,
+                ":topic": topic,
+                ":topic_type": topicTypeKey,
+                ":label": topicLabel,
+                ":slug": `topics/${topicTypeKey}/${topicId}`,
+              }
+            );
 
-            config.db
-              .query(
-                `
+            await config.db.run(
+              `
                     INSERT INTO topics_manifests (topic_id, manifest_id)
-                    VALUES ($topic_id, $manifest_id)
+                    VALUES (:topic_id, :manifest_id)
                     ON CONFLICT (topic_id, manifest_id) DO NOTHING
                 `,
-              )
-              .all({
-                $topic_id: `${topicTypeKey}/${topicId}`,
-                $manifest_id: resource.id,
-              });
+              {
+                ":topic_id": `${topicTypeKey}/${topicId}`,
+                ":manifest_id": resource.id,
+              }
+            );
           }
         }
       }

@@ -1,4 +1,4 @@
-import { extract } from "../lib/scripts";
+import { extract } from "../lib/scripts.js";
 
 extract(
   {
@@ -8,5 +8,5 @@ extract(
   },
   async (resource, api) => {
     return {};
-  },
+  }
 );

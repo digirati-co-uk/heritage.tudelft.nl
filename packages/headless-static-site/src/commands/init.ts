@@ -1,13 +1,13 @@
 import { existsSync } from "node:fs";
+import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { cwd } from "node:process";
 import type { Command } from "commander";
-import { mkdirp } from "mkdirp";
 import { supportedConfigFiles } from "../util/get-config.ts";
 
 type InitOptions = unknown;
 
-export async function init(options: InitOptions, command: Command) {
+export async function initCommand(options: InitOptions, command: Command) {
   // Check if any of the supported configs exist.
   for (const config of supportedConfigFiles) {
     if (existsSync(join(cwd(), config))) {
@@ -19,7 +19,7 @@ export async function init(options: InitOptions, command: Command) {
   const configFile = join(cwd(), ".iiifrc.yml");
   console.log(`Creating config file: ${configFile}`);
   // language=yaml
-  await Bun.write(
+  await writeFile(
     configFile,
     `
 server:
@@ -52,11 +52,11 @@ slugs:
 `
   );
 
-  await mkdirp(join(cwd(), "content"));
+  await mkdir(join(cwd(), "content"), { recursive: true });
   // Example cookbook
 
   if (!existsSync(join(cwd(), "content", "0001-mvm-image.json"))) {
-    await Bun.write(
+    await writeFile(
       join(cwd(), "content", "0001-mvm-image.json"),
       `{
   "@context": "http://iiif.io/api/presentation/3/context.json",
@@ -100,9 +100,9 @@ slugs:
     );
   }
 
-  await mkdirp(join(cwd(), "scripts"));
+  await mkdir(join(cwd(), "scripts"), { recursive: true });
 
-  await Bun.write(
+  await writeFile(
     join(cwd(), "scripts", "example.js"),
     `
 import { extract } from "hss-iiif";

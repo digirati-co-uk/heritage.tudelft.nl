@@ -1,5 +1,6 @@
 import type { IIIFStore, Vault } from "@iiif/helpers";
 import type { BuildConfig } from "../commands/build.ts";
+import type { FileHandler } from "./file-handler.ts";
 
 export interface StoreApi {
   storeId: string;
@@ -9,7 +10,7 @@ export interface StoreApi {
     didChange(url: string): Promise<boolean>;
     getKey(url: string): Promise<string | null>;
   };
-
+  files: FileHandler;
   // Escape hatch, all config.
   build: BuildConfig;
 }

@@ -1,6 +1,6 @@
 import { createWriteStream, existsSync } from "node:fs";
+import { mkdir } from "node:fs/promises";
 import { join } from "node:path";
-import { mkdirp } from "mkdirp";
 import { convertManifest } from "pdiiif";
 import type { Enrichment } from "../util/enrich";
 export const pdiiif: Enrichment = {
@@ -11,7 +11,7 @@ export const pdiiif: Enrichment = {
     return !existsSync(join(api.files, "manifest.pdf"));
   },
   async handler(resource, api) {
-    mkdirp.sync(api.files);
+    await mkdir(api.files, { recursive: true });
     const p3Manifest = resource.vault?.toPresentation3({
       id: resource.id,
       type: "Manifest",

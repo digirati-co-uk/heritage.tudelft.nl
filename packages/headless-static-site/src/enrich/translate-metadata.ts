@@ -1,7 +1,6 @@
-import type { Enrichment } from "../util/enrich";
 import { buildLocaleString } from "@iiif/helpers";
 import translate from "translate";
-import fetch from "node-fetch";
+import type { Enrichment } from "../util/enrich";
 
 global.fetch = global.fetch || (fetch as any);
 
@@ -39,9 +38,7 @@ export const translateMetadata: Enrichment = {
 
     let newMetadata = [...metadata];
     for (const lang of langs) {
-      translated[lang] =
-        cache[`metadata_${lang}`] ||
-        (await translate(metadataToTranslate, { to: lang }));
+      translated[lang] = cache[`metadata_${lang}`] || (await translate(metadataToTranslate, { to: lang }));
       newMetadata = translated[lang].split("\n----\n").map((m, k) => {
         const existing = newMetadata[k];
         const [label, value] = m.split("\n---\n");

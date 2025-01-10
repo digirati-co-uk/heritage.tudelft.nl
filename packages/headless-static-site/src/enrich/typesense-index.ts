@@ -1,9 +1,8 @@
 import { existsSync } from "node:fs";
-import { readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { getValue } from "@iiif/helpers";
 import type { InternationalString } from "@iiif/presentation-3";
-import { mkdirp } from "mkdirp";
 import type { Enrichment } from "../util/enrich";
 
 const schema = {
@@ -113,7 +112,7 @@ export const enrichTypesense: Enrichment<unknown, { record: SingleRecord; foundT
       }
     }
 
-    await mkdirp(typeSenseDir);
+    await mkdir(typeSenseDir, { recursive: true });
 
     // Write the schema
     await writeFile(schemaFile, JSON.stringify({ ...schema, fields: [...schema.fields, ...topicSchema] }, null, 2));

@@ -1,4 +1,4 @@
-import { enrich } from "../lib/scripts";
+import { enrich } from "../lib/scripts.js";
 
 enrich(
   {
@@ -26,12 +26,7 @@ enrich(
           const en = (m.label.en || [])[0];
           const none = (m.label.none || [])[0];
 
-          if (
-            nl === "Titel" ||
-            en === "Title" ||
-            none === "Title" ||
-            none === "Titel"
-          ) {
+          if (nl === "Titel" || en === "Title" || none === "Title" || none === "Titel") {
             manifest.setLabel(m.value);
             didChange = true;
             return;
@@ -41,5 +36,5 @@ enrich(
     });
 
     return { didChange };
-  },
+  }
 );
