@@ -6,11 +6,26 @@ import exhibitions from "@repo/iiif/build/collections/exhibitions/collection.jso
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const t = await getTranslations();
+  const siteName = `TU Delft ${t("Academic Heritage")}`;
+  const title = `${siteName} | ${t("Exhibitions")}`;
   return {
-    title: `TU Delft ${t("Academic Heritage")} | ${t("Exhibitions")}`,
-    description: "...",
+    title: title,
+    description: t("exhibitionsDesc"),
+    openGraph: {
+      title: title,
+      description: t("exhibitionsDesc"),
+      images: [
+        {
+          url: "/logo/TUDelft_logo_rgb.svg",
+        },
+      ],
+      locale: params.locale,
+      siteName: siteName,
+      type: "website",
+      url: "https://heritage.tudelft.nl/",
+    },
   };
 }
 

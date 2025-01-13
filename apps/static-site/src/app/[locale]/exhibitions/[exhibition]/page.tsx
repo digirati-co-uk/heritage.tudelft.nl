@@ -1,6 +1,6 @@
 import { Page } from "@/components/Page";
 import { ExhibitionPage } from "@/components/pages/ExhibitionPage";
-import { unstable_setRequestLocale } from "next-intl/server";
+import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import { ManifestLoader } from "@/app/provider";
 import imageServiceLinks from "@repo/iiif/build/meta/image-service-links.json";
 import allExhibitions from "@repo/iiif/build/collections/exhibitions/collection.json";
@@ -14,13 +14,28 @@ export async function generateMetadata({
 }: {
   params: { exhibition: string; locale: string };
 }): Promise<Metadata> {
+  const t = await getTranslations();
   const manifestSlug = `manifests/${params.exhibition}`;
   const { manifest } = await loadManifest(manifestSlug);
+  const siteName = `TU Delft ${t("Academic Heritage")}`;
   const title = getValue(manifest.label, { language: params.locale, fallbackLanguages: ["nl", "en"] });
   const description = getValue(manifest.summary, { language: params.locale, fallbackLanguages: ["nl", "en"] });
   return {
     title: `Exhibitions | ${title}`,
     description: description,
+    openGraph: {
+      title: title,
+      description: description,
+      images: [
+        {
+          url: "/logo/TUDelft_logo_rgb.svg",
+        },
+      ],
+      locale: params.locale,
+      siteName: siteName,
+      type: "website",
+      url: "https://heritage.tudelft.nl/",
+    },
   };
 }
 

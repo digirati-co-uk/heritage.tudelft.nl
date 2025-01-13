@@ -4,11 +4,26 @@ import { PublicationListPage } from "@/components/pages/PublicationListPage";
 import { Page } from "@/components/Page";
 import { Metadata } from "next";
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const t = await getTranslations();
+  const siteName = `TU Delft ${t("Academic Heritage")}`;
+  const title = `${siteName} | ${t("Publications")}`;
   return {
-    title: `TU Delft ${t("Academic Heritage")} | ${t("Publications")}`,
-    description: "...",
+    title: title,
+    description: t("publicationsDesc"),
+    openGraph: {
+      title: title,
+      description: t("publicationsDesc"),
+      images: [
+        {
+          url: "/logo/TUDelft_logo_rgb.svg",
+        },
+      ],
+      locale: params.locale,
+      siteName: siteName,
+      type: "website",
+      url: "https://heritage.tudelft.nl/",
+    },
   };
 }
 

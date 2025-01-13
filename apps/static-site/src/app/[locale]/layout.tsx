@@ -10,11 +10,26 @@ import { SlotContext } from "@/blocks/slot-context";
 import { GlobalFooter } from "@/components/GlobalFooter";
 import { $ } from "bun";
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const t = await getTranslations();
+  const siteName = `TU Delft ${t("Academic Heritage")}`;
+  const title = siteName;
   return {
-    title: t("homeTitle"),
-    description: "...",
+    title: title,
+    description: t("homeDesc"),
+    openGraph: {
+      title: title,
+      description: t("homeDesc"),
+      images: [
+        {
+          url: "/logo/TUDelft_logo_rgb.svg",
+        },
+      ],
+      locale: params.locale,
+      siteName: siteName,
+      type: "website",
+      url: "https://heritage.tudelft.nl/",
+    },
   };
 }
 

@@ -1,7 +1,7 @@
 import { allPublications } from "contentlayer/generated";
 import { Page } from "@/components/Page";
 import { PublicationPage } from "@/components/pages/PublicationPage";
-import { unstable_setRequestLocale } from "next-intl/server";
+import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 import { getValue } from "@iiif/helpers";
 
@@ -10,6 +10,7 @@ export async function generateMetadata({
 }: {
   params: { publication: string; locale: string };
 }): Promise<Metadata> {
+  const t = await getTranslations();
   const publicationInLanguage = allPublications.find(
     (post) => post.id === params.publication && post.lang === params.locale
   );
@@ -17,9 +18,23 @@ export async function generateMetadata({
   const title =
     publication && getValue(publication.title, { language: params.locale, fallbackLanguages: ["nl", "en"] });
   const description = publication ? `${publication.author} ${publication.date}` : "";
+  const siteName = `TU Delft ${t("Academic Heritage")}`;
   return {
     title: `Publication | ${title}`,
     description: description,
+    openGraph: {
+      title: title,
+      description: description,
+      images: [
+        {
+          url: "/logo/TUDelft_logo_rgb.svg",
+        },
+      ],
+      locale: params.locale,
+      siteName: siteName,
+      type: "website",
+      url: "https://heritage.tudelft.nl/",
+    },
   };
 }
 

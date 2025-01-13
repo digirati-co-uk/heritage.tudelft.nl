@@ -12,13 +12,28 @@ export async function generateMetadata({
 }: {
   params: { manifest: string; locale: string };
 }): Promise<Metadata> {
+  const t = await getTranslations();
   const manifestSlug = `manifests/${params.manifest}`;
   const { manifest } = await loadManifest(manifestSlug);
   const title = getValue(manifest.label, { language: params.locale, fallbackLanguages: ["nl", "en"] });
   const description = getValue(manifest.summary, { language: params.locale, fallbackLanguages: ["nl", "en"] });
+  const siteName = `TU Delft ${t("Academic Heritage")}`;
   return {
     title: title,
     description: description,
+    openGraph: {
+      title: title,
+      description: description,
+      images: [
+        {
+          url: "/logo/TUDelft_logo_rgb.svg",
+        },
+      ],
+      locale: params.locale,
+      siteName: siteName,
+      type: "website",
+      url: "https://heritage.tudelft.nl/",
+    },
   };
 }
 
