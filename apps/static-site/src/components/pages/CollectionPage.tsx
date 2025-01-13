@@ -1,15 +1,17 @@
-import type { Collection } from "@iiif/presentation-3";
 import { AutoLanguage } from "@/components/pages/AutoLanguage";
-import { Link, getObjectSlug } from "@/navigation";
-import { ManifestSearch } from "../search/ManifestSearch";
 import { renderCollectionLabel } from "@/helpers/collection-label";
+import { Link, getObjectSlug } from "@/navigation";
+import type { Collection } from "@iiif/presentation-3";
 import { getTranslations } from "next-intl/server";
 import { CollectionMetadata } from "../iiif/CollectionMetadata";
+import { SharingAndViewingLinks, type SharingAndViewingLinksContent } from "../iiif/SharingAndViewingLinks";
+import { ManifestSearch } from "../search/ManifestSearch";
 
 export interface CollectionPageProps {
   slug: string;
   collection: Collection;
   meta: {};
+  content: SharingAndViewingLinksContent;
 }
 
 // @todo this is a bug with HSS not providing a slug on all collections. This can be removed once fixed.
@@ -46,7 +48,9 @@ export async function CollectionPage(props: CollectionPageProps) {
                 target="_blank"
                 title={t("Drag and Drop IIIF Resource")}
                 rel="noreferrer"
-              ></a>
+              >
+                <span className="sr-only">IIIF Collection Link</span>
+              </a>
             </div>
           </div>
           <div />
@@ -63,6 +67,18 @@ export async function CollectionPage(props: CollectionPageProps) {
             />
           ) : null}
         </div>
+        <SharingAndViewingLinks
+          resource={{
+            id: props.collection.id,
+            type: "collection",
+          }}
+          content={{
+            sharingViewers: t("Sharing / Viewers"),
+            showMore: t("Show more"),
+            showLess: t("Show less"),
+            currentPage: t("Copy link to current page"),
+          }}
+        />
 
         <div className="p-4">
           <ManifestSearch
@@ -76,8 +92,8 @@ export async function CollectionPage(props: CollectionPageProps) {
           />
         </div>
       </div>
-      <div className={`col-span-2`}>
-        <div id="search-results"></div>
+      <div className="col-span-2">
+        <div id="search-results" />
         <div className="b=9 grid grid-cols-1 gap-4 md:grid-cols-2">
           {props.collection.items.map((manifest) => {
             // @todo fix the bug in hss.

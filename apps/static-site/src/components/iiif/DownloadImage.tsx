@@ -1,17 +1,5 @@
 "use client";
-import { useTranslations } from "next-intl";
-import { useLayoutEffect, useState } from "react";
-import { createPortal } from "react-dom";
-import {
-  CanvasContext,
-  ContextBridge,
-  useCanvas,
-  useContextBridge,
-  useRenderingStrategy,
-  useSimpleViewer,
-  useVault,
-  useVaultSelector,
-} from "react-iiif-vault";
+import { CanvasContext, useCanvas, useRenderingStrategy, useSimpleViewer } from "react-iiif-vault";
 import { AutoLanguage } from "../pages/AutoLanguage";
 
 export function DownloadImage({ content }: { content: { downloadImage: string } }) {
@@ -21,7 +9,7 @@ export function DownloadImage({ content }: { content: { downloadImage: string } 
 
   return (
     <div className="overflow-hidden font-mono">
-      <div className="cut-corners w-full place-self-start bg-black p-4 text-white">
+      <div className="cut-corners w-full place-self-start bg-black p-8 text-white">
         <h3 className="mb-2 uppercase">{content.downloadImage}:</h3>
         {canvases.map((canvas) => {
           return (
@@ -46,7 +34,7 @@ function DownloadImageInner({ single }: { single?: boolean }) {
         <>
           {single ? null : <AutoLanguage className="text-xs uppercase">{canvas?.label}</AutoLanguage>}
 
-          <ul className="text-md mb-4 list-none underline-offset-4">
+          <ul className="text-md list-none underline-offset-4">
             {service.sizes
               .toSorted((a, b) => a.width - b.width)
               .map((size, n) => (

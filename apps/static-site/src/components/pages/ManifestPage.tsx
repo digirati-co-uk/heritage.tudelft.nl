@@ -10,6 +10,7 @@ import { Box } from "../blocks/Box";
 import { DownloadImage } from "../iiif/DownloadImage";
 import { ObjectMetadata } from "../iiif/ObjectMetadata";
 import { ObjectThumbnails } from "../iiif/ObjectThumbnails";
+import { SharingAndViewingLinks } from "../iiif/SharingAndViewingLinks";
 import { ViewerSliderControls } from "../iiif/ViewerSliderControls";
 import { ViewerZoomControls } from "../iiif/ViewerZoomControls";
 import { AutoLanguage } from "./AutoLanguage";
@@ -50,7 +51,6 @@ const runtimeOptions = { maxOverZoom: 2 };
 
 export function ManifestPage({ related, manifest, meta, content }: ManifestPageProps) {
   const { currentSequenceIndex } = useSimpleViewer();
-  const [sharingExpanded, setSharingExpanded] = useState(false);
 
   const atlas = useRef<Preset>();
 
@@ -136,9 +136,9 @@ export function ManifestPage({ related, manifest, meta, content }: ManifestPageP
         <div className="col-span-1">
           {(meta.partOfCollections || []).length === 0 ? null : (
             <div className="overflow-hidden font-mono">
-              <div className="cut-corners w-full place-self-start bg-black p-4 text-white">
+              <div className="cut-corners w-full place-self-start bg-black p-8 text-white">
                 <h3 className="mb-2 uppercase">{content.seeAlso}:</h3>
-                <ul className="text-md mb-4 list-disc underline underline-offset-4">
+                <ul className="text-md list-disc underline underline-offset-4">
                   {(meta.partOfCollections || []).map((collection, i) => (
                     <li key={collection.slug} className="list-none">
                       <Link href={`/${collection.slug}`} className="hover:text-slate-300">
@@ -150,56 +150,14 @@ export function ManifestPage({ related, manifest, meta, content }: ManifestPageP
               </div>
             </div>
           )}
-          {configuredViewers.length === 0 ? null : (
-            <div className="overflow-hidden font-mono">
-              <div className="cut-corners w-full place-self-start bg-black p-4 text-white">
-                <h3 className="mb-2 uppercase">{content.sharingViewers}:</h3>
-                <ul className="text-md mb-4 list-none underline underline-offset-4">
-                  <li>
-                    <a
-                      suppressHydrationWarning
-                      href={
-                        typeof window !== "undefined"
-                          ? window.location.href.replace("/en/", "/").replace("/nl/", "/")
-                          : ""
-                      }
-                      target="_blank"
-                      className="hover:text-slate-300"
-                      rel="noreferrer"
-                    >
-                      {content.currentPage}
-                    </a>
-                  </li>
-                  {configuredViewers.map((viewer, i) => {
-                    if (!sharingExpanded && i > viewerConfig.showMax - 1) return null;
 
-                    return (
-                      <li key={viewer.id}>
-                        <a
-                          href={viewer.link.replace("{url}", manifest.id)}
-                          target="_blank"
-                          className="hover:text-slate-300"
-                          rel="noreferrer"
-                        >
-                          <AutoLanguage>{viewer.label}</AutoLanguage>
-                        </a>
-                      </li>
-                    );
-                  })}
-                  {configuredViewers.length > viewerConfig.showMax ? (
-                    <li className="mt-4">
-                      <button
-                        onClick={() => setSharingExpanded(!sharingExpanded)}
-                        className="uppercase hover:text-slate-300 hover:underline"
-                      >
-                        {sharingExpanded ? `${content.showLess} -` : `${content.showMore} +`}
-                      </button>
-                    </li>
-                  ) : null}
-                </ul>
-              </div>
-            </div>
-          )}
+          <SharingAndViewingLinks
+            resource={{
+              id: manifest.id,
+              type: "object",
+            }}
+            content={content}
+          />
 
           <DownloadImage content={content} />
         </div>
