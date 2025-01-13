@@ -1,7 +1,7 @@
 "use client";
 
 import { Dialog } from "@headlessui/react";
-import { useLocale } from "next-intl";
+import { useParams } from "next/navigation";
 import { useState } from "react";
 import { CanvasContext, useCanvas, useVault } from "react-iiif-vault";
 import { CloseIcon } from "../atoms/CloseIcon";
@@ -14,7 +14,7 @@ type Content = {
 function ReadMoreBlockInner({ content }: { content: Content }) {
   const canvas = useCanvas();
   const vault = useVault();
-  const locale = useLocale();
+  const locale = useParams().locale;
   const [isOpen, setIsOpen] = useState(false);
 
   if (!canvas) return null;

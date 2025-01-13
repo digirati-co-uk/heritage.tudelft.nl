@@ -1,15 +1,18 @@
 "use client";
-import { Manifest, InternationalString } from "@iiif/presentation-3";
+import { Link, getObjectSlug } from "@/navigation";
+import viewerConfig from "@/viewers.json";
+import { HTMLPortal, type Preset } from "@atlas-viewer/atlas";
+import type { InternationalString, Manifest } from "@iiif/presentation-3";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { CanvasPanel, useSimpleViewer } from "react-iiif-vault";
+import { Box } from "../blocks/Box";
+import { DownloadImage } from "../iiif/DownloadImage";
 import { ObjectMetadata } from "../iiif/ObjectMetadata";
 import { ObjectThumbnails } from "../iiif/ObjectThumbnails";
 import { ViewerSliderControls } from "../iiif/ViewerSliderControls";
 import { ViewerZoomControls } from "../iiif/ViewerZoomControls";
-import { Box } from "../blocks/Box";
 import { AutoLanguage } from "./AutoLanguage";
-import { useEffect, useRef } from "react";
-import type { Preset } from "@atlas-viewer/atlas";
-import { Link, getObjectSlug } from "@/navigation";
 
 interface ManifestPageProps {
   manifest: Manifest;
@@ -33,6 +36,13 @@ interface ManifestPageProps {
     untitled: string;
     relatedObjects: string;
     partOfCollections: string;
+
+    seeAlso: string;
+    sharingViewers: string;
+    showMore: string;
+    showLess: string;
+    downloadImage: string;
+    currentPage: string;
   };
 }
 
@@ -40,14 +50,19 @@ const runtimeOptions = { maxOverZoom: 2 };
 
 export function ManifestPage({ related, manifest, meta, content }: ManifestPageProps) {
   const { currentSequenceIndex } = useSimpleViewer();
+  const [sharingExpanded, setSharingExpanded] = useState(false);
 
   const atlas = useRef<Preset>();
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Needs to run when currentSequenceIndex changes.
   useEffect(() => {
     if (atlas.current) {
       setTimeout(() => atlas.current?.runtime.world.goHome(true), 5);
     }
   }, [currentSequenceIndex]);
+
+  const partOf = meta.partOfCollections || [];
+  const configuredViewers = viewerConfig.viewers.filter((viewer) => viewer.enabled?.includes("object"));
 
   return (
     <div>
@@ -86,7 +101,10 @@ export function ManifestPage({ related, manifest, meta, content }: ManifestPageP
                 href={`${manifest.id}?manifest=${manifest.id}`}
                 target="_blank"
                 title="Drag and Drop IIIF Resource"
-              ></a>
+                rel="noreferrer"
+              >
+                <span className="sr-only">IIIF Manifest Link</span>
+              </a>
             </div>
           </div>
 
@@ -101,7 +119,7 @@ export function ManifestPage({ related, manifest, meta, content }: ManifestPageP
 
                   return (
                     <Box
-                      key={i}
+                      key={item.slug}
                       title={item.label}
                       unfiltered
                       small
@@ -115,22 +133,76 @@ export function ManifestPage({ related, manifest, meta, content }: ManifestPageP
             </>
           )}
         </div>
-        {(meta.partOfCollections || []).length === 0 ? null : (
-          <div className="col-span-1 overflow-hidden">
-            <div className="cut-corners aspect-square place-self-start bg-black p-8 text-white">
-              <h3 className="mb-2 text-2xl font-medium">{content.partOfCollections}</h3>
-              <ul className="text-md ml-4 list-disc underline underline-offset-4">
-                {(meta.partOfCollections || []).map((collection, i) => (
-                  <li key={i}>
-                    <Link href={`/${collection.slug}`} className="hover:text-slate-300">
-                      <AutoLanguage>{collection.label}</AutoLanguage>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+        <div className="col-span-1">
+          {(meta.partOfCollections || []).length === 0 ? null : (
+            <div className="overflow-hidden font-mono">
+              <div className="cut-corners w-full place-self-start bg-black p-4 text-white">
+                <h3 className="mb-2 uppercase">{content.seeAlso}:</h3>
+                <ul className="text-md mb-4 list-disc underline underline-offset-4">
+                  {(meta.partOfCollections || []).map((collection, i) => (
+                    <li key={collection.slug} className="list-none">
+                      <Link href={`/${collection.slug}`} className="hover:text-slate-300">
+                        <AutoLanguage>{collection.label}</AutoLanguage>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-          </div>
-        )}
+          )}
+          {configuredViewers.length === 0 ? null : (
+            <div className="overflow-hidden font-mono">
+              <div className="cut-corners w-full place-self-start bg-black p-4 text-white">
+                <h3 className="mb-2 uppercase">{content.sharingViewers}:</h3>
+                <ul className="text-md mb-4 list-none underline underline-offset-4">
+                  <li>
+                    <a
+                      suppressHydrationWarning
+                      href={
+                        typeof window !== "undefined"
+                          ? window.location.href.replace("/en/", "/").replace("/nl/", "/")
+                          : ""
+                      }
+                      target="_blank"
+                      className="hover:text-slate-300"
+                      rel="noreferrer"
+                    >
+                      {content.currentPage}
+                    </a>
+                  </li>
+                  {configuredViewers.map((viewer, i) => {
+                    if (!sharingExpanded && i > viewerConfig.showMax - 1) return null;
+
+                    return (
+                      <li key={viewer.id}>
+                        <a
+                          href={viewer.link.replace("{url}", manifest.id)}
+                          target="_blank"
+                          className="hover:text-slate-300"
+                          rel="noreferrer"
+                        >
+                          <AutoLanguage>{viewer.label}</AutoLanguage>
+                        </a>
+                      </li>
+                    );
+                  })}
+                  {configuredViewers.length > viewerConfig.showMax ? (
+                    <li className="mt-4">
+                      <button
+                        onClick={() => setSharingExpanded(!sharingExpanded)}
+                        className="uppercase hover:text-slate-300 hover:underline"
+                      >
+                        {sharingExpanded ? `${content.showLess} -` : `${content.showMore} +`}
+                      </button>
+                    </li>
+                  ) : null}
+                </ul>
+              </div>
+            </div>
+          )}
+
+          <DownloadImage content={content} />
+        </div>
       </div>
     </div>
   );

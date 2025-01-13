@@ -1,6 +1,5 @@
 import { getClassName } from "@/helpers/exhibition";
 import type { Canvas } from "@iiif/presentation-3";
-import { useLocale } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";

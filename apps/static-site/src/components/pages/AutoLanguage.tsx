@@ -49,16 +49,18 @@ export function AutoLanguage({
   }
 
   if (value) {
-    const filtered = value.filter(Boolean);
+    const filtered = value.filter(Boolean) as string[];
     if (filtered.length > 0) {
       if (lines) {
         return (
           <>
-            {filtered.map((line) =>
+            {filtered.map((line, n) =>
               html ? (
-                <div className={className} dangerouslySetInnerHTML={{ __html: m(line) }} />
+                <div key={`line-${n}`} className={className} dangerouslySetInnerHTML={{ __html: m(line) }} />
               ) : (
-                <div className={className}>{m(line)}</div>
+                <div key={`line-${n}`} className={className}>
+                  {m(line)}
+                </div>
               )
             )}
           </>

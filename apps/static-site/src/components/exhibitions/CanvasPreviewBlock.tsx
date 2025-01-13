@@ -1,17 +1,17 @@
 "use client";
 
-import type { DefaultPresetOptions, Preset } from "@atlas-viewer/atlas";
-import { useState, useRef, useMemo, useEffect } from "react";
-import { Dialog } from "@headlessui/react";
-import { useCanvas, CanvasPanel, CanvasContext, useVault } from "react-iiif-vault";
-import invariant from "tiny-invariant";
-import { AutoLanguage } from "../pages/AutoLanguage";
-import { LazyLoadComponent } from "react-lazy-load-image-component";
-import { CloseIcon } from "../atoms/CloseIcon";
-import type { Canvas, Annotation } from "@iiif/presentation-3";
-import { expandTarget } from "@iiif/helpers";
-import type { AnnotationPageNormalized } from "@iiif/presentation-3-normalized";
 import { Link, getObjectSlug } from "@/navigation";
+import type { DefaultPresetOptions, Preset } from "@atlas-viewer/atlas";
+import { Dialog } from "@headlessui/react";
+import { expandTarget } from "@iiif/helpers";
+import type { Annotation, Canvas } from "@iiif/presentation-3";
+import type { AnnotationPageNormalized } from "@iiif/presentation-3-normalized";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { CanvasContext, CanvasPanel, useCanvas, useVault } from "react-iiif-vault";
+import { LazyLoadComponent } from "react-lazy-load-image-component";
+import invariant from "tiny-invariant";
+import { CloseIcon } from "../atoms/CloseIcon";
+import { AutoLanguage } from "../pages/AutoLanguage";
 
 function CanvasPreviewBlockInner({
   cover,
@@ -29,8 +29,13 @@ function CanvasPreviewBlockInner({
   const vault = useVault();
   const canvas = useCanvas();
   const atlas = useRef<Preset | null>(null);
+  const [isReady, setIsReady] = useState(false);
   const config = useMemo(
-    () => ["default-preset", { runtimeOptions: {}, interactive: isOpen } as DefaultPresetOptions] as any,
+    () =>
+      [
+        "default-preset",
+        { runtimeOptions: { visibilityRatio: 0.5, maxOverZoom: 3 }, interactive: isOpen } as DefaultPresetOptions,
+      ] as any,
     [isOpen]
   );
   const [stepIndex, setStepIndex] = useState(0);
@@ -128,8 +133,26 @@ function CanvasPreviewBlockInner({
           renderPreset={config}
           homeOnResize
           homeCover={cover ? "start" : false}
+          onCreated={(preset) => {
+            const clear = preset.runtime.registerHook("useAfterFrame", () => {
+              const renderers = (preset.renderer as any).renderers;
+              const canvasRenderer = renderers[0]?.canvas ? renderers[0] : null;
+              if (!canvasRenderer) {
+                setIsReady(true);
+                clear();
+              }
+              if ((canvasRenderer as any).isReady()) {
+                preset.runtime.updateNextFrame();
+                setTimeout(() => {
+                  setIsReady(true);
+                }, 300);
+                clear();
+              }
+            });
+            setTimeout(() => preset.runtime.updateNextFrame(), 1000);
+          }}
         >
-          <CanvasPanel.RenderCanvas strategies={["images"]}>
+          <CanvasPanel.RenderCanvas strategies={["images"]} enableSizes>
             {highlights.map((highlight, index) => {
               const target = highlight?.selector?.spatial as any;
               if (!target) return null;
@@ -294,13 +317,13 @@ export function CanvasPreviewBlock({
     </CanvasContext>
   );
 
-  if (index < 4) {
+  if (index < 3) {
     return <div className="relative h-full w-full bg-[#373737]">{inner}</div>;
   }
 
   return (
     <div className="relative h-full w-full bg-[#373737]">
-      <LazyLoadComponent placeholder={<div />} visibleByDefault={index < 4} threshold={700}>
+      <LazyLoadComponent placeholder={<div />} visibleByDefault={false} threshold={300}>
         {inner}
       </LazyLoadComponent>
     </div>

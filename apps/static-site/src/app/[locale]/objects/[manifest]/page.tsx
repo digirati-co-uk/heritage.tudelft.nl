@@ -40,6 +40,14 @@ export default async function ManifestP({ params }: { params: { locale: string; 
             untitled: t("Untitled"),
             relatedObjects: t("Related objects"),
             partOfCollections: t("Part of collections"),
+
+            // New.
+            seeAlso: t("See also"),
+            sharingViewers: t("Sharing / Viewers"),
+            showMore: t("Show more"),
+            showLess: t("Show less"),
+            downloadImage: t("Download image"),
+            currentPage: t("Copy link to current page"),
           }}
           manifest={manifest}
           meta={meta}

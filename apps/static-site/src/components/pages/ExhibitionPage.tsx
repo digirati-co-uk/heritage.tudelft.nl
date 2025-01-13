@@ -37,7 +37,7 @@ export async function ExhibitionPage(props: ExhibitionPageProps) {
           try {
             const strategy = getRenderingStrategy({
               canvas,
-              loadImageService: () => void 0,
+              loadImageService: (t) => t,
               paintables,
               supports: ["empty", "images", "media", "video", "3d-model", "textual-content", "complex-timeline"],
             });
