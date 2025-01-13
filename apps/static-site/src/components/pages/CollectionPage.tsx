@@ -31,8 +31,6 @@ function getSlugFromId(id: string) {
 export async function CollectionPage(props: CollectionPageProps) {
   const t = await getTranslations();
 
-  console.log(props.collection);
-
   return (
     <div className="grid-cols-1 gap-8 md:grid md:grid-cols-3">
       <div className="col-span-1">

@@ -2,8 +2,8 @@ import { allPublications } from "contentlayer/generated";
 import { Page } from "@/components/Page";
 import { PublicationPage } from "@/components/pages/PublicationPage";
 import { unstable_setRequestLocale } from "next-intl/server";
-import { loadManifest, loadManifestMeta } from "@/iiif";
 import type { Metadata } from "next";
+import { getValue } from "@iiif/helpers";
 
 export async function generateMetadata({
   params,
@@ -14,9 +14,11 @@ export async function generateMetadata({
     (post) => post.id === params.publication && post.lang === params.locale
   );
   const publication = publicationInLanguage || allPublications.find((post) => post.id === params.publication);
+  const title = publication && getValue(publication.title, { language: "en", fallbackLanguages: ["nl", "en"] });
+  const description = publication ? `${publication.author} ${publication.date}` : "";
   return {
-    title: `Publications | ${(publication && publication.title) || ""}`,
-    description: "Description",
+    title: `Publication | ${title}`,
+    description: description,
   };
 }
 

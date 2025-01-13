@@ -7,6 +7,7 @@ import allExhibitions from "@repo/iiif/build/collections/exhibitions/collection.
 import { SlotContext } from "@/blocks/slot-context";
 import type { Metadata } from "next";
 import { loadManifest } from "@/iiif";
+import { getValue } from "@iiif/helpers";
 
 export async function generateMetadata({
   params,
@@ -15,10 +16,11 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const manifestSlug = `manifests/${params.exhibition}`;
   const { manifest } = await loadManifest(manifestSlug);
-  const fallbackLocale = "en";
+  const title = getValue(manifest.label, { language: "en", fallbackLanguages: ["nl", "en"] });
+  const description = getValue(manifest.summary, { language: "en", fallbackLanguages: ["nl", "en"] });
   return {
-    title: `Exhibitions | ${manifest.label[params.locale] || manifest.label[fallbackLocale]}`,
-    description: "Description",
+    title: `Exhibitions | ${title}`,
+    description: description,
   };
 }
 
