@@ -80,7 +80,7 @@ pb-slot.grid::part(slot-bar) {
 /* Exhibition editorial */
 
 .exhibition-info-block h2 {
-  @apply mb-4 text-center font-mono uppercase;
+  @apply my-4 text-center font-mono uppercase;
 }
 .exhibition-info-block p {
   @apply my-4;
@@ -160,4 +160,14 @@ input[type="search"]::-webkit-search-cancel-button {
 
 .facet-search .ais-SearchBox-reset {
   display: none;
+}
+
+.safe-inset {
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+.fill-height {
+  min-height: 100vh;
+  /* mobile viewport bug fix */
+  min-height: -webkit-fill-available;
 }

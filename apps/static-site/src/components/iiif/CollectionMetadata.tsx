@@ -1,6 +1,6 @@
 "use client";
 
-import { InternationalString, MetadataItem } from "@iiif/presentation-3";
+import type { InternationalString, MetadataItem } from "@iiif/presentation-3";
 import { Metadata } from "react-iiif-vault";
 import { AutoLanguage } from "../pages/AutoLanguage";
 import { useState } from "react";
@@ -35,7 +35,7 @@ export function CollectionMetadata({
 
             <Dialog className="relative z-50" open={isOpen} onClose={() => setIsOpen(false)}>
               <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
-              <div className="fixed inset-0 flex h-screen w-screen items-center p-4">
+              <div className="mobile-height fixed inset-0 flex w-screen items-center p-4">
                 <button
                   className="absolute right-8 top-8 z-10 flex h-8 w-8 items-center justify-center rounded hover:bg-slate-100"
                   onClick={() => setIsOpen(false)}

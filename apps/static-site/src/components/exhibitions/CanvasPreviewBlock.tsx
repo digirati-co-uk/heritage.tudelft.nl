@@ -143,14 +143,14 @@ function CanvasPreviewBlockInner({
       </div>
       <Dialog className="relative z-50" open={isOpen} onClose={() => setIsOpen(false)}>
         <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
-        <div className="fixed inset-0 z-20 flex h-screen w-screen items-center p-4">
+        <div className="safe-inset fill-height fixed inset-0 z-20 flex w-screen items-center md:p-4">
           <button
             className="absolute right-4 top-4 z-20 flex  h-16 w-16 items-center justify-center bg-black hover:bg-gray-900"
             onClick={() => setIsOpen(false)}
           >
             <CloseIcon fill="#fff" />
           </button>
-          <Dialog.Panel className="relative z-10 flex h-full w-full flex-col justify-center overflow-y-auto overflow-x-hidden rounded bg-black">
+          <Dialog.Panel className="relative z-10 flex h-full w-full flex-col justify-center overflow-y-auto overflow-x-hidden bg-black md:rounded">
             <div className="min-h-0 flex-1 bg-[#373737]">
               {isOpen ? (
                 <CanvasPanel.Viewer

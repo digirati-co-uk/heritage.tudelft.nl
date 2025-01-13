@@ -35,7 +35,7 @@ function MediaBlockInner(props: MediaBlockProps) {
 
       <Dialog className="relative z-50" open={isOpen} onClose={() => setIsOpen(false)}>
         <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
-        <div className="fixed inset-0 flex h-screen w-screen items-center p-4">
+        <div className="mobile-height fixed inset-0 flex w-screen items-center p-4">
           <button
             className="absolute right-6 top-6 z-20 flex h-16 w-16 items-center justify-center rounded bg-black hover:bg-slate-900"
             onClick={() => setIsOpen(false)}
