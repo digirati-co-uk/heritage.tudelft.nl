@@ -14,8 +14,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const manifestSlug = `manifests/${params.manifest}`;
   const { manifest } = await loadManifest(manifestSlug);
-  const title = getValue(manifest.label, { language: "en", fallbackLanguages: ["nl", "en"] });
-  const description = getValue(manifest.summary, { language: "en", fallbackLanguages: ["nl", "en"] });
+  const title = getValue(manifest.label, { language: params.locale, fallbackLanguages: ["nl", "en"] });
+  const description = getValue(manifest.summary, { language: params.locale, fallbackLanguages: ["nl", "en"] });
   return {
     title: title,
     description: description,

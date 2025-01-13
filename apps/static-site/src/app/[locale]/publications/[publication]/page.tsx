@@ -14,7 +14,8 @@ export async function generateMetadata({
     (post) => post.id === params.publication && post.lang === params.locale
   );
   const publication = publicationInLanguage || allPublications.find((post) => post.id === params.publication);
-  const title = publication && getValue(publication.title, { language: "en", fallbackLanguages: ["nl", "en"] });
+  const title =
+    publication && getValue(publication.title, { language: params.locale, fallbackLanguages: ["nl", "en"] });
   const description = publication ? `${publication.author} ${publication.date}` : "";
   return {
     title: `Publication | ${title}`,

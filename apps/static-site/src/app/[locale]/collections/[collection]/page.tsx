@@ -13,8 +13,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const slug = `collections/${params.collection}`;
   const { collection } = await loadCollection(slug);
-  const title = getValue(collection.label, { language: "en", fallbackLanguages: ["nl", "en"] });
-  const description = getValue(collection.summary, { language: "en", fallbackLanguages: ["nl", "en"] });
+  const title = getValue(collection.label, { language: params.locale, fallbackLanguages: ["nl", "en"] });
+  const description = getValue(collection.summary, { language: params.locale, fallbackLanguages: ["nl", "en"] });
   return {
     title: `Collections | ${title}`,
     description: description,
