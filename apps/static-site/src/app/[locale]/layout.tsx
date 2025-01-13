@@ -3,16 +3,20 @@ import type { Metadata } from "next";
 import BlockEditor from "../../blocks/block-editor";
 import { Provider } from "../provider";
 import { ReactNode } from "react";
-import { unstable_setRequestLocale } from "next-intl/server";
+import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import localFont from "next/font/local";
 import { SlotContext } from "@/blocks/slot-context";
 import { GlobalFooter } from "@/components/GlobalFooter";
+import { $ } from "bun";
 
-export const metadata: Metadata = {
-  title: "TU Delft Academic Heritage",
-  description: "TU Delft Library's Special Collections portal"
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations();
+  return {
+    title: t("homeTitle"),
+    description: "...",
+  };
+}
 
 if (process.env.NODE_ENV !== "production") {
   // @ts-expect-error typescript can't resolve CSS
