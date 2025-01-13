@@ -3,6 +3,16 @@ import { unstable_setRequestLocale } from "next-intl/server";
 import { ExhibitionListing } from "@/components/pages/ExhibitionListing";
 import { Slot } from "@/blocks/slot";
 import exhibitions from "@repo/iiif/build/collections/exhibitions/collection.json";
+import { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations();
+  return {
+    title: `TU Delft ${t("Academic Heritage")} | ${t("Exhibitions")}`,
+    description: "...",
+  };
+}
 
 export default function ExhibitionsPage({ params }: { params: { locale: string } }) {
   unstable_setRequestLocale(params.locale);

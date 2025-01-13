@@ -4,6 +4,16 @@ import { SlotContext } from "@/blocks/slot-context";
 import { Page } from "@/components/Page";
 import { Illustration } from "@/components/blocks/Illustration";
 import { useMDXComponent } from "next-contentlayer/hooks";
+import { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations();
+  return {
+    title: `TU Delft ${t("Academic Heritage")} | ${t("About")}`,
+    description: "...",
+  };
+}
 
 export default async function AboutPage({ params }: { params: { locale: string } }) {
   const aboutPages = allPages.filter((page) => page.path === "/about");
