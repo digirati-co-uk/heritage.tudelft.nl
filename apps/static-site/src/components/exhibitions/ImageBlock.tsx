@@ -24,7 +24,7 @@ export async function ImageBlock({
   const className = getClassName(behavior);
 
   const canvasViewer = (
-    <Suspense fallback={<div className="h-full w-full bg-red-700" />}>
+    <Suspense fallback={<div className="h-full w-full" />}>
       <CanvasPreviewBlock canvasId={canvas.id} cover={!showSummary} index={index} objectLinks={objectLinks} />
     </Suspense>
   );
