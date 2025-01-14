@@ -13,6 +13,7 @@ const boxProps = z.object({
   frameUrl: z.string(),
   frameLabel: z.string(),
   frameDescription: z.string(),
+  fullHeight: z.boolean().optional(),
   backgroundColor: z
     .enum([
       "bg-orange-500",
@@ -43,11 +44,12 @@ export default block(
     const titleSize = props.small ? "md:text-xl" : "text-2xl md:text-4xl";
     const filters = props.unfiltered ? "" : "grayscale";
     const fallbackBackground = props.fallbackBackgroundColor || "bg-yellow-400";
+    const height = props.fullHeight ? "h-full" : "aspect-square";
 
     if (!props.frameUrl) return null;
 
     return (
-      <div className={twMerge(`cut-corners group relative flex aspect-square`, props.className)}>
+      <div className={twMerge(`cut-corners group relative flex`, height, props.className)}>
         <div
           className={`relative z-20 cursor-pointer p-5 ${
             props.dark ? "text-black" : "text-white"
