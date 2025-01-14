@@ -3,6 +3,7 @@ import { Page } from "@/components/Page";
 import { ManifestPage } from "@/components/pages/ManifestPage";
 import { loadManifest, loadManifestMeta } from "@/iiif";
 import related from "@repo/iiif/build/meta/related-objects.json";
+import imageServiceLinks from "@repo/iiif/build/meta/image-service-links.json";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 export default async function ManifestP({ params }: { params: { locale: string; manifest: string } }) {
@@ -11,11 +12,31 @@ export default async function ManifestP({ params }: { params: { locale: string; 
 
   const manifestSlug = `manifests/${params.manifest}`;
   const { manifest, meta } = await loadManifest(manifestSlug);
+  const exhibitions = imageServiceLinks[manifestSlug as keyof typeof imageServiceLinks] || [];
 
   const relatedItems = related[manifestSlug as keyof typeof related] || [];
   const relatedSnippets = (
     await Promise.all(
       relatedItems.map(async (slug) => {
+        try {
+          const meta = await loadManifestMeta(slug);
+
+          return {
+            slug,
+            label: meta.label || "Untitled",
+            thumbnail: meta.thumbnail?.id,
+            meta,
+          };
+        } catch (e) {
+          return null;
+        }
+      })
+    )
+  ).filter((x) => x !== null);
+
+  const exhibitionLinks = (
+    await Promise.all(
+      exhibitions.map(async ({ slug }) => {
         try {
           const meta = await loadManifestMeta(slug);
 
@@ -49,6 +70,7 @@ export default async function ManifestP({ params }: { params: { locale: string; 
             downloadImage: t("Download image"),
             currentPage: t("Copy link to current page"),
           }}
+          exhibitionLinks={exhibitionLinks}
           manifest={manifest}
           meta={meta}
           related={relatedSnippets}

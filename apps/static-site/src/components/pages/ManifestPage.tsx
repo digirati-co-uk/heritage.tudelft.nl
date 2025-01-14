@@ -45,11 +45,16 @@ interface ManifestPageProps {
     downloadImage: string;
     currentPage: string;
   };
+  exhibitionLinks: Array<null | {
+    label: string;
+    slug: string;
+    thumbnail?: string;
+  }>;
 }
 
 const runtimeOptions = { maxOverZoom: 2 };
 
-export function ManifestPage({ related, manifest, meta, content }: ManifestPageProps) {
+export function ManifestPage({ related, manifest, meta, content, exhibitionLinks }: ManifestPageProps) {
   const { currentSequenceIndex } = useSimpleViewer();
 
   const atlas = useRef<Preset>();
@@ -150,6 +155,22 @@ export function ManifestPage({ related, manifest, meta, content }: ManifestPageP
               </div>
             </div>
           )}
+          {exhibitionLinks.map((item, i) => {
+            if (item === null) return null;
+
+            return (
+              <Box
+                key={item.slug}
+                title={item.label}
+                unfiltered
+                backgroundColor="bg-yellow-400"
+                small
+                backgroundImage={item.thumbnail}
+                link={`/${getObjectSlug(item.slug)}`}
+                type="Exhibition"
+              />
+            );
+          })}
 
           <SharingAndViewingLinks
             resource={{
