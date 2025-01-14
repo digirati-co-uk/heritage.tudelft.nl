@@ -206,23 +206,28 @@ body.pb-editing .featured-card-grid {
   grid-area: 3 / 4 / 4 / 6;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 800px) {
   .featured-card-grid {
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(5, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    height: auto;
   }
 
   .featured-card-grid pb-block:first-child {
-    grid-area: 1 / 1 / 3 / 4;
+    grid-area: 1 / 1 / 2 / 2;
+    aspect-ratio: 1;
   }
   .featured-card-grid pb-block:nth-child(2) {
-    grid-area: 3 / 1 / 4 / 4;
+    grid-area: 1 / 2 / 2 / 3;
+    aspect-ratio: 1;
   }
   .featured-card-grid pb-block:nth-child(3) {
-    grid-area: 4 / 1 / 6 / 4;
+    grid-area: 2 / 1 / 3 / 2;
+    aspect-ratio: 1;
   }
   .featured-card-grid pb-block:nth-child(4) {
-    grid-area: 1 / 4 / 6 / 4;
+    grid-area: 2 / 2 / 3 / 3;
+    aspect-ratio: 1;
   }
 }
 
