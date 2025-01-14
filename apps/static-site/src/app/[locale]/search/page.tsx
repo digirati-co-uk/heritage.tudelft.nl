@@ -2,28 +2,14 @@ import { SearchPage } from "@/components/pages/SearchPage";
 import { Page } from "@/components/Page";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import { Metadata } from "next";
+import { getSiteName, getMetadata } from "@/helpers/metadata";
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const t = await getTranslations();
-  const siteName = `TU Delft ${t("Academic Heritage")}`;
+  const siteName = await getSiteName();
   const title = `${siteName} | ${t("Search")}`;
-  return {
-    title: title,
-    description: t("searchDesc"),
-    openGraph: {
-      title: title,
-      description: t("searchDesc"),
-      images: [
-        {
-          url: "/logo/TUDelft_logo_rgb.svg",
-        },
-      ],
-      locale: params.locale,
-      siteName: siteName,
-      type: "website",
-      url: "https://heritage.tudelft.nl/",
-    },
-  };
+  const description = t("searchDesc");
+  return getMetadata(params.locale, siteName, title, description);
 }
 
 export default async function Search({ params }: { params: { locale: string } }) {

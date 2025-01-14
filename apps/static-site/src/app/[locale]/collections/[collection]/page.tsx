@@ -1,24 +1,25 @@
 import { CollectionPage } from "@/components/pages/CollectionPage";
 import { loadCollection } from "@/iiif";
 import { Page } from "@/components/Page";
-import { unstable_setRequestLocale } from "next-intl/server";
+import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 // import siteMap from "@repo/iiif/build/meta/sitemap.json";
 import { Metadata } from "next";
 import { getValue } from "@iiif/helpers";
+import { getSiteName, getMetadata } from "@/helpers/metadata";
 
 export async function generateMetadata({
   params,
 }: {
   params: { collection: string; locale: string };
 }): Promise<Metadata> {
+  const t = await getTranslations();
   const slug = `collections/${params.collection}`;
   const { collection } = await loadCollection(slug);
-  const title = getValue(collection.label, { language: params.locale, fallbackLanguages: ["nl", "en"] });
+  const siteName = await getSiteName();
+  const collTitle = getValue(collection.label, { language: params.locale, fallbackLanguages: ["nl", "en"] });
   const description = getValue(collection.summary, { language: params.locale, fallbackLanguages: ["nl", "en"] });
-  return {
-    title: `Collections | ${title}`,
-    description: description,
-  };
+  const title = `${siteName} | ${t("Collections")} | ${collTitle}`;
+  return getMetadata(params.locale, siteName, title, description);
 }
 
 export default async function Collection({ params }: { params: { collection: string; locale: string } }) {

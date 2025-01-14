@@ -8,29 +8,15 @@ import { GlobalHeader } from "@/components/GlobalHeader";
 import localFont from "next/font/local";
 import { SlotContext } from "@/blocks/slot-context";
 import { GlobalFooter } from "@/components/GlobalFooter";
+import { getSiteName, getMetadata } from "@/helpers/metadata";
 import { $ } from "bun";
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const t = await getTranslations();
-  const siteName = `TU Delft ${t("Academic Heritage")}`;
+  const siteName = await getSiteName();
   const title = siteName;
-  return {
-    title: title,
-    description: t("homeDesc"),
-    openGraph: {
-      title: title,
-      description: t("homeDesc"),
-      images: [
-        {
-          url: "/logo/TUDelft_logo_rgb.svg",
-        },
-      ],
-      locale: params.locale,
-      siteName: siteName,
-      type: "website",
-      url: "https://heritage.tudelft.nl/",
-    },
-  };
+  const description = t("homeDesc");
+  return getMetadata(params.locale, siteName, title, description);
 }
 
 if (process.env.NODE_ENV !== "production") {

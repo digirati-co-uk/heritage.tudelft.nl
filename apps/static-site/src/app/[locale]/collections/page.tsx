@@ -2,29 +2,15 @@ import { Page } from "@/components/Page";
 import { Slot } from "@/blocks/slot";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import { CollectionListing } from "@/components/pages/CollectionListing";
+import { getSiteName, getMetadata } from "@/helpers/metadata";
 import { Metadata } from "next";
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const t = await getTranslations();
-  const siteName = `TU Delft ${t("Academic Heritage")}`;
+  const siteName = await getSiteName();
   const title = `${siteName} | ${t("Collections")}`;
-  return {
-    title: title,
-    description: t("collectionsDesc"),
-    openGraph: {
-      title: title,
-      description: t("collectionsDesc"),
-      images: [
-        {
-          url: "/logo/TUDelft_logo_rgb.svg",
-        },
-      ],
-      locale: params.locale,
-      siteName: siteName,
-      type: "website",
-      url: "https://heritage.tudelft.nl/",
-    },
-  };
+  const description = t("collectionsDesc");
+  return getMetadata(params.locale, siteName, title, description);
 }
 
 export default async function Collections(props: { params: { locale: string } }) {

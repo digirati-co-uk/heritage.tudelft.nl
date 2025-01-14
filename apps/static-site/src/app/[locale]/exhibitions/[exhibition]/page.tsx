@@ -8,6 +8,8 @@ import { SlotContext } from "@/blocks/slot-context";
 import type { Metadata } from "next";
 import { loadManifest } from "@/iiif";
 import { getValue } from "@iiif/helpers";
+import { getSiteName, getMetadata } from "@/helpers/metadata";
+import { title } from "process";
 
 export async function generateMetadata({
   params,
@@ -17,26 +19,11 @@ export async function generateMetadata({
   const t = await getTranslations();
   const manifestSlug = `manifests/${params.exhibition}`;
   const { manifest } = await loadManifest(manifestSlug);
-  const siteName = `TU Delft ${t("Academic Heritage")}`;
-  const title = getValue(manifest.label, { language: params.locale, fallbackLanguages: ["nl", "en"] });
+  const siteName = await getSiteName();
+  const exTitle = getValue(manifest.label, { language: params.locale, fallbackLanguages: ["nl", "en"] });
   const description = getValue(manifest.summary, { language: params.locale, fallbackLanguages: ["nl", "en"] });
-  return {
-    title: `Exhibitions | ${title}`,
-    description: description,
-    openGraph: {
-      title: title,
-      description: description,
-      images: [
-        {
-          url: "/logo/TUDelft_logo_rgb.svg",
-        },
-      ],
-      locale: params.locale,
-      siteName: siteName,
-      type: "website",
-      url: "https://heritage.tudelft.nl/",
-    },
-  };
+  const title = `${siteName} | ${t("Exhibitions")} | ${exTitle}`;
+  return getMetadata(params.locale, siteName, title, description);
 }
 
 export const generateStaticParams = async () => {

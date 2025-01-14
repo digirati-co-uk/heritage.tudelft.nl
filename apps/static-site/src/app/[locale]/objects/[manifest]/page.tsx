@@ -6,6 +6,7 @@ import { ManifestLoader } from "@/app/provider";
 import related from "@repo/iiif/build/meta/related-objects.json";
 import type { Metadata } from "next";
 import { getValue } from "@iiif/helpers";
+import { getSiteName, getMetadata } from "@/helpers/metadata";
 
 export async function generateMetadata({
   params,
@@ -15,26 +16,11 @@ export async function generateMetadata({
   const t = await getTranslations();
   const manifestSlug = `manifests/${params.manifest}`;
   const { manifest } = await loadManifest(manifestSlug);
-  const title = getValue(manifest.label, { language: params.locale, fallbackLanguages: ["nl", "en"] });
+  const objTitle = getValue(manifest.label, { language: params.locale, fallbackLanguages: ["nl", "en"] });
   const description = getValue(manifest.summary, { language: params.locale, fallbackLanguages: ["nl", "en"] });
-  const siteName = `TU Delft ${t("Academic Heritage")}`;
-  return {
-    title: title,
-    description: description,
-    openGraph: {
-      title: title,
-      description: description,
-      images: [
-        {
-          url: "/logo/TUDelft_logo_rgb.svg",
-        },
-      ],
-      locale: params.locale,
-      siteName: siteName,
-      type: "website",
-      url: "https://heritage.tudelft.nl/",
-    },
-  };
+  const siteName = await getSiteName();
+  const title = `${siteName} | ${t("Collections")} | ${objTitle}`;
+  return getMetadata(params.locale, siteName, title, description);
 }
 
 export default async function ManifestP({ params }: { params: { locale: string; manifest: string } }) {

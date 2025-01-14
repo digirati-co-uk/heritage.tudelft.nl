@@ -7,28 +7,14 @@ import { useMDXComponent } from "next-contentlayer/hooks";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { PathParamsContext } from "next/dist/shared/lib/hooks-client-context.shared-runtime";
+import { getSiteName, getMetadata } from "@/helpers/metadata";
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const t = await getTranslations();
-  const siteName = `TU Delft ${t("Academic Heritage")}`;
+  const siteName = await getSiteName();
   const title = `${siteName} | ${t("About")}`;
-  return {
-    title: title,
-    description: t("aboutDesc"),
-    openGraph: {
-      title: title,
-      description: t("aboutDesc"),
-      images: [
-        {
-          url: "/logo/TUDelft_logo_rgb.svg",
-        },
-      ],
-      locale: params.locale,
-      siteName: siteName,
-      type: "website",
-      url: "https://heritage.tudelft.nl/",
-    },
-  };
+  const description = t("aboutDesc");
+  return getMetadata(params.locale, siteName, title, description);
 }
 
 export default async function AboutPage({ params }: { params: { locale: string } }) {

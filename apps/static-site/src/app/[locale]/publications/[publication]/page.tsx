@@ -4,6 +4,8 @@ import { PublicationPage } from "@/components/pages/PublicationPage";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 import { getValue } from "@iiif/helpers";
+import { getSiteName, getMetadata } from "@/helpers/metadata";
+import { decodeAction } from "next/dist/server/app-render/entry-base";
 
 export async function generateMetadata({
   params,
@@ -15,27 +17,12 @@ export async function generateMetadata({
     (post) => post.id === params.publication && post.lang === params.locale
   );
   const publication = publicationInLanguage || allPublications.find((post) => post.id === params.publication);
-  const title =
+  const pubTitle =
     publication && getValue(publication.title, { language: params.locale, fallbackLanguages: ["nl", "en"] });
   const description = publication ? `${publication.author} ${publication.date}` : "";
-  const siteName = `TU Delft ${t("Academic Heritage")}`;
-  return {
-    title: `Publication | ${title}`,
-    description: description,
-    openGraph: {
-      title: title,
-      description: description,
-      images: [
-        {
-          url: "/logo/TUDelft_logo_rgb.svg",
-        },
-      ],
-      locale: params.locale,
-      siteName: siteName,
-      type: "website",
-      url: "https://heritage.tudelft.nl/",
-    },
-  };
+  const siteName = await getSiteName();
+  const title = `${siteName} | ${t("Publications")} | ${pubTitle}`;
+  return getMetadata(params.locale, siteName, title, description);
 }
 
 export default async function Publication({ params }: { params: { publication: string; locale: string } }) {

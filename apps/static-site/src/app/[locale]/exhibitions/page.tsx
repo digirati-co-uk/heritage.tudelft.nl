@@ -5,28 +5,14 @@ import { Slot } from "@/blocks/slot";
 import exhibitions from "@repo/iiif/build/collections/exhibitions/collection.json";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import { getSiteName, getMetadata } from "@/helpers/metadata";
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const t = await getTranslations();
-  const siteName = `TU Delft ${t("Academic Heritage")}`;
+  const siteName = await getSiteName();
   const title = `${siteName} | ${t("Exhibitions")}`;
-  return {
-    title: title,
-    description: t("exhibitionsDesc"),
-    openGraph: {
-      title: title,
-      description: t("exhibitionsDesc"),
-      images: [
-        {
-          url: "/logo/TUDelft_logo_rgb.svg",
-        },
-      ],
-      locale: params.locale,
-      siteName: siteName,
-      type: "website",
-      url: "https://heritage.tudelft.nl/",
-    },
-  };
+  const description = t("exhibitionsDesc");
+  return getMetadata(params.locale, siteName, title, description);
 }
 
 export default function ExhibitionsPage({ params }: { params: { locale: string } }) {
