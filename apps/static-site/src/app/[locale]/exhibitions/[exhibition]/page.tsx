@@ -9,7 +9,6 @@ import type { Metadata } from "next";
 import { loadManifest } from "@/iiif";
 import { getValue } from "@iiif/helpers";
 import { getSiteName, getMetadata } from "@/helpers/metadata";
-import { title } from "process";
 
 export async function generateMetadata({
   params,
@@ -45,8 +44,7 @@ export const generateStaticParams = async () => {
 export default async function Exhibition({ params }: { params: { exhibition: string; locale: string } }) {
   unstable_setRequestLocale(params.locale);
   const manifestSlug = `manifests/${params.exhibition}`;
-  const meta = await import(`@repo/iiif/build/manifests/${params.exhibition}/meta.json`);
-  const manifest = await import(`@repo/iiif/build/manifests/${params.exhibition}/manifest.json`);
+  const { manifest, meta } = await loadManifest(manifestSlug);
   const viewObjectLinks = imageServiceLinks[manifestSlug as keyof typeof imageServiceLinks] || [];
 
   return (
