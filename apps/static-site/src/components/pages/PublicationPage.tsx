@@ -13,7 +13,7 @@ export interface PublicationPageProps {
 interface PublicationHeading {
   id: string;
   heading: string;
-  level: number
+  level: number;
 }
 
 export async function PublicationPage(props: PublicationPageProps) {
@@ -28,7 +28,7 @@ export async function PublicationPage(props: PublicationPageProps) {
 
   const t = await getTranslations();
 
-  const depth = props.publication.depth > 4 ? 4 : props.publication.depth < 1 ? 1 : props.publication.depth
+  const depth = props.publication.depth > 4 ? 4 : props.publication.depth < 1 ? 1 : props.publication.depth;
 
   return (
     <div>
@@ -50,21 +50,23 @@ export async function PublicationPage(props: PublicationPageProps) {
             <div className="cut-corners bg-black p-5 text-white">
               <h3 className="mb-4 text-center font-mono text-sm">{t("Table of contents")}</h3>
               <ul className="pl-4 font-mono">
-                {props.publication.headings.filter((heading: PublicationHeading) => heading.level <= depth).map((heading: PublicationHeading) => {
-                  const leftMargins: {
-                    [index: number]: string
-                  } = {
-                    1: "ml-0",
-                    2: "ml-4",
-                    3: "ml-8",
-                    4: "ml-12"
-                  }
-                  return (
-                    <li key={heading.id} className={`mb-3 list-disc text-sm underline ${leftMargins[heading.level]}`}>
-                      <a href={`#${heading.id}`}>{heading.heading}</a>
-                    </li>
-                  );
-                })}
+                {props.publication.headings
+                  .filter((heading: PublicationHeading) => heading.level <= depth)
+                  .map((heading: PublicationHeading) => {
+                    const leftMargins: {
+                      [index: number]: string;
+                    } = {
+                      1: "ml-0",
+                      2: "ml-4",
+                      3: "ml-8",
+                      4: "ml-12",
+                    };
+                    return (
+                      <li key={heading.id} className={`mb-3 list-disc text-sm underline ${leftMargins[heading.level]}`}>
+                        <a href={`#${heading.id}`}>{heading.heading}</a>
+                      </li>
+                    );
+                  })}
               </ul>
             </div>
           ) : null}

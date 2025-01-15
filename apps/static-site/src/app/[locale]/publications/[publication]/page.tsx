@@ -4,8 +4,10 @@ import { PublicationPage } from "@/components/pages/PublicationPage";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 import { getValue } from "@iiif/helpers";
-import { getSiteName, getMetadata } from "@/helpers/metadata";
+import { getSiteName, siteURL, fallbackImage } from "@/helpers/metadata";
 import { decodeAction } from "next/dist/server/app-render/entry-base";
+import { AuthRContext } from "react-iiif-vault";
+import { PUBLIC_DIR_MIDDLEWARE_CONFLICT } from "next/dist/lib/constants";
 
 export async function generateMetadata({
   params,
@@ -19,10 +21,45 @@ export async function generateMetadata({
   const publication = publicationInLanguage || allPublications.find((post) => post.id === params.publication);
   const pubTitle =
     publication && getValue(publication.title, { language: params.locale, fallbackLanguages: ["nl", "en"] });
-  const description = publication ? `${publication.author} ${publication.date}` : "";
   const siteName = await getSiteName();
-  const title = `${siteName} | ${t("Publications")} | ${pubTitle}`;
-  return getMetadata(params.locale, siteName, title, description);
+  const title = `${pubTitle} | ${siteName}`;
+  const author = {
+    name: (publication && publication.author) || "",
+  };
+  const pubDateStr = publication?.date;
+  const pubDate = pubDateStr && new Date(pubDateStr);
+  const pubDateFmt =
+    pubDate &&
+    pubDate.toLocaleString(params.locale, {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+
+  console.log("PUBLICATION", publication);
+
+  const publicationsURL = `${siteURL}/${params.locale}/publications`;
+  let metadata: Metadata = {
+    //metadataBase: TODO: use site root
+    authors: author,
+    title: title,
+    openGraph: {
+      authors: [author.name],
+      locale: params.locale,
+      publishedTime: pubDateFmt,
+      siteName: siteName,
+      title: title,
+      type: "article",
+      url: publication ? `${publicationsURL}/${publication.id}` : publicationsURL,
+      images: [
+        {
+          url: publication?.image || fallbackImage,
+          width: 1080,
+        },
+      ],
+    },
+  };
+  return metadata;
 }
 
 export default async function Publication({ params }: { params: { publication: string; locale: string } }) {

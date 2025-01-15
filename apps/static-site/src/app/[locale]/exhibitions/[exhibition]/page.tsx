@@ -6,9 +6,9 @@ import imageServiceLinks from "@repo/iiif/build/meta/image-service-links.json";
 import allExhibitions from "@repo/iiif/build/collections/exhibitions/collection.json";
 import { SlotContext } from "@/blocks/slot-context";
 import type { Metadata } from "next";
-import { loadManifest } from "@/iiif";
+import { loadManifest, loadManifestMeta } from "@/iiif";
 import { getValue } from "@iiif/helpers";
-import { getSiteName, getMetadata } from "@/helpers/metadata";
+import { getSiteName, siteURL, fallbackImage } from "@/helpers/metadata";
 
 export async function generateMetadata({
   params,
@@ -17,12 +17,33 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const t = await getTranslations();
   const manifestSlug = `manifests/${params.exhibition}`;
-  const { manifest } = await loadManifest(manifestSlug);
+  const meta = await loadManifestMeta(manifestSlug);
+  console.log("meta", meta);
   const siteName = await getSiteName();
-  const exTitle = getValue(manifest.label, { language: params.locale, fallbackLanguages: ["nl", "en"] });
-  const description = getValue(manifest.summary, { language: params.locale, fallbackLanguages: ["nl", "en"] });
-  const title = `${siteName} | ${t("Exhibitions")} | ${exTitle}`;
-  return getMetadata(params.locale, siteName, title, description);
+  const exTitle = getValue(meta.intlLabel, { language: params.locale, fallbackLanguages: ["nl", "en"] });
+  const description = getValue(meta.intlSummary, { language: params.locale, fallbackLanguages: ["nl", "en"] });
+  const title = `${exTitle} | ${siteName}`;
+  const objectURL = `${siteURL}/${params.locale}/objects/${params.exhibition}`;
+  let metadata: Metadata = {
+    //   //metadataBase: TODO: use site root
+    description: description,
+    title: title,
+    openGraph: {
+      locale: params.locale,
+      siteName: siteName,
+      title: title,
+      type: "website",
+      url: objectURL,
+      images: [
+        {
+          url: meta.thumbnail.id || fallbackImage,
+          width: meta.thumbnail.width,
+          height: meta.thumbnail.height,
+        },
+      ],
+    },
+  };
+  return metadata;
 }
 
 export const generateStaticParams = async () => {

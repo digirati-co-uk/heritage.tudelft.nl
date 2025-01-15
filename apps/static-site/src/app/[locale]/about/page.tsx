@@ -12,7 +12,7 @@ import { getSiteName, getMetadata } from "@/helpers/metadata";
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const t = await getTranslations();
   const siteName = await getSiteName();
-  const title = `${siteName} | ${t("About")}`;
+  const title = `${t("About")} | ${siteName}`;
   const description = t("aboutDesc");
   return getMetadata(params.locale, siteName, title, description);
 }

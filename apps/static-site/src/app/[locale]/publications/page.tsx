@@ -8,7 +8,7 @@ import { getSiteName, getMetadata } from "@/helpers/metadata";
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const t = await getTranslations();
   const siteName = await getSiteName();
-  const title = `${siteName} | ${t("Publications")}`;
+  const title = `${t("Publications")} | ${siteName}`;
   const description = t("publicationsDesc");
   return getMetadata(params.locale, siteName, title, description);
 }

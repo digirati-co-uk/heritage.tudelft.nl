@@ -6,7 +6,7 @@ import { ManifestLoader } from "@/app/provider";
 import related from "@repo/iiif/build/meta/related-objects.json";
 import type { Metadata } from "next";
 import { getValue } from "@iiif/helpers";
-import { getSiteName, getMetadata } from "@/helpers/metadata";
+import { getSiteName, siteURL, fallbackImage } from "@/helpers/metadata";
 
 export async function generateMetadata({
   params,
@@ -15,12 +15,33 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const t = await getTranslations();
   const manifestSlug = `manifests/${params.manifest}`;
-  const { manifest } = await loadManifest(manifestSlug);
-  const objTitle = getValue(manifest.label, { language: params.locale, fallbackLanguages: ["nl", "en"] });
-  const description = getValue(manifest.summary, { language: params.locale, fallbackLanguages: ["nl", "en"] });
+  const meta = await loadManifestMeta(manifestSlug);
+  console.log(meta);
+  const objTitle = getValue(meta.intlLabel, { language: params.locale, fallbackLanguages: ["nl", "en"] });
+  const description = getValue(meta.intlSummary, { language: params.locale, fallbackLanguages: ["nl", "en"] });
   const siteName = await getSiteName();
-  const title = `${siteName} | ${t("Collections")} | ${objTitle}`;
-  return getMetadata(params.locale, siteName, title, description);
+  const title = `${objTitle} | ${siteName}`;
+  const objectURL = `${siteURL}/${params.locale}/objects/${params.manifest}`;
+  let metadata: Metadata = {
+    //   //metadataBase: TODO: use site root
+    description: description,
+    title: title,
+    openGraph: {
+      locale: params.locale,
+      siteName: siteName,
+      title: title,
+      type: "website",
+      url: objectURL,
+      images: [
+        {
+          url: meta.thumbnail.id || fallbackImage,
+          width: meta.thumbnail.width,
+          height: meta.thumbnail.height,
+        },
+      ],
+    },
+  };
+  return metadata;
 }
 
 export default async function ManifestP({ params }: { params: { locale: string; manifest: string } }) {

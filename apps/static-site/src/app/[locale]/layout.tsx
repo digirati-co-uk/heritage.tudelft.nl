@@ -11,13 +11,13 @@ import { GlobalFooter } from "@/components/GlobalFooter";
 import { getSiteName, getMetadata } from "@/helpers/metadata";
 import { $ } from "bun";
 
-export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
-  const t = await getTranslations();
-  const siteName = await getSiteName();
-  const title = siteName;
-  const description = t("homeDesc");
-  return getMetadata(params.locale, siteName, title, description);
-}
+// export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+//   const t = await getTranslations();
+//   const siteName = await getSiteName();
+//   const title = siteName;
+//   const description = t("homeDesc");
+//   return getMetadata(params.locale, siteName, title, description);
+// }
 
 if (process.env.NODE_ENV !== "production") {
   // @ts-expect-error typescript can't resolve CSS
