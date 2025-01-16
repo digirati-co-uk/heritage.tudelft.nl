@@ -41,6 +41,7 @@ export async function generateMetadata({
     metadataBase: new URL(siteURL),
     authors: author,
     title: title,
+    description: null, // assume google will use the first paragraph
     openGraph: {
       authors: [author.name],
       locale: params.locale,
