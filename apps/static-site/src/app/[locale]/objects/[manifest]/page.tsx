@@ -16,14 +16,13 @@ export async function generateMetadata({
   const t = await getTranslations();
   const manifestSlug = `manifests/${params.manifest}`;
   const meta = await loadManifestMeta(manifestSlug);
-  console.log(meta);
   const objTitle = getValue(meta.intlLabel, { language: params.locale, fallbackLanguages: ["nl", "en"] });
   const description = getValue(meta.intlSummary, { language: params.locale, fallbackLanguages: ["nl", "en"] });
   const siteName = await getSiteName();
   const title = `${objTitle} | ${siteName}`;
   const objectURL = `${siteURL}/${params.locale}/objects/${params.manifest}`;
-  let metadata: Metadata = {
-    //   //metadataBase: TODO: use site root
+  return {
+    metadataBase: new URL(siteURL),
     description: description,
     title: title,
     openGraph: {
@@ -41,7 +40,6 @@ export async function generateMetadata({
       ],
     },
   };
-  return metadata;
 }
 
 export default async function ManifestP({ params }: { params: { locale: string; manifest: string } }) {

@@ -1,11 +1,11 @@
 import { CollectionPage } from "@/components/pages/CollectionPage";
-import { loadCollection, loadCollectionMeta } from "@/iiif";
+import { loadCollection } from "@/iiif";
 import { Page } from "@/components/Page";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 // import siteMap from "@repo/iiif/build/meta/sitemap.json";
 import { Metadata } from "next";
 import { getValue } from "@iiif/helpers";
-import { getSiteName, getMetadata } from "@/helpers/metadata";
+import { getSiteName, siteURL, fallbackImage } from "@/helpers/metadata";
 
 export async function generateMetadata({
   params,
@@ -14,12 +14,31 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const t = await getTranslations();
   const slug = `collections/${params.collection}`;
-  const meta = await loadCollectionMeta(slug);
+  const { collection } = await loadCollection(slug);
   const siteName = await getSiteName();
-  const collTitle = getValue(meta.intlLabel, { language: params.locale, fallbackLanguages: ["nl", "en"] });
-  const description = getValue(meta.intlSummary, { language: params.locale, fallbackLanguages: ["nl", "en"] });
+  const collTitle = getValue(collection.label, { language: params.locale, fallbackLanguages: ["nl", "en"] });
+  const description = getValue(collection.summary, { language: params.locale, fallbackLanguages: ["nl", "en"] });
   const title = `${collTitle} | ${siteName}`;
-  return getMetadata(params.locale, siteName, title, description);
+  const objectURL = `${siteURL}/${params.locale}/objects/${params.collection}`;
+
+  return {
+    metadataBase: new URL(siteURL),
+    description: description,
+    title: title,
+    openGraph: {
+      locale: params.locale,
+      siteName: siteName,
+      title: title,
+      type: "website",
+      url: objectURL,
+      images: [
+        {
+          url: fallbackImage,
+          width: 1080,
+        },
+      ],
+    },
+  };
 }
 
 export default async function Collection({ params }: { params: { collection: string; locale: string } }) {

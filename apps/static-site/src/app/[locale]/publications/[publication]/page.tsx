@@ -5,9 +5,6 @@ import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 import { getValue } from "@iiif/helpers";
 import { getSiteName, siteURL, fallbackImage } from "@/helpers/metadata";
-import { decodeAction } from "next/dist/server/app-render/entry-base";
-import { AuthRContext } from "react-iiif-vault";
-import { PUBLIC_DIR_MIDDLEWARE_CONFLICT } from "next/dist/lib/constants";
 
 export async function generateMetadata({
   params,
@@ -35,12 +32,9 @@ export async function generateMetadata({
       month: "long",
       day: "numeric",
     });
-
-  console.log("PUBLICATION", publication);
-
   const publicationsURL = `${siteURL}/${params.locale}/publications`;
-  let metadata: Metadata = {
-    //metadataBase: TODO: use site root
+  return {
+    metadataBase: new URL(siteURL),
     authors: author,
     title: title,
     openGraph: {
@@ -59,7 +53,6 @@ export async function generateMetadata({
       ],
     },
   };
-  return metadata;
 }
 
 export default async function Publication({ params }: { params: { publication: string; locale: string } }) {
