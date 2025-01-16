@@ -44,21 +44,22 @@ export async function generateMetadata({
   };
 }
 
-export const generateStaticParams = async () => {
-  const exhibitions = [];
-  for (const item of allExhibitions.items) {
-    const slug = item["hss:slug"].replace("manifests/", "");
-    exhibitions.push({
-      exhibition: slug,
-      lang: "en",
-    });
-    exhibitions.push({
-      exhibition: slug,
-      lang: "nl",
-    });
-  }
-  return exhibitions;
-};
+// no static rendering for now...
+// export const generateStaticParams = async () => {
+//   const exhibitions = [];
+//   for (const item of allExhibitions.items) {
+//     const slug = item["hss:slug"].replace("manifests/", "");
+//     exhibitions.push({
+//       exhibition: slug,
+//       lang: "en",
+//     });
+//     exhibitions.push({
+//       exhibition: slug,
+//       lang: "nl",
+//     });
+//   }
+//   return exhibitions;
+// };
 
 export default async function Exhibition({ params }: { params: { exhibition: string; locale: string } }) {
   unstable_setRequestLocale(params.locale);
