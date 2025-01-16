@@ -5,7 +5,7 @@ import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 // import siteMap from "@repo/iiif/build/meta/sitemap.json";
 import { Metadata } from "next";
 import { getValue } from "@iiif/helpers";
-import { getSiteName, siteURL, fallbackImage } from "@/helpers/metadata";
+import { getSiteName, siteURL, fallbackImage, makeTitle } from "@/helpers/metadata";
 
 export async function generateMetadata({
   params,
@@ -18,7 +18,7 @@ export async function generateMetadata({
   const siteName = await getSiteName();
   const collTitle = getValue(collection.label, { language: params.locale, fallbackLanguages: ["nl", "en"] });
   const description = getValue(collection.summary, { language: params.locale, fallbackLanguages: ["nl", "en"] });
-  const title = `${collTitle} | ${siteName}`;
+  const title = makeTitle([collTitle, siteName]);
   const objectURL = `${siteURL}/${params.locale}/objects/${params.collection}`;
 
   return {

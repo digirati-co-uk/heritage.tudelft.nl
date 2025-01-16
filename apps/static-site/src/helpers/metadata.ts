@@ -9,9 +9,20 @@ export async function getSiteName() {
   return `TU Delft ${t("Academic Heritage")}`;
 }
 
-export function getMetadata(locale: string, siteName: string, title: string, description: string): Metadata {
+// Removes any parts that have no value (i.e. collection title if label is "")
+export function makeTitle(parts: (string | undefined | null)[]) {
+  let partsArray: string[] = [];
+  for (const part of parts) {
+    if (part) {
+      partsArray.push(part);
+    }
+  }
+  return partsArray.join(" | ");
+}
+
+export function getBasicMetadata(locale: string, siteName: string, title: string, description: string): Metadata {
   return {
-    //metadataBase: TODO: add this using host
+    metadataBase: new URL(siteURL),
     title: title,
     description: description,
     openGraph: {

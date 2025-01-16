@@ -8,7 +8,7 @@ import { SlotContext } from "@/blocks/slot-context";
 import type { Metadata } from "next";
 import { loadManifest, loadManifestMeta } from "@/iiif";
 import { getValue } from "@iiif/helpers";
-import { getSiteName, siteURL, fallbackImage } from "@/helpers/metadata";
+import { getSiteName, siteURL, fallbackImage, makeTitle } from "@/helpers/metadata";
 
 export async function generateMetadata({
   params,
@@ -21,7 +21,7 @@ export async function generateMetadata({
   const siteName = await getSiteName();
   const exTitle = getValue(meta.intlLabel, { language: params.locale, fallbackLanguages: ["nl", "en"] });
   const description = getValue(meta.intlSummary, { language: params.locale, fallbackLanguages: ["nl", "en"] });
-  const title = `${exTitle} | ${siteName}`;
+  const title = makeTitle([exTitle, siteName]);
   const objectURL = `${siteURL}/${params.locale}/objects/${params.exhibition}`;
   return {
     metadataBase: new URL(siteURL),

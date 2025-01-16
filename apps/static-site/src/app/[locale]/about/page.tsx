@@ -6,15 +6,14 @@ import { Illustration } from "@/components/blocks/Illustration";
 import { useMDXComponent } from "next-contentlayer/hooks";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { PathParamsContext } from "next/dist/shared/lib/hooks-client-context.shared-runtime";
-import { getSiteName, getMetadata } from "@/helpers/metadata";
+import { getSiteName, getBasicMetadata, makeTitle } from "@/helpers/metadata";
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const t = await getTranslations();
   const siteName = await getSiteName();
-  const title = `${t("About")} | ${siteName}`;
+  const title = makeTitle([t("About"), siteName]);
   const description = t("aboutDesc");
-  return getMetadata(params.locale, siteName, title, description);
+  return getBasicMetadata(params.locale, siteName, title, description);
 }
 
 export default async function AboutPage({ params }: { params: { locale: string } }) {

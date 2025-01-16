@@ -4,7 +4,7 @@ import { PublicationPage } from "@/components/pages/PublicationPage";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 import { getValue } from "@iiif/helpers";
-import { getSiteName, siteURL, fallbackImage } from "@/helpers/metadata";
+import { getSiteName, siteURL, fallbackImage, makeTitle } from "@/helpers/metadata";
 
 export async function generateMetadata({
   params,
@@ -19,11 +19,13 @@ export async function generateMetadata({
   const pubTitle =
     publication && getValue(publication.title, { language: params.locale, fallbackLanguages: ["nl", "en"] });
   const siteName = await getSiteName();
-  const title = `${pubTitle} | ${siteName}`;
+  const title = makeTitle([pubTitle, siteName]);
   const author = {
-    name: (publication && publication.author) || "",
+    name:
+      (publication && getValue(publication.author, { language: params.locale, fallbackLanguages: ["nl", "en"] })) || "",
   };
-  const pubDateStr = publication?.date;
+  const pubDateStr =
+    publication && getValue(publication.date, { language: params.locale, fallbackLanguages: ["nl", "en"] });
   const pubDate = pubDateStr && new Date(pubDateStr);
   const pubDateFmt =
     pubDate &&
@@ -33,6 +35,8 @@ export async function generateMetadata({
       day: "numeric",
     });
   const publicationsURL = `${siteURL}/${params.locale}/publications`;
+  const image =
+    publication && getValue(publication.image, { language: params.locale, fallbackLanguages: ["nl", "en"] });
   return {
     metadataBase: new URL(siteURL),
     authors: author,
@@ -47,7 +51,7 @@ export async function generateMetadata({
       url: publication ? `${publicationsURL}/${publication.id}` : publicationsURL,
       images: [
         {
-          url: publication?.image || fallbackImage,
+          url: image || fallbackImage,
           width: 1080,
         },
       ],

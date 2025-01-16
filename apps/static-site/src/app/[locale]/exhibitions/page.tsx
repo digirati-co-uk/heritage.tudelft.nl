@@ -5,14 +5,14 @@ import { Slot } from "@/blocks/slot";
 import exhibitions from "@repo/iiif/build/collections/exhibitions/collection.json";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { getSiteName, getMetadata } from "@/helpers/metadata";
+import { getSiteName, getBasicMetadata, makeTitle } from "@/helpers/metadata";
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const t = await getTranslations();
   const siteName = await getSiteName();
-  const title = `${t("Exhibitions")} | ${siteName}`;
+  const title = makeTitle([t("Exhibitions"), siteName]);
   const description = t("exhibitionsDesc");
-  return getMetadata(params.locale, siteName, title, description);
+  return getBasicMetadata(params.locale, siteName, title, description);
 }
 
 export default function ExhibitionsPage({ params }: { params: { locale: string } }) {

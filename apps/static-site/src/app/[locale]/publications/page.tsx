@@ -3,14 +3,14 @@ import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import { PublicationListPage } from "@/components/pages/PublicationListPage";
 import { Page } from "@/components/Page";
 import { Metadata } from "next";
-import { getSiteName, getMetadata } from "@/helpers/metadata";
+import { getSiteName, getBasicMetadata, makeTitle } from "@/helpers/metadata";
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const t = await getTranslations();
   const siteName = await getSiteName();
-  const title = `${t("Publications")} | ${siteName}`;
+  const title = makeTitle([t("Publications"), siteName]);
   const description = t("publicationsDesc");
-  return getMetadata(params.locale, siteName, title, description);
+  return getBasicMetadata(params.locale, siteName, title, description);
 }
 
 export default async function PublicationsList({ params }: { params: { locale: string } }) {
