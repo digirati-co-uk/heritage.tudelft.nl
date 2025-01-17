@@ -28,6 +28,7 @@ const Publication = defineDocumentType(() => ({
   contentType: "mdx",
   fields: {
     title: { type: "string", required: true },
+    description: { type: "string", required: false },
     date: { type: "string", required: false },
     author: { type: "string", required: false },
     image: { type: "string", required: false },

@@ -12,28 +12,20 @@ export async function generateMetadata({
   params: { publication: string; locale: string };
 }): Promise<Metadata> {
   const t = await getTranslations();
+  const getValueParams = { language: params.locale, fallbackLanguages: ["nl", "en"] };
   const publicationInLanguage = allPublications.find(
     (post) => post.id === params.publication && post.lang === params.locale
   );
   const publication = publicationInLanguage || allPublications.find((post) => post.id === params.publication);
-  const pubTitle =
-    publication && getValue(publication.title, { language: params.locale, fallbackLanguages: ["nl", "en"] });
+  const pubTitle = publication && getValue(publication.title, getValueParams);
   const siteName = await getSiteName();
   const title = makeTitle([pubTitle, siteName]);
+  const description = publication && getValue(publication.description, getValueParams);
   const author = {
-    name:
-      (publication && getValue(publication.author, { language: params.locale, fallbackLanguages: ["nl", "en"] })) || "",
+    name: (publication && getValue(publication.author, getValueParams)) || "",
   };
-  const pubDateStr =
-    publication && getValue(publication.date, { language: params.locale, fallbackLanguages: ["nl", "en"] });
-  const pubDate = pubDateStr && new Date(pubDateStr);
-  const pubDateFmt =
-    pubDate &&
-    pubDate.toLocaleString(params.locale, {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
+  const pubDateStr = publication && getValue(publication.date, getValueParams);
+  const pubDate = pubDateStr && new Date(pubDateStr).toISOString();
   const publicationsURL = `${siteURL}/${params.locale}/publications`;
   const image =
     publication && getValue(publication.image, { language: params.locale, fallbackLanguages: ["nl", "en"] });
@@ -41,11 +33,11 @@ export async function generateMetadata({
     metadataBase: new URL(siteURL),
     authors: author,
     title: title,
-    description: null, // assume google will use the first paragraph
+    description: description,
     openGraph: {
       authors: [author.name],
       locale: params.locale,
-      publishedTime: pubDateFmt,
+      publishedTime: pubDate,
       siteName: siteName,
       title: title,
       type: "article",

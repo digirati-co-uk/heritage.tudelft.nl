@@ -30,9 +30,9 @@ export function getBasicMetadata(locale: string, siteName: string, title: string
       description: description,
       images: [
         {
-          url: "/logo/TUDelft_logo_rgb.png",
-          width: 1080,
-          height: 665,
+          url: "/metadata/default.jpg",
+          width: 800,
+          height: 800,
         },
       ],
       locale: locale,

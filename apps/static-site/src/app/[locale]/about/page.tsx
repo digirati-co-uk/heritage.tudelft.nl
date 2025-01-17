@@ -8,20 +8,25 @@ import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { getSiteName, getBasicMetadata, makeTitle } from "@/helpers/metadata";
 
+function getAboutPage({ params }: { params: { locale: string } }) {
+  const aboutPages = allPages.filter((page) => page.path === "/about");
+  const aboutPage = aboutPages.find((page) => page.lang === params.locale) || aboutPages[0];
+  if (!aboutPage) throw new Error(`No about page found for locale ${params.locale}`);
+  return aboutPage;
+}
+
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const t = await getTranslations();
   const siteName = await getSiteName();
-  const title = makeTitle([t("About"), siteName]);
-  const description = t("aboutDesc");
+  const aboutPage = getAboutPage({ params: params });
+  const aboutTitle = aboutPage.title || t("About");
+  const title = makeTitle([aboutTitle, siteName]);
+  const description = aboutPage.description || t("aboutDesc");
   return getBasicMetadata(params.locale, siteName, title, description);
 }
 
 export default async function AboutPage({ params }: { params: { locale: string } }) {
-  const aboutPages = allPages.filter((page) => page.path === "/about");
-  const aboutPage = aboutPages.find((page) => page.lang === params.locale) || aboutPages[0];
-
-  if (!aboutPage) throw new Error(`No about page found for locale ${params.locale}`);
-
+  const aboutPage = getAboutPage({ params: params });
   const MDXContent = useMDXComponent(aboutPage.body.code);
   const CustomSlot = (inner: any) => {
     return <Slot context={{ page: "about", locale: params.locale }} {...inner} />;
