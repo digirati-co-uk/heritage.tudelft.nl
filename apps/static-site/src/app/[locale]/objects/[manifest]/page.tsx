@@ -42,9 +42,16 @@ export async function generateMetadata({
   };
 }
 
-export default async function ManifestP({ params }: { params: { locale: string; manifest: string } }) {
+export default async function ManifestP({
+  params,
+  searchParams,
+}: {
+  params: { locale: string; manifest: string };
+  searchParams: { id: string };
+}) {
   unstable_setRequestLocale(params.locale);
   const t = await getTranslations();
+  const idNum = searchParams?.id ? parseInt(searchParams.id) : 0;
 
   const manifestSlug = `manifests/${params.manifest}`;
   const { manifest, meta } = await loadManifest(manifestSlug);
@@ -81,6 +88,7 @@ export default async function ManifestP({ params }: { params: { locale: string; 
           manifest={manifest}
           meta={meta}
           related={relatedSnippets}
+          initialCanvasIndex={Number.isNaN(idNum) ? 0 : idNum}
         />
       </ManifestLoader>
     </Page>
