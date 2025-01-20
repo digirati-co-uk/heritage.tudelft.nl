@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import { allPages } from ".contentlayer/generated";
 
 export const siteURL = "https://heritage.tudelft.nl";
 export const fallbackImage = "/logo/TUDelft_logo_rgb.png";
@@ -20,7 +21,15 @@ export function makeTitle(parts: (string | undefined | null)[]) {
   return partsArray.join(" | ");
 }
 
-export function getBasicMetadata(locale: string, siteName: string, title: string, description: string): Metadata {
+export const defaultImage = "/metadata/default.jpg";
+
+export function getBasicMetadata(
+  locale: string,
+  siteName: string,
+  title: string,
+  description: string,
+  image: string | null | undefined
+): Metadata {
   return {
     metadataBase: new URL(siteURL),
     title: title,
@@ -30,7 +39,7 @@ export function getBasicMetadata(locale: string, siteName: string, title: string
       description: description,
       images: [
         {
-          url: "/metadata/default.jpg",
+          url: image || defaultImage,
           width: 800,
           height: 800,
         },
@@ -41,4 +50,11 @@ export function getBasicMetadata(locale: string, siteName: string, title: string
       url: "https://heritage.tudelft.nl/",
     },
   };
+}
+
+export function getMdx({ params }: { params: { pageName: string; path: string; locale: string } }) {
+  const pages = allPages.filter((page) => page.path === params.path);
+  const page = pages.find((p) => p.lang === params.locale) || pages[0];
+  if (!page) throw new Error(`No ${params.pageName} page found for locale ${params.locale}`);
+  return page;
 }

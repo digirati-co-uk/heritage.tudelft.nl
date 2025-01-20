@@ -2,15 +2,17 @@ import { Page } from "@/components/Page";
 import { Slot } from "@/blocks/slot";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import { CollectionListing } from "@/components/pages/CollectionListing";
-import { getSiteName, getBasicMetadata, makeTitle } from "@/helpers/metadata";
+import { getSiteName, getBasicMetadata, makeTitle, getMdx } from "@/helpers/metadata";
 import { Metadata } from "next";
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const t = await getTranslations();
   const siteName = await getSiteName();
-  const title = makeTitle([t("Collections"), siteName]);
-  const description = t("collectionsDesc");
-  return getBasicMetadata(params.locale, siteName, title, description);
+  const page = getMdx({ params: { pageName: "Collections", path: "/collections", locale: params.locale } });
+  const title = makeTitle([page.title || t("Collections"), siteName]);
+  const description = page.description || t("defaultDesc");
+  const image = page.image;
+  return getBasicMetadata(params.locale, siteName, title, description, image);
 }
 
 export default async function Collections(props: { params: { locale: string } }) {

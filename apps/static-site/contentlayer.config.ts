@@ -11,6 +11,7 @@ const Pages = defineDocumentType(() => ({
     title: { type: "string", required: true },
     path: { type: "string", required: true },
     description: { type: "string", required: false },
+    image: { type: "string", required: false },
   },
   computedFields: {
     lang: {

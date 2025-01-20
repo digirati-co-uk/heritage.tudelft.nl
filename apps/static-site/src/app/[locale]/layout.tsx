@@ -8,15 +8,17 @@ import { GlobalHeader } from "@/components/GlobalHeader";
 import localFont from "next/font/local";
 import { SlotContext } from "@/blocks/slot-context";
 import { GlobalFooter } from "@/components/GlobalFooter";
-import { getSiteName, getBasicMetadata } from "@/helpers/metadata";
+import { getSiteName, getBasicMetadata, makeTitle, getMdx } from "@/helpers/metadata";
 import { $ } from "bun";
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const t = await getTranslations();
   const siteName = await getSiteName();
-  const title = siteName;
-  const description = t("homeDesc");
-  return getBasicMetadata(params.locale, siteName, title, description);
+  const page = getMdx({ params: { pageName: "Home", path: "/", locale: params.locale } });
+  const title = makeTitle([page.title, siteName]);
+  const description = page.description || t("defaultDesc");
+  const image = page.image;
+  return getBasicMetadata(params.locale, siteName, title, description, image);
 }
 
 if (process.env.NODE_ENV !== "production") {
