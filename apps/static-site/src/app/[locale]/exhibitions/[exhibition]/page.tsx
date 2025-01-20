@@ -8,7 +8,7 @@ import { SlotContext } from "@/blocks/slot-context";
 import type { Metadata } from "next";
 import { loadManifest, loadManifestMeta } from "@/iiif";
 import { getValue } from "@iiif/helpers";
-import { getSiteName, siteURL, fallbackImage, makeTitle } from "@/helpers/metadata";
+import { getSiteName, baseURL, defaultImage, makeTitle } from "@/helpers/metadata";
 
 export async function generateMetadata({
   params,
@@ -22,9 +22,9 @@ export async function generateMetadata({
   const exTitle = getValue(meta.intlLabel, { language: params.locale, fallbackLanguages: ["nl", "en"] });
   const description = getValue(meta.intlSummary, { language: params.locale, fallbackLanguages: ["nl", "en"] });
   const title = makeTitle([exTitle, siteName]);
-  const objectURL = `${siteURL}/${params.locale}/objects/${params.exhibition}`;
+  const url = `/exhibitions/${params.exhibition}`;
   return {
-    metadataBase: new URL(siteURL),
+    metadataBase: new URL(baseURL),
     description: description,
     title: title,
     openGraph: {
@@ -32,10 +32,10 @@ export async function generateMetadata({
       siteName: siteName,
       title: title,
       type: "website",
-      url: objectURL,
+      url: url,
       images: [
         {
-          url: meta.thumbnail.id || fallbackImage,
+          url: meta.thumbnail.id || defaultImage,
           width: meta.thumbnail.width,
           height: meta.thumbnail.height,
         },

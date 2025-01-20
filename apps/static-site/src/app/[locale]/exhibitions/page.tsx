@@ -10,11 +10,19 @@ import { getSiteName, getBasicMetadata, makeTitle, getMdx } from "@/helpers/meta
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const t = await getTranslations();
   const siteName = await getSiteName();
-  const page = getMdx({ params: { pageName: "Exhibitions", path: "/exhibitions", locale: params.locale } });
+  const path = "/exhibitions";
+  const page = getMdx({ params: { pageName: "Exhibitions", path: path, locale: params.locale } });
   const title = makeTitle([page.title || t("Exhibitions"), siteName]);
   const description = page.description || t("defaultDesc");
   const image = page.image;
-  return getBasicMetadata(params.locale, siteName, title, description, image);
+  return getBasicMetadata({
+    locale: params.locale,
+    siteName: siteName,
+    title: title,
+    description: description,
+    image: image,
+    path: path,
+  });
 }
 
 export default function ExhibitionsPage({ params }: { params: { locale: string } }) {

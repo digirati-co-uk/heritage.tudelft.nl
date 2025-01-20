@@ -4,7 +4,7 @@ import { PublicationPage } from "@/components/pages/PublicationPage";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 import { getValue } from "@iiif/helpers";
-import { getSiteName, siteURL, fallbackImage, makeTitle } from "@/helpers/metadata";
+import { getSiteName, baseURL, defaultImage, makeTitle } from "@/helpers/metadata";
 
 export async function generateMetadata({
   params,
@@ -26,11 +26,11 @@ export async function generateMetadata({
   };
   const pubDateStr = publication && getValue(publication.date, getValueParams);
   const pubDate = pubDateStr && new Date(pubDateStr).toISOString();
-  const publicationsURL = `${siteURL}/${params.locale}/publications`;
+  const publicationsURL = `/publications`;
   const image =
     publication && getValue(publication.image, { language: params.locale, fallbackLanguages: ["nl", "en"] });
   return {
-    metadataBase: new URL(siteURL),
+    metadataBase: new URL(baseURL),
     authors: author,
     title: title,
     description: description,
@@ -44,7 +44,7 @@ export async function generateMetadata({
       url: publication ? `${publicationsURL}/${publication.id}` : publicationsURL,
       images: [
         {
-          url: image || fallbackImage,
+          url: image || defaultImage,
           width: 1080,
         },
       ],

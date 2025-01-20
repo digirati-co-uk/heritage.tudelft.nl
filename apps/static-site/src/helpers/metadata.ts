@@ -2,8 +2,7 @@ import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { allPages } from ".contentlayer/generated";
 
-export const siteURL = "https://heritage.tudelft.nl";
-export const fallbackImage = "/logo/TUDelft_logo_rgb.png";
+export const baseURL = process.env["DEPLOY_PRIME_URL"] || "http://localhost:3000";
 
 export async function getSiteName() {
   const t = await getTranslations();
@@ -23,31 +22,34 @@ export function makeTitle(parts: (string | undefined | null)[]) {
 
 export const defaultImage = "/metadata/default.jpg";
 
-export function getBasicMetadata(
-  locale: string,
-  siteName: string,
-  title: string,
-  description: string,
-  image: string | null | undefined
-): Metadata {
+type GetBasicMetadataProps = {
+  locale: string;
+  siteName: string;
+  title: string;
+  description: string;
+  image: string | null | undefined;
+  path: string;
+};
+
+export function getBasicMetadata(params: GetBasicMetadataProps): Metadata {
   return {
-    metadataBase: new URL(siteURL),
-    title: title,
-    description: description,
+    metadataBase: new URL(baseURL),
+    title: params.title,
+    description: params.description,
     openGraph: {
-      title: title,
-      description: description,
+      title: params.title,
+      description: params.description,
       images: [
         {
-          url: image || defaultImage,
+          url: params.image || defaultImage,
           width: 800,
           height: 800,
         },
       ],
-      locale: locale,
-      siteName: siteName,
+      locale: params.locale,
+      siteName: params.siteName,
       type: "website",
-      url: "https://heritage.tudelft.nl/",
+      url: `${params.locale}${params.path}`,
     },
   };
 }

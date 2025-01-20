@@ -8,11 +8,19 @@ import { Metadata } from "next";
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const t = await getTranslations();
   const siteName = await getSiteName();
-  const page = getMdx({ params: { pageName: "Collections", path: "/collections", locale: params.locale } });
+  const path = "/collections";
+  const page = getMdx({ params: { pageName: "Collections", path: path, locale: params.locale } });
   const title = makeTitle([page.title || t("Collections"), siteName]);
   const description = page.description || t("defaultDesc");
   const image = page.image;
-  return getBasicMetadata(params.locale, siteName, title, description, image);
+  return getBasicMetadata({
+    locale: params.locale,
+    siteName: siteName,
+    title: title,
+    description: description,
+    image: image,
+    path: path,
+  });
 }
 
 export default async function Collections(props: { params: { locale: string } }) {

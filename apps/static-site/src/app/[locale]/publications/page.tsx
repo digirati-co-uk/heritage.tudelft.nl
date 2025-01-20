@@ -8,12 +8,19 @@ import { getSiteName, getBasicMetadata, makeTitle, getMdx } from "@/helpers/meta
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const t = await getTranslations();
   const siteName = await getSiteName();
-  const page = getMdx({ params: { pageName: "Publications", path: "/publications", locale: params.locale } });
+  const path = "/publications";
+  const page = getMdx({ params: { pageName: "Publications", path: path, locale: params.locale } });
   const title = makeTitle([page.title || t("Publications"), siteName]);
   const description = page.description || t("defaultDesc");
   const image = page.image;
-
-  return getBasicMetadata(params.locale, siteName, title, description, image);
+  return getBasicMetadata({
+    locale: params.locale,
+    siteName: siteName,
+    title: title,
+    description: description,
+    image: image,
+    path: path,
+  });
 }
 
 export default async function PublicationsList({ params }: { params: { locale: string } }) {
