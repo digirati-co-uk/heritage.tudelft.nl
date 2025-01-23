@@ -8,7 +8,7 @@ import { SlotContext } from "@/blocks/slot-context";
 import type { Metadata } from "next";
 import { loadManifest, loadManifestMeta } from "@/iiif";
 import { getValue } from "@iiif/helpers";
-import { getSiteName, baseURL, defaultImage, makeTitle } from "@/helpers/metadata";
+import { getSiteName, baseURL, makeTitle, getDefaultMetaMdx } from "@/helpers/metadata";
 
 export async function generateMetadata({
   params,
@@ -16,11 +16,14 @@ export async function generateMetadata({
   params: { exhibition: string; locale: string };
 }): Promise<Metadata> {
   const t = await getTranslations();
+  const defaultMeta = getDefaultMetaMdx({ params: { locale: params.locale } });
   const manifestSlug = `manifests/${params.exhibition}`;
   const meta = await loadManifestMeta(manifestSlug);
   const siteName = await getSiteName();
-  const exTitle = getValue(meta.intlLabel, { language: params.locale, fallbackLanguages: ["nl", "en"] });
-  const description = getValue(meta.intlSummary, { language: params.locale, fallbackLanguages: ["nl", "en"] });
+  const exTitle =
+    getValue(meta.intlLabel, { language: params.locale, fallbackLanguages: ["nl", "en"] }) ?? defaultMeta.title;
+  const description =
+    getValue(meta.intlSummary, { language: params.locale, fallbackLanguages: ["nl", "en"] }) ?? defaultMeta.description;
   const title = makeTitle([exTitle, siteName]);
   const url = `/exhibitions/${params.exhibition}`;
   return {
@@ -35,9 +38,9 @@ export async function generateMetadata({
       url: url,
       images: [
         {
-          url: meta.thumbnail.id || defaultImage,
-          width: meta.thumbnail.width,
-          height: meta.thumbnail.height,
+          url: meta.thumbnail.id ?? defaultMeta.image ?? "",
+          width: meta.thumbnail ? meta.thumbnail.width : defaultMeta.imageWidth,
+          height: meta.thumbnail ? meta.thumbnail.height : defaultMeta.imageHeight,
         },
       ],
     },
