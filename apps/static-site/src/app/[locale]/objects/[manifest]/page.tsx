@@ -6,7 +6,7 @@ import { ManifestLoader } from "@/app/provider";
 import related from "@repo/iiif/build/meta/related-objects.json";
 import type { Metadata } from "next";
 import { getValue } from "@iiif/helpers";
-import { getSiteName, baseURL, defaultImage, makeTitle } from "@/helpers/metadata";
+import { getSiteName, baseURL, makeTitle, getDefaultMetaMdx } from "@/helpers/metadata";
 
 export async function generateMetadata({
   params,
@@ -14,10 +14,13 @@ export async function generateMetadata({
   params: { manifest: string; locale: string };
 }): Promise<Metadata> {
   const t = await getTranslations();
+  const defaultMeta = getDefaultMetaMdx({ params: { locale: params.locale } });
   const manifestSlug = `manifests/${params.manifest}`;
   const meta = await loadManifestMeta(manifestSlug);
-  const objTitle = getValue(meta.intlLabel, { language: params.locale, fallbackLanguages: ["nl", "en"] });
-  const description = getValue(meta.intlSummary, { language: params.locale, fallbackLanguages: ["nl", "en"] });
+  const objTitle =
+    getValue(meta.intlLabel, { language: params.locale, fallbackLanguages: ["nl", "en"] }) ?? defaultMeta.title;
+  const description =
+    getValue(meta.intlSummary, { language: params.locale, fallbackLanguages: ["nl", "en"] }) ?? defaultMeta.description;
   const siteName = await getSiteName();
   const title = makeTitle([objTitle, siteName]);
   const url = `/objects/${params.manifest}`;
@@ -33,9 +36,9 @@ export async function generateMetadata({
       url: url,
       images: [
         {
-          url: meta.thumbnail.id || defaultImage,
-          width: meta.thumbnail.width,
-          height: meta.thumbnail.height,
+          url: meta.thumbnail.id ?? defaultMeta.image ?? "",
+          width: meta.thumbnail ? meta.thumbnail.width : defaultMeta.imageWidth,
+          height: meta.thumbnail ? meta.thumbnail.height : defaultMeta.imageHeight,
         },
       ],
     },

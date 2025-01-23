@@ -8,7 +8,7 @@ import { GlobalHeader } from "@/components/GlobalHeader";
 import localFont from "next/font/local";
 import { SlotContext } from "@/blocks/slot-context";
 import { GlobalFooter } from "@/components/GlobalFooter";
-import { getSiteName, getBasicMetadata, makeTitle, getMdx } from "@/helpers/metadata";
+import { getSiteName, getBasicMetadata, getMdx } from "@/helpers/metadata";
 import { $ } from "bun";
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
@@ -16,15 +16,18 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   const siteName = await getSiteName();
   const path = "/";
   const page = getMdx({ params: { pageName: "Home", path: path, locale: params.locale } });
-  const title = makeTitle([page.title, siteName]);
-  const description = page.description || t("defaultDesc");
-  const image = page.image;
+  const title = page.title; //n.b. unlike other pages, the homepage does not append "| TU Delft Academic Heritage" to the title.
+  const description = page.description;
   return getBasicMetadata({
     locale: params.locale,
     siteName: siteName,
     title: title,
     description: description,
-    image: image,
+    image: {
+      url: page.image,
+      width: page.imageWidth,
+      height: page.imageHeight,
+    },
     path: path,
   });
 }
