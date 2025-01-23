@@ -5,7 +5,7 @@ import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 // import siteMap from "@repo/iiif/build/meta/sitemap.json";
 import { Metadata } from "next";
 import { getValue } from "@iiif/helpers";
-import { getSiteName, baseURL, makeTitle, getDefaultMetaMdx } from "@/helpers/metadata";
+import { baseURL, makeTitle, getDefaultMetaMdx } from "@/helpers/metadata";
 
 export async function generateMetadata({
   params,
@@ -16,13 +16,11 @@ export async function generateMetadata({
   const slug = `collections/${params.collection}`;
   const { collection } = await loadCollection(slug);
   const defaultMeta = getDefaultMetaMdx({ params: { locale: params.locale } });
-  const siteName = await getSiteName();
-  const collTitle =
-    getValue(collection.label, { language: params.locale, fallbackLanguages: ["nl", "en"] }) ?? defaultMeta.title;
+  const collTitle = getValue(collection.label, { language: params.locale, fallbackLanguages: ["nl", "en"] });
   const description =
     getValue(collection.summary, { language: params.locale, fallbackLanguages: ["nl", "en"] }) ??
     defaultMeta.description;
-  const title = makeTitle([collTitle, siteName]);
+  const title = makeTitle([collTitle, defaultMeta.title]);
   const url = `/collections/${params.collection}`;
   // this page currently uses the default meta image as a 'collection image' is not available.
   return {
@@ -31,7 +29,7 @@ export async function generateMetadata({
     title: title,
     openGraph: {
       locale: params.locale,
-      siteName: siteName,
+      siteName: defaultMeta.title,
       title: title,
       type: "website",
       url: url,

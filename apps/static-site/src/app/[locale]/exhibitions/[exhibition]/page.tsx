@@ -8,7 +8,7 @@ import { SlotContext } from "@/blocks/slot-context";
 import type { Metadata } from "next";
 import { loadManifest, loadManifestMeta } from "@/iiif";
 import { getValue } from "@iiif/helpers";
-import { getSiteName, baseURL, makeTitle, getDefaultMetaMdx } from "@/helpers/metadata";
+import { baseURL, makeTitle, getDefaultMetaMdx } from "@/helpers/metadata";
 
 export async function generateMetadata({
   params,
@@ -19,12 +19,10 @@ export async function generateMetadata({
   const defaultMeta = getDefaultMetaMdx({ params: { locale: params.locale } });
   const manifestSlug = `manifests/${params.exhibition}`;
   const meta = await loadManifestMeta(manifestSlug);
-  const siteName = await getSiteName();
-  const exTitle =
-    getValue(meta.intlLabel, { language: params.locale, fallbackLanguages: ["nl", "en"] }) ?? defaultMeta.title;
+  const exTitle = getValue(meta.intlLabel, { language: params.locale, fallbackLanguages: ["nl", "en"] });
   const description =
     getValue(meta.intlSummary, { language: params.locale, fallbackLanguages: ["nl", "en"] }) ?? defaultMeta.description;
-  const title = makeTitle([exTitle, siteName]);
+  const title = makeTitle([exTitle, defaultMeta.title]);
   const url = `/exhibitions/${params.exhibition}`;
   return {
     metadataBase: new URL(baseURL),
@@ -32,7 +30,7 @@ export async function generateMetadata({
     title: title,
     openGraph: {
       locale: params.locale,
-      siteName: siteName,
+      siteName: defaultMeta.title,
       title: title,
       type: "website",
       url: url,
