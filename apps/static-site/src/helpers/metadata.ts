@@ -4,7 +4,7 @@ import { allPages } from ".contentlayer/generated";
 import { T } from "@iiif/helpers/dist/vault-actions-FZxiP2q-";
 import { U } from "react-iiif-vault/dist/useRenderingStrategy-2EaRC2Nc";
 
-export const baseURL = process.env["DEPLOY_PRIME_URL"] || "http://localhost:3000";
+export const baseURL = process.env["URL"] ?? "http://localhost:3000";
 
 // Removes any parts that have no value (i.e. collection title if label is "")
 export function makeTitle(parts: (string | undefined | null)[]) {
