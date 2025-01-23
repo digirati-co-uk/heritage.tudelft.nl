@@ -6,11 +6,6 @@ import { U } from "react-iiif-vault/dist/useRenderingStrategy-2EaRC2Nc";
 
 export const baseURL = process.env["DEPLOY_PRIME_URL"] || "http://localhost:3000";
 
-export async function getSiteName() {
-  const t = await getTranslations();
-  return t("TU Delft Academic Heritage");
-}
-
 // Removes any parts that have no value (i.e. collection title if label is "")
 export function makeTitle(parts: (string | undefined | null)[]) {
   let partsArray: string[] = [];

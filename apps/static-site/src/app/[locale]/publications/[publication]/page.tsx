@@ -4,7 +4,7 @@ import { PublicationPage } from "@/components/pages/PublicationPage";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 import { getValue } from "@iiif/helpers";
-import { getSiteName, baseURL, makeTitle, getDefaultMetaMdx } from "@/helpers/metadata";
+import { baseURL, makeTitle, getDefaultMetaMdx } from "@/helpers/metadata";
 
 export async function generateMetadata({
   params,
@@ -18,9 +18,8 @@ export async function generateMetadata({
     (post) => post.id === params.publication && post.lang === params.locale
   );
   const publication = publicationInLanguage || allPublications.find((post) => post.id === params.publication);
-  const pubTitle = (publication && getValue(publication.title, getValueParams)) ?? defaultMeta.title;
-  const siteName = await getSiteName();
-  const title = makeTitle([pubTitle, siteName]);
+  const pubTitle = publication && getValue(publication.title, getValueParams);
+  const title = makeTitle([pubTitle, defaultMeta.title]);
   const description = (publication && getValue(publication.description, getValueParams)) ?? defaultMeta.description;
   const author = {
     name: (publication && getValue(publication.author, getValueParams)) || "",
@@ -38,7 +37,7 @@ export async function generateMetadata({
       authors: [author.name],
       locale: params.locale,
       publishedTime: pubDate,
-      siteName: siteName,
+      siteName: defaultMeta.title,
       title: title,
       type: "article",
       url: publication ? `${publicationsURL}/${publication.id}` : publicationsURL,

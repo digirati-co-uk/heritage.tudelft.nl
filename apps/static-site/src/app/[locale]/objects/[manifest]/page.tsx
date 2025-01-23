@@ -6,7 +6,7 @@ import { ManifestLoader } from "@/app/provider";
 import related from "@repo/iiif/build/meta/related-objects.json";
 import type { Metadata } from "next";
 import { getValue } from "@iiif/helpers";
-import { getSiteName, baseURL, makeTitle, getDefaultMetaMdx } from "@/helpers/metadata";
+import { baseURL, makeTitle, getDefaultMetaMdx } from "@/helpers/metadata";
 
 export async function generateMetadata({
   params,
@@ -17,12 +17,10 @@ export async function generateMetadata({
   const defaultMeta = getDefaultMetaMdx({ params: { locale: params.locale } });
   const manifestSlug = `manifests/${params.manifest}`;
   const meta = await loadManifestMeta(manifestSlug);
-  const objTitle =
-    getValue(meta.intlLabel, { language: params.locale, fallbackLanguages: ["nl", "en"] }) ?? defaultMeta.title;
+  const objTitle = getValue(meta.intlLabel, { language: params.locale, fallbackLanguages: ["nl", "en"] });
   const description =
     getValue(meta.intlSummary, { language: params.locale, fallbackLanguages: ["nl", "en"] }) ?? defaultMeta.description;
-  const siteName = await getSiteName();
-  const title = makeTitle([objTitle, siteName]);
+  const title = makeTitle([objTitle, defaultMeta.title]);
   const url = `/objects/${params.manifest}`;
   return {
     metadataBase: new URL(baseURL),
@@ -30,7 +28,7 @@ export async function generateMetadata({
     title: title,
     openGraph: {
       locale: params.locale,
-      siteName: siteName,
+      siteName: defaultMeta.title,
       title: title,
       type: "website",
       url: url,

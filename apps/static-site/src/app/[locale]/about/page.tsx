@@ -5,19 +5,18 @@ import { Illustration } from "@/components/blocks/Illustration";
 import { useMDXComponent } from "next-contentlayer/hooks";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { getSiteName, getBasicMetadata, makeTitle, getMdx, getDefaultMetaMdx } from "@/helpers/metadata";
+import { getBasicMetadata, makeTitle, getMdx, getDefaultMetaMdx } from "@/helpers/metadata";
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const t = await getTranslations();
-  const siteName = await getSiteName();
   const path = "/about";
   const defaultMeta = getDefaultMetaMdx({ params: { locale: params.locale } });
   const page = getMdx({ params: { pageName: "About", path: path, locale: params.locale } });
-  const title = makeTitle([page.title ?? defaultMeta.title, siteName]);
+  const title = makeTitle([page.title, defaultMeta.title]);
   const description = page.description ?? defaultMeta.description;
   return getBasicMetadata({
     locale: params.locale,
-    siteName: siteName,
+    siteName: defaultMeta.title,
     title: title,
     description: description,
     image: {
