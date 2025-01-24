@@ -6,6 +6,7 @@ import imageServiceLinks from "@repo/iiif/build/meta/image-service-links.json";
 import allExhibitions from "@repo/iiif/build/collections/exhibitions/collection.json";
 import { SlotContext } from "@/blocks/slot-context";
 import { loadManifest } from "@/iiif";
+import { useState } from "react";
 
 export const generateStaticParams = async () => {
   const exhibitions = [];
@@ -23,14 +24,22 @@ export const generateStaticParams = async () => {
   return exhibitions;
 };
 
-export default async function Exhibition({ params }: { params: { exhibition: string; locale: string } }) {
+export default async function Exhibition({
+  params,
+  searchParams,
+}: {
+  params: { exhibition: string; locale: string };
+  searchParams: { toc: string };
+}) {
   unstable_setRequestLocale(params.locale);
   const manifestSlug = `manifests/${params.exhibition}`;
   const { manifest, meta } = await loadManifest(manifestSlug);
   const viewObjectLinks = imageServiceLinks[manifestSlug as keyof typeof imageServiceLinks] || [];
+  const toc = searchParams.toc;
 
   return (
     <Page>
+      {toc && <div className="fixed mx-auto my-auto border">I AM THE MODAL</div>}
       <SlotContext name="exhibition" value={params.exhibition}>
         <ManifestLoader manifest={{ ...manifest }}>
           <ExhibitionPage
@@ -39,6 +48,7 @@ export default async function Exhibition({ params }: { params: { exhibition: str
             slug={params.exhibition}
             viewObjectLinks={viewObjectLinks}
             locale={params.locale}
+            toc={toc}
           />
         </ManifestLoader>
       </SlotContext>

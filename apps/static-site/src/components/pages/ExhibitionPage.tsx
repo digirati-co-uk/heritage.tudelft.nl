@@ -6,7 +6,7 @@ import { InfoBlock } from "../exhibitions/InfoBlock";
 import { ImageBlock } from "../exhibitions/ImageBlock";
 import { MediaBlock } from "../exhibitions/MediaBlock";
 import { Slot } from "@/blocks/slot";
-import { BottomBar } from "../toc/BottomBar";
+import { TOCBar } from "../exhibitions/TOCBar";
 
 export interface ExhibitionPageProps {
   locale: string;
@@ -14,6 +14,7 @@ export interface ExhibitionPageProps {
   meta: {};
   slug: string;
   viewObjectLinks: Array<{ service: string; slug: string; canvasId: string; targetCanvasId: string }>;
+  toc?: string;
 }
 
 export async function ExhibitionPage(props: ExhibitionPageProps) {
@@ -52,11 +53,10 @@ export async function ExhibitionPage(props: ExhibitionPageProps) {
 
           return null;
         })}
+
+        <TOCBar manifest={props.manifest} toc={props.toc} />
       </div>
-
-      <Slot name="exhibition" context={{ locale: props.locale, exhibition: props.slug }} />
-
-      <BottomBar manifest={props.manifest} />
+      {/* <Slot name="exhibition" context={{ locale: props.locale, exhibition: props.slug }} /> */}
     </>
   );
 }

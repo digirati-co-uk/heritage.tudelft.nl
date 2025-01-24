@@ -30,8 +30,9 @@ function MediaBlockInner(props: MediaBlockProps) {
 
   return (
     <div className={twMerge("cut-corners bg-black text-white", className)}>
+      {" "}
+      LOOK AT ME
       <img className="h-full w-full object-cover" src={thumbnail?.id} alt="" onClick={() => setIsOpen(true)} />
-
       <Dialog className="relative z-50" open={isOpen} onClose={() => setIsOpen(false)}>
         <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
         <div className="fixed inset-0 flex h-screen w-screen items-center p-4">
