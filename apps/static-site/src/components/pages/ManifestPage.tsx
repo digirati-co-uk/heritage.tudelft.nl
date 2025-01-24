@@ -34,16 +34,24 @@ interface ManifestPageProps {
     relatedObjects: string;
     partOfCollections: string;
   };
+
+  initialCanvasIndex: number;
 }
 
 const runtimeOptions = { maxOverZoom: 2 };
 
-export function ManifestPage({ related, manifest, meta, content }: ManifestPageProps) {
-  const { currentSequenceIndex } = useSimpleViewer();
+export function ManifestPage({ related, manifest, meta, content, initialCanvasIndex }: ManifestPageProps) {
+  const context = useSimpleViewer();
+  const { currentSequenceIndex } = context;
+  const previousSeqIndex = useRef(currentSequenceIndex);
 
   const atlas = useRef<Preset>();
-
   useEffect(() => {
+    if (currentSequenceIndex == previousSeqIndex.current) {
+      context.setCurrentCanvasIndex(initialCanvasIndex);
+    } else {
+      context.setCurrentCanvasIndex(currentSequenceIndex);
+    }
     if (atlas.current) {
       setTimeout(() => atlas.current?.runtime.world.goHome(true), 5);
     }

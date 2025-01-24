@@ -13,10 +13,13 @@ extract(
     if (!resource) return false;
 
     const label = resource.label;
+    const summary = resource.summary;
 
     return {
       meta: {
         label: getValue(label),
+        intlLabel: label,
+        intlSummary: summary
       },
     };
   }
