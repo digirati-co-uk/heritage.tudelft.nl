@@ -8,7 +8,7 @@ import { SlotContext } from "@/blocks/slot-context";
 import type { Metadata } from "next";
 import { loadManifest, loadManifestMeta } from "@/iiif";
 import { getValue } from "@iiif/helpers";
-import { getSiteName, siteURL, fallbackImage, makeTitle } from "@/helpers/metadata";
+import { baseURL, makeTitle, getDefaultMetaMdx } from "@/helpers/metadata";
 
 export async function generateMetadata({
   params,
@@ -16,28 +16,29 @@ export async function generateMetadata({
   params: { exhibition: string; locale: string };
 }): Promise<Metadata> {
   const t = await getTranslations();
+  const defaultMeta = getDefaultMetaMdx({ params: { locale: params.locale } });
   const manifestSlug = `manifests/${params.exhibition}`;
   const meta = await loadManifestMeta(manifestSlug);
-  const siteName = await getSiteName();
   const exTitle = getValue(meta.intlLabel, { language: params.locale, fallbackLanguages: ["nl", "en"] });
-  const description = getValue(meta.intlSummary, { language: params.locale, fallbackLanguages: ["nl", "en"] });
-  const title = makeTitle([exTitle, siteName]);
-  const objectURL = `${siteURL}/${params.locale}/objects/${params.exhibition}`;
+  const description =
+    getValue(meta.intlSummary, { language: params.locale, fallbackLanguages: ["nl", "en"] }) ?? defaultMeta.description;
+  const title = makeTitle([exTitle, defaultMeta.title]);
+  const url = `/exhibitions/${params.exhibition}`;
   return {
-    metadataBase: new URL(siteURL),
+    metadataBase: new URL(baseURL),
     description: description,
     title: title,
     openGraph: {
       locale: params.locale,
-      siteName: siteName,
+      siteName: defaultMeta.title,
       title: title,
       type: "website",
-      url: objectURL,
+      url: url,
       images: [
         {
-          url: meta.thumbnail.id || fallbackImage,
-          width: meta.thumbnail.width,
-          height: meta.thumbnail.height,
+          url: meta.thumbnail.id ?? defaultMeta.image ?? "",
+          width: meta.thumbnail ? meta.thumbnail.width : defaultMeta.imageWidth,
+          height: meta.thumbnail ? meta.thumbnail.height : defaultMeta.imageHeight,
         },
       ],
     },

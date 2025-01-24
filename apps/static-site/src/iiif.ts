@@ -24,8 +24,10 @@ export async function loadCollection(slug: string) {
 
 export async function loadCollectionMeta(slug: string) {
   const resp = await fetch(`${IIIF_URL}${slug}/meta.json`);
+
   if (resp.ok) {
-    return resp.json();
+    const json = await resp.json();
+    return json;
   }
 }
 

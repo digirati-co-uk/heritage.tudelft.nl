@@ -9,12 +9,17 @@ run:
   - extract-slug-source
   - delft-extract-labels
   - extract-part-of-collection
-  - extract-thumbnail
+  - extract-thumbnail-local
   - manifest-sqlite
   - metadata-analysis
   - site-collections
   - delft-image-source
   - typesense-manifests
+
+config:
+  extract-thumbnail-local:
+    width: 1080
+    height: 1080
 
 stores:
   collective-access:

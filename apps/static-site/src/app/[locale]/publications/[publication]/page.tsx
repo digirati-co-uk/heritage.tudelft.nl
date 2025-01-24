@@ -4,7 +4,7 @@ import { PublicationPage } from "@/components/pages/PublicationPage";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 import { getValue } from "@iiif/helpers";
-import { getSiteName, siteURL, fallbackImage, makeTitle } from "@/helpers/metadata";
+import { baseURL, makeTitle, getDefaultMetaMdx } from "@/helpers/metadata";
 
 export async function generateMetadata({
   params,
@@ -12,25 +12,24 @@ export async function generateMetadata({
   params: { publication: string; locale: string };
 }): Promise<Metadata> {
   const t = await getTranslations();
+  const defaultMeta = getDefaultMetaMdx({ params: { locale: params.locale } });
   const getValueParams = { language: params.locale, fallbackLanguages: ["nl", "en"] };
   const publicationInLanguage = allPublications.find(
     (post) => post.id === params.publication && post.lang === params.locale
   );
   const publication = publicationInLanguage || allPublications.find((post) => post.id === params.publication);
   const pubTitle = publication && getValue(publication.title, getValueParams);
-  const siteName = await getSiteName();
-  const title = makeTitle([pubTitle, siteName]);
-  const description = publication && getValue(publication.description, getValueParams);
+  const title = makeTitle([pubTitle, defaultMeta.title]);
+  const description = (publication && getValue(publication.description, getValueParams)) ?? defaultMeta.description;
   const author = {
     name: (publication && getValue(publication.author, getValueParams)) || "",
   };
   const pubDateStr = publication && getValue(publication.date, getValueParams);
   const pubDate = pubDateStr && new Date(pubDateStr).toISOString();
-  const publicationsURL = `${siteURL}/${params.locale}/publications`;
-  const image =
-    publication && getValue(publication.image, { language: params.locale, fallbackLanguages: ["nl", "en"] });
+  const publicationsURL = `/publications`;
+
   return {
-    metadataBase: new URL(siteURL),
+    metadataBase: new URL(baseURL),
     authors: author,
     title: title,
     description: description,
@@ -38,14 +37,15 @@ export async function generateMetadata({
       authors: [author.name],
       locale: params.locale,
       publishedTime: pubDate,
-      siteName: siteName,
+      siteName: defaultMeta.title,
       title: title,
       type: "article",
       url: publication ? `${publicationsURL}/${publication.id}` : publicationsURL,
       images: [
         {
-          url: image || fallbackImage,
-          width: 1080,
+          url: publication?.image ?? defaultMeta.image ?? "",
+          width: publication?.image ? publication?.imageWidth : defaultMeta.imageWidth,
+          height: publication?.image ? publication?.imageHeight : defaultMeta.imageHeight,
         },
       ],
     },
