@@ -6,6 +6,7 @@ import { InfoBlock } from "../exhibitions/InfoBlock";
 import { ImageBlock } from "../exhibitions/ImageBlock";
 import { MediaBlock } from "../exhibitions/MediaBlock";
 import { Slot } from "@/blocks/slot";
+import { BottomBar } from "../toc/BottomBar";
 
 export interface ExhibitionPageProps {
   locale: string;
@@ -54,6 +55,8 @@ export async function ExhibitionPage(props: ExhibitionPageProps) {
       </div>
 
       <Slot name="exhibition" context={{ locale: props.locale, exhibition: props.slug }} />
+
+      <BottomBar manifest={props.manifest} />
     </>
   );
 }
