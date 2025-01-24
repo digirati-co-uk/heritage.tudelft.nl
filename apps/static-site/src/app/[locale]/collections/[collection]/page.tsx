@@ -37,7 +37,7 @@ export async function generateMetadata({
         {
           url: defaultMeta.image ?? "",
           width: defaultMeta.imageWidth,
-          height: defaultMeta.imageWidth,
+          height: defaultMeta.imageHeight,
         },
       ],
     },

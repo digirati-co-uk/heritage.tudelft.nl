@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
     image: {
       url: page.image ?? defaultMeta.image,
       width: page.image ? page.imageWidth : defaultMeta.imageWidth,
-      height: page.image ? page.imageHeight : defaultMeta.imageWidth,
+      height: page.image ? page.imageHeight : defaultMeta.imageHeight,
     },
     path: path,
   });
