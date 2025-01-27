@@ -26,8 +26,7 @@ export async function InfoBlock({ id, canvas, strategy }: InfoBlockProps) {
 
   return (
     <>
-      {/* <div className="text-2xl">SECTION {getValue(intro)}</div> */}
-      <div className={twMerge("cut-corners bg-black p-6 text-white", className)} id={id.toString()}>
+      <div className={twMerge("cut-corners bg-black p-6 text-white", className)}>
         <div className="exhibition-info-block" id={getValue(intro)}>
           {items.map((item, idx) => (
             <AutoLanguage key={idx} lines html className="mb-3">

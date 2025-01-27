@@ -28,8 +28,6 @@ export async function ExhibitionPage(props: ExhibitionPageProps) {
   return (
     <>
       <div className="mb-12 auto-rows-auto grid-cols-12 content-center justify-center lg:grid">
-        <TitlePanel manifest={props.manifest} />
-
         {props.manifest.items.map((canvas: any, idx) => {
           const paintables = helper.getPaintables(canvas);
           const strategy = getRenderingStrategy({
@@ -44,15 +42,30 @@ export async function ExhibitionPage(props: ExhibitionPageProps) {
           //console.log(strategy);
 
           if (strategy.type === "textual-content") {
-            return <InfoBlock key={idx} canvas={canvas} strategy={strategy} id={idx} />;
+            return (
+              <>
+                <TitlePanel manifest={props.manifest} position={idx} />
+                <InfoBlock key={idx} canvas={canvas} strategy={strategy} id={idx} />
+              </>
+            );
           }
 
           if (strategy.type === "images") {
-            return <ImageBlock key={idx} canvas={canvas} index={idx} objectLinks={foundLinks} id={idx} />;
+            return (
+              <>
+                <TitlePanel manifest={props.manifest} position={idx} />
+                <ImageBlock key={idx} canvas={canvas} index={idx} objectLinks={foundLinks} id={idx} />
+              </>
+            );
           }
 
           if (strategy.type === "media") {
-            return <MediaBlock key={idx} canvas={canvas} strategy={strategy} index={idx} id={idx} />;
+            return (
+              <>
+                <TitlePanel manifest={props.manifest} position={idx} />
+                <MediaBlock key={idx} canvas={canvas} strategy={strategy} index={idx} id={idx} />
+              </>
+            );
           }
 
           return null;
