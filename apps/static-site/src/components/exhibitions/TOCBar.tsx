@@ -33,6 +33,7 @@ export function TOCBar({
             </div>
             <ul>
               {contents.map((item, idx) => {
+                console.log(idx, item.label);
                 const label = getValue(item.label);
                 return (
                   <li>
