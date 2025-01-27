@@ -10,10 +10,12 @@ export async function ImageBlock({
   index,
   canvas,
   objectLinks,
+  id,
 }: {
   index: number;
   canvas: Canvas;
   objectLinks: Array<{ service: string; slug: string; canvasId: string; targetCanvasId: string }>;
+  id: number;
 }) {
   const behavior = canvas.behavior || [];
   const isLeft = behavior.includes("left");
@@ -31,7 +33,10 @@ export async function ImageBlock({
   );
 
   return (
-    <div className={twMerge(className, "cut-corners relative", !showSummary && "aspect-square lg:aspect-auto")}>
+    <div
+      className={twMerge(className, "cut-corners relative", !showSummary && "aspect-square lg:aspect-auto")}
+      id={id.toString()}
+    >
       {showSummary ? (
         <div className={twMerge("h-full md:flex", isLeft && "flex-row-reverse", isBottom && "flex-col")}>
           <div

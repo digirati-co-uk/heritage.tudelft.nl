@@ -1,50 +1,55 @@
 "use client";
 import { Manifest } from "@iiif/presentation-3";
 import { getValue } from "@iiif/helpers";
-import { useState, useEffect } from "react";
-import { TOCModal } from "./TOCModal";
-import { useSearchParams } from "next/navigation";
-import { usePathname } from "@/navigation";
+import { useState } from "react";
+import { TextualContentStrategy } from "react-iiif-vault";
+import { getTranslations } from "next-intl/server";
 
-export function TOCBar({ manifest, toc }: { manifest: Manifest; toc: string }) {
+export function TOCBar({
+  manifest,
+  strategy,
+  TOCHeading,
+}: {
+  manifest: Manifest;
+  strategy?: TextualContentStrategy;
+  TOCHeading: string;
+}) {
   const title = getValue(manifest.label);
   const [tocOpen, setTocOpen] = useState(false);
+  const [currentItem, setCurrentItem] = useState<string>();
 
-  console.log(toc);
-
-  // useEffect(() => {
-  //   console.log("Hash:", window.location.hash);
-  // }, [params]);
-
+  //const contents = manifest.items.filter((item) => item.summary);
   const contents = manifest.items;
-
-  function goto(item: string) {}
 
   return (
     <>
       {tocOpen && (
-        <div className="fixed top-0 flex h-full w-full flex-row items-center">
-          <div className="mx-auto w-4/5 border-2 border-red-700 bg-slate-500 p-10 text-2xl">
-            <div>TABLE OF CONTENTS</div>
+        <div className="fixed top-0 flex h-full w-full flex-row items-center justify-center">
+          {/* MODAL CONTAINER */}
+          <div className="border-1 cut-corners mx-auto w-3/5 border-[#6d6e70] bg-[#6d6e70] px-8 py-5 text-white">
+            <div className="mb-3 flex flex-row justify-between">
+              <div className="text-lg">{`${title} - ${TOCHeading}`}</div>
+              <button onClick={() => setTocOpen(false)}>X</button>
+            </div>
             <ul>
-              {manifest.items.map((item) => {
+              {contents.map((item, idx) => {
                 const label = getValue(item.label);
                 return (
                   <li>
-                    {/* <button onClick={() => goto(item)}>{item}</button> */}
-                    <a href={`#${label}`}>{label}</a>
+                    <a className="hover:underline" onClick={() => setCurrentItem(label)} href={`#${idx}`}>
+                      {label}
+                    </a>
                   </li>
                 );
               })}
             </ul>
-            <button onClick={() => setTocOpen(false)}>X</button>
           </div>
         </div>
       )}
       <div className="fixed bottom-10 right-0 flex min-h-14 w-full flex-row items-center justify-between bg-[#6d6e70] px-5 text-4xl font-medium text-white">
         <div className="flex flex-row gap-6">
           <div>{title}</div>
-          <div className="font-light">{toc}</div>
+          <div className="font-light">{currentItem}</div>
         </div>
 
         <button

@@ -13,6 +13,7 @@ interface MediaBlockProps {
   canvas: Canvas;
   strategy: MediaStrategy;
   index: number;
+  id: number;
 }
 
 function getWindowHost() {
@@ -29,9 +30,9 @@ function MediaBlockInner(props: MediaBlockProps) {
   if (props.strategy.media.type !== "VideoYouTube") return null;
 
   return (
-    <div className={twMerge("cut-corners bg-black text-white", className)}>
+    <div className={twMerge("cut-corners bg-black text-white", className)} id={props.id.toString()}>
       {" "}
-      LOOK AT ME
+      MEDIA BLOCK
       <img className="h-full w-full object-cover" src={thumbnail?.id} alt="" onClick={() => setIsOpen(true)} />
       <Dialog className="relative z-50" open={isOpen} onClose={() => setIsOpen(false)}>
         <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
