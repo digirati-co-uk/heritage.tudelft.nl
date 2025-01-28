@@ -7,23 +7,24 @@ import { expandTarget } from "@iiif/helpers";
 import type { Annotation, Canvas } from "@iiif/presentation-3";
 import type { AnnotationPageNormalized } from "@iiif/presentation-3-normalized";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { CanvasContext, CanvasPanel, useCanvas, useVault } from "react-iiif-vault";
+import {
+  CanvasContext,
+  CanvasPanel,
+  useCanvas,
+  useVault,
+} from "react-iiif-vault";
 import { LazyLoadComponent } from "react-lazy-load-image-component";
 import invariant from "tiny-invariant";
 import { CloseIcon } from "../atoms/CloseIcon";
 import { AutoLanguage } from "../pages/AutoLanguage";
+import type { ObjectLink } from "@/helpers/object-links";
 
 function CanvasPreviewBlockInner({
   cover,
   objectLinks,
 }: {
   cover?: boolean;
-  objectLinks: Array<{
-    service: string;
-    slug: string;
-    canvasId: string;
-    targetCanvasId: string;
-  }>;
+  objectLinks: Array<ObjectLink>;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const vault = useVault();
@@ -34,16 +35,21 @@ function CanvasPreviewBlockInner({
     () =>
       [
         "default-preset",
-        { runtimeOptions: { visibilityRatio: 0.5, maxOverZoom: 3 }, interactive: isOpen } as DefaultPresetOptions,
+        {
+          runtimeOptions: { visibilityRatio: 0.5, maxOverZoom: 3 },
+          interactive: isOpen,
+        } as DefaultPresetOptions,
       ] as any,
-    [isOpen]
+    [isOpen],
   );
   const [stepIndex, setStepIndex] = useState(0);
   const [tour, setTour] = useState(false);
 
   invariant(canvas);
 
-  const annotations = canvas.annotations[0] ? vault.get(canvas.annotations[0]) : null;
+  const annotations = canvas.annotations[0]
+    ? vault.get(canvas.annotations[0])
+    : null;
 
   const highlights = useMemo(() => {
     if (!canvas.annotations[0]) return [];
@@ -93,7 +99,9 @@ function CanvasPreviewBlockInner({
         }
       }
 
-      const objectLink = imageService ? objectLinks.find((link) => link.service === imageService) : null;
+      const objectLink = imageService
+        ? objectLinks.find((link) => link.service === imageService)
+        : null;
 
       return {
         label: target.label,
@@ -113,7 +121,11 @@ function CanvasPreviewBlockInner({
     }
     if (atlas.current) {
       if (tour) {
-        if (step && step.target.selector && step.target.selector.type === "BoxSelector") {
+        if (
+          step &&
+          step.target.selector &&
+          step.target.selector.type === "BoxSelector"
+        ) {
           atlas.current.runtime.world.gotoRegion(step.target.selector?.spatial);
         }
       } else {
@@ -124,7 +136,10 @@ function CanvasPreviewBlockInner({
 
   return (
     <>
-      <div className="exhibition-canvas-panel z-10 h-full bg-[#373737]" onClick={() => setIsOpen(true)}>
+      <div
+        className="exhibition-canvas-panel z-10 h-full bg-[#373737]"
+        onClick={() => setIsOpen(true)}
+      >
         <CanvasPanel.Viewer
           containerStyle={{
             height: "100%",
@@ -156,7 +171,15 @@ function CanvasPreviewBlockInner({
             {highlights.map((highlight, index) => {
               const target = highlight?.selector?.spatial as any;
               if (!target) return null;
-              return <box key={index} target={target} relativeStyle html style={{ border: "2px dashed red" }} />;
+              return (
+                <box
+                  key={index}
+                  target={target}
+                  relativeStyle
+                  html
+                  style={{ border: "2px dashed red" }}
+                />
+              );
             })}
           </CanvasPanel.RenderCanvas>
         </CanvasPanel.Viewer>
@@ -164,7 +187,11 @@ function CanvasPreviewBlockInner({
       <div className="absolute bottom-4 left-0 right-0 z-20 text-center font-mono text-sm text-white">
         <AutoLanguage>{canvas.label}</AutoLanguage>
       </div>
-      <Dialog className="relative z-50" open={isOpen} onClose={() => setIsOpen(false)}>
+      <Dialog
+        className="relative z-50"
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
+      >
         <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
         <div className="safe-inset fill-height fixed inset-0 z-20 flex w-screen items-center md:p-4">
           <button
@@ -246,8 +273,17 @@ function CanvasPreviewBlockInner({
                         }
                       }}
                     >
-                      <svg className="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="#fff" />
+                      <svg
+                        className=""
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+                          fill="#fff"
+                        />
                       </svg>
                       {stepIndex > 0 ? "Previous" : "End tour"}
                     </button>
@@ -269,7 +305,10 @@ function CanvasPreviewBlockInner({
                         height="24"
                         viewBox="0 0 24 24"
                       >
-                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="#fff" />
+                        <path
+                          d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+                          fill="#fff"
+                        />
                       </svg>
                     </button>
                   </div>
@@ -323,7 +362,11 @@ export function CanvasPreviewBlock({
 
   return (
     <div className="relative h-full w-full bg-[#373737]">
-      <LazyLoadComponent placeholder={<div />} visibleByDefault={false} threshold={300}>
+      <LazyLoadComponent
+        placeholder={<div />}
+        visibleByDefault={false}
+        threshold={300}
+      >
         {inner}
       </LazyLoadComponent>
     </div>

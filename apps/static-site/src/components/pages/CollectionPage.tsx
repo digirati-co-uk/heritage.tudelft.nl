@@ -6,12 +6,12 @@ import { getTranslations } from "next-intl/server";
 import { CollectionMetadata } from "../iiif/CollectionMetadata";
 import { SharingAndViewingLinks, type SharingAndViewingLinksContent } from "../iiif/SharingAndViewingLinks";
 import { ManifestSearch } from "../search/ManifestSearch";
+import { IIIFLogo } from "../iiif/IIIFLogo";
 
 export interface CollectionPageProps {
   slug: string;
   collection: Collection;
   meta: {};
-  content: SharingAndViewingLinksContent;
 }
 
 // @todo this is a bug with HSS not providing a slug on all collections. This can be removed once fixed.
@@ -42,20 +42,22 @@ export async function CollectionPage(props: CollectionPageProps) {
             <h1 className="text-center text-3xl font-medium">
               <AutoLanguage mapString={renderCollectionLabel}>{props.collection.label}</AutoLanguage>
             </h1>
-            <div className="iiif-link-wrapper">
+            <div>
               <a
+                className="opacity-40 hover:opacity-100"
                 href={`${props.collection.id}`}
                 target="_blank"
                 title={t("Drag and Drop IIIF Resource")}
                 rel="noreferrer"
               >
+                <IIIFLogo className="text-2xl" title={"IIIF Collection Link"} />
                 <span className="sr-only">IIIF Collection Link</span>
               </a>
             </div>
           </div>
           <div />
         </div>
-        <div>
+        <div suppressHydrationWarning>
           {props.collection.metadata || props.collection.summary ? (
             <CollectionMetadata
               content={{
@@ -77,6 +79,8 @@ export async function CollectionPage(props: CollectionPageProps) {
             showMore: t("Show more"),
             showLess: t("Show less"),
             currentPage: t("Copy link to current page"),
+            copiedMessage: t("Link copied to clipboard"),
+            iiifLabel: t("IIIF Collection"),
           }}
         />
 
