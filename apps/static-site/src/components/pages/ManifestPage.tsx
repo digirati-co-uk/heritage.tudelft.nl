@@ -50,17 +50,25 @@ interface ManifestPageProps {
     slug: string;
     thumbnail?: string;
   }>;
+
+  initialCanvasIndex: number;
 }
 
 const runtimeOptions = { maxOverZoom: 2 };
 
-export function ManifestPage({ related, manifest, meta, content, exhibitionLinks }: ManifestPageProps) {
-  const { currentSequenceIndex } = useSimpleViewer();
-
+export function ManifestPage({ related, manifest, meta, content, exhibitionLinks, initialCanvasIndex }: ManifestPageProps) {
+  const context = useSimpleViewer();
+  const { currentSequenceIndex } = context;
+  const previousSeqIndex = useRef(currentSequenceIndex);
   const atlas = useRef<Preset>();
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Needs to run when currentSequenceIndex changes.
   useEffect(() => {
+    if (currentSequenceIndex == previousSeqIndex.current) {
+      context.setCurrentCanvasIndex(initialCanvasIndex);
+    } else {
+      context.setCurrentCanvasIndex(currentSequenceIndex);
+    }
     if (atlas.current) {
       setTimeout(() => atlas.current?.runtime.world.goHome(true), 5);
     }

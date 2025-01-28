@@ -9,7 +9,7 @@ run:
   - extract-slug-source
   - delft-extract-labels
   - extract-part-of-collection
-  - extract-thumbnail
+  - extract-thumbnail-local
   - manifest-sqlite
   - metadata-analysis
   - site-collections
@@ -19,6 +19,11 @@ run:
 collections:
   index:
     label: { "en": "TU Delft Academic Heritage", "nl": "Academisch Erfgoed TU Delft" }
+
+config:
+  extract-thumbnail-local:
+    width: 1080
+    height: 1080
 
 stores:
   collective-access:

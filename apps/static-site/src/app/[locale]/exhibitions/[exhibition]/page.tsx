@@ -2,11 +2,50 @@ import { ManifestLoader } from "@/app/provider";
 import { SlotContext } from "@/blocks/slot-context";
 import { Page } from "@/components/Page";
 import { ExhibitionPage } from "@/components/pages/ExhibitionPage";
-import { loadManifest } from "@/iiif";
-import allExhibitions from "@repo/iiif/build/collections/exhibitions/collection.json";
-import imageServiceLinks from "@repo/iiif/build/meta/image-service-links.json";
 import { setRequestLocale } from "next-intl/server";
+import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import imageServiceLinks from "@repo/iiif/build/meta/image-service-links.json";
+import type { Metadata } from "next";
+import { loadManifest, loadManifestMeta } from "@/iiif";
+import { getValue } from "@iiif/helpers";
+import { baseURL, makeTitle, getDefaultMetaMdx } from "@/helpers/metadata";
 
+export async function generateMetadata({
+  params,
+}: {
+  params: { exhibition: string; locale: string };
+}): Promise<Metadata> {
+  const t = await getTranslations();
+  const defaultMeta = getDefaultMetaMdx({ params: { locale: params.locale } });
+  const manifestSlug = `manifests/${params.exhibition}`;
+  const meta = await loadManifestMeta(manifestSlug);
+  const exTitle = getValue(meta.intlLabel, { language: params.locale, fallbackLanguages: ["nl", "en"] });
+  const description =
+    getValue(meta.intlSummary, { language: params.locale, fallbackLanguages: ["nl", "en"] }) ?? defaultMeta.description;
+  const title = makeTitle([exTitle, defaultMeta.title]);
+  const url = `/exhibitions/${params.exhibition}`;
+  return {
+    metadataBase: new URL(baseURL),
+    description: description,
+    title: title,
+    openGraph: {
+      locale: params.locale,
+      siteName: defaultMeta.title,
+      title: title,
+      type: "website",
+      url: url,
+      images: [
+        {
+          url: meta.thumbnail.id ?? defaultMeta.image ?? "",
+          width: meta.thumbnail ? meta.thumbnail.width : defaultMeta.imageWidth,
+          height: meta.thumbnail ? meta.thumbnail.height : defaultMeta.imageHeight,
+        },
+      ],
+    },
+  };
+}
+
+// no static rendering for now...
 // export const generateStaticParams = async () => {
 //   const exhibitions = [];
 //   for (const item of allExhibitions.items) {

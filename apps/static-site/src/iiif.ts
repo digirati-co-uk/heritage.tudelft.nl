@@ -26,6 +26,15 @@ export async function loadCollection(slug: string) {
   return ret;
 }
 
+export async function loadCollectionMeta(slug: string) {
+  const resp = await fetch(`${IIIF_URL}${slug}/meta.json`);
+
+  if (resp.ok) {
+    const json = await resp.json();
+    return json;
+  }
+}
+
 export async function loadManifest(slug: string) {
   const manifestReq = fetch(`${IIIF_URL}${slug}/manifest.json`, fetchOptions);
   const metaReq = fetch(`${IIIF_URL}${slug}/meta.json`, fetchOptions);

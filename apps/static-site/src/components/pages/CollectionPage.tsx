@@ -98,8 +98,7 @@ export async function CollectionPage(props: CollectionPageProps) {
           {props.collection.items.map((manifest) => {
             // @todo fix the bug in hss.
             const slug = getObjectSlug(manifest["hss:slug"] || getSlugFromId(manifest.id));
-
-            const thumbnail = (manifest.thumbnail || [])[0]?.id;
+            let thumbnail = (manifest.thumbnail || [])[0]?.id;
             if (thumbnail) {
               thumbnail.replace("/200,/", "/400,/");
             }
