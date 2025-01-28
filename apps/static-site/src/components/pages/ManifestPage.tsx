@@ -123,10 +123,22 @@ export function ManifestPage({ related, manifest, meta, content, exhibitionLinks
 
           <ObjectMetadata />
 
-          {related.length !== 0 && (
+          {(related.length !== 0 || meta.partOfCollections.length !== 0) && (
             <>
               <h3 className="mb-5 mt-10 text-3xl font-medium">{content.relatedObjects}</h3>
               <div className="mb-4 grid md:grid-cols-3">
+                {(meta.partOfCollections || []).map((collection, i) => (
+                  <Box
+                    key={collection.slug}
+                    title={getValue(collection.label)}
+                    unfiltered
+                    fallbackBackgroundColor="bg-cyan-500"
+                    small
+                    dark
+                    link={`/${getObjectSlug(collection.slug)}`}
+                    type="Collection"
+                  />
+                ))}
                 {related.map((item, i) => {
                   if (item === null) return null;
 
@@ -179,7 +191,6 @@ export function ManifestPage({ related, manifest, meta, content, exhibitionLinks
               />
             );
           })}
-
           <SharingAndViewingLinks
             resource={{
               id: manifest.id,
