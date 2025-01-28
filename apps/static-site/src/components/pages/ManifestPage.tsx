@@ -147,22 +147,6 @@ export function ManifestPage({ related, manifest, meta, content, exhibitionLinks
           )}
         </div>
         <div className="col-span-1">
-          {(meta.partOfCollections || []).length === 0 ? null : (
-            <div className="overflow-hidden font-mono">
-              <div className="cut-corners w-full place-self-start bg-black p-8 text-white">
-                <h3 className="mb-2 uppercase">{content.seeAlso}:</h3>
-                <ul className="text-md list-disc underline underline-offset-4">
-                  {(meta.partOfCollections || []).map((collection, i) => (
-                    <li key={collection.slug} className="list-none">
-                      <Link href={`/${collection.slug}`} className="hover:text-slate-300">
-                        <AutoLanguage>{collection.label}</AutoLanguage>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          )}
           {exhibitionLinks.map((item, i) => {
             if (item === null) return null;
 
