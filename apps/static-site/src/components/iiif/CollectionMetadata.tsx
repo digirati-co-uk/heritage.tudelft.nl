@@ -26,35 +26,39 @@ export function CollectionMetadata({
       metadata={metadata}
       tableHeader={
         summary ? (
-          <div className="mb-4">
-            <h3 className="font-mono uppercase">{content.summary}</h3>
+          <thead className="mb-4">
+            <tr>
+              <th className="text-start font-normal">
+                <h3 className="font-mono uppercase">{content.summary}</h3>
 
-            <AutoLanguage first className="mb-5 block max-h-64 overflow-hidden text-ellipsis text-xl">
-              {summary}
-            </AutoLanguage>
+                <AutoLanguage first className="mb-5 block max-h-64 overflow-hidden text-ellipsis text-xl">
+                  {summary}
+                </AutoLanguage>
 
-            <Dialog className="relative z-50" open={isOpen} onClose={() => setIsOpen(false)}>
-              <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
-              <div className="mobile-height fixed inset-0 flex w-screen items-center p-4">
-                <button
-                  className="absolute right-8 top-8 z-10 flex h-8 w-8 items-center justify-center rounded hover:bg-slate-100"
-                  onClick={() => setIsOpen(false)}
-                >
-                  <CloseIcon />
+                <Dialog className="relative z-50" open={isOpen} onClose={() => setIsOpen(false)}>
+                  <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+                  <div className="mobile-height fixed inset-0 flex w-screen items-center p-4">
+                    <button
+                      className="absolute right-8 top-8 z-10 flex h-8 w-8 items-center justify-center rounded hover:bg-slate-100"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <CloseIcon />
+                    </button>
+                    <Dialog.Panel className="relative flex h-full w-full justify-center overflow-y-auto overflow-x-hidden rounded bg-white">
+                      <article className="prose prose-lg mt-16 h-fit max-w-2xl leading-snug md:leading-normal">
+                        <AutoLanguage lines html className="mb-3">
+                          {summary}
+                        </AutoLanguage>
+                      </article>
+                    </Dialog.Panel>
+                  </div>
+                </Dialog>
+                <button onClick={() => setIsOpen(true)} className="my-4 block underline underline-offset-4">
+                  {content.readMore}
                 </button>
-                <Dialog.Panel className="relative flex h-full w-full justify-center overflow-y-auto overflow-x-hidden rounded bg-white">
-                  <article className="prose prose-lg mt-16 h-fit max-w-2xl leading-snug md:leading-normal">
-                    <AutoLanguage lines html className="mb-3">
-                      {summary}
-                    </AutoLanguage>
-                  </article>
-                </Dialog.Panel>
-              </div>
-            </Dialog>
-            <button onClick={() => setIsOpen(true)} className="my-4 block underline underline-offset-4">
-              {content.readMore}
-            </button>
-          </div>
+              </th>
+            </tr>
+          </thead>
         ) : null
       }
       classes={{

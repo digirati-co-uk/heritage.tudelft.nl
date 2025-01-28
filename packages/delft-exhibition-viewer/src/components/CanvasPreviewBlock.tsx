@@ -1,30 +1,32 @@
-"use client";
-
-import { Link, getObjectSlug } from "@/navigation";
 import type { DefaultPresetOptions, Preset } from "@atlas-viewer/atlas";
 import { Dialog } from "@headlessui/react";
 import { expandTarget } from "@iiif/helpers";
 import type { Annotation, Canvas } from "@iiif/presentation-3";
 import type { AnnotationPageNormalized } from "@iiif/presentation-3-normalized";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import {
   CanvasContext,
   CanvasPanel,
   useCanvas,
   useVault,
 } from "react-iiif-vault";
+import { LocaleString } from "react-iiif-vault";
 import { LazyLoadComponent } from "react-lazy-load-image-component";
 import invariant from "tiny-invariant";
-import { CloseIcon } from "../atoms/CloseIcon";
-import { AutoLanguage } from "../pages/AutoLanguage";
-import type { ObjectLink } from "@/helpers/object-links";
+import { CloseIcon } from "./CloseIcon";
 
 function CanvasPreviewBlockInner({
   cover,
   objectLinks,
 }: {
   cover?: boolean;
-  objectLinks: Array<ObjectLink>;
+  objectLinks: Array<{
+    service: string;
+    slug: string;
+    canvasId: string;
+    targetCanvasId: string;
+    component: ReactNode;
+  }>;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const vault = useVault();
@@ -167,7 +169,7 @@ function CanvasPreviewBlockInner({
             setTimeout(() => preset.runtime.updateNextFrame(), 1000);
           }}
         >
-          <CanvasPanel.RenderCanvas strategies={["images"]} enableSizes>
+          <CanvasPanel.RenderCanvas strategies={["images"]} enableSizes={false}>
             {highlights.map((highlight, index) => {
               const target = highlight?.selector?.spatial as any;
               if (!target) return null;
@@ -185,7 +187,7 @@ function CanvasPreviewBlockInner({
         </CanvasPanel.Viewer>
       </div>
       <div className="absolute bottom-4 left-0 right-0 z-20 text-center font-mono text-sm text-white">
-        <AutoLanguage>{canvas.label}</AutoLanguage>
+        <LocaleString>{canvas.label}</LocaleString>
       </div>
       <Dialog
         className="relative z-50"
@@ -216,32 +218,22 @@ function CanvasPreviewBlockInner({
               <div className="flex-1">
                 {tour && step ? (
                   <div>
-                    <AutoLanguage>{step.label}</AutoLanguage>
-                    <AutoLanguage>{step.summary}</AutoLanguage>
+                    <LocaleString>{step.label}</LocaleString>
+                    <LocaleString>{step.summary}</LocaleString>
                   </div>
                 ) : (
                   <div>
-                    <AutoLanguage>{canvas.label}</AutoLanguage>
-                    <AutoLanguage>{canvas.summary}</AutoLanguage>
+                    <LocaleString>{canvas.label}</LocaleString>
+                    <LocaleString>{canvas.summary}</LocaleString>
                   </div>
                 )}
               </div>
-              {!tour && objectLink ? (
-                <Link
-                  href={`/${getObjectSlug(objectLink.slug)}${objectLink ? `?canvasId=${btoa(objectLink.targetCanvasId)}` : ""}`}
-                  className="underline underline-offset-4"
-                >
-                  View object
-                </Link>
-              ) : null}
-              {tour && step && step.objectLink ? (
-                <Link
-                  href={`/${getObjectSlug(step.objectLink.slug)}?canvasId=${btoa(step.objectLink.targetCanvasId)}`}
-                  className="font-mono underline underline-offset-4"
-                >
-                  View object
-                </Link>
-              ) : null}
+
+              {!tour && objectLink ? objectLink.component : null}
+              {tour && step && step.objectLink
+                ? step.objectLink.component
+                : null}
+
               <div className="px-4">
                 {tour && step ? (
                   <div>
@@ -348,6 +340,7 @@ export function CanvasPreviewBlock({
     slug: string;
     canvasId: string;
     targetCanvasId: string;
+    component: ReactNode;
   }>;
 }) {
   const inner = (
