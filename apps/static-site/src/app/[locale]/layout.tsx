@@ -13,11 +13,6 @@ import { getBasicMetadata, getMdx } from "@/helpers/metadata";
 
 const IIIFDevRefresh = lazy(() => import("../../components/IIIFDevRefresh"));
 
-export const metadata: Metadata = {
-  title: "TU Delft Academic Heritage",
-  description: "TU Delft Library's Special Collections portal",
-};
-
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const t = await getTranslations();
   const path = "/";
