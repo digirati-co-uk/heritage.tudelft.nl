@@ -13,25 +13,20 @@ const ReadMoreBlock = dynamic(() => import("./ReadMore"));
 export interface InfoBlockProps {
   canvas: Canvas;
   strategy: TextualContentStrategy;
+  firstInfo?: boolean;
   locale: string;
 }
 
-export function InfoBlock({ canvas, strategy }: InfoBlockProps) {
-  const className = getClassName(canvas.behavior);
+export function InfoBlock({ canvas, strategy, firstInfo }: InfoBlockProps) {
+  const className = getClassName(canvas.behavior, firstInfo);
   const locale = useIIIFLanguage();
   const items = getItemsByLocale(strategy.items, locale);
 
   return (
-    <section
-      className={twMerge("cut-corners bg-black p-6 text-white", className)}
-    >
+    <section className={twMerge("cut-corners bg-black p-6 text-white", className)}>
       <div className="exhibition-info-block">
         {items.map((item, idx) => (
-          <LocaleString
-            key={idx}
-            enableDangerouslySetInnerHTML
-            className="mb-3"
-          >
+          <LocaleString key={idx} enableDangerouslySetInnerHTML className="mb-3">
             {item.text}
           </LocaleString>
         ))}

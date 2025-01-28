@@ -28,13 +28,17 @@ const widthMap = {
   "w-12": "col-span-12",
 };
 
-export function getClassName(b?: string[]) {
+export function getClassName(b?: string[], firstInfo = false) {
   if (!b || b.length === 0) {
     b = ["h-8", "w-8", "image"];
   }
-  const h = b.find((a) => a.includes("h-")) as keyof typeof heightMap;
+  let h = b.find((a) => a.includes("h-")) as keyof typeof heightMap;
   const w = b.find((a) => a.includes("w-")) as keyof typeof widthMap;
   const classNames = [];
+
+  if (firstInfo && h === "h-4") {
+    h = "h-8";
+  }
   classNames.push(heightMap[h]);
   classNames.push(widthMap[w]);
   return classNames.join(" ");

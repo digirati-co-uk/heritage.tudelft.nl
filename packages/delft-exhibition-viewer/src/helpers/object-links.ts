@@ -3,4 +3,5 @@ export interface ObjectLink {
   slug: string;
   canvasId: string;
   targetCanvasId: string;
+  component?: any;
 }

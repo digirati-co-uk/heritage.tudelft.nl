@@ -1,4 +1,4 @@
-.cut-corners {
+*[data-cut-corners-enabled="true"] .cut-corners {
   -webkit-clip-path: polygon(
     1rem 0,
     calc(100% - 1rem) 0,
@@ -81,8 +81,7 @@ div[data-textual-content="true"] p {
 }
 
 .safe-inset {
-  padding: env(safe-area-inset-top) env(safe-area-inset-right)
-    env(safe-area-inset-bottom) env(safe-area-inset-left);
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
 .fill-height {

@@ -16,11 +16,16 @@ function App() {
 
   const isPresentation = search.get("type") === "presentation";
   const manifestId = search.get("manifest");
+  const cutCorners = search.get("cut-corners");
+  const fullTitleBar = search.get("full-title-bar");
+
+  const options = {
+    cutCorners: !(cutCorners === "false"),
+    fullTitleBar: fullTitleBar === "true",
+  };
 
   useEffect(() => {
-    fetch(
-      "https://heritage.tudelft.nl/iiif/stores/manifest-editor/collection.json",
-    )
+    fetch("https://heritage.tudelft.nl/iiif/stores/manifest-editor/collection.json")
       .then((r) => r.json())
       .then((col) => {
         setCollection(col);
@@ -42,17 +47,14 @@ function App() {
   if (!manifest) {
     return (
       <div>
-        <ul className="w-full my-8 text-center">
+        <ul className="my-8 w-full text-center">
           {collection.items.map((item: any) => (
-            <li key={item.id} className="text-2xl pb-4">
+            <li key={item.id} className="pb-4 text-2xl">
               <a href={`?manifest=${item.id}`} className="hover:underline">
                 <LocaleString>{item.label}</LocaleString>
               </a>{" "}
               (
-              <a
-                href={`?manifest=${item.id}&type=presentation`}
-                className="hover:underline"
-              >
+              <a href={`?manifest=${item.id}&type=presentation`} className="hover:underline">
                 Presentation
               </a>
               )
@@ -67,17 +69,9 @@ function App() {
     <div className="flex w-full flex-col items-center">
       <div className="min-h-[90vh] w-full max-w-screen-xl px-5 py-10 lg:px-10">
         {isPresentation ? (
-          <DelftPresentation
-            manifest={manifest}
-            language="en"
-            viewObjectLinks={[]}
-          />
+          <DelftPresentation manifest={manifest} options={options} language="en" viewObjectLinks={[]} />
         ) : (
-          <DelftExhibition
-            manifest={manifest}
-            language="en"
-            viewObjectLinks={[]}
-          />
+          <DelftExhibition manifest={manifest} options={options} language="en" viewObjectLinks={[]} />
         )}
       </div>
     </div>
