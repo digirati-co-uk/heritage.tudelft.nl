@@ -1,7 +1,7 @@
 "use client";
 import { Link, getObjectSlug } from "@/navigation";
 import viewerConfig from "@/viewers.json";
-import { HTMLPortal, type Preset } from "@atlas-viewer/atlas";
+import { type Preset } from "@atlas-viewer/atlas";
 import type { InternationalString, Manifest } from "@iiif/presentation-3";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -14,6 +14,7 @@ import { SharingAndViewingLinks } from "../iiif/SharingAndViewingLinks";
 import { ViewerSliderControls } from "../iiif/ViewerSliderControls";
 import { ViewerZoomControls } from "../iiif/ViewerZoomControls";
 import { AutoLanguage } from "./AutoLanguage";
+import { getValue } from "@iiif/helpers/i18n";
 
 interface ManifestPageProps {
   manifest: Manifest;
@@ -42,8 +43,11 @@ interface ManifestPageProps {
     sharingViewers: string;
     showMore: string;
     showLess: string;
+    iiifLabel: string;
     downloadImage: string;
+    download: string;
     currentPage: string;
+    copiedMessage: string;
   };
   exhibitionLinks: Array<null | {
     label: string;
@@ -73,9 +77,6 @@ export function ManifestPage({ related, manifest, meta, content, exhibitionLinks
       setTimeout(() => atlas.current?.runtime.world.goHome(true), 5);
     }
   }, [currentSequenceIndex]);
-
-  const partOf = meta.partOfCollections || [];
-  const configuredViewers = viewerConfig.viewers.filter((viewer) => viewer.enabled?.includes("object"));
 
   return (
     <div>
@@ -108,19 +109,6 @@ export function ManifestPage({ related, manifest, meta, content, exhibitionLinks
       </div>
       <div className="grid-cols-3 md:grid">
         <div className="col-span-2">
-          <div>
-            <div className="iiif-link-wrapper m-4">
-              <a
-                href={`${manifest.id}?manifest=${manifest.id}`}
-                target="_blank"
-                title="Drag and Drop IIIF Resource"
-                rel="noreferrer"
-              >
-                <span className="sr-only">IIIF Manifest Link</span>
-              </a>
-            </div>
-          </div>
-
           <ObjectMetadata />
 
           {(related.length !== 0 || meta.partOfCollections.length !== 0) && (
