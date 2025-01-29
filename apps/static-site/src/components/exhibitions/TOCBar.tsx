@@ -5,6 +5,7 @@ import { useState } from "react";
 import { TextualContentStrategy } from "react-iiif-vault";
 import { BurgerIcon } from "../atoms/BurgerIcon";
 import { CloseIcon } from "../atoms/CloseIcon";
+import { twMerge } from "tailwind-merge";
 
 export function TOCBar({
   manifest,
@@ -12,6 +13,7 @@ export function TOCBar({
   barContent,
   tocOpen,
   setTocOpen,
+  tocBarShown,
 }: {
   manifest: Manifest;
   strategy?: TextualContentStrategy;
@@ -19,10 +21,11 @@ export function TOCBar({
   barContent: string;
   tocOpen: boolean;
   setTocOpen: (isOpen: boolean) => void;
+  tocBarShown: boolean;
 }) {
   const title = getValue(manifest.label);
-  //const [tocOpen, setTocOpen] = useState(false);
   const contents = manifest.items;
+  const barDisplayClass = tocBarShown ? "opacity-100" : "opacity-0";
 
   return (
     <>
@@ -51,7 +54,13 @@ export function TOCBar({
           </div>
         </div>
       )}
-      <div className="fixed bottom-10 right-0 flex min-h-14 w-full flex-row items-center justify-between bg-[#6d6e70] px-5 text-4xl font-medium text-white">
+      {/* BAR */}
+      <div
+        className={twMerge(
+          "fixed bottom-10 right-0 flex min-h-14 w-full flex-row items-center justify-between bg-[#6d6e70] px-5 text-4xl font-medium text-white transition-opacity duration-300 ease-in-out",
+          barDisplayClass
+        )}
+      >
         <div className="flex flex-row gap-6">
           <div>{title}</div>
           <div className="font-light">{barContent}</div>

@@ -24,10 +24,12 @@ export function ExhibitionPage(props: ExhibitionPageProps) {
   const TOCHeading = "Table of contents"; // TODO make intl
   const [tocBarContent, setTocBarContent] = useState<string>("");
   const [tocOpen, setTocOpen] = useState(false);
+  const [tocBarShown, setTocBarShown] = useState(false);
 
-  function updateTocBar(heading: string, position: number) {
+  function updateTocBar(heading: string, position: number, showTocBar: boolean) {
     setTocBarContent(heading);
     window.location.hash = position.toString();
+    setTocBarShown(showTocBar);
   }
 
   if (!canvas) return null;
@@ -96,13 +98,13 @@ export function ExhibitionPage(props: ExhibitionPageProps) {
 
           return null;
         })}
-
         <TOCBar
           manifest={props.manifest}
           heading={TOCHeading}
           barContent={tocBarContent}
           tocOpen={tocOpen}
           setTocOpen={setTocOpen}
+          tocBarShown={tocBarShown}
         />
       </div>
       {/* <Slot name="exhibition" context={{ locale: props.locale, exhibition: props.slug }} /> */}
