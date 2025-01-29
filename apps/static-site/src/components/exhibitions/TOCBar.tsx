@@ -1,8 +1,6 @@
 "use client";
 import { Manifest } from "@iiif/presentation-3";
 import { getValue } from "@iiif/helpers";
-import { useState } from "react";
-import { TextualContentStrategy } from "react-iiif-vault";
 import { BurgerIcon } from "../atoms/BurgerIcon";
 import { CloseIcon } from "../atoms/CloseIcon";
 import { twMerge } from "tailwind-merge";
@@ -16,7 +14,6 @@ export function TOCBar({
   tocBarShown,
 }: {
   manifest: Manifest;
-  strategy?: TextualContentStrategy;
   heading: string;
   barContent: string;
   tocOpen: boolean;

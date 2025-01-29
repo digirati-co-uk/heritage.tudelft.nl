@@ -6,7 +6,6 @@ import { DownIcon } from "../atoms/DownIcon";
 import { useRef, useState, useLayoutEffect } from "react";
 import { getValue } from "@iiif/helpers";
 import type { Manifest } from "@iiif/presentation-3";
-import invariant from "tiny-invariant";
 
 export function TitlePanel({
   manifest,

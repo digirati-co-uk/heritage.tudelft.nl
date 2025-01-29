@@ -32,7 +32,6 @@ function getItemsByLocale<T extends { text: any }>(items: T[], locale: string): 
 }
 
 export async function InfoBlock({ id, canvas, strategy, locale }: InfoBlockProps) {
- 
   const className = getClassName(canvas.behavior);
   const items = getItemsByLocale(strategy.items, locale);
 
