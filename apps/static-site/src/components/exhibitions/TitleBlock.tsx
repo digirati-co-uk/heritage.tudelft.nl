@@ -67,7 +67,7 @@ export function TitlePanel({
     const observer = new IntersectionObserver(handleIntersect, intersectionOptions);
     current && observer.observe(current);
     return () => current && observer.unobserve(current);
-  }, []);
+  }, [height]);
   invariant(manifest, "Manifest not found");
   return (
     manifest.items[position]?.label &&
