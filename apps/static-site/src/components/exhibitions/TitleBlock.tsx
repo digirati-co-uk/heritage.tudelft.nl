@@ -6,7 +6,6 @@ import { UpIcon } from "../atoms/UpIcon";
 import { DownIcon } from "../atoms/DownIcon";
 import { useRef, useState, useLayoutEffect } from "react";
 import { getValue } from "@iiif/helpers";
-import { HeadingParagraph } from "../blocks/HeadingParagraph";
 
 export function TitlePanel({
   manifest,
@@ -55,16 +54,16 @@ export function TitlePanel({
 
   function handleIntersect(entries: IntersectionObserverEntry[]) {
     entries.forEach((entry) => {
-      console.log(entry);
+      //console.log(entry);
       const targetId: string = entry.target.id;
       const id = parseInt(targetId);
       const heading = !Number.isNaN(id) && getValue(manifest.items[id]?.label);
       if (entry.isIntersecting) {
         heading && updateTocBar(heading, id, targetId !== "0"); // update heading and show bar for all except zeroth position
       } else {
-        // when scrolling starts and '0' exits off the top of the screen
+        // when scrolling starts and '0' exits off the top of the screen (buggy!!)
         if (targetId === "0" && entry.intersectionRect.top === 0) {
-          console.log("show the bar!");
+          //console.log("show the bar!");
           heading && updateTocBar(heading, id, true);
         }
       }
