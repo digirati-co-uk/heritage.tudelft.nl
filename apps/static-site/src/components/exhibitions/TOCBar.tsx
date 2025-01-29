@@ -40,7 +40,7 @@ export function TOCBar({
               {contents.map((item, idx) => {
                 const label = getValue(item.label);
                 return (
-                  <li>
+                  <li key={`toc_entry_${idx}_${label.substring(0, 20)}`}>
                     <a className="hover:underline" href={`#${idx}`}>
                       {label}
                     </a>
