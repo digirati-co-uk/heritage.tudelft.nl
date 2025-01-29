@@ -1,4 +1,4 @@
-import { InternationalString } from "@iiif/presentation-3";
+import type { InternationalString } from "@iiif/presentation-3";
 import { useLocale } from "next-intl";
 
 export function AutoLanguage({
@@ -49,22 +49,18 @@ export function AutoLanguage({
   }
 
   if (value) {
-    const filtered = value.filter(Boolean);
+    const filtered = value.filter(Boolean) as string[];
     if (filtered.length > 0) {
       if (lines) {
         return (
           <>
-            {filtered.map((line, idx) =>
+            {filtered.map((line, n) =>
               html ? (
-                <p
-                  className={className}
-                  dangerouslySetInnerHTML={{ __html: m(line) }}
-                  key={`${idx}_${line.substring(0, 20)}`}
-                />
+                <div key={`line-${n}`} className={className} dangerouslySetInnerHTML={{ __html: m(line) }} />
               ) : (
-                <p className={className} key={`${idx}_${line.substring(0, 20)}`}>
+                <div key={`line-${n}`} className={className}>
                   {m(line)}
-                </p>
+                </div>
               )
             )}
           </>

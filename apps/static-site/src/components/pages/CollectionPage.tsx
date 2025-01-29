@@ -1,10 +1,12 @@
-import { Collection } from "@iiif/presentation-3";
 import { AutoLanguage } from "@/components/pages/AutoLanguage";
-import { Link, getObjectSlug } from "@/navigation";
-import { ManifestSearch } from "../search/ManifestSearch";
 import { renderCollectionLabel } from "@/helpers/collection-label";
+import { Link, getObjectSlug } from "@/navigation";
+import type { Collection } from "@iiif/presentation-3";
 import { getTranslations } from "next-intl/server";
 import { CollectionMetadata } from "../iiif/CollectionMetadata";
+import { SharingAndViewingLinks, type SharingAndViewingLinksContent } from "../iiif/SharingAndViewingLinks";
+import { ManifestSearch } from "../search/ManifestSearch";
+import { IIIFLogo } from "../iiif/IIIFLogo";
 
 export interface CollectionPageProps {
   slug: string;
@@ -40,13 +42,22 @@ export async function CollectionPage(props: CollectionPageProps) {
             <h1 className="text-center text-3xl font-medium">
               <AutoLanguage mapString={renderCollectionLabel}>{props.collection.label}</AutoLanguage>
             </h1>
-            <div className="iiif-link-wrapper">
-              <a href={`${props.collection.id}`} target="_blank" title={t("Drag and Drop IIIF Resource")}></a>
+            <div>
+              <a
+                className="opacity-40 hover:opacity-100"
+                href={`${props.collection.id}`}
+                target="_blank"
+                title={t("Drag and Drop IIIF Resource")}
+                rel="noreferrer"
+              >
+                <IIIFLogo className="text-2xl" title={"IIIF Collection Link"} />
+                <span className="sr-only">IIIF Collection Link</span>
+              </a>
             </div>
           </div>
           <div />
         </div>
-        <div>
+        <div suppressHydrationWarning>
           {props.collection.metadata || props.collection.summary ? (
             <CollectionMetadata
               content={{
@@ -58,6 +69,20 @@ export async function CollectionPage(props: CollectionPageProps) {
             />
           ) : null}
         </div>
+        <SharingAndViewingLinks
+          resource={{
+            id: props.collection.id,
+            type: "collection",
+          }}
+          content={{
+            sharingViewers: t("Sharing / Viewers"),
+            showMore: t("Show more"),
+            showLess: t("Show less"),
+            currentPage: t("Copy link to current page"),
+            copiedMessage: t("Link copied to clipboard"),
+            iiifLabel: t("IIIF Collection"),
+          }}
+        />
 
         <div className="p-4">
           <ManifestSearch
@@ -71,13 +96,12 @@ export async function CollectionPage(props: CollectionPageProps) {
           />
         </div>
       </div>
-      <div className={`col-span-2`}>
-        <div id="search-results"></div>
+      <div className="col-span-2">
+        <div id="search-results" />
         <div className="b=9 grid grid-cols-1 gap-4 md:grid-cols-2">
           {props.collection.items.map((manifest) => {
             // @todo fix the bug in hss.
             const slug = getObjectSlug(manifest["hss:slug"] || getSlugFromId(manifest.id));
-
             let thumbnail = (manifest.thumbnail || [])[0]?.id;
             if (thumbnail) {
               thumbnail.replace("/200,/", "/400,/");

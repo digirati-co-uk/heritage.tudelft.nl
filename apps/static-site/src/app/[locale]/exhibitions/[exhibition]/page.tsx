@@ -1,10 +1,10 @@
+import { ManifestLoader } from "@/app/provider";
+import { SlotContext } from "@/blocks/slot-context";
 import { Page } from "@/components/Page";
 import { ExhibitionPage } from "@/components/pages/ExhibitionPage";
+import { setRequestLocale } from "next-intl/server";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
-import { ManifestLoader } from "@/app/provider";
 import imageServiceLinks from "@repo/iiif/build/meta/image-service-links.json";
-import allExhibitions from "@repo/iiif/build/collections/exhibitions/collection.json";
-import { SlotContext } from "@/blocks/slot-context";
 import type { Metadata } from "next";
 import { loadManifest, loadManifestMeta } from "@/iiif";
 import { getValue } from "@iiif/helpers";
@@ -63,7 +63,7 @@ export async function generateMetadata({
 // };
 
 export default async function Exhibition({ params }: { params: { exhibition: string; locale: string } }) {
-  unstable_setRequestLocale(params.locale);
+  setRequestLocale(params.locale);
   const manifestSlug = `manifests/${params.exhibition}`;
   const { manifest, meta } = await loadManifest(manifestSlug);
   const viewObjectLinks = imageServiceLinks[manifestSlug as keyof typeof imageServiceLinks] || [];

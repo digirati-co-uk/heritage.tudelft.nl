@@ -1,10 +1,10 @@
-import { CanvasPreviewBlock } from "./CanvasPreviewBlock";
-import { AutoLanguage } from "../pages/AutoLanguage";
 import { getClassName } from "@/helpers/exhibition";
-import { twMerge } from "tailwind-merge";
+import type { Canvas } from "@iiif/presentation-3";
 import { Suspense } from "react";
-import { Canvas } from "@iiif/presentation-3";
 import { getValue } from "@iiif/helpers";
+import { twMerge } from "tailwind-merge";
+import { AutoLanguage } from "../pages/AutoLanguage";
+import { CanvasPreviewBlock } from "./CanvasPreviewBlock";
 
 export function ImageBlock({
   index,
@@ -27,7 +27,7 @@ export function ImageBlock({
   const className = getClassName(behavior);
 
   const canvasViewer = (
-    <Suspense fallback={<div className="h-full w-full bg-red-700" />}>
+    <Suspense fallback={<div className="h-full w-full" />}>
       <CanvasPreviewBlock canvasId={canvas.id} cover={!showSummary} index={index} objectLinks={objectLinks} />
     </Suspense>
   );

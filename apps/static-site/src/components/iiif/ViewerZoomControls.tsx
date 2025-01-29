@@ -16,7 +16,7 @@ export function ViewerZoomControls() {
             <g>
               <ellipse ry="200" rx="200" cy="200.413" cx="200" fill="#EAEAEA"></ellipse>
               <ellipse rx="100" ry="100" cy="36" cx="943.5" fill="#EAEAEA"></ellipse>
-              <path d="M100 200h200M200 100v200" fill="none" stroke="#000" stroke-width="20"></path>
+              <path d="M100 200h200M200 100v200" fill="none" stroke="#000" strokeWidth="20"></path>
             </g>
           </svg>
         </button>
@@ -26,7 +26,7 @@ export function ViewerZoomControls() {
             <g>
               <ellipse ry="200" rx="200" cy="200.413" cx="200" fill="#EAEAEA"></ellipse>
               <ellipse rx="100" ry="100" cy="36" cx="943.5" fill="#EAEAEA"></ellipse>
-              <path d="M100 200h200M200 300" fill="none" stroke="#000" stroke-width="20"></path>
+              <path d="M100 200h200M200 300" fill="none" stroke="#000" strokeWidth="20"></path>
             </g>
           </svg>
         </button>

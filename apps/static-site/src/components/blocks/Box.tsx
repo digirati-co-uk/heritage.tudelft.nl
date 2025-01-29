@@ -26,6 +26,7 @@ const boxProps = z.object({
       "bg-purple-400",
     ])
     .optional(),
+  fullHeight: z.boolean().optional(),
   fallbackBackgroundColor: z.string().optional(),
   backgroundImage: z.string().optional(),
   dark: z.boolean().optional(),
@@ -39,8 +40,10 @@ export function Box(props: z.infer<typeof boxProps>) {
   const fallbackBackground = props.fallbackBackgroundColor || "bg-yellow-400";
   const titleSize = props.small ? "md:text-xl" : "text-2xl md:text-4xl";
 
+  const fullHeight = props.fullHeight ? "h-full" : "aspect-square";
+
   return (
-    <div className={twMerge(`cut-corners group relative flex aspect-square`, props.className)}>
+    <div className={twMerge(`cut-corners group relative flex`, props.className, fullHeight)}>
       <div className={`z-1 absolute inset-0 overflow-hidden ${fallbackBackground}`}>
         {props.backgroundImage ? (
           <img

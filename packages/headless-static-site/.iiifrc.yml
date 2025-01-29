@@ -1,0 +1,161 @@
+server:
+  url: http://localhost:7111
+
+# Run these everywhere.
+run:
+  - flat-manifests
+  - extract-remote-source
+  - extract-slug-source
+  - extract-label-string
+  - extract-thumbnail
+  # This is really slow.
+  # - extract-part-of-collection
+  - manifest-sqlite
+  - metadata-analysis
+  - folder-collections
+  - typesense-manifests
+
+collections:
+  index:
+    label: { "en": "My great top level collection" }
+    summary: { "en": "This is a summary of the collection" }
+  manifests:
+    label: { "en": "Manifests" }
+    summary: { "en": "A list of all manifests in the collection" }
+
+generators:
+  sts-shuttles:
+    type: nasa-generator
+    config:
+      label: STS Shuttles
+      query: "sts orbit"
+      maxResults: 50
+  curiosity:
+    type: nasa-generator
+    config:
+      label: Curiosity
+      query: "curiosity rover"
+      maxResults: 10
+
+stores:
+  manifests:
+    type: iiif-json
+    path: ./content
+    subFiles: true
+    ignore:
+      - content/objects/**/*
+      - content/manifests/*
+      - content/topics/**/*
+    pattern: "**/*.json"
+    destination: manifests
+    base: ./content
+
+  delft:
+    type: iiif-json
+    path: ./delft
+    pattern: "**/*.{json,yml}"
+    run:
+      - delft-labels
+      - extract-thumbnail
+      - manifest-sqlite
+      - extract-topics
+    config:
+      extract-topics:
+        commaSeparated: ["material"]
+        topicTypes:
+          material: ["Materiaal", "Material"]
+          date: ["Date", "Datering"]
+          Maker: ["Maker"]
+          Publisher: ["Publisher"]
+
+  bridges:
+    type: iiif-remote
+    url: https://view.nls.uk/collections/7446/74466699.json
+    overrides: ./content
+    saveManifests: true
+    slugTemplates:
+      - nls-manifests
+      - nls-collections
+
+    # Skip these for this store.
+    skip:
+      - extract-canvas-dims
+
+    # But additionally run these.
+    run:
+      - canvas-thumbnail
+      - extract-thumbnail
+      - manifest-sqlite
+
+  hutton:
+    type: iiif-remote
+    url: https://view.nls.uk/collections/7446/74466682.json
+    overrides: ./content
+    slugTemplates:
+      - nls-manifests
+      - nls-collections
+
+  wellcomePaintings:
+    type: iiif-remote
+    url: https://iiif.wellcomecollection.org/presentation/collections/digitalcollections/digpaintings
+    slugTemplates:
+      - wellcome-manifest
+      - wellcome-collection
+    run:
+      - extract-topics
+    config:
+      extract-topics:
+        topicTypes:
+          technique: ["Type/technique"]
+          subjects: ["Subjects"]
+
+  wellcomeBookVolume:
+    type: iiif-remote
+    url: https://iiif.wellcomecollection.org/presentation/b18031511_0001
+    # url: https://iiif.wellcomecollection.org/presentation/b18031511
+    slugTemplates:
+      - wellcome-collection
+      - wellcome-manifest
+
+config:
+  extract-label-string:
+    language: en
+
+  manifest-sqlite:
+    enableTopics: true
+
+slugs:
+  wellcome-manifest:
+    type: Manifest
+    domain: iiif.wellcomecollection.org
+    prefix: /presentation/
+    addedPrefix: wellcome-
+    examples:
+      - https://iiif.wellcomecollection.org/presentation/b30496974
+
+  wellcome-collection:
+    type: Collection
+    domain: iiif.wellcomecollection.org
+    prefix: /presentation/collections/
+    addedPrefix: wellcome-
+    examples:
+      - https://iiif.wellcomecollection.org/presentation/collections/digitalcollections/digpaintings
+
+  nls-manifests:
+    type: Manifest
+    domain: view.nls.uk
+    prefix: /manifest/
+    suffix: /manifest.json
+    addedPrefix: nls-
+    examples:
+      - https://view.nls.uk/manifest/7446/74464117/manifest.json
+    pathSeparator: "-"
+
+  nls-collections:
+    type: Collection
+    domain: view.nls.uk
+    prefix: /collections/
+    suffix: .json
+    addedPrefix: nls-
+    examples:
+      - https://view.nls.uk/collections/7446/74466699.json

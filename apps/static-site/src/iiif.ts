@@ -1,4 +1,4 @@
-import { Collection } from "@iiif/presentation-3";
+import type { Collection } from "@iiif/presentation-3";
 
 let IIIF_URL = process.env["IIIF_URL"] || process.env["NEXT_PUBLIC_IIIF_URL"] || "http://localhost:7111/";
 
@@ -6,8 +6,12 @@ if (!IIIF_URL.endsWith("/")) {
   IIIF_URL += "/";
 }
 
+const fetchOptions: RequestInit = {
+  cache: process.env.NODE_ENV === "production" ? "default" : "no-store",
+};
+
 export async function loadCollection(slug: string) {
-  const collectionReq = fetch(`${IIIF_URL}${slug}/collection.json`);
+  const collectionReq = fetch(`${IIIF_URL}${slug}/collection.json`, fetchOptions);
   // const metaReq = fetch(`${IIIF_URL}${slug}/meta.json`);
   const ret: { collection: Collection; meta: any } = { meta: {} } as any;
 
@@ -32,8 +36,8 @@ export async function loadCollectionMeta(slug: string) {
 }
 
 export async function loadManifest(slug: string) {
-  const manifestReq = fetch(`${IIIF_URL}${slug}/manifest.json`);
-  const metaReq = fetch(`${IIIF_URL}${slug}/meta.json`);
+  const manifestReq = fetch(`${IIIF_URL}${slug}/manifest.json`, fetchOptions);
+  const metaReq = fetch(`${IIIF_URL}${slug}/meta.json`, fetchOptions);
 
   return Promise.all([manifestReq, metaReq]).then(async ([manifest, meta]) => {
     return {
@@ -44,7 +48,7 @@ export async function loadManifest(slug: string) {
 }
 
 export async function loadManifestMeta(slug: string) {
-  const resp = await fetch(`${IIIF_URL}${slug}/meta.json`);
+  const resp = await fetch(`${IIIF_URL}${slug}/meta.json`, fetchOptions);
   if (resp.ok) {
     return resp.json();
   }

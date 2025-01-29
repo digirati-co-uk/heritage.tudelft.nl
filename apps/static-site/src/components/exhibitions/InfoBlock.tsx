@@ -1,42 +1,53 @@
 import { getClassName } from "@/helpers/exhibition";
-import { Canvas } from "@iiif/presentation-3";
-import { TextualContentStrategy } from "react-iiif-vault";
+import type { Canvas } from "@iiif/presentation-3";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
+import type { TextualContentStrategy } from "react-iiif-vault";
 import { twMerge } from "tailwind-merge";
 import { AutoLanguage } from "../pages/AutoLanguage";
-import { Suspense } from "react";
 import { ReadMoreBlock } from "./ReadMore";
 import { useLocale } from "next-intl";
 import { getValue } from "@iiif/helpers";
+
+const ReadMoreBlock = dynamic(() => import("./ReadMore"));
 
 interface InfoBlockProps {
   canvas: Canvas;
   strategy: TextualContentStrategy;
   id: number;
+  locale: string;
 }
 
-export function InfoBlock({ id, canvas, strategy }: InfoBlockProps) {
+function getItemsByLocale<T extends { text: any }>(items: T[], locale: string): T[] {
+  if (items.length === 1) return items;
+  const found = items.filter((t) => Object.keys(t.text).includes(locale));
+  if (found.length) {
+    return found;
+  }
+  const firstLang = Object.keys(items[0]?.text || {})[0];
+  if (firstLang) {
+    return items.filter((t) => Object.keys(t.text).includes(firstLang));
+  }
+  return items;
+}
+
+export async function InfoBlock({ id, canvas, strategy, locale }: InfoBlockProps) {
+ 
   const className = getClassName(canvas.behavior);
-  const locale = useLocale();
-  const items =
-    strategy.items.length === 1 ? strategy.items : strategy.items.filter((t) => Object.keys(t.text).includes(locale));
+  const items = getItemsByLocale(strategy.items, locale);
 
   return (
-    <>
-      <div className={twMerge("cut-corners bg-black p-6 text-white", className)}>
-        <div className="exhibition-info-block">
-          {items.map((item, idx) => (
-            <AutoLanguage key={idx} lines html className="mb-3">
-              {item.text}
-            </AutoLanguage>
-          ))}
-          <p>
-            {/* TODO: reintroduce translations */}
-            <Suspense fallback={<div className="underline underline-offset-4">Read more</div>}>
-              <ReadMoreBlock content={{ readMore: "Read more" }} canvasId={canvas.id} />
-            </Suspense>
-          </p>
-        </div>
+    <div className={twMerge("cut-corners bg-black p-6 text-white", className)}>
+      <div className="exhibition-info-block">
+        {items.map((item, idx) => (
+          <AutoLanguage key={idx} lines html className="mb-3">
+            {item.text}
+          </AutoLanguage>
+        ))}
+        <Suspense fallback={<div className="underline underline-offset-4">"Read more"</div>}>
+          <ReadMoreBlock content={{ readMore: "Read more" }} canvasId={canvas.id} />
+        </Suspense>
       </div>
-    </>
+    </div>
   );
 }

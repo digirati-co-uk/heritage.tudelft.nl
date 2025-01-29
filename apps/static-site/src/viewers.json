@@ -1,0 +1,72 @@
+{
+  "showMax": 2,
+  "viewers": [
+    {
+      "id": "theseus",
+      "enabled": ["object", "exhibition", "collection"],
+      "label": { "en": ["Open in Theseus"] },
+      "link": "https://theseusviewer.org/?iiif-content={url}&ref=delft"
+    },
+    {
+      "id": "manifest-editor",
+      "enabled": ["exhibition"],
+      "label": { "en": ["Edit in Manifest Editor"] },
+      "link": "https://manifest-editor-site.netlify.app/share?iiif-content={url}&action=preview"
+    },
+    {
+      " id": "uv",
+      "enabled": ["object"],
+      "label": { "en": ["Open in Universal Viewer"] },
+      "link": "https://uv-v4.netlify.app/uv.html#?manifest={url}"
+    },
+    {
+      "id": "mirador",
+      "enabled": ["object"],
+      "label": { "en": ["Open in Mirador"] },
+      "link": "https://projectmirador.org/embed/?iiif-content={url}"
+    },
+    {
+      "id": "allmaps-viewer",
+      "enabled": ["object"],
+      "label": { "en": ["Open in Allmaps Viewer"] },
+      "link": "https://viewer.allmaps.org/?url={url}"
+    },
+    {
+      "id": "allmaps-editor",
+      "enabled": ["object"],
+      "label": { "en": ["Edit in Allmaps Edtior"] },
+      "link": "https://editor.allmaps.org/?#/collection?url={url}"
+    },
+
+    {
+      "id": "curation",
+      "label": { "en": ["IIIF Curation Viewer"] },
+      "link": "http://codh.rois.ac.jp/software/iiif-curation-viewer/demo/?manifest={url}"
+    },
+    {
+      "id": "annona",
+      "label": { "en": ["Annona"] },
+      "link": "https://ncsu-libraries.github.io/annona/tools/#/display?url={url}&viewtype=iiif-storyboard&settings=%7B%22fullpage%22%3Atrue%7D"
+    },
+    {
+      "id": "clover",
+      "label": { "en": ["Clover"] },
+      "link": "https://samvera-labs.github.io/clover-iiif/docs/viewer/demo?iiif-content={url}"
+    },
+    {
+      "id": "navplace",
+      "label": { "en": ["Navplace Viewer"] },
+      "link": "https://map.rerum.io/?iiif-content={url}"
+    },
+    {
+      "id": "ramp",
+      "label": { "en": ["Ramp"] },
+      "link": "https://ramp.avalonmediasystem.org/?iiif-content={url}"
+    },
+    {
+      "id": "glycerine",
+      "label": { "en": ["Glycerine Viewer"] },
+      "link": "https://demo.viewer.glycerine.io/viewer?iiif-content={url}"
+    }
+  ]
+}
