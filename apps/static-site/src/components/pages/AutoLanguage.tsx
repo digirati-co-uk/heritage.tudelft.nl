@@ -54,11 +54,17 @@ export function AutoLanguage({
       if (lines) {
         return (
           <>
-            {filtered.map((line) =>
+            {filtered.map((line, idx) =>
               html ? (
-                <p className={className} dangerouslySetInnerHTML={{ __html: m(line) }} />
+                <p
+                  className={className}
+                  dangerouslySetInnerHTML={{ __html: m(line) }}
+                  key={`${idx}_${line.substring(0, 20)}`}
+                />
               ) : (
-                <p className={className}>{m(line)}</p>
+                <p className={className} key={`${idx}_${line.substring(0, 20)}`}>
+                  {m(line)}
+                </p>
               )
             )}
           </>

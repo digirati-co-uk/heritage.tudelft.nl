@@ -14,7 +14,7 @@ export function TitlePanel({
 }: {
   manifest: Manifest;
   position: number;
-  updateTocBar: (heading: string) => void;
+  updateTocBar: (heading: string, position: number) => void;
 }) {
   const ref = useRef(null);
 
@@ -23,7 +23,6 @@ export function TitlePanel({
   // viewport height - (height-200) = leaves a 200 high region at the top.
   const { height } = useWindowDimensions();
   const bottomMargin = -(height - 150);
-  console.log("bottomMargin", bottomMargin);
   const intersectionOptions = {
     rootMargin: `0px 0px ${bottomMargin}px 0px`,
     threshold: 1.0,
@@ -55,7 +54,7 @@ export function TitlePanel({
         const intersectingID: string = entry.target.id;
         const id = parseInt(intersectingID);
         const heading = !Number.isNaN(id) && getValue(manifest.items[id]?.label);
-        heading && updateTocBar(heading);
+        heading && updateTocBar(heading, id);
       }
     });
   }

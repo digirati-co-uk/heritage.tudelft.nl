@@ -24,8 +24,9 @@ export function ExhibitionPage(props: ExhibitionPageProps) {
   const TOCHeading = "Table of contents"; // TODO make intl
   const [tocBarContent, setTocBarContent] = useState<string>("");
 
-  function updateTocBar(heading: string) {
+  function updateTocBar(heading: string, position: number) {
     setTocBarContent(heading);
+    window.location.hash = position.toString();
   }
 
   if (!canvas) return null;
@@ -53,7 +54,7 @@ export function ExhibitionPage(props: ExhibitionPageProps) {
                   key={`exhibition_heading_${idx}`}
                   updateTocBar={updateTocBar}
                 />
-                <InfoBlock key={idx} canvas={canvas} strategy={strategy} id={idx} />
+                <InfoBlock key={`info${idx}`} canvas={canvas} strategy={strategy} id={idx} />
               </>
             );
           }
@@ -67,7 +68,7 @@ export function ExhibitionPage(props: ExhibitionPageProps) {
                   key={`exhibition_heading_${idx}`}
                   updateTocBar={updateTocBar}
                 />
-                <ImageBlock key={idx} canvas={canvas} index={idx} objectLinks={foundLinks} id={idx} />
+                <ImageBlock key={`image${idx}`} canvas={canvas} index={idx} objectLinks={foundLinks} id={idx} />
               </>
             );
           }
@@ -81,7 +82,7 @@ export function ExhibitionPage(props: ExhibitionPageProps) {
                   key={`exhibition_heading_${idx}`}
                   updateTocBar={updateTocBar}
                 />
-                <MediaBlock key={idx} canvas={canvas} strategy={strategy} index={idx} id={idx} />
+                <MediaBlock key={`media${idx}`} canvas={canvas} strategy={strategy} index={idx} id={idx} />
               </>
             );
           }
