@@ -11,14 +11,17 @@ import { createExhibitionStore } from "../helpers/exhibition-store";
 import { useStore } from "zustand";
 import { useHover } from "react-aria";
 import { useCanvasHighlights } from "../helpers/use-canvas-highlights";
+import { twMerge } from "tailwind-merge";
 
 function CanvasPreviewBlockInner({
   cover,
   autoPlay = false,
   objectLinks,
+  alternativeMode,
 }: {
   cover?: boolean;
   autoPlay?: boolean;
+  alternativeMode?: boolean;
   objectLinks: Array<{
     service: string;
     slug: string;
@@ -242,87 +245,132 @@ function CanvasPreviewBlockInner({
                 </CanvasPanel.Viewer>
               ) : null}
             </div>
-            <footer className="background-black flex flex-col items-center gap-8 p-8 text-white md:min-h-32 md:flex-row">
-              <div className="flex-1">
-                {tour && step ? (
-                  <div>
-                    <LocaleString>{step.label}</LocaleString>
-                    <LocaleString>{step.summary}</LocaleString>
-                  </div>
-                ) : (
-                  <div>
-                    <LocaleString>{canvas.label}</LocaleString>
-                    <LocaleString>{canvas.summary}</LocaleString>
-                  </div>
-                )}
-              </div>
-
-              {!tour && objectLink ? objectLink.component : null}
-              {tour && step && step.objectLink ? (step.objectLink as any).component : null}
-
-              <div className="px-4">
-                {tour && step ? (
-                  <div>
-                    <div className="mb-2 font-mono">
-                      {stepIndex + 1} / {steps.length}
+            {alternativeMode ? (
+              <div className="absolute bottom-4 right-4 z-10 w-full max-w-lg p-4 text-white">
+                <div className="cut-corners mb-4 max-h-[40vh] overflow-y-auto bg-black px-8 pb-8">
+                  {stepIndex !== -1 && step ? (
+                    <div>
+                      <LocaleString as="h2" className="sticky top-0 bg-black pb-4 pt-8 font-mono uppercase">
+                        {step.label}
+                      </LocaleString>
+                      as
+                      <LocaleString>{step.summary}</LocaleString>
                     </div>
-                    <div className="relative h-2 w-16">
-                      <div className="absolute inset-0 bg-gray-800" />
-                      <div
-                        className="absolute inset-0 bg-slate-100"
-                        style={{
-                          width: `${((stepIndex + 1) / steps.length) * 100}%`,
-                        }}
-                      />
+                  ) : (
+                    <div>
+                      <LocaleString as="h2" className="sticky top-0 bg-black pb-4 pt-8 font-mono uppercase">
+                        {canvas.label}
+                      </LocaleString>
+                      <LocaleString>{canvas.summary}</LocaleString>
                     </div>
+                  )}
+                </div>
+                {steps.length > 1 ? (
+                  <div className="cut-corners flex max-h-[40vh] flex-col gap-2 overflow-y-auto bg-black px-8 pb-8">
+                    <h3 className="sticky top-0 bg-black pb-4 pt-8 font-mono uppercase">Visible annotations</h3>
+                    {steps.map((step, index) => {
+                      return (
+                        <div
+                          key={`step-${index}`}
+                          className={twMerge(
+                            "cursor-pointer hover:underline",
+                            index === stepIndex ? "text-yellow-400" : "text-white"
+                          )}
+                          onClick={() => goToStep(index)}
+                        >
+                          <LocaleString as="h3" className="text-semibold">
+                            {step.label}
+                          </LocaleString>
+                          <LocaleString>{step.summary}</LocaleString>
+                        </div>
+                      );
+                    })}
                   </div>
                 ) : null}
               </div>
-              <div>
-                {currentStep !== -1 ? (
-                  <div className="flex gap-3">
-                    <button
-                      {...previousHoverProps}
-                      className="flex items-center gap-2 font-mono underline underline-offset-4"
-                      onClick={() => previousStep()}
-                    >
-                      <svg className="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="#fff" />
-                      </svg>
-                      {stepIndex > 0 ? "Previous" : "End tour"}
-                    </button>
-                    <button
-                      {...nextHoverProps}
-                      className="flex items-center gap-2 font-mono underline underline-offset-4"
-                      onClick={() => {
-                        if (stepIndex + 1 < steps.length) {
-                          nextStep();
-                        } else {
-                          goToStep(-1);
-                        }
-                      }}
-                    >
-                      {stepIndex + 1 < steps.length ? "Next" : "End tour"}
-                      <svg
-                        className="rotate-180"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
+            ) : (
+              <footer className="background-black flex flex-col items-center gap-8 p-8 text-white md:min-h-32 md:flex-row">
+                <div className="flex-1">
+                  {tour && step ? (
+                    <div>
+                      <LocaleString>{step.label}</LocaleString>
+                      <LocaleString>{step.summary}</LocaleString>
+                    </div>
+                  ) : (
+                    <div>
+                      <LocaleString>{canvas.label}</LocaleString>
+                      <LocaleString>{canvas.summary}</LocaleString>
+                    </div>
+                  )}
+                </div>
+
+                {!tour && objectLink ? objectLink.component : null}
+                {tour && step && step.objectLink ? (step.objectLink as any).component : null}
+
+                <div className="px-4">
+                  {tour && step ? (
+                    <div>
+                      <div className="mb-2 font-mono">
+                        {stepIndex + 1} / {steps.length}
+                      </div>
+                      <div className="relative h-2 w-16">
+                        <div className="absolute inset-0 bg-gray-800" />
+                        <div
+                          className="absolute inset-0 bg-slate-100"
+                          style={{
+                            width: `${((stepIndex + 1) / steps.length) * 100}%`,
+                          }}
+                        />
+                      </div>
+                    </div>
+                  ) : null}
+                </div>
+                <div>
+                  {currentStep !== -1 ? (
+                    <div className="flex gap-3">
+                      <button
+                        {...previousHoverProps}
+                        className="flex items-center gap-2 font-mono underline underline-offset-4"
+                        onClick={() => previousStep()}
                       >
-                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="#fff" />
-                      </svg>
-                    </button>
-                  </div>
-                ) : (
-                  steps.length > 0 && (
-                    <button className="font-mono underline underline-offset-4" onClick={() => nextStep()}>
-                      Start tour
-                    </button>
-                  )
-                )}
-              </div>
-            </footer>
+                        <svg className="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="#fff" />
+                        </svg>
+                        {stepIndex > 0 ? "Previous" : "End tour"}
+                      </button>
+                      <button
+                        {...nextHoverProps}
+                        className="flex items-center gap-2 font-mono underline underline-offset-4"
+                        onClick={() => {
+                          if (stepIndex + 1 < steps.length) {
+                            nextStep();
+                          } else {
+                            goToStep(-1);
+                          }
+                        }}
+                      >
+                        {stepIndex + 1 < steps.length ? "Next" : "End tour"}
+                        <svg
+                          className="rotate-180"
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="#fff" />
+                        </svg>
+                      </button>
+                    </div>
+                  ) : (
+                    steps.length > 0 && (
+                      <button className="font-mono underline underline-offset-4" onClick={() => nextStep()}>
+                        Start tour
+                      </button>
+                    )
+                  )}
+                </div>
+              </footer>
+            )}
           </Dialog.Panel>
         </div>
       </Dialog>
@@ -336,11 +384,13 @@ export function CanvasPreviewBlock({
   index,
   autoPlay,
   objectLinks,
+  alternativeMode,
 }: {
   canvasId: string;
   cover?: boolean;
   index: number;
   autoPlay?: boolean;
+  alternativeMode?: boolean;
   objectLinks: Array<{
     service: string;
     slug: string;
@@ -351,7 +401,12 @@ export function CanvasPreviewBlock({
 }) {
   const inner = (
     <CanvasContext canvas={canvasId} key={canvasId}>
-      <CanvasPreviewBlockInner cover={cover} objectLinks={objectLinks} autoPlay={autoPlay} />
+      <CanvasPreviewBlockInner
+        cover={cover}
+        objectLinks={objectLinks}
+        autoPlay={autoPlay}
+        alternativeMode={alternativeMode}
+      />
     </CanvasContext>
   );
 

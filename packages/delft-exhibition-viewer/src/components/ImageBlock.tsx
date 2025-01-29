@@ -16,9 +16,10 @@ export interface ImageBlockProps {
     targetCanvasId: string;
     component: ReactNode;
   }>;
+  alternativeMode?: boolean;
 }
 
-export function ImageBlock({ index, canvas, objectLinks, autoPlay }: ImageBlockProps) {
+export function ImageBlock({ index, canvas, objectLinks, autoPlay, alternativeMode }: ImageBlockProps) {
   const behavior = canvas.behavior || [];
   const isLeft = behavior.includes("left");
   const isRight = behavior.includes("right");
@@ -36,6 +37,7 @@ export function ImageBlock({ index, canvas, objectLinks, autoPlay }: ImageBlockP
         index={index}
         objectLinks={objectLinks}
         autoPlay={autoPlay}
+        alternativeMode={alternativeMode}
       />
     </Suspense>
   );

@@ -1,6 +1,6 @@
 import { createPaintingAnnotationsHelper } from "@iiif/helpers/painting-annotations";
 import type { Manifest } from "@iiif/presentation-3";
-import { type ReactNode, useMemo, useRef } from "react";
+import { type ReactNode, useEffect, useMemo, useRef } from "react";
 import { LanguageProvider, VaultProvider, useExistingVault } from "react-iiif-vault";
 import { getRenderingStrategy } from "react-iiif-vault/utils";
 import { useStore } from "zustand";
@@ -22,14 +22,14 @@ export type DelftPresentationProps = {
     targetCanvasId: string;
     component: ReactNode;
   }>;
-  options?: { cutCorners?: boolean };
+  options?: { cutCorners?: boolean; autoPlay?: boolean };
 };
 
 export function DelftPresentation(props: DelftPresentationProps) {
   const deckRef = useRef<Reveal.Api | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const vault = useExistingVault();
-  const { cutCorners } = props.options || {};
+  const { cutCorners, autoPlay } = props.options || {};
 
   // Needs to be here.
   if (props.manifest?.id && !vault.requestStatus(props.manifest.id)) {
@@ -47,9 +47,15 @@ export function DelftPresentation(props: DelftPresentationProps) {
     [vault, props.manifest]
   );
 
-  const { currentStep, goToStep, nextStep, previousStep, steps, playPause, isPlaying } = useStore(store);
+  const { currentStep, goToStep, nextStep, previousStep, steps, play, playPause, isPlaying } = useStore(store);
 
   const step = currentStep === -1 ? null : steps[currentStep];
+
+  useEffect(() => {
+    if (autoPlay) {
+      play();
+    }
+  }, []);
 
   // useLayoutEffect(() => {
   //   if (deckRef.current) return;
@@ -81,7 +87,7 @@ export function DelftPresentation(props: DelftPresentationProps) {
         <LanguageProvider language={props.language || "en"}>
           <div
             data-cut-corners-enabled={cutCorners}
-            className={"delft-presentation-viewer relative h-[800px] w-full border-2 border-[black] bg-black"}
+            className={"delft-presentation-viewer relative h-full w-full bg-black"}
           >
             <div className="absolute bottom-0 right-0 z-30 flex gap-2 bg-[white] p-2">
               <button type="button" className="rounded border px-4 py-2 hover:bg-gray-100" onClick={playPause}>
@@ -158,3 +164,5 @@ export function DelftPresentation(props: DelftPresentationProps) {
     </ExhibitionProvider>
   );
 }
+
+export default DelftPresentation;

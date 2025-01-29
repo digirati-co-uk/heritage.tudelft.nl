@@ -69,7 +69,9 @@ function App() {
     <div className="flex w-full flex-col items-center">
       <div className="min-h-[90vh] w-full max-w-screen-xl px-5 py-10 lg:px-10">
         {isPresentation ? (
-          <DelftPresentation manifest={manifest} options={options} language="en" viewObjectLinks={[]} />
+          <div className="h-[800px]">
+            <DelftPresentation manifest={manifest} options={options} language="en" viewObjectLinks={[]} />
+          </div>
         ) : (
           <DelftExhibition manifest={manifest} options={options} language="en" viewObjectLinks={[]} />
         )}
