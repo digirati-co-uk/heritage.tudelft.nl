@@ -23,6 +23,7 @@ export function ExhibitionPage(props: ExhibitionPageProps) {
   const canvas: any = props.manifest.items[0];
   const TOCHeading = "Table of contents"; // TODO make intl
   const [tocBarContent, setTocBarContent] = useState<string>("");
+  const [tocOpen, setTocOpen] = useState(false);
 
   function updateTocBar(heading: string, position: number) {
     setTocBarContent(heading);
@@ -53,6 +54,8 @@ export function ExhibitionPage(props: ExhibitionPageProps) {
                   position={idx}
                   key={`exhibition_heading_${idx}`}
                   updateTocBar={updateTocBar}
+                  setTocOpen={setTocOpen}
+                  tocOpen={tocOpen}
                 />
                 <InfoBlock key={`info${idx}`} canvas={canvas} strategy={strategy} id={idx} />
               </>
@@ -67,6 +70,8 @@ export function ExhibitionPage(props: ExhibitionPageProps) {
                   position={idx}
                   key={`exhibition_heading_${idx}`}
                   updateTocBar={updateTocBar}
+                  setTocOpen={setTocOpen}
+                  tocOpen={tocOpen}
                 />
                 <ImageBlock key={`image${idx}`} canvas={canvas} index={idx} objectLinks={foundLinks} id={idx} />
               </>
@@ -81,6 +86,8 @@ export function ExhibitionPage(props: ExhibitionPageProps) {
                   position={idx}
                   key={`exhibition_heading_${idx}`}
                   updateTocBar={updateTocBar}
+                  setTocOpen={setTocOpen}
+                  tocOpen={tocOpen}
                 />
                 <MediaBlock key={`media${idx}`} canvas={canvas} strategy={strategy} index={idx} id={idx} />
               </>
@@ -90,7 +97,13 @@ export function ExhibitionPage(props: ExhibitionPageProps) {
           return null;
         })}
 
-        <TOCBar manifest={props.manifest} heading={TOCHeading} barContent={tocBarContent} />
+        <TOCBar
+          manifest={props.manifest}
+          heading={TOCHeading}
+          barContent={tocBarContent}
+          tocOpen={tocOpen}
+          setTocOpen={setTocOpen}
+        />
       </div>
       {/* <Slot name="exhibition" context={{ locale: props.locale, exhibition: props.slug }} /> */}
     </>

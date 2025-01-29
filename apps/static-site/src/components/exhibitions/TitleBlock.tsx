@@ -11,10 +11,14 @@ export function TitlePanel({
   manifest,
   position,
   updateTocBar,
+  setTocOpen,
+  tocOpen,
 }: {
   manifest: Manifest;
   position: number;
   updateTocBar: (heading: string, position: number) => void;
+  setTocOpen: (isOpen: boolean) => void;
+  tocOpen: boolean;
 }) {
   const ref = useRef(null);
 
@@ -73,7 +77,9 @@ export function TitlePanel({
           <div className="flex flex-row justify-between">
             {/* TODO: PASS IN TRANSLATED WORDS!! */}
             <div className="text-xl uppercase">Exhibition</div>
-            <div className="text-xl uppercase">Table Of Contents</div>
+            <div className="cursor-pointer text-xl uppercase" onClick={() => setTocOpen(!tocOpen)}>
+              Table Of Contents
+            </div>
           </div>
           <div className="flex flex-row justify-between">
             <h1 className="text-4xl font-medium">
