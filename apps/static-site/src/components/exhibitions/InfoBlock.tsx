@@ -6,9 +6,7 @@ import { AutoLanguage } from "../pages/AutoLanguage";
 import { Suspense } from "react";
 import { ReadMoreBlock } from "./ReadMore";
 import { useLocale } from "next-intl";
-import { getTranslations } from "next-intl/server";
 import { getValue } from "@iiif/helpers";
-import { TextContent } from "react-iiif-vault";
 
 interface InfoBlockProps {
   canvas: Canvas;
@@ -16,26 +14,25 @@ interface InfoBlockProps {
   id: number;
 }
 
-export async function InfoBlock({ id, canvas, strategy }: InfoBlockProps) {
-  const t = await getTranslations();
+export function InfoBlock({ id, canvas, strategy }: InfoBlockProps) {
   const className = getClassName(canvas.behavior);
   const locale = useLocale();
   const items =
     strategy.items.length === 1 ? strategy.items : strategy.items.filter((t) => Object.keys(t.text).includes(locale));
-  const intro = items[0]?.text;
 
   return (
     <>
       <div className={twMerge("cut-corners bg-black p-6 text-white", className)}>
-        <div className="exhibition-info-block" id={getValue(intro)}>
+        <div className="exhibition-info-block">
           {items.map((item, idx) => (
             <AutoLanguage key={idx} lines html className="mb-3">
               {item.text}
             </AutoLanguage>
           ))}
           <p>
-            <Suspense fallback={<div className="underline underline-offset-4">{t("Read more")}</div>}>
-              <ReadMoreBlock content={{ readMore: t("Read more") }} canvasId={canvas.id} />
+            {/* TODO: reintroduce translations */}
+            <Suspense fallback={<div className="underline underline-offset-4">Read more</div>}>
+              <ReadMoreBlock content={{ readMore: "Read more" }} canvasId={canvas.id} />
             </Suspense>
           </p>
         </div>

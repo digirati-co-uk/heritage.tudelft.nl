@@ -1,3 +1,4 @@
+"use client";
 import { Manifest } from "@iiif/presentation-3";
 import { createPaintingAnnotationsHelper } from "@iiif/helpers/painting-annotations";
 import { getRenderingStrategy } from "react-iiif-vault/utils";
@@ -7,7 +8,7 @@ import { ImageBlock } from "../exhibitions/ImageBlock";
 import { MediaBlock } from "../exhibitions/MediaBlock";
 import { Slot } from "@/blocks/slot";
 import { TOCBar } from "../exhibitions/TOCBar";
-import { getTranslations } from "next-intl/server";
+import { useState } from "react";
 
 export interface ExhibitionPageProps {
   locale: string;
@@ -17,11 +18,15 @@ export interface ExhibitionPageProps {
   viewObjectLinks: Array<{ service: string; slug: string; canvasId: string; targetCanvasId: string }>;
 }
 
-export async function ExhibitionPage(props: ExhibitionPageProps) {
+export function ExhibitionPage(props: ExhibitionPageProps) {
   const helper = createPaintingAnnotationsHelper();
   const canvas: any = props.manifest.items[0];
-  const t = await getTranslations();
-  const TOCHeading = t("Table of contents");
+  const TOCHeading = "Table of contents"; // TODO make intl
+  const [tocBarContent, setTocBarContent] = useState<string>("");
+
+  function updateTocBar(heading: string) {
+    setTocBarContent(heading);
+  }
 
   if (!canvas) return null;
 
@@ -39,12 +44,15 @@ export async function ExhibitionPage(props: ExhibitionPageProps) {
 
           const foundLinks = props.viewObjectLinks.filter((link) => link.canvasId === canvas.id);
 
-          //console.log(strategy);
-
           if (strategy.type === "textual-content") {
             return (
               <>
-                <TitlePanel manifest={props.manifest} position={idx} />
+                <TitlePanel
+                  manifest={props.manifest}
+                  position={idx}
+                  key={`exhibition_heading_${idx}`}
+                  updateTocBar={updateTocBar}
+                />
                 <InfoBlock key={idx} canvas={canvas} strategy={strategy} id={idx} />
               </>
             );
@@ -53,7 +61,12 @@ export async function ExhibitionPage(props: ExhibitionPageProps) {
           if (strategy.type === "images") {
             return (
               <>
-                <TitlePanel manifest={props.manifest} position={idx} />
+                <TitlePanel
+                  manifest={props.manifest}
+                  position={idx}
+                  key={`exhibition_heading_${idx}`}
+                  updateTocBar={updateTocBar}
+                />
                 <ImageBlock key={idx} canvas={canvas} index={idx} objectLinks={foundLinks} id={idx} />
               </>
             );
@@ -62,7 +75,12 @@ export async function ExhibitionPage(props: ExhibitionPageProps) {
           if (strategy.type === "media") {
             return (
               <>
-                <TitlePanel manifest={props.manifest} position={idx} />
+                <TitlePanel
+                  manifest={props.manifest}
+                  position={idx}
+                  key={`exhibition_heading_${idx}`}
+                  updateTocBar={updateTocBar}
+                />
                 <MediaBlock key={idx} canvas={canvas} strategy={strategy} index={idx} id={idx} />
               </>
             );
@@ -71,7 +89,7 @@ export async function ExhibitionPage(props: ExhibitionPageProps) {
           return null;
         })}
 
-        <TOCBar manifest={props.manifest} TOCHeading={TOCHeading} />
+        <TOCBar manifest={props.manifest} heading={TOCHeading} barContent={tocBarContent} />
       </div>
       {/* <Slot name="exhibition" context={{ locale: props.locale, exhibition: props.slug }} /> */}
     </>

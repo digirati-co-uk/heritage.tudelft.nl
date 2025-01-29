@@ -6,7 +6,7 @@ import { Suspense } from "react";
 import { Canvas } from "@iiif/presentation-3";
 import { getValue } from "@iiif/helpers";
 
-export async function ImageBlock({
+export function ImageBlock({
   index,
   canvas,
   objectLinks,
