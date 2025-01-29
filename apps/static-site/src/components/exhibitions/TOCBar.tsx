@@ -67,6 +67,7 @@ export function TOCBar({
         </div>
 
         <button
+          aria-label={`${tocOpen ? "Hide" : "Show"} table of contents`}
           onClick={() => {
             setTocOpen(!tocOpen);
           }}

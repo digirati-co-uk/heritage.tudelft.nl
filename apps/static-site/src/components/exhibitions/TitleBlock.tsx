@@ -94,7 +94,7 @@ export function TitlePanel({
               <AutoLanguage>{manifest.label}</AutoLanguage>
             </h1>
             <div>
-              <a href={`#${position + 1}`}>
+              <a href={`#${position + 1}`} aria-label="Next Section">
                 <DownIcon />
               </a>
             </div>
@@ -108,11 +108,11 @@ export function TitlePanel({
             <AutoLanguage>{manifest.items[position]?.label}</AutoLanguage>
           </h2>
           <div className="flex flex-row">
-            <a href={`#${position - 1}`}>
+            <a href={`#${position - 1}`} aria-label="Previous Section">
               <UpIcon />
             </a>
             {position < manifest.items.length - 1 && (
-              <a href={`#${position + 1}`}>
+              <a href={`#${position + 1}`} aria-label="Next Section">
                 {" "}
                 <DownIcon />
               </a>
