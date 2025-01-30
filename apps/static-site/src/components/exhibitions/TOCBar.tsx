@@ -52,25 +52,30 @@ export function TOCBar({
         </div>
       )}
       {/* BAR */}
+
       <div
         className={twMerge(
-          "fixed left-0 top-0 flex min-h-14 w-full flex-row items-center justify-between gap-2 bg-[#6d6e70] px-5 text-2xl font-medium text-white transition-opacity duration-300 ease-in-out lg:text-4xl",
+          "fixed left-0 top-0 flex min-h-14 w-full flex-row content-center justify-center bg-[#6d6e70] px-5 transition-opacity duration-300 ease-in-out lg:px-0",
           barDisplayClass
         )}
       >
-        <div className="m-2 flex flex-col gap-1 md:flex-row md:gap-6">
-          <div>{title}</div>
-          <div className="font-light">{barContent}</div>
-        </div>
+        <div className="col-span-12 w-full max-w-screen-xl lg:px-10">
+          <div className="mx-auto flex flex-row items-center justify-between gap-2 text-2xl font-medium text-white lg:text-4xl">
+            <div className="m-2 flex flex-col gap-1 md:flex-row md:gap-6">
+              <div>{title}</div>
+              <div className="font-light">{barContent}</div>
+            </div>
 
-        <button
-          aria-label={`${tocOpen ? "Hide" : "Show"} table of contents`}
-          onClick={() => {
-            setTocOpen(!tocOpen);
-          }}
-        >
-          <ExpandDownIcon />
-        </button>
+            <button
+              aria-label={`${tocOpen ? "Hide" : "Show"} table of contents`}
+              onClick={() => {
+                setTocOpen(!tocOpen);
+              }}
+            >
+              <ExpandDownIcon />
+            </button>
+          </div>
+        </div>
       </div>
     </>
   );
