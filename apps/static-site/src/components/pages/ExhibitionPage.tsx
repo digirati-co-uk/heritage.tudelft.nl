@@ -29,12 +29,12 @@ export function ExhibitionPage(props: ExhibitionPageProps) {
   const TOCHeading = "Table of contents"; // TODO make intl
   const [tocBarContent, setTocBarContent] = useState<string>("");
   const [tocOpen, setTocOpen] = useState(false);
-  //const [tocBarShown, setTocBarShown] = useState(false);
+  const [tocBarShown, setTocBarShown] = useState(false);
 
   function updateTocBar(heading: string, position: number, showTocBar: boolean) {
     setTocBarContent(heading);
     window.location.hash = position.toString();
-    //setTocBarShown(showTocBar);
+    setTocBarShown(showTocBar);
   }
 
   if (!canvas) return null;
@@ -54,56 +54,55 @@ export function ExhibitionPage(props: ExhibitionPageProps) {
 
             const foundLinks = props.viewObjectLinks.filter((link) => link.canvasId === canvas.id);
 
-          if (strategy.type === "textual-content") {
-            return (
-              <>
-                <TitlePanel
-                  manifest={props.manifest}
-                  position={idx}
-                  key={`exhibition_heading_${idx}`}
-                  updateTocBar={updateTocBar}
-                  setTocOpen={setTocOpen}
-                  tocOpen={tocOpen}
-                />
-                <InfoBlock key={`info${idx}`} canvas={canvas} strategy={strategy} id={idx} locale={props.locale}/>
-              </>
-            );
-          }
+            if (strategy.type === "textual-content") {
+              return (
+                <>
+                  <TitlePanel
+                    manifest={props.manifest}
+                    position={idx}
+                    key={`exhibition_heading_${idx}`}
+                    updateTocBar={updateTocBar}
+                    setTocOpen={setTocOpen}
+                    tocOpen={tocOpen}
+                  />
+                  <InfoBlock key={`info${idx}`} canvas={canvas} strategy={strategy} id={idx} locale={props.locale} />
+                </>
+              );
+            }
 
-          if (strategy.type === "images") {
-            return (
-              <>
-                <TitlePanel
-                  manifest={props.manifest}
-                  position={idx}
-                  key={`exhibition_heading_${idx}`}
-                  updateTocBar={updateTocBar}
-                  setTocOpen={setTocOpen}
-                  tocOpen={tocOpen}
-                />
-                <ImageBlock key={`image${idx}`} canvas={canvas} index={idx} objectLinks={foundLinks} id={idx}/>
-              </>
-            );
-          }
+            if (strategy.type === "images") {
+              return (
+                <>
+                  <TitlePanel
+                    manifest={props.manifest}
+                    position={idx}
+                    key={`exhibition_heading_${idx}`}
+                    updateTocBar={updateTocBar}
+                    setTocOpen={setTocOpen}
+                    tocOpen={tocOpen}
+                  />
+                  <ImageBlock key={`image${idx}`} canvas={canvas} index={idx} objectLinks={foundLinks} id={idx} />
+                </>
+              );
+            }
 
-          if (strategy.type === "media") {
-            return (
-              <>
-                <TitlePanel
-                  manifest={props.manifest}
-                  position={idx}
-                  key={`exhibition_heading_${idx}`}
-                  updateTocBar={updateTocBar}
-                  setTocOpen={setTocOpen}
-                  tocOpen={tocOpen}
-                />
-                <Suspense key={idx} fallback={<div className={"cut-corners bg-black text-white"} />}>
-                  <MediaBlock key={`media${idx}`} canvas={canvas} strategy={strategy} index={idx} id={idx} />
-                </Suspense>
-              </>
-            );
-          }
-
+            if (strategy.type === "media") {
+              return (
+                <>
+                  <TitlePanel
+                    manifest={props.manifest}
+                    position={idx}
+                    key={`exhibition_heading_${idx}`}
+                    updateTocBar={updateTocBar}
+                    setTocOpen={setTocOpen}
+                    tocOpen={tocOpen}
+                  />
+                  <Suspense key={idx} fallback={<div className={"cut-corners bg-black text-white"} />}>
+                    <MediaBlock key={`media${idx}`} canvas={canvas} strategy={strategy} index={idx} id={idx} />
+                  </Suspense>
+                </>
+              );
+            }
 
             return null;
           } catch (e) {
@@ -116,7 +115,7 @@ export function ExhibitionPage(props: ExhibitionPageProps) {
           barContent={tocBarContent}
           tocOpen={tocOpen}
           setTocOpen={setTocOpen}
-          tocBarShown={true}
+          tocBarShown={tocBarShown}
         />
       </div>
       {/* <Slot name="exhibition" context={{ locale: props.locale, exhibition: props.slug }} /> */}

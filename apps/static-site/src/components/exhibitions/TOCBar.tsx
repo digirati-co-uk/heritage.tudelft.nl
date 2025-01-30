@@ -1,7 +1,7 @@
 "use client";
 import { Manifest } from "@iiif/presentation-3";
 import { getValue } from "@iiif/helpers";
-import { BurgerIcon } from "../atoms/BurgerIcon";
+import { ExpandDownIcon } from "../atoms/ExpandDownIcon";
 import { CloseIcon } from "../atoms/CloseIcon";
 import { twMerge } from "tailwind-merge";
 
@@ -54,11 +54,11 @@ export function TOCBar({
       {/* BAR */}
       <div
         className={twMerge(
-          "fixed bottom-10 right-0 flex min-h-14 w-full flex-row items-center justify-between bg-[#6d6e70] px-5 text-4xl font-medium text-white transition-opacity duration-300 ease-in-out",
+          "fixed left-0 top-0 flex min-h-14 w-full flex-row items-center justify-between gap-2 bg-[#6d6e70] px-5 text-2xl font-medium text-white transition-opacity duration-300 ease-in-out lg:text-4xl",
           barDisplayClass
         )}
       >
-        <div className="flex flex-row gap-6">
+        <div className="m-2 flex flex-col gap-1 md:flex-row md:gap-6">
           <div>{title}</div>
           <div className="font-light">{barContent}</div>
         </div>
@@ -69,7 +69,7 @@ export function TOCBar({
             setTocOpen(!tocOpen);
           }}
         >
-          <BurgerIcon />
+          <ExpandDownIcon />
         </button>
       </div>
     </>

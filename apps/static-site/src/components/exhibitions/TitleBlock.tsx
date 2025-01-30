@@ -26,7 +26,7 @@ export function TitlePanel({
   // amount to reduce the intersection root container by. It starts as window height.
   // viewport height - (height-200) = leaves a 200 high region at the top.
   const { height } = useWindowDimensions();
-  const bottomMargin = -(height - 150);
+  const bottomMargin = -(height - 200);
   const intersectionOptions = {
     rootMargin: `0px 0px ${bottomMargin}px 0px`,
     threshold: 1.0,
@@ -53,22 +53,22 @@ export function TitlePanel({
   }
 
   function handleIntersect(entries: IntersectionObserverEntry[]) {
-    for (const entry of entries)  {
+    for (const entry of entries) {
       //console.log(entry);
       const targetId: string = entry.target.id;
       const id = Number.parseInt(targetId);
       const heading = !Number.isNaN(id) && getValue(manifest.items[id]?.label);
       if (entry.isIntersecting) {
         heading && updateTocBar(heading, id, targetId !== "0"); // update heading and show bar for all except zeroth position
-      } 
-      // else {
-      //   // when scrolling starts and '0' exits off the top of the screen (buggy!!)
-      //   if (targetId === "0" && entry.intersectionRect.top === 0) {
-      //     //console.log("show the bar!");
-      //     heading && updateTocBar(heading, id, true);
-      //   }
-      // }
-    };
+      } else {
+        console.log("intersect top", entry.intersectionRect.top);
+        // when scrolling starts and '0' exits off the top of the screen (buggy!!)
+        if (targetId === "0" && entry.intersectionRect.top === 0) {
+          //console.log("show the bar!");
+          heading && updateTocBar(heading, id, true);
+        }
+      }
+    }
   }
   useLayoutEffect(() => {
     const current = ref?.current;
