@@ -5,7 +5,6 @@ import { Suspense } from "react";
 import type { TextualContentStrategy } from "react-iiif-vault";
 import { twMerge } from "tailwind-merge";
 import { AutoLanguage } from "../pages/AutoLanguage";
-import { ReadMoreBlock } from "./ReadMore";
 import { useLocale } from "next-intl";
 import { getValue } from "@iiif/helpers";
 
