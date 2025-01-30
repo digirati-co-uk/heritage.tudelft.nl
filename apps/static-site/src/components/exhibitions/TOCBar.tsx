@@ -4,6 +4,7 @@ import { getValue } from "@iiif/helpers";
 import { ExpandDownIcon } from "../atoms/ExpandDownIcon";
 import { CloseIcon } from "../atoms/CloseIcon";
 import { twMerge } from "tailwind-merge";
+import { CollapseUpIcon } from "../atoms/CollapseUpIcon";
 
 export function TOCBar({
   manifest,
@@ -27,27 +28,29 @@ export function TOCBar({
   return (
     <>
       {tocOpen && (
-        <div className="fixed top-0 flex h-full w-full flex-row items-center justify-center">
+        <div className="fixed left-0 top-0 flex h-full w-full flex-row justify-center border border-red-600">
           {/* MODAL CONTAINER */}
-          <div className="border-1 cut-corners mx-auto w-3/5 border-[#6d6e70] bg-[#6d6e70] px-8 py-5 text-white">
-            <div className="mb-3 flex flex-row justify-between">
-              <div className="text-lg">{`${title} - ${heading}`}</div>
-              <button onClick={() => setTocOpen(false)}>
-                <CloseIcon fill={"#fff"} />
-              </button>
+          <div className="col-span-12 w-full max-w-screen-xl px-5 pt-10 text-white lg:px-10">
+            <div className="bg-[#6d6e70] p-5">
+              <div className="mb-3 flex flex-row justify-between">
+                <div className="text-lg">{`${title} - ${heading}`}</div>
+                {/* <button onClick={() => setTocOpen(false)}>
+                  <CloseIcon fill={"#fff"} />
+                </button> */}
+              </div>
+              <ul>
+                {contents.map((item, idx) => {
+                  const label = getValue(item.label);
+                  return (
+                    <li key={`toc_entry_${idx}_${label.substring(0, 20)}`}>
+                      <a className="hover:underline" href={`#${idx}`}>
+                        {label}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
             </div>
-            <ul>
-              {contents.map((item, idx) => {
-                const label = getValue(item.label);
-                return (
-                  <li key={`toc_entry_${idx}_${label.substring(0, 20)}`}>
-                    <a className="hover:underline" href={`#${idx}`}>
-                      {label}
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
           </div>
         </div>
       )}
@@ -76,7 +79,7 @@ export function TOCBar({
                 setTocOpen(!tocOpen);
               }}
             >
-              <ExpandDownIcon />
+              {tocOpen ? <CollapseUpIcon /> : <ExpandDownIcon />}
             </button>
           </div>
         </div>
