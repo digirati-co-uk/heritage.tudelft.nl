@@ -53,21 +53,22 @@ export function TitlePanel({
   }
 
   function handleIntersect(entries: IntersectionObserverEntry[]) {
-    entries.forEach((entry) => {
+    for (const entry of entries)  {
       //console.log(entry);
       const targetId: string = entry.target.id;
-      const id = parseInt(targetId);
+      const id = Number.parseInt(targetId);
       const heading = !Number.isNaN(id) && getValue(manifest.items[id]?.label);
       if (entry.isIntersecting) {
         heading && updateTocBar(heading, id, targetId !== "0"); // update heading and show bar for all except zeroth position
-      } else {
-        // when scrolling starts and '0' exits off the top of the screen (buggy!!)
-        if (targetId === "0" && entry.intersectionRect.top === 0) {
-          //console.log("show the bar!");
-          heading && updateTocBar(heading, id, true);
-        }
-      }
-    });
+      } 
+      // else {
+      //   // when scrolling starts and '0' exits off the top of the screen (buggy!!)
+      //   if (targetId === "0" && entry.intersectionRect.top === 0) {
+      //     //console.log("show the bar!");
+      //     heading && updateTocBar(heading, id, true);
+      //   }
+      // }
+    };
   }
   useLayoutEffect(() => {
     const current = ref?.current;
