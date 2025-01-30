@@ -83,13 +83,6 @@ export function TitlePanel({
       <div className="col-span-12 w-full px-5 pb-8 text-black" id={`${position.toString()}`} ref={ref}>
         <div className="flex flex-col gap-5">
           <div className="flex flex-row justify-between">
-            {/* TODO: PASS IN TRANSLATED WORDS!! */}
-            <div className="text-xl uppercase">Exhibition</div>
-            <div className="cursor-pointer text-xl uppercase" onClick={() => setTocOpen(!tocOpen)}>
-              Table Of Contents
-            </div>
-          </div>
-          <div className="flex flex-row justify-between">
             <h1 className="text-4xl font-medium">
               <AutoLanguage>{manifest.label}</AutoLanguage>
             </h1>

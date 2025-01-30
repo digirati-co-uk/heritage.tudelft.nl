@@ -62,7 +62,11 @@ export function TOCBar({
         <div className="col-span-12 w-full max-w-screen-xl lg:px-10">
           <div className="mx-auto flex flex-row items-center justify-between gap-2 text-2xl font-medium text-white lg:text-4xl">
             <div className="m-2 flex flex-col gap-1 md:flex-row md:gap-6">
-              <div>{title}</div>
+              <div>
+                <a href="#0" aria-label="Back to top">
+                  {title}
+                </a>
+              </div>
               <div className="font-light">{barContent}</div>
             </div>
 
