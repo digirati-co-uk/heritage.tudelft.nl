@@ -25,10 +25,10 @@ export function TOCBar({
       {/* BAR */}
       <div className="fixed bottom-0 left-0 z-30 flex min-h-14 w-full flex-row content-center justify-center bg-[#6d6e70] px-4 lg:px-9">
         <div className="relative z-30 w-full max-w-screen-xl">
-          <div className="flex flex-row items-center justify-between gap-2 text-2xl font-medium text-white lg:mb-1.5 lg:text-4xl">
+          <div className="flex flex-row items-center justify-between gap-2 text-2xl font-medium text-white lg:mb-1.5">
             <div className="m-2 font-light">
               <button
-                className="z-50 text-white"
+                className="z-50 uppercase text-white"
                 onClick={() => {
                   setTocOpen(!tocOpen);
                 }}
@@ -37,9 +37,9 @@ export function TOCBar({
                 {barContent}
               </button>
             </div>
-            <div className="flex flex-row gap-1">
+            <div className="flex flex-row items-center gap-1 text-3xl">
               <button
-                className="z-50 text-white"
+                className="z-50"
                 onClick={() => {
                   setTocOpen(!tocOpen);
                 }}
@@ -47,7 +47,7 @@ export function TOCBar({
               >
                 <ContentsIcon />
               </button>
-              <a href="#site_top" aria-label={"Back to top"} className="z-50 self-end">
+              <a href="#site_top" aria-label={"Back to top"} className="z-50">
                 <TopIcon />
               </a>
             </div>
@@ -57,20 +57,23 @@ export function TOCBar({
 
       {/* TOC MODAL */}
       {tocOpen && (
-        <div className="fixed bottom-[3.5rem] left-0 z-40 flex max-h-[90vh] w-full flex-row content-center justify-center overflow-y-scroll border-b-2 border-black bg-[#6d6e70] px-4 lg:px-10">
+        <div className="fixed bottom-[3.5rem] left-0 z-40 flex max-h-[90vh] w-full flex-row content-center justify-center overflow-y-auto border-b-2 border-black bg-[#6d6e70] px-4 lg:px-10">
           <div className="z-40 flex w-full max-w-screen-xl flex-col px-2 py-5 text-white">
-            <div className="mb-3">
-              <div className="text-lg">{`${title} - ${heading}`}</div>
+            <div className="mb-3 flex flex-col gap-4">
+              <div className="text-lg uppercase">{title}</div>
+              <div className="text-lg">{heading}</div>
             </div>
             <ul>
               {contents.map((item, idx) => {
                 const label = getValue(item.label);
                 return (
-                  <li key={`toc_entry_${idx}_${label.substring(0, 20)}`}>
-                    <a className="hover:underline" href={`#${idx}`} onClick={() => setTocOpen(false)}>
-                      {label}
-                    </a>
-                  </li>
+                  label && (
+                    <li key={`toc_entry_${idx}_${label.substring(0, 20)}`}>
+                      <a className="text-md hover:underline" href={`#${idx}`} onClick={() => setTocOpen(false)}>
+                        {`${idx + 1}. ${label}`}
+                      </a>
+                    </li>
+                  )
                 );
               })}
             </ul>
