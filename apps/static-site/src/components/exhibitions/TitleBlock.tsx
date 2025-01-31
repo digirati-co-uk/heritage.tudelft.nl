@@ -10,10 +10,12 @@ import type { Manifest } from "@iiif/presentation-3";
 export function TitlePanel({
   manifest,
   position,
+  showTitle,
   updateTocBar,
 }: {
   manifest: Manifest;
   position: number;
+  showTitle: boolean;
   updateTocBar: (heading: string, position: number, showTocBar: boolean) => void;
 }) {
   const ref = useRef(null);
@@ -66,27 +68,33 @@ export function TitlePanel({
   }, [height]);
   invariant(manifest, "Manifest not found");
   return (
-    manifest.items[position]?.label && (
-      <div className="col-span-12 w-full px-5 pb-8 pt-8 text-black" id={`${position.toString()}`} ref={ref}>
-        <div className="flex flex-row justify-between">
-          <h2 className="text-4xl font-light">
-            <AutoLanguage>{manifest.items[position]?.label}</AutoLanguage>
-          </h2>
-          <div className="flex flex-row items-center">
-            {position > 0 && (
-              <a href={`#${position - 1}`} aria-label="Previous Section">
-                <UpIcon />
-              </a>
-            )}
-            {position < manifest.items.length - 1 && (
-              <a href={`#${position + 1}`} aria-label="Next Section">
-                {" "}
-                <DownIcon />
-              </a>
-            )}
+    manifest.items[position]?.label &&
+    (showTitle ? (
+      position === 0 ? (
+        <div className="col-span-12 w-full px-5 pb-8 text-black" id={`${position.toString()}`} ref={ref}>
+          <div className="flex flex-col gap-5">
+            <div className="flex flex-row justify-between">
+              {/* TODO: PASS IN TRANSLATED WORDS!! */}
+              <div className="text-xl uppercase">Exhibition</div>
+            </div>
+            <div className="flex flex-row justify-between">
+              <h1 className="text-4xl font-medium">
+                <AutoLanguage>{manifest.label}</AutoLanguage>
+              </h1>
+            </div>
           </div>
         </div>
-      </div>
-    )
+      ) : (
+        <div className="col-span-12 w-full px-5 pb-8 pt-8 text-black" id={`${position.toString()}`} ref={ref}>
+          <div className="flex flex-row justify-between">
+            <h2 className="text-4xl font-light">
+              <AutoLanguage>{manifest.items[position]?.label}</AutoLanguage>
+            </h2>
+          </div>
+        </div>
+      )
+    ) : (
+      <div id={`${position.toString()}`} ref={ref}></div>
+    ))
   );
 }

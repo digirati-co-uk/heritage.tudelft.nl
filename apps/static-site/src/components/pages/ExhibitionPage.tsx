@@ -59,6 +59,7 @@ export function ExhibitionPage(props: ExhibitionPageProps) {
             });
 
             const foundLinks = props.viewObjectLinks.filter((link) => link.canvasId === canvas.id);
+            const showTitle = idx == 0; // only show main title at top, not section titles
 
             if (strategy.type === "textual-content") {
               return (
@@ -68,6 +69,7 @@ export function ExhibitionPage(props: ExhibitionPageProps) {
                     position={idx}
                     key={`exhibition_heading_${idx}`}
                     updateTocBar={updateTocBar}
+                    showTitle={showTitle}
                   />
                   <InfoBlock key={`info${idx}`} canvas={canvas} strategy={strategy} id={idx} locale={props.locale} />
                 </>
@@ -82,6 +84,7 @@ export function ExhibitionPage(props: ExhibitionPageProps) {
                     position={idx}
                     key={`exhibition_heading_${idx}`}
                     updateTocBar={updateTocBar}
+                    showTitle={showTitle}
                   />
                   <ImageBlock key={`image${idx}`} canvas={canvas} index={idx} objectLinks={foundLinks} id={idx} />
                 </>
@@ -96,6 +99,7 @@ export function ExhibitionPage(props: ExhibitionPageProps) {
                     position={idx}
                     key={`exhibition_heading_${idx}`}
                     updateTocBar={updateTocBar}
+                    showTitle={showTitle}
                   />
                   <Suspense key={idx} fallback={<div className={"cut-corners bg-black text-white"} />}>
                     <MediaBlock key={`media${idx}`} canvas={canvas} strategy={strategy} index={idx} id={idx} />
