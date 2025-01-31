@@ -66,7 +66,7 @@ export async function GlobalHeader() {
 
   return (
     <div className="flex justify-center bg-[#1D1F71] font-mono text-white">
-      <div className="flex h-16 w-full max-w-screen-xl items-center gap-5 px-5 py-2 md:px-10">
+      <div className="flex h-16 w-full max-w-screen-xl items-center gap-5 px-5 py-2 md:px-10" id="site_top">
         <MobileMenu>{menu}</MobileMenu>
         <div className="font-mono uppercase max-sm:ml-auto max-sm:mr-auto md:text-base">
           <Link href="/">{t("Academic Heritage")}</Link>
