@@ -39,7 +39,15 @@ export function ExhibitionPage(props: ExhibitionPageProps) {
 
   return (
     <>
-      <div className="mb-12 auto-rows-auto grid-cols-12 content-center justify-center pt-2 lg:grid">
+      <TOCBar
+        manifest={props.manifest}
+        heading={TOCHeading}
+        barContent={tocBarContent}
+        tocOpen={tocOpen}
+        setTocOpen={setTocOpen}
+      />
+
+      <div className="mb-12 auto-rows-auto grid-cols-12 content-center justify-center lg:grid">
         {props.manifest.items.map((canvas: any, idx) => {
           const paintables = helper.getPaintables(canvas);
           try {
@@ -101,13 +109,6 @@ export function ExhibitionPage(props: ExhibitionPageProps) {
             return null;
           }
         })}
-        <TOCBar
-          manifest={props.manifest}
-          heading={TOCHeading}
-          barContent={tocBarContent}
-          tocOpen={tocOpen}
-          setTocOpen={setTocOpen}
-        />
       </div>
       {/* <Slot name="exhibition" context={{ locale: props.locale, exhibition: props.slug }} /> */}
     </>

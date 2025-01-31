@@ -22,31 +22,21 @@ export function TOCBar({
 
   return (
     <>
-      {tocOpen && (
-        <div className="fixed left-0 top-[3.75rem] flex w-full flex-row justify-center bg-[#6d6e70]">
-          <div className="flex w-full max-w-screen-xl flex-col px-6 py-5 text-white lg:px-11">
-            <div className="mb-3">
-              <div className="text-lg">{`${title} - ${heading}`}</div>
-            </div>
-            <ul>
-              {contents.map((item, idx) => {
-                const label = getValue(item.label);
-                return (
-                  <li key={`toc_entry_${idx}_${label.substring(0, 20)}`}>
-                    <a className="hover:underline" href={`#${idx}`}>
-                      {label}
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        </div>
-      )}
-      {/* BAR */}
-      <div className="fixed left-0 top-[3.75rem] flex min-h-14 w-full flex-row content-center justify-center bg-[#6d6e70] px-4 transition-opacity duration-300 ease-in-out lg:px-0">
-        <div className="col-span-12 w-full max-w-screen-xl lg:px-9">
-          <div className="mx-auto flex flex-row items-center justify-between gap-2 text-2xl font-medium text-white lg:mb-1.5 lg:text-4xl">
+      {/* BAR - with pseudo element to make it appear full width outside of narrow page container*/}
+      <div
+        className="sticky left-0 top-0 z-30 flex min-h-14 w-full flex-row content-center justify-center
+           before:absolute 
+           before:bottom-0 
+           before:left-[-100%]
+           before:right-[-100%]
+           before:top-0 
+           before:z-10 
+           before:w-[300vw] 
+           before:bg-[#6d6e70]
+           before:content-['']"
+      >
+        <div className="relative z-30 w-full max-w-screen-xl">
+          <div className="flex flex-row items-center justify-between gap-2 text-2xl font-medium text-white lg:mb-1.5 lg:text-4xl">
             <div className="m-2 flex flex-col gap-1 md:flex-row md:gap-6">
               <div>
                 <a href="#site_top" aria-label="Back to top">
@@ -68,6 +58,28 @@ export function TOCBar({
           </div>
         </div>
       </div>
+      {/* TOC MODAL */}
+      {tocOpen && (
+        <div className="absolute left-0 z-40 flex w-full flex-row content-center justify-center bg-[#6d6e70]">
+          <div className="z-40 flex w-full max-w-screen-xl flex-col px-7 py-5 text-white lg:px-12">
+            <div className="mb-3">
+              <div className="text-lg">{`${title} - ${heading}`}</div>
+            </div>
+            <ul>
+              {contents.map((item, idx) => {
+                const label = getValue(item.label);
+                return (
+                  <li key={`toc_entry_${idx}_${label.substring(0, 20)}`}>
+                    <a className="hover:underline" href={`#${idx}`}>
+                      {label}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </div>
+      )}
     </>
   );
 }
