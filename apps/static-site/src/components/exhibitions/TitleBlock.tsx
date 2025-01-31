@@ -72,7 +72,7 @@ export function TitlePanel({
           <h2 className="text-4xl font-light">
             <AutoLanguage>{manifest.items[position]?.label}</AutoLanguage>
           </h2>
-          <div className="flex flex-row">
+          <div className="flex flex-row items-center">
             {position > 0 && (
               <a href={`#${position - 1}`} aria-label="Previous Section">
                 <UpIcon />
