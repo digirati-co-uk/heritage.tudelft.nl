@@ -78,32 +78,18 @@ export function TitlePanel({
   }, [height]);
   invariant(manifest, "Manifest not found");
   return (
-    manifest.items[position]?.label &&
-    (position === 0 ? (
-      <div className="col-span-12 w-full px-5 pb-8 text-black" id={`${position.toString()}`} ref={ref}>
-        <div className="flex flex-col gap-5">
-          <div className="flex flex-row justify-between">
-            <h1 className="text-4xl font-medium">
-              <AutoLanguage>{manifest.label}</AutoLanguage>
-            </h1>
-            <div>
-              <a href={`#${position + 1}`} aria-label="Next Section">
-                <DownIcon />
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    ) : (
+    manifest.items[position]?.label && (
       <div className="col-span-12 w-full px-5 pb-8 pt-8 text-black" id={`${position.toString()}`} ref={ref}>
         <div className="flex flex-row justify-between">
           <h2 className="text-4xl font-light">
             <AutoLanguage>{manifest.items[position]?.label}</AutoLanguage>
           </h2>
           <div className="flex flex-row">
-            <a href={`#${position - 1}`} aria-label="Previous Section">
-              <UpIcon />
-            </a>
+            {position > 0 && (
+              <a href={`#${position - 1}`} aria-label="Previous Section">
+                <UpIcon />
+              </a>
+            )}
             {position < manifest.items.length - 1 && (
               <a href={`#${position + 1}`} aria-label="Next Section">
                 {" "}
@@ -113,6 +99,6 @@ export function TitlePanel({
           </div>
         </div>
       </div>
-    ))
+    )
   );
 }

@@ -41,7 +41,7 @@ export function ExhibitionPage(props: ExhibitionPageProps) {
 
   return (
     <>
-      <div className="mb-12 auto-rows-auto grid-cols-12 content-center justify-center lg:grid">
+      <div className="mb-12 auto-rows-auto grid-cols-12 content-center justify-center pt-5 lg:grid">
         {props.manifest.items.map((canvas: any, idx) => {
           const paintables = helper.getPaintables(canvas);
           try {
@@ -115,7 +115,7 @@ export function ExhibitionPage(props: ExhibitionPageProps) {
           barContent={tocBarContent}
           tocOpen={tocOpen}
           setTocOpen={setTocOpen}
-          tocBarShown={tocBarShown}
+          tocBarShown={true} //always show toc bar - don't hide when scrolled to top anymore
         />
       </div>
       {/* <Slot name="exhibition" context={{ locale: props.locale, exhibition: props.slug }} /> */}
