@@ -25,7 +25,7 @@ export function TOCBar({
       {/* BAR */}
       <div className="fixed bottom-0 left-0 z-30 flex min-h-14 w-full flex-row content-center justify-center bg-[#6d6e70] px-4 lg:px-9">
         <div className="relative z-30 w-full max-w-screen-xl">
-          <div className="flex flex-row items-center justify-between gap-2 text-2xl font-medium text-white lg:mb-1.5">
+          <div className="flex flex-row items-center justify-between gap-2 text-lg font-medium text-white sm:text-2xl lg:mb-1.5">
             <div className="m-2 font-light">
               <button
                 className="z-50 uppercase text-white"
