@@ -2,8 +2,6 @@
 import { Manifest } from "@iiif/presentation-3";
 import { getValue } from "@iiif/helpers";
 import { ExpandDownIcon } from "../atoms/ExpandDownIcon";
-import { CloseIcon } from "../atoms/CloseIcon";
-import { twMerge } from "tailwind-merge";
 import { CollapseUpIcon } from "../atoms/CollapseUpIcon";
 
 export function TOCBar({
@@ -12,18 +10,15 @@ export function TOCBar({
   barContent,
   tocOpen,
   setTocOpen,
-  tocBarShown,
 }: {
   manifest: Manifest;
   heading: string;
   barContent: string;
   tocOpen: boolean;
   setTocOpen: (isOpen: boolean) => void;
-  tocBarShown: boolean;
 }) {
   const title = getValue(manifest.label);
   const contents = manifest.items;
-  const barDisplayClass = tocBarShown ? "opacity-100" : "opacity-0";
 
   return (
     <>
@@ -49,18 +44,12 @@ export function TOCBar({
         </div>
       )}
       {/* BAR */}
-
-      <div
-        className={twMerge(
-          "fixed left-0 top-[3.75rem] flex min-h-14 w-full flex-row content-center justify-center bg-[#6d6e70] px-4 transition-opacity duration-300 ease-in-out lg:px-0",
-          barDisplayClass
-        )}
-      >
+      <div className="fixed left-0 top-[3.75rem] flex min-h-14 w-full flex-row content-center justify-center bg-[#6d6e70] px-4 transition-opacity duration-300 ease-in-out lg:px-0">
         <div className="col-span-12 w-full max-w-screen-xl lg:px-9">
           <div className="mx-auto flex flex-row items-center justify-between gap-2 text-2xl font-medium text-white lg:text-4xl">
             <div className="m-2 flex flex-col gap-1 md:flex-row md:gap-6">
               <div>
-                <a href="#0" aria-label="Back to top">
+                <a href="#site_top" aria-label="Back to top">
                   {title}
                 </a>
               </div>

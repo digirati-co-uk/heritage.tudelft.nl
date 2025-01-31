@@ -29,12 +29,10 @@ export function ExhibitionPage(props: ExhibitionPageProps) {
   const TOCHeading = "Table of contents"; // TODO make intl
   const [tocBarContent, setTocBarContent] = useState<string>("");
   const [tocOpen, setTocOpen] = useState(false);
-  const [tocBarShown, setTocBarShown] = useState(false);
 
-  function updateTocBar(heading: string, position: number, showTocBar: boolean) {
+  function updateTocBar(heading: string, position: number) {
     setTocBarContent(heading);
     window.location.hash = position.toString();
-    setTocBarShown(showTocBar);
   }
 
   if (!canvas) return null;
@@ -62,8 +60,6 @@ export function ExhibitionPage(props: ExhibitionPageProps) {
                     position={idx}
                     key={`exhibition_heading_${idx}`}
                     updateTocBar={updateTocBar}
-                    setTocOpen={setTocOpen}
-                    tocOpen={tocOpen}
                   />
                   <InfoBlock key={`info${idx}`} canvas={canvas} strategy={strategy} id={idx} locale={props.locale} />
                 </>
@@ -78,8 +74,6 @@ export function ExhibitionPage(props: ExhibitionPageProps) {
                     position={idx}
                     key={`exhibition_heading_${idx}`}
                     updateTocBar={updateTocBar}
-                    setTocOpen={setTocOpen}
-                    tocOpen={tocOpen}
                   />
                   <ImageBlock key={`image${idx}`} canvas={canvas} index={idx} objectLinks={foundLinks} id={idx} />
                 </>
@@ -94,8 +88,6 @@ export function ExhibitionPage(props: ExhibitionPageProps) {
                     position={idx}
                     key={`exhibition_heading_${idx}`}
                     updateTocBar={updateTocBar}
-                    setTocOpen={setTocOpen}
-                    tocOpen={tocOpen}
                   />
                   <Suspense key={idx} fallback={<div className={"cut-corners bg-black text-white"} />}>
                     <MediaBlock key={`media${idx}`} canvas={canvas} strategy={strategy} index={idx} id={idx} />
@@ -115,7 +107,6 @@ export function ExhibitionPage(props: ExhibitionPageProps) {
           barContent={tocBarContent}
           tocOpen={tocOpen}
           setTocOpen={setTocOpen}
-          tocBarShown={true} //always show toc bar - don't hide when scrolled to top anymore
         />
       </div>
       {/* <Slot name="exhibition" context={{ locale: props.locale, exhibition: props.slug }} /> */}
