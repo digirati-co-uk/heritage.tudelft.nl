@@ -45,7 +45,6 @@ export function TOCBar({
               </div>
               <div className="font-light">{barContent}</div>
             </div>
-
             <button
               aria-label={`${tocOpen ? "Hide" : "Show"} table of contents`}
               onClick={() => {
@@ -56,30 +55,42 @@ export function TOCBar({
               {tocOpen ? <CollapseUpIcon /> : <ExpandDownIcon />}
             </button>
           </div>
+
+          {/* TOC MODAL */}
+          {tocOpen && (
+            <div
+              className="absolute left-0 z-40 flex w-full flex-row content-center justify-center bg-[#6d6e70]
+              before:absolute 
+              before:bottom-0 
+              before:left-[-100%]
+              before:right-[-100%]
+              before:top-0 
+              before:z-10 
+              before:w-[300vw] 
+              before:bg-[#6d6e70]
+              before:content-['']"
+            >
+              <div className="z-40 flex w-full max-w-screen-xl flex-col px-2 py-5 text-white">
+                <div className="mb-3">
+                  <div className="text-lg">{`${title} - ${heading}`}</div>
+                </div>
+                <ul>
+                  {contents.map((item, idx) => {
+                    const label = getValue(item.label);
+                    return (
+                      <li key={`toc_entry_${idx}_${label.substring(0, 20)}`}>
+                        <a className="hover:underline" href={`#${idx}`}>
+                          {label}
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            </div>
+          )}
         </div>
       </div>
-      {/* TOC MODAL */}
-      {tocOpen && (
-        <div className="absolute left-0 z-40 flex w-full flex-row content-center justify-center bg-[#6d6e70]">
-          <div className="z-40 flex w-full max-w-screen-xl flex-col px-7 py-5 text-white lg:px-12">
-            <div className="mb-3">
-              <div className="text-lg">{`${title} - ${heading}`}</div>
-            </div>
-            <ul>
-              {contents.map((item, idx) => {
-                const label = getValue(item.label);
-                return (
-                  <li key={`toc_entry_${idx}_${label.substring(0, 20)}`}>
-                    <a className="hover:underline" href={`#${idx}`}>
-                      {label}
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        </div>
-      )}
     </>
   );
 }
