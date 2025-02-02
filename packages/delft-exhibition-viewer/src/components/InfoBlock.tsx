@@ -7,6 +7,7 @@ import { LocaleString, useIIIFLanguage } from "react-iiif-vault";
 import { twMerge } from "tailwind-merge";
 import { getClassName } from "../helpers/exhibition";
 import { getItemsByLocale } from "../helpers/get-items-by-locale";
+import { BaseGridSection } from "./BaseGridSection";
 
 const ReadMoreBlock = dynamic(() => import("./ReadMore"));
 
@@ -15,18 +16,34 @@ export interface InfoBlockProps {
   strategy: TextualContentStrategy;
   firstInfo?: boolean;
   locale: string;
+  id?: string;
+  index: number;
 }
 
-export function InfoBlock({ canvas, strategy, firstInfo }: InfoBlockProps) {
+export function InfoBlock({
+  id,
+  index,
+  canvas,
+  strategy,
+  firstInfo,
+}: InfoBlockProps) {
   const className = getClassName(canvas.behavior, firstInfo);
   const locale = useIIIFLanguage();
   const items = getItemsByLocale(strategy.items, locale);
 
   return (
-    <section className={twMerge("cut-corners bg-black p-6 text-white", className)}>
+    <BaseGridSection
+      updatesTitle={!!canvas.label}
+      id={id || `${index}`}
+      className={twMerge("cut-corners bg-black p-6 text-white", className)}
+    >
       <div className="exhibition-info-block">
         {items.map((item, idx) => (
-          <LocaleString key={idx} enableDangerouslySetInnerHTML className="mb-3">
+          <LocaleString
+            key={idx}
+            enableDangerouslySetInnerHTML
+            className="mb-3"
+          >
             {item.text}
           </LocaleString>
         ))}
@@ -41,6 +58,6 @@ export function InfoBlock({ canvas, strategy, firstInfo }: InfoBlockProps) {
           <ReadMoreBlock canvasId={canvas.id} />
         </Suspense>
       </div>
-    </section>
+    </BaseGridSection>
   );
 }

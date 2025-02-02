@@ -1,17 +1,23 @@
-import { getClassName } from "../helpers/exhibition";
 import { Dialog } from "@headlessui/react";
 import type { Canvas } from "@iiif/presentation-3";
-import { lazy, Suspense, useState } from "react";
-import { type MediaStrategy, type SingleYouTubeVideo, useThumbnail } from "react-iiif-vault";
-import { twMerge } from "tailwind-merge";
-import { CloseIcon } from "./CloseIcon";
+import { Suspense, lazy, useState } from "react";
+import {
+  type MediaStrategy,
+  type SingleYouTubeVideo,
+  useThumbnail,
+} from "react-iiif-vault";
 import { CanvasContext } from "react-iiif-vault";
 import { LocaleString } from "react-iiif-vault";
+import { twMerge } from "tailwind-merge";
+import { getClassName } from "../helpers/exhibition";
+import { BaseGridSection } from "./BaseGridSection";
+import { CloseIcon } from "./CloseIcon";
 
 export interface MediaBlockProps {
   canvas: Canvas;
   strategy: MediaStrategy;
   index: number;
+  id?: string;
 }
 
 function getWindowHost() {
@@ -29,10 +35,22 @@ function MediaBlockInner(props: MediaBlockProps) {
   const annotation = media.annotation;
 
   return (
-    <section className={twMerge("cut-corners bg-black text-white", className)}>
-      <img className="h-full w-full object-cover" src={thumbnail?.id} alt="" onClick={() => setIsOpen(true)} />
+    <BaseGridSection
+      id={props.id || `${props.index}`}
+      className={twMerge("cut-corners bg-black text-white", className)}
+    >
+      <img
+        className="h-full w-full object-cover"
+        src={thumbnail?.id}
+        alt=""
+        onClick={() => setIsOpen(true)}
+      />
 
-      <Dialog className="relative z-50" open={isOpen} onClose={() => setIsOpen(false)}>
+      <Dialog
+        className="relative z-50"
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
+      >
         <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
         <div className="mobile-height fixed inset-0 flex w-screen items-center p-4">
           <button
@@ -45,16 +63,21 @@ function MediaBlockInner(props: MediaBlockProps) {
             <div className="relative w-full flex-1">
               {media.type === "VideoYouTube" ? (
                 <iframe
+                  title="YouTube video player"
                   className="h-full w-full border-none object-cover"
                   src={`https://www.youtube.com/embed/${(media as SingleYouTubeVideo).youTubeId}?enablejsapi=1&origin=${getWindowHost()}&autoplay=1&modestbranding=1&rel=0`}
                   referrerPolicy="no-referrer"
                   sandbox="allow-scripts allow-same-origin allow-presentation"
-                ></iframe>
+                />
               ) : (
                 <Suspense>
                   <IIIFMediaPlayer
                     className="absolute bottom-0 left-0 right-0 top-0 z-10"
-                    media={{ duration: media.duration, format: "video/mp4", url: media.url }}
+                    media={{
+                      duration: media.duration,
+                      format: "video/mp4",
+                      url: media.url,
+                    }}
                   />
                 </Suspense>
               )}
@@ -66,13 +89,17 @@ function MediaBlockInner(props: MediaBlockProps) {
                     <LocaleString>{annotation.label}</LocaleString>
                   </h3>
                 ) : null}
-                <p>{annotation?.summary ? <LocaleString>{annotation.summary}</LocaleString> : null}</p>
+                <p>
+                  {annotation?.summary ? (
+                    <LocaleString>{annotation.summary}</LocaleString>
+                  ) : null}
+                </p>
               </div>
             ) : null}
           </Dialog.Panel>
         </div>
       </Dialog>
-    </section>
+    </BaseGridSection>
   );
 }
 
