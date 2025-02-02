@@ -21,9 +21,12 @@ import { InfoBlock } from "./components/InfoBlock";
 import { MediaBlock } from "./components/MediaBlock";
 import { TitlePanel } from "./components/TitleBlock";
 import "./styles/lib.css";
+import { twMerge } from "tailwind-merge";
 import { CloseIcon } from "./components/CloseIcon";
 import { TableOfContentsBar } from "./components/TableOfContentsBar";
 import { TableOfContentsHeader } from "./components/TableOfContentsHeader";
+import { PlayIcon } from "./components/icons/PlayIcon";
+import { TopIcon } from "./components/icons/TopIcon";
 
 export type DelftExhibitionProps = {
   manifest: Manifest;
@@ -76,9 +79,9 @@ export function DelftExhibition(props: DelftExhibitionProps) {
             onClose={() => setEnabled(false)}
           >
             <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
-            <div className="mobile-height fixed inset-0 flex w-screen items-center p-4">
+            <div className="mobile-height fixed inset-0 flex w-screen items-center lg:p-4">
               <button
-                className="absolute right-8 top-8 z-30 flex h-8 w-8 items-center justify-center rounded bg-black text-white hover:bg-slate-700"
+                className="absolute top-3 right-3 lg:right-8 lg:top-8 z-30 flex h-8 w-8 items-center justify-center rounded bg-black text-white hover:bg-slate-700"
                 onClick={() => setEnabled(false)}
               >
                 <CloseIcon fill="currentColor" />
@@ -99,15 +102,34 @@ export function DelftExhibition(props: DelftExhibitionProps) {
           />
 
           <TableOfContentsBar
+            fixed
             content={{ tableOfContents: "Table of Contents" }}
             onPlay={() => setEnabled(true)}
-          />
+          >
+            <a
+              href="#top"
+              aria-label={"Back to top"}
+              className="z-50 hover:bg-black/10 w-10 h-10 rounded flex items-center justify-center"
+            >
+              <TopIcon />
+            </a>
+
+            <button
+              className="z-50 hover:bg-black/10 w-10 h-10 rounded flex items-center justify-center"
+              onClick={() => setEnabled(true)}
+              aria-label="Play"
+            >
+              <span className="sr-only">Play</span>
+              <PlayIcon />
+            </button>
+          </TableOfContentsBar>
 
           <div ref={containerRef} data-cut-corners-enabled={cutCorners}>
             <div
-              className={
-                "delft-exhibition-viewer slides mb-12 auto-rows-auto grid-cols-12 content-center justify-center lg:grid"
-              }
+              className={twMerge(
+                "delft-exhibition-viewer slides mb-12 auto-rows-auto grid-cols-12 content-center justify-center lg:grid",
+                enabled ? "opacity-0" : "",
+              )}
             >
               {!fullTitleBar ? <TitlePanel manifest={props.manifest} /> : null}
               {props.manifest.items.map((canvas: any, idx) => {
@@ -136,6 +158,7 @@ export function DelftExhibition(props: DelftExhibitionProps) {
                     return (
                       <InfoBlock
                         key={idx}
+                        scrollEnabled={!enabled}
                         index={idx}
                         firstInfo={fullTitleBar && idx === 1}
                         canvas={canvas}
@@ -149,6 +172,7 @@ export function DelftExhibition(props: DelftExhibitionProps) {
                     return (
                       <ImageBlock
                         key={idx}
+                        scrollEnabled={!enabled}
                         canvas={canvas}
                         index={idx}
                         objectLinks={foundLinks}
@@ -167,6 +191,7 @@ export function DelftExhibition(props: DelftExhibitionProps) {
                       >
                         <MediaBlock
                           key={idx}
+                          scrollEnabled={!enabled}
                           canvas={canvas}
                           strategy={strategy}
                           index={idx}

@@ -7,6 +7,7 @@ interface BaseGridSectionProps extends HTMLAttributes<HTMLDivElement> {
   id: string;
   children: ReactNode;
   updatesTitle?: boolean;
+  enabled?: boolean;
 }
 
 export function BaseGridSection({
@@ -14,24 +15,30 @@ export function BaseGridSection({
   className,
   children,
   updatesTitle = true,
+  enabled = true,
   ...props
 }: BaseGridSectionProps) {
   const [hash, setHash] = useHashValue();
   const ref = useRef<HTMLDivElement>(null);
   const isVisible = `${hash}` === `${id}`;
 
-  useIntersectionRef(ref, (entries) => {
-    if (!updatesTitle) return;
-    for (const entry of entries) {
-      const targetId: string = entry.target.id;
-      if (entry.isIntersecting && targetId === id) {
-        if (targetId !== "undefined") {
-          setHash(targetId);
+  useIntersectionRef(
+    ref,
+    (entries) => {
+      if (!updatesTitle || !enabled) return;
+      for (const entry of entries) {
+        const targetId: string = entry.target.id;
+        if (entry.isIntersecting && targetId === id) {
+          if (targetId !== "undefined") {
+            setHash(targetId);
+          }
+          break;
         }
-        break;
       }
-    }
-  });
+    },
+    undefined,
+    [enabled],
+  );
 
   return (
     <section

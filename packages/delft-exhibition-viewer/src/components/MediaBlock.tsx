@@ -18,6 +18,7 @@ export interface MediaBlockProps {
   strategy: MediaStrategy;
   index: number;
   id?: string;
+  scrollEnabled?: boolean;
 }
 
 function getWindowHost() {
@@ -37,6 +38,7 @@ function MediaBlockInner(props: MediaBlockProps) {
   return (
     <BaseGridSection
       id={props.id || `${props.index}`}
+      enabled={props.scrollEnabled}
       className={twMerge("cut-corners bg-black text-white", className)}
     >
       <img

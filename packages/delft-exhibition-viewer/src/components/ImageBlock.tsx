@@ -19,6 +19,7 @@ export interface ImageBlockProps {
     component: ReactNode;
   }>;
   alternativeMode?: boolean;
+  scrollEnabled?: boolean;
 }
 
 export function ImageBlock({
@@ -28,6 +29,7 @@ export function ImageBlock({
   objectLinks,
   autoPlay,
   alternativeMode,
+  scrollEnabled,
 }: ImageBlockProps) {
   const behavior = canvas.behavior || [];
   const isLeft = behavior.includes("left");
@@ -56,6 +58,7 @@ export function ImageBlock({
   return (
     <BaseGridSection
       id={id || `${index}`}
+      enabled={scrollEnabled}
       className={twMerge(
         className,
         "cut-corners relative",

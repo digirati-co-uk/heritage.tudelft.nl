@@ -15,6 +15,7 @@ function App() {
   const [collection, setCollection] = useState<any | null>(null);
 
   const isPresentation = search.get("type") === "presentation";
+  const isEmbed = search.get("embed") === "true";
   const manifestId = search.get("manifest");
   const cutCorners = search.get("cut-corners");
   const fullTitleBar = search.get("full-title-bar");
@@ -25,7 +26,9 @@ function App() {
   };
 
   useEffect(() => {
-    fetch("https://heritage.tudelft.nl/iiif/stores/manifest-editor/collection.json")
+    fetch(
+      "https://heritage.tudelft.nl/iiif/stores/manifest-editor/collection.json",
+    )
       .then((r) => r.json())
       .then((col) => {
         setCollection(col);
@@ -54,7 +57,10 @@ function App() {
                 <LocaleString>{item.label}</LocaleString>
               </a>{" "}
               (
-              <a href={`?manifest=${item.id}&type=presentation`} className="hover:underline">
+              <a
+                href={`?manifest=${item.id}&type=presentation`}
+                className="hover:underline"
+              >
                 Presentation
               </a>
               )
@@ -70,10 +76,28 @@ function App() {
       <div className="min-h-[90vh] w-full max-w-screen-xl px-5 py-10 lg:px-10">
         {isPresentation ? (
           <div className="h-[800px]">
-            <DelftPresentation manifest={manifest} options={options} language="en" viewObjectLinks={[]} />
+            {isEmbed ? (
+              <iframe
+                src={`/embed.html?manifest=${manifestId}`}
+                className="w-full h-full"
+                title="Presentation"
+              />
+            ) : (
+              <DelftPresentation
+                manifest={manifest}
+                options={options}
+                language="en"
+                viewObjectLinks={[]}
+              />
+            )}
           </div>
         ) : (
-          <DelftExhibition manifest={manifest} options={options} language="en" viewObjectLinks={[]} />
+          <DelftExhibition
+            manifest={manifest}
+            options={options}
+            language="en"
+            viewObjectLinks={[]}
+          />
         )}
       </div>
     </div>

@@ -1,5 +1,6 @@
 import { Dialog } from "@headlessui/react";
 import { createRangeHelper, getValue } from "@iiif/helpers";
+import type { InternationalString } from "@iiif/presentation-3";
 import { useMemo, useState } from "react";
 import { usePress } from "react-aria";
 import {
@@ -10,6 +11,7 @@ import {
 } from "react-iiif-vault";
 import { twMerge } from "tailwind-merge";
 import { useHashValue } from "../helpers/use-hash-value";
+import { TableOfContents } from "./TableOfContents";
 import { ContentsIcon } from "./icons/ContentsIcon";
 import { IIIFIcon } from "./icons/IIIFIcon";
 import { PlayIcon } from "./icons/PlayIcon";
@@ -18,13 +20,17 @@ import { TopIcon } from "./icons/TopIcon";
 export function TableOfContentsBar({
   initialOpen = false,
   hideInitial = false,
+  fixed = false,
   content,
   onPlay,
+  children,
 }: {
   hideInitial?: boolean;
   initialOpen?: boolean;
-  content: { tableOfContents: string };
+  fixed?: boolean;
+  content: { tableOfContents: string | InternationalString };
   onPlay?: () => void;
+  children?: React.ReactNode;
 }) {
   const [hash] = useHashValue(() => {
     // custom on change.
@@ -58,12 +64,20 @@ export function TableOfContentsBar({
   });
 
   return (
-    <>
-      {/* BAR */}
+    <div className="relative">
+      {!fixed && isTocOpen ? (
+        <div className="absolute bottom-0 z-30 mb-14 px-14 py-4 text-white overflow-y-auto bg-[#6d6e70] left-0 right-0">
+          <TableOfContents items={items} treeLabel={tree?.label} />
+        </div>
+      ) : null}
+
       <div
         className={twMerge(
-          "fixed bottom-0 left-0 right-0 z-30 min-h-14 items-center content-center place-items-center justify-center bg-[#6d6e70] px-4 lg:px-9",
-          "transition-opacity drop-shadow-lg",
+          "z-30 h-14 items-center content-center place-items-center justify-center bg-[#6d6e70]",
+          "transition-opacity drop-shadow-lg px-4",
+
+          fixed && "fixed bottom-0 left-0 right-0 px-4 lg:px-9",
+
           currentItem || !hideInitial
             ? "pointer-events-auto opacity-1"
             : "pointer-events-none opacity-0",
@@ -77,10 +91,10 @@ export function TableOfContentsBar({
                 aria-label={`${isTocOpen ? "Hide" : "Show"} table of contents`}
                 {...toggleProps.pressProps}
               >
-                {currentItem ? (
+                {currentItem?.label ? (
                   <LocaleString>{currentItem?.label}</LocaleString>
                 ) : (
-                  content.tableOfContents
+                  <LocaleString>{content.tableOfContents}</LocaleString>
                 )}
               </button>
             </div>
@@ -92,85 +106,32 @@ export function TableOfContentsBar({
               >
                 <ContentsIcon />
               </button>
-              <a
-                href="#top"
-                aria-label={"Back to top"}
-                className="z-50 hover:bg-black/10 w-10 h-10 rounded flex items-center justify-center"
-              >
-                <TopIcon />
-              </a>
-              {onPlay ? (
-                <button
-                  className="z-50 hover:bg-black/10 w-10 h-10 rounded flex items-center justify-center"
-                  onClick={onPlay}
-                  aria-label="Play"
-                >
-                  <span className="sr-only">Play</span>
-                  <PlayIcon />
-                </button>
-              ) : null}
+
+              {/* Additional controls. */}
+              {children}
             </div>
           </div>
         </div>
       </div>
 
-      {/* TOC MODAL */}
-
-      <Dialog
-        className={twMerge(
-          "fixed bottom-[3.5rem] left-0 right-0 z-40 flex max-h-[90vh] flex-row content-center justify-center bg-[#6d6e70] px-4",
-          "transition-all duration-300 ease-in-out transform origin-bottom",
-          isTocOpen ? "opacity-1 scale-100" : "opacity-0 scale-95",
-        )}
-        open={isTocOpen}
-        onClose={() => setTocOpen(false)}
-      >
-        <Dialog.Panel className="z-40 flex w-full max-w-screen-xl flex-col px-10 py-6 text-white border-b overflow-y-auto border-[#5A5B5D]">
-          <div className="mb-3 flex flex-col gap-4">
-            <div className="flex">
-              <LocaleString className="text-2xl uppercase mb-4 flex-1">
-                {manifest?.label}
-              </LocaleString>
-
-              <a
-                href={`${manifest?.id}?manifest=${manifest?.id}`}
-                target="_blank"
-                className=""
-                title="Drag and Drop IIIF Resource"
-                rel="noreferrer"
-              >
-                <IIIFIcon
-                  className="text-xl text-white/50 hover:text-white"
-                  title={"Open IIIF Manifest"}
-                />
-                <span className="sr-only">Open IIIF Manifest</span>
-              </a>
-            </div>
-            {tree ? (
-              <LocaleString className="text-lg">{tree.label}</LocaleString>
-            ) : null}
-          </div>
-          <ol className="list-decimal flex flex-col gap-2 font-mono">
-            {items.map((item, idx) => {
-              if (!item.label) return null;
-              return (
-                <li key={`toc_entry_${idx}`} className="marker:text-white/40">
-                  <LocaleString
-                    as="a"
-                    className={twMerge(
-                      "text-md hover:underline",
-                      hashAsNumber === idx ? "underline" : "",
-                    )}
-                    href={`#${idx}`}
-                  >
-                    {item.label}
-                  </LocaleString>
-                </li>
-              );
-            })}
-          </ol>
-        </Dialog.Panel>
-      </Dialog>
-    </>
+      {fixed ? (
+        <Dialog
+          className={twMerge(
+            "z-40 flex max-h-[90vh] flex-row content-center justify-center bg-[#6d6e70] px-4",
+            fixed
+              ? "fixed bottom-[3.5rem] left-0 right-0 "
+              : "absolute bottom-0",
+            "transition-all duration-300 ease-in-out transform origin-bottom",
+            isTocOpen ? "opacity-1 scale-100" : "opacity-0 scale-95",
+          )}
+          open={isTocOpen}
+          onClose={() => setTocOpen(false)}
+        >
+          <Dialog.Panel className="z-40 flex w-full max-w-screen-xl flex-col px-10 py-6 text-white border-b overflow-y-auto border-[#5A5B5D]">
+            <TableOfContents treeLabel={tree?.label} items={items} />
+          </Dialog.Panel>
+        </Dialog>
+      ) : null}
+    </div>
   );
 }

@@ -17,6 +17,7 @@ export interface InfoBlockProps {
   firstInfo?: boolean;
   locale: string;
   id?: string;
+  scrollEnabled?: boolean;
   index: number;
 }
 
@@ -26,6 +27,7 @@ export function InfoBlock({
   canvas,
   strategy,
   firstInfo,
+  scrollEnabled,
 }: InfoBlockProps) {
   const className = getClassName(canvas.behavior, firstInfo);
   const locale = useIIIFLanguage();
@@ -33,6 +35,7 @@ export function InfoBlock({
 
   return (
     <BaseGridSection
+      enabled={scrollEnabled}
       updatesTitle={!!canvas.label}
       id={id || `${index}`}
       className={twMerge("cut-corners bg-black p-6 text-white", className)}
