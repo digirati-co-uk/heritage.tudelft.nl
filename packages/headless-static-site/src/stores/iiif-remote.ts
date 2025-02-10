@@ -5,7 +5,12 @@ import { Vault } from "@iiif/helpers";
 import type { Manifest } from "@iiif/presentation-3";
 import { copy, pathExists } from "fs-extra/esm";
 import { isEmpty } from "../util/is-empty";
-import { type ParsedResource, type ProtoResourceDirectory, type Store, createProtoDirectory } from "../util/store";
+import {
+  type ParsedResource,
+  type ProtoResourceDirectory,
+  type Store,
+  createProtoDirectory,
+} from "../util/store";
 
 export interface IIIFRemoteStore {
   type: "iiif-remote";
@@ -20,7 +25,12 @@ export const IIIFRemoteStore: Store<IIIFRemoteStore> = {
     if (store.urls) {
       const toReturn = [];
       for (const url of store.urls) {
-        toReturn.push(...(await IIIFRemoteStore.parse({ ...store, url, urls: undefined }, api)));
+        toReturn.push(
+          ...(await IIIFRemoteStore.parse(
+            { ...store, url, urls: undefined },
+            api,
+          )),
+        );
       }
       return toReturn;
     }
@@ -31,8 +41,11 @@ export const IIIFRemoteStore: Store<IIIFRemoteStore> = {
     const collection = await api.requestCache.fetch(store.url);
     // We support v2 and v3 collections.
     const identifier = collection["@id"] || collection.id || "";
-    const isCollection = collection["@type"] === "sc:Collection" || collection.type === "Collection";
-    const isManifest = collection["@type"] === "sc:Manifest" || collection.type === "Manifest";
+    const isCollection =
+      collection["@type"] === "sc:Collection" ||
+      collection.type === "Collection";
+    const isManifest =
+      collection["@type"] === "sc:Manifest" || collection.type === "Manifest";
 
     if ((!isCollection && !isManifest) || !identifier) {
       console.log("ERROR: Could not parse collection", store.url);
@@ -60,7 +73,12 @@ export const IIIFRemoteStore: Store<IIIFRemoteStore> = {
       };
 
       if (override && fs.existsSync(join(cwd(), override))) {
-        source = { type: "disk", path: override, alias: slug };
+        source = {
+          type: "disk",
+          path: override,
+          alias: slug,
+          filePath: override,
+        };
       }
       // This is a manifest, probably shouldn't have requested it...
       return [
@@ -95,7 +113,9 @@ export const IIIFRemoteStore: Store<IIIFRemoteStore> = {
     }
     const loading = [];
     for (const manifestItem of collectionVault.items) {
-      loading.push(IIIFRemoteStore.parse({ ...store, url: manifestItem.id }, api));
+      loading.push(
+        IIIFRemoteStore.parse({ ...store, url: manifestItem.id }, api),
+      );
     }
 
     const results = await Promise.all(loading);
@@ -105,7 +125,11 @@ export const IIIFRemoteStore: Store<IIIFRemoteStore> = {
 
     return allResources;
   },
-  async invalidate(store: IIIFRemoteStore, resource: ParsedResource, caches: ProtoResourceDirectory["caches.json"]) {
+  async invalidate(
+    store: IIIFRemoteStore,
+    resource: ParsedResource,
+    caches: ProtoResourceDirectory["caches.json"],
+  ) {
     if (!caches.load && !caches.urls) {
       return true;
     }
@@ -149,7 +173,11 @@ export const IIIFRemoteStore: Store<IIIFRemoteStore> = {
       const pathWithoutExtension = resource.source.path.replace(".json", "");
       const subFilesFolder = fs.existsSync(join(cwd(), pathWithoutExtension));
       if (subFilesFolder) {
-        if (subFilesFolder && (await pathExists(resource.slug)) && !isEmpty(resource.slug)) {
+        if (
+          subFilesFolder &&
+          (await pathExists(resource.slug)) &&
+          !isEmpty(resource.slug)
+        ) {
           const destination = join(cwd(), directory, "files");
           await copy(resource.slug, destination, { overwrite: true });
         }
@@ -169,11 +197,12 @@ export const IIIFRemoteStore: Store<IIIFRemoteStore> = {
         storeId: api.storeId,
         slugSource: resource.slugSource,
         subResources: (res?.items || []).length,
-        saveToDisk: resource.source.type === "disk" || store.saveManifests || false,
+        saveToDisk:
+          resource.source.type === "disk" || store.saveManifests || false,
         source: resource.source,
       },
       vault,
-      caches
+      caches,
     );
   },
 };
