@@ -3,13 +3,17 @@ import { join } from "node:path";
 import type { IFS } from "unionfs";
 import { makeProgressBar } from "../../util/make-progress-bar.ts";
 import { createStoreRequestCache } from "../../util/store-request-cache.ts";
-import type { ActiveResourceJson, ParsedResource, Store } from "../../util/store.ts";
+import type {
+  ActiveResourceJson,
+  ParsedResource,
+  Store,
+} from "../../util/store.ts";
 import type { BuildConfig } from "../build.ts";
 
 export async function loadStores(
   { storeResources }: { storeResources: Record<string, ParsedResource[]> },
   buildConfig: BuildConfig,
-  customFs?: IFS
+  customFs?: IFS,
 ) {
   const fss = customFs || nfs;
   const fs = fss.promises;
@@ -42,17 +46,27 @@ export async function loadStores(
     const storeConfig = config.stores[store];
     const resources = storeResources[store];
 
-    const progress = makeProgressBar("Loading store", resources.length, options.ui);
+    const progress = makeProgressBar(
+      "Loading store",
+      resources.length,
+      options.ui,
+    );
 
     for (const resource of resources) {
-      if (options.exact && resource.slug !== options.exact && resource.path !== options.exact) {
+      if (
+        options.exact &&
+        resource.slug !== options.exact &&
+        resource.path !== options.exact
+      ) {
         progress.increment();
         continue;
       }
 
       // Unique slug check. (NEEDS TO HAPPEN AFTER REWRITE)
       if (uniqueSlugs.includes(resource.slug)) {
-        log(`WARNING: Duplicate slug found: ${resource.slug} in resource: ${resource.path}`);
+        log(
+          `WARNING: Duplicate slug found: ${resource.slug} in resource: ${resource.path}`,
+        );
         continue;
       }
       uniqueSlugs.push(resource.slug);
@@ -62,18 +76,25 @@ export async function loadStores(
       const cachesFile = join(resourceDir, "caches.json");
       const caches = await files.loadJson(cachesFile);
       const storeType: Store<any> = (storeTypes as any)[storeConfig.type];
-      const shouldRebuild = !options.cache || (await storeType.invalidate(storeConfig as any, resource, caches));
+      const shouldRebuild =
+        !options.cache ||
+        (await storeType.invalidate(storeConfig as any, resource, caches));
 
       if (shouldRebuild) {
         log(`Building ${resource.path}`);
         invalidCount++;
         await files.mkdir(resourceDir);
-        const data = await storeType.load(storeConfig as any, resource, resourceDir, {
-          requestCache,
-          storeId: resource.storeId,
-          build: buildConfig,
-          files,
-        });
+        const data = await storeType.load(
+          storeConfig as any,
+          resource,
+          resourceDir,
+          {
+            requestCache,
+            storeId: resource.storeId,
+            build: buildConfig,
+            files,
+          },
+        );
 
         if (data["resource.json"].id && data["resource.json"].saveToDisk) {
           idsToSlugs[data["resource.json"].id] = {
@@ -85,11 +106,17 @@ export async function loadStores(
         allResources.push(data["resource.json"]);
 
         await Promise.all([
-          files.saveJson(join(resourceDir, "resource.json"), data["resource.json"]),
+          files.saveJson(
+            join(resourceDir, "resource.json"),
+            data["resource.json"],
+          ),
           files.saveJson(join(resourceDir, "vault.json"), data["vault.json"]),
           files.saveJson(join(resourceDir, "meta.json"), data["meta.json"]),
           files.saveJson(join(resourceDir, "caches.json"), data["caches.json"]),
-          files.saveJson(join(resourceDir, "indices.json"), data["indices.json"]),
+          files.saveJson(
+            join(resourceDir, "indices.json"),
+            data["indices.json"],
+          ),
         ]);
       } else {
         validCount++;
@@ -106,7 +133,7 @@ export async function loadStores(
 
       // Record all paths at the end, the rewrite should have happened by now.
       if (resource.source && resource.source.type === "disk") {
-        editable[resource.slug] = resource.source.path;
+        editable[resource.slug] = resource.source.filePath;
       }
       if (resource.source.type === "disk" && resource.source.alias) {
         overrides[resource.source.alias] = `${resource.slug}/manifest.json`;

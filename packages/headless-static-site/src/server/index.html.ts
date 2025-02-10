@@ -106,7 +106,8 @@ export function indexHtml() {
                 const $li = document.createElement("li");
 
                 $li.className = "mb-1 p-1 hover:bg-slate-100 flex items-center gap-3";
-                const url = await helper.getManifest(item);
+                const relativeUrl = await helper.getManifest(item);
+                const url = origin + relativeUrl;
                 $li.innerHTML =
                   (!url
                     ? ""
@@ -122,11 +123,11 @@ export function indexHtml() {
                   "</span>" +
                   '<a class="' +
                   l +
-                  '" href="/clover/' +
-                  item +
-                  '">[view]</a>' +
+                  '" target="_blank" href="https://theseusviewer.org?iiif-content=' +
+                  url +
+                  '&ref=hss">[view]</a>' +
                   (overrides ? '<a class="' + l + '" href="/editor/' + item + '#copy">[save copy]</a>' : "") +
-                  (editable[item] ? '<a class="' + l + '" href="/editor/' + item + '">[edit]</a>' : "");
+                  (editable[item] ? '<a target="_blank" class="' + l + '" href="https://manifest-editor.digirati.services/editor/external?manifest=' + url + '">[edit]</a>' : "");
 
                 $ul.appendChild($li);
               }

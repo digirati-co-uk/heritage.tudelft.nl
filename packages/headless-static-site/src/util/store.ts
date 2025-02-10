@@ -4,7 +4,10 @@ import type { FileHandler } from "./file-handler.ts";
 
 export interface StoreApi {
   storeId: string;
-  getSlug: (resource: { id: string; type: string }) => readonly [string, string];
+  getSlug: (resource: { id: string; type: string }) => readonly [
+    string,
+    string,
+  ];
   requestCache: {
     fetch<T = any>(url: string): Promise<T>;
     didChange(url: string): Promise<boolean>;
@@ -17,13 +20,17 @@ export interface StoreApi {
 export interface Store<T> {
   parse(store: T, api: StoreApi): Promise<ParsedResource[]> | ParsedResource[];
 
-  invalidate(store: T, resource: ParsedResource, caches: ProtoResourceDirectory["caches.json"]): Promise<boolean>;
+  invalidate(
+    store: T,
+    resource: ParsedResource,
+    caches: ProtoResourceDirectory["caches.json"],
+  ): Promise<boolean>;
 
   load(
     store: T,
     resource: ParsedResource,
     directory: string,
-    api: Omit<StoreApi, "getSlug">
+    api: Omit<StoreApi, "getSlug">,
   ): Promise<ProtoResourceDirectory>;
 }
 
@@ -66,7 +73,13 @@ export interface ProtoResourceDirectory {
      * Where this resource originated from.
      */
     source:
-      | { type: "disk"; path: string; alias?: string; relativePath?: string }
+      | {
+          type: "disk";
+          path: string;
+          alias?: string;
+          relativePath?: string;
+          filePath: string;
+        }
       | { type: "remote"; url: string; overrides?: string };
   };
   "vault.json": IIIFStore;
@@ -82,7 +95,10 @@ export interface ProtoResourceDirectory {
   __files?: Array<string>;
 }
 
-export type ParsedResource = Omit<ProtoResourceDirectory["resource.json"], "id" | "type"> & {
+export type ParsedResource = Omit<
+  ProtoResourceDirectory["resource.json"],
+  "id" | "type"
+> & {
   id?: string;
   type: string;
   subFiles?: string[];
@@ -98,7 +114,7 @@ export function createProtoDirectory(
   resource: ProtoResourceDirectory["resource.json"],
   vault: Vault,
   caches: any = {},
-  other: Partial<ProtoResourceDirectory> = {}
+  other: Partial<ProtoResourceDirectory> = {},
 ): ProtoResourceDirectory {
   return {
     "resource.json": resource,

@@ -21,7 +21,33 @@ const require = createRequire(import.meta.url);
 
 const app = new Hono();
 
-app.use(cors());
+app.use(async (c, next) => {
+  if (c.req.method === "OPTIONS") {
+    function set(key: string, value: string) {
+      c.res.headers.set(key, value);
+    }
+    const didRequestPrivateNetwork = c.req.header(
+      "access-control-request-private-network",
+    );
+    if (didRequestPrivateNetwork) {
+      set("Access-Control-Allow-Private-Network", "true");
+    }
+  }
+  await next();
+});
+
+app.use(
+  cors({
+    origin: "*",
+    allowMethods: ["GET", "POST"],
+    exposeHeaders: [
+      "Content-Type",
+      "X-IIIF-Post-Url",
+      "Access-Control-Allow-Private-Network",
+    ],
+    allowHeaders: ["Content-Type", "Access-Control-Request-Private-Network"],
+  }),
+);
 
 const emitter = mitt<{
   "file-change": { path: string };
@@ -41,6 +67,10 @@ const pathCache = { allPaths: {} as Record<string, string> };
 let isWatching = false;
 const fileHandler = new FileHandler(fs, cwd());
 const storeRequestCaches = {};
+
+const state = {
+  shouldRebuild: false,
+};
 
 const cachedBuild = async (options: BuildOptions) => {
   return build(options, defaultBuiltIns, {
@@ -66,7 +96,9 @@ app.get("/config", async (ctx) => {
   const config = await getConfig();
   return ctx.json({
     isWatching: isWatching,
-    pendingFiles: Array.from(fileHandler.openJsonChanged.keys()).filter(Boolean),
+    pendingFiles: Array.from(fileHandler.openJsonChanged.keys()).filter(
+      Boolean,
+    ),
     ...config,
   });
 });
@@ -138,7 +170,9 @@ app.get("/unwatch", async (ctx) => {
 });
 
 app.get("/build/save", async (ctx) => {
-  const total = Array.from(fileHandler.openJsonChanged.keys()).filter(Boolean).length;
+  const total = Array.from(fileHandler.openJsonChanged.keys()).filter(
+    Boolean,
+  ).length;
   if (total) {
     await fileHandler.saveAll();
   }
@@ -163,18 +197,19 @@ app.get(
       debug: z.string().optional(),
       enrich: z.string().optional(),
       extract: z.string().optional(),
-    })
+    }),
   ),
   async (ctx) => {
-    const { buildConfig, emitted, enrichments, extractions, parsed, stores } = await cachedBuild({
-      cache: ctx.req.query("cache") !== "false",
-      generate: ctx.req.query("generate") !== "false",
-      exact: ctx.req.query("exact"),
-      emit: ctx.req.query("emit") !== "false",
-      debug: ctx.req.query("debug") === "true",
-      enrich: ctx.req.query("enrich") !== "false",
-      extract: ctx.req.query("extract") !== "false",
-    });
+    const { buildConfig, emitted, enrichments, extractions, parsed, stores } =
+      await cachedBuild({
+        cache: ctx.req.query("cache") !== "false",
+        generate: ctx.req.query("generate") !== "false",
+        exact: ctx.req.query("exact"),
+        emit: ctx.req.query("emit") !== "false",
+        debug: ctx.req.query("debug") === "true",
+        enrich: ctx.req.query("enrich") !== "false",
+        extract: ctx.req.query("extract") !== "false",
+      });
 
     const { files, log, fileTypeCache, ...config } = buildConfig;
 
@@ -193,7 +228,7 @@ app.get(
     emitter.emit("full-rebuild", report);
 
     return ctx.json(report);
-  }
+  },
 );
 
 app.post(
@@ -210,12 +245,17 @@ app.post(
       debug: z.string().optional(),
       enrich: z.string().optional(),
       extract: z.string().optional(),
-    })
+    }),
   ),
   async (ctx) => {
     const body = await ctx.req.json();
 
-    const { buildConfig, emitted, enrichments, extractions, parsed, stores } = await cachedBuild(body);
+    if (!body.exact) {
+      state.shouldRebuild = false;
+    }
+
+    const { buildConfig, emitted, enrichments, extractions, parsed, stores } =
+      await cachedBuild(body);
 
     const report = {
       emitted: {
@@ -232,7 +272,7 @@ app.post(
     emitter.emit("full-rebuild", report);
 
     return ctx.json(report);
-  }
+  },
 );
 
 app.get("/*", async (ctx, next) => {
@@ -245,17 +285,60 @@ app.get("/*", async (ctx, next) => {
     realPath = join(cwd(), ".iiif/cache", ctx.req.path);
   }
 
+  const headers: Record<string, string> = {
+    //
+  };
+
+  const isManifest = ctx.req.path.endsWith("manifest.json");
+  if (isManifest) {
+    const baseUrl = new URL(ctx.req.url);
+    baseUrl.search = "";
+    headers["X-IIIF-Post-Url"] = baseUrl.toString();
+  }
+
   if (fileHandler.openJsonMap.has(fileHandler.resolve(realPath))) {
     const file = await fileHandler.loadJson(realPath);
-    return ctx.json(file);
+    return ctx.json(file, { headers });
   }
 
   if (fileHandler.existsBinary(fileHandler.resolve(realPath))) {
     const file = await fileHandler.readFile(realPath);
-    return ctx.body(file as any);
+    return ctx.body(file as any, { headers });
   }
 
   return ctx.notFound();
+});
+
+app.post("/*", async (ctx) => {
+  const isManifest = ctx.req.path.endsWith("manifest.json");
+  if (!isManifest) {
+    return ctx.notFound();
+  }
+
+  // WIthout `/manifest.json`
+  const slug = ctx.req.path.replace("/manifest.json", "").slice(1);
+  const editable = join(cwd(), ".iiif/build/meta/editable.json");
+  const allEditable = await fileHandler.loadJson(editable, true);
+  const realPath = allEditable[slug];
+  if (!realPath) {
+    return ctx.notFound();
+  }
+
+  const fullRealPath = join(cwd(), realPath);
+  if (!fileHandler.exists(fullRealPath)) {
+    return ctx.notFound();
+  }
+
+  const file = await ctx.req.json();
+  await fileHandler.saveJson(fullRealPath, file, true);
+  await cachedBuild({
+    exact: slug,
+    emit: true,
+    cache: true,
+  });
+  emitter.emit("file-refresh", { path: realPath });
+
+  return ctx.json({ saved: true });
 });
 
 // @ts-ignore
