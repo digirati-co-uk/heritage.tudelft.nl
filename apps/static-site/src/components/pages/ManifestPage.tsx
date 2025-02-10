@@ -1,7 +1,7 @@
 "use client";
 import { Link, getObjectSlug } from "@/navigation";
 import viewerConfig from "@/viewers.json";
-import { type Preset } from "@atlas-viewer/atlas";
+import type { Preset } from "@atlas-viewer/atlas";
 import type { InternationalString, Manifest } from "@iiif/presentation-3";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -60,7 +60,14 @@ interface ManifestPageProps {
 
 const runtimeOptions = { maxOverZoom: 2 };
 
-export function ManifestPage({ related, manifest, meta, content, exhibitionLinks, initialCanvasIndex }: ManifestPageProps) {
+export function ManifestPage({
+  related,
+  manifest,
+  meta,
+  content,
+  exhibitionLinks,
+  initialCanvasIndex,
+}: ManifestPageProps) {
   const context = useSimpleViewer();
   const { currentSequenceIndex } = context;
   const previousSeqIndex = useRef(currentSequenceIndex);
@@ -111,9 +118,11 @@ export function ManifestPage({ related, manifest, meta, content, exhibitionLinks
         <div className="col-span-2">
           <ObjectMetadata />
 
-          {(related.length !== 0 || meta.partOfCollections.length !== 0) && (
+          {(related.length !== 0 || meta.partOfCollections?.length !== 0) && (
             <>
-              <h3 className="mb-5 mt-10 text-3xl font-medium">{content.relatedObjects}</h3>
+              <h3 className="mb-5 mt-10 text-3xl font-medium">
+                {content.relatedObjects}
+              </h3>
               <div className="mb-4 grid md:grid-cols-3">
                 {(meta.partOfCollections || []).map((collection, i) => (
                   <Box

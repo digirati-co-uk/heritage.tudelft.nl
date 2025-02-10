@@ -1,10 +1,11 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { useLayoutEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 export default function IIIFDevRefresh() {
   const router = useRouter();
+  const params = useParams<{ manifest?: string; collection?: string }>();
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Only runs once.
@@ -24,7 +25,10 @@ export default function IIIFDevRefresh() {
   const fullRebuild = async () => {
     setIsRefreshing(true);
     try {
-      await fetch("http://localhost:7111/build", { method: "POST", body: JSON.stringify({ cache: false }) });
+      await fetch("http://localhost:7111/build", {
+        method: "POST",
+        body: JSON.stringify({ cache: false }),
+      });
       router.refresh();
     } catch (e) {
       console.error(e);
@@ -33,11 +37,14 @@ export default function IIIFDevRefresh() {
   };
 
   return (
-    <div className="fixed bottom-0 left-32 flex h-12 items-center bg-white p-3">
+    <div className="fixed bottom-2 left-36 flex h-12 items-center bg-white p-3 rounded">
       <div className={twMerge("iiif-logo", isRefreshing && "animate-pulse")} />
       <button
         type="button"
-        className={twMerge("ml-2 text-blue-500 underline", isRefreshing && "opacity-40")}
+        className={twMerge(
+          "ml-2 text-blue-500 underline",
+          isRefreshing && "opacity-40",
+        )}
         onClick={fullRebuild}
         disabled={isRefreshing}
       >

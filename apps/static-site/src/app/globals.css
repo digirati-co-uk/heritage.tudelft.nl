@@ -163,7 +163,8 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 .safe-inset {
-  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
 .fill-height {
@@ -254,4 +255,8 @@ body.pb-editing .featured-card-grid {
     grid-area: initial;
     aspect-ratio: 1;
   }
+}
+
+div.block-editor-toggle {
+  @apply bottom-2 left-2 rounded w-32;
 }

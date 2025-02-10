@@ -7,6 +7,7 @@ import { ImageBlock } from "../exhibitions/ImageBlock";
 import { InfoBlock } from "../exhibitions/InfoBlock";
 import { MediaBlock } from "../exhibitions/MediaBlock";
 import { TitlePanel } from "../exhibitions/TitleBlock";
+import { EditInManifestEditor } from "../atoms/EditInManifestEditor";
 
 export interface ExhibitionPageProps {
   locale: string;
@@ -29,6 +30,7 @@ export async function ExhibitionPage(props: ExhibitionPageProps) {
 
   return (
     <>
+      <EditInManifestEditor preset="exhibition" id={props.manifest.id} />
       <div className="mb-12 auto-rows-auto grid-cols-12 content-center justify-center lg:grid">
         <TitlePanel manifest={props.manifest} />
 
