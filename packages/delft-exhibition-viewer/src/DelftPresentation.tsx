@@ -235,7 +235,7 @@ export function DelftPresentation(props: DelftPresentationProps) {
                   <button
                     type="button"
                     className="z-50 hover:bg-black/10 w-10 h-10 rounded flex items-center justify-center"
-                    onClick={nextStep}
+                    onClick={() => nextStep()}
                   >
                     <NextIcon />
                   </button>

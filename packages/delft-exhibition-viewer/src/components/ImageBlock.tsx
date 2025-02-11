@@ -115,7 +115,7 @@ export function ImageBlock({
             </div>
             <div className="exhibition-info-block">
               <div>
-                <LocaleString lines>{canvas.summary}</LocaleString>
+                <LocaleString>{canvas.summary}</LocaleString>
               </div>
               {canvas.requiredStatement && (
                 <div className="">

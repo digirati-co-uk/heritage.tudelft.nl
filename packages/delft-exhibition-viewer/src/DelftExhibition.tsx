@@ -98,12 +98,15 @@ export function DelftExhibition(props: DelftExhibitionProps) {
 
           <TableOfContentsHeader
             label={props.manifest.label}
-            content={{ exhibition: "Exhibition" }}
+            content={{ exhibition: props.content?.exhibition || "Exhibition" }}
           />
 
           <TableOfContentsBar
             fixed
-            content={{ tableOfContents: "Table of Contents" }}
+            content={{
+              tableOfContents:
+                props.content?.tableOfContents || "Table of Contents",
+            }}
             onPlay={() => setEnabled(true)}
           >
             <a

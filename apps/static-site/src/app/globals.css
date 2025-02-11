@@ -258,5 +258,11 @@ body.pb-editing .featured-card-grid {
 }
 
 div.block-editor-toggle {
-  @apply bottom-2 left-2 rounded w-32;
+  @apply bottom-2 left-2 rounded w-32 h-10 z-40 items-center flex;
+}
+
+.delft-exhibition-viewer,
+.delft-presentation-viewer {
+  --delft-title-card: rgb(250 204 21 / var(--tw-bg-opacity, 1));
+  --delft-title-card-text: #000;
 }

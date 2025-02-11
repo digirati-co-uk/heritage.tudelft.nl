@@ -9,7 +9,7 @@ export function EditInManifestEditor({
 }: { id: string; preset?: string }) {
   const DEV_LINK =
     process.env.NODE_ENV !== "production" ? (
-      <div className="fixed bg-white bottom-2 rounded right-2 text-md p-4 flex gap-4">
+      <div className="fixed bg-white z-40 bottom-2 rounded right-2 text-md py-2 px-4 flex gap-4">
         <a
           href={`${ME_URL}/editor/external?manifest=${id}&preset=${preset}`}
           target="_blank"

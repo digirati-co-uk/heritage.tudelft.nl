@@ -123,7 +123,7 @@ export function ImageBlockPresentation({
             )}
           >
             <div>
-              <LocaleString lines>{summary}</LocaleString>
+              <LocaleString>{summary}</LocaleString>
             </div>
             {showBody && toShow
               ? (toShow || []).map((body, n) => {

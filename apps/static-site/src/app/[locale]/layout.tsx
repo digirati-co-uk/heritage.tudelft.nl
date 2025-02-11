@@ -2,21 +2,26 @@ import "../globals.css";
 import { SlotContext } from "@/blocks/slot-context";
 import { GlobalFooter } from "@/components/GlobalFooter";
 import { GlobalHeader } from "@/components/GlobalHeader";
+import { getBasicMetadata, getMdx } from "@/helpers/metadata";
 import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import localFont from "next/font/local";
 import { type ReactNode, lazy } from "react";
 import BlockEditor from "../../blocks/block-editor";
 import { Provider } from "../provider";
-import { getTranslations } from "next-intl/server";
-import { getBasicMetadata, getMdx } from "@/helpers/metadata";
+import 'delft-exhibition-viewer/dist/index.css';
 
 const IIIFDevRefresh = lazy(() => import("../../components/IIIFDevRefresh"));
 
-export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: { params: { locale: string } }): Promise<Metadata> {
   const t = await getTranslations();
   const path = "/";
-  const page = getMdx({ params: { pageName: "Home", path: path, locale: params.locale } });
+  const page = getMdx({
+    params: { pageName: "Home", path: path, locale: params.locale },
+  });
   const description = page.description;
   return getBasicMetadata({
     locale: params.locale,
@@ -39,6 +44,8 @@ if (process.env.NODE_ENV !== "production") {
   import("@page-blocks/react/dist/index.css");
   // @ts-expect-error typescript can't resolve CSS
   import("@page-blocks/web-components/dist/index.css");
+  // @ts-expect-error typescript can't resolve CSS
+  import('delft-exhibition-viewer/dist/index.css');
 }
 
 const foundersGrotesk = localFont({
@@ -99,11 +106,15 @@ export default function RootLayout({
   setRequestLocale(params.locale);
   return (
     <html lang={params.locale}>
-      <body className={`bg-gray-200 ${foundersGrotesk.variable} ${foundersGroteskMono.variable} font-sans`}>
+      <body
+        className={`bg-gray-200 ${foundersGrotesk.variable} ${foundersGroteskMono.variable} font-sans`}
+      >
         <Provider>
           <SlotContext name="locale" value={params.locale}>
             <GlobalHeader />
-            <main className="flex w-full flex-col items-center">{children}</main>
+            <main className="flex w-full flex-col items-center">
+              {children}
+            </main>
             {process.env.NODE_ENV !== "production" ? (
               <>
                 <BlockEditor showToggle rsc />

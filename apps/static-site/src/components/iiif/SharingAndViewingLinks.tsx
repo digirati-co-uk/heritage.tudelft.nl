@@ -51,7 +51,10 @@ export function SharingAndViewingLinks({
 
   return (
     <>
-      <EditInManifestEditor id={resource.id} preset="manifest" />
+      {resource.type === "object" ? (
+        // Could change in the future to allow editing of collections
+        <EditInManifestEditor id={resource.id} preset="manifest" />
+      ) : null}
       {configuredViewers.length === 0 ? null : (
         <div className="overflow-hidden font-mono">
           <div className="cut-corners w-full place-self-start bg-black p-5 text-white">

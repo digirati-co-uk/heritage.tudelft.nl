@@ -37,7 +37,6 @@ export function InfoBlockContentsInner() {
           return (
             <LocaleString
               key={annotation.id + key}
-              lines
               className="mb-3"
               enableDangerouslySetInnerHTML
             >

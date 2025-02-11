@@ -1,6 +1,4 @@
 import type { Canvas } from "@iiif/presentation-3";
-import { getTranslations } from "next-intl/server";
-import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import type { TextualContentStrategy } from "react-iiif-vault";
 import { LocaleString, useIIIFLanguage } from "react-iiif-vault";
@@ -8,8 +6,7 @@ import { twMerge } from "tailwind-merge";
 import { getClassName } from "../helpers/exhibition";
 import { getItemsByLocale } from "../helpers/get-items-by-locale";
 import { BaseGridSection } from "./BaseGridSection";
-
-const ReadMoreBlock = dynamic(() => import("./ReadMore"));
+import ReadMoreBlock from './ReadMore';
 
 export interface InfoBlockProps {
   canvas: Canvas;
