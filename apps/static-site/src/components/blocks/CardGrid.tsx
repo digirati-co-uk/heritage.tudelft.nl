@@ -8,6 +8,7 @@ const columns: Record<string, string> = {
   5: "lg:grid-cols-5",
   6: "lg:grid-cols-6",
 };
+
 export const CardGrid = block(
   {
     label: "Card grid",

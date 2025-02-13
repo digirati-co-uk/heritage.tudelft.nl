@@ -1,6 +1,12 @@
+import typography from "@tailwindcss/typography";
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["src/**/*.{tsx,ts}", "content/**/*.{md,mdx}"],
+  content: [
+    "src/**/*.{tsx,ts}",
+    "content/**/*.{md,mdx}",
+    "../../packages/delft-exhibition-viewer/src/**/*.{tsx,ts}",
+  ],
   theme: {
     extend: {
       fontFamily: {
@@ -10,6 +16,10 @@ module.exports = {
       fontWeight: {
         normal: "400",
         bold: "500",
+      },
+      colors: {
+        TitleCard: "var(--delft-title-card)",
+        TitleCardText: "var(--delft-title-card-text)",
       },
       typography: {
         DEFAULT: {
@@ -32,5 +42,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require("@tailwindcss/typography")],
+  plugins: [typography],
 };

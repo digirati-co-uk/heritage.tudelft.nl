@@ -1,0 +1,126 @@
+{
+  "name": "iiif-hss",
+  "version": "1.0.2",
+  "description": "IIIF Headless Static Site",
+  "type": "module",
+  "keywords": [],
+  "files": [
+    "src",
+    "build",
+    "lib"
+  ],
+  "main": "lib/scripts.js",
+  "module": "lib/scripts.js",
+  "bin": {
+    "iiif-hss": "build/index.js",
+    "iiif-hss-dev": "build/server/entrypoint.js"
+  },
+  "author": "Stephen Fraser <stephen.fraser@digirati.com>",
+  "license": "MIT",
+  "typings": "lib/scripts.d.ts",
+  "scripts": {
+    "dev-server": "bun run ./src/entrypoint.ts",
+    "dev-cli": "bun run ./src/index.ts",
+    "build": "pnpm run build:cli && pnpm run build:server && pnpm run build:client && pnpm run build:node-client && pnpm run build:library",
+    "build:cli": "tsup-node src/index.ts --no-splitting --outDir build --format esm --env.NODE_ENV production",
+    "build:server": "tsup-node src/entrypoint.ts --no-splitting --outDir build/server --format esm --env.NODE_ENV production",
+    "build:library": "tsup src/library.ts --outDir build",
+    "build:client": "tsup src/dev/client.ts --outDir build",
+    "build:node-client": "tsup src/dev/node-client.ts --outDir build",
+    "lint": "publint",
+    "test": "vitest",
+    "prepack": "pnpm run build"
+  },
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/scripts.d.ts",
+        "default": "./lib/scripts.js"
+      }
+    },
+    "./library": {
+      "import": {
+        "types": "./build/library.d.ts",
+        "default": "./build/library.js"
+      }
+    },
+    "./client": {
+      "import": {
+        "types": "./build/client.d.ts",
+        "default": "./build/client.js"
+      },
+      "require": "./build/client.js"
+    },
+    "./node-client": {
+      "import": {
+        "types": "./build/node-client.d.ts",
+        "default": "./build/node-client.js"
+      }
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "lib/scripts.d.ts"
+      ],
+      "client": [
+        "build/client.d.ts"
+      ]
+    }
+  },
+  "optionalDependencies": {
+    "@iiif/presentation-3": "^2.1.3"
+  },
+  "overrides": {
+    "@iiif/parser": "^2.1.1"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.7",
+    "@hono/node-ws": "^1.0.5",
+    "@hono/zod-validator": "^0.4.1",
+    "@iiif/builder": "^2.0.1",
+    "@iiif/helpers": "^1.0.6",
+    "chalk": "^5.3.0",
+    "cli-progress": "^3.12.0",
+    "commander": "^13.0.0",
+    "detect-python-interpreter": "^1.0.0",
+    "fs-extra": "^11.1.1",
+    "hono": "^4.6.16",
+    "js-yaml": "^4.1.0",
+    "keyword-extractor": "^0.0.28",
+    "micromatch": "^4.0.5",
+    "mitt": "^3.0.1",
+    "object-hash": "^3.0.0",
+    "p-queue": "^8.0.1",
+    "pdiiif": "^0.1.9",
+    "slug": "^8.2.3",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7",
+    "translate": "^2.0.2",
+    "typesense": "1.7.2",
+    "unionfs": "^4.5.4",
+    "yaml": "^2.6.1",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@atlas-viewer/iiif-image-api": "^2.1.1",
+    "@biomejs/biome": "1.9.4",
+    "@iiif/presentation-3": "^2.1.3",
+    "@inquirer/prompts": "^3.1.2",
+    "@types/chalk": "^2.2.0",
+    "@types/cli-progress": "^3.11.3",
+    "@types/fs-extra": "^11.0.1",
+    "@types/js-yaml": "^4.0.6",
+    "@types/micromatch": "^4.0.2",
+    "@types/node": "^20.5.9",
+    "@types/object-hash": "^3.0.4",
+    "@types/slug": "^5.0.5",
+    "bun-types": "^1.0.1",
+    "prettier": "^3.2.5",
+    "publint": "^0.2.12",
+    "tslib": "^2.6.2",
+    "tsup": "^8.3.5",
+    "typescript": "^5.2.2",
+    "vitest": "^2.1.8"
+  }
+}

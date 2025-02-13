@@ -29,6 +29,7 @@ This website provides access to the different facets of the academic heritage te
     ```
 
     then run a first build, to create the IIIF:
+
     ```sh
     bun run build
     ```
@@ -61,15 +62,38 @@ The project is a [Monorepo](https://turbo.build/repo/docs) with multiple project
     bun run build
     ```
 
-Once you have a running build push to the project repo and open a pull request. Netlify will automatically build a preview of your branch and the details are availible on the pull request if you add a label  "Deploy preview" to the pull request.
+Once you have a running build push to the project repo and open a pull request. Netlify will automatically build a preview of your branch and the details are availible on the pull request if you add a label "Deploy preview" to the pull request.
 
 Main branch is automatically deployed to the live site.
 
 ## Useful links
-
 
 [UX Wireframe](https://www.figma.com/file/emiQTuM5feCweZT4soUY4MJg/Wires?node-id=0:1)
 
 [Demo site](https://delft-static-site-generator.netlify.com/)
 
 [Changelog](https://github.com/digirati-co-uk/delft-static-site-generator/issues)
+
+## Updating Headless Static Site
+
+Ensure you have the headless static site origin:
+
+```sh
+git remote add -f hss git@github.com:digirati-co-uk/headless-static-site.git
+```
+
+Then you can pull changes using:
+
+```sh
+git subtree pull --prefix=packages/headless-static-site hss main
+```
+
+Or contribute changes back using:
+
+```sh
+git subtree push --prefix=packages/headless-static-site hss feature/my-feature
+```
+
+Where `feature/my-feature` is the name of a branch you want to push to the headless static site repository.
+
+Read more about this process here: https://www.atlassian.com/git/tutorials/git-subtree
