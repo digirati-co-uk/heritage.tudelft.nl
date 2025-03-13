@@ -1,5 +1,6 @@
-import { SearchPage } from "@/components/pages/SearchPage";
 import { Page } from "@/components/Page";
+import { SearchPage } from "@/components/pages/SearchPage";
+import { setRequestLocale } from "next-intl/server";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import { Metadata } from "next";
 import { getBasicMetadata, makeTitle, getMdx, getDefaultMetaMdx } from "@/helpers/metadata";
@@ -27,7 +28,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
 }
 
 export default async function Search({ params }: { params: { locale: string } }) {
-  unstable_setRequestLocale(params.locale);
+  setRequestLocale(params.locale);
   const page = getMdx({ params: { pageName: "Search", path: "/search", locale: params.locale } });
   return (
     <Page>

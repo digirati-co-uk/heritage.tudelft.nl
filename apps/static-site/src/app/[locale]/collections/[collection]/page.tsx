@@ -1,7 +1,8 @@
+import { Page } from "@/components/Page";
 import { CollectionPage } from "@/components/pages/CollectionPage";
 import { loadCollection } from "@/iiif";
-import { Page } from "@/components/Page";
-import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 // import siteMap from "@repo/iiif/build/meta/sitemap.json";
 import { Metadata } from "next";
 import { getValue } from "@iiif/helpers";
@@ -45,7 +46,7 @@ export async function generateMetadata({
 }
 
 export default async function Collection({ params }: { params: { collection: string; locale: string } }) {
-  unstable_setRequestLocale(params.locale);
+  setRequestLocale(params.locale);
   const slug = `collections/${params.collection}`;
   const { collection, meta } = await loadCollection(slug);
 

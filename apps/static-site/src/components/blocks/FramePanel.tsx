@@ -13,6 +13,7 @@ const boxProps = z.object({
   frameUrl: z.string(),
   frameLabel: z.string(),
   frameDescription: z.string(),
+  fullHeight: z.boolean().optional(),
   backgroundColor: z
     .enum([
       "bg-orange-500",
@@ -43,11 +44,12 @@ export default block(
     const titleSize = props.small ? "md:text-xl" : "text-2xl md:text-4xl";
     const filters = props.unfiltered ? "" : "grayscale";
     const fallbackBackground = props.fallbackBackgroundColor || "bg-yellow-400";
+    const height = props.fullHeight ? "h-full" : "aspect-square";
 
     if (!props.frameUrl) return null;
 
     return (
-      <div className={twMerge(`cut-corners group relative flex aspect-square`, props.className)}>
+      <div className={twMerge(`cut-corners group relative flex`, height, props.className)}>
         <div
           className={`relative z-20 cursor-pointer p-5 ${
             props.dark ? "text-black" : "text-white"
@@ -59,7 +61,7 @@ export default block(
           <div className="text-center">{props.subtitle || " "}</div>
         </div>
 
-        <div className={`absolute inset-0 z-10 overflow-hidden ${fallbackBackground}`}>
+        <div className={`safe-inset absolute inset-0 z-10 overflow-hidden ${fallbackBackground}`}>
           {props.backgroundImage ? (
             <img
               alt=""
@@ -68,13 +70,15 @@ export default block(
             />
           ) : null}
           {props.backgroundColor ? (
-            <div className={`absolute inset-0 mix-blend-multiply ${props.backgroundColor} pointer-events-none`}></div>
+            <div
+              className={`safe-inset absolute inset-0 mix-blend-multiply ${props.backgroundColor} pointer-events-none`}
+            ></div>
           ) : null}
         </div>
 
         <Dialog className="relative z-50" open={isOpen} onClose={() => setIsOpen(false)}>
-          <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
-          <div className="fixed inset-0 flex h-screen w-screen items-center p-4">
+          <div className="safe-inset fixed inset-0 bg-black/30" aria-hidden="true" />
+          <div className="safe-inset mobile-height fixed inset-0 flex w-screen items-center">
             <button
               className="absolute right-6 top-6 z-20 flex h-16 w-16 items-center justify-center rounded bg-black hover:bg-slate-900"
               onClick={() => setIsOpen(false)}
@@ -84,7 +88,7 @@ export default block(
             <Dialog.Panel className="relative flex h-full w-full flex-col justify-center overflow-y-auto overflow-x-hidden rounded bg-black">
               <div className="w-full flex-1">
                 <iframe
-                  className="h-full w-full border-none object-cover"
+                  className="h-full min-h-0 w-full border-none object-cover"
                   src={props.frameUrl}
                   referrerPolicy="no-referrer"
                   allow="autoplay"
@@ -92,12 +96,12 @@ export default block(
                 ></iframe>
               </div>
 
-              <footer className="flex flex-col items-center gap-8 bg-black p-8 text-white md:min-h-32 md:flex-row">
+              <footer className="flex flex-shrink-0 flex-col items-center gap-8 bg-black p-8 text-white md:min-h-32 md:flex-row">
                 <div className="flex-1">
                   <div>{props.frameLabel}</div>
                   <div>{props.frameDescription}</div>
                 </div>
-                <a className="underline underline-offset-4" href={props.frameUrl} target="_blank">
+                <a className="underline underline-offset-4" href={props.frameUrl} target="_blank" rel="noreferrer">
                   Open in new window
                 </a>
               </footer>

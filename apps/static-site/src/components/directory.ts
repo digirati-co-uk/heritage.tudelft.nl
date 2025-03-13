@@ -1,7 +1,9 @@
-import { createDirectory } from "@page-blocks/react";
-import { CollectionBox, ManifestBox, PublicationBox, ExhibitionBox } from "@/components/blocks/Box";
-import { HeadingParagraph } from "@/components/blocks/HeadingParagraph";
+import { CollectionBox, ExhibitionBox, ManifestBox, PublicationBox } from "@/components/blocks/Box";
 import { CardGrid } from "@/components/blocks/CardGrid";
+import { HeadingParagraph } from "@/components/blocks/HeadingParagraph";
+import { FeaturedCardGrid } from "@/components/blocks/FeaturedCardGrid";
+import { InfoBox } from "@/components/blocks/InfoBox";
+import { createDirectory } from "@page-blocks/react";
 import * as FramePanel from "./blocks/FramePanel";
 
 export const directory = createDirectory({
@@ -19,6 +21,8 @@ export const directory = createDirectory({
     ExhibitionBox,
     CardGrid,
     FramePanel: FramePanel.default,
+    FeaturedCardGrid,
+    InfoBox,
   },
 });
 

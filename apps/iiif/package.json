@@ -1,15 +1,18 @@
 {
   "name": "@repo/iiif",
+  "version": "1.0.0",
   "type": "module",
+  "main": "./index.js",
   "exports": {
     "./build/*": "./build/*"
   },
   "scripts": {
     "build": "iiif-hss build --out ./build --scripts ./scripts",
-    "dev": "iiif-hss build --out ./build --scripts ./scripts && iiif-hss serve --scripts ./scripts"
+    "dev": "IIIF_URL=http://localhost:7111 iiif-hss-dev"
   },
   "dependencies": {
-    "iiif-hss": "^0.2.8",
-    "@iiif/helpers": "^1.2.19"
+    "@iiif/helpers": "^1.2.19",
+    "iiif-hss": "^1.0.1",
+    "yaml": "^2.7.0"
   }
 }
