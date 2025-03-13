@@ -38,7 +38,6 @@ interface ManifestPageProps {
     untitled: string;
     relatedObjects: string;
     partOfCollections: string;
-
     seeAlso: string;
     sharingViewers: string;
     showMore: string;
@@ -120,9 +119,7 @@ export function ManifestPage({
 
           {(related.length !== 0 || meta.partOfCollections?.length !== 0) && (
             <>
-              <h3 className="mb-5 mt-10 text-3xl font-medium">
-                {content.relatedObjects}
-              </h3>
+              <h3 className="mb-5 mt-10 text-3xl font-medium">{content.relatedObjects}</h3>
               <div className="mb-4 grid md:grid-cols-3">
                 {(meta.partOfCollections || []).map((collection, i) => (
                   <Box
