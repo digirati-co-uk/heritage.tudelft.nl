@@ -36,7 +36,7 @@ export async function CollectionPage(props: CollectionPageProps) {
   return (
     <div className="grid-cols-1 gap-8 md:grid md:grid-cols-3">
       <div className="col-span-1">
-        <div className="cut-corners mb-8 flex w-full flex-col justify-between bg-cyan-500 p-4 md:aspect-square">
+        <div className="cut-corners flex w-full flex-col justify-between bg-cyan-500 p-4 md:aspect-square">
           <div className="text-center font-mono text-sm uppercase">{t("Collection")}</div>
           <div className="flex flex-col items-center justify-center gap-4">
             <h1 className="text-center text-3xl font-medium">
@@ -64,6 +64,7 @@ export async function CollectionPage(props: CollectionPageProps) {
                 summary: t("Summary"),
                 readMore: t("Read more"),
               }}
+              label={props.collection.label}
               summary={props.collection.summary}
               metadata={props.collection.metadata}
             />
@@ -75,11 +76,11 @@ export async function CollectionPage(props: CollectionPageProps) {
             type: "collection",
           }}
           content={{
-            sharingViewers: t("Sharing / Viewers"),
+            sharingViewers: t("Sharing"),
             showMore: t("Show more"),
             showLess: t("Show less"),
-            currentPage: t("Copy link to current page"),
-            copiedMessage: t("Link copied to clipboard"),
+            currentPage: t("Permalink"),
+            copiedMessage: t("Copied"),
             iiifLabel: t("IIIF Collection"),
           }}
         />
@@ -103,18 +104,21 @@ export async function CollectionPage(props: CollectionPageProps) {
             // @todo fix the bug in hss.
             const slug = getObjectSlug(manifest["hss:slug"] || getSlugFromId(manifest.id));
             let thumbnail = (manifest.thumbnail || [])[0]?.id;
+
             if (thumbnail) {
-              thumbnail.replace("/200,/", "/400,/");
+              // Todo: check for devicePixelRatio
+              thumbnail = thumbnail.replace(/\/full\/.*?\//, "/full/!400,400/");
             }
+
             return (
               <div key={slug} className="mb-4">
                 <div className="group">
-                  <div className="cut-corners aspect-square bg-cyan-500">
+                  <div className="cut-corners aspect-square bg-gray-400">
                     <Link href={`/${slug}`}>
                       <img
                         src={thumbnail}
                         alt=""
-                        className="h-full w-full cursor-pointer object-cover transition-transform duration-1000 group-hover:scale-110"
+                        className="h-full w-full cursor-pointer object-contain transition-transform duration-1000 group-hover:scale-110"
                       />
                     </Link>
                   </div>

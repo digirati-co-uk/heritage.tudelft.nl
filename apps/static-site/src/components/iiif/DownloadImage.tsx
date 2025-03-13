@@ -11,7 +11,7 @@ export function DownloadImage({ content }: { content: { downloadImage: string; d
   return (
     <div className="overflow-hidden font-mono">
       <div className="cut-corners w-full place-self-start bg-black p-5 text-white">
-        <h3 className="mb-2 uppercase">{content.downloadImage}:</h3>
+        <h3 className="mb-2 uppercase">{content.download}</h3>
         {canvases.map((canvas) => {
           return (
             <CanvasContext key={canvas.id} canvas={canvas.id}>
@@ -43,12 +43,29 @@ export function DownloadIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-function DownloadImageInner({ single, content }: { single?: boolean; content: { download: string } }) {
+function calculateDimensions(fullWidth: number, fullHeight: number, maxArea: number) {
+  const aspectRatio = fullWidth / fullHeight;
+  const maxHeight = Math.sqrt(maxArea / aspectRatio);
+  const maxWidth = maxHeight * aspectRatio;
+
+  return {
+    width: Math.floor(maxWidth),
+    height: Math.floor(maxHeight),
+  };
+}
+
+function DownloadImageInner({ single, content }: { single?: boolean; content: { downloadImage: string } }) {
   const canvas = useCanvas();
   const [strategy] = useRenderingStrategy();
 
   if (strategy.type === "images") {
+    let { width, height } = strategy.image;
     const service = strategy.image.service;
+    const maxArea = service?.maxArea;
+    // DLCS returns full image in spite of maxArea property
+    // if (maxArea && width && height) {
+    //   ({ width, height } = calculateDimensions(width, height, maxArea));
+    // }
     const largest = service?.sizes?.toSorted((a, b) => b.width - a.width)[0];
     if (largest) {
       return (
@@ -59,7 +76,13 @@ function DownloadImageInner({ single, content }: { single?: boolean; content: { 
             <li key={largest.width} className="flex items-center gap-2">
               <DownloadIcon className="text-2xl text-slate-300 opacity-50" />
               <a className="underline" href={`${service.id}/full/${largest.width},/0/default.jpg`}>
-                {content.download} ({largest.width} x {largest.height})
+                {content.downloadImage} ({largest.width} x {largest.height})
+              </a>
+            </li>
+            <li key={width} className="flex items-center gap-2">
+              <DownloadIcon className="text-2xl text-slate-300 opacity-50" />
+              <a className="underline" href={`${service.id}/full/max/0/default.jpg`}>
+                {content.downloadImage} ({width} x {height})
               </a>
             </li>
           </ul>

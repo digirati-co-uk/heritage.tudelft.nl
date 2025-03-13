@@ -104,19 +104,19 @@ export default async function ManifestP({
         <ManifestPage
           content={{
             untitled: t("Untitled"),
-            relatedObjects: t("Related objects"),
+            relatedObjects: t("Related"),
             partOfCollections: t("Part of collections"),
 
             // Sharing.
             seeAlso: t("See also"),
-            sharingViewers: t("Sharing / Viewers"),
+            sharingViewers: t("Sharing"),
             showMore: t("Show more"),
             showLess: t("Show less"),
             iiifLabel: t("IIIF Manifest"),
             downloadImage: t("Download image"),
             download: t("Download"),
-            currentPage: t("Copy link to current page"),
-            copiedMessage: t("Link copied to clipboard"),
+            currentPage: t("Permalink"),
+            copiedMessage: t("Copied"),
           }}
           exhibitionLinks={exhibitionLinks}
           manifest={manifest}

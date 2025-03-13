@@ -19,13 +19,7 @@ export type SharingAndViewingLinksContent = {
 
 export function LinkIcon(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="1em"
-      height="1em"
-      viewBox="0 0 24 24"
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}>
       <path
         fill="currentColor"
         d="M11 17H7q-2.075 0-3.537-1.463T2 12t1.463-3.537T7 7h4v2H7q-1.25 0-2.125.875T4 12t.875 2.125T7 15h4zm-3-4v-2h8v2zm5 4v-2h4q1.25 0 2.125-.875T20 12t-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.463T22 12t-1.463 3.538T17 17z"
@@ -45,9 +39,7 @@ export function SharingAndViewingLinks({
   content: SharingAndViewingLinksContent;
 }) {
   const [sharingExpanded, setSharingExpanded] = useState(false);
-  const configuredViewers = viewerConfig.viewers.filter((viewer) =>
-    viewer.enabled?.includes(resource.type),
-  );
+  const configuredViewers = viewerConfig.viewers.filter((viewer) => viewer.enabled?.includes(resource.type));
 
   return (
     <>
@@ -58,23 +50,18 @@ export function SharingAndViewingLinks({
       {configuredViewers.length === 0 ? null : (
         <div className="overflow-hidden font-mono">
           <div className="cut-corners w-full place-self-start bg-black p-5 text-white">
-            <h3 className="mb-4 uppercase">{content.sharingViewers}:</h3>
+            <h3 className="mb-4 uppercase">{content.sharingViewers}</h3>
             <ul className="text-md flex list-none flex-col gap-1 underline-offset-4">
-              <li className="group">
+              <li className="flex items-center gap-4">
+                <IIIFLogo className="translate-x-[2px] text-xl text-slate-300" title={content.iiifLabel} />
                 <CopyToClipboard
                   href={resource.id}
                   target="_blank"
                   copiedText={content.copiedMessage}
                   rel="noreferrer"
-                  className="flex items-center gap-4"
+                  className="underline hover:text-slate-300 data-[copied=true]:no-underline data-[copied=true]:opacity-50"
                 >
-                  <IIIFLogo
-                    className="translate-x-[2px] text-xl text-slate-300"
-                    title={content.iiifLabel}
-                  />
-                  <span className="underline hover:text-slate-300">
-                    {content.iiifLabel}
-                  </span>
+                  {content.iiifLabel}
                 </CopyToClipboard>
               </li>
               <li className="flex items-center gap-3">
@@ -83,11 +70,7 @@ export function SharingAndViewingLinks({
                   suppressHydrationWarning
                   copiedText={content.copiedMessage}
                   href={
-                    typeof window !== "undefined"
-                      ? window.location.href
-                          .replace("/en/", "/")
-                          .replace("/nl/", "/")
-                      : ""
+                    typeof window !== "undefined" ? window.location.href.replace("/en/", "/").replace("/nl/", "/") : ""
                   }
                   target="_blank"
                   className="underline hover:text-slate-300 data-[copied=true]:no-underline data-[copied=true]:opacity-50"
@@ -97,8 +80,7 @@ export function SharingAndViewingLinks({
                 </CopyToClipboard>
               </li>
               {configuredViewers.map((viewer, i) => {
-                if (!sharingExpanded && i > viewerConfig.showMax - 1)
-                  return null;
+                if (!sharingExpanded && i > viewerConfig.showMax - 1) return null;
 
                 return (
                   <li key={viewer.id} className="flex items-center gap-3">
@@ -120,9 +102,7 @@ export function SharingAndViewingLinks({
                     onClick={() => setSharingExpanded(!sharingExpanded)}
                     className="uppercase hover:text-slate-300 hover:underline"
                   >
-                    {sharingExpanded
-                      ? `${content.showLess} -`
-                      : `${content.showMore} +`}
+                    {sharingExpanded ? `${content.showLess} -` : `${content.showMore} +`}
                   </button>
                 </li>
               ) : null}
