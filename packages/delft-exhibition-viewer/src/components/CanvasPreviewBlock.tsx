@@ -201,19 +201,21 @@ function CanvasPreviewBlockInner({
           }}
         >
           <CanvasPanel.RenderCanvas strategies={["images"]} enableSizes={false}>
-            {highlights.map((highlight, index) => {
-              const target = highlight?.selector?.spatial as any;
-              if (!target) return null;
-              return (
-                <box
-                  key={index}
-                  target={target}
-                  relativeStyle
-                  html
-                  style={{ border: "2px dashed red" }}
-                />
-              );
-            })}
+            {highlights.length > 1
+              ? null
+              : highlights.map((highlight, index) => {
+                  const target = highlight?.selector?.spatial as any;
+                  if (!target) return null;
+                  return (
+                    <box
+                      key={index}
+                      target={target}
+                      relativeStyle
+                      html
+                      style={{ border: "2px dashed red" }}
+                    />
+                  );
+                })}
           </CanvasPanel.RenderCanvas>
         </CanvasPanel.Viewer>
       </div>

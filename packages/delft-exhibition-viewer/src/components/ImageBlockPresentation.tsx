@@ -20,6 +20,9 @@ export function ImageBlockPresentation({
   ...props
 }: ImageBlockProps & BaseSlideProps) {
   const step = useExhibitionStep();
+  const behavior = canvas.behavior || [];
+  const isLeft = behavior.includes("left");
+  const isBottom = behavior.includes("bottom");
   const { isActive, showSummary, label, summary, showBody, toShow } =
     useStepDetails(canvas, step);
 
