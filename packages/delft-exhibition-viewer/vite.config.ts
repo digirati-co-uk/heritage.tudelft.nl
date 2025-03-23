@@ -1,10 +1,16 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
 import { resolve } from "node:path";
+import react from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
 
 export default defineConfig({
   build: {
     chunkSizeWarningLimit: 1700,
+    rollupOptions: {
+      input: {
+        index: "index.html",
+        embed: "embed.html",
+      },
+    },
   },
   plugins: [react()],
   resolve: {
