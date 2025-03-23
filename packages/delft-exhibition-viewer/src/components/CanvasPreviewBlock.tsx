@@ -24,6 +24,7 @@ import { useStore } from "zustand";
 import { createExhibitionStore } from "../helpers/exhibition-store";
 import { useCanvasHighlights } from "../helpers/use-canvas-highlights";
 import { CloseIcon } from "./CloseIcon";
+import { VisibleAnnotationsListingItem } from "./VisibleAnnotationListItem";
 
 function CanvasPreviewBlockInner({
   cover,
@@ -318,7 +319,12 @@ function CanvasPreviewBlockInner({
                       >
                         {canvas.label}
                       </LocaleString>
-                      <LocaleString>{canvas.summary}</LocaleString>
+                      <LocaleString
+                        className="whitespace-pre-wrap"
+                        enableDangerouslySetInnerHTML
+                      >
+                        {canvas.summary}
+                      </LocaleString>
                     </div>
                   </div>
                 ) : null}
@@ -329,31 +335,15 @@ function CanvasPreviewBlockInner({
                     </h3>
                     {steps.map((step, index) => {
                       return (
-                        <div
+                        <VisibleAnnotationsListingItem
                           key={`step-${index}`}
-                          data-step-id={index}
-                          {...hoverProps}
-                          className="cursor-pointer mb-2"
-                          onClick={() => goToStep(index)}
-                        >
-                          <LocaleString
-                            as="h3"
-                            className={twMerge(
-                              "text-semibold hover:hover:underline",
-                              index === stepIndex
-                                ? "text-yellow-400"
-                                : "text-white",
-                            )}
-                          >
-                            {step.label}
-                          </LocaleString>
-                          <LocaleString
-                            as="p"
-                            className="text-white/50 text-sm"
-                          >
-                            {step.summary}
-                          </LocaleString>
-                        </div>
+                          canvas={canvas}
+                          goToStep={goToStep}
+                          hoverProps={hoverProps}
+                          index={index}
+                          step={step}
+                          stepIndex={stepIndex}
+                        />
                       );
                     })}
                   </div>
@@ -365,12 +355,22 @@ function CanvasPreviewBlockInner({
                   {tour && step ? (
                     <div>
                       <LocaleString>{step.label}</LocaleString>
-                      <LocaleString>{step.summary}</LocaleString>
+                      <LocaleString
+                        enableDangerouslySetInnerHTML
+                        className="whitespace-pre-wrap"
+                      >
+                        {step.summary}
+                      </LocaleString>
                     </div>
                   ) : (
                     <div>
                       <LocaleString>{canvas.label}</LocaleString>
-                      <LocaleString>{canvas.summary}</LocaleString>
+                      <LocaleString
+                        enableDangerouslySetInnerHTML
+                        className="whitespace-pre-wrap"
+                      >
+                        {canvas.summary}
+                      </LocaleString>
                     </div>
                   )}
                 </div>

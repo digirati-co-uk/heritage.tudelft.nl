@@ -18,13 +18,14 @@ import { useStore } from "zustand";
 import { type StoreApi, createStore } from "zustand/vanilla";
 import type { ObjectLink } from "./object-links";
 
-interface ExhibitionStep {
+export interface ExhibitionStep {
   canvasId: string;
   canvasIndex: number;
   region: null | SupportedTarget;
   body: ContentResource[];
   highlight: null | SupportedTarget;
   annotationId: null | string;
+  duration?: number;
 
   // Content.
   label: null | InternationalString;
@@ -117,6 +118,9 @@ function getCanvasTourSteps({
     ? vault.get(canvas.annotations[0])
     : null;
 
+  const paintingPage = canvas.items[0] ? vault.get(canvas.items[0]) : null;
+  const hasMultipleAnnotations = (paintingPage?.items.length || 0) > 1;
+
   for (const item of annotations?.items || []) {
     const annotation = vault.get<Annotation>(item);
     const target = vault.get<Canvas | Annotation>(annotation.target as any);
@@ -183,8 +187,8 @@ function getCanvasTourSteps({
   }
 
   // @todo check if this is the right logic.
-  if (steps.length === 0 || firstStep) {
-    steps.push({
+  if (steps.length === 0 || firstStep || hasMultipleAnnotations) {
+    steps.unshift({
       label: canvas.label || null,
       summary: canvas.summary || null,
       region: null,
@@ -192,6 +196,7 @@ function getCanvasTourSteps({
       canvasId: canvas.id,
       body: [],
       canvasIndex: canvasIndex,
+      duration: canvas.duration,
       annotationId: null,
       highlight: null,
       previousCanvasId,
@@ -253,7 +258,12 @@ export function createExhibitionStore(options: ExhibitionStoreOptions) {
       const goToNext = () => {
         get().nextStep(true);
       };
-      nextFrameTimer = setTimeout(goToNext, timePerSlide);
+      const stepIdx = get().currentStep;
+      const resolvedNextStep = get().steps[stepIdx + 1];
+      nextFrameTimer = setTimeout(
+        goToNext,
+        resolvedNextStep?.duration || timePerSlide,
+      );
     };
     const pause = () => {
       if (nextFrameTimer) {
@@ -318,7 +328,6 @@ export function createExhibitionStore(options: ExhibitionStoreOptions) {
         const stepIndex = get().steps.findIndex(
           (step) => step.canvasIndex === index,
         );
-        console.log("Go to canvas index", index, stepIndex, get().steps);
         if (stepIndex !== -1) {
           set({ currentStep: stepIndex });
         }

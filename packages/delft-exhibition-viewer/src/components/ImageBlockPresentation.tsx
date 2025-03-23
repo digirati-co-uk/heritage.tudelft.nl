@@ -8,6 +8,7 @@ import {
 import { twMerge } from "tailwind-merge";
 import { getClassName } from "../helpers/exhibition";
 import { useExhibitionStep } from "../helpers/exhibition-store";
+import { useStepDetails } from "../helpers/use-step-details";
 import { BaseSlide, type BaseSlideProps } from "./BaseSlide";
 import { CanvasExhibitionBlock } from "./CanvasExhibitionBlock";
 import { CanvasPreviewBlock } from "./CanvasPreviewBlock";
@@ -18,33 +19,9 @@ export function ImageBlockPresentation({
   objectLinks,
   ...props
 }: ImageBlockProps & BaseSlideProps) {
-  const locale = useIIIFLanguage();
-  const behavior = canvas.behavior || [];
-  const isLeft = behavior.includes("left");
-  const isRight = behavior.includes("right");
-  const isBottom = behavior.includes("bottom");
   const step = useExhibitionStep();
-
-  const isActive = step?.canvasId === canvas.id;
-  const region = step?.region;
-
-  const textualBodies = region
-    ? step?.body.filter((t) => t.type === "TextualBody")
-    : [];
-  const showSummary =
-    Boolean(canvas.summary && (isLeft || isRight || isBottom)) ||
-    (isActive && region && step.label) ||
-    (region && textualBodies.length > 0);
-
-  const label = region ? step?.label : canvas.label;
-  const summary = region ? step?.summary : canvas.summary;
-
-  const showBody = !(label && summary);
-  const toShow = showBody
-    ? step?.body.length === 1
-      ? step?.body || []
-      : step?.body.filter((t: any) => (t as any).language === locale)
-    : [];
+  const { isActive, showSummary, label, summary, showBody, toShow } =
+    useStepDetails(canvas, step);
 
   const canvasViewer = (
     <Suspense fallback={<div className="h-full w-full" />}>

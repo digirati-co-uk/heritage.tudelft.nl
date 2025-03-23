@@ -30,11 +30,17 @@ export const FeaturedCardGrid = block(
     return (
       <div className="mb-12 mt-6">
         {props.title ? (
-          <h3 className="my-12 place-items-center text-center text-3xl text-slate-800">{props.title}</h3>
+          <h3 className="my-12 place-items-center text-center text-3xl text-slate-800">
+            {props.title}
+          </h3>
         ) : null}
         {/* blockSlot(slot, htmlProps, fallback) */}
-        {blockSlot(props.gridItems, { className: "featured-card-grid h-[700px]" }, props.children || null)}
+        {blockSlot(
+          props.gridItems,
+          { className: "featured-card-grid h-[700px]" },
+          props.children || null,
+        )}
       </div>
     );
-  }
+  },
 );

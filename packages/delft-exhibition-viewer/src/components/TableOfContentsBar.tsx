@@ -73,7 +73,7 @@ export function TableOfContentsBar({
 
       <div
         className={twMerge(
-          "z-30 h-14 items-center content-center place-items-center justify-center bg-[#6d6e70]",
+          "z-30 h-14 flex items-center flex-col bg-[#6d6e70]",
           "transition-opacity drop-shadow-lg px-4",
 
           fixed && "fixed bottom-0 left-0 right-0 px-4 lg:px-9",

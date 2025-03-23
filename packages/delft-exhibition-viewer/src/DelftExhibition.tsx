@@ -22,6 +22,7 @@ import { MediaBlock } from "./components/MediaBlock";
 import { TitlePanel } from "./components/TitleBlock";
 import "./styles/lib.css";
 import { twMerge } from "tailwind-merge";
+import { useMediaQuery } from "usehooks-ts";
 import { CloseIcon } from "./components/CloseIcon";
 import { TableOfContentsBar } from "./components/TableOfContentsBar";
 import { TableOfContentsHeader } from "./components/TableOfContentsHeader";
@@ -55,6 +56,7 @@ export function DelftExhibition(props: DelftExhibitionProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [enabled, setEnabled] = useState(false);
   const vault = useExistingVault();
+  const matches = useMediaQuery("(min-width: 1200px)");
   const helper = createPaintingAnnotationsHelper();
   const {
     cutCorners = true,
@@ -70,7 +72,7 @@ export function DelftExhibition(props: DelftExhibitionProps) {
   }
 
   return (
-    <VaultProvider vault={vault}>
+    <VaultProvider vault={vault} key={matches ? "large" : "small"}>
       <ManifestContext manifest={props.manifest.id}>
         <LanguageProvider language={props.language || "en"}>
           <Dialog
@@ -135,9 +137,10 @@ export function DelftExhibition(props: DelftExhibitionProps) {
               )}
             >
               {!fullTitleBar ? <TitlePanel manifest={props.manifest} /> : null}
-              {props.manifest.items.map((canvas: any, idx) => {
-                const paintables = helper.getPaintables(canvas);
+              {(props.manifest.items || []).map((canvas: any, idx) => {
+                if (!canvas) return null;
                 try {
+                  const paintables = helper.getPaintables(canvas);
                   const strategy = getRenderingStrategy({
                     canvas,
                     loadImageService: (t) => t,
