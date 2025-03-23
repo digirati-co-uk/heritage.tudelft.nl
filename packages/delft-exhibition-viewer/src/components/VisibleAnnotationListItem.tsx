@@ -23,13 +23,6 @@ export function VisibleAnnotationsListingItem({
   const { label, summary, isActive, showBody, showSummary, toShow } =
     useStepDetails(canvas, step);
 
-  console.log({
-    label,
-    summary,
-    isActive,
-    showBody,
-    toShow,
-  });
   return (
     <div
       data-step-id={index}
