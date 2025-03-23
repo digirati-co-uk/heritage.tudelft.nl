@@ -119,39 +119,41 @@ export function CanvasExhibitionBlock(props: CanvasExhibitionBlockProps) {
           strategies={["images"]}
           enableSizes={false}
         >
-          {highlights.map((highlight, index) => {
-            const target = highlight?.selector?.spatial as any;
-            if (!target) return null;
+          {highlights.length > 1
+            ? null
+            : highlights.map((highlight, index) => {
+                const target = highlight?.selector?.spatial as any;
+                if (!target) return null;
 
-            if (highlight?.selector?.type === "SvgSelector") {
-              const Shape = "shape" as any;
-              return (
-                <Shape
-                  points={highlight?.selector.points}
-                  relativeStyle={true}
-                  target={{
-                    x: 0,
-                    y: 0,
-                    width: canvas.width,
-                    height: canvas.height,
-                  }}
-                  style={{
-                    border: "2px solid red",
-                  }}
-                />
-              );
-            }
+                if (highlight?.selector?.type === "SvgSelector") {
+                  const Shape = "shape" as any;
+                  return (
+                    <Shape
+                      points={highlight?.selector.points}
+                      relativeStyle={true}
+                      target={{
+                        x: 0,
+                        y: 0,
+                        width: canvas.width,
+                        height: canvas.height,
+                      }}
+                      style={{
+                        border: "2px solid red",
+                      }}
+                    />
+                  );
+                }
 
-            return (
-              <box
-                key={index}
-                target={target}
-                relativeStyle
-                html
-                style={{ border: "2px dashed red" }}
-              />
-            );
-          })}
+                return (
+                  <box
+                    key={index}
+                    target={target}
+                    relativeStyle
+                    html
+                    style={{ border: "2px dashed red" }}
+                  />
+                );
+              })}
         </CanvasPanel.RenderCanvas>
       </CanvasPanel.Viewer>
     </div>
