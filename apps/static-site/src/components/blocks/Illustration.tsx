@@ -36,7 +36,7 @@ export async function Illustration(props: { source: string }) {
     }
 
     return (
-      <div className="bg-white/50 p-8 gap-3 h-96 cut-corners flex-col flex items-center justify-center">
+      <div className="cut-corners flex h-96 flex-col items-center justify-center gap-3 bg-white/50 p-8">
         <DevEditManifest slug={slug} />
       </div>
     );
@@ -44,8 +44,8 @@ export async function Illustration(props: { source: string }) {
 
   return (
     <ManifestLoader manifest={{ ...data }}>
-      <div className="mb-8 grid-cols-7 md:grid relative group">
-        <div className="cut-corners col-span-4 aspect-square bg-black">
+      <div className="group relative mb-8 grid-cols-7 md:grid">
+        <div className="cut-corners col-span-4 aspect-square bg-gray-400">
           <ObjectViewer
             className="h-full w-full cursor-pointer"
             objectLink={link?.slug}
@@ -54,7 +54,7 @@ export async function Illustration(props: { source: string }) {
             {thumb.best ? (
               <img
                 style={{ margin: 0 }}
-                className="h-full w-full object-cover transition-transform duration-1000 ease-in-out hover:scale-110"
+                className="h-full w-full object-contain transition-transform duration-1000 ease-in-out hover:scale-110"
                 src={thumb.best.id}
                 alt=""
               />
@@ -70,7 +70,7 @@ export async function Illustration(props: { source: string }) {
           </div>
         </div>
         {process.env.NODE_ENV !== "production" ? (
-          <div className="bg-white p-3 rounded transition-opacity group-hover:opacity-100 opacity-0 absolute bottom-3 right-3">
+          <div className="absolute bottom-3 right-3 rounded bg-white p-3 opacity-0 transition-opacity group-hover:opacity-100">
             <DevEditManifest slug={slug} />
           </div>
         ) : null}
