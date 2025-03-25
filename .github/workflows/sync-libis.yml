@@ -28,3 +28,6 @@ jobs:
           git diff-index --quiet HEAD || git commit -m "Automatic publish from github.com/tu-delft-heritage/collective-access-data"
 
       - run: git push origin main --force-with-lease
+
+      - name: Deploy changes
+        uses: ./deploy.yml
