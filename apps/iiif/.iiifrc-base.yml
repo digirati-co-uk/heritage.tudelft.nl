@@ -7,14 +7,23 @@ run:
   - delft-labels
   - extract-remote-source
   - extract-slug-source
-  - extract-label-string
+  - delft-extract-labels
   - extract-part-of-collection
-  - extract-thumbnail
+  - extract-thumbnail-local
   - manifest-sqlite
   - metadata-analysis
   - site-collections
   - delft-image-source
   - typesense-manifests
+
+collections:
+  index:
+    label: { "en": "TU Delft Academic Heritage", "nl": "Academisch Erfgoed TU Delft" }
+
+config:
+  extract-thumbnail-local:
+    width: 1080
+    height: 1080
 
 stores:
   collective-access:
@@ -28,6 +37,7 @@ stores:
     config:
       extract-topics:
         commaSeparated: ["material"]
+        dateRange: ["date"]
         topicTypes:
           material: ["Materiaal", "Material"]
           date: ["Date", "Datering"]

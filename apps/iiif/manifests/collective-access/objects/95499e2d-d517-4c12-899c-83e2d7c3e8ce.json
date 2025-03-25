@@ -1,132 +1,169 @@
 {
-  "metadata": [
-    {
-      "label": "Titel",
-      "value": "Leren aktetas van college van curatoren."
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/95499e2d-d517-4c12-899c-83e2d7c3e8ce.json",
+    "type": "Manifest",
+    "label": {
+        "nl": [
+            "Leren aktetas van college van curatoren."
+        ]
     },
-    {
-      "label": "Objectnaam",
-      "value": "aktetas"
-    },
-    {
-      "label": "Inventarisnummer",
-      "value": "1992.0257.TMD"
-    },
-    {
-      "label": "Datering",
-      "value": "1905 - 1971"
-    },
-    {
-      "label": "Afmetingen",
-      "value": "400,0 (h)  * 420,0 (b)  * 130,0 (d) "
-    },
-    {
-      "label": "Materiaal",
-      "value": "leer"
-    },
-    {
-      "label": "Beschrijving",
-      "value": "Deze aktetas werd van 1905 tot 1971 gebruikt door het college van curatoren.</br>Met de overgang van Polytechnische School naar de Technische Hoogeschool in 1905 kwam het bestuur in handen van het college van curatoren en de senaat. De curatoren waren belast met de zorg voor de huisvesting en het beheer van de financiën. De senaat, die bestond uit alle ‘gewone’ hoogleraren, behartigde het belang van het onderwijs en de wetenschap. </br>In 1971 werd de Wet Universitaire Bestuurshervorming ingevoerd, bedoeld om de oude, starre, bestuursstructuur te doorbreken zodat er makkelijker op maatschappelijke veranderingen ingesprongen kon worden. Het bestuur van de universiteit veranderde daarmee ingrijpend. Dit betekende het einde van het college van curatoren en daarmee het einde van het gebruik van deze aktetas. </br>"
-    },
-    {
-      "label": "Herkomst",
-      "value": "College van Curatoren"
-    }
-  ],
-  "@type": "sc:Manifest",
-  "structures": [
-    {
-      "canvases": [
-        "https://dlc.services/iiif-img/7/18/61d8907c-7c3f-47ae-9856-ba5ba9ebf9fa/canvas/c0"
-      ],
-      "within": "https://dlc.services/iiif-manifest/7/18/95499e2d-d517-4c12-899c-83e2d7c3e8ce/range/range-0.json",
-      "@type": "sc:Range",
-      "@id": "https://dlc.services/iiif-manifest/7/18/95499e2d-d517-4c12-899c-83e2d7c3e8ce/range/range-0-0.json",
-      "label": "0"
-    }
-  ],
-  "@id": "https://raw.githubusercontent.com/libis/ca_tudelft_iiif/main/objects/95499e2d-d517-4c12-899c-83e2d7c3e8ce.json",
-  "sequences": [
-    {
-      "viewingDirection": "left-to-right",
-      "viewingHint": "paged",
-      "canvases": [
+    "metadata": [
         {
-          "images": [
-            {
-              "resource": {
-                "@type": "dctypes:Image",
-                "service": {
-                  "protocol": "http://iiif.io/api/image",
-                  "profile": "http://iiif.io/api/image/2/level1.json",
-                  "width": 2048,
-                  "@id": "https://dlc.services/iiif-img/7/18/61d8907c-7c3f-47ae-9856-ba5ba9ebf9fa",
-                  "height": 1536
-                },
-                "width": 2048,
-                "@id": "https://dlc.services/iiif-img/7/18/61d8907c-7c3f-47ae-9856-ba5ba9ebf9fa/full/1024,768/0/default.jpg",
-                "height": 1536
-              },
-              "@type": "oa:Annotation",
-              "motivation": "sc:painting",
-              "@id": "https://dlc.services/iiif-img/7/18/61d8907c-7c3f-47ae-9856-ba5ba9ebf9fa/imageanno/0",
-              "on": "https://dlc.services/iiif-img/7/18/61d8907c-7c3f-47ae-9856-ba5ba9ebf9fa/canvas/c0"
-            }
-          ],
-          "thumbnail": {
-            "@type": "dctypes:Image",
-            "service": {
-              "sizes": [
-                {
-                  "width": 1024,
-                  "height": 768
-                },
-                {
-                  "width": 400,
-                  "height": 300
-                },
-                {
-                  "width": 200,
-                  "height": 150
-                },
-                {
-                  "width": 100,
-                  "height": 75
-                }
-              ],
-              "profile": [
-                "http://iiif.io/api/image/2/level0.json",
-                {
-                  "formats": [
-                    "jpg"
-                  ],
-                  "qualities": [
-                    "color"
-                  ],
-                  "supports": [
-                    "sizeByWhListed"
-                  ]
-                }
-              ],
-              "width": 1024,
-              "@id": "https://dlc.services/thumbs/7/18/61d8907c-7c3f-47ae-9856-ba5ba9ebf9fa",
-              "@context": "http://iiif.io/api/image/2/context.json",
-              "height": 768
+            "label": {
+                "en": [
+                    "Title"
+                ],
+                "nl": [
+                    "Titel"
+                ]
             },
-            "@id": "https://dlc.services/thumbs/7/18/61d8907c-7c3f-47ae-9856-ba5ba9ebf9fa/full/full/0/default.jpg"
-          },
-          "@type": "sc:Canvas",
-          "width": 2048,
-          "@id": "https://dlc.services/iiif-img/7/18/61d8907c-7c3f-47ae-9856-ba5ba9ebf9fa/canvas/c0",
-          "label": "Image",
-          "height": 1536
+            "value": {
+                "nl": [
+                    "Leren aktetas van college van curatoren."
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Object name"
+                ],
+                "nl": [
+                    "Objectnaam"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "aktetas"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Inventory number"
+                ],
+                "nl": [
+                    "Inventarisnummer"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "1992.0257.TMD"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dating"
+                ],
+                "nl": [
+                    "Datering"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "1905 – 1971"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dimensions"
+                ],
+                "nl": [
+                    "Afmetingen"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "400,0 mm (h) x 420,0 mm (b) x 130,0 mm (d)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Material"
+                ],
+                "nl": [
+                    "Materiaal"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "leer"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Description"
+                ],
+                "nl": [
+                    "Beschrijving"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Deze aktetas werd van 1905 tot 1971 gebruikt door het college van curatoren.\nMet de overgang van Polytechnische School naar de Technische Hoogeschool in 1905 kwam het bestuur in handen van het college van curatoren en de senaat. De curatoren waren belast met de zorg voor de huisvesting en het beheer van de financiën. De senaat, die bestond uit alle ‘gewone’ hoogleraren, behartigde het belang van het onderwijs en de wetenschap. \nIn 1971 werd de Wet Universitaire Bestuurshervorming ingevoerd, bedoeld om de oude, starre, bestuursstructuur te doorbreken zodat er makkelijker op maatschappelijke veranderingen ingesprongen kon worden. Het bestuur van de universiteit veranderde daarmee ingrijpend. Dit betekende het einde van het college van curatoren en daarmee het einde van het gebruik van deze aktetas. \n"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Provenance"
+                ],
+                "nl": [
+                    "Herkomst"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "College van Curatoren"
+                ]
+            }
         }
-      ],
-      "@type": "sc:Sequence",
-      "@id": "https://dlc.services/7/18/95499e2d-d517-4c12-899c-83e2d7c3e8ce/sequences/normal",
-      "label": "Current page order"
-    }
-  ],
-  "@context": "http://iiif.io/api/presentation/2/context.json",
-  "label": "Leren aktetas van college van curatoren."
+    ],
+    "items": [
+        {
+            "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/95499e2d-d517-4c12-899c-83e2d7c3e8ce/canvas/0",
+            "type": "Canvas",
+            "height": 1536,
+            "width": 2048,
+            "items": [
+                {
+                    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/95499e2d-d517-4c12-899c-83e2d7c3e8ce/canvas/0/annotation-page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://dlc.services/iiif-img/v3/7/18/61d8907c-7c3f-47ae-9856-ba5ba9ebf9fa",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/95499e2d-d517-4c12-899c-83e2d7c3e8ce/canvas/0",
+                            "body": {
+                                "id": "https://dlc.services/iiif-img/v3/7/18/61d8907c-7c3f-47ae-9856-ba5ba9ebf9fa/full/max/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "height": 1536,
+                                "width": 2048,
+                                "service": [
+                                    {
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/18/61d8907c-7c3f-47ae-9856-ba5ba9ebf9fa",
+                                        "type": "ImageService3",
+                                        "profile": "level2"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

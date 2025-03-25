@@ -1,215 +1,221 @@
 {
-  "metadata": [
-    {
-      "label": "Titel",
-      "value": "Afstandmeter door A. le Cyre"
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/500a1b18-9dac-46ee-a743-b3eeeb1acd68.json",
+    "type": "Manifest",
+    "label": {
+        "nl": [
+            "Afstandmeter door A. le Cyre"
+        ]
     },
-    {
-      "label": "Objectnaam",
-      "value": "afstandmeter"
-    },
-    {
-      "label": "Inventarisnummer",
-      "value": "2000.0338.GEO"
-    },
-    {
-      "label": "Datering",
-      "value": "1875 - 1900"
-    },
-    {
-      "label": "Maker",
-      "value": "Le Cyre, A. (Frans)  (maker)"
-    },
-    {
-      "label": "Afmetingen",
-      "value": "1.380,0 (h)  * 460,0 (b)  * 1.080,0 (d) "
-    },
-    {
-      "label": "Materiaal",
-      "value": "hout, koper, ijzer"
-    },
-    {
-      "label": "Beschrijving",
-      "value": "Afstandmeter door A. le Cyre, hydrografisch meetinstrument voor het het bepalen van afstanden vanaf een varend schip. Het instrument staat met een kogelgewricht op een stalen voet en is voorzien van metalen bollen om het in evenwicht te houden. Instrumenten van dit type zijn korte tijd bij de Nederlandse Marine in gebruik geweest, maar in 1890 wegens geringe bruikbaarheid verkocht. De voet is een ontwerp van P.J. Kaiser. De steun (bevestiging aan het schip) voor de voet is niet origineel, maar gemaakt in de werkplaats van Geodesie. Het geheel is in vier onderdelen (basisafstandmeter, twee contra-gewichten en een buisstatief) uit elkaar gehaald."
-    },
-    {
-      "label": "Documentatie",
-      "value": "Mededelingen betreffende het zeewezen 22e deel (Den Haag 1881) blz 1-22"
-    }
-  ],
-  "@type": "sc:Manifest",
-  "structures": [
-    {
-      "canvases": [
-        "https://dlc.services/iiif-img/7/18/bed3c25e-8cdf-4e9c-96fe-3f6c78a3fc86/canvas/c0"
-      ],
-      "within": "https://dlc.services/iiif-manifest/7/18/500a1b18-9dac-46ee-a743-b3eeeb1acd68/range/range-0.json",
-      "@type": "sc:Range",
-      "@id": "https://dlc.services/iiif-manifest/7/18/500a1b18-9dac-46ee-a743-b3eeeb1acd68/range/range-0-0.json",
-      "label": "0"
-    },
-    {
-      "canvases": [
-        "https://dlc.services/iiif-img/7/18/85acc221-65dd-4a21-b63b-c8cc756c581a/canvas/c0"
-      ],
-      "within": "https://dlc.services/iiif-manifest/7/18/500a1b18-9dac-46ee-a743-b3eeeb1acd68/range/range-0.json",
-      "@type": "sc:Range",
-      "@id": "https://dlc.services/iiif-manifest/7/18/500a1b18-9dac-46ee-a743-b3eeeb1acd68/range/range-0-1.json",
-      "label": "1"
-    }
-  ],
-  "@id": "https://raw.githubusercontent.com/libis/ca_tudelft_iiif/main/objects/500a1b18-9dac-46ee-a743-b3eeeb1acd68.json",
-  "sequences": [
-    {
-      "viewingDirection": "left-to-right",
-      "viewingHint": "paged",
-      "canvases": [
+    "metadata": [
         {
-          "images": [
-            {
-              "resource": {
-                "@type": "dctypes:Image",
-                "service": {
-                  "protocol": "http://iiif.io/api/image",
-                  "profile": "http://iiif.io/api/image/2/level1.json",
-                  "width": 3072,
-                  "@id": "https://dlc.services/iiif-img/7/18/bed3c25e-8cdf-4e9c-96fe-3f6c78a3fc86",
-                  "height": 2048
-                },
-                "width": 3072,
-                "@id": "https://dlc.services/iiif-img/7/18/bed3c25e-8cdf-4e9c-96fe-3f6c78a3fc86/full/1024,683/0/default.jpg",
-                "height": 2048
-              },
-              "@type": "oa:Annotation",
-              "motivation": "sc:painting",
-              "@id": "https://dlc.services/iiif-img/7/18/bed3c25e-8cdf-4e9c-96fe-3f6c78a3fc86/imageanno/0",
-              "on": "https://dlc.services/iiif-img/7/18/bed3c25e-8cdf-4e9c-96fe-3f6c78a3fc86/canvas/c0"
-            }
-          ],
-          "thumbnail": {
-            "@type": "dctypes:Image",
-            "service": {
-              "sizes": [
-                {
-                  "width": 1024,
-                  "height": 683
-                },
-                {
-                  "width": 400,
-                  "height": 267
-                },
-                {
-                  "width": 200,
-                  "height": 133
-                },
-                {
-                  "width": 100,
-                  "height": 67
-                }
-              ],
-              "profile": [
-                "http://iiif.io/api/image/2/level0.json",
-                {
-                  "formats": [
-                    "jpg"
-                  ],
-                  "qualities": [
-                    "color"
-                  ],
-                  "supports": [
-                    "sizeByWhListed"
-                  ]
-                }
-              ],
-              "width": 1024,
-              "@id": "https://dlc.services/thumbs/7/18/bed3c25e-8cdf-4e9c-96fe-3f6c78a3fc86",
-              "@context": "http://iiif.io/api/image/2/context.json",
-              "height": 683
+            "label": {
+                "en": [
+                    "Title"
+                ],
+                "nl": [
+                    "Titel"
+                ]
             },
-            "@id": "https://dlc.services/thumbs/7/18/bed3c25e-8cdf-4e9c-96fe-3f6c78a3fc86/full/full/0/default.jpg"
-          },
-          "@type": "sc:Canvas",
-          "width": 3072,
-          "@id": "https://dlc.services/iiif-img/7/18/bed3c25e-8cdf-4e9c-96fe-3f6c78a3fc86/canvas/c0",
-          "label": "Image",
-          "height": 2048
+            "value": {
+                "nl": [
+                    "Afstandmeter door A. le Cyre"
+                ]
+            }
         },
         {
-          "images": [
-            {
-              "resource": {
-                "@type": "dctypes:Image",
-                "service": {
-                  "protocol": "http://iiif.io/api/image",
-                  "profile": "http://iiif.io/api/image/2/level1.json",
-                  "width": 2916,
-                  "@id": "https://dlc.services/iiif-img/7/18/85acc221-65dd-4a21-b63b-c8cc756c581a",
-                  "height": 1922
-                },
-                "width": 2916,
-                "@id": "https://dlc.services/iiif-img/7/18/85acc221-65dd-4a21-b63b-c8cc756c581a/full/1024,675/0/default.jpg",
-                "height": 1922
-              },
-              "@type": "oa:Annotation",
-              "motivation": "sc:painting",
-              "@id": "https://dlc.services/iiif-img/7/18/85acc221-65dd-4a21-b63b-c8cc756c581a/imageanno/0",
-              "on": "https://dlc.services/iiif-img/7/18/85acc221-65dd-4a21-b63b-c8cc756c581a/canvas/c0"
-            }
-          ],
-          "thumbnail": {
-            "@type": "dctypes:Image",
-            "service": {
-              "sizes": [
-                {
-                  "width": 1024,
-                  "height": 675
-                },
-                {
-                  "width": 400,
-                  "height": 264
-                },
-                {
-                  "width": 200,
-                  "height": 132
-                },
-                {
-                  "width": 100,
-                  "height": 66
-                }
-              ],
-              "profile": [
-                "http://iiif.io/api/image/2/level0.json",
-                {
-                  "formats": [
-                    "jpg"
-                  ],
-                  "qualities": [
-                    "color"
-                  ],
-                  "supports": [
-                    "sizeByWhListed"
-                  ]
-                }
-              ],
-              "width": 1024,
-              "@id": "https://dlc.services/thumbs/7/18/85acc221-65dd-4a21-b63b-c8cc756c581a",
-              "@context": "http://iiif.io/api/image/2/context.json",
-              "height": 675
+            "label": {
+                "en": [
+                    "Object name"
+                ],
+                "nl": [
+                    "Objectnaam"
+                ]
             },
-            "@id": "https://dlc.services/thumbs/7/18/85acc221-65dd-4a21-b63b-c8cc756c581a/full/full/0/default.jpg"
-          },
-          "@type": "sc:Canvas",
-          "width": 2916,
-          "@id": "https://dlc.services/iiif-img/7/18/85acc221-65dd-4a21-b63b-c8cc756c581a/canvas/c0",
-          "label": "Image",
-          "height": 1922
+            "value": {
+                "nl": [
+                    "afstandmeter"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Inventory number"
+                ],
+                "nl": [
+                    "Inventarisnummer"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "2000.0338.GEO"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dating"
+                ],
+                "nl": [
+                    "Datering"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "1875 – 1900"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Maker"
+                ],
+                "nl": [
+                    "Maker"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Le Cyre, A. (Frans)  (maker)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dimensions"
+                ],
+                "nl": [
+                    "Afmetingen"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "1.380,0 mm (h) x 460,0 mm (b) x 1.080,0 mm (d)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Material"
+                ],
+                "nl": [
+                    "Materiaal"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "hout",
+                    "koper",
+                    "ijzer"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Description"
+                ],
+                "nl": [
+                    "Beschrijving"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Afstandmeter door A. le Cyre, hydrografisch meetinstrument voor het het bepalen van afstanden vanaf een varend schip. Het instrument staat met een kogelgewricht op een stalen voet en is voorzien van metalen bollen om het in evenwicht te houden. Instrumenten van dit type zijn korte tijd bij de Nederlandse Marine in gebruik geweest, maar in 1890 wegens geringe bruikbaarheid verkocht. De voet is een ontwerp van P.J. Kaiser. De steun (bevestiging aan het schip) voor de voet is niet origineel, maar gemaakt in de werkplaats van Geodesie. Het geheel is in vier onderdelen (basisafstandmeter, twee contra-gewichten en een buisstatief) uit elkaar gehaald."
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Documentation"
+                ],
+                "nl": [
+                    "Documentatie"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Mededelingen betreffende het zeewezen 22e deel (Den Haag 1881) blz 1-22"
+                ]
+            }
         }
-      ],
-      "@type": "sc:Sequence",
-      "@id": "https://dlc.services/7/18/500a1b18-9dac-46ee-a743-b3eeeb1acd68/sequences/normal",
-      "label": "Current page order"
-    }
-  ],
-  "@context": "http://iiif.io/api/presentation/2/context.json",
-  "label": "Afstandmeter door A. le Cyre"
+    ],
+    "items": [
+        {
+            "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/500a1b18-9dac-46ee-a743-b3eeeb1acd68/canvas/0",
+            "type": "Canvas",
+            "height": 2048,
+            "width": 3072,
+            "items": [
+                {
+                    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/500a1b18-9dac-46ee-a743-b3eeeb1acd68/canvas/0/annotation-page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://dlc.services/iiif-img/v3/7/18/bed3c25e-8cdf-4e9c-96fe-3f6c78a3fc86",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/500a1b18-9dac-46ee-a743-b3eeeb1acd68/canvas/0",
+                            "body": {
+                                "id": "https://dlc.services/iiif-img/v3/7/18/bed3c25e-8cdf-4e9c-96fe-3f6c78a3fc86/full/max/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "height": 2048,
+                                "width": 3072,
+                                "service": [
+                                    {
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/18/bed3c25e-8cdf-4e9c-96fe-3f6c78a3fc86",
+                                        "type": "ImageService3",
+                                        "profile": "level2"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/500a1b18-9dac-46ee-a743-b3eeeb1acd68/canvas/1",
+            "type": "Canvas",
+            "height": 1922,
+            "width": 2916,
+            "items": [
+                {
+                    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/500a1b18-9dac-46ee-a743-b3eeeb1acd68/canvas/1/annotation-page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://dlc.services/iiif-img/v3/7/18/85acc221-65dd-4a21-b63b-c8cc756c581a",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/500a1b18-9dac-46ee-a743-b3eeeb1acd68/canvas/1",
+                            "body": {
+                                "id": "https://dlc.services/iiif-img/v3/7/18/85acc221-65dd-4a21-b63b-c8cc756c581a/full/max/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "height": 1922,
+                                "width": 2916,
+                                "service": [
+                                    {
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/18/85acc221-65dd-4a21-b63b-c8cc756c581a",
+                                        "type": "ImageService3",
+                                        "profile": "level2"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

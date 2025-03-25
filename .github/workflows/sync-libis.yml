@@ -1,4 +1,4 @@
-name: Sync Libis
+name: Sync Collective Access
 
 on:
   schedule:
@@ -13,25 +13,19 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup bun.sh environment
-        uses: oven-sh/setup-bun@v1
-        with:
-          bun-version: latest
-
       - run: |
-          git clone --depth=1 --branch=main https://github.com/libis/ca_tudelft_iiif
+          git clone --depth=1 --branch=main https://github.com/tu-delft-heritage/collective-access-data
           pwd
           ls
           rm -r apps/iiif/manifests/collective-access/objects
           rm -rf apps/iiif/manifests/collective-access/collections
-          cp -a ca_tudelft_iiif/objects/. apps/iiif/manifests/collective-access/objects
-          cp -a ca_tudelft_iiif/collections/. apps/iiif/manifests/collective-access/collections
-          rm -r ca_tudelft_iiif
-          bun run ./process-libis.mts
+          cp -a collective-access-data/build/iiif/objects/. apps/iiif/manifests/collective-access/objects
+          cp -a collective-access-data/build/iiif/collections/. apps/iiif/manifests/collective-access/collections
+          rm -r collective-access-data
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
-          git diff-index --quiet HEAD || git commit -m "Automatic publish from github.com/libis/ca_tudelft_iiif"
+          git diff-index --quiet HEAD || git commit -m "Automatic publish from github.com/tu-delft-heritage/collective-access-data"
 
       - run: git push origin main --force-with-lease
 

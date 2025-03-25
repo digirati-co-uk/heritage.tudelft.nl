@@ -1,136 +1,185 @@
 {
-  "metadata": [
-    {
-      "label": "Titel",
-      "value": "Hoekmeter door E. Lenoir"
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/eb9f2ca8-6244-4b30-940d-667810828e96.json",
+    "type": "Manifest",
+    "label": {
+        "nl": [
+            "Hoekmeter door E. Lenoir"
+        ]
     },
-    {
-      "label": "Objectnaam",
-      "value": "hoekmeter"
-    },
-    {
-      "label": "Inventarisnummer",
-      "value": "2000.0005.GEO"
-    },
-    {
-      "label": "Datering",
-      "value": "1750 - 1800"
-    },
-    {
-      "label": "Maker",
-      "value": "Lenoir, Etienne  (maker)"
-    },
-    {
-      "label": "Afmetingen",
-      "value": "195,0 (h)  * 220,0 (b)  * 150,0 (d) "
-    },
-    {
-      "label": "Materiaal",
-      "value": "metaal, hout"
-    },
-    {
-      "label": "Beschrijving",
-      "value": "Grafometer of halve cirkel met een draaibaar vizier (alhidade) door E. Lenoir. Voor het meten van richtingen en het bepalen van hoeken tussen kenmerkende punten in het terrein. Met een kogelgewricht kan het instrument horizontaal gesteld worden. In de 17de eeuw werd dit instrument ook wel \"plat kloot\" genoemd."
-    },
-    {
-      "label": "Documentatie",
-      "value": "Pouls, H.C., \"De landmeter: inleiding in de geschiedenis van de Nederlandse landmeetkunde van de Romeinse tot de Franse tijd\", Alphen aan de Rijn: Canaletto/Repro-Holland, 1997, p.275."
-    }
-  ],
-  "@type": "sc:Manifest",
-  "structures": [
-    {
-      "canvases": [
-        "https://dlc.services/iiif-img/7/18/9e629bee-54e1-4018-bb91-46034fa390dc/canvas/c0"
-      ],
-      "within": "https://dlc.services/iiif-manifest/7/18/eb9f2ca8-6244-4b30-940d-667810828e96/range/range-0.json",
-      "@type": "sc:Range",
-      "@id": "https://dlc.services/iiif-manifest/7/18/eb9f2ca8-6244-4b30-940d-667810828e96/range/range-0-0.json",
-      "label": "0"
-    }
-  ],
-  "@id": "https://raw.githubusercontent.com/libis/ca_tudelft_iiif/main/objects/eb9f2ca8-6244-4b30-940d-667810828e96.json",
-  "sequences": [
-    {
-      "viewingDirection": "left-to-right",
-      "viewingHint": "paged",
-      "canvases": [
+    "metadata": [
         {
-          "images": [
-            {
-              "resource": {
-                "@type": "dctypes:Image",
-                "service": {
-                  "protocol": "http://iiif.io/api/image",
-                  "profile": "http://iiif.io/api/image/2/level1.json",
-                  "width": 3072,
-                  "@id": "https://dlc.services/iiif-img/7/18/9e629bee-54e1-4018-bb91-46034fa390dc",
-                  "height": 2048
-                },
-                "width": 3072,
-                "@id": "https://dlc.services/iiif-img/7/18/9e629bee-54e1-4018-bb91-46034fa390dc/full/1024,683/0/default.jpg",
-                "height": 2048
-              },
-              "@type": "oa:Annotation",
-              "motivation": "sc:painting",
-              "@id": "https://dlc.services/iiif-img/7/18/9e629bee-54e1-4018-bb91-46034fa390dc/imageanno/0",
-              "on": "https://dlc.services/iiif-img/7/18/9e629bee-54e1-4018-bb91-46034fa390dc/canvas/c0"
-            }
-          ],
-          "thumbnail": {
-            "@type": "dctypes:Image",
-            "service": {
-              "sizes": [
-                {
-                  "width": 1024,
-                  "height": 683
-                },
-                {
-                  "width": 400,
-                  "height": 267
-                },
-                {
-                  "width": 200,
-                  "height": 133
-                },
-                {
-                  "width": 100,
-                  "height": 67
-                }
-              ],
-              "profile": [
-                "http://iiif.io/api/image/2/level0.json",
-                {
-                  "formats": [
-                    "jpg"
-                  ],
-                  "qualities": [
-                    "color"
-                  ],
-                  "supports": [
-                    "sizeByWhListed"
-                  ]
-                }
-              ],
-              "width": 1024,
-              "@id": "https://dlc.services/thumbs/7/18/9e629bee-54e1-4018-bb91-46034fa390dc",
-              "@context": "http://iiif.io/api/image/2/context.json",
-              "height": 683
+            "label": {
+                "en": [
+                    "Title"
+                ],
+                "nl": [
+                    "Titel"
+                ]
             },
-            "@id": "https://dlc.services/thumbs/7/18/9e629bee-54e1-4018-bb91-46034fa390dc/full/full/0/default.jpg"
-          },
-          "@type": "sc:Canvas",
-          "width": 3072,
-          "@id": "https://dlc.services/iiif-img/7/18/9e629bee-54e1-4018-bb91-46034fa390dc/canvas/c0",
-          "label": "Image",
-          "height": 2048
+            "value": {
+                "nl": [
+                    "Hoekmeter door E. Lenoir"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Object name"
+                ],
+                "nl": [
+                    "Objectnaam"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "hoekmeter"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Inventory number"
+                ],
+                "nl": [
+                    "Inventarisnummer"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "2000.0005.GEO"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dating"
+                ],
+                "nl": [
+                    "Datering"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "1750 – 1800"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Maker"
+                ],
+                "nl": [
+                    "Maker"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Lenoir, Etienne  (maker)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dimensions"
+                ],
+                "nl": [
+                    "Afmetingen"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "195,0 mm (h) x 220,0 mm (b) x 150,0 mm (d)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Material"
+                ],
+                "nl": [
+                    "Materiaal"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "metaal",
+                    "hout"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Description"
+                ],
+                "nl": [
+                    "Beschrijving"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Grafometer of halve cirkel met een draaibaar vizier (alhidade) door E. Lenoir. Voor het meten van richtingen en het bepalen van hoeken tussen kenmerkende punten in het terrein. Met een kogelgewricht kan het instrument horizontaal gesteld worden. In de 17de eeuw werd dit instrument ook wel \"plat kloot\" genoemd."
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Documentation"
+                ],
+                "nl": [
+                    "Documentatie"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Pouls, H.C., \"De landmeter: inleiding in de geschiedenis van de Nederlandse landmeetkunde van de Romeinse tot de Franse tijd\", Alphen aan de Rijn: Canaletto/Repro-Holland, 1997, p.275."
+                ]
+            }
         }
-      ],
-      "@type": "sc:Sequence",
-      "@id": "https://dlc.services/7/18/eb9f2ca8-6244-4b30-940d-667810828e96/sequences/normal",
-      "label": "Current page order"
-    }
-  ],
-  "@context": "http://iiif.io/api/presentation/2/context.json",
-  "label": "Hoekmeter door E. Lenoir"
+    ],
+    "items": [
+        {
+            "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/eb9f2ca8-6244-4b30-940d-667810828e96/canvas/0",
+            "type": "Canvas",
+            "height": 2048,
+            "width": 3072,
+            "items": [
+                {
+                    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/eb9f2ca8-6244-4b30-940d-667810828e96/canvas/0/annotation-page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://dlc.services/iiif-img/v3/7/18/9e629bee-54e1-4018-bb91-46034fa390dc",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/eb9f2ca8-6244-4b30-940d-667810828e96/canvas/0",
+                            "body": {
+                                "id": "https://dlc.services/iiif-img/v3/7/18/9e629bee-54e1-4018-bb91-46034fa390dc/full/max/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "height": 2048,
+                                "width": 3072,
+                                "service": [
+                                    {
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/18/9e629bee-54e1-4018-bb91-46034fa390dc",
+                                        "type": "ImageService3",
+                                        "profile": "level2"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

@@ -1,140 +1,201 @@
 {
-  "metadata": [
-    {
-      "label": "Titel",
-      "value": "Portret van prof. S.E.B. Hoogewerff door J.P. Veth"
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/94663288-dac4-4f58-8941-a35a21ceb931.json",
+    "type": "Manifest",
+    "label": {
+        "nl": [
+            "Portret van prof. S.E.B. Hoogewerff door J.P. Veth"
+        ]
     },
-    {
-      "label": "Objectnaam",
-      "value": "schilderij"
-    },
-    {
-      "label": "Inventarisnummer",
-      "value": "2011.0014.CVB"
-    },
-    {
-      "label": "Datering",
-      "value": "1907"
-    },
-    {
-      "label": "Maker",
-      "value": "Veth, Jan Pieter  (maker)"
-    },
-    {
-      "label": "Afmetingen",
-      "value": "895,0 (h)  * 810,0 (b)  * 80,0 (d) "
-    },
-    {
-      "label": "Materiaal",
-      "value": "olieverf, linnen, hout"
-    },
-    {
-      "label": "Beschrijving",
-      "value": "Portret door Jan Veth, van prof. dr. Sebastiaan Hoogewerff, hoogleraar anorganische en organische scheikunde; analytische scheikunde van 1885 tot 1907.</br>Op 5 oktober 1907 werd het portret door leerlingen en oud-leerlingen aangeboden en geplaatst in de Prinsenkamer."
-    },
-    {
-      "label": "Voorstelling",
-      "value": "Hoogewerff, Sebastiaan"
-    },
-    {
-      "label": "Documentatie",
-      "value": "Aanbieding portret wordt vermeld in: \"Jaarboek van de Technische Hoogeschool te Delft\", 1916-1917, p.40."
-    }
-  ],
-  "@type": "sc:Manifest",
-  "structures": [
-    {
-      "canvases": [
-        "https://dlc.services/iiif-img/7/18/e3158163-fb53-4a23-a3a5-cdda7245b022/canvas/c0"
-      ],
-      "within": "https://dlc.services/iiif-manifest/7/18/94663288-dac4-4f58-8941-a35a21ceb931/range/range-0.json",
-      "@type": "sc:Range",
-      "@id": "https://dlc.services/iiif-manifest/7/18/94663288-dac4-4f58-8941-a35a21ceb931/range/range-0-0.json",
-      "label": "0"
-    }
-  ],
-  "@id": "https://raw.githubusercontent.com/libis/ca_tudelft_iiif/main/objects/94663288-dac4-4f58-8941-a35a21ceb931.json",
-  "sequences": [
-    {
-      "viewingDirection": "left-to-right",
-      "viewingHint": "paged",
-      "canvases": [
+    "metadata": [
         {
-          "images": [
-            {
-              "resource": {
-                "@type": "dctypes:Image",
-                "service": {
-                  "protocol": "http://iiif.io/api/image",
-                  "profile": "http://iiif.io/api/image/2/level1.json",
-                  "width": 2419,
-                  "@id": "https://dlc.services/iiif-img/7/18/e3158163-fb53-4a23-a3a5-cdda7245b022",
-                  "height": 2638
-                },
-                "width": 2419,
-                "@id": "https://dlc.services/iiif-img/7/18/e3158163-fb53-4a23-a3a5-cdda7245b022/full/939,1024/0/default.jpg",
-                "height": 2638
-              },
-              "@type": "oa:Annotation",
-              "motivation": "sc:painting",
-              "@id": "https://dlc.services/iiif-img/7/18/e3158163-fb53-4a23-a3a5-cdda7245b022/imageanno/0",
-              "on": "https://dlc.services/iiif-img/7/18/e3158163-fb53-4a23-a3a5-cdda7245b022/canvas/c0"
-            }
-          ],
-          "thumbnail": {
-            "@type": "dctypes:Image",
-            "service": {
-              "sizes": [
-                {
-                  "width": 939,
-                  "height": 1024
-                },
-                {
-                  "width": 367,
-                  "height": 400
-                },
-                {
-                  "width": 183,
-                  "height": 200
-                },
-                {
-                  "width": 92,
-                  "height": 100
-                }
-              ],
-              "profile": [
-                "http://iiif.io/api/image/2/level0.json",
-                {
-                  "formats": [
-                    "jpg"
-                  ],
-                  "qualities": [
-                    "color"
-                  ],
-                  "supports": [
-                    "sizeByWhListed"
-                  ]
-                }
-              ],
-              "width": 939,
-              "@id": "https://dlc.services/thumbs/7/18/e3158163-fb53-4a23-a3a5-cdda7245b022",
-              "@context": "http://iiif.io/api/image/2/context.json",
-              "height": 1024
+            "label": {
+                "en": [
+                    "Title"
+                ],
+                "nl": [
+                    "Titel"
+                ]
             },
-            "@id": "https://dlc.services/thumbs/7/18/e3158163-fb53-4a23-a3a5-cdda7245b022/full/full/0/default.jpg"
-          },
-          "@type": "sc:Canvas",
-          "width": 2419,
-          "@id": "https://dlc.services/iiif-img/7/18/e3158163-fb53-4a23-a3a5-cdda7245b022/canvas/c0",
-          "label": "Image",
-          "height": 2638
+            "value": {
+                "nl": [
+                    "Portret van prof. S.E.B. Hoogewerff door J.P. Veth"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Object name"
+                ],
+                "nl": [
+                    "Objectnaam"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "schilderij"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Inventory number"
+                ],
+                "nl": [
+                    "Inventarisnummer"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "2011.0014.CVB"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dating"
+                ],
+                "nl": [
+                    "Datering"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "1907"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Maker"
+                ],
+                "nl": [
+                    "Maker"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Veth, Jan Pieter  (maker)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dimensions"
+                ],
+                "nl": [
+                    "Afmetingen"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "895,0 mm (h) x 810,0 mm (b) x 80,0 mm (d)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Material"
+                ],
+                "nl": [
+                    "Materiaal"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "olieverf",
+                    "linnen",
+                    "hout"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Description"
+                ],
+                "nl": [
+                    "Beschrijving"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Portret van prof. dr. Sebastiaan Hoogewerff (1847-1934), hoogleraar anorganische en organische scheikunde en analytische scheikunde aan de Polytechnische School te Delft van 1885 tot 1907. Tevens was hij rector magnificus van 1905 tot 1907. Op 5 oktober 1907 werd het portret door leerlingen en oud-leerlingen aangeboden en geplaatst in de Prinsenkamer in Delft. Het werk is geschilderd door Jan Pieter Veth (1864-1925). "
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Subject"
+                ],
+                "nl": [
+                    "Voorstelling"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Hoogewerff, Sebastiaan"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Documentation"
+                ],
+                "nl": [
+                    "Documentatie"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Aanbieding portret wordt vermeld in: \"Jaarboek van de Technische Hoogeschool te Delft\", 1916-1917, p.40."
+                ]
+            }
         }
-      ],
-      "@type": "sc:Sequence",
-      "@id": "https://dlc.services/7/18/94663288-dac4-4f58-8941-a35a21ceb931/sequences/normal",
-      "label": "Current page order"
-    }
-  ],
-  "@context": "http://iiif.io/api/presentation/2/context.json",
-  "label": "Portret van prof. S.E.B. Hoogewerff door J.P. Veth"
+    ],
+    "items": [
+        {
+            "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/94663288-dac4-4f58-8941-a35a21ceb931/canvas/0",
+            "type": "Canvas",
+            "height": 2638,
+            "width": 2419,
+            "items": [
+                {
+                    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/94663288-dac4-4f58-8941-a35a21ceb931/canvas/0/annotation-page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://dlc.services/iiif-img/v3/7/18/e3158163-fb53-4a23-a3a5-cdda7245b022",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/94663288-dac4-4f58-8941-a35a21ceb931/canvas/0",
+                            "body": {
+                                "id": "https://dlc.services/iiif-img/v3/7/18/e3158163-fb53-4a23-a3a5-cdda7245b022/full/max/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "height": 2638,
+                                "width": 2419,
+                                "service": [
+                                    {
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/18/e3158163-fb53-4a23-a3a5-cdda7245b022",
+                                        "type": "ImageService3",
+                                        "profile": "level2"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

@@ -1,8 +1,8 @@
-import { CombinedMetadata } from "react-iiif-vault";
+import { ManifestMetadata } from "react-iiif-vault";
 
 export function ObjectMetadata() {
   return (
-    <CombinedMetadata
+    <ManifestMetadata
       allowHtml={true}
       classes={{
         container: "m-4",

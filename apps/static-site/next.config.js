@@ -8,13 +8,18 @@ const config = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  redirects: [
-    {
-      source: "/:locale/manifests/:manifest",
-      destination: "/:locale/objects/:manifest",
-      permanent: true,
-    },
-  ],
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  async redirects() {
+    return [
+      {
+        source: "/:locale/manifests/:manifest",
+        destination: "/:locale/objects/:manifest",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 module.exports = withNextIntl(withContentlayer(config));

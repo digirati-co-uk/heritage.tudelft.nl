@@ -1,155 +1,185 @@
 {
-  "metadata": [
-    {
-      "label": "Titel",
-      "value": "Berg-boussole door G. de Koningh"
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/d85652d1-842c-473a-927d-c7d780148755.json",
+    "type": "Manifest",
+    "label": {
+        "nl": [
+            "Berg-boussole door G. de Koningh"
+        ]
     },
-    {
-      "label": "Objectnaam",
-      "value": "boussole"
-    },
-    {
-      "label": "Inventarisnummer",
-      "value": "2000.0407.GEO"
-    },
-    {
-      "label": "Datering",
-      "value": "1902 - 1925"
-    },
-    {
-      "label": "Maker",
-      "value": "G. de Koningh  (producent)"
-    },
-    {
-      "label": "Afmetingen",
-      "value": "200,0 (h)  * 300,0 (b)  * 220,0 (d) "
-    },
-    {
-      "label": "Materiaal",
-      "value": "metaal, glas"
-    },
-    {
-      "label": "Plaats vervaardiging",
-      "value": "<a href=\"https://www.geonames.org/2759660\">Arnhem, Nederland</a>"
-    },
-    {
-      "label": "Beschrijving",
-      "value": "Boussole tranche-montagne (bergboussole) door G. de Koningh, op een vast stelschroevenblok met een richtkijker. Dit type werd vooral gebruikt bij exploratiemetingen. De randverdeling sexagesimaal. Bij dit instrument hoort een schrift met een foto en getypte informatie."
-    }
-  ],
-  "@type": "sc:Manifest",
-  "structures": [
-    {
-      "canvases": [
-        "https://dlc.services/iiif-img/7/18/df969988-7972-4c72-876a-9ff59ffdec60/canvas/c/1"
-      ],
-      "within": "https://dlc.services/iiif-manifest/7/18/d85652d1-842c-473a-927d-c7d780148755/range/range-0.json",
-      "@type": "sc:Range",
-      "@id": "https://dlc.services/iiif-manifest/7/18/d85652d1-842c-473a-927d-c7d780148755/range/range-0-0.json",
-      "label": "0"
-    }
-  ],
-  "@id": "https://raw.githubusercontent.com/libis/ca_tudelft_iiif/main/objects/d85652d1-842c-473a-927d-c7d780148755.json",
-  "sequences": [
-    {
-      "viewingDirection": "left-to-right",
-      "viewingHint": "paged",
-      "canvases": [
+    "metadata": [
         {
-          "metadata": [
-            {
-              "label": "String 1",
-              "value": "2000.0407.GEO"
+            "label": {
+                "en": [
+                    "Title"
+                ],
+                "nl": [
+                    "Titel"
+                ]
             },
-            {
-              "label": "String 2",
-              "value": "3004"
-            },
-            {
-              "label": "String 3",
-              "value": "2000.0407.GEO.jpg"
-            },
-            {
-              "label": "Number 1",
-              "value": "0"
-            },
-            {
-              "label": "Number 2",
-              "value": "0"
-            },
-            {
-              "label": "Number 3",
-              "value": "0"
-            },
-            {
-              "label": "Tags",
-              "value": ""
-            },
-            {
-              "label": "Roles",
-              "value": ""
+            "value": {
+                "nl": [
+                    "Berg-boussole door G. de Koningh"
+                ]
             }
-          ],
-          "images": [
-            {
-              "resource": {
-                "@type": "dctypes:Image",
-                "service": {
-                  "profile": "http://iiif.io/api/image/2/level2.json",
-                  "width": 3072,
-                  "@id": "https://dlc.services/iiif-img/7/18/df969988-7972-4c72-876a-9ff59ffdec60",
-                  "@context": "http://iiif.io/api/image/2/context.json",
-                  "height": 2048
-                },
-                "width": 1024,
-                "@id": "https://dlc.services/iiif-img/7/18/df969988-7972-4c72-876a-9ff59ffdec60/full/1024,683/0/default.jpg",
-                "height": 683
-              },
-              "@type": "oa:Annotation",
-              "motivation": "sc:painting",
-              "@id": "https://dlc.services/iiif-img/7/18/df969988-7972-4c72-876a-9ff59ffdec60/imageanno/0",
-              "on": "https://dlc.services/iiif-img/7/18/df969988-7972-4c72-876a-9ff59ffdec60/canvas/c/1"
-            }
-          ],
-          "thumbnail": {
-            "@type": "dctypes:Image",
-            "service": {
-              "sizes": [
-                {
-                  "width": 1024,
-                  "height": 683
-                },
-                {
-                  "width": 400,
-                  "height": 267
-                },
-                {
-                  "width": 200,
-                  "height": 133
-                },
-                {
-                  "width": 100,
-                  "height": 67
-                }
-              ],
-              "profile": "http://iiif.io/api/image/2/level0.json",
-              "@id": "https://dlc.services/thumbs/7/18/df969988-7972-4c72-876a-9ff59ffdec60",
-              "@context": "http://iiif.io/api/image/2/context.json"
+        },
+        {
+            "label": {
+                "en": [
+                    "Object name"
+                ],
+                "nl": [
+                    "Objectnaam"
+                ]
             },
-            "@id": "https://dlc.services/thumbs/7/18/df969988-7972-4c72-876a-9ff59ffdec60/full/full/0/default.jpg"
-          },
-          "@type": "sc:Canvas",
-          "width": 3072,
-          "@id": "https://dlc.services/iiif-img/7/18/df969988-7972-4c72-876a-9ff59ffdec60/canvas/c/1",
-          "label": "Canvas 1",
-          "height": 2048
+            "value": {
+                "nl": [
+                    "boussole"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Inventory number"
+                ],
+                "nl": [
+                    "Inventarisnummer"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "2000.0407.GEO"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dating"
+                ],
+                "nl": [
+                    "Datering"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "1902 – 1925"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Maker"
+                ],
+                "nl": [
+                    "Maker"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "G. de Koningh  (producent)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dimensions"
+                ],
+                "nl": [
+                    "Afmetingen"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "200,0 mm (h) x 300,0 mm (b) x 220,0 mm (d)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Material"
+                ],
+                "nl": [
+                    "Materiaal"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "metaal",
+                    "glas"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Place of manufacture"
+                ],
+                "nl": [
+                    "Plaats vervaardiging"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "<a href=\"https://www.geonames.org/2759660\">Arnhem, Nederland</a>"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Description"
+                ],
+                "nl": [
+                    "Beschrijving"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Boussole tranche-montagne (bergboussole) door G. de Koningh, op een vast stelschroevenblok met een richtkijker. Dit type werd vooral gebruikt bij exploratiemetingen. De randverdeling sexagesimaal. Bij dit instrument hoort een schrift met een foto en getypte informatie."
+                ]
+            }
         }
-      ],
-      "@type": "sc:Sequence",
-      "@id": "https://dlc.services/7/18/d85652d1-842c-473a-927d-c7d780148755/sequences/normal",
-      "label": "Current page order"
-    }
-  ],
-  "@context": "http://iiif.io/api/presentation/2/context.json",
-  "label": "Berg-boussole door G. de Koningh"
+    ],
+    "items": [
+        {
+            "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/d85652d1-842c-473a-927d-c7d780148755/canvas/0",
+            "type": "Canvas",
+            "height": 2048,
+            "width": 3072,
+            "items": [
+                {
+                    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/d85652d1-842c-473a-927d-c7d780148755/canvas/0/annotation-page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://dlc.services/iiif-img/v3/7/18/df969988-7972-4c72-876a-9ff59ffdec60",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/d85652d1-842c-473a-927d-c7d780148755/canvas/0",
+                            "body": {
+                                "id": "https://dlc.services/iiif-img/v3/7/18/df969988-7972-4c72-876a-9ff59ffdec60/full/max/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "height": 2048,
+                                "width": 3072,
+                                "service": [
+                                    {
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/18/df969988-7972-4c72-876a-9ff59ffdec60",
+                                        "type": "ImageService3",
+                                        "profile": "level2"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

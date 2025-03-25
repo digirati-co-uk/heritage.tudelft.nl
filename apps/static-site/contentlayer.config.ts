@@ -11,12 +11,15 @@ const Pages = defineDocumentType(() => ({
     title: { type: "string", required: true },
     path: { type: "string", required: true },
     description: { type: "string", required: false },
+    image: { type: "string", required: false },
+    imageWidth: { type: "number", required: false },
+    imageHeight: { type: "number", required: false },
   },
   computedFields: {
     lang: {
       type: "string",
-      resolve: (publication) => {
-        return publication._id.split("/")[1];
+      resolve: (page) => {
+        return page._id.split("/")[1];
       },
     },
   },
@@ -28,9 +31,12 @@ const Publication = defineDocumentType(() => ({
   contentType: "mdx",
   fields: {
     title: { type: "string", required: true },
+    description: { type: "string", required: false },
     date: { type: "string", required: false },
     author: { type: "string", required: false },
     image: { type: "string", required: false },
+    imageWidth: { type: "number", required: false },
+    imageHeight: { type: "number", required: false },
     hero: { type: "string", required: false },
     toc: { type: "boolean", default: false },
     depth: { type: "number", default: 3 },
