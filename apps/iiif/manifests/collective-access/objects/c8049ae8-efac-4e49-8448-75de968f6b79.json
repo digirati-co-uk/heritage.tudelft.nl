@@ -1,155 +1,186 @@
 {
-  "metadata": [
-    {
-      "label": "Titel",
-      "value": "Portret van kroonprins Willem Alexander Paul Frederik Lodewijk van Oranje Nassau door N. Pieneman"
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/c8049ae8-efac-4e49-8448-75de968f6b79.json",
+    "type": "Manifest",
+    "label": {
+        "nl": [
+            "Portret van kroonprins Willem Alexander Paul Frederik Lodewijk van Oranje Nassau door N. Pieneman"
+        ]
     },
-    {
-      "label": "Objectnaam",
-      "value": "schilderij"
-    },
-    {
-      "label": "Inventarisnummer",
-      "value": "2008.0029.CVB"
-    },
-    {
-      "label": "Datering",
-      "value": "1844"
-    },
-    {
-      "label": "Maker",
-      "value": "Pieneman, Nicolaas  (maker)"
-    },
-    {
-      "label": "Afmetingen",
-      "value": "2.100,0 (h)  * 1.450,0 (b) "
-    },
-    {
-      "label": "Materiaal",
-      "value": "olieverf, linnen, hout"
-    },
-    {
-      "label": "Beschrijving",
-      "value": "Geschilderd portret van kroonprins Willem Alexander Paul Frederik Lodewijk van Oranje Nassau, de latere Koning Willem III, beschermheer van de Koninklijke Academie voor Burgelijk Ingenieurs.</br>Geschilderd door Nicolaas Pieneman."
-    },
-    {
-      "label": "Voorstelling",
-      "value": "van Oranje Nassau, Willem Alexander Paul Frederik Lodewijk"
-    }
-  ],
-  "@type": "sc:Manifest",
-  "structures": [
-    {
-      "canvases": [
-        "https://dlc.services/iiif-img/7/18/b5218e9d-ff3c-4168-96e7-c53164e5246f/canvas/c/1"
-      ],
-      "within": "https://dlc.services/iiif-manifest/7/18/c8049ae8-efac-4e49-8448-75de968f6b79/range/range-0.json",
-      "@type": "sc:Range",
-      "@id": "https://dlc.services/iiif-manifest/7/18/c8049ae8-efac-4e49-8448-75de968f6b79/range/range-0-0.json",
-      "label": "0"
-    }
-  ],
-  "@id": "https://raw.githubusercontent.com/libis/ca_tudelft_iiif/main/objects/c8049ae8-efac-4e49-8448-75de968f6b79.json",
-  "sequences": [
-    {
-      "viewingDirection": "left-to-right",
-      "viewingHint": "paged",
-      "canvases": [
+    "metadata": [
         {
-          "metadata": [
-            {
-              "label": "String 1",
-              "value": ""
+            "label": {
+                "en": [
+                    "Title"
+                ],
+                "nl": [
+                    "Titel"
+                ]
             },
-            {
-              "label": "String 2",
-              "value": "9064"
-            },
-            {
-              "label": "String 3",
-              "value": "2008.0029.CVB.jpg"
-            },
-            {
-              "label": "Number 1",
-              "value": "0"
-            },
-            {
-              "label": "Number 2",
-              "value": "0"
-            },
-            {
-              "label": "Number 3",
-              "value": "0"
-            },
-            {
-              "label": "Tags",
-              "value": ""
-            },
-            {
-              "label": "Roles",
-              "value": ""
+            "value": {
+                "nl": [
+                    "Portret van kroonprins Willem Alexander Paul Frederik Lodewijk van Oranje Nassau door N. Pieneman"
+                ]
             }
-          ],
-          "images": [
-            {
-              "resource": {
-                "@type": "dctypes:Image",
-                "service": {
-                  "profile": "http://iiif.io/api/image/2/level2.json",
-                  "width": 3905,
-                  "@id": "https://dlc.services/iiif-img/7/18/b5218e9d-ff3c-4168-96e7-c53164e5246f",
-                  "@context": "http://iiif.io/api/image/2/context.json",
-                  "height": 5067
-                },
-                "width": 789,
-                "@id": "https://dlc.services/iiif-img/7/18/b5218e9d-ff3c-4168-96e7-c53164e5246f/full/789,1024/0/default.jpg",
-                "height": 1024
-              },
-              "@type": "oa:Annotation",
-              "motivation": "sc:painting",
-              "@id": "https://dlc.services/iiif-img/7/18/b5218e9d-ff3c-4168-96e7-c53164e5246f/imageanno/0",
-              "on": "https://dlc.services/iiif-img/7/18/b5218e9d-ff3c-4168-96e7-c53164e5246f/canvas/c/1"
-            }
-          ],
-          "thumbnail": {
-            "@type": "dctypes:Image",
-            "service": {
-              "sizes": [
-                {
-                  "width": 789,
-                  "height": 1024
-                },
-                {
-                  "width": 308,
-                  "height": 400
-                },
-                {
-                  "width": 154,
-                  "height": 200
-                },
-                {
-                  "width": 77,
-                  "height": 100
-                }
-              ],
-              "profile": "http://iiif.io/api/image/2/level0.json",
-              "@id": "https://dlc.services/thumbs/7/18/b5218e9d-ff3c-4168-96e7-c53164e5246f",
-              "@context": "http://iiif.io/api/image/2/context.json"
+        },
+        {
+            "label": {
+                "en": [
+                    "Object name"
+                ],
+                "nl": [
+                    "Objectnaam"
+                ]
             },
-            "@id": "https://dlc.services/thumbs/7/18/b5218e9d-ff3c-4168-96e7-c53164e5246f/full/full/0/default.jpg"
-          },
-          "@type": "sc:Canvas",
-          "width": 3905,
-          "@id": "https://dlc.services/iiif-img/7/18/b5218e9d-ff3c-4168-96e7-c53164e5246f/canvas/c/1",
-          "label": "Canvas 1",
-          "height": 5067
+            "value": {
+                "nl": [
+                    "schilderij"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Inventory number"
+                ],
+                "nl": [
+                    "Inventarisnummer"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "2008.0029.CVB"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dating"
+                ],
+                "nl": [
+                    "Datering"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "1844"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Maker"
+                ],
+                "nl": [
+                    "Maker"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Pieneman, Nicolaas  (maker)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dimensions"
+                ],
+                "nl": [
+                    "Afmetingen"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "2.100,0 mm (h) x 1.450,0 mm (b) x  (d)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Material"
+                ],
+                "nl": [
+                    "Materiaal"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "olieverf",
+                    "linnen",
+                    "hout"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Description"
+                ],
+                "nl": [
+                    "Beschrijving"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Geschilderd portret van kroonprins Willem Alexander Paul Frederik Lodewijk van Oranje Nassau, de latere Koning Willem III, beschermheer van de Koninklijke Academie voor Burgelijk Ingenieurs.\nGeschilderd door Nicolaas Pieneman."
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Subject"
+                ],
+                "nl": [
+                    "Voorstelling"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "van Oranje Nassau, Willem Alexander Paul Frederik Lodewijk"
+                ]
+            }
         }
-      ],
-      "@type": "sc:Sequence",
-      "@id": "https://dlc.services/7/18/c8049ae8-efac-4e49-8448-75de968f6b79/sequences/normal",
-      "label": "Current page order"
-    }
-  ],
-  "@context": "http://iiif.io/api/presentation/2/context.json",
-  "label": "Portret van kroonprins Willem Alexander Paul Frederik Lodewijk van Oranje Nassau door N. Pieneman"
+    ],
+    "items": [
+        {
+            "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/c8049ae8-efac-4e49-8448-75de968f6b79/canvas/0",
+            "type": "Canvas",
+            "height": 5067,
+            "width": 3905,
+            "items": [
+                {
+                    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/c8049ae8-efac-4e49-8448-75de968f6b79/canvas/0/annotation-page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://dlc.services/iiif-img/v3/7/18/b5218e9d-ff3c-4168-96e7-c53164e5246f",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/c8049ae8-efac-4e49-8448-75de968f6b79/canvas/0",
+                            "body": {
+                                "id": "https://dlc.services/iiif-img/v3/7/18/b5218e9d-ff3c-4168-96e7-c53164e5246f/full/max/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "height": 5067,
+                                "width": 3905,
+                                "service": [
+                                    {
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/18/b5218e9d-ff3c-4168-96e7-c53164e5246f",
+                                        "type": "ImageService3",
+                                        "profile": "level2"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

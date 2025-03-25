@@ -1,136 +1,186 @@
 {
-  "metadata": [
-    {
-      "label": "Titel",
-      "value": "Cirkel-waterpasinstrument volgens het principe van Lenoir"
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/c91d9752-9948-4e55-be9d-1b484a7224e4.json",
+    "type": "Manifest",
+    "label": {
+        "nl": [
+            "Cirkel-waterpasinstrument volgens het principe van Lenoir"
+        ]
     },
-    {
-      "label": "Objectnaam",
-      "value": "waterpas"
-    },
-    {
-      "label": "Inventarisnummer",
-      "value": "2000.0022.GEO"
-    },
-    {
-      "label": "Datering",
-      "value": "1850 - 1900"
-    },
-    {
-      "label": "Maker",
-      "value": "Lenoir, Etienne  (maker)"
-    },
-    {
-      "label": "Afmetingen",
-      "value": "175,0 (h)  * 280,0 (b)  * 170,0 (d) "
-    },
-    {
-      "label": "Materiaal",
-      "value": "metaal, glas"
-    },
-    {
-      "label": "Beschrijving",
-      "value": "Waterpasinstrument met rand volgens het principe van Lenoir. De kijker en het niveau zijn los en afneembaar. Verschillende delen van het instrument zijn voorzien van een 'schildpadmotief'. Dit instrument is geschikt voor eenvoudige waterpassingen."
-    },
-    {
-      "label": "Documentatie",
-      "value": "Kerkwijk, G.A. van, \"Geodesie, Voor De Kadetten Van Alle Wapenen\" , Breda: Van Broese, 1860, pp.146-147."
-    }
-  ],
-  "@type": "sc:Manifest",
-  "structures": [
-    {
-      "canvases": [
-        "https://dlc.services/iiif-img/7/18/cb3eac82-9607-405c-87d1-59c0e7604cba/canvas/c0"
-      ],
-      "within": "https://dlc.services/iiif-manifest/7/18/c91d9752-9948-4e55-be9d-1b484a7224e4/range/range-0.json",
-      "@type": "sc:Range",
-      "@id": "https://dlc.services/iiif-manifest/7/18/c91d9752-9948-4e55-be9d-1b484a7224e4/range/range-0-0.json",
-      "label": "0"
-    }
-  ],
-  "@id": "https://raw.githubusercontent.com/libis/ca_tudelft_iiif/main/objects/c91d9752-9948-4e55-be9d-1b484a7224e4.json",
-  "sequences": [
-    {
-      "viewingDirection": "left-to-right",
-      "viewingHint": "paged",
-      "canvases": [
+    "metadata": [
         {
-          "images": [
-            {
-              "resource": {
-                "@type": "dctypes:Image",
-                "service": {
-                  "protocol": "http://iiif.io/api/image",
-                  "profile": "http://iiif.io/api/image/2/level1.json",
-                  "width": 3072,
-                  "@id": "https://dlc.services/iiif-img/7/18/cb3eac82-9607-405c-87d1-59c0e7604cba",
-                  "height": 2048
-                },
-                "width": 3072,
-                "@id": "https://dlc.services/iiif-img/7/18/cb3eac82-9607-405c-87d1-59c0e7604cba/full/1024,683/0/default.jpg",
-                "height": 2048
-              },
-              "@type": "oa:Annotation",
-              "motivation": "sc:painting",
-              "@id": "https://dlc.services/iiif-img/7/18/cb3eac82-9607-405c-87d1-59c0e7604cba/imageanno/0",
-              "on": "https://dlc.services/iiif-img/7/18/cb3eac82-9607-405c-87d1-59c0e7604cba/canvas/c0"
-            }
-          ],
-          "thumbnail": {
-            "@type": "dctypes:Image",
-            "service": {
-              "sizes": [
-                {
-                  "width": 1024,
-                  "height": 683
-                },
-                {
-                  "width": 400,
-                  "height": 267
-                },
-                {
-                  "width": 200,
-                  "height": 133
-                },
-                {
-                  "width": 100,
-                  "height": 67
-                }
-              ],
-              "profile": [
-                "http://iiif.io/api/image/2/level0.json",
-                {
-                  "formats": [
-                    "jpg"
-                  ],
-                  "qualities": [
-                    "color"
-                  ],
-                  "supports": [
-                    "sizeByWhListed"
-                  ]
-                }
-              ],
-              "width": 1024,
-              "@id": "https://dlc.services/thumbs/7/18/cb3eac82-9607-405c-87d1-59c0e7604cba",
-              "@context": "http://iiif.io/api/image/2/context.json",
-              "height": 683
+            "label": {
+                "en": [
+                    "Title"
+                ],
+                "nl": [
+                    "Titel"
+                ]
             },
-            "@id": "https://dlc.services/thumbs/7/18/cb3eac82-9607-405c-87d1-59c0e7604cba/full/full/0/default.jpg"
-          },
-          "@type": "sc:Canvas",
-          "width": 3072,
-          "@id": "https://dlc.services/iiif-img/7/18/cb3eac82-9607-405c-87d1-59c0e7604cba/canvas/c0",
-          "label": "Image",
-          "height": 2048
+            "value": {
+                "nl": [
+                    "Cirkel-waterpasinstrument volgens het principe van Lenoir"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Object name"
+                ],
+                "nl": [
+                    "Objectnaam"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "waterpasinstrument"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Inventory number"
+                ],
+                "nl": [
+                    "Inventarisnummer"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "2000.0022.GEO"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dating"
+                ],
+                "nl": [
+                    "Datering"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "1850 – 1900"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Maker"
+                ],
+                "nl": [
+                    "Maker"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Lenoir, Etienne  (maker)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dimensions"
+                ],
+                "nl": [
+                    "Afmetingen"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "175,0 mm (h) x 280,0 mm (b) x 170,0 mm (d)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Material"
+                ],
+                "nl": [
+                    "Materiaal"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "metaal",
+                    "glas"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Description"
+                ],
+                "nl": [
+                    "Beschrijving"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Waterpasinstrument met rand volgens het principe van Lenoir. De kijker en het niveau zijn los en afneembaar. Verschillende delen van het instrument zijn voorzien van een 'schildpadmotief'. Dit instrument is geschikt voor eenvoudige waterpassingen."
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Documentation"
+                ],
+                "nl": [
+                    "Documentatie"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Kerkwijk, G.A. van, \"Geodesie, Voor De Kadetten Van Alle Wapenen\" , Breda: Van Broese, 1860, pp.146-147.",
+                    "Schols, C.M., \"Landmeten en Waterpassen\", Breda: K.M.A., 1899, tekstband p.209, atlasband fig.169."
+                ]
+            }
         }
-      ],
-      "@type": "sc:Sequence",
-      "@id": "https://dlc.services/7/18/c91d9752-9948-4e55-be9d-1b484a7224e4/sequences/normal",
-      "label": "Current page order"
-    }
-  ],
-  "@context": "http://iiif.io/api/presentation/2/context.json",
-  "label": "Cirkel-waterpasinstrument volgens het principe van Lenoir"
+    ],
+    "items": [
+        {
+            "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/c91d9752-9948-4e55-be9d-1b484a7224e4/canvas/0",
+            "type": "Canvas",
+            "height": 2048,
+            "width": 3072,
+            "items": [
+                {
+                    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/c91d9752-9948-4e55-be9d-1b484a7224e4/canvas/0/annotation-page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://dlc.services/iiif-img/v3/7/18/cb3eac82-9607-405c-87d1-59c0e7604cba",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/c91d9752-9948-4e55-be9d-1b484a7224e4/canvas/0",
+                            "body": {
+                                "id": "https://dlc.services/iiif-img/v3/7/18/cb3eac82-9607-405c-87d1-59c0e7604cba/full/max/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "height": 2048,
+                                "width": 3072,
+                                "service": [
+                                    {
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/18/cb3eac82-9607-405c-87d1-59c0e7604cba",
+                                        "type": "ImageService3",
+                                        "profile": "level2"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

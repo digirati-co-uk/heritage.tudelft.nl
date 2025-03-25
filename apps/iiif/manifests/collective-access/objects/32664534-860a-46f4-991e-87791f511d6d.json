@@ -1,253 +1,221 @@
 {
-  "metadata": [
-    {
-      "label": "Titel",
-      "value": "Zelfportret van prof. A.F. Gips"
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/32664534-860a-46f4-991e-87791f511d6d.json",
+    "type": "Manifest",
+    "label": {
+        "nl": [
+            "Zelfportret van prof. A.F. Gips"
+        ]
     },
-    {
-      "label": "Objectnaam",
-      "value": "schilderij"
-    },
-    {
-      "label": "Inventarisnummer",
-      "value": "2003.0729.BKD"
-    },
-    {
-      "label": "Datering",
-      "value": "1924"
-    },
-    {
-      "label": "Maker",
-      "value": "Gips, Abraham Frans  (maker)"
-    },
-    {
-      "label": "Afmetingen",
-      "value": "680,0 (h)  * 550,0 (b)  * 50,0 (d) "
-    },
-    {
-      "label": "Materiaal",
-      "value": "olieverf, linnen, hout"
-    },
-    {
-      "label": "Beschrijving",
-      "value": "Geschilderd zelfportret van prof. Abraham Frans (Bram) Gips (1861-1943), hoogleraar handtekenen en geschiedenis der schilder- en beeldhouwkunst van 1905 tot 1930, en daarvoor leraar vanaf 1894 aan de Polytechnische school van Delft en vervolgens de Technische Hoogeschool van Delft."
-    },
-    {
-      "label": "Voorstelling",
-      "value": "Gips, Abraham Frans"
-    }
-  ],
-  "@type": "sc:Manifest",
-  "structures": [
-    {
-      "canvases": [
-        "https://dlc.services/iiif-img/7/18/c1a5abc3-8df1-4d10-8a31-8aead61e9350/canvas/c/1"
-      ],
-      "within": "https://dlc.services/iiif-manifest/7/18/32664534-860a-46f4-991e-87791f511d6d/range/range-0.json",
-      "@type": "sc:Range",
-      "@id": "https://dlc.services/iiif-manifest/7/18/32664534-860a-46f4-991e-87791f511d6d/range/range-0-0.json",
-      "label": "0"
-    },
-    {
-      "canvases": [
-        "https://dlc.services/iiif-img/7/18/cb8d8f16-ec68-495b-bf51-0bb692716e9e/canvas/c/1"
-      ],
-      "within": "https://dlc.services/iiif-manifest/7/18/32664534-860a-46f4-991e-87791f511d6d/range/range-0.json",
-      "@type": "sc:Range",
-      "@id": "https://dlc.services/iiif-manifest/7/18/32664534-860a-46f4-991e-87791f511d6d/range/range-0-1.json",
-      "label": "1"
-    }
-  ],
-  "@id": "https://raw.githubusercontent.com/libis/ca_tudelft_iiif/main/objects/32664534-860a-46f4-991e-87791f511d6d.json",
-  "sequences": [
-    {
-      "viewingDirection": "left-to-right",
-      "viewingHint": "paged",
-      "canvases": [
+    "metadata": [
         {
-          "metadata": [
-            {
-              "label": "String 1",
-              "value": ""
+            "label": {
+                "en": [
+                    "Title"
+                ],
+                "nl": [
+                    "Titel"
+                ]
             },
-            {
-              "label": "String 2",
-              "value": "9062"
-            },
-            {
-              "label": "String 3",
-              "value": "2003.0729.BKD.jpg"
-            },
-            {
-              "label": "Number 1",
-              "value": "0"
-            },
-            {
-              "label": "Number 2",
-              "value": "0"
-            },
-            {
-              "label": "Number 3",
-              "value": "0"
-            },
-            {
-              "label": "Tags",
-              "value": ""
-            },
-            {
-              "label": "Roles",
-              "value": ""
+            "value": {
+                "nl": [
+                    "Zelfportret van prof. A.F. Gips"
+                ]
             }
-          ],
-          "images": [
-            {
-              "resource": {
-                "@type": "dctypes:Image",
-                "service": {
-                  "profile": "http://iiif.io/api/image/2/level2.json",
-                  "width": 3438,
-                  "@id": "https://dlc.services/iiif-img/7/18/c1a5abc3-8df1-4d10-8a31-8aead61e9350",
-                  "@context": "http://iiif.io/api/image/2/context.json",
-                  "height": 4152
-                },
-                "width": 848,
-                "@id": "https://dlc.services/iiif-img/7/18/c1a5abc3-8df1-4d10-8a31-8aead61e9350/full/848,1024/0/default.jpg",
-                "height": 1024
-              },
-              "@type": "oa:Annotation",
-              "motivation": "sc:painting",
-              "@id": "https://dlc.services/iiif-img/7/18/c1a5abc3-8df1-4d10-8a31-8aead61e9350/imageanno/0",
-              "on": "https://dlc.services/iiif-img/7/18/c1a5abc3-8df1-4d10-8a31-8aead61e9350/canvas/c/1"
-            }
-          ],
-          "thumbnail": {
-            "@type": "dctypes:Image",
-            "service": {
-              "sizes": [
-                {
-                  "width": 848,
-                  "height": 1024
-                },
-                {
-                  "width": 332,
-                  "height": 400
-                },
-                {
-                  "width": 166,
-                  "height": 200
-                },
-                {
-                  "width": 83,
-                  "height": 100
-                }
-              ],
-              "profile": "http://iiif.io/api/image/2/level0.json",
-              "@id": "https://dlc.services/thumbs/7/18/c1a5abc3-8df1-4d10-8a31-8aead61e9350",
-              "@context": "http://iiif.io/api/image/2/context.json"
-            },
-            "@id": "https://dlc.services/thumbs/7/18/c1a5abc3-8df1-4d10-8a31-8aead61e9350/full/full/0/default.jpg"
-          },
-          "@type": "sc:Canvas",
-          "width": 3438,
-          "@id": "https://dlc.services/iiif-img/7/18/c1a5abc3-8df1-4d10-8a31-8aead61e9350/canvas/c/1",
-          "label": "Canvas 1",
-          "height": 4152
         },
         {
-          "metadata": [
-            {
-              "label": "String 1",
-              "value": "2003.0729.BKD.a"
+            "label": {
+                "en": [
+                    "Object name"
+                ],
+                "nl": [
+                    "Objectnaam"
+                ]
             },
-            {
-              "label": "String 2",
-              "value": "603"
-            },
-            {
-              "label": "String 3",
-              "value": "2003.0729.BKD.a.JPG"
-            },
-            {
-              "label": "Number 1",
-              "value": "0"
-            },
-            {
-              "label": "Number 2",
-              "value": "0"
-            },
-            {
-              "label": "Number 3",
-              "value": "0"
-            },
-            {
-              "label": "Tags",
-              "value": ""
-            },
-            {
-              "label": "Roles",
-              "value": ""
+            "value": {
+                "nl": [
+                    "schilderij"
+                ]
             }
-          ],
-          "images": [
-            {
-              "resource": {
-                "@type": "dctypes:Image",
-                "service": {
-                  "profile": "http://iiif.io/api/image/2/level2.json",
-                  "width": 3072,
-                  "@id": "https://dlc.services/iiif-img/7/18/cb8d8f16-ec68-495b-bf51-0bb692716e9e",
-                  "@context": "http://iiif.io/api/image/2/context.json",
-                  "height": 2048
-                },
-                "width": 1024,
-                "@id": "https://dlc.services/iiif-img/7/18/cb8d8f16-ec68-495b-bf51-0bb692716e9e/full/1024,683/0/default.jpg",
-                "height": 683
-              },
-              "@type": "oa:Annotation",
-              "motivation": "sc:painting",
-              "@id": "https://dlc.services/iiif-img/7/18/cb8d8f16-ec68-495b-bf51-0bb692716e9e/imageanno/0",
-              "on": "https://dlc.services/iiif-img/7/18/cb8d8f16-ec68-495b-bf51-0bb692716e9e/canvas/c/1"
-            }
-          ],
-          "thumbnail": {
-            "@type": "dctypes:Image",
-            "service": {
-              "sizes": [
-                {
-                  "width": 1024,
-                  "height": 683
-                },
-                {
-                  "width": 400,
-                  "height": 267
-                },
-                {
-                  "width": 200,
-                  "height": 133
-                },
-                {
-                  "width": 100,
-                  "height": 67
-                }
-              ],
-              "profile": "http://iiif.io/api/image/2/level0.json",
-              "@id": "https://dlc.services/thumbs/7/18/cb8d8f16-ec68-495b-bf51-0bb692716e9e",
-              "@context": "http://iiif.io/api/image/2/context.json"
+        },
+        {
+            "label": {
+                "en": [
+                    "Inventory number"
+                ],
+                "nl": [
+                    "Inventarisnummer"
+                ]
             },
-            "@id": "https://dlc.services/thumbs/7/18/cb8d8f16-ec68-495b-bf51-0bb692716e9e/full/full/0/default.jpg"
-          },
-          "@type": "sc:Canvas",
-          "width": 3072,
-          "@id": "https://dlc.services/iiif-img/7/18/cb8d8f16-ec68-495b-bf51-0bb692716e9e/canvas/c/1",
-          "label": "Canvas 1",
-          "height": 2048
+            "value": {
+                "nl": [
+                    "2003.0729.BKD"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dating"
+                ],
+                "nl": [
+                    "Datering"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "1924"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Maker"
+                ],
+                "nl": [
+                    "Maker"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Gips, Abraham Frans  (maker)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dimensions"
+                ],
+                "nl": [
+                    "Afmetingen"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "680,0 mm (h) x 550,0 mm (b) x 50,0 mm (d)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Material"
+                ],
+                "nl": [
+                    "Materiaal"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "olieverf",
+                    "linnen",
+                    "hout"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Description"
+                ],
+                "nl": [
+                    "Beschrijving"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Geschilderd zelfportret van prof. Abraham Frans (Bram) Gips (1861-1943), hoogleraar handtekenen en geschiedenis der schilder- en beeldhouwkunst van 1905 tot 1930, en daarvoor leraar vanaf 1894 aan de Polytechnische school van Delft en vervolgens de Technische Hoogeschool van Delft."
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Subject"
+                ],
+                "nl": [
+                    "Voorstelling"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Gips, Abraham Frans"
+                ]
+            }
         }
-      ],
-      "@type": "sc:Sequence",
-      "@id": "https://dlc.services/7/18/32664534-860a-46f4-991e-87791f511d6d/sequences/normal",
-      "label": "Current page order"
-    }
-  ],
-  "@context": "http://iiif.io/api/presentation/2/context.json",
-  "label": "Zelfportret van prof. A.F. Gips"
+    ],
+    "items": [
+        {
+            "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/32664534-860a-46f4-991e-87791f511d6d/canvas/0",
+            "type": "Canvas",
+            "height": 4152,
+            "width": 3438,
+            "items": [
+                {
+                    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/32664534-860a-46f4-991e-87791f511d6d/canvas/0/annotation-page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://dlc.services/iiif-img/v3/7/18/c1a5abc3-8df1-4d10-8a31-8aead61e9350",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/32664534-860a-46f4-991e-87791f511d6d/canvas/0",
+                            "body": {
+                                "id": "https://dlc.services/iiif-img/v3/7/18/c1a5abc3-8df1-4d10-8a31-8aead61e9350/full/max/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "height": 4152,
+                                "width": 3438,
+                                "service": [
+                                    {
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/18/c1a5abc3-8df1-4d10-8a31-8aead61e9350",
+                                        "type": "ImageService3",
+                                        "profile": "level2"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/32664534-860a-46f4-991e-87791f511d6d/canvas/1",
+            "type": "Canvas",
+            "height": 2048,
+            "width": 3072,
+            "items": [
+                {
+                    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/32664534-860a-46f4-991e-87791f511d6d/canvas/1/annotation-page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://dlc.services/iiif-img/v3/7/18/cb8d8f16-ec68-495b-bf51-0bb692716e9e",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/32664534-860a-46f4-991e-87791f511d6d/canvas/1",
+                            "body": {
+                                "id": "https://dlc.services/iiif-img/v3/7/18/cb8d8f16-ec68-495b-bf51-0bb692716e9e/full/max/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "height": 2048,
+                                "width": 3072,
+                                "service": [
+                                    {
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/18/cb8d8f16-ec68-495b-bf51-0bb692716e9e",
+                                        "type": "ImageService3",
+                                        "profile": "level2"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

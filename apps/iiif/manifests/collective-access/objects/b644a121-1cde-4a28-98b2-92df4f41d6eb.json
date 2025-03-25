@@ -1,159 +1,216 @@
 {
-  "metadata": [
-    {
-      "label": "Titel",
-      "value": "Spoorbrug over de Lek bij Culemborg"
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/b644a121-1cde-4a28-98b2-92df4f41d6eb.json",
+    "type": "Manifest",
+    "label": {
+        "nl": [
+            "Spoorbrug over de Lek bij Culemborg"
+        ]
     },
-    {
-      "label": "Objectnaam",
-      "value": "schilderij"
-    },
-    {
-      "label": "Inventarisnummer",
-      "value": "2002.0052.CTG"
-    },
-    {
-      "label": "Datering",
-      "value": "1875"
-    },
-    {
-      "label": "Maker",
-      "value": "Kannemans, Christiaan Cornelis  (maker)"
-    },
-    {
-      "label": "Afmetingen",
-      "value": "1.250,0 (h)  * 4.000,0 (b)  * 200,0 (d) "
-    },
-    {
-      "label": "Materiaal",
-      "value": "olieverf, linnen, hout"
-    },
-    {
-      "label": "Plaats vervaardiging",
-      "value": "<a href=\"https://www.geonames.org/2758400\">Breda, Nederland</a>"
-    },
-    {
-      "label": "Beschrijving",
-      "value": "Schilderij van de spoorbrug over de Lek bij Culemborg, geschilderd door Christiaan Cornelis Kannemans (1812-1884) in 1875. Bij de opening van de spoorbrug in 1868 was de hoofdoverspanning met een lengte van 154 meter de langste overspanning ter wereld. Dit type schilderijen werd gemaakt in opdracht van Rijkswaterstaat na de afronding van een groot project.</br>"
-    },
-    {
-      "label": "Gerelateerd erfgoedobject",
-      "value": "Monding van het Noorzeekanaal bij IJmuiden;Spoorbrug over de Waal bij Zaltbommel;Monding van de Nieuwe Waterweg bij Hoek van Holland;Spoorbrug over het Hollands Diep bij Moerdijk;Spoorbrug over de Waal bij Nijmegen (CTG.2002.0057;CTG.2002.0056;CTG.2002.0053;CTG.2002.0054;CTG.2002.0055)"
-    }
-  ],
-  "@type": "sc:Manifest",
-  "structures": [
-    {
-      "canvases": [
-        "https://dlc.services/iiif-img/7/18/56077157-6d15-415e-9515-0dd1f36dac31/canvas/c/1"
-      ],
-      "within": "https://dlc.services/iiif-manifest/7/18/b644a121-1cde-4a28-98b2-92df4f41d6eb/range/range-0.json",
-      "@type": "sc:Range",
-      "@id": "https://dlc.services/iiif-manifest/7/18/b644a121-1cde-4a28-98b2-92df4f41d6eb/range/range-0-0.json",
-      "label": "0"
-    }
-  ],
-  "@id": "https://raw.githubusercontent.com/libis/ca_tudelft_iiif/main/objects/b644a121-1cde-4a28-98b2-92df4f41d6eb.json",
-  "sequences": [
-    {
-      "viewingDirection": "left-to-right",
-      "viewingHint": "paged",
-      "canvases": [
+    "metadata": [
         {
-          "metadata": [
-            {
-              "label": "String 1",
-              "value": ""
+            "label": {
+                "en": [
+                    "Title"
+                ],
+                "nl": [
+                    "Titel"
+                ]
             },
-            {
-              "label": "String 2",
-              "value": "9686"
-            },
-            {
-              "label": "String 3",
-              "value": "2002.0052.CTG tiff adobeRGB.tif"
-            },
-            {
-              "label": "Number 1",
-              "value": "0"
-            },
-            {
-              "label": "Number 2",
-              "value": "0"
-            },
-            {
-              "label": "Number 3",
-              "value": "0"
-            },
-            {
-              "label": "Tags",
-              "value": ""
-            },
-            {
-              "label": "Roles",
-              "value": ""
+            "value": {
+                "nl": [
+                    "Spoorbrug over de Lek bij Culemborg"
+                ]
             }
-          ],
-          "images": [
-            {
-              "resource": {
-                "@type": "dctypes:Image",
-                "service": {
-                  "profile": "http://iiif.io/api/image/2/level2.json",
-                  "width": 11063,
-                  "@id": "https://dlc.services/iiif-img/7/18/56077157-6d15-415e-9515-0dd1f36dac31",
-                  "@context": "http://iiif.io/api/image/2/context.json",
-                  "height": 3499
-                },
-                "width": 1024,
-                "@id": "https://dlc.services/iiif-img/7/18/56077157-6d15-415e-9515-0dd1f36dac31/full/1024,324/0/default.jpg",
-                "height": 324
-              },
-              "@type": "oa:Annotation",
-              "motivation": "sc:painting",
-              "@id": "https://dlc.services/iiif-img/7/18/56077157-6d15-415e-9515-0dd1f36dac31/imageanno/0",
-              "on": "https://dlc.services/iiif-img/7/18/56077157-6d15-415e-9515-0dd1f36dac31/canvas/c/1"
-            }
-          ],
-          "thumbnail": {
-            "@type": "dctypes:Image",
-            "service": {
-              "sizes": [
-                {
-                  "width": 1024,
-                  "height": 324
-                },
-                {
-                  "width": 400,
-                  "height": 127
-                },
-                {
-                  "width": 200,
-                  "height": 63
-                },
-                {
-                  "width": 100,
-                  "height": 32
-                }
-              ],
-              "profile": "http://iiif.io/api/image/2/level0.json",
-              "@id": "https://dlc.services/thumbs/7/18/56077157-6d15-415e-9515-0dd1f36dac31",
-              "@context": "http://iiif.io/api/image/2/context.json"
+        },
+        {
+            "label": {
+                "en": [
+                    "Object name"
+                ],
+                "nl": [
+                    "Objectnaam"
+                ]
             },
-            "@id": "https://dlc.services/thumbs/7/18/56077157-6d15-415e-9515-0dd1f36dac31/full/full/0/default.jpg"
-          },
-          "@type": "sc:Canvas",
-          "width": 11063,
-          "@id": "https://dlc.services/iiif-img/7/18/56077157-6d15-415e-9515-0dd1f36dac31/canvas/c/1",
-          "label": "Canvas 1",
-          "height": 3499
+            "value": {
+                "nl": [
+                    "schilderij"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Inventory number"
+                ],
+                "nl": [
+                    "Inventarisnummer"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "2002.0052.CTG"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dating"
+                ],
+                "nl": [
+                    "Datering"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "1875"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Maker"
+                ],
+                "nl": [
+                    "Maker"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Kannemans, Christiaan Cornelis  (maker)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dimensions"
+                ],
+                "nl": [
+                    "Afmetingen"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "1.250,0 mm (h) x 4.000,0 mm (b) x 200,0 mm (d)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Material"
+                ],
+                "nl": [
+                    "Materiaal"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "olieverf",
+                    "linnen",
+                    "hout"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Place of manufacture"
+                ],
+                "nl": [
+                    "Plaats vervaardiging"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "<a href=\"https://www.geonames.org/2758400\">Breda, Nederland</a>"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Description"
+                ],
+                "nl": [
+                    "Beschrijving"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Schilderij van de spoorbrug over de Lek bij Culemborg, geschilderd door Christiaan Cornelis Kannemans (1812-1884) in 1875. Bij de opening van de spoorbrug in 1868 was de hoofdoverspanning met een lengte van 154 meter de langste overspanning ter wereld. Dit type schilderijen werd gemaakt in opdracht van Rijkswaterstaat na de afronding van een groot project.\n"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Documentation"
+                ],
+                "nl": [
+                    "Documentatie"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Giersbergen, Wilma van, \"Universitair cultureel erfgoed. Zes negentiende-eeuwse waterstaatswerken geschilderd door C.C. Kannemans en A.W. Stortenbeker\", in: 'Delft Integraal', nr. 4, 1998, pp. 22-25. "
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Related object"
+                ],
+                "nl": [
+                    "Gerelateerd object"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Monding van het Noorzeekanaal bij IJmuiden;Spoorbrug over de Waal bij Zaltbommel;Monding van de Nieuwe Waterweg bij Hoek van Holland;Spoorbrug over het Hollands Diep bij Moerdijk;Spoorbrug over de Waal bij Nijmegen (CTG.2002.0057;CTG.2002.0056;CTG.2002.0053;CTG.2002.0054;CTG.2002.0055)"
+                ]
+            }
         }
-      ],
-      "@type": "sc:Sequence",
-      "@id": "https://dlc.services/7/18/b644a121-1cde-4a28-98b2-92df4f41d6eb/sequences/normal",
-      "label": "Current page order"
-    }
-  ],
-  "@context": "http://iiif.io/api/presentation/2/context.json",
-  "label": "Spoorbrug over de Lek bij Culemborg"
+    ],
+    "items": [
+        {
+            "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/b644a121-1cde-4a28-98b2-92df4f41d6eb/canvas/0",
+            "type": "Canvas",
+            "height": 3499,
+            "width": 11063,
+            "items": [
+                {
+                    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/b644a121-1cde-4a28-98b2-92df4f41d6eb/canvas/0/annotation-page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://dlc.services/iiif-img/v3/7/18/56077157-6d15-415e-9515-0dd1f36dac31",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/b644a121-1cde-4a28-98b2-92df4f41d6eb/canvas/0",
+                            "body": {
+                                "id": "https://dlc.services/iiif-img/v3/7/18/56077157-6d15-415e-9515-0dd1f36dac31/full/max/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "height": 3499,
+                                "width": 11063,
+                                "service": [
+                                    {
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/18/56077157-6d15-415e-9515-0dd1f36dac31",
+                                        "type": "ImageService3",
+                                        "profile": "level2"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

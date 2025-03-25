@@ -1,155 +1,188 @@
 {
-  "metadata": [
-    {
-      "label": "Titel",
-      "value": "Chronometer door Ulysse Nardin nr. 2081"
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/a107684c-47d6-49bc-bfc6-505ff4f6026d.json",
+    "type": "Manifest",
+    "label": {
+        "nl": [
+            "Chronometer door Ulysse Nardin nr. 2081"
+        ]
     },
-    {
-      "label": "Objectnaam",
-      "value": "chronometer"
-    },
-    {
-      "label": "Inventarisnummer",
-      "value": "2000.0809.GEO"
-    },
-    {
-      "label": "Datering",
-      "value": "1925 - 1950"
-    },
-    {
-      "label": "Maker",
-      "value": "Ulysse Nardin  (producent)"
-    },
-    {
-      "label": "Afmetingen",
-      "value": "200,0 (h)  * 210,0 (b)  * 185,0 (d) "
-    },
-    {
-      "label": "Materiaal",
-      "value": "metaal, glas, hout, textiel, papier"
-    },
-    {
-      "label": "Plaats vervaardiging",
-      "value": "<a href=\"https://www.geonames.org/2659960\">Le Locle, Zwitserland</a>"
-    },
-    {
-      "label": "Beschrijving",
-      "value": "Een cardanisch opgehangen chronometer door Ulysse Nardin, in een houten kistje. Het kistje bevat twee ijkcertificaten van de firma N.V. Observator daterend uit 1952 en 1967. 0 - 60 seconden, 0 - 60 minuten, 0 - 24 uur."
-    }
-  ],
-  "@type": "sc:Manifest",
-  "structures": [
-    {
-      "canvases": [
-        "https://dlc.services/iiif-img/7/18/3c977064-e569-4da3-b58e-66d3e8393213/canvas/c/1"
-      ],
-      "within": "https://dlc.services/iiif-manifest/7/18/a107684c-47d6-49bc-bfc6-505ff4f6026d/range/range-0.json",
-      "@type": "sc:Range",
-      "@id": "https://dlc.services/iiif-manifest/7/18/a107684c-47d6-49bc-bfc6-505ff4f6026d/range/range-0-0.json",
-      "label": "0"
-    }
-  ],
-  "@id": "https://raw.githubusercontent.com/libis/ca_tudelft_iiif/main/objects/a107684c-47d6-49bc-bfc6-505ff4f6026d.json",
-  "sequences": [
-    {
-      "viewingDirection": "left-to-right",
-      "viewingHint": "paged",
-      "canvases": [
+    "metadata": [
         {
-          "metadata": [
-            {
-              "label": "String 1",
-              "value": "2000.0809.GEO"
+            "label": {
+                "en": [
+                    "Title"
+                ],
+                "nl": [
+                    "Titel"
+                ]
             },
-            {
-              "label": "String 2",
-              "value": "3271"
-            },
-            {
-              "label": "String 3",
-              "value": "2000.0809.GEO.jpg"
-            },
-            {
-              "label": "Number 1",
-              "value": "0"
-            },
-            {
-              "label": "Number 2",
-              "value": "0"
-            },
-            {
-              "label": "Number 3",
-              "value": "0"
-            },
-            {
-              "label": "Tags",
-              "value": ""
-            },
-            {
-              "label": "Roles",
-              "value": ""
+            "value": {
+                "nl": [
+                    "Chronometer door Ulysse Nardin nr. 2081"
+                ]
             }
-          ],
-          "images": [
-            {
-              "resource": {
-                "@type": "dctypes:Image",
-                "service": {
-                  "profile": "http://iiif.io/api/image/2/level2.json",
-                  "width": 3072,
-                  "@id": "https://dlc.services/iiif-img/7/18/3c977064-e569-4da3-b58e-66d3e8393213",
-                  "@context": "http://iiif.io/api/image/2/context.json",
-                  "height": 2048
-                },
-                "width": 1024,
-                "@id": "https://dlc.services/iiif-img/7/18/3c977064-e569-4da3-b58e-66d3e8393213/full/1024,683/0/default.jpg",
-                "height": 683
-              },
-              "@type": "oa:Annotation",
-              "motivation": "sc:painting",
-              "@id": "https://dlc.services/iiif-img/7/18/3c977064-e569-4da3-b58e-66d3e8393213/imageanno/0",
-              "on": "https://dlc.services/iiif-img/7/18/3c977064-e569-4da3-b58e-66d3e8393213/canvas/c/1"
-            }
-          ],
-          "thumbnail": {
-            "@type": "dctypes:Image",
-            "service": {
-              "sizes": [
-                {
-                  "width": 1024,
-                  "height": 683
-                },
-                {
-                  "width": 400,
-                  "height": 267
-                },
-                {
-                  "width": 200,
-                  "height": 133
-                },
-                {
-                  "width": 100,
-                  "height": 67
-                }
-              ],
-              "profile": "http://iiif.io/api/image/2/level0.json",
-              "@id": "https://dlc.services/thumbs/7/18/3c977064-e569-4da3-b58e-66d3e8393213",
-              "@context": "http://iiif.io/api/image/2/context.json"
+        },
+        {
+            "label": {
+                "en": [
+                    "Object name"
+                ],
+                "nl": [
+                    "Objectnaam"
+                ]
             },
-            "@id": "https://dlc.services/thumbs/7/18/3c977064-e569-4da3-b58e-66d3e8393213/full/full/0/default.jpg"
-          },
-          "@type": "sc:Canvas",
-          "width": 3072,
-          "@id": "https://dlc.services/iiif-img/7/18/3c977064-e569-4da3-b58e-66d3e8393213/canvas/c/1",
-          "label": "Canvas 1",
-          "height": 2048
+            "value": {
+                "nl": [
+                    "chronometer"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Inventory number"
+                ],
+                "nl": [
+                    "Inventarisnummer"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "2000.0809.GEO"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dating"
+                ],
+                "nl": [
+                    "Datering"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "1925 – 1950"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Maker"
+                ],
+                "nl": [
+                    "Maker"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Ulysse Nardin  (producent)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dimensions"
+                ],
+                "nl": [
+                    "Afmetingen"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "200,0 mm (h) x 210,0 mm (b) x 185,0 mm (d)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Material"
+                ],
+                "nl": [
+                    "Materiaal"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "metaal",
+                    "glas",
+                    "hout",
+                    "textiel",
+                    "papier"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Place of manufacture"
+                ],
+                "nl": [
+                    "Plaats vervaardiging"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "<a href=\"https://www.geonames.org/2659960\">Le Locle, Zwitserland</a>"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Description"
+                ],
+                "nl": [
+                    "Beschrijving"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Een cardanisch opgehangen chronometer door Ulysse Nardin, in een houten kistje. Het kistje bevat twee ijkcertificaten van de firma N.V. Observator daterend uit 1952 en 1967. 0 - 60 seconden, 0 - 60 minuten, 0 - 24 uur."
+                ]
+            }
         }
-      ],
-      "@type": "sc:Sequence",
-      "@id": "https://dlc.services/7/18/a107684c-47d6-49bc-bfc6-505ff4f6026d/sequences/normal",
-      "label": "Current page order"
-    }
-  ],
-  "@context": "http://iiif.io/api/presentation/2/context.json",
-  "label": "Chronometer door Ulysse Nardin nr. 2081"
+    ],
+    "items": [
+        {
+            "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/a107684c-47d6-49bc-bfc6-505ff4f6026d/canvas/0",
+            "type": "Canvas",
+            "height": 2048,
+            "width": 3072,
+            "items": [
+                {
+                    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/a107684c-47d6-49bc-bfc6-505ff4f6026d/canvas/0/annotation-page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://dlc.services/iiif-img/v3/7/18/3c977064-e569-4da3-b58e-66d3e8393213",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/a107684c-47d6-49bc-bfc6-505ff4f6026d/canvas/0",
+                            "body": {
+                                "id": "https://dlc.services/iiif-img/v3/7/18/3c977064-e569-4da3-b58e-66d3e8393213/full/max/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "height": 2048,
+                                "width": 3072,
+                                "service": [
+                                    {
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/18/3c977064-e569-4da3-b58e-66d3e8393213",
+                                        "type": "ImageService3",
+                                        "profile": "level2"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

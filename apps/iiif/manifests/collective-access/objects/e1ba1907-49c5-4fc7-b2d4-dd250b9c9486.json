@@ -1,155 +1,172 @@
 {
-  "metadata": [
-    {
-      "label": "Titel",
-      "value": "Zonneprisma volgens R. Roelofs door Van Leeuwen"
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/e1ba1907-49c5-4fc7-b2d4-dd250b9c9486.json",
+    "type": "Manifest",
+    "label": {
+        "nl": [
+            "Zonneprisma volgens R. Roelofs door Van Leeuwen"
+        ]
     },
-    {
-      "label": "Objectnaam",
-      "value": "prisma"
-    },
-    {
-      "label": "Inventarisnummer",
-      "value": "2018.0002.GEO"
-    },
-    {
-      "label": "Maker",
-      "value": "Roelofs, R.  (ontwerper)"
-    },
-    {
-      "label": "Maker",
-      "value": "Van Leeuwen  (producent)"
-    },
-    {
-      "label": "Afmetingen",
-      "value": "50,0 (h)  * 100,0 (b)  * 90,0 (d) "
-    },
-    {
-      "label": "Materiaal",
-      "value": "metaal, glas, hout"
-    },
-    {
-      "label": "Beschrijving",
-      "value": "Zonneprisma in houten kistje geproduceerd door C.J. van Leeuwen (1917-1994) uit Delft, naar ontwerp van prof. R. Roelofs. Aan de binnenzijde van de deksel staat \"Solar - Prism Prof. R. Roelofs - Netherlands\", met daaronder de patentnummers van verschillende landen. Ook afgebeeld is het logo van de producent met de tekst: \"Van Leeuwen Delft\". Op zowel het prisma als de deksel is het voormalige inventarisnummer van het Laboratorium van Geodesie te lezen: 1909."
-    },
-    {
-      "label": "Documentatie",
-      "value": "Aardoom, L., 'Cornelis Johannes van Leeuwen (1917-1994), Fabrikant van speciale instrumenten', in: \"De Hollandse Cirkel\", jaargang 24 nr. 3, 2022, pp.8-16."
-    }
-  ],
-  "@type": "sc:Manifest",
-  "structures": [
-    {
-      "canvases": [
-        "https://dlc.services/iiif-img/7/18/d001dca1-3cc1-4249-bc73-9dc7da8362e7/canvas/c/1"
-      ],
-      "within": "https://dlc.services/iiif-manifest/7/18/e1ba1907-49c5-4fc7-b2d4-dd250b9c9486/range/range-0.json",
-      "@type": "sc:Range",
-      "@id": "https://dlc.services/iiif-manifest/7/18/e1ba1907-49c5-4fc7-b2d4-dd250b9c9486/range/range-0-0.json",
-      "label": "0"
-    }
-  ],
-  "@id": "https://raw.githubusercontent.com/libis/ca_tudelft_iiif/main/objects/e1ba1907-49c5-4fc7-b2d4-dd250b9c9486.json",
-  "sequences": [
-    {
-      "viewingDirection": "left-to-right",
-      "viewingHint": "paged",
-      "canvases": [
+    "metadata": [
         {
-          "metadata": [
-            {
-              "label": "String 1",
-              "value": ""
+            "label": {
+                "en": [
+                    "Title"
+                ],
+                "nl": [
+                    "Titel"
+                ]
             },
-            {
-              "label": "String 2",
-              "value": "7465"
-            },
-            {
-              "label": "String 3",
-              "value": "Bestand 24-01-18 12 48 35.jpeg"
-            },
-            {
-              "label": "Number 1",
-              "value": "0"
-            },
-            {
-              "label": "Number 2",
-              "value": "0"
-            },
-            {
-              "label": "Number 3",
-              "value": "0"
-            },
-            {
-              "label": "Tags",
-              "value": ""
-            },
-            {
-              "label": "Roles",
-              "value": ""
+            "value": {
+                "nl": [
+                    "Zonneprisma volgens R. Roelofs door Van Leeuwen"
+                ]
             }
-          ],
-          "images": [
-            {
-              "resource": {
-                "@type": "dctypes:Image",
-                "service": {
-                  "profile": "http://iiif.io/api/image/2/level2.json",
-                  "width": 3024,
-                  "@id": "https://dlc.services/iiif-img/7/18/d001dca1-3cc1-4249-bc73-9dc7da8362e7",
-                  "@context": "http://iiif.io/api/image/2/context.json",
-                  "height": 4032
-                },
-                "width": 768,
-                "@id": "https://dlc.services/iiif-img/7/18/d001dca1-3cc1-4249-bc73-9dc7da8362e7/full/768,1024/0/default.jpg",
-                "height": 1024
-              },
-              "@type": "oa:Annotation",
-              "motivation": "sc:painting",
-              "@id": "https://dlc.services/iiif-img/7/18/d001dca1-3cc1-4249-bc73-9dc7da8362e7/imageanno/0",
-              "on": "https://dlc.services/iiif-img/7/18/d001dca1-3cc1-4249-bc73-9dc7da8362e7/canvas/c/1"
-            }
-          ],
-          "thumbnail": {
-            "@type": "dctypes:Image",
-            "service": {
-              "sizes": [
-                {
-                  "width": 768,
-                  "height": 1024
-                },
-                {
-                  "width": 300,
-                  "height": 400
-                },
-                {
-                  "width": 150,
-                  "height": 200
-                },
-                {
-                  "width": 76,
-                  "height": 100
-                }
-              ],
-              "profile": "http://iiif.io/api/image/2/level0.json",
-              "@id": "https://dlc.services/thumbs/7/18/d001dca1-3cc1-4249-bc73-9dc7da8362e7",
-              "@context": "http://iiif.io/api/image/2/context.json"
+        },
+        {
+            "label": {
+                "en": [
+                    "Object name"
+                ],
+                "nl": [
+                    "Objectnaam"
+                ]
             },
-            "@id": "https://dlc.services/thumbs/7/18/d001dca1-3cc1-4249-bc73-9dc7da8362e7/full/full/0/default.jpg"
-          },
-          "@type": "sc:Canvas",
-          "width": 3024,
-          "@id": "https://dlc.services/iiif-img/7/18/d001dca1-3cc1-4249-bc73-9dc7da8362e7/canvas/c/1",
-          "label": "Canvas 1",
-          "height": 4032
+            "value": {
+                "nl": [
+                    "prisma"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Inventory number"
+                ],
+                "nl": [
+                    "Inventarisnummer"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "2018.0002.GEO"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Maker"
+                ],
+                "nl": [
+                    "Maker"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Roelofs, R.  (ontwerper)",
+                    "Van Leeuwen  (producent)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dimensions"
+                ],
+                "nl": [
+                    "Afmetingen"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "50,0 mm (h) x 100,0 mm (b) x 90,0 mm (d)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Material"
+                ],
+                "nl": [
+                    "Materiaal"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "metaal",
+                    "glas",
+                    "hout"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Description"
+                ],
+                "nl": [
+                    "Beschrijving"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Zonneprisma in houten kistje geproduceerd door C.J. van Leeuwen (1917-1994) uit Delft, naar ontwerp van prof. R. Roelofs. Aan de binnenzijde van de deksel staat \"Solar - Prism Prof. R. Roelofs - Netherlands\", met daaronder de patentnummers van verschillende landen. Ook afgebeeld is het logo van de producent met de tekst: \"Van Leeuwen Delft\". Op zowel het prisma als de deksel is het voormalige inventarisnummer van het Laboratorium van Geodesie te lezen: 1909."
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Documentation"
+                ],
+                "nl": [
+                    "Documentatie"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Aardoom, L., 'Cornelis Johannes van Leeuwen (1917-1994), Fabrikant van speciale instrumenten', in: \"De Hollandse Cirkel\", jaargang 24 nr. 3, 2022, pp.8-16."
+                ]
+            }
         }
-      ],
-      "@type": "sc:Sequence",
-      "@id": "https://dlc.services/7/18/e1ba1907-49c5-4fc7-b2d4-dd250b9c9486/sequences/normal",
-      "label": "Current page order"
-    }
-  ],
-  "@context": "http://iiif.io/api/presentation/2/context.json",
-  "label": "Zonneprisma volgens R. Roelofs door Van Leeuwen"
+    ],
+    "items": [
+        {
+            "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/e1ba1907-49c5-4fc7-b2d4-dd250b9c9486/canvas/0",
+            "type": "Canvas",
+            "height": 4032,
+            "width": 3024,
+            "items": [
+                {
+                    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/e1ba1907-49c5-4fc7-b2d4-dd250b9c9486/canvas/0/annotation-page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://dlc.services/iiif-img/v3/7/18/d001dca1-3cc1-4249-bc73-9dc7da8362e7",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/e1ba1907-49c5-4fc7-b2d4-dd250b9c9486/canvas/0",
+                            "body": {
+                                "id": "https://dlc.services/iiif-img/v3/7/18/d001dca1-3cc1-4249-bc73-9dc7da8362e7/full/max/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "height": 4032,
+                                "width": 3024,
+                                "service": [
+                                    {
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/18/d001dca1-3cc1-4249-bc73-9dc7da8362e7",
+                                        "type": "ImageService3",
+                                        "profile": "level2"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }
