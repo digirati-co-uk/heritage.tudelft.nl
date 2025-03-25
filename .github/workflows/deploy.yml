@@ -4,7 +4,11 @@ on:
   push:
     branches:
       - main
-  workflow_call:
+  workflow_run:
+    workflows: ["Sync Collective Access"]
+    types: [completed]
+    branches:
+      - "main"
 
 jobs:
   build:
