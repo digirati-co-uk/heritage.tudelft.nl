@@ -16,6 +16,10 @@ run:
   - delft-image-source
   - typesense-manifests
 
+collections:
+  index:
+    label: { "en": "TU Delft Academic Heritage", "nl": "Academisch Erfgoed TU Delft" }
+
 config:
   extract-thumbnail-local:
     width: 1080

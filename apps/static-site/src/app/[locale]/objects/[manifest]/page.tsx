@@ -1,12 +1,13 @@
-import { Page } from "@/components/Page";
-import { loadManifest, loadManifestMeta } from "@/iiif";
-import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
-import { ManifestPage } from "@/components/pages/ManifestPage";
 import { ManifestLoader } from "@/app/provider";
+import { Page } from "@/components/Page";
+import { ManifestPage } from "@/components/pages/ManifestPage";
+import { loadManifest, loadManifestMeta } from "@/iiif";
 import related from "@repo/iiif/build/meta/related-objects.json";
 import type { Metadata } from "next";
 import { getValue } from "@iiif/helpers";
 import { baseURL, makeTitle, getDefaultMetaMdx } from "@/helpers/metadata";
+import imageServiceLinks from "@repo/iiif/build/meta/image-service-links.json";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 export async function generateMetadata({
   params,
@@ -50,17 +51,37 @@ export default async function ManifestP({
   params: { locale: string; manifest: string };
   searchParams: { id: string };
 }) {
-  unstable_setRequestLocale(params.locale);
+  setRequestLocale(params.locale);
   const t = await getTranslations();
   const idNum = searchParams?.id ? parseInt(searchParams.id) : 0;
 
   const manifestSlug = `manifests/${params.manifest}`;
   const { manifest, meta } = await loadManifest(manifestSlug);
+  const exhibitions = imageServiceLinks[manifestSlug as keyof typeof imageServiceLinks] || [];
 
   const relatedItems = related[manifestSlug as keyof typeof related] || [];
   const relatedSnippets = (
     await Promise.all(
       relatedItems.map(async (slug) => {
+        try {
+          const meta = await loadManifestMeta(slug);
+
+          return {
+            slug,
+            label: meta.label || "Untitled",
+            thumbnail: meta.thumbnail?.id,
+            meta,
+          };
+        } catch (e) {
+          return null;
+        }
+      })
+    )
+  ).filter((x) => x !== null);
+
+  const exhibitionLinks = (
+    await Promise.all(
+      exhibitions.map(async ({ slug }) => {
         try {
           const meta = await loadManifestMeta(slug);
 
@@ -83,9 +104,21 @@ export default async function ManifestP({
         <ManifestPage
           content={{
             untitled: t("Untitled"),
-            relatedObjects: t("Related objects"),
+            relatedObjects: t("Related"),
             partOfCollections: t("Part of collections"),
+
+            // Sharing.
+            seeAlso: t("See also"),
+            sharingViewers: t("Sharing"),
+            showMore: t("Show more"),
+            showLess: t("Show less"),
+            iiifLabel: t("IIIF Manifest"),
+            downloadImage: t("Download image"),
+            download: t("Download"),
+            currentPage: t("Permalink"),
+            copiedMessage: t("Copied"),
           }}
+          exhibitionLinks={exhibitionLinks}
           manifest={manifest}
           meta={meta}
           related={relatedSnippets}

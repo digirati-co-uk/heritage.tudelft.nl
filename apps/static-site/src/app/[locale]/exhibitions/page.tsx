@@ -1,8 +1,6 @@
-import { Page } from "@/components/Page";
-import { unstable_setRequestLocale } from "next-intl/server";
-import { ExhibitionListing } from "@/components/pages/ExhibitionListing";
 import { Slot } from "@/blocks/slot";
-import exhibitions from "@repo/iiif/build/collections/exhibitions/collection.json";
+import { Page } from "@/components/Page";
+import { setRequestLocale } from "next-intl/server";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { getBasicMetadata, makeTitle, getMdx, getDefaultMetaMdx } from "@/helpers/metadata";
@@ -29,7 +27,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
 }
 
 export default function ExhibitionsPage({ params }: { params: { locale: string } }) {
-  unstable_setRequestLocale(params.locale);
+  setRequestLocale(params.locale);
   return (
     <Page>
       <Slot name="main-exhibitions" context={{ locale: params.locale }} />
