@@ -2,11 +2,11 @@
   "metadata": [
     {
       "label": "Titel",
-      "value": "Chronometer door Favag "
+      "value": "Chronograaf door Favag "
     },
     {
       "label": "Objectnaam",
-      "value": "chronometer"
+      "value": "chronograaf"
     },
     {
       "label": "Inventarisnummer",
@@ -30,14 +30,14 @@
     },
     {
       "label": "Beschrijving",
-      "value": "Een elektrische registrerende chronometer door Favag, voor nauwkeurige tijdmeting bij astronomische metingen (plaats- en azimut bepaling) met een nauwkeurige theodoliet zoals de Wild T3 en of Wild T4. "
+      "value": "Een elektrische registrerende chronograaf door Favag, voor nauwkeurige tijdmeting bij astronomische metingen (plaats- en azimut bepaling) met een nauwkeurige theodoliet zoals de Wild T3 en of Wild T4. "
     }
   ],
   "@type": "sc:Manifest",
   "structures": [
     {
       "canvases": [
-        "https://dlc.services/iiif-img/7/18/0cdc3a2e-765d-4628-86a4-0ade87ee82d5/canvas/c0"
+        "https://dlc.services/iiif-img/7/18/0cdc3a2e-765d-4628-86a4-0ade87ee82d5/canvas/c/1"
       ],
       "within": "https://dlc.services/iiif-manifest/7/18/99c594be-5f26-4c22-b817-ce4adcc1b034/range/range-0.json",
       "@type": "sc:Range",
@@ -52,25 +52,59 @@
       "viewingHint": "paged",
       "canvases": [
         {
+          "metadata": [
+            {
+              "label": "String 1",
+              "value": "2000.0893.GEO"
+            },
+            {
+              "label": "String 2",
+              "value": "3352"
+            },
+            {
+              "label": "String 3",
+              "value": "2000.0893.GEO.jpg"
+            },
+            {
+              "label": "Number 1",
+              "value": "0"
+            },
+            {
+              "label": "Number 2",
+              "value": "0"
+            },
+            {
+              "label": "Number 3",
+              "value": "0"
+            },
+            {
+              "label": "Tags",
+              "value": ""
+            },
+            {
+              "label": "Roles",
+              "value": ""
+            }
+          ],
           "images": [
             {
               "resource": {
                 "@type": "dctypes:Image",
                 "service": {
-                  "protocol": "http://iiif.io/api/image",
-                  "profile": "http://iiif.io/api/image/2/level1.json",
+                  "profile": "http://iiif.io/api/image/2/level2.json",
                   "width": 3072,
                   "@id": "https://dlc.services/iiif-img/7/18/0cdc3a2e-765d-4628-86a4-0ade87ee82d5",
+                  "@context": "http://iiif.io/api/image/2/context.json",
                   "height": 2048
                 },
-                "width": 3072,
+                "width": 1024,
                 "@id": "https://dlc.services/iiif-img/7/18/0cdc3a2e-765d-4628-86a4-0ade87ee82d5/full/1024,683/0/default.jpg",
-                "height": 2048
+                "height": 683
               },
               "@type": "oa:Annotation",
               "motivation": "sc:painting",
               "@id": "https://dlc.services/iiif-img/7/18/0cdc3a2e-765d-4628-86a4-0ade87ee82d5/imageanno/0",
-              "on": "https://dlc.services/iiif-img/7/18/0cdc3a2e-765d-4628-86a4-0ade87ee82d5/canvas/c0"
+              "on": "https://dlc.services/iiif-img/7/18/0cdc3a2e-765d-4628-86a4-0ade87ee82d5/canvas/c/1"
             }
           ],
           "thumbnail": {
@@ -94,31 +128,16 @@
                   "height": 67
                 }
               ],
-              "profile": [
-                "http://iiif.io/api/image/2/level0.json",
-                {
-                  "formats": [
-                    "jpg"
-                  ],
-                  "qualities": [
-                    "color"
-                  ],
-                  "supports": [
-                    "sizeByWhListed"
-                  ]
-                }
-              ],
-              "width": 1024,
+              "profile": "http://iiif.io/api/image/2/level0.json",
               "@id": "https://dlc.services/thumbs/7/18/0cdc3a2e-765d-4628-86a4-0ade87ee82d5",
-              "@context": "http://iiif.io/api/image/2/context.json",
-              "height": 683
+              "@context": "http://iiif.io/api/image/2/context.json"
             },
             "@id": "https://dlc.services/thumbs/7/18/0cdc3a2e-765d-4628-86a4-0ade87ee82d5/full/full/0/default.jpg"
           },
           "@type": "sc:Canvas",
           "width": 3072,
-          "@id": "https://dlc.services/iiif-img/7/18/0cdc3a2e-765d-4628-86a4-0ade87ee82d5/canvas/c0",
-          "label": "Image",
+          "@id": "https://dlc.services/iiif-img/7/18/0cdc3a2e-765d-4628-86a4-0ade87ee82d5/canvas/c/1",
+          "label": "Canvas 1",
           "height": 2048
         }
       ],
@@ -128,5 +147,5 @@
     }
   ],
   "@context": "http://iiif.io/api/presentation/2/context.json",
-  "label": "Chronometer door Favag "
+  "label": "Chronograaf door Favag "
 }

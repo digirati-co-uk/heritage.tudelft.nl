@@ -10,7 +10,7 @@
     "NEXT_PUBLIC_TYPESENSE_COLLECTION_NAME",
     "TYPESENSE_API_KEY"
   ],
-  "pipeline": {
+  "tasks": {
     "build": {
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**"]

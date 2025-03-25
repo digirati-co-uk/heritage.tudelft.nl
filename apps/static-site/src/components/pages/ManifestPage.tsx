@@ -1,15 +1,20 @@
 "use client";
-import { Manifest, InternationalString } from "@iiif/presentation-3";
+import { Link, getObjectSlug } from "@/navigation";
+import viewerConfig from "@/viewers.json";
+import type { Preset } from "@atlas-viewer/atlas";
+import type { InternationalString, Manifest } from "@iiif/presentation-3";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { CanvasPanel, useSimpleViewer } from "react-iiif-vault";
+import { Box } from "../blocks/Box";
+import { DownloadImage } from "../iiif/DownloadImage";
 import { ObjectMetadata } from "../iiif/ObjectMetadata";
 import { ObjectThumbnails } from "../iiif/ObjectThumbnails";
+import { SharingAndViewingLinks } from "../iiif/SharingAndViewingLinks";
 import { ViewerSliderControls } from "../iiif/ViewerSliderControls";
 import { ViewerZoomControls } from "../iiif/ViewerZoomControls";
-import { Box } from "../blocks/Box";
 import { AutoLanguage } from "./AutoLanguage";
-import { useEffect, useRef } from "react";
-import type { Preset } from "@atlas-viewer/atlas";
-import { Link, getObjectSlug } from "@/navigation";
+import { getValue } from "@iiif/helpers/i18n";
 
 interface ManifestPageProps {
   manifest: Manifest;
@@ -33,17 +38,47 @@ interface ManifestPageProps {
     untitled: string;
     relatedObjects: string;
     partOfCollections: string;
+    seeAlso: string;
+    sharingViewers: string;
+    showMore: string;
+    showLess: string;
+    iiifLabel: string;
+    downloadImage: string;
+    download: string;
+    currentPage: string;
+    copiedMessage: string;
   };
+  exhibitionLinks: Array<null | {
+    label: string;
+    slug: string;
+    thumbnail?: string;
+  }>;
+
+  initialCanvasIndex: number;
 }
 
 const runtimeOptions = { maxOverZoom: 2 };
 
-export function ManifestPage({ related, manifest, meta, content }: ManifestPageProps) {
-  const { currentSequenceIndex } = useSimpleViewer();
-
+export function ManifestPage({
+  related,
+  manifest,
+  meta,
+  content,
+  exhibitionLinks,
+  initialCanvasIndex,
+}: ManifestPageProps) {
+  const context = useSimpleViewer();
+  const { currentSequenceIndex } = context;
+  const previousSeqIndex = useRef(currentSequenceIndex);
   const atlas = useRef<Preset>();
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Needs to run when currentSequenceIndex changes.
   useEffect(() => {
+    if (currentSequenceIndex == previousSeqIndex.current) {
+      context.setCurrentCanvasIndex(initialCanvasIndex);
+    } else {
+      context.setCurrentCanvasIndex(currentSequenceIndex);
+    }
     if (atlas.current) {
       setTimeout(() => atlas.current?.runtime.world.goHome(true), 5);
     }
@@ -80,28 +115,30 @@ export function ManifestPage({ related, manifest, meta, content }: ManifestPageP
       </div>
       <div className="grid-cols-3 md:grid">
         <div className="col-span-2">
-          <div>
-            <div className="iiif-link-wrapper m-4">
-              <a
-                href={`${manifest.id}?manifest=${manifest.id}`}
-                target="_blank"
-                title="Drag and Drop IIIF Resource"
-              ></a>
-            </div>
-          </div>
-
           <ObjectMetadata />
 
-          {related.length !== 0 && (
+          {(related.length !== 0 || meta.partOfCollections?.length !== 0) && (
             <>
               <h3 className="mb-5 mt-10 text-3xl font-medium">{content.relatedObjects}</h3>
               <div className="mb-4 grid md:grid-cols-3">
+                {(meta.partOfCollections || []).map((collection, i) => (
+                  <Box
+                    key={collection.slug}
+                    title={getValue(collection.label)}
+                    unfiltered
+                    fallbackBackgroundColor="bg-cyan-500"
+                    small
+                    dark
+                    link={`/${getObjectSlug(collection.slug)}`}
+                    type="Collection"
+                  />
+                ))}
                 {related.map((item, i) => {
                   if (item === null) return null;
 
                   return (
                     <Box
-                      key={i}
+                      key={item.slug}
                       title={item.label}
                       unfiltered
                       small
@@ -115,22 +152,33 @@ export function ManifestPage({ related, manifest, meta, content }: ManifestPageP
             </>
           )}
         </div>
-        {(meta.partOfCollections || []).length === 0 ? null : (
-          <div className="col-span-1 overflow-hidden">
-            <div className="cut-corners aspect-square place-self-start bg-black p-8 text-white">
-              <h3 className="mb-2 text-2xl font-medium">{content.partOfCollections}</h3>
-              <ul className="text-md ml-4 list-disc underline underline-offset-4">
-                {(meta.partOfCollections || []).map((collection, i) => (
-                  <li key={i}>
-                    <Link href={`/${collection.slug}`} className="hover:text-slate-300">
-                      <AutoLanguage>{collection.label}</AutoLanguage>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        )}
+        <div className="col-span-1">
+          {exhibitionLinks.map((item, i) => {
+            if (item === null) return null;
+
+            return (
+              <Box
+                key={item.slug}
+                title={item.label}
+                unfiltered
+                backgroundColor="bg-yellow-400"
+                small
+                backgroundImage={item.thumbnail}
+                link={`/${getObjectSlug(item.slug)}`}
+                type="Exhibition"
+              />
+            );
+          })}
+          <SharingAndViewingLinks
+            resource={{
+              id: manifest.id,
+              type: "object",
+            }}
+            content={content}
+          />
+
+          <DownloadImage content={content} />
+        </div>
       </div>
     </div>
   );
