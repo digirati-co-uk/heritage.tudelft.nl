@@ -30,4 +30,4 @@ jobs:
       - run: git push origin main --force-with-lease
 
       - name: Deploy changes
-        uses: ./deploy.yml
+        uses: .github/workflows/deploy.yml
