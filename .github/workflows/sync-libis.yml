@@ -23,8 +23,7 @@ jobs:
       - name: Refresh Collective Access data
         id: check_changes
         run: |
-          BRANCH=${{ github.event.inputs.branch || 'main' }}
-          git clone --depth=1 --branch=$BRANCH https://github.com/tu-delft-heritage/collective-access-data
+          git clone --depth=1 --branch=main https://github.com/tu-delft-heritage/collective-access-data
           rm -r apps/iiif/manifests/collective-access/objects
           rm -rf apps/iiif/manifests/collective-access/collections
           cp -a collective-access-data/build/iiif/objects/. apps/iiif/manifests/collective-access/objects
