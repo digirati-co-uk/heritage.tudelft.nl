@@ -23,7 +23,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.bun/install/cache
-          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lock') }}
           restore-keys: |
             ${{ runner.os }}-bun-
 
@@ -41,9 +41,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: apps/static-site/.next/cache
-          key: ${{ runner.os }}-iiif-cache-${{ hashFiles('**/bun.lockb') }}--${{ hashFiles('app/static-site/src/**/*.ts', 'app/static-site/src/**/*.tsx') }}
+          key: ${{ runner.os }}-iiif-cache-${{ hashFiles('**/bun.lock') }}--${{ hashFiles('app/static-site/src/**/*.ts', 'app/static-site/src/**/*.tsx') }}
           restore-keys: |
-            ${{ runner.os }}-iiif-cache-${{ hashFiles('**/bun.lockb') }}
+            ${{ runner.os }}-iiif-cache-${{ hashFiles('**/bun.lock') }}
 
       - name: IIIF Netlify deploy (production)
         id: netlify_iiif
