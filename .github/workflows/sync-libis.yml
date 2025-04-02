@@ -5,18 +5,26 @@ on:
     # Daily schedule
     - cron: "0 3 * * *"
 
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "The branch to run this workflow on"
+        required: false
+        default: "main"
 
 jobs:
   copy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.branch || 'main' }}
 
-      - run: |
-          git clone --depth=1 --branch=main https://github.com/tu-delft-heritage/collective-access-data
-          pwd
-          ls
+      - name: Refresh Collective Access data
+        id: check_changes
+        run: |
+          BRANCH=${{ github.event.inputs.branch || 'main' }}
+          git clone --depth=1 --branch=$BRANCH https://github.com/tu-delft-heritage/collective-access-data
           rm -r apps/iiif/manifests/collective-access/objects
           rm -rf apps/iiif/manifests/collective-access/collections
           cp -a collective-access-data/build/iiif/objects/. apps/iiif/manifests/collective-access/objects
@@ -25,6 +33,27 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
-          git diff-index --quiet HEAD || git commit -m "Automatic publish from github.com/tu-delft-heritage/collective-access-data"
+          if git diff-index --quiet HEAD; then
+            echo "changes=false" >> $GITHUB_OUTPUT
+          else
+            git commit -m "Automatic publish from github.com/tu-delft-heritage/collective-access-data"
+            echo "changes=true" >> $GITHUB_OUTPUT
+          fi
 
-      - run: git push origin main --force-with-lease
+      - name: Push changes
+        run: |
+          BRANCH=${{ github.event.inputs.branch || 'main' }}
+          git push origin $BRANCH --force-with-lease
+
+      - name: Trigger deploy workflow
+        if: steps.check_changes.outputs.changes == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const response = await github.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'deploy.yml',
+              ref: context.ref,
+            });
+            core.info(`Triggered deploy workflow: ${response.status}`);
