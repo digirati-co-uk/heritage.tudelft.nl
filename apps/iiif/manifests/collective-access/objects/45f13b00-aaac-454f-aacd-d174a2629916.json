@@ -1,132 +1,250 @@
 {
-  "metadata": [
-    {
-      "label": "Titel",
-      "value": "Winkelhaak door Lerebours"
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/45f13b00-aaac-454f-aacd-d174a2629916.json",
+    "type": "Manifest",
+    "label": {
+        "nl": [
+            "Winkelhaak door Lerebours"
+        ]
     },
-    {
-      "label": "Objectnaam",
-      "value": "winkelhaak"
-    },
-    {
-      "label": "Inventarisnummer",
-      "value": "2000.0068.GEO"
-    },
-    {
-      "label": "Datering",
-      "value": "1775 - 1825"
-    },
-    {
-      "label": "Maker",
-      "value": "Lerebours (Parijs)  (producent)"
-    },
-    {
-      "label": "Afmetingen",
-      "value": "3,0 (h)  * 175,0 (b)  * 175,0 (d) "
-    },
-    {
-      "label": "Materiaal",
-      "value": "metaal"
-    },
-    {
-      "label": "Beschrijving",
-      "value": "Winkelhaak door Lerebours, cartografisch tekeninstrument voor het tekenen van haakse (winkel) hoeken en te gebruiken om afstanden op een kaart uit te zetten of te meten. Opvouwbare winkelhaak met een transversaalschaal en schaalverdeling in \"pouces\" en centimeters."
-    }
-  ],
-  "@type": "sc:Manifest",
-  "structures": [
-    {
-      "canvases": [
-        "https://dlc.services/iiif-img/7/18/9dd7cd9d-05f5-4b38-a97c-ccc5c4bf7483/canvas/c0"
-      ],
-      "within": "https://dlc.services/iiif-manifest/7/18/45f13b00-aaac-454f-aacd-d174a2629916/range/range-0.json",
-      "@type": "sc:Range",
-      "@id": "https://dlc.services/iiif-manifest/7/18/45f13b00-aaac-454f-aacd-d174a2629916/range/range-0-0.json",
-      "label": "0"
-    }
-  ],
-  "@id": "https://raw.githubusercontent.com/libis/ca_tudelft_iiif/main/objects/45f13b00-aaac-454f-aacd-d174a2629916.json",
-  "sequences": [
-    {
-      "viewingDirection": "left-to-right",
-      "viewingHint": "paged",
-      "canvases": [
+    "metadata": [
         {
-          "images": [
-            {
-              "resource": {
-                "@type": "dctypes:Image",
-                "service": {
-                  "protocol": "http://iiif.io/api/image",
-                  "profile": "http://iiif.io/api/image/2/level1.json",
-                  "width": 3072,
-                  "@id": "https://dlc.services/iiif-img/7/18/9dd7cd9d-05f5-4b38-a97c-ccc5c4bf7483",
-                  "height": 2048
-                },
-                "width": 3072,
-                "@id": "https://dlc.services/iiif-img/7/18/9dd7cd9d-05f5-4b38-a97c-ccc5c4bf7483/full/1024,683/0/default.jpg",
-                "height": 2048
-              },
-              "@type": "oa:Annotation",
-              "motivation": "sc:painting",
-              "@id": "https://dlc.services/iiif-img/7/18/9dd7cd9d-05f5-4b38-a97c-ccc5c4bf7483/imageanno/0",
-              "on": "https://dlc.services/iiif-img/7/18/9dd7cd9d-05f5-4b38-a97c-ccc5c4bf7483/canvas/c0"
-            }
-          ],
-          "thumbnail": {
-            "@type": "dctypes:Image",
-            "service": {
-              "sizes": [
-                {
-                  "width": 1024,
-                  "height": 683
-                },
-                {
-                  "width": 400,
-                  "height": 267
-                },
-                {
-                  "width": 200,
-                  "height": 133
-                },
-                {
-                  "width": 100,
-                  "height": 67
-                }
-              ],
-              "profile": [
-                "http://iiif.io/api/image/2/level0.json",
-                {
-                  "formats": [
-                    "jpg"
-                  ],
-                  "qualities": [
-                    "color"
-                  ],
-                  "supports": [
-                    "sizeByWhListed"
-                  ]
-                }
-              ],
-              "width": 1024,
-              "@id": "https://dlc.services/thumbs/7/18/9dd7cd9d-05f5-4b38-a97c-ccc5c4bf7483",
-              "@context": "http://iiif.io/api/image/2/context.json",
-              "height": 683
+            "label": {
+                "en": [
+                    "Title"
+                ],
+                "nl": [
+                    "Titel"
+                ]
             },
-            "@id": "https://dlc.services/thumbs/7/18/9dd7cd9d-05f5-4b38-a97c-ccc5c4bf7483/full/full/0/default.jpg"
-          },
-          "@type": "sc:Canvas",
-          "width": 3072,
-          "@id": "https://dlc.services/iiif-img/7/18/9dd7cd9d-05f5-4b38-a97c-ccc5c4bf7483/canvas/c0",
-          "label": "Image",
-          "height": 2048
+            "value": {
+                "nl": [
+                    "Winkelhaak door Lerebours"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Object name"
+                ],
+                "nl": [
+                    "Objectnaam"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "winkelhaak"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Inventory number"
+                ],
+                "nl": [
+                    "Inventarisnummer"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "2000.0068.GEO"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dating"
+                ],
+                "nl": [
+                    "Datering"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "1775 – 1825"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Maker"
+                ],
+                "nl": [
+                    "Maker"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Lerebours  (producent)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dimensions"
+                ],
+                "nl": [
+                    "Afmetingen"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "3,0 mm (h) x 175,0 mm (b) x 175,0 mm (d)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Material"
+                ],
+                "nl": [
+                    "Materiaal"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "metaal"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Place of manufacture"
+                ],
+                "nl": [
+                    "Plaats vervaardiging"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "<a href=\"https://www.geonames.org/2988507\">Parijs, Frankrijk</a>"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Description"
+                ],
+                "nl": [
+                    "Beschrijving"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Winkelhaak door Lerebours, cartografisch tekeninstrument voor het tekenen van haakse (winkel) hoeken en te gebruiken om afstanden op een kaart uit te zetten of te meten. Opvouwbare winkelhaak met een transversaalschaal en schaalverdeling in \"pouces\" en centimeters."
+                ]
+            }
         }
-      ],
-      "@type": "sc:Sequence",
-      "@id": "https://dlc.services/7/18/45f13b00-aaac-454f-aacd-d174a2629916/sequences/normal",
-      "label": "Current page order"
-    }
-  ],
-  "@context": "http://iiif.io/api/presentation/2/context.json",
-  "label": "Winkelhaak door Lerebours"
+    ],
+    "thumbnail": [
+        {
+            "id": "https://dlc.services/thumbs/v3/7/18/9dd7cd9d-05f5-4b38-a97c-ccc5c4bf7483/full/max/0/default.jpg",
+            "type": "Image",
+            "format": "image/jpeg",
+            "service": [
+                {
+                    "@context": "http://iiif.io/api/image/3/context.json",
+                    "id": "https://dlc.services/thumbs/v3/7/18/9dd7cd9d-05f5-4b38-a97c-ccc5c4bf7483",
+                    "type": "ImageService3",
+                    "profile": "level0",
+                    "sizes": [
+                        {
+                            "width": 1024,
+                            "height": 683
+                        },
+                        {
+                            "width": 400,
+                            "height": 267
+                        },
+                        {
+                            "width": 200,
+                            "height": 133
+                        },
+                        {
+                            "width": 100,
+                            "height": 67
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "items": [
+        {
+            "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/45f13b00-aaac-454f-aacd-d174a2629916/canvas/0",
+            "type": "Canvas",
+            "height": 2048,
+            "width": 3072,
+            "thumbnail": [
+                {
+                    "id": "https://dlc.services/thumbs/v3/7/18/9dd7cd9d-05f5-4b38-a97c-ccc5c4bf7483/full/max/0/default.jpg",
+                    "type": "Image",
+                    "format": "image/jpeg",
+                    "service": [
+                        {
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/18/9dd7cd9d-05f5-4b38-a97c-ccc5c4bf7483",
+                            "type": "ImageService3",
+                            "profile": "level0",
+                            "sizes": [
+                                {
+                                    "width": 1024,
+                                    "height": 683
+                                },
+                                {
+                                    "width": 400,
+                                    "height": 267
+                                },
+                                {
+                                    "width": 200,
+                                    "height": 133
+                                },
+                                {
+                                    "width": 100,
+                                    "height": 67
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "items": [
+                {
+                    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/45f13b00-aaac-454f-aacd-d174a2629916/canvas/0/annotation-page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://dlc.services/iiif-img/v3/7/18/9dd7cd9d-05f5-4b38-a97c-ccc5c4bf7483",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/45f13b00-aaac-454f-aacd-d174a2629916/canvas/0",
+                            "body": {
+                                "id": "https://dlc.services/iiif-img/v3/7/18/9dd7cd9d-05f5-4b38-a97c-ccc5c4bf7483/full/max/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "height": 2048,
+                                "width": 3072,
+                                "service": [
+                                    {
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/18/9dd7cd9d-05f5-4b38-a97c-ccc5c4bf7483",
+                                        "type": "ImageService3",
+                                        "profile": "level2"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

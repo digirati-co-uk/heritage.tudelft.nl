@@ -1,132 +1,236 @@
 {
-  "metadata": [
-    {
-      "label": "Titel",
-      "value": "Precisie-theodoliet door Wild type T3"
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/a08226c6-1edc-4eb9-9d63-5464af4dc7a7.json",
+    "type": "Manifest",
+    "label": {
+        "nl": [
+            "Precisie-theodoliet door Wild type T3"
+        ]
     },
-    {
-      "label": "Objectnaam",
-      "value": "theodoliet"
-    },
-    {
-      "label": "Inventarisnummer",
-      "value": "2000.0533.GEO"
-    },
-    {
-      "label": "Datering",
-      "value": "1950 - 1975"
-    },
-    {
-      "label": "Maker",
-      "value": "Wild Heerbrugg AG  (producent)"
-    },
-    {
-      "label": "Afmetingen",
-      "value": "570,0 (h)  * 530,0 (b)  * 530,0 (d) "
-    },
-    {
-      "label": "Materiaal",
-      "value": "metaal, glas"
-    },
-    {
-      "label": "Beschrijving",
-      "value": "Een precisie theodoliet type T3 door H. Wild Werkstätte, voor het bepalen van horizontale en verticale richtingen. Voor eerste en tweede orde triangulaties en precisie deformatiemetingen. Bij dit instrument behoort zowel een stalen doos en een met textiel beklede houten kist."
-    }
-  ],
-  "@type": "sc:Manifest",
-  "structures": [
-    {
-      "canvases": [
-        "https://dlc.services/iiif-img/7/18/ac2410fc-8047-47b8-9dcd-560c6fdcc8c9/canvas/c0"
-      ],
-      "within": "https://dlc.services/iiif-manifest/7/18/a08226c6-1edc-4eb9-9d63-5464af4dc7a7/range/range-0.json",
-      "@type": "sc:Range",
-      "@id": "https://dlc.services/iiif-manifest/7/18/a08226c6-1edc-4eb9-9d63-5464af4dc7a7/range/range-0-0.json",
-      "label": "0"
-    }
-  ],
-  "@id": "https://raw.githubusercontent.com/libis/ca_tudelft_iiif/main/objects/a08226c6-1edc-4eb9-9d63-5464af4dc7a7.json",
-  "sequences": [
-    {
-      "viewingDirection": "left-to-right",
-      "viewingHint": "paged",
-      "canvases": [
+    "metadata": [
         {
-          "images": [
-            {
-              "resource": {
-                "@type": "dctypes:Image",
-                "service": {
-                  "protocol": "http://iiif.io/api/image",
-                  "profile": "http://iiif.io/api/image/2/level1.json",
-                  "width": 3072,
-                  "@id": "https://dlc.services/iiif-img/7/18/ac2410fc-8047-47b8-9dcd-560c6fdcc8c9",
-                  "height": 2048
-                },
-                "width": 3072,
-                "@id": "https://dlc.services/iiif-img/7/18/ac2410fc-8047-47b8-9dcd-560c6fdcc8c9/full/1024,683/0/default.jpg",
-                "height": 2048
-              },
-              "@type": "oa:Annotation",
-              "motivation": "sc:painting",
-              "@id": "https://dlc.services/iiif-img/7/18/ac2410fc-8047-47b8-9dcd-560c6fdcc8c9/imageanno/0",
-              "on": "https://dlc.services/iiif-img/7/18/ac2410fc-8047-47b8-9dcd-560c6fdcc8c9/canvas/c0"
-            }
-          ],
-          "thumbnail": {
-            "@type": "dctypes:Image",
-            "service": {
-              "sizes": [
-                {
-                  "width": 1024,
-                  "height": 683
-                },
-                {
-                  "width": 400,
-                  "height": 267
-                },
-                {
-                  "width": 200,
-                  "height": 133
-                },
-                {
-                  "width": 100,
-                  "height": 67
-                }
-              ],
-              "profile": [
-                "http://iiif.io/api/image/2/level0.json",
-                {
-                  "formats": [
-                    "jpg"
-                  ],
-                  "qualities": [
-                    "color"
-                  ],
-                  "supports": [
-                    "sizeByWhListed"
-                  ]
-                }
-              ],
-              "width": 1024,
-              "@id": "https://dlc.services/thumbs/7/18/ac2410fc-8047-47b8-9dcd-560c6fdcc8c9",
-              "@context": "http://iiif.io/api/image/2/context.json",
-              "height": 683
+            "label": {
+                "en": [
+                    "Title"
+                ],
+                "nl": [
+                    "Titel"
+                ]
             },
-            "@id": "https://dlc.services/thumbs/7/18/ac2410fc-8047-47b8-9dcd-560c6fdcc8c9/full/full/0/default.jpg"
-          },
-          "@type": "sc:Canvas",
-          "width": 3072,
-          "@id": "https://dlc.services/iiif-img/7/18/ac2410fc-8047-47b8-9dcd-560c6fdcc8c9/canvas/c0",
-          "label": "Image",
-          "height": 2048
+            "value": {
+                "nl": [
+                    "Precisie-theodoliet door Wild type T3"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Object name"
+                ],
+                "nl": [
+                    "Objectnaam"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "theodoliet"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Inventory number"
+                ],
+                "nl": [
+                    "Inventarisnummer"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "2000.0533.GEO"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dating"
+                ],
+                "nl": [
+                    "Datering"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "1950 – 1975"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Maker"
+                ],
+                "nl": [
+                    "Maker"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Wild Heerbrugg AG  (producent)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dimensions"
+                ],
+                "nl": [
+                    "Afmetingen"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "570,0 mm (h) x 530,0 mm (b) x 530,0 mm (d)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Material"
+                ],
+                "nl": [
+                    "Materiaal"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "metaal",
+                    "glas"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Description"
+                ],
+                "nl": [
+                    "Beschrijving"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Een precisie theodoliet type T3 door H. Wild Werkstätte, voor het bepalen van horizontale en verticale richtingen. Voor eerste en tweede orde triangulaties en precisie deformatiemetingen. Bij dit instrument behoort zowel een stalen doos en een met textiel beklede houten kist."
+                ]
+            }
         }
-      ],
-      "@type": "sc:Sequence",
-      "@id": "https://dlc.services/7/18/a08226c6-1edc-4eb9-9d63-5464af4dc7a7/sequences/normal",
-      "label": "Current page order"
-    }
-  ],
-  "@context": "http://iiif.io/api/presentation/2/context.json",
-  "label": "Precisie-theodoliet door Wild type T3"
+    ],
+    "thumbnail": [
+        {
+            "id": "https://dlc.services/thumbs/v3/7/18/ac2410fc-8047-47b8-9dcd-560c6fdcc8c9/full/max/0/default.jpg",
+            "type": "Image",
+            "format": "image/jpeg",
+            "service": [
+                {
+                    "@context": "http://iiif.io/api/image/3/context.json",
+                    "id": "https://dlc.services/thumbs/v3/7/18/ac2410fc-8047-47b8-9dcd-560c6fdcc8c9",
+                    "type": "ImageService3",
+                    "profile": "level0",
+                    "sizes": [
+                        {
+                            "width": 1024,
+                            "height": 683
+                        },
+                        {
+                            "width": 400,
+                            "height": 267
+                        },
+                        {
+                            "width": 200,
+                            "height": 133
+                        },
+                        {
+                            "width": 100,
+                            "height": 67
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "items": [
+        {
+            "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/a08226c6-1edc-4eb9-9d63-5464af4dc7a7/canvas/0",
+            "type": "Canvas",
+            "height": 2048,
+            "width": 3072,
+            "thumbnail": [
+                {
+                    "id": "https://dlc.services/thumbs/v3/7/18/ac2410fc-8047-47b8-9dcd-560c6fdcc8c9/full/max/0/default.jpg",
+                    "type": "Image",
+                    "format": "image/jpeg",
+                    "service": [
+                        {
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/18/ac2410fc-8047-47b8-9dcd-560c6fdcc8c9",
+                            "type": "ImageService3",
+                            "profile": "level0",
+                            "sizes": [
+                                {
+                                    "width": 1024,
+                                    "height": 683
+                                },
+                                {
+                                    "width": 400,
+                                    "height": 267
+                                },
+                                {
+                                    "width": 200,
+                                    "height": 133
+                                },
+                                {
+                                    "width": 100,
+                                    "height": 67
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "items": [
+                {
+                    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/a08226c6-1edc-4eb9-9d63-5464af4dc7a7/canvas/0/annotation-page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://dlc.services/iiif-img/v3/7/18/ac2410fc-8047-47b8-9dcd-560c6fdcc8c9",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/a08226c6-1edc-4eb9-9d63-5464af4dc7a7/canvas/0",
+                            "body": {
+                                "id": "https://dlc.services/iiif-img/v3/7/18/ac2410fc-8047-47b8-9dcd-560c6fdcc8c9/full/max/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "height": 2048,
+                                "width": 3072,
+                                "service": [
+                                    {
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/18/ac2410fc-8047-47b8-9dcd-560c6fdcc8c9",
+                                        "type": "ImageService3",
+                                        "profile": "level2"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

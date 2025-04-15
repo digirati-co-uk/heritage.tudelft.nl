@@ -1,132 +1,252 @@
 {
-  "metadata": [
-    {
-      "label": "Titel",
-      "value": "Spiegelsextant door H. Hughes & Son"
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/f7c08253-9601-498d-9677-24af6bc237f6.json",
+    "type": "Manifest",
+    "label": {
+        "nl": [
+            "Spiegelsextant door H. Hughes & Son"
+        ]
     },
-    {
-      "label": "Objectnaam",
-      "value": "sextant"
-    },
-    {
-      "label": "Inventarisnummer",
-      "value": "2000.0403.GEO"
-    },
-    {
-      "label": "Datering",
-      "value": "1900 - 1925"
-    },
-    {
-      "label": "Maker",
-      "value": "H. Hughes & Son (Londen)  (producent)"
-    },
-    {
-      "label": "Afmetingen",
-      "value": "120,0 (h)  * 280,0 (b)  * 220,0 (d) "
-    },
-    {
-      "label": "Materiaal",
-      "value": "metaal, glas, kunststof"
-    },
-    {
-      "label": "Beschrijving",
-      "value": "Een spiegelsextant door H. Hughes & Son, voorzien van een wormas met witte afleestrommel, verlichting en diverse uitwisselbare kijkers. Deze voorzieningen maakten nachtelijke metingen mogelijk."
-    }
-  ],
-  "@type": "sc:Manifest",
-  "structures": [
-    {
-      "canvases": [
-        "https://dlc.services/iiif-img/7/18/7b48d51a-1fc1-4de4-a934-0f4b8f21b915/canvas/c0"
-      ],
-      "within": "https://dlc.services/iiif-manifest/7/18/f7c08253-9601-498d-9677-24af6bc237f6/range/range-0.json",
-      "@type": "sc:Range",
-      "@id": "https://dlc.services/iiif-manifest/7/18/f7c08253-9601-498d-9677-24af6bc237f6/range/range-0-0.json",
-      "label": "0"
-    }
-  ],
-  "@id": "https://raw.githubusercontent.com/libis/ca_tudelft_iiif/main/objects/f7c08253-9601-498d-9677-24af6bc237f6.json",
-  "sequences": [
-    {
-      "viewingDirection": "left-to-right",
-      "viewingHint": "paged",
-      "canvases": [
+    "metadata": [
         {
-          "images": [
-            {
-              "resource": {
-                "@type": "dctypes:Image",
-                "service": {
-                  "protocol": "http://iiif.io/api/image",
-                  "profile": "http://iiif.io/api/image/2/level1.json",
-                  "width": 3072,
-                  "@id": "https://dlc.services/iiif-img/7/18/7b48d51a-1fc1-4de4-a934-0f4b8f21b915",
-                  "height": 2048
-                },
-                "width": 3072,
-                "@id": "https://dlc.services/iiif-img/7/18/7b48d51a-1fc1-4de4-a934-0f4b8f21b915/full/1024,683/0/default.jpg",
-                "height": 2048
-              },
-              "@type": "oa:Annotation",
-              "motivation": "sc:painting",
-              "@id": "https://dlc.services/iiif-img/7/18/7b48d51a-1fc1-4de4-a934-0f4b8f21b915/imageanno/0",
-              "on": "https://dlc.services/iiif-img/7/18/7b48d51a-1fc1-4de4-a934-0f4b8f21b915/canvas/c0"
-            }
-          ],
-          "thumbnail": {
-            "@type": "dctypes:Image",
-            "service": {
-              "sizes": [
-                {
-                  "width": 1024,
-                  "height": 683
-                },
-                {
-                  "width": 400,
-                  "height": 267
-                },
-                {
-                  "width": 200,
-                  "height": 133
-                },
-                {
-                  "width": 100,
-                  "height": 67
-                }
-              ],
-              "profile": [
-                "http://iiif.io/api/image/2/level0.json",
-                {
-                  "formats": [
-                    "jpg"
-                  ],
-                  "qualities": [
-                    "color"
-                  ],
-                  "supports": [
-                    "sizeByWhListed"
-                  ]
-                }
-              ],
-              "width": 1024,
-              "@id": "https://dlc.services/thumbs/7/18/7b48d51a-1fc1-4de4-a934-0f4b8f21b915",
-              "@context": "http://iiif.io/api/image/2/context.json",
-              "height": 683
+            "label": {
+                "en": [
+                    "Title"
+                ],
+                "nl": [
+                    "Titel"
+                ]
             },
-            "@id": "https://dlc.services/thumbs/7/18/7b48d51a-1fc1-4de4-a934-0f4b8f21b915/full/full/0/default.jpg"
-          },
-          "@type": "sc:Canvas",
-          "width": 3072,
-          "@id": "https://dlc.services/iiif-img/7/18/7b48d51a-1fc1-4de4-a934-0f4b8f21b915/canvas/c0",
-          "label": "Image",
-          "height": 2048
+            "value": {
+                "nl": [
+                    "Spiegelsextant door H. Hughes & Son"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Object name"
+                ],
+                "nl": [
+                    "Objectnaam"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "sextant"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Inventory number"
+                ],
+                "nl": [
+                    "Inventarisnummer"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "2000.0403.GEO"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dating"
+                ],
+                "nl": [
+                    "Datering"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "1900 – 1925"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Maker"
+                ],
+                "nl": [
+                    "Maker"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "H. Hughes & Son  (producent)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dimensions"
+                ],
+                "nl": [
+                    "Afmetingen"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "120,0 mm (h) x 280,0 mm (b) x 220,0 mm (d)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Material"
+                ],
+                "nl": [
+                    "Materiaal"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "metaal",
+                    "glas",
+                    "kunststof"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Place of manufacture"
+                ],
+                "nl": [
+                    "Plaats vervaardiging"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "<a href=\"https://www.geonames.org/2643743\">Londen, VK</a>"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Description"
+                ],
+                "nl": [
+                    "Beschrijving"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Een spiegelsextant door H. Hughes & Son, voorzien van een wormas met witte afleestrommel, verlichting en diverse uitwisselbare kijkers. Deze voorzieningen maakten nachtelijke metingen mogelijk."
+                ]
+            }
         }
-      ],
-      "@type": "sc:Sequence",
-      "@id": "https://dlc.services/7/18/f7c08253-9601-498d-9677-24af6bc237f6/sequences/normal",
-      "label": "Current page order"
-    }
-  ],
-  "@context": "http://iiif.io/api/presentation/2/context.json",
-  "label": "Spiegelsextant door H. Hughes & Son"
+    ],
+    "thumbnail": [
+        {
+            "id": "https://dlc.services/thumbs/v3/7/18/7b48d51a-1fc1-4de4-a934-0f4b8f21b915/full/max/0/default.jpg",
+            "type": "Image",
+            "format": "image/jpeg",
+            "service": [
+                {
+                    "@context": "http://iiif.io/api/image/3/context.json",
+                    "id": "https://dlc.services/thumbs/v3/7/18/7b48d51a-1fc1-4de4-a934-0f4b8f21b915",
+                    "type": "ImageService3",
+                    "profile": "level0",
+                    "sizes": [
+                        {
+                            "width": 1024,
+                            "height": 683
+                        },
+                        {
+                            "width": 400,
+                            "height": 267
+                        },
+                        {
+                            "width": 200,
+                            "height": 133
+                        },
+                        {
+                            "width": 100,
+                            "height": 67
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "items": [
+        {
+            "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/f7c08253-9601-498d-9677-24af6bc237f6/canvas/0",
+            "type": "Canvas",
+            "height": 2048,
+            "width": 3072,
+            "thumbnail": [
+                {
+                    "id": "https://dlc.services/thumbs/v3/7/18/7b48d51a-1fc1-4de4-a934-0f4b8f21b915/full/max/0/default.jpg",
+                    "type": "Image",
+                    "format": "image/jpeg",
+                    "service": [
+                        {
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/18/7b48d51a-1fc1-4de4-a934-0f4b8f21b915",
+                            "type": "ImageService3",
+                            "profile": "level0",
+                            "sizes": [
+                                {
+                                    "width": 1024,
+                                    "height": 683
+                                },
+                                {
+                                    "width": 400,
+                                    "height": 267
+                                },
+                                {
+                                    "width": 200,
+                                    "height": 133
+                                },
+                                {
+                                    "width": 100,
+                                    "height": 67
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "items": [
+                {
+                    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/f7c08253-9601-498d-9677-24af6bc237f6/canvas/0/annotation-page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://dlc.services/iiif-img/v3/7/18/7b48d51a-1fc1-4de4-a934-0f4b8f21b915",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/f7c08253-9601-498d-9677-24af6bc237f6/canvas/0",
+                            "body": {
+                                "id": "https://dlc.services/iiif-img/v3/7/18/7b48d51a-1fc1-4de4-a934-0f4b8f21b915/full/max/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "height": 2048,
+                                "width": 3072,
+                                "service": [
+                                    {
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/18/7b48d51a-1fc1-4de4-a934-0f4b8f21b915",
+                                        "type": "ImageService3",
+                                        "profile": "level2"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

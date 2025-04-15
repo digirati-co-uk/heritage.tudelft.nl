@@ -1,136 +1,251 @@
 {
-  "metadata": [
-    {
-      "label": "Titel",
-      "value": "Transformateur door F. L. Laporte"
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/eac0d0a7-72ac-49eb-9bab-881a0658ca3a.json",
+    "type": "Manifest",
+    "label": {
+        "nl": [
+            "Transformateur door F. L. Laporte"
+        ]
     },
-    {
-      "label": "Objectnaam",
-      "value": "transformateur"
-    },
-    {
-      "label": "Inventarisnummer",
-      "value": "2000.0058.GEO"
-    },
-    {
-      "label": "Datering",
-      "value": "1875 - 1900"
-    },
-    {
-      "label": "Maker",
-      "value": "Laporte, F.L.  (maker)"
-    },
-    {
-      "label": "Afmetingen",
-      "value": "8,0 (h)  * 200,0 (b)  * 40,0 (d) "
-    },
-    {
-      "label": "Materiaal",
-      "value": "metaal"
-    },
-    {
-      "label": "Beschrijving",
-      "value": "Transformateur door F. L. Laporte, voor vereenvoudiging van de oppervlaktebepaling, door een veelhoek te transformeren in een driehoek. Voorloper van de planimeter."
-    },
-    {
-      "label": "Documentatie",
-      "value": "C.M. Schols. Landmeten en waterpassen 5e druk 1894 blz 171 t/m 173 en de bijbehorende atlas (1895) plaat 12 fig 110."
-    }
-  ],
-  "@type": "sc:Manifest",
-  "structures": [
-    {
-      "canvases": [
-        "https://dlc.services/iiif-img/7/18/2c341ba3-1276-40c2-95cb-51563882480d/canvas/c0"
-      ],
-      "within": "https://dlc.services/iiif-manifest/7/18/eac0d0a7-72ac-49eb-9bab-881a0658ca3a/range/range-0.json",
-      "@type": "sc:Range",
-      "@id": "https://dlc.services/iiif-manifest/7/18/eac0d0a7-72ac-49eb-9bab-881a0658ca3a/range/range-0-0.json",
-      "label": "0"
-    }
-  ],
-  "@id": "https://raw.githubusercontent.com/libis/ca_tudelft_iiif/main/objects/eac0d0a7-72ac-49eb-9bab-881a0658ca3a.json",
-  "sequences": [
-    {
-      "viewingDirection": "left-to-right",
-      "viewingHint": "paged",
-      "canvases": [
+    "metadata": [
         {
-          "images": [
-            {
-              "resource": {
-                "@type": "dctypes:Image",
-                "service": {
-                  "protocol": "http://iiif.io/api/image",
-                  "profile": "http://iiif.io/api/image/2/level1.json",
-                  "width": 3072,
-                  "@id": "https://dlc.services/iiif-img/7/18/2c341ba3-1276-40c2-95cb-51563882480d",
-                  "height": 2048
-                },
-                "width": 3072,
-                "@id": "https://dlc.services/iiif-img/7/18/2c341ba3-1276-40c2-95cb-51563882480d/full/1024,683/0/default.jpg",
-                "height": 2048
-              },
-              "@type": "oa:Annotation",
-              "motivation": "sc:painting",
-              "@id": "https://dlc.services/iiif-img/7/18/2c341ba3-1276-40c2-95cb-51563882480d/imageanno/0",
-              "on": "https://dlc.services/iiif-img/7/18/2c341ba3-1276-40c2-95cb-51563882480d/canvas/c0"
-            }
-          ],
-          "thumbnail": {
-            "@type": "dctypes:Image",
-            "service": {
-              "sizes": [
-                {
-                  "width": 1024,
-                  "height": 683
-                },
-                {
-                  "width": 400,
-                  "height": 267
-                },
-                {
-                  "width": 200,
-                  "height": 133
-                },
-                {
-                  "width": 100,
-                  "height": 67
-                }
-              ],
-              "profile": [
-                "http://iiif.io/api/image/2/level0.json",
-                {
-                  "formats": [
-                    "jpg"
-                  ],
-                  "qualities": [
-                    "color"
-                  ],
-                  "supports": [
-                    "sizeByWhListed"
-                  ]
-                }
-              ],
-              "width": 1024,
-              "@id": "https://dlc.services/thumbs/7/18/2c341ba3-1276-40c2-95cb-51563882480d",
-              "@context": "http://iiif.io/api/image/2/context.json",
-              "height": 683
+            "label": {
+                "en": [
+                    "Title"
+                ],
+                "nl": [
+                    "Titel"
+                ]
             },
-            "@id": "https://dlc.services/thumbs/7/18/2c341ba3-1276-40c2-95cb-51563882480d/full/full/0/default.jpg"
-          },
-          "@type": "sc:Canvas",
-          "width": 3072,
-          "@id": "https://dlc.services/iiif-img/7/18/2c341ba3-1276-40c2-95cb-51563882480d/canvas/c0",
-          "label": "Image",
-          "height": 2048
+            "value": {
+                "nl": [
+                    "Transformateur door F. L. Laporte"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Object name"
+                ],
+                "nl": [
+                    "Objectnaam"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "transformateur"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Inventory number"
+                ],
+                "nl": [
+                    "Inventarisnummer"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "2000.0058.GEO"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dating"
+                ],
+                "nl": [
+                    "Datering"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "1875 – 1900"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Maker"
+                ],
+                "nl": [
+                    "Maker"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Laporte, F.L.  (maker)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dimensions"
+                ],
+                "nl": [
+                    "Afmetingen"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "8,0 mm (h) x 200,0 mm (b) x 40,0 mm (d)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Material"
+                ],
+                "nl": [
+                    "Materiaal"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "metaal"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Description"
+                ],
+                "nl": [
+                    "Beschrijving"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Transformateur door F. L. Laporte, voor vereenvoudiging van de oppervlaktebepaling, door een veelhoek te transformeren in een driehoek. Voorloper van de planimeter."
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Documentation"
+                ],
+                "nl": [
+                    "Documentatie"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "C.M. Schols. Landmeten en waterpassen 5e druk 1894 blz 171 t/m 173 en de bijbehorende atlas (1895) plaat 12 fig 110.",
+                    "Jan Stehouwer, \"De transformateur\", in: De Hollandse Cirkel, jaargang 11, nr. 3, september 2011, p. 95"
+                ]
+            }
         }
-      ],
-      "@type": "sc:Sequence",
-      "@id": "https://dlc.services/7/18/eac0d0a7-72ac-49eb-9bab-881a0658ca3a/sequences/normal",
-      "label": "Current page order"
-    }
-  ],
-  "@context": "http://iiif.io/api/presentation/2/context.json",
-  "label": "Transformateur door F. L. Laporte"
+    ],
+    "thumbnail": [
+        {
+            "id": "https://dlc.services/thumbs/v3/7/18/2c341ba3-1276-40c2-95cb-51563882480d/full/max/0/default.jpg",
+            "type": "Image",
+            "format": "image/jpeg",
+            "service": [
+                {
+                    "@context": "http://iiif.io/api/image/3/context.json",
+                    "id": "https://dlc.services/thumbs/v3/7/18/2c341ba3-1276-40c2-95cb-51563882480d",
+                    "type": "ImageService3",
+                    "profile": "level0",
+                    "sizes": [
+                        {
+                            "width": 1024,
+                            "height": 683
+                        },
+                        {
+                            "width": 400,
+                            "height": 267
+                        },
+                        {
+                            "width": 200,
+                            "height": 133
+                        },
+                        {
+                            "width": 100,
+                            "height": 67
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "items": [
+        {
+            "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/eac0d0a7-72ac-49eb-9bab-881a0658ca3a/canvas/0",
+            "type": "Canvas",
+            "height": 2048,
+            "width": 3072,
+            "thumbnail": [
+                {
+                    "id": "https://dlc.services/thumbs/v3/7/18/2c341ba3-1276-40c2-95cb-51563882480d/full/max/0/default.jpg",
+                    "type": "Image",
+                    "format": "image/jpeg",
+                    "service": [
+                        {
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/18/2c341ba3-1276-40c2-95cb-51563882480d",
+                            "type": "ImageService3",
+                            "profile": "level0",
+                            "sizes": [
+                                {
+                                    "width": 1024,
+                                    "height": 683
+                                },
+                                {
+                                    "width": 400,
+                                    "height": 267
+                                },
+                                {
+                                    "width": 200,
+                                    "height": 133
+                                },
+                                {
+                                    "width": 100,
+                                    "height": 67
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "items": [
+                {
+                    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/eac0d0a7-72ac-49eb-9bab-881a0658ca3a/canvas/0/annotation-page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://dlc.services/iiif-img/v3/7/18/2c341ba3-1276-40c2-95cb-51563882480d",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/eac0d0a7-72ac-49eb-9bab-881a0658ca3a/canvas/0",
+                            "body": {
+                                "id": "https://dlc.services/iiif-img/v3/7/18/2c341ba3-1276-40c2-95cb-51563882480d/full/max/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "height": 2048,
+                                "width": 3072,
+                                "service": [
+                                    {
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/18/2c341ba3-1276-40c2-95cb-51563882480d",
+                                        "type": "ImageService3",
+                                        "profile": "level2"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

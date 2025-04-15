@@ -1,0 +1,13 @@
+.delft-presentation-viewer {
+  grid-template-areas: "slide";
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  display: grid;
+}
+
+.delft-presentation-viewer .delft-slide {
+  grid-area: slide;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}

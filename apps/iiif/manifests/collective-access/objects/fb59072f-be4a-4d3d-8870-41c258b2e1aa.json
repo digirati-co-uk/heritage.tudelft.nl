@@ -1,351 +1,388 @@
 {
-  "metadata": [
-    {
-      "label": "Titel",
-      "value": "Portret van J.A. Keurenaer door H. Goovaerts"
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/fb59072f-be4a-4d3d-8870-41c258b2e1aa.json",
+    "type": "Manifest",
+    "label": {
+        "nl": [
+            "Portret van J.A. Keurenaer door H. Goovaerts"
+        ]
     },
-    {
-      "label": "Objectnaam",
-      "value": "schilderij"
-    },
-    {
-      "label": "Inventarisnummer",
-      "value": "2002.0007.CVB"
-    },
-    {
-      "label": "Datering",
-      "value": "1850 - 1900"
-    },
-    {
-      "label": "Maker",
-      "value": "Goovaerts, Henri  (maker)"
-    },
-    {
-      "label": "Afmetingen",
-      "value": "1.117,0 (h)  * 914,0 (b)  * 58,0 (d) "
-    },
-    {
-      "label": "Materiaal",
-      "value": "olieverf, linnen, hout"
-    },
-    {
-      "label": "Beschrijving",
-      "value": "Geschilderd portret van Johannes Augustus Keurenaer, directeur van de Koninklijke Akademie voor Civiel Ingenieurs van 1859 tot 1864. Geschilderd door Henri Goovaerts. "
-    },
-    {
-      "label": "Voorstelling",
-      "value": " Keurenaer, Johannes Augustus "
-    }
-  ],
-  "@type": "sc:Manifest",
-  "structures": [
-    {
-      "canvases": [
-        "https://dlc.services/iiif-img/7/18/61f5a944-d288-4b87-bdf0-27dcbe4271ff/canvas/c/1"
-      ],
-      "within": "https://dlc.services/iiif-manifest/7/18/fb59072f-be4a-4d3d-8870-41c258b2e1aa/range/range-0.json",
-      "@type": "sc:Range",
-      "@id": "https://dlc.services/iiif-manifest/7/18/fb59072f-be4a-4d3d-8870-41c258b2e1aa/range/range-0-0.json",
-      "label": "0"
-    },
-    {
-      "canvases": [
-        "https://dlc.services/iiif-img/7/18/5aad8c92-6882-463a-9df5-1923e0eb0a98/canvas/c/1"
-      ],
-      "within": "https://dlc.services/iiif-manifest/7/18/fb59072f-be4a-4d3d-8870-41c258b2e1aa/range/range-0.json",
-      "@type": "sc:Range",
-      "@id": "https://dlc.services/iiif-manifest/7/18/fb59072f-be4a-4d3d-8870-41c258b2e1aa/range/range-0-1.json",
-      "label": "1"
-    },
-    {
-      "canvases": [
-        "https://dlc.services/iiif-img/7/18/5de31b96-d39a-472c-bf16-c8497d8cf5ec/canvas/c/1"
-      ],
-      "within": "https://dlc.services/iiif-manifest/7/18/fb59072f-be4a-4d3d-8870-41c258b2e1aa/range/range-0.json",
-      "@type": "sc:Range",
-      "@id": "https://dlc.services/iiif-manifest/7/18/fb59072f-be4a-4d3d-8870-41c258b2e1aa/range/range-0-2.json",
-      "label": "2"
-    }
-  ],
-  "@id": "https://raw.githubusercontent.com/libis/ca_tudelft_iiif/main/objects/fb59072f-be4a-4d3d-8870-41c258b2e1aa.json",
-  "sequences": [
-    {
-      "viewingDirection": "left-to-right",
-      "viewingHint": "paged",
-      "canvases": [
+    "metadata": [
         {
-          "metadata": [
-            {
-              "label": "String 1",
-              "value": ""
+            "label": {
+                "en": [
+                    "Title"
+                ],
+                "nl": [
+                    "Titel"
+                ]
             },
-            {
-              "label": "String 2",
-              "value": "9022"
-            },
-            {
-              "label": "String 3",
-              "value": "2002.0007.CVB.jpg"
-            },
-            {
-              "label": "Number 1",
-              "value": "0"
-            },
-            {
-              "label": "Number 2",
-              "value": "0"
-            },
-            {
-              "label": "Number 3",
-              "value": "0"
-            },
-            {
-              "label": "Tags",
-              "value": ""
-            },
-            {
-              "label": "Roles",
-              "value": ""
+            "value": {
+                "nl": [
+                    "Portret van J.A. Keurenaer door H. Goovaerts"
+                ]
             }
-          ],
-          "images": [
-            {
-              "resource": {
-                "@type": "dctypes:Image",
-                "service": {
-                  "profile": "http://iiif.io/api/image/2/level2.json",
-                  "width": 4027,
-                  "@id": "https://dlc.services/iiif-img/7/18/61f5a944-d288-4b87-bdf0-27dcbe4271ff",
-                  "@context": "http://iiif.io/api/image/2/context.json",
-                  "height": 4838
-                },
-                "width": 852,
-                "@id": "https://dlc.services/iiif-img/7/18/61f5a944-d288-4b87-bdf0-27dcbe4271ff/full/852,1024/0/default.jpg",
-                "height": 1024
-              },
-              "@type": "oa:Annotation",
-              "motivation": "sc:painting",
-              "@id": "https://dlc.services/iiif-img/7/18/61f5a944-d288-4b87-bdf0-27dcbe4271ff/imageanno/0",
-              "on": "https://dlc.services/iiif-img/7/18/61f5a944-d288-4b87-bdf0-27dcbe4271ff/canvas/c/1"
-            }
-          ],
-          "thumbnail": {
-            "@type": "dctypes:Image",
-            "service": {
-              "sizes": [
-                {
-                  "width": 852,
-                  "height": 1024
-                },
-                {
-                  "width": 333,
-                  "height": 400
-                },
-                {
-                  "width": 166,
-                  "height": 200
-                },
-                {
-                  "width": 83,
-                  "height": 100
-                }
-              ],
-              "profile": "http://iiif.io/api/image/2/level0.json",
-              "@id": "https://dlc.services/thumbs/7/18/61f5a944-d288-4b87-bdf0-27dcbe4271ff",
-              "@context": "http://iiif.io/api/image/2/context.json"
-            },
-            "@id": "https://dlc.services/thumbs/7/18/61f5a944-d288-4b87-bdf0-27dcbe4271ff/full/full/0/default.jpg"
-          },
-          "@type": "sc:Canvas",
-          "width": 4027,
-          "@id": "https://dlc.services/iiif-img/7/18/61f5a944-d288-4b87-bdf0-27dcbe4271ff/canvas/c/1",
-          "label": "Canvas 1",
-          "height": 4838
         },
         {
-          "metadata": [
-            {
-              "label": "String 1",
-              "value": "2002.0007.CVB.a"
+            "label": {
+                "en": [
+                    "Object name"
+                ],
+                "nl": [
+                    "Objectnaam"
+                ]
             },
-            {
-              "label": "String 2",
-              "value": "1726"
-            },
-            {
-              "label": "String 3",
-              "value": "2002.0007.CVB.a.JPG"
-            },
-            {
-              "label": "Number 1",
-              "value": "0"
-            },
-            {
-              "label": "Number 2",
-              "value": "0"
-            },
-            {
-              "label": "Number 3",
-              "value": "0"
-            },
-            {
-              "label": "Tags",
-              "value": ""
-            },
-            {
-              "label": "Roles",
-              "value": ""
+            "value": {
+                "nl": [
+                    "schilderij"
+                ]
             }
-          ],
-          "images": [
-            {
-              "resource": {
-                "@type": "dctypes:Image",
-                "service": {
-                  "profile": "http://iiif.io/api/image/2/level2.json",
-                  "width": 1228,
-                  "@id": "https://dlc.services/iiif-img/7/18/5aad8c92-6882-463a-9df5-1923e0eb0a98",
-                  "@context": "http://iiif.io/api/image/2/context.json",
-                  "height": 1818
-                },
-                "width": 692,
-                "@id": "https://dlc.services/iiif-img/7/18/5aad8c92-6882-463a-9df5-1923e0eb0a98/full/692,1024/0/default.jpg",
-                "height": 1024
-              },
-              "@type": "oa:Annotation",
-              "motivation": "sc:painting",
-              "@id": "https://dlc.services/iiif-img/7/18/5aad8c92-6882-463a-9df5-1923e0eb0a98/imageanno/0",
-              "on": "https://dlc.services/iiif-img/7/18/5aad8c92-6882-463a-9df5-1923e0eb0a98/canvas/c/1"
-            }
-          ],
-          "thumbnail": {
-            "@type": "dctypes:Image",
-            "service": {
-              "sizes": [
-                {
-                  "width": 692,
-                  "height": 1024
-                },
-                {
-                  "width": 270,
-                  "height": 400
-                },
-                {
-                  "width": 135,
-                  "height": 200
-                },
-                {
-                  "width": 68,
-                  "height": 100
-                }
-              ],
-              "profile": "http://iiif.io/api/image/2/level0.json",
-              "@id": "https://dlc.services/thumbs/7/18/5aad8c92-6882-463a-9df5-1923e0eb0a98",
-              "@context": "http://iiif.io/api/image/2/context.json"
-            },
-            "@id": "https://dlc.services/thumbs/7/18/5aad8c92-6882-463a-9df5-1923e0eb0a98/full/full/0/default.jpg"
-          },
-          "@type": "sc:Canvas",
-          "width": 1228,
-          "@id": "https://dlc.services/iiif-img/7/18/5aad8c92-6882-463a-9df5-1923e0eb0a98/canvas/c/1",
-          "label": "Canvas 1",
-          "height": 1818
         },
         {
-          "metadata": [
-            {
-              "label": "String 1",
-              "value": "2002.0007.CVB.b"
+            "label": {
+                "en": [
+                    "Inventory number"
+                ],
+                "nl": [
+                    "Inventarisnummer"
+                ]
             },
-            {
-              "label": "String 2",
-              "value": "1727"
-            },
-            {
-              "label": "String 3",
-              "value": "2002.0007.CVB.b.JPG"
-            },
-            {
-              "label": "Number 1",
-              "value": "0"
-            },
-            {
-              "label": "Number 2",
-              "value": "0"
-            },
-            {
-              "label": "Number 3",
-              "value": "0"
-            },
-            {
-              "label": "Tags",
-              "value": ""
-            },
-            {
-              "label": "Roles",
-              "value": ""
+            "value": {
+                "nl": [
+                    "2002.0007.CVB"
+                ]
             }
-          ],
-          "images": [
-            {
-              "resource": {
-                "@type": "dctypes:Image",
-                "service": {
-                  "profile": "http://iiif.io/api/image/2/level2.json",
-                  "width": 1228,
-                  "@id": "https://dlc.services/iiif-img/7/18/5de31b96-d39a-472c-bf16-c8497d8cf5ec",
-                  "@context": "http://iiif.io/api/image/2/context.json",
-                  "height": 1818
-                },
-                "width": 692,
-                "@id": "https://dlc.services/iiif-img/7/18/5de31b96-d39a-472c-bf16-c8497d8cf5ec/full/692,1024/0/default.jpg",
-                "height": 1024
-              },
-              "@type": "oa:Annotation",
-              "motivation": "sc:painting",
-              "@id": "https://dlc.services/iiif-img/7/18/5de31b96-d39a-472c-bf16-c8497d8cf5ec/imageanno/0",
-              "on": "https://dlc.services/iiif-img/7/18/5de31b96-d39a-472c-bf16-c8497d8cf5ec/canvas/c/1"
-            }
-          ],
-          "thumbnail": {
-            "@type": "dctypes:Image",
-            "service": {
-              "sizes": [
-                {
-                  "width": 692,
-                  "height": 1024
-                },
-                {
-                  "width": 270,
-                  "height": 400
-                },
-                {
-                  "width": 135,
-                  "height": 200
-                },
-                {
-                  "width": 68,
-                  "height": 100
-                }
-              ],
-              "profile": "http://iiif.io/api/image/2/level0.json",
-              "@id": "https://dlc.services/thumbs/7/18/5de31b96-d39a-472c-bf16-c8497d8cf5ec",
-              "@context": "http://iiif.io/api/image/2/context.json"
+        },
+        {
+            "label": {
+                "en": [
+                    "Dating"
+                ],
+                "nl": [
+                    "Datering"
+                ]
             },
-            "@id": "https://dlc.services/thumbs/7/18/5de31b96-d39a-472c-bf16-c8497d8cf5ec/full/full/0/default.jpg"
-          },
-          "@type": "sc:Canvas",
-          "width": 1228,
-          "@id": "https://dlc.services/iiif-img/7/18/5de31b96-d39a-472c-bf16-c8497d8cf5ec/canvas/c/1",
-          "label": "Canvas 1",
-          "height": 1818
+            "value": {
+                "nl": [
+                    "1850 – 1900"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Maker"
+                ],
+                "nl": [
+                    "Maker"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Goovaerts, Henri  (maker)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dimensions"
+                ],
+                "nl": [
+                    "Afmetingen"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "1.117,0 mm (h) x 914,0 mm (b) x 58,0 mm (d)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Material"
+                ],
+                "nl": [
+                    "Materiaal"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "olieverf",
+                    "linnen",
+                    "hout"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Description"
+                ],
+                "nl": [
+                    "Beschrijving"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Geschilderd portret van Johannes Augustus Keurenaer, directeur van de Koninklijke Akademie voor Civiel Ingenieurs van 1859 tot 1864. Geschilderd door Henri Goovaerts. "
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Subject"
+                ],
+                "nl": [
+                    "Voorstelling"
+                ]
+            },
+            "value": {
+                "nl": [
+                    " Keurenaer, Johannes Augustus "
+                ]
+            }
         }
-      ],
-      "@type": "sc:Sequence",
-      "@id": "https://dlc.services/7/18/fb59072f-be4a-4d3d-8870-41c258b2e1aa/sequences/normal",
-      "label": "Current page order"
-    }
-  ],
-  "@context": "http://iiif.io/api/presentation/2/context.json",
-  "label": "Portret van J.A. Keurenaer door H. Goovaerts"
+    ],
+    "thumbnail": [
+        {
+            "id": "https://dlc.services/thumbs/v3/7/18/61f5a944-d288-4b87-bdf0-27dcbe4271ff/full/max/0/default.jpg",
+            "type": "Image",
+            "format": "image/jpeg",
+            "service": [
+                {
+                    "@context": "http://iiif.io/api/image/3/context.json",
+                    "id": "https://dlc.services/thumbs/v3/7/18/61f5a944-d288-4b87-bdf0-27dcbe4271ff",
+                    "type": "ImageService3",
+                    "profile": "level0",
+                    "sizes": [
+                        {
+                            "width": 852,
+                            "height": 1024
+                        },
+                        {
+                            "width": 333,
+                            "height": 400
+                        },
+                        {
+                            "width": 166,
+                            "height": 200
+                        },
+                        {
+                            "width": 83,
+                            "height": 100
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "items": [
+        {
+            "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/fb59072f-be4a-4d3d-8870-41c258b2e1aa/canvas/0",
+            "type": "Canvas",
+            "height": 4838,
+            "width": 4027,
+            "thumbnail": [
+                {
+                    "id": "https://dlc.services/thumbs/v3/7/18/61f5a944-d288-4b87-bdf0-27dcbe4271ff/full/max/0/default.jpg",
+                    "type": "Image",
+                    "format": "image/jpeg",
+                    "service": [
+                        {
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/18/61f5a944-d288-4b87-bdf0-27dcbe4271ff",
+                            "type": "ImageService3",
+                            "profile": "level0",
+                            "sizes": [
+                                {
+                                    "width": 852,
+                                    "height": 1024
+                                },
+                                {
+                                    "width": 333,
+                                    "height": 400
+                                },
+                                {
+                                    "width": 166,
+                                    "height": 200
+                                },
+                                {
+                                    "width": 83,
+                                    "height": 100
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "items": [
+                {
+                    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/fb59072f-be4a-4d3d-8870-41c258b2e1aa/canvas/0/annotation-page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://dlc.services/iiif-img/v3/7/18/61f5a944-d288-4b87-bdf0-27dcbe4271ff",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/fb59072f-be4a-4d3d-8870-41c258b2e1aa/canvas/0",
+                            "body": {
+                                "id": "https://dlc.services/iiif-img/v3/7/18/61f5a944-d288-4b87-bdf0-27dcbe4271ff/full/max/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "height": 4838,
+                                "width": 4027,
+                                "service": [
+                                    {
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/18/61f5a944-d288-4b87-bdf0-27dcbe4271ff",
+                                        "type": "ImageService3",
+                                        "profile": "level2"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/fb59072f-be4a-4d3d-8870-41c258b2e1aa/canvas/1",
+            "type": "Canvas",
+            "height": 1818,
+            "width": 1228,
+            "thumbnail": [
+                {
+                    "id": "https://dlc.services/thumbs/v3/7/18/5aad8c92-6882-463a-9df5-1923e0eb0a98/full/max/0/default.jpg",
+                    "type": "Image",
+                    "format": "image/jpeg",
+                    "service": [
+                        {
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/18/5aad8c92-6882-463a-9df5-1923e0eb0a98",
+                            "type": "ImageService3",
+                            "profile": "level0",
+                            "sizes": [
+                                {
+                                    "width": 692,
+                                    "height": 1024
+                                },
+                                {
+                                    "width": 270,
+                                    "height": 400
+                                },
+                                {
+                                    "width": 135,
+                                    "height": 200
+                                },
+                                {
+                                    "width": 68,
+                                    "height": 100
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "items": [
+                {
+                    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/fb59072f-be4a-4d3d-8870-41c258b2e1aa/canvas/1/annotation-page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://dlc.services/iiif-img/v3/7/18/5aad8c92-6882-463a-9df5-1923e0eb0a98",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/fb59072f-be4a-4d3d-8870-41c258b2e1aa/canvas/1",
+                            "body": {
+                                "id": "https://dlc.services/iiif-img/v3/7/18/5aad8c92-6882-463a-9df5-1923e0eb0a98/full/max/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "height": 1818,
+                                "width": 1228,
+                                "service": [
+                                    {
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/18/5aad8c92-6882-463a-9df5-1923e0eb0a98",
+                                        "type": "ImageService3",
+                                        "profile": "level2"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/fb59072f-be4a-4d3d-8870-41c258b2e1aa/canvas/2",
+            "type": "Canvas",
+            "height": 1818,
+            "width": 1228,
+            "thumbnail": [
+                {
+                    "id": "https://dlc.services/thumbs/v3/7/18/5de31b96-d39a-472c-bf16-c8497d8cf5ec/full/max/0/default.jpg",
+                    "type": "Image",
+                    "format": "image/jpeg",
+                    "service": [
+                        {
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/18/5de31b96-d39a-472c-bf16-c8497d8cf5ec",
+                            "type": "ImageService3",
+                            "profile": "level0",
+                            "sizes": [
+                                {
+                                    "width": 692,
+                                    "height": 1024
+                                },
+                                {
+                                    "width": 270,
+                                    "height": 400
+                                },
+                                {
+                                    "width": 135,
+                                    "height": 200
+                                },
+                                {
+                                    "width": 68,
+                                    "height": 100
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "items": [
+                {
+                    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/fb59072f-be4a-4d3d-8870-41c258b2e1aa/canvas/2/annotation-page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://dlc.services/iiif-img/v3/7/18/5de31b96-d39a-472c-bf16-c8497d8cf5ec",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/fb59072f-be4a-4d3d-8870-41c258b2e1aa/canvas/2",
+                            "body": {
+                                "id": "https://dlc.services/iiif-img/v3/7/18/5de31b96-d39a-472c-bf16-c8497d8cf5ec/full/max/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "height": 1818,
+                                "width": 1228,
+                                "service": [
+                                    {
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/18/5de31b96-d39a-472c-bf16-c8497d8cf5ec",
+                                        "type": "ImageService3",
+                                        "profile": "level2"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

@@ -1,140 +1,351 @@
 {
-  "metadata": [
-    {
-      "label": "Titel",
-      "value": "Theodoliet door Julius Wanschaff nr. 2"
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/f7ed82aa-e195-40c2-b9e8-f0a457e651d2.json",
+    "type": "Manifest",
+    "label": {
+        "nl": [
+            "Theodoliet door Julius Wanschaff nr. 2"
+        ]
     },
-    {
-      "label": "Objectnaam",
-      "value": "theodoliet"
-    },
-    {
-      "label": "Inventarisnummer",
-      "value": "2008.0012.GEO"
-    },
-    {
-      "label": "Datering",
-      "value": "1886 - 1925"
-    },
-    {
-      "label": "Maker",
-      "value": "Julius Wanschaff (Berlijn)  (producent)"
-    },
-    {
-      "label": "Afmetingen",
-      "value": "710,0 (h)  * 770,0 (b)  * 500,0 (d) "
-    },
-    {
-      "label": "Materiaal",
-      "value": "metaal, glas, textiel, hout"
-    },
-    {
-      "label": "Beschrijving",
-      "value": "Theodoliet door Julius Wanschaff, voor het bepalen van horizontale richtingen, voor driehoeksmeting (triangulatie).  De diameter van de horizontale rand is 35 cm. De theodoliet is gebruikt bij de Rijksdriehoeksmeting van Nederland in de periode 1886-1904 (primaire meting). Deze theodoliet is bekend onder de theodoliet nummer 2 (Rijksdriehoeksmeting I). Het ruiterniveau (alhidadeniveau), de kijker en de afleesmicroscopen zijn afneembaar. Aan het einde van beide afleesmicroscopen zijn borsteltjes bevestigd. Zie voor de nummer 1 het inventarisnummer 2000.0103.GEO."
-    },
-    {
-      "label": "Documentatie",
-      "value": "zie publicaties van de Nederlandse Commissie voor Geodesie voorheen Rijksciommisie voor Graadmeting en waterpassing."
-    },
-    {
-      "label": "Gerelateerd erfgoedobject",
-      "value": "Theodoliet door Julius Wanschaff nr. 1 (GEO.2000.0103)"
-    }
-  ],
-  "@type": "sc:Manifest",
-  "structures": [
-    {
-      "canvases": [
-        "https://dlc.services/iiif-img/7/18/796fb615-9a02-4999-9c79-9f78f168e4fc/canvas/c0"
-      ],
-      "within": "https://dlc.services/iiif-manifest/7/18/f7ed82aa-e195-40c2-b9e8-f0a457e651d2/range/range-0.json",
-      "@type": "sc:Range",
-      "@id": "https://dlc.services/iiif-manifest/7/18/f7ed82aa-e195-40c2-b9e8-f0a457e651d2/range/range-0-0.json",
-      "label": "0"
-    }
-  ],
-  "@id": "https://raw.githubusercontent.com/libis/ca_tudelft_iiif/main/objects/f7ed82aa-e195-40c2-b9e8-f0a457e651d2.json",
-  "sequences": [
-    {
-      "viewingDirection": "left-to-right",
-      "viewingHint": "paged",
-      "canvases": [
+    "metadata": [
         {
-          "images": [
-            {
-              "resource": {
-                "@type": "dctypes:Image",
-                "service": {
-                  "protocol": "http://iiif.io/api/image",
-                  "profile": "http://iiif.io/api/image/2/level1.json",
-                  "width": 2174,
-                  "@id": "https://dlc.services/iiif-img/7/18/796fb615-9a02-4999-9c79-9f78f168e4fc",
-                  "height": 1878
-                },
-                "width": 2174,
-                "@id": "https://dlc.services/iiif-img/7/18/796fb615-9a02-4999-9c79-9f78f168e4fc/full/1024,885/0/default.jpg",
-                "height": 1878
-              },
-              "@type": "oa:Annotation",
-              "motivation": "sc:painting",
-              "@id": "https://dlc.services/iiif-img/7/18/796fb615-9a02-4999-9c79-9f78f168e4fc/imageanno/0",
-              "on": "https://dlc.services/iiif-img/7/18/796fb615-9a02-4999-9c79-9f78f168e4fc/canvas/c0"
-            }
-          ],
-          "thumbnail": {
-            "@type": "dctypes:Image",
-            "service": {
-              "sizes": [
-                {
-                  "width": 1024,
-                  "height": 885
-                },
-                {
-                  "width": 400,
-                  "height": 346
-                },
-                {
-                  "width": 200,
-                  "height": 173
-                },
-                {
-                  "width": 100,
-                  "height": 86
-                }
-              ],
-              "profile": [
-                "http://iiif.io/api/image/2/level0.json",
-                {
-                  "formats": [
-                    "jpg"
-                  ],
-                  "qualities": [
-                    "color"
-                  ],
-                  "supports": [
-                    "sizeByWhListed"
-                  ]
-                }
-              ],
-              "width": 1024,
-              "@id": "https://dlc.services/thumbs/7/18/796fb615-9a02-4999-9c79-9f78f168e4fc",
-              "@context": "http://iiif.io/api/image/2/context.json",
-              "height": 885
+            "label": {
+                "en": [
+                    "Title"
+                ],
+                "nl": [
+                    "Titel"
+                ]
             },
-            "@id": "https://dlc.services/thumbs/7/18/796fb615-9a02-4999-9c79-9f78f168e4fc/full/full/0/default.jpg"
-          },
-          "@type": "sc:Canvas",
-          "width": 2174,
-          "@id": "https://dlc.services/iiif-img/7/18/796fb615-9a02-4999-9c79-9f78f168e4fc/canvas/c0",
-          "label": "Image",
-          "height": 1878
+            "value": {
+                "nl": [
+                    "Theodoliet door Julius Wanschaff nr. 2"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Object name"
+                ],
+                "nl": [
+                    "Objectnaam"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "theodoliet"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Inventory number"
+                ],
+                "nl": [
+                    "Inventarisnummer"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "2008.0012.GEO"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dating"
+                ],
+                "nl": [
+                    "Datering"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "1886 – 1925"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Maker"
+                ],
+                "nl": [
+                    "Maker"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Julius Wanschaff   (producent)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dimensions"
+                ],
+                "nl": [
+                    "Afmetingen"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "710,0 mm (h) x 770,0 mm (b) x 500,0 mm (d)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Material"
+                ],
+                "nl": [
+                    "Materiaal"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "metaal",
+                    "glas",
+                    "textiel",
+                    "hout"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Place of manufacture"
+                ],
+                "nl": [
+                    "Plaats vervaardiging"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "<a href=\"https://www.geonames.org/2950157\">Berlijn, Duitsland</a>"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Description"
+                ],
+                "nl": [
+                    "Beschrijving"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Theodoliet door Julius Wanschaff, voor het bepalen van horizontale richtingen, voor driehoeksmeting (triangulatie).  De diameter van de horizontale rand is 35 cm. De theodoliet is gebruikt bij de Rijksdriehoeksmeting van Nederland in de periode 1886-1904 (primaire meting). Deze theodoliet is bekend onder de theodoliet nummer 2 (Rijksdriehoeksmeting I). Het ruiterniveau (alhidadeniveau), de kijker en de afleesmicroscopen zijn afneembaar. Aan het einde van beide afleesmicroscopen zijn borsteltjes bevestigd. Zie voor de nummer 1 het inventarisnummer 2000.0103.GEO."
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Documentation"
+                ],
+                "nl": [
+                    "Documentatie"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "zie publicaties van de Nederlandse Commissie voor Geodesie voorheen Rijksciommisie voor Graadmeting en waterpassing."
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Related object"
+                ],
+                "nl": [
+                    "Gerelateerd object"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Theodoliet door Julius Wanschaff nr. 1 (GEO.2000.0103)"
+                ]
+            }
         }
-      ],
-      "@type": "sc:Sequence",
-      "@id": "https://dlc.services/7/18/f7ed82aa-e195-40c2-b9e8-f0a457e651d2/sequences/normal",
-      "label": "Current page order"
-    }
-  ],
-  "@context": "http://iiif.io/api/presentation/2/context.json",
-  "label": "Theodoliet door Julius Wanschaff nr. 2"
+    ],
+    "thumbnail": [
+        {
+            "id": "https://dlc.services/thumbs/v3/7/18/796fb615-9a02-4999-9c79-9f78f168e4fc/full/max/0/default.jpg",
+            "type": "Image",
+            "format": "image/jpeg",
+            "service": [
+                {
+                    "@context": "http://iiif.io/api/image/3/context.json",
+                    "id": "https://dlc.services/thumbs/v3/7/18/796fb615-9a02-4999-9c79-9f78f168e4fc",
+                    "type": "ImageService3",
+                    "profile": "level0",
+                    "sizes": [
+                        {
+                            "width": 1024,
+                            "height": 885
+                        },
+                        {
+                            "width": 400,
+                            "height": 346
+                        },
+                        {
+                            "width": 200,
+                            "height": 173
+                        },
+                        {
+                            "width": 100,
+                            "height": 86
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "items": [
+        {
+            "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/f7ed82aa-e195-40c2-b9e8-f0a457e651d2/canvas/0",
+            "type": "Canvas",
+            "height": 1878,
+            "width": 2174,
+            "thumbnail": [
+                {
+                    "id": "https://dlc.services/thumbs/v3/7/18/796fb615-9a02-4999-9c79-9f78f168e4fc/full/max/0/default.jpg",
+                    "type": "Image",
+                    "format": "image/jpeg",
+                    "service": [
+                        {
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/18/796fb615-9a02-4999-9c79-9f78f168e4fc",
+                            "type": "ImageService3",
+                            "profile": "level0",
+                            "sizes": [
+                                {
+                                    "width": 1024,
+                                    "height": 885
+                                },
+                                {
+                                    "width": 400,
+                                    "height": 346
+                                },
+                                {
+                                    "width": 200,
+                                    "height": 173
+                                },
+                                {
+                                    "width": 100,
+                                    "height": 86
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "items": [
+                {
+                    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/f7ed82aa-e195-40c2-b9e8-f0a457e651d2/canvas/0/annotation-page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://dlc.services/iiif-img/v3/7/18/796fb615-9a02-4999-9c79-9f78f168e4fc",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/f7ed82aa-e195-40c2-b9e8-f0a457e651d2/canvas/0",
+                            "body": {
+                                "id": "https://dlc.services/iiif-img/v3/7/18/796fb615-9a02-4999-9c79-9f78f168e4fc/full/max/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "height": 1878,
+                                "width": 2174,
+                                "service": [
+                                    {
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/18/796fb615-9a02-4999-9c79-9f78f168e4fc",
+                                        "type": "ImageService3",
+                                        "profile": "level2"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/f7ed82aa-e195-40c2-b9e8-f0a457e651d2/canvas/1",
+            "type": "Canvas",
+            "height": 2048,
+            "width": 3072,
+            "thumbnail": [
+                {
+                    "id": "https://dlc.services/thumbs/v3/7/18/f0045987-07da-479c-a972-1c2c49627358/full/max/0/default.jpg",
+                    "type": "Image",
+                    "format": "image/jpeg",
+                    "service": [
+                        {
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/18/f0045987-07da-479c-a972-1c2c49627358",
+                            "type": "ImageService3",
+                            "profile": "level0",
+                            "sizes": [
+                                {
+                                    "width": 1024,
+                                    "height": 683
+                                },
+                                {
+                                    "width": 400,
+                                    "height": 267
+                                },
+                                {
+                                    "width": 200,
+                                    "height": 133
+                                },
+                                {
+                                    "width": 100,
+                                    "height": 67
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "items": [
+                {
+                    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/f7ed82aa-e195-40c2-b9e8-f0a457e651d2/canvas/1/annotation-page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://dlc.services/iiif-img/v3/7/18/f0045987-07da-479c-a972-1c2c49627358",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/f7ed82aa-e195-40c2-b9e8-f0a457e651d2/canvas/1",
+                            "body": {
+                                "id": "https://dlc.services/iiif-img/v3/7/18/f0045987-07da-479c-a972-1c2c49627358/full/max/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "height": 2048,
+                                "width": 3072,
+                                "service": [
+                                    {
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/18/f0045987-07da-479c-a972-1c2c49627358",
+                                        "type": "ImageService3",
+                                        "profile": "level2"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

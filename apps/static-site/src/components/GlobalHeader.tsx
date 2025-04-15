@@ -71,7 +71,7 @@ export async function GlobalHeader() {
         <div className="font-mono uppercase max-sm:ml-auto max-sm:mr-auto md:text-base">
           <Link href="/">{t("Academic Heritage")}</Link>
         </div>
-        <ul className="ml-auto hidden items-center text-xs md:gap-2 md:text-base lg:flex lg:gap-5">{menu}</ul>
+        <ul className="ml-auto lg:flex hidden items-center text-xs md:gap-2 md:text-base lg:gap-5">{menu}</ul>
         <div className="justify-self-end sm:ml-auto lg:hidden">
           <Link className="uppercase" href="/search">
             <div className="transition-background duration-400 flex h-10 w-10 items-center justify-center rounded-full text-white hover:bg-white hover:bg-opacity-20">

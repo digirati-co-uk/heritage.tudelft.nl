@@ -1,140 +1,281 @@
 {
-  "metadata": [
-    {
-      "label": "Titel",
-      "value": "Statief voor waterpasinstrument door Instrumentenfabriek H.M. Smitt"
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/873ee307-d42f-4531-b3cc-9c6e0a4553b2.json",
+    "type": "Manifest",
+    "label": {
+        "nl": [
+            "Statief voor waterpasinstrument door Instrumentenfabriek H.M. Smitt"
+        ]
     },
-    {
-      "label": "Objectnaam",
-      "value": "statief (standaarden)"
-    },
-    {
-      "label": "Inventarisnummer",
-      "value": "2000.0520.GEO"
-    },
-    {
-      "label": "Datering",
-      "value": "1900 - 1925"
-    },
-    {
-      "label": "Maker",
-      "value": "Instrumentenfabriek H.M. Smitt (Bilthoven)  (producent)"
-    },
-    {
-      "label": "Afmetingen",
-      "value": "190,0 (h)  * 1.380,0 (b)  * 190,0 (d) "
-    },
-    {
-      "label": "Materiaal",
-      "value": "hout, metaal"
-    },
-    {
-      "label": "Beschrijving",
-      "value": "Een statief of driepoot met stengelhaak en vaste poten voor het waterpasinstrument door H.M. Smitt (Utrecht) inventarisnummer 2000.0302.GEO."
-    },
-    {
-      "label": "Documentatie",
-      "value": "J.A. Muller & A.Scheffer. Landmeten enWaterpassen (Tweede druk) 1954 blz 80 en 81."
-    },
-    {
-      "label": "Gerelateerd erfgoedobject",
-      "value": "Waterpasinstrument door Instrumentenfabriek H.M. Smitt;Waterpasinstrument door G. de Koningh (GEO.2000.0302;GEO.2000.0406)"
-    }
-  ],
-  "@type": "sc:Manifest",
-  "structures": [
-    {
-      "canvases": [
-        "https://dlc.services/iiif-img/7/18/bc352c03-4139-4de2-89d1-44ea2ca72cb9/canvas/c0"
-      ],
-      "within": "https://dlc.services/iiif-manifest/7/18/873ee307-d42f-4531-b3cc-9c6e0a4553b2/range/range-0.json",
-      "@type": "sc:Range",
-      "@id": "https://dlc.services/iiif-manifest/7/18/873ee307-d42f-4531-b3cc-9c6e0a4553b2/range/range-0-0.json",
-      "label": "0"
-    }
-  ],
-  "@id": "https://raw.githubusercontent.com/libis/ca_tudelft_iiif/main/objects/873ee307-d42f-4531-b3cc-9c6e0a4553b2.json",
-  "sequences": [
-    {
-      "viewingDirection": "left-to-right",
-      "viewingHint": "paged",
-      "canvases": [
+    "metadata": [
         {
-          "images": [
-            {
-              "resource": {
-                "@type": "dctypes:Image",
-                "service": {
-                  "protocol": "http://iiif.io/api/image",
-                  "profile": "http://iiif.io/api/image/2/level1.json",
-                  "width": 2048,
-                  "@id": "https://dlc.services/iiif-img/7/18/bc352c03-4139-4de2-89d1-44ea2ca72cb9",
-                  "height": 3072
-                },
-                "width": 2048,
-                "@id": "https://dlc.services/iiif-img/7/18/bc352c03-4139-4de2-89d1-44ea2ca72cb9/full/683,1024/0/default.jpg",
-                "height": 3072
-              },
-              "@type": "oa:Annotation",
-              "motivation": "sc:painting",
-              "@id": "https://dlc.services/iiif-img/7/18/bc352c03-4139-4de2-89d1-44ea2ca72cb9/imageanno/0",
-              "on": "https://dlc.services/iiif-img/7/18/bc352c03-4139-4de2-89d1-44ea2ca72cb9/canvas/c0"
-            }
-          ],
-          "thumbnail": {
-            "@type": "dctypes:Image",
-            "service": {
-              "sizes": [
-                {
-                  "width": 683,
-                  "height": 1024
-                },
-                {
-                  "width": 267,
-                  "height": 400
-                },
-                {
-                  "width": 133,
-                  "height": 200
-                },
-                {
-                  "width": 67,
-                  "height": 100
-                }
-              ],
-              "profile": [
-                "http://iiif.io/api/image/2/level0.json",
-                {
-                  "formats": [
-                    "jpg"
-                  ],
-                  "qualities": [
-                    "color"
-                  ],
-                  "supports": [
-                    "sizeByWhListed"
-                  ]
-                }
-              ],
-              "width": 683,
-              "@id": "https://dlc.services/thumbs/7/18/bc352c03-4139-4de2-89d1-44ea2ca72cb9",
-              "@context": "http://iiif.io/api/image/2/context.json",
-              "height": 1024
+            "label": {
+                "en": [
+                    "Title"
+                ],
+                "nl": [
+                    "Titel"
+                ]
             },
-            "@id": "https://dlc.services/thumbs/7/18/bc352c03-4139-4de2-89d1-44ea2ca72cb9/full/full/0/default.jpg"
-          },
-          "@type": "sc:Canvas",
-          "width": 2048,
-          "@id": "https://dlc.services/iiif-img/7/18/bc352c03-4139-4de2-89d1-44ea2ca72cb9/canvas/c0",
-          "label": "Image",
-          "height": 3072
+            "value": {
+                "nl": [
+                    "Statief voor waterpasinstrument door Instrumentenfabriek H.M. Smitt"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Object name"
+                ],
+                "nl": [
+                    "Objectnaam"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "statief (standaarden)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Inventory number"
+                ],
+                "nl": [
+                    "Inventarisnummer"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "2000.0520.GEO"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dating"
+                ],
+                "nl": [
+                    "Datering"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "1900 – 1925"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Maker"
+                ],
+                "nl": [
+                    "Maker"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Instrumentenfabriek H.M. Smitt  (producent)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dimensions"
+                ],
+                "nl": [
+                    "Afmetingen"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "190,0 mm (h) x 1.380,0 mm (b) x 190,0 mm (d)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Material"
+                ],
+                "nl": [
+                    "Materiaal"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "hout",
+                    "metaal"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Place of manufacture"
+                ],
+                "nl": [
+                    "Plaats vervaardiging"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "<a href=\"https://www.geonames.org/2758927\">Bilthoven, Nederland</a>"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Description"
+                ],
+                "nl": [
+                    "Beschrijving"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Een statief of driepoot met stengelhaak en vaste poten voor het waterpasinstrument door H.M. Smitt (Utrecht) inventarisnummer 2000.0302.GEO."
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Documentation"
+                ],
+                "nl": [
+                    "Documentatie"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "J.A. Muller & A.Scheffer. Landmeten enWaterpassen (Tweede druk) 1954 blz 80 en 81."
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Related object"
+                ],
+                "nl": [
+                    "Gerelateerd object"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Waterpasinstrument door Instrumentenfabriek H.M. Smitt;Waterpasinstrument door G. de Koningh (GEO.2000.0302;GEO.2000.0406)"
+                ]
+            }
         }
-      ],
-      "@type": "sc:Sequence",
-      "@id": "https://dlc.services/7/18/873ee307-d42f-4531-b3cc-9c6e0a4553b2/sequences/normal",
-      "label": "Current page order"
-    }
-  ],
-  "@context": "http://iiif.io/api/presentation/2/context.json",
-  "label": "Statief voor waterpasinstrument door Instrumentenfabriek H.M. Smitt"
+    ],
+    "thumbnail": [
+        {
+            "id": "https://dlc.services/thumbs/v3/7/18/bc352c03-4139-4de2-89d1-44ea2ca72cb9/full/max/0/default.jpg",
+            "type": "Image",
+            "format": "image/jpeg",
+            "service": [
+                {
+                    "@context": "http://iiif.io/api/image/3/context.json",
+                    "id": "https://dlc.services/thumbs/v3/7/18/bc352c03-4139-4de2-89d1-44ea2ca72cb9",
+                    "type": "ImageService3",
+                    "profile": "level0",
+                    "sizes": [
+                        {
+                            "width": 683,
+                            "height": 1024
+                        },
+                        {
+                            "width": 267,
+                            "height": 400
+                        },
+                        {
+                            "width": 133,
+                            "height": 200
+                        },
+                        {
+                            "width": 67,
+                            "height": 100
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "items": [
+        {
+            "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/873ee307-d42f-4531-b3cc-9c6e0a4553b2/canvas/0",
+            "type": "Canvas",
+            "height": 3072,
+            "width": 2048,
+            "thumbnail": [
+                {
+                    "id": "https://dlc.services/thumbs/v3/7/18/bc352c03-4139-4de2-89d1-44ea2ca72cb9/full/max/0/default.jpg",
+                    "type": "Image",
+                    "format": "image/jpeg",
+                    "service": [
+                        {
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/18/bc352c03-4139-4de2-89d1-44ea2ca72cb9",
+                            "type": "ImageService3",
+                            "profile": "level0",
+                            "sizes": [
+                                {
+                                    "width": 683,
+                                    "height": 1024
+                                },
+                                {
+                                    "width": 267,
+                                    "height": 400
+                                },
+                                {
+                                    "width": 133,
+                                    "height": 200
+                                },
+                                {
+                                    "width": 67,
+                                    "height": 100
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "items": [
+                {
+                    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/873ee307-d42f-4531-b3cc-9c6e0a4553b2/canvas/0/annotation-page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://dlc.services/iiif-img/v3/7/18/bc352c03-4139-4de2-89d1-44ea2ca72cb9",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/873ee307-d42f-4531-b3cc-9c6e0a4553b2/canvas/0",
+                            "body": {
+                                "id": "https://dlc.services/iiif-img/v3/7/18/bc352c03-4139-4de2-89d1-44ea2ca72cb9/full/max/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "height": 3072,
+                                "width": 2048,
+                                "service": [
+                                    {
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/18/bc352c03-4139-4de2-89d1-44ea2ca72cb9",
+                                        "type": "ImageService3",
+                                        "profile": "level2"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

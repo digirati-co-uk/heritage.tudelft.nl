@@ -1,136 +1,266 @@
 {
-  "metadata": [
-    {
-      "label": "Titel",
-      "value": "Waterpasinstrument door J.M. Kleman & Zoon"
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/efcbdf1c-9d32-4c76-bd33-c62593f13272.json",
+    "type": "Manifest",
+    "label": {
+        "nl": [
+            "Waterpasinstrument door J.M. Kleman & Zoon"
+        ]
     },
-    {
-      "label": "Objectnaam",
-      "value": "waterpas"
-    },
-    {
-      "label": "Inventarisnummer",
-      "value": "2000.0042.GEO"
-    },
-    {
-      "label": "Datering",
-      "value": "1800 - 1850"
-    },
-    {
-      "label": "Maker",
-      "value": "J.M. Kleman & Zoon (Amsterdam)  (producent)"
-    },
-    {
-      "label": "Afmetingen",
-      "value": "205,0 (h)  * 520,0 (b)  * 120,0 (d) "
-    },
-    {
-      "label": "Materiaal",
-      "value": "metaal, glas"
-    },
-    {
-      "label": "Beschrijving",
-      "value": "Waterpasinstrument door J.M. Kleman & Zoon, op een vast vierstelschroevenblok voor hoogteverschilmeting. Het instrument is voorzien van een boussole en lijkt op het instrument van Onderdewijngaart Cansius."
-    },
-    {
-      "label": "Documentatie",
-      "value": "Pouls, H.C., \"De landmeter: inleiding in de geschiedenis van de Nederlandse landmeetkunde van de Romeinse tot de Franse tijd\", Alphen aan de Rijn: Canaletto/Repro-Holland, 1997."
-    }
-  ],
-  "@type": "sc:Manifest",
-  "structures": [
-    {
-      "canvases": [
-        "https://dlc.services/iiif-img/7/18/fb1398fb-a797-4710-ba05-6e483f374791/canvas/c0"
-      ],
-      "within": "https://dlc.services/iiif-manifest/7/18/efcbdf1c-9d32-4c76-bd33-c62593f13272/range/range-0.json",
-      "@type": "sc:Range",
-      "@id": "https://dlc.services/iiif-manifest/7/18/efcbdf1c-9d32-4c76-bd33-c62593f13272/range/range-0-0.json",
-      "label": "0"
-    }
-  ],
-  "@id": "https://raw.githubusercontent.com/libis/ca_tudelft_iiif/main/objects/efcbdf1c-9d32-4c76-bd33-c62593f13272.json",
-  "sequences": [
-    {
-      "viewingDirection": "left-to-right",
-      "viewingHint": "paged",
-      "canvases": [
+    "metadata": [
         {
-          "images": [
-            {
-              "resource": {
-                "@type": "dctypes:Image",
-                "service": {
-                  "protocol": "http://iiif.io/api/image",
-                  "profile": "http://iiif.io/api/image/2/level1.json",
-                  "width": 3072,
-                  "@id": "https://dlc.services/iiif-img/7/18/fb1398fb-a797-4710-ba05-6e483f374791",
-                  "height": 2048
-                },
-                "width": 3072,
-                "@id": "https://dlc.services/iiif-img/7/18/fb1398fb-a797-4710-ba05-6e483f374791/full/1024,683/0/default.jpg",
-                "height": 2048
-              },
-              "@type": "oa:Annotation",
-              "motivation": "sc:painting",
-              "@id": "https://dlc.services/iiif-img/7/18/fb1398fb-a797-4710-ba05-6e483f374791/imageanno/0",
-              "on": "https://dlc.services/iiif-img/7/18/fb1398fb-a797-4710-ba05-6e483f374791/canvas/c0"
-            }
-          ],
-          "thumbnail": {
-            "@type": "dctypes:Image",
-            "service": {
-              "sizes": [
-                {
-                  "width": 1024,
-                  "height": 683
-                },
-                {
-                  "width": 400,
-                  "height": 267
-                },
-                {
-                  "width": 200,
-                  "height": 133
-                },
-                {
-                  "width": 100,
-                  "height": 67
-                }
-              ],
-              "profile": [
-                "http://iiif.io/api/image/2/level0.json",
-                {
-                  "formats": [
-                    "jpg"
-                  ],
-                  "qualities": [
-                    "color"
-                  ],
-                  "supports": [
-                    "sizeByWhListed"
-                  ]
-                }
-              ],
-              "width": 1024,
-              "@id": "https://dlc.services/thumbs/7/18/fb1398fb-a797-4710-ba05-6e483f374791",
-              "@context": "http://iiif.io/api/image/2/context.json",
-              "height": 683
+            "label": {
+                "en": [
+                    "Title"
+                ],
+                "nl": [
+                    "Titel"
+                ]
             },
-            "@id": "https://dlc.services/thumbs/7/18/fb1398fb-a797-4710-ba05-6e483f374791/full/full/0/default.jpg"
-          },
-          "@type": "sc:Canvas",
-          "width": 3072,
-          "@id": "https://dlc.services/iiif-img/7/18/fb1398fb-a797-4710-ba05-6e483f374791/canvas/c0",
-          "label": "Image",
-          "height": 2048
+            "value": {
+                "nl": [
+                    "Waterpasinstrument door J.M. Kleman & Zoon"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Object name"
+                ],
+                "nl": [
+                    "Objectnaam"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "waterpasinstrument"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Inventory number"
+                ],
+                "nl": [
+                    "Inventarisnummer"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "2000.0042.GEO"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dating"
+                ],
+                "nl": [
+                    "Datering"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "1800 – 1850"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Maker"
+                ],
+                "nl": [
+                    "Maker"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "J.M. Kleman & Zoon  (producent)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dimensions"
+                ],
+                "nl": [
+                    "Afmetingen"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "205,0 mm (h) x 520,0 mm (b) x 120,0 mm (d)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Material"
+                ],
+                "nl": [
+                    "Materiaal"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "metaal",
+                    "glas"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Place of manufacture"
+                ],
+                "nl": [
+                    "Plaats vervaardiging"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "<a href=\"https://www.geonames.org/2759793\">Amsterdam, Nederland</a>"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Description"
+                ],
+                "nl": [
+                    "Beschrijving"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Waterpasinstrument door J.M. Kleman & Zoon, op een vast vierstelschroevenblok voor hoogteverschilmeting. Het instrument is voorzien van een boussole en lijkt op het instrument van Onderdewijngaart Cansius."
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Documentation"
+                ],
+                "nl": [
+                    "Documentatie"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Pouls, H.C., \"De landmeter: inleiding in de geschiedenis van de Nederlandse landmeetkunde van de Romeinse tot de Franse tijd\", Alphen aan de Rijn: Canaletto/Repro-Holland, 1997."
+                ]
+            }
         }
-      ],
-      "@type": "sc:Sequence",
-      "@id": "https://dlc.services/7/18/efcbdf1c-9d32-4c76-bd33-c62593f13272/sequences/normal",
-      "label": "Current page order"
-    }
-  ],
-  "@context": "http://iiif.io/api/presentation/2/context.json",
-  "label": "Waterpasinstrument door J.M. Kleman & Zoon"
+    ],
+    "thumbnail": [
+        {
+            "id": "https://dlc.services/thumbs/v3/7/18/fb1398fb-a797-4710-ba05-6e483f374791/full/max/0/default.jpg",
+            "type": "Image",
+            "format": "image/jpeg",
+            "service": [
+                {
+                    "@context": "http://iiif.io/api/image/3/context.json",
+                    "id": "https://dlc.services/thumbs/v3/7/18/fb1398fb-a797-4710-ba05-6e483f374791",
+                    "type": "ImageService3",
+                    "profile": "level0",
+                    "sizes": [
+                        {
+                            "width": 1024,
+                            "height": 683
+                        },
+                        {
+                            "width": 400,
+                            "height": 267
+                        },
+                        {
+                            "width": 200,
+                            "height": 133
+                        },
+                        {
+                            "width": 100,
+                            "height": 67
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "items": [
+        {
+            "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/efcbdf1c-9d32-4c76-bd33-c62593f13272/canvas/0",
+            "type": "Canvas",
+            "height": 2048,
+            "width": 3072,
+            "thumbnail": [
+                {
+                    "id": "https://dlc.services/thumbs/v3/7/18/fb1398fb-a797-4710-ba05-6e483f374791/full/max/0/default.jpg",
+                    "type": "Image",
+                    "format": "image/jpeg",
+                    "service": [
+                        {
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/18/fb1398fb-a797-4710-ba05-6e483f374791",
+                            "type": "ImageService3",
+                            "profile": "level0",
+                            "sizes": [
+                                {
+                                    "width": 1024,
+                                    "height": 683
+                                },
+                                {
+                                    "width": 400,
+                                    "height": 267
+                                },
+                                {
+                                    "width": 200,
+                                    "height": 133
+                                },
+                                {
+                                    "width": 100,
+                                    "height": 67
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "items": [
+                {
+                    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/efcbdf1c-9d32-4c76-bd33-c62593f13272/canvas/0/annotation-page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://dlc.services/iiif-img/v3/7/18/fb1398fb-a797-4710-ba05-6e483f374791",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/efcbdf1c-9d32-4c76-bd33-c62593f13272/canvas/0",
+                            "body": {
+                                "id": "https://dlc.services/iiif-img/v3/7/18/fb1398fb-a797-4710-ba05-6e483f374791/full/max/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "height": 2048,
+                                "width": 3072,
+                                "service": [
+                                    {
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/18/fb1398fb-a797-4710-ba05-6e483f374791",
+                                        "type": "ImageService3",
+                                        "profile": "level2"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

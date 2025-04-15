@@ -1,18 +1,41 @@
 import "../globals.css";
-import type { Metadata } from "next";
-import BlockEditor from "../../blocks/block-editor";
-import { Provider } from "../provider";
-import { ReactNode } from "react";
-import { unstable_setRequestLocale } from "next-intl/server";
-import { GlobalHeader } from "@/components/GlobalHeader";
-import localFont from "next/font/local";
 import { SlotContext } from "@/blocks/slot-context";
 import { GlobalFooter } from "@/components/GlobalFooter";
+import { GlobalHeader } from "@/components/GlobalHeader";
+import { getBasicMetadata, getMdx } from "@/helpers/metadata";
+import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
+import localFont from "next/font/local";
+import { type ReactNode, lazy } from "react";
+import BlockEditor from "../../blocks/block-editor";
+import { Provider } from "../provider";
+import 'delft-exhibition-viewer/dist/index.css';
 
-export const metadata: Metadata = {
-  title: "TU Delft Academic Heritage",
-  description: "TU Delft Library's Special Collections portal"
-};
+const IIIFDevRefresh = lazy(() => import("../../components/IIIFDevRefresh"));
+
+export async function generateMetadata({
+  params,
+}: { params: { locale: string } }): Promise<Metadata> {
+  const t = await getTranslations();
+  const path = "/";
+  const page = getMdx({
+    params: { pageName: "Home", path: path, locale: params.locale },
+  });
+  const description = page.description;
+  return getBasicMetadata({
+    locale: params.locale,
+    siteName: page.title,
+    title: page.title,
+    description: description,
+    image: {
+      url: page.image,
+      width: page.imageWidth,
+      height: page.imageHeight,
+    },
+    path: path,
+  });
+}
 
 if (process.env.NODE_ENV !== "production") {
   // @ts-expect-error typescript can't resolve CSS
@@ -21,6 +44,8 @@ if (process.env.NODE_ENV !== "production") {
   import("@page-blocks/react/dist/index.css");
   // @ts-expect-error typescript can't resolve CSS
   import("@page-blocks/web-components/dist/index.css");
+  // @ts-expect-error typescript can't resolve CSS
+  import('delft-exhibition-viewer/dist/index.css');
 }
 
 const foundersGrotesk = localFont({
@@ -78,15 +103,24 @@ export default function RootLayout({
   children: ReactNode;
   params: { locale: string };
 }): JSX.Element {
-  unstable_setRequestLocale(params.locale);
+  setRequestLocale(params.locale);
   return (
     <html lang={params.locale}>
-      <body className={`bg-gray-200 ${foundersGrotesk.variable} ${foundersGroteskMono.variable} font-sans`}>
+      <body
+        className={`bg-gray-200 ${foundersGrotesk.variable} ${foundersGroteskMono.variable} font-sans`}
+      >
         <Provider>
           <SlotContext name="locale" value={params.locale}>
             <GlobalHeader />
-            <main className="flex w-full flex-col items-center">{children}</main>
-            {process.env.NODE_ENV !== "production" ? <BlockEditor showToggle rsc /> : null}
+            <main className="flex w-full flex-col items-center">
+              {children}
+            </main>
+            {process.env.NODE_ENV !== "production" ? (
+              <>
+                <BlockEditor showToggle rsc />
+                <IIIFDevRefresh />
+              </>
+            ) : null}
             <GlobalFooter />
           </SlotContext>
         </Provider>
