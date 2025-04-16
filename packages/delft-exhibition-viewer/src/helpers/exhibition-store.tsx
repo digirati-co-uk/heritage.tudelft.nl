@@ -50,6 +50,7 @@ type ExhibitionStoreOptions = {
   objectLinks: Array<ObjectLink>;
   timePerSlide?: number;
   startCanvasIndex?: number;
+  firstStep?: boolean;
 };
 
 const ExhibitionContext = createContext<StoreApi<ExhibitionStore> | null>(null);
@@ -165,28 +166,36 @@ function getCanvasTourSteps({
   }
 
   // @todo check if this is the right logic.
-  // if (steps.length === 0 || firstStep || hasMultipleAnnotations) {
-  //   steps.unshift({
-  //     label: canvas.label || null,
-  //     summary: canvas.summary || null,
-  //     region: null,
-  //     objectLink: null,
-  //     canvasId: canvas.id,
-  //     body: [],
-  //     canvasIndex: canvasIndex,
-  //     duration: canvas.duration,
-  //     annotationId: null,
-  //     highlight: null,
-  //     previousCanvasId,
-  //     nextCanvasId,
-  //   });
-  // }
+  if (firstStep) {
+    steps.unshift({
+      label: canvas.label || null,
+      summary: canvas.summary || null,
+      region: null,
+      objectLink: null,
+      canvasId: canvas.id,
+      body: [],
+      canvasIndex: canvasIndex,
+      duration: canvas.duration,
+      annotationId: null,
+      highlight: null,
+      previousCanvasId,
+      nextCanvasId,
+    });
+  }
 
   return steps;
 }
 
 export function createExhibitionStore(options: ExhibitionStoreOptions) {
-  const { vault, manifest, canvases, objectLinks, timePerSlide = 5000, startCanvasIndex = 0 } = options;
+  const {
+    vault,
+    manifest,
+    canvases,
+    objectLinks,
+    timePerSlide = 5000,
+    startCanvasIndex = 0,
+    firstStep = false,
+  } = options;
 
   const selectedCanvases = canvases || manifest?.items || [];
 
@@ -203,7 +212,7 @@ export function createExhibitionStore(options: ExhibitionStoreOptions) {
       objectLinks,
       previousCanvasId,
       nextCanvasId,
-      firstStep: false,
+      firstStep,
     });
     allSteps.push(...steps);
   }
