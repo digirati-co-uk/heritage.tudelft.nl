@@ -1,16 +1,5 @@
-import {
-  type SupportedTarget,
-  type Vault,
-  expandTarget,
-  getValue,
-} from "@iiif/helpers";
-import type {
-  Annotation,
-  Canvas,
-  ContentResource,
-  InternationalString,
-  Manifest,
-} from "@iiif/presentation-3";
+import { type SupportedTarget, type Vault, expandTarget, getValue } from "@iiif/helpers";
+import type { Annotation, Canvas, ContentResource, InternationalString, Manifest } from "@iiif/presentation-3";
 import type { CanvasNormalized } from "@iiif/presentation-3-normalized";
 import { createContext, useContext } from "react";
 import invariant from "tiny-invariant";
@@ -73,11 +62,7 @@ export function ExhibitionProvider({
   store: StoreApi<ExhibitionStore>;
   children: React.ReactNode;
 }) {
-  return (
-    <ExhibitionContext.Provider value={store}>
-      {children}
-    </ExhibitionContext.Provider>
-  );
+  return <ExhibitionContext.Provider value={store}>{children}</ExhibitionContext.Provider>;
 }
 
 export function useExhibition() {
@@ -114,9 +99,7 @@ function getCanvasTourSteps({
   nextCanvasId: string | null;
 }): ExhibitionStep[] {
   const steps: ExhibitionStep[] = [];
-  const annotations = canvas.annotations[0]
-    ? vault.get(canvas.annotations[0])
-    : null;
+  const annotations = canvas.annotations[0] ? vault.get(canvas.annotations[0]) : null;
 
   const paintingPage = canvas.items[0] ? vault.get(canvas.items[0]) : null;
   const hasMultipleAnnotations = (paintingPage?.items.length || 0) > 1;
@@ -130,10 +113,7 @@ function getCanvasTourSteps({
 
     if (target.type === "Canvas") {
       const target = expandTarget(annotation.target as any);
-      if (
-        (getValue(annotation.label) && getValue(annotation.summary)) ||
-        target.selector?.spatial
-      ) {
+      if ((getValue(annotation.label) && getValue(annotation.summary)) || target.selector?.spatial) {
         steps.push({
           label: annotation.label || null,
           summary: annotation.summary || null,
@@ -167,9 +147,7 @@ function getCanvasTourSteps({
       region = expandTarget(target.target as any);
     }
 
-    const objectLink = imageService
-      ? objectLinks.find((link) => link.service === imageService) || null
-      : null;
+    const objectLink = imageService ? objectLinks.find((link) => link.service === imageService) || null : null;
 
     steps.push({
       label: target.label || null,
@@ -187,47 +165,36 @@ function getCanvasTourSteps({
   }
 
   // @todo check if this is the right logic.
-  if (steps.length === 0 || firstStep || hasMultipleAnnotations) {
-    steps.unshift({
-      label: canvas.label || null,
-      summary: canvas.summary || null,
-      region: null,
-      objectLink: null,
-      canvasId: canvas.id,
-      body: [],
-      canvasIndex: canvasIndex,
-      duration: canvas.duration,
-      annotationId: null,
-      highlight: null,
-      previousCanvasId,
-      nextCanvasId,
-    });
-  }
+  // if (steps.length === 0 || firstStep || hasMultipleAnnotations) {
+  //   steps.unshift({
+  //     label: canvas.label || null,
+  //     summary: canvas.summary || null,
+  //     region: null,
+  //     objectLink: null,
+  //     canvasId: canvas.id,
+  //     body: [],
+  //     canvasIndex: canvasIndex,
+  //     duration: canvas.duration,
+  //     annotationId: null,
+  //     highlight: null,
+  //     previousCanvasId,
+  //     nextCanvasId,
+  //   });
+  // }
 
   return steps;
 }
 
 export function createExhibitionStore(options: ExhibitionStoreOptions) {
-  const {
-    vault,
-    manifest,
-    canvases,
-    objectLinks,
-    timePerSlide = 5000,
-    startCanvasIndex = 0,
-  } = options;
+  const { vault, manifest, canvases, objectLinks, timePerSlide = 5000, startCanvasIndex = 0 } = options;
 
   const selectedCanvases = canvases || manifest?.items || [];
 
   const allSteps: ExhibitionStep[] = [];
   for (const [index, item] of selectedCanvases.entries()) {
     const canvas = vault.get<CanvasNormalized>(item);
-    const previousCanvasId =
-      index > 0 && manifest ? manifest.items[index - 1].id : null;
-    const nextCanvasId =
-      manifest && index < manifest.items.length - 1
-        ? manifest.items[index + 1].id
-        : null;
+    const previousCanvasId = index > 0 && manifest ? manifest.items[index - 1].id : null;
+    const nextCanvasId = manifest && index < manifest.items.length - 1 ? manifest.items[index + 1].id : null;
     if (!canvas) continue;
     const steps = getCanvasTourSteps({
       vault,
@@ -241,9 +208,7 @@ export function createExhibitionStore(options: ExhibitionStoreOptions) {
     allSteps.push(...steps);
   }
 
-  const startIndex = allSteps.findIndex(
-    (step) => step.canvasIndex === startCanvasIndex,
-  );
+  const startIndex = allSteps.findIndex((step) => step.canvasIndex === startCanvasIndex);
 
   return createStore<ExhibitionStore>((set, get) => {
     let nextFrameTimer: Timer | null = null;
@@ -260,10 +225,7 @@ export function createExhibitionStore(options: ExhibitionStoreOptions) {
       };
       const stepIdx = get().currentStep;
       const resolvedNextStep = get().steps[stepIdx + 1];
-      nextFrameTimer = setTimeout(
-        goToNext,
-        resolvedNextStep?.duration || timePerSlide,
-      );
+      nextFrameTimer = setTimeout(goToNext, resolvedNextStep?.duration || timePerSlide);
     };
     const pause = () => {
       if (nextFrameTimer) {
@@ -325,9 +287,7 @@ export function createExhibitionStore(options: ExhibitionStoreOptions) {
       },
 
       goToCanvasIndex(index: number) {
-        const stepIndex = get().steps.findIndex(
-          (step) => step.canvasIndex === index,
-        );
+        const stepIndex = get().steps.findIndex((step) => step.canvasIndex === index);
         if (stepIndex !== -1) {
           set({ currentStep: stepIndex });
         }
