@@ -41,6 +41,7 @@ function CanvasPreviewBlockInner({
         vault: vault as any,
         canvases: [canvas as any],
         objectLinks,
+        firstStep: false,
       }),
     [vault, canvas]
   );
