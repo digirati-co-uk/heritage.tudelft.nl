@@ -4,13 +4,14 @@
     "": {
       "name": "heritage.tudelft.nl",
       "dependencies": {
-        "@atlas-viewer/atlas": "^2.0.6",
+        "@atlas-viewer/atlas": "^2.3.3",
         "@types/react-lazy-load-image-component": "^1.6.3",
         "bun-types": "*",
         "react-instantsearch-router-nextjs": "^7.7.0",
         "react-social-icons": "^6.14.0",
       },
       "devDependencies": {
+        "@biomejs/biome": "1.9.4",
         "@repo/typescript-config": "*",
         "@tailwindcss/typography": "^0.5.10",
         "@types/bun": "^1.1.6",
@@ -75,7 +76,7 @@
         "next": "14.1.0",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
-        "react-iiif-vault": "^1.5.1",
+        "react-iiif-vault": "^1.5.6",
         "react-instantsearch": "^7.6.0",
         "react-lazy-load-image-component": "^1.6.0",
         "sqlite": "^5.0.1",
@@ -107,13 +108,14 @@
         "@iiif/helpers": "^1.3.1",
         "@iiif/presentation-3": "^2.1.3",
         "@iiif/presentation-3-normalized": "0.9.7",
+        "@uidotdev/usehooks": "^2.4.1",
         "@vidstack/react": "^1.11.29",
         "mitt": "^3.0.1",
         "publint": "^0.3.2",
         "react": "^18.3.1",
         "react-aria": "^3.37.0",
         "react-dom": "^18.3.1",
-        "react-iiif-vault": "^1.5.1",
+        "react-iiif-vault": "^1.5.6",
         "react-lazy-load-image-component": "^1.6.0",
         "reveal.js": "^5.1.0",
         "tailwind-merge": "^2.2.1",
@@ -138,9 +140,7 @@
       "name": "iiif-hss",
       "version": "1.0.2",
       "bin": {
-        "iiif-hss": "build/index.js",
-        "iiif-hss-dev": "build/server/entrypoint.js",
-      },
+        "iiif-hss": "build/index.js",        "iiif-hss-dev": "build/server/entrypoint.js"      },
       "dependencies": {
         "@hono/node-server": "^1.13.7",
         "@hono/node-ws": "^1.0.5",
@@ -213,7 +213,7 @@
     },
   },
   "overrides": {
-    "@atlas-viewer/atlas": "^2.0.6",
+    "@atlas-viewer/atlas": "^2.3.3",
   },
   "packages": {
     "@algolia/client-abtesting": ["@algolia/client-abtesting@5.19.0", "", { "dependencies": { "@algolia/client-common": "5.19.0", "@algolia/requester-browser-xhr": "5.19.0", "@algolia/requester-fetch": "5.19.0", "@algolia/requester-node-http": "5.19.0" } }, "sha512-dMHwy2+nBL0SnIsC1iHvkBao64h4z+roGelOz11cxrDBrAdASxLxmfVMop8gmodQ2yZSacX0Rzevtxa+9SqxCw=="],
@@ -248,7 +248,7 @@
 
     "@ampproject/remapping": ["@ampproject/remapping@2.3.0", "", { "dependencies": { "@jridgewell/gen-mapping": "^0.3.5", "@jridgewell/trace-mapping": "^0.3.24" } }, "sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw=="],
 
-    "@atlas-viewer/atlas": ["@atlas-viewer/atlas@2.2.9", "", { "dependencies": { "@atlas-viewer/dna": "^0.5.0", "@atlas-viewer/iiif-image-api": "^2.2.0", "@iiif/helpers": "^1.1.0", "@iiif/parser": "^2.1.0", "@iiif/presentation-3": ">=2", "lru-cache": "^7.17.0", "normalize-wheel": "^1.0.1", "react-reconciler": "^0.29.0", "react-use-measure": "^2.0.1", "scheduler": "^0.21.0" }, "peerDependencies": { "react": ">=17.0", "react-dom": ">=17.0" }, "optionalPeers": ["react-dom"] }, "sha512-UqtyxcfIMx8MbXWTVwBIFOL5Dz9BacBWpUWNkOOefC6/9FWKwitCm7L15ZvosyVwGN+UsexeAuyV5mNh45lTvg=="],
+    "@atlas-viewer/atlas": ["@atlas-viewer/atlas@2.3.3", "", { "dependencies": { "@atlas-viewer/dna": "^0.5.0", "@atlas-viewer/iiif-image-api": "^2.2.0", "@iiif/helpers": "^1.1.0", "@iiif/parser": "^2.1.0", "@iiif/presentation-3": ">=2", "lru-cache": "^7.17.0", "normalize-wheel": "^1.0.1", "react-reconciler": "^0.29.0", "react-use-measure": "^2.1.7", "scheduler": "^0.21.0" }, "peerDependencies": { "react": ">=17.0", "react-dom": ">=17.0" }, "optionalPeers": ["react-dom"] }, "sha512-QvsSMB0ioQVgZ2a0HrdVGdThiL9A48EoGteTXXtM20OJLPiTIJUqIr2fZ8Kij3cVLPLDneiVgAl3UNk0RzURaA=="],
 
     "@atlas-viewer/dna": ["@atlas-viewer/dna@0.5.0", "", {}, "sha512-vHyMwXoCFq6ymk+wOVIkMphUo+I+wBRoA2tBf1AIUZWJMsk51cBtO2qzOaZQUh/TmrzrqEY5aEAtgBj52LVRUg=="],
 
@@ -426,7 +426,7 @@
 
     "@iiif/helpers": ["@iiif/helpers@1.3.1", "", { "dependencies": { "@iiif/presentation-2": "1.0.4", "@iiif/presentation-3": "2.2.3", "@iiif/presentation-3-normalized": "0.9.7", "@types/geojson": "7946.0.13" }, "optionalDependencies": { "abs-svg-path": "^0.1.1", "parse-svg-path": "^0.1.2", "svg-arc-to-cubic-bezier": "^3.2.0" }, "peerDependencies": { "@iiif/parser": "^2.1.7" } }, "sha512-zVqgvvrUhKVq8JR1Gz8VXp+dD3SDdleAg/yJfGJ7cFvqFXiNQRtgY1ZbKxUfj/5ej5w5pgD/UuFF+E2CjcbxwQ=="],
 
-    "@iiif/parser": ["@iiif/parser@2.1.7", "", { "dependencies": { "@iiif/presentation-2": "^1.0.4", "@iiif/presentation-3": "^2.2.2", "@iiif/presentation-3-normalized": "^0.9.7", "@types/geojson": "^7946.0.10" } }, "sha512-a3NrHOdW6RbmUeBCFJ751FBBuzS251O7owbRjUHUvRRs9GoFwNIDk5slh9qP5FFHycIbuyWjyl1lIxbikxAq/g=="],
+    "@iiif/parser": ["@iiif/parser@2.1.8", "", { "dependencies": { "@iiif/presentation-2": "^1.0.4", "@iiif/presentation-3": "^2.2.2", "@iiif/presentation-3-normalized": "^0.9.7", "@types/geojson": "^7946.0.10" } }, "sha512-87ifvY3Pq6dzSbHKrCr6/aIiZZDeaozIFz+EAYWYGxmpxn213t3kISCrSCC/XJ03jdXW7mQgPUEPcmztX5uh1A=="],
 
     "@iiif/presentation-2": ["@iiif/presentation-2@1.0.4", "", { "peerDependencies": { "@iiif/presentation-3": "*" } }, "sha512-hJakpq62VBajesLJrYPtFm6hcn6c/HkKP7CmKZ5atuzu40m0nifWYsqigR1l9sZGvhhHb/DRshPmiW/0GNrJoA=="],
 
@@ -1032,6 +1032,8 @@
 
     "@types/ws": ["@types/ws@8.5.13", "", { "dependencies": { "@types/node": "*" } }, "sha512-osM/gWBTPKgHV8XkTunnegTRIsvF6owmf5w+JtAfOw472dptdm0dlGv4xCt6GwQRcC2XVOvvRE/0bAoQcL2QkA=="],
 
+    "@uidotdev/usehooks": ["@uidotdev/usehooks@2.4.1", "", { "peerDependencies": { "react": ">=18.0.0", "react-dom": ">=18.0.0" } }, "sha512-1I+RwWyS+kdv3Mv0Vmc+p0dPYH0DTRAo04HLyXReYBL9AeseDWUJyi4THuksBJcu9F0Pih69Ak150VDnqbVnXg=="],
+
     "@vercel/node-bridge": ["@vercel/node-bridge@2.2.2", "", {}, "sha512-haGBC8noyA5BfjCRXRH+VIkHCDVW5iD5UX24P2nOdilwUxI4qWsattS/co8QBGq64XsNLRAMdM5pQUE3zxkF9Q=="],
 
     "@vidstack/react": ["@vidstack/react@1.12.12", "", { "dependencies": { "@floating-ui/dom": "^1.6.10", "media-captions": "^1.0.4" }, "peerDependencies": { "@types/react": "^18.0.0", "react": "^18.0.0" } }, "sha512-rEwCkZdp/K0FopUU76lgYJqzOZa3AGM2FumQnTPPSCP9jwShYReY9mXgl4/UP5CH3v7MkaVl5ZT67rhfjPxx9Q=="],
@@ -1275,8 +1277,6 @@
     "data-uri-to-buffer": ["data-uri-to-buffer@4.0.1", "", {}, "sha512-0R9ikRb668HB7QDxT1vkpuUBtqc53YyAwMwGeUFKRojY/NWKvdZ+9UYtRfGmhqNbRkTSVpMbmyhXipFFv2cb/A=="],
 
     "data-urls": ["data-urls@4.0.0", "", { "dependencies": { "abab": "^2.0.6", "whatwg-mimetype": "^3.0.0", "whatwg-url": "^12.0.0" } }, "sha512-/mMTei/JXPqvFqQtfyTowxmJVwr2PVAeCcDxyFf6LhoOu/09TX2OX3kb2wzi4DMXcfj4OItwDOnhl5oziPnT6g=="],
-
-    "debounce": ["debounce@1.2.1", "", {}, "sha512-XRRe6Glud4rd/ZGQfiV1ruXSfbvfJedlV9Y6zOlP+2K04vBYiJEte6stfFkCP03aMnY5tsipamumUjL14fofug=="],
 
     "debug": ["debug@4.4.0", "", { "dependencies": { "ms": "^2.1.3" } }, "sha512-6WTZ/IxCY/T6BALoZHaE4ctp9xm+Z5kY/pzYaCHRFeyVhojxlrm+46y68HA6hr0TcwEssoxNiDEUJQjfPZ/RYA=="],
 
@@ -2130,7 +2130,7 @@
 
     "react-i18next": ["react-i18next@11.18.6", "", { "dependencies": { "@babel/runtime": "^7.14.5", "html-parse-stringify": "^3.0.1" }, "peerDependencies": { "i18next": ">= 19.0.0", "react": ">= 16.8.0" } }, "sha512-yHb2F9BiT0lqoQDt8loZ5gWP331GwctHz9tYQ8A2EIEUu+CcEdjBLQWli1USG3RdWQt3W+jqQLg/d4rrQR96LA=="],
 
-    "react-iiif-vault": ["react-iiif-vault@1.5.1", "", { "dependencies": { "@atlas-viewer/atlas": "^2.2.9", "@iiif/helpers": "^1.3.1", "@iiif/parser": "^2.1.7", "@iiif/presentation-2": "^1.0.4", "@iiif/presentation-3": "^2.2.3", "@iiif/presentation-3-normalized": "^0.9.7", "mitt": "^3.0.1", "polygon-editor": "^0.0.4", "react-error-boundary": "^4.0.13", "react-lazy-load-image-component": "^1.6.0", "react-reconciler": "~0.29.0", "tiny-invariant": "^1.3.3", "zustand": "^4.5.2" }, "peerDependencies": { "react": "^18.2.0", "react-dom": "^18.2.0" } }, "sha512-/vbrlhYrvTc9trU2r2Zx0Bden0zCn8Mu+VFV4qjLwa1WVXJd/ZZYwaCZIi1Et9hnYjx/vhi3751UA+9AHOFnjw=="],
+    "react-iiif-vault": ["react-iiif-vault@1.5.6", "", { "dependencies": { "@atlas-viewer/atlas": "^2.2.9", "@iiif/helpers": "^1.3.1", "@iiif/parser": "^2.1.8", "@iiif/presentation-2": "^1.0.4", "@iiif/presentation-3": "^2.2.3", "@iiif/presentation-3-normalized": "^0.9.7", "mitt": "^3.0.1", "polygon-editor": "^0.0.4", "react-error-boundary": "^4.0.13", "react-lazy-load-image-component": "^1.6.0", "react-reconciler": "~0.29.0", "tiny-invariant": "^1.3.3", "zustand": "^4.5.2" }, "peerDependencies": { "react": "^18.2.0", "react-dom": "^18.2.0" } }, "sha512-ViJTR3GerN+IKTzwUwwYdO1FDRq4XdYtUR1lmhvTbG7M3fCP3wggMzt9QjOiev6HjCjw4bRlP1QsZADtN15W1A=="],
 
     "react-instantsearch": ["react-instantsearch@7.13.10", "", { "dependencies": { "@babel/runtime": "^7.1.2", "instantsearch-ui-components": "0.9.0", "instantsearch.js": "4.75.7", "react-instantsearch-core": "7.13.10" }, "peerDependencies": { "algoliasearch": ">= 3.1 < 6", "react": ">= 16.8.0 < 19", "react-dom": ">= 16.8.0 < 19" } }, "sha512-AcgDUvBGP4UH3XveNt+vFWdqpjrq0ujYjw/blaE0zEIsHPDu7ottr5I24RLSCzjLsOc1sIPh69yW/HNKppG/XA=="],
 
@@ -2148,7 +2148,7 @@
 
     "react-social-icons": ["react-social-icons@6.18.0", "", { "dependencies": { "@babel/runtime": "^7.24.8", "react": "^18.3.1", "react-dom": "^18.3.1" } }, "sha512-eUWAaTw9FDMYjXIXkyt9oqMIwO7l9z68jlNBbfEh/Rsxs0WaUKK5P1OgC1thITOQumgLqzTB10h3Fjzl/IdvGw=="],
 
-    "react-use-measure": ["react-use-measure@2.1.1", "", { "dependencies": { "debounce": "^1.2.1" }, "peerDependencies": { "react": ">=16.13", "react-dom": ">=16.13" } }, "sha512-nocZhN26cproIiIduswYpV5y5lQpSQS1y/4KuvUCjSKmw7ZWIS/+g3aFnX3WdBkyuGUtTLif3UTqnLLhbDoQig=="],
+    "react-use-measure": ["react-use-measure@2.1.7", "", { "peerDependencies": { "react": ">=16.13", "react-dom": ">=16.13" }, "optionalPeers": ["react-dom"] }, "sha512-KrvcAo13I/60HpwGO5jpW7E9DfusKyLPLvuHlUyP5zqnmAPhNc6qTRjUQrdTADl0lpPpDVU2/Gg51UlOGHXbdg=="],
 
     "read-cache": ["read-cache@1.0.0", "", { "dependencies": { "pify": "^2.3.0" } }, "sha512-Owdv/Ft7IjOgm/i0xvNDZ1LrRANRfew4b2prF3OWMQLxLfu3bS8FVhCsrSCMK4lR56Y9ya+AThoTpDCTxCmpRA=="],
 
@@ -2580,8 +2580,6 @@
 
     "zwitch": ["zwitch@2.0.4", "", {}, "sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A=="],
 
-    "@atlas-viewer/atlas/@iiif/helpers": ["@iiif/helpers@1.3.0", "", { "dependencies": { "@iiif/presentation-2": "1.0.4", "@iiif/presentation-3": "2.2.3", "@iiif/presentation-3-normalized": "0.9.7", "@types/geojson": "7946.0.13" }, "optionalDependencies": { "abs-svg-path": "^0.1.1", "parse-svg-path": "^0.1.2", "svg-arc-to-cubic-bezier": "^3.2.0" }, "peerDependencies": { "@iiif/parser": "^2.1.7" } }, "sha512-B7R+ToknGuL5DCCQSGE4HTC5tIDcH75EoXFL+e/nmaO/LAES+EkE+HFpcrXuk/zFh7Za7oydMpD5umVD6TqvbQ=="],
-
     "@babel/core/semver": ["semver@6.3.1", "", { "bin": { "semver": "bin/semver.js" } }, "sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA=="],
 
     "@babel/helper-compilation-targets/lru-cache": ["lru-cache@5.1.1", "", { "dependencies": { "yallist": "^3.0.2" } }, "sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w=="],
@@ -2601,6 +2599,8 @@
     "@esbuild-plugins/node-resolve/escape-string-regexp": ["escape-string-regexp@4.0.0", "", {}, "sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA=="],
 
     "@iiif/builder/@iiif/helpers": ["@iiif/helpers@1.3.0", "", { "dependencies": { "@iiif/presentation-2": "1.0.4", "@iiif/presentation-3": "2.2.3", "@iiif/presentation-3-normalized": "0.9.7", "@types/geojson": "7946.0.13" }, "optionalDependencies": { "abs-svg-path": "^0.1.1", "parse-svg-path": "^0.1.2", "svg-arc-to-cubic-bezier": "^3.2.0" }, "peerDependencies": { "@iiif/parser": "^2.1.7" } }, "sha512-B7R+ToknGuL5DCCQSGE4HTC5tIDcH75EoXFL+e/nmaO/LAES+EkE+HFpcrXuk/zFh7Za7oydMpD5umVD6TqvbQ=="],
+
+    "@iiif/builder/@iiif/parser": ["@iiif/parser@2.1.7", "", { "dependencies": { "@iiif/presentation-2": "^1.0.4", "@iiif/presentation-3": "^2.2.2", "@iiif/presentation-3-normalized": "^0.9.7", "@types/geojson": "^7946.0.10" } }, "sha512-a3NrHOdW6RbmUeBCFJ751FBBuzS251O7owbRjUHUvRRs9GoFwNIDk5slh9qP5FFHycIbuyWjyl1lIxbikxAq/g=="],
 
     "@iiif/parser/@types/geojson": ["@types/geojson@7946.0.15", "", {}, "sha512-9oSxFzDCT2Rj6DfcHF8G++jxBKS7mBqXl5xrRW+Kbvjry6Uduya2iiwqHPhVXpasAVMBYKkEPGgKhd3+/HZ6xA=="],
 
@@ -2888,7 +2888,7 @@
 
     "del/globby": ["globby@10.0.2", "", { "dependencies": { "@types/glob": "^7.1.1", "array-union": "^2.1.0", "dir-glob": "^3.0.1", "fast-glob": "^3.0.3", "glob": "^7.1.3", "ignore": "^5.1.1", "merge2": "^1.2.3", "slash": "^3.0.0" } }, "sha512-7dUi7RvCoT/xast/o/dLN53oqND4yk0nsHkhRgn9w65C4PofCLOoJ39iSOg+qVDdWQPIEj+eszMHQ+aLVwwQSg=="],
 
-    "delft-exhibition-viewer/@types/bun": ["@types/bun@1.2.8", "", { "dependencies": { "bun-types": "1.2.7" } }, "sha512-t8L1RvJVUghW5V+M/fL3Thbxcs0HwNsXsnTEBEfEVqGteiJToOlZ/fyOEaR1kZsNqnu+3XA4RI/qmnX4w6+S+w=="],
+    "delft-exhibition-viewer/@types/bun": ["@types/bun@1.2.13", "", { "dependencies": { "bun-types": "1.2.13" } }, "sha512-u6vXep/i9VBxoJl3GjZsl/BFIsvML8DfVDO0RYLEwtSZSp981kEO1V5NwRcO1CPJ7AmvpbnDCiMKo3JvbDEjAg=="],
 
     "docs/@types/node": ["@types/node@17.0.45", "", {}, "sha512-w+tIMs3rq2afQdsPJlODhoUEKzFP1ayaoyl1CcnwtIlsVe7K7bA1NGm4s3PraqTLlXnbIN84zuBlxBWo1u9BLw=="],
 
@@ -2960,7 +2960,7 @@
 
     "ignore-walk/minimatch": ["minimatch@5.1.6", "", { "dependencies": { "brace-expansion": "^2.0.1" } }, "sha512-lKwV/1brpG6mBUFHtb7NUmtABCb2WZZmm2wNiOA5hAb8VdCS4B3dtMWyvcoViccwAW/COERjXLt0zP1zXUN26g=="],
 
-    "iiif-hss/bun-types": ["bun-types@1.2.6", "", { "dependencies": { "@types/node": "*", "@types/ws": "~8.5.10" } }, "sha512-FbCKyr5KDiPULUzN/nm5oqQs9nXCHD8dVc64BArxJadCvbNzAI6lUWGh9fSJZWeDIRD38ikceBU8Kj/Uh+53oQ=="],
+    "iiif-hss/bun-types": ["bun-types@1.2.13", "", { "dependencies": { "@types/node": "*" } }, "sha512-rRjA1T6n7wto4gxhAO/ErZEtOXyEZEmnIHQfl0Dt1QQSB4QV0iP6BZ9/YB5fZaHFQ2dwHFrmPaRQ9GGMX01k9Q=="],
 
     "iiif-hss/publint": ["publint@0.2.12", "", { "dependencies": { "npm-packlist": "^5.1.3", "picocolors": "^1.1.1", "sade": "^1.8.1" }, "bin": { "publint": "lib/cli.js" } }, "sha512-YNeUtCVeM4j9nDiTT2OPczmlyzOkIXNtdDZnSuajAxS/nZ6j3t7Vs9SUB4euQNddiltIwu7Tdd3s+hr08fAsMw=="],
 
@@ -3304,6 +3304,8 @@
 
     "@contentlayer/source-files/unified/vfile": ["vfile@5.3.7", "", { "dependencies": { "@types/unist": "^2.0.0", "is-buffer": "^2.0.0", "unist-util-stringify-position": "^3.0.0", "vfile-message": "^3.0.0" } }, "sha512-r7qlzkgErKjobAmyNIkkSpizsFPYiUPuJb5pNW1RB4JcYVZhs4lIbVqk8XPk033CV/1z8ss5pkax8SuhGpcG8g=="],
 
+    "@iiif/builder/@iiif/parser/@types/geojson": ["@types/geojson@7946.0.15", "", {}, "sha512-9oSxFzDCT2Rj6DfcHF8G++jxBKS7mBqXl5xrRW+Kbvjry6Uduya2iiwqHPhVXpasAVMBYKkEPGgKhd3+/HZ6xA=="],
+
     "@iiif/vault-helpers/@iiif/presentation-3/@types/geojson": ["@types/geojson@7946.0.15", "", {}, "sha512-9oSxFzDCT2Rj6DfcHF8G++jxBKS7mBqXl5xrRW+Kbvjry6Uduya2iiwqHPhVXpasAVMBYKkEPGgKhd3+/HZ6xA=="],
 
     "@iiif/vault/@iiif/parser/@types/geojson": ["@types/geojson@7946.0.15", "", {}, "sha512-9oSxFzDCT2Rj6DfcHF8G++jxBKS7mBqXl5xrRW+Kbvjry6Uduya2iiwqHPhVXpasAVMBYKkEPGgKhd3+/HZ6xA=="],
@@ -3434,7 +3436,7 @@
 
     "del/globby/glob": ["glob@7.2.3", "", { "dependencies": { "fs.realpath": "^1.0.0", "inflight": "^1.0.4", "inherits": "2", "minimatch": "^3.1.1", "once": "^1.3.0", "path-is-absolute": "^1.0.0" } }, "sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q=="],
 
-    "delft-exhibition-viewer/@types/bun/bun-types": ["bun-types@1.2.7", "", { "dependencies": { "@types/node": "*", "@types/ws": "*" } }, "sha512-P4hHhk7kjF99acXqKvltyuMQ2kf/rzIw3ylEDpCxDS9Xa0X0Yp/gJu/vDCucmWpiur5qJ0lwB2bWzOXa2GlHqA=="],
+    "delft-exhibition-viewer/@types/bun/bun-types": ["bun-types@1.2.13", "", { "dependencies": { "@types/node": "*" } }, "sha512-rRjA1T6n7wto4gxhAO/ErZEtOXyEZEmnIHQfl0Dt1QQSB4QV0iP6BZ9/YB5fZaHFQ2dwHFrmPaRQ9GGMX01k9Q=="],
 
     "gradient-string/chalk/ansi-styles": ["ansi-styles@4.3.0", "", { "dependencies": { "color-convert": "^2.0.1" } }, "sha512-zbB9rCJAT1rbjiVDb2hqKFHNYLxgtk8NURxZ3IZwD3F6NtxbXZQCnnSi1Lkx+IDohdPlFp222wVALIheZJQSEg=="],
 
