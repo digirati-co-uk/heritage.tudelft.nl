@@ -5,7 +5,7 @@ module.exports = {
   content: [
     "src/**/*.{tsx,ts}",
     "content/**/*.{md,mdx}",
-    "../../packages/delft-exhibition-viewer/src/**/*.{tsx,ts}",
+    "../../packages/exhibition-viewer/src/**/*.{tsx,ts}",
   ],
   theme: {
     extend: {
