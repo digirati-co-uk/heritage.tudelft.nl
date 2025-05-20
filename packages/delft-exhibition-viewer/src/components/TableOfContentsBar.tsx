@@ -13,9 +13,6 @@ import { twMerge } from "tailwind-merge";
 import { useHashValue } from "../helpers/use-hash-value";
 import { TableOfContents } from "./TableOfContents";
 import { ContentsIcon } from "./icons/ContentsIcon";
-import { IIIFIcon } from "./icons/IIIFIcon";
-import { PlayIcon } from "./icons/PlayIcon";
-import { TopIcon } from "./icons/TopIcon";
 
 export function TableOfContentsBar({
   initialOpen = false,
@@ -66,14 +63,14 @@ export function TableOfContentsBar({
   return (
     <div className="relative">
       {!fixed && isTocOpen ? (
-        <div className="absolute bottom-0 z-30 mb-14 px-14 py-4 text-white overflow-y-auto bg-[#6d6e70] left-0 right-0">
+        <div className="absolute bottom-0 z-30 mb-14 px-14 py-4 text-TextPrimary overflow-y-auto bg-ControlBar left-0 right-0">
           <TableOfContents items={items} treeLabel={tree?.label} />
         </div>
       ) : null}
 
       <div
         className={twMerge(
-          "z-30 h-14 flex items-center flex-col justify-center bg-[#6d6e70]",
+          "z-30 h-14 flex items-center flex-col justify-center bg-ControlBar",
           "transition-opacity drop-shadow-lg px-4",
 
           fixed && "fixed bottom-0 left-0 right-0 px-4 lg:px-9",
@@ -84,10 +81,10 @@ export function TableOfContentsBar({
         )}
       >
         <div className="relative z-30 w-full max-w-screen-xl px-5 lg:px-10">
-          <div className="flex flex-row items-center justify-between gap-2 text-lg font-medium text-white sm:text-2xl font-mono">
+          <div className="flex flex-row items-center justify-between gap-2 text-lg font-medium text-TextPrimary sm:text-2xl font-mono">
             <div className="my-2 font-light flex-1 min-w-0">
               <button
-                className="z-50 uppercase text-white overflow-ellipsis overflow-hidden whitespace-nowrap max-w-full"
+                className="z-50 uppercase text-TextPrimary overflow-ellipsis overflow-hidden whitespace-nowrap max-w-full"
                 aria-label={`${isTocOpen ? "Hide" : "Show"} table of contents`}
                 {...toggleProps.pressProps}
               >
@@ -117,7 +114,7 @@ export function TableOfContentsBar({
       {fixed ? (
         <Dialog
           className={twMerge(
-            "z-40 flex max-h-[90vh] flex-row content-center justify-center bg-[#6d6e70] px-4",
+            "z-40 flex max-h-[90vh] flex-row content-center justify-center bg-ControlBar px-4",
             fixed
               ? "fixed bottom-[3.5rem] left-0 right-0 "
               : "absolute bottom-0",
@@ -127,7 +124,7 @@ export function TableOfContentsBar({
           open={isTocOpen}
           onClose={() => setTocOpen(false)}
         >
-          <Dialog.Panel className="z-40 flex w-full max-w-screen-xl flex-col px-10 py-6 text-white border-b overflow-y-auto border-[#5A5B5D]">
+          <Dialog.Panel className="z-40 flex w-full max-w-screen-xl flex-col px-10 py-6 text-TextPrimary border-b overflow-y-auto border-ControlBarBorder">
             <TableOfContents treeLabel={tree?.label} items={items} />
           </Dialog.Panel>
         </Dialog>

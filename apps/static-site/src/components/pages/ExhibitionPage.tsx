@@ -1,6 +1,6 @@
 "use client";
 import type { Manifest } from "@iiif/presentation-3";
-import { DelftExhibition } from "delft-exhibition-viewer";
+import { DelftExhibition } from "exhibition-viewer";
 import { EditInManifestEditor } from "../atoms/EditInManifestEditor";
 
 export interface ExhibitionPageProps {

@@ -10,7 +10,7 @@ import localFont from "next/font/local";
 import { type ReactNode, lazy } from "react";
 import BlockEditor from "../../blocks/block-editor";
 import { Provider } from "../provider";
-import 'delft-exhibition-viewer/dist/index.css';
+import "exhibition-viewer/dist/index.css";
 
 const IIIFDevRefresh = lazy(() => import("../../components/IIIFDevRefresh"));
 
@@ -45,7 +45,7 @@ if (process.env.NODE_ENV !== "production") {
   // @ts-expect-error typescript can't resolve CSS
   import("@page-blocks/web-components/dist/index.css");
   // @ts-expect-error typescript can't resolve CSS
-  import('delft-exhibition-viewer/dist/index.css');
+  import("exhibition-viewer/dist/index.css");
 }
 
 const foundersGrotesk = localFont({

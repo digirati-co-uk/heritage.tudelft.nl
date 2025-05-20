@@ -1,7 +1,7 @@
-import { type HTMLAttributes, type ReactNode, useRef } from "react";
+import { type HTMLAttributes, type ReactNode, useEffect, useRef } from "react";
 import { twMerge } from "tailwind-merge";
+import { useIntersectionObserver } from "usehooks-ts";
 import { useHashValue } from "../helpers/use-hash-value";
-import { useIntersectionRef } from "../helpers/use-intersection-ref";
 
 interface BaseGridSectionProps extends HTMLAttributes<HTMLDivElement> {
   id: string;
@@ -19,31 +19,24 @@ export function BaseGridSection({
   ...props
 }: BaseGridSectionProps) {
   const [hash, setHash] = useHashValue();
-  const ref = useRef<HTMLDivElement>(null);
-  const isVisible = `${hash}` === `${id}`;
 
-  useIntersectionRef(
-    ref,
-    (entries) => {
-      if (!updatesTitle || !enabled) return;
-      for (const entry of entries) {
-        const targetId: string = entry.target.id;
-        if (entry.isIntersecting && targetId === id) {
-          if (targetId !== "undefined") {
-            setHash(targetId);
-          }
-          break;
-        }
+  const [ref, entry] = useIntersectionObserver({
+    threshold: 0.75,
+    root: null,
+    rootMargin: "0px",
+    onChange: (isIntersecting) => {
+      if (isIntersecting) {
+        setHash(`s${id}`);
       }
     },
-    undefined,
-    [enabled],
-  );
+  });
 
   return (
     <section
-      id={id}
+      data-visible={entry}
+      id={`s${id}`}
       ref={ref}
+      data-step-id={id}
       className={twMerge("scroll-m-8", className)}
       {...props}
     >

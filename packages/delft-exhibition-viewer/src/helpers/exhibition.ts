@@ -30,7 +30,7 @@ const widthMap = {
 
 export function getClassName(b?: string[], firstInfo = false) {
   if (!b || b.length === 0) {
-    b = ["h-8", "w-8", "image"];
+    b = ["h-6", "w-12", "image"];
   }
   let h = b.find((a) => a.includes("h-")) as keyof typeof heightMap;
   const w = b.find((a) => a.includes("w-")) as keyof typeof widthMap;
@@ -39,6 +39,7 @@ export function getClassName(b?: string[], firstInfo = false) {
   if (firstInfo && h === "h-4") {
     h = "h-8";
   }
+
   classNames.push(heightMap[h]);
   classNames.push(widthMap[w]);
   return classNames.join(" ");

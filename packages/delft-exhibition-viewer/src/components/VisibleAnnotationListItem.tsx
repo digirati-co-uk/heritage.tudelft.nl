@@ -1,6 +1,6 @@
-import { useRef, useEffect } from "react";
 import type { Canvas } from "@iiif/presentation-3";
 import type { CanvasNormalized } from "@iiif/presentation-3-normalized";
+import { useEffect, useRef } from "react";
 import { LocaleString } from "react-iiif-vault";
 import { twMerge } from "tailwind-merge";
 import type { ExhibitionStep } from "../helpers/exhibition-store";
@@ -21,7 +21,8 @@ export function VisibleAnnotationsListingItem({
   hoverProps: any;
   goToStep: (step: number) => void;
 }) {
-  const { label, summary, isActive, showBody, showSummary, toShow } = useStepDetails(canvas, step);
+  const { label, summary, isActive, showBody, showSummary, toShow } =
+    useStepDetails(canvas, step);
 
   const itemRef = useRef<HTMLDivElement>(null);
 
@@ -46,12 +47,16 @@ export function VisibleAnnotationsListingItem({
         as="h3"
         className={twMerge(
           "text-semibold hover:hover:underline",
-          index === stepIndex ? "text-yellow-400" : "text-white"
+          index === stepIndex ? "text-AnnotationSelected" : "",
         )}
       >
         {label}
       </LocaleString>
-      <LocaleString as="div" className="whitespace-pre-wrap text-sm text-white/50" enableDangerouslySetInnerHTML>
+      <LocaleString
+        as="div"
+        className="whitespace-pre-wrap text-sm opacity-50"
+        enableDangerouslySetInnerHTML
+      >
         {summary}
       </LocaleString>
       {showBody && toShow
@@ -60,13 +65,17 @@ export function VisibleAnnotationsListingItem({
               return (
                 <div
                   className={twMerge(
-                    "prose-sm exhibition-html text-white",
+                    "prose-sm exhibition-html",
                     "text-semibold hover:hover:underline",
-                    index === stepIndex ? "prose-headings:text-yellow-400" : "text-white"
+                    index === stepIndex
+                      ? "prose-headings:text-AnnotationSelected"
+                      : "",
                   )}
                   key={n}
                 >
-                  <LocaleString enableDangerouslySetInnerHTML>{body.value}</LocaleString>
+                  <LocaleString enableDangerouslySetInnerHTML>
+                    {body.value}
+                  </LocaleString>
                 </div>
               );
             }

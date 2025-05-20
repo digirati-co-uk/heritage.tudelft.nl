@@ -2,10 +2,17 @@ import { Dialog } from "@headlessui/react";
 import { useState } from "react";
 import { CanvasContext, LocaleString } from "react-iiif-vault";
 import { CloseIcon } from "./CloseIcon";
-import { InfoBlockContentsInner } from "./InfoBlockContents";
+import {
+  InfoBlockContentsInner,
+  useInfoBlockContents,
+} from "./InfoBlockContents";
 
 function ReadMoreBlockInner() {
   const [isOpen, setIsOpen] = useState(false);
+  const annotationsToShow = useInfoBlockContents();
+  if (annotationsToShow.length === 0) {
+    return null;
+  }
 
   return (
     <>
