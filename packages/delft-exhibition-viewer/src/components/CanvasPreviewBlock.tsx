@@ -12,6 +12,7 @@ import { useStore } from "zustand";
 import { createExhibitionStore } from "../helpers/exhibition-store";
 import { useCanvasHighlights } from "../helpers/use-canvas-highlights";
 import { CloseIcon } from "./CloseIcon";
+import { ViewerZoomControls } from "./ViewerZoomControls";
 import { VisibleAnnotationsListingItem } from "./VisibleAnnotationListItem";
 
 function CanvasPreviewBlockInner({
@@ -232,7 +233,11 @@ function CanvasPreviewBlockInner({
                   containerStyle={{ height: "100%", minHeight: 0 }}
                   renderPreset={config}
                 >
-                  <CanvasPanel.RenderCanvas strategies={["images"]} enableSizes={false}>
+                  <CanvasPanel.RenderCanvas
+                    strategies={["images"]}
+                    enableSizes={false}
+                    renderViewerControls={() => <ViewerZoomControls />}
+                  >
                     {highlights.map((highlight, index) => {
                       const target = highlight?.selector?.spatial as any;
                       if (!target) return null;
