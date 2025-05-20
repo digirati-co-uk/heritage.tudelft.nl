@@ -18,31 +18,47 @@ export interface InfoBlockProps {
   index: number;
 }
 
-export function InfoBlock({ id, index, canvas, strategy, firstInfo, scrollEnabled }: InfoBlockProps) {
+export function InfoBlock({
+  id,
+  index,
+  canvas,
+  strategy,
+  firstInfo,
+  scrollEnabled,
+}: InfoBlockProps) {
   const className = getClassName(canvas.behavior, firstInfo);
   const locale = useIIIFLanguage();
   const items = getItemsByLocale(strategy.items, locale);
   const vault = useVault();
   const annotationPage = vault.get(canvas.annotations || []);
-  const annotations = vault.get(annotationPage.flatMap((page) => page.items || []));
+  const annotations = vault.get(
+    annotationPage.flatMap((page) => page.items || []),
+  );
 
   return (
     <BaseGridSection
       enabled={scrollEnabled}
       updatesTitle={!!canvas.label}
       id={id || `${index}`}
-      className={twMerge("cut-corners bg-black p-6 text-white", className)}
+      className={twMerge(
+        "cut-corners bg-InfoBlock p-6 text-InfoBlockText",
+        className,
+      )}
     >
       <div className="exhibition-info-block">
         {canvas.label ? (
-          <div className="text-m mb-4 font-mono uppercase">
+          <div className="text-m mb-4 font-mono delft-title">
             <LocaleString>{canvas.label}</LocaleString>
           </div>
         ) : (
           ""
         )}
         {items.map((item, idx) => (
-          <LocaleString key={idx} enableDangerouslySetInnerHTML className="mb-3">
+          <LocaleString
+            key={idx}
+            enableDangerouslySetInnerHTML
+            className="mb-3"
+          >
             {item.text}
           </LocaleString>
         ))}

@@ -1,13 +1,15 @@
 import type { Manifest } from "@iiif/presentation-3";
-import invariant from "tiny-invariant";
 import { LocaleString } from "react-iiif-vault";
+import invariant from "tiny-invariant";
 
 export function TitlePanel({ manifest }: { manifest: Manifest }) {
   invariant(manifest, "Manifest not found");
 
   return (
     <section className="cut-corners bg-TitleCard text-TitleCardText col-span-4 row-span-4 flex min-h-[400px] flex-col justify-between p-5">
-      <div className="text-md text-center font-mono uppercase">{<LocaleString>Exhibition</LocaleString>}</div>
+      <div className="text-md text-center font-mono delft-title">
+        <LocaleString>Exhibition</LocaleString>
+      </div>
       <div className="flex flex-col items-center gap-4">
         <h1 className="my-3 text-center text-3xl font-medium">
           <LocaleString>{manifest.label}</LocaleString>

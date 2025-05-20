@@ -31,7 +31,7 @@ export function TableOfContents({
             rel="noreferrer"
           >
             <IIIFIcon
-              className="text-xl text-white/50 hover:text-white"
+              className="text-xl opacity-50 hover:opacity-100"
               title={"Open IIIF Manifest"}
             />
             <span className="sr-only">Open IIIF Manifest</span>

@@ -1,5 +1,16 @@
-import { type SupportedTarget, type Vault, expandTarget, getValue } from "@iiif/helpers";
-import type { Annotation, Canvas, ContentResource, InternationalString, Manifest } from "@iiif/presentation-3";
+import {
+  type SupportedTarget,
+  type Vault,
+  expandTarget,
+  getValue,
+} from "@iiif/helpers";
+import type {
+  Annotation,
+  Canvas,
+  ContentResource,
+  InternationalString,
+  Manifest,
+} from "@iiif/presentation-3";
 import type { CanvasNormalized } from "@iiif/presentation-3-normalized";
 import { createContext, useContext } from "react";
 import invariant from "tiny-invariant";
@@ -26,7 +37,7 @@ export interface ExhibitionStep {
   nextCanvasId: null | string;
 }
 
-interface ExhibitionStore {
+export interface ExhibitionStore {
   currentStep: number;
   steps: ExhibitionStep[];
 
@@ -43,7 +54,7 @@ interface ExhibitionStore {
   isPlaying: boolean;
 }
 
-type ExhibitionStoreOptions = {
+export type ExhibitionStoreOptions = {
   vault: Vault;
   manifest?: Manifest;
   canvases?: Canvas[];
@@ -63,7 +74,11 @@ export function ExhibitionProvider({
   store: StoreApi<ExhibitionStore>;
   children: React.ReactNode;
 }) {
-  return <ExhibitionContext.Provider value={store}>{children}</ExhibitionContext.Provider>;
+  return (
+    <ExhibitionContext.Provider value={store}>
+      {children}
+    </ExhibitionContext.Provider>
+  );
 }
 
 export function useExhibition() {
@@ -100,7 +115,9 @@ function getCanvasTourSteps({
   nextCanvasId: string | null;
 }): ExhibitionStep[] {
   const steps: ExhibitionStep[] = [];
-  const annotations = canvas.annotations[0] ? vault.get(canvas.annotations[0]) : null;
+  const annotations = canvas.annotations[0]
+    ? vault.get(canvas.annotations[0])
+    : null;
 
   const paintingPage = canvas.items[0] ? vault.get(canvas.items[0]) : null;
   const hasMultipleAnnotations = (paintingPage?.items.length || 0) > 1;
@@ -114,7 +131,10 @@ function getCanvasTourSteps({
 
     if (target.type === "Canvas") {
       const target = expandTarget(annotation.target as any);
-      if ((getValue(annotation.label) && getValue(annotation.summary)) || target.selector?.spatial) {
+      if (
+        (getValue(annotation.label) && getValue(annotation.summary)) ||
+        target.selector?.spatial
+      ) {
         steps.push({
           label: annotation.label || null,
           summary: annotation.summary || null,
@@ -148,7 +168,9 @@ function getCanvasTourSteps({
       region = expandTarget(target.target as any);
     }
 
-    const objectLink = imageService ? objectLinks.find((link) => link.service === imageService) || null : null;
+    const objectLink = imageService
+      ? objectLinks.find((link) => link.service === imageService) || null
+      : null;
 
     steps.push({
       label: target.label || null,
@@ -202,8 +224,12 @@ export function createExhibitionStore(options: ExhibitionStoreOptions) {
   const allSteps: ExhibitionStep[] = [];
   for (const [index, item] of selectedCanvases.entries()) {
     const canvas = vault.get<CanvasNormalized>(item);
-    const previousCanvasId = index > 0 && manifest ? manifest.items[index - 1].id : null;
-    const nextCanvasId = manifest && index < manifest.items.length - 1 ? manifest.items[index + 1].id : null;
+    const previousCanvasId =
+      index > 0 && manifest ? manifest.items[index - 1].id : null;
+    const nextCanvasId =
+      manifest && index < manifest.items.length - 1
+        ? manifest.items[index + 1].id
+        : null;
     if (!canvas) continue;
     const steps = getCanvasTourSteps({
       vault,
@@ -217,7 +243,12 @@ export function createExhibitionStore(options: ExhibitionStoreOptions) {
     allSteps.push(...steps);
   }
 
-  const startIndex = allSteps.findIndex((step) => step.canvasIndex === startCanvasIndex);
+  let startIndex = allSteps.findIndex(
+    (step) => step.canvasIndex === startCanvasIndex,
+  );
+  if (startIndex === -1) {
+    startIndex = 0;
+  }
 
   return createStore<ExhibitionStore>((set, get) => {
     let nextFrameTimer: Timer | null = null;
@@ -234,7 +265,10 @@ export function createExhibitionStore(options: ExhibitionStoreOptions) {
       };
       const stepIdx = get().currentStep;
       const resolvedNextStep = get().steps[stepIdx + 1];
-      nextFrameTimer = setTimeout(goToNext, resolvedNextStep?.duration || timePerSlide);
+      nextFrameTimer = setTimeout(
+        goToNext,
+        resolvedNextStep?.duration || timePerSlide,
+      );
     };
     const pause = () => {
       if (nextFrameTimer) {
@@ -296,7 +330,9 @@ export function createExhibitionStore(options: ExhibitionStoreOptions) {
       },
 
       goToCanvasIndex(index: number) {
-        const stepIndex = get().steps.findIndex((step) => step.canvasIndex === index);
+        const stepIndex = get().steps.findIndex(
+          (step) => step.canvasIndex === index,
+        );
         if (stepIndex !== -1) {
           set({ currentStep: stepIndex });
         }

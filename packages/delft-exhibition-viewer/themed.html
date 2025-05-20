@@ -1,0 +1,47 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,viewport-fit=cover, initial-scale=1.0" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Delft exhibition viewer" />
+    <title>Delft Exhibition Viewer</title>
+    <style>
+      body.blue {
+        /* Base colors */
+        --delft-bg-primary: rgb(229 231 235);
+        --delft-bg-secondary: #fff;
+        --delft-bg-overlay: rgba(0, 0, 0, 0.3);
+
+        /* Text colors */
+        --delft-text-primary: #fff;
+        --delft-text-secondary: #000;
+        --delft-image-caption: #fff;
+        --delft-annotation-selected: rgb(250, 204, 21);
+
+        /* UI elements */
+        --delft-control-bar: #303f9f;
+        --delft-control-bar-border: #1a237e;
+        --delft-control-hover: rgba(0, 0, 0, 0.1);
+
+        --delft-progress-bar: #fff;
+
+        /* Title elements */
+        --delft-title-card: #1a237e;
+        --delft-title-card-text: #fff;
+
+        /* Info blocks */
+        --delft-info-block: #3949ab;
+        --delft-info-block-text: #fff;
+
+        /* Viewer elements */
+        --delft-viewer-background: #09115a;
+        --delft-title-transform: none;
+      }
+    </style>
+  </head>
+  <body class="blue">
+    <div id="root"></div>
+    <script type="module" src="./src/index.tsx"></script>
+  </body>
+</html>

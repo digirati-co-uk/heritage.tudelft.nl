@@ -1,4 +1,4 @@
-.cut-corners {
+*[data-cut-corners-enabled="true"] .cut-corners {
   -webkit-clip-path: polygon(
     1rem 0,
     calc(100% - 1rem) 0,
@@ -35,7 +35,8 @@
 /* Exhibition editorial */
 
 .exhibition-info-block h2 {
-  @apply my-4 text-center font-mono uppercase;
+  @apply my-4 text-center font-mono;
+  text-transform: var(--delft-title-transform);
 }
 .exhibition-info-block p {
   @apply my-4;
@@ -49,7 +50,7 @@
   min-width: 0;
   min-height: 0;
   --atlas-container-flex: 1 1 0px;
-  --atlas-background: #373737;
+  --atlas-background: var(--delft-viewer-background);
   --atlas-container-height: 100%;
 }
 
@@ -84,7 +85,8 @@ div[data-textual-content="true"] p {
 }
 
 .safe-inset {
-  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
 .fill-height {

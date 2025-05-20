@@ -68,7 +68,7 @@ export function CanvasExhibitionBlock(props: CanvasExhibitionBlockProps) {
   }
 
   return (
-    <div className="text-white flex flex-col flex-1 min-w-0 min-h-0 h-full">
+    <div className="text-ImageCaption flex flex-col flex-1 min-w-0 min-h-0 h-full">
       <CanvasPanel.Viewer
         key={props.fullWidth ? 1 : 2}
         containerStyle={{

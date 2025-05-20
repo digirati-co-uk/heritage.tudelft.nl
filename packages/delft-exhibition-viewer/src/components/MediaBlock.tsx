@@ -39,7 +39,10 @@ function MediaBlockInner(props: MediaBlockProps) {
     <BaseGridSection
       id={props.id || `${props.index}`}
       enabled={props.scrollEnabled}
-      className={twMerge("cut-corners bg-black text-white", className)}
+      className={twMerge(
+        "cut-corners bg-InfoBlock text-InfoBlockText",
+        className,
+      )}
     >
       <img
         className="h-full w-full object-cover"
@@ -53,15 +56,18 @@ function MediaBlockInner(props: MediaBlockProps) {
         open={isOpen}
         onClose={() => setIsOpen(false)}
       >
-        <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+        <div
+          className="fixed inset-0 bg-BackgroundOverlay"
+          aria-hidden="true"
+        />
         <div className="mobile-height fixed inset-0 flex w-screen items-center p-4">
           <button
-            className="absolute right-6 top-6 z-20 flex h-16 w-16 items-center justify-center rounded bg-black hover:bg-slate-900"
+            className="absolute right-6 top-6 z-20 flex h-16 w-16 items-center justify-center rounded bg-ControlBar hover:bg-ControlHover"
             onClick={() => setIsOpen(false)}
           >
             <CloseIcon fill="#fff" />
           </button>
-          <Dialog.Panel className="relative flex h-full w-full flex-col justify-center overflow-y-auto overflow-x-hidden rounded bg-black">
+          <Dialog.Panel className="relative flex h-full w-full flex-col justify-center overflow-y-auto overflow-x-hidden rounded bg-InfoBlock text-InfoBlockText">
             <div className="relative w-full flex-1">
               {media.type === "VideoYouTube" ? (
                 <iframe
@@ -85,7 +91,7 @@ function MediaBlockInner(props: MediaBlockProps) {
               )}
             </div>
             {annotation?.label || annotation?.summary ? (
-              <div className="p-8 text-white">
+              <div className="p-8 text-InfoBlockText">
                 {annotation?.label ? (
                   <h3 className="mb-2 uppercase">
                     <LocaleString>{annotation.label}</LocaleString>
