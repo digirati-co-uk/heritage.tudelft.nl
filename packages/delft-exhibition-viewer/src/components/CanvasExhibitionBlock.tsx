@@ -43,25 +43,24 @@ export function CanvasExhibitionBlock(props: CanvasExhibitionBlockProps) {
     step?.previousCanvasId === props.canvasId ||
     step?.nextCanvasId === props.canvasId;
 
+  const region = step?.region?.selector?.spatial;
+
   useLayoutEffect(() => {
     if (atlas.current && isReady && stepCurrent) {
       if (
         step?.region?.selector?.type === "BoxSelector" ||
         step?.region?.selector?.type === "SvgSelector"
       ) {
-        atlas.current.runtime.world.gotoRegion({
+        atlas.current.runtime.setHomePosition({
           ...(step.region?.selector?.spatial as any),
           padding: 50,
         });
-      } else if (step) {
+      }
+      if (step) {
         atlas.current?.runtime.world.goHome();
       }
     }
-  }, [stepCurrent, isReady, props.fullWidth]);
-
-  useEffect(() => {
-    atlas.current?.runtime.world.recalculateWorldSize();
-  }, [props.fullWidth]);
+  }, [step, stepCurrent, isReady, props.fullWidth]);
 
   if (!canvas || !shouldPreload) {
     return null;
@@ -70,32 +69,12 @@ export function CanvasExhibitionBlock(props: CanvasExhibitionBlockProps) {
   return (
     <div className="text-ImageCaption flex flex-col flex-1 min-w-0 min-h-0 h-full">
       <CanvasPanel.Viewer
-        key={props.fullWidth ? 1 : 2}
-        containerStyle={{
-          height: "100%",
-          width: "100%",
-          // pointerEvents: isOpen ? undefined : "none",
-        }}
+        homePosition={region as any}
         renderPreset={config}
+        resizeHash={props.fullWidth ? 1 : 2}
         homeOnResize
-        // homeCover={cover ? "start" : false}
-        // onCreated={(ctx) => void (atlas.current = ctx)}
         onCreated={(preset) => {
           atlas.current = preset;
-          atlas.current.em?.updateBounds();
-          // Set position.
-          if (
-            step?.region?.selector?.type === "BoxSelector" ||
-            step?.region?.selector?.type === "SvgSelector"
-          ) {
-            atlas.current.runtime.world.gotoRegion({
-              ...(step.region?.selector?.spatial as any),
-              padding: 50,
-            });
-          } else if (step) {
-            atlas.current?.runtime.world.goHome();
-          }
-
           const clear = preset.runtime.registerHook("useAfterFrame", () => {
             const renderers = (preset.renderer as any).renderers;
             const canvasRenderer = renderers[0]?.canvas ? renderers[0] : null;
