@@ -35,6 +35,7 @@ export function ImageBlock({
   const isLeft = behavior.includes("left");
   const isRight = behavior.includes("right");
   const isBottom = behavior.includes("bottom");
+  const cover = behavior.includes("cover");
 
   const showSummary = Boolean(canvas.summary && (isLeft || isRight || isBottom));
 
@@ -44,7 +45,7 @@ export function ImageBlock({
     <Suspense fallback={<div className="h-full w-full" />}>
       <CanvasPreviewBlock
         canvasId={canvas.id}
-        cover={false}
+        cover={cover}
         index={index}
         objectLinks={objectLinks}
         autoPlay={autoPlay}

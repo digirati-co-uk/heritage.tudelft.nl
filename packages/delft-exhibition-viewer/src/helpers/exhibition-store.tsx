@@ -102,9 +102,6 @@ function getCanvasTourSteps({
   const steps: ExhibitionStep[] = [];
   const annotations = canvas.annotations[0] ? vault.get(canvas.annotations[0]) : null;
 
-  const paintingPage = canvas.items[0] ? vault.get(canvas.items[0]) : null;
-  const hasMultipleAnnotations = (paintingPage?.items.length || 0) > 1;
-
   for (const item of annotations?.items || []) {
     const annotation = vault.get<Annotation>(item);
     const target = vault.get<Canvas | Annotation>(annotation.target as any);
