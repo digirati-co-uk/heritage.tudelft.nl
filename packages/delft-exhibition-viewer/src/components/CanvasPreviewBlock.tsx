@@ -1,9 +1,21 @@
 import type { DefaultPresetOptions, Preset } from "@atlas-viewer/atlas";
 import { Dialog } from "@headlessui/react";
 import { expandTarget } from "@iiif/helpers";
-import { type ReactNode, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import {
+  type ReactNode,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useHover } from "react-aria";
-import { CanvasContext, CanvasPanel, useCanvas, useVault } from "react-iiif-vault";
+import {
+  CanvasContext,
+  CanvasPanel,
+  useCanvas,
+  useVault,
+} from "react-iiif-vault";
 import { LocaleString } from "react-iiif-vault";
 import { LazyLoadComponent } from "react-lazy-load-image-component";
 import { twMerge } from "tailwind-merge";
@@ -12,18 +24,24 @@ import { useStore } from "zustand";
 import { createExhibitionStore } from "../helpers/exhibition-store";
 import { useCanvasHighlights } from "../helpers/use-canvas-highlights";
 import { CloseIcon } from "./CloseIcon";
+import { RenderSeeAlso } from "./RenderSeeAlso";
 import { ViewerZoomControls } from "./ViewerZoomControls";
 import { VisibleAnnotationsListingItem } from "./VisibleAnnotationListItem";
+import { InfoIcon } from "./icons/InfoIcon";
 
 function CanvasPreviewBlockInner({
   cover,
   autoPlay = false,
   objectLinks,
   alternativeMode,
+  transitionScale = false,
+  imageInfoIcon = false,
 }: {
   cover?: boolean;
   autoPlay?: boolean;
   alternativeMode?: boolean;
+  transitionScale?: boolean;
+  imageInfoIcon?: boolean;
   objectLinks: Array<{
     service: string;
     slug: string;
@@ -44,10 +62,20 @@ function CanvasPreviewBlockInner({
         objectLinks,
         firstStep: false,
       }),
-    [vault, canvas]
+    [vault, canvas],
   );
 
-  const { currentStep, goToStep, isPlaying, nextStep, pause, play, playPause, previousStep, steps } = useStore(store);
+  const {
+    currentStep,
+    goToStep,
+    isPlaying,
+    nextStep,
+    pause,
+    play,
+    playPause,
+    previousStep,
+    steps,
+  } = useStore(store);
 
   const step = currentStep === -1 ? null : steps[currentStep];
 
@@ -112,7 +140,7 @@ function CanvasPreviewBlockInner({
           interactive: isOpen,
         } as DefaultPresetOptions,
       ] as any,
-    [isOpen]
+    [isOpen],
   );
 
   const tour = currentStep !== -1;
@@ -122,7 +150,10 @@ function CanvasPreviewBlockInner({
 
   useLayoutEffect(() => {
     if (atlas.current && isReady && step) {
-      if (step?.region?.selector?.type === "BoxSelector" || step?.region?.selector?.type === "SvgSelector") {
+      if (
+        step?.region?.selector?.type === "BoxSelector" ||
+        step?.region?.selector?.type === "SvgSelector"
+      ) {
         atlas.current.runtime.world.gotoRegion({
           ...(step.region?.selector?.spatial as any),
           padding: 50,
@@ -188,7 +219,15 @@ function CanvasPreviewBlockInner({
               : highlights.map((highlight, index) => {
                   const target = highlight?.selector?.spatial as any;
                   if (!target) return null;
-                  return <box key={index} target={target} relativeStyle html style={{ border: "2px dashed red" }} />;
+                  return (
+                    <box
+                      key={index}
+                      target={target}
+                      relativeStyle
+                      html
+                      style={{ border: "2px dashed red" }}
+                    />
+                  );
                 })}
           </CanvasPanel.RenderCanvas>
         </CanvasPanel.Viewer>
@@ -319,6 +358,16 @@ function CanvasPreviewBlockInner({
                         {canvas.summary}
                       </LocaleString>
                     </div>
+                    {canvas.requiredStatement && (
+                      <div className="mt-8 text-sm opacity-60">
+                        <LocaleString>
+                          {canvas.requiredStatement.value}
+                        </LocaleString>
+                      </div>
+                    )}
+                    {canvas.seeAlso?.length ? (
+                      <RenderSeeAlso resource={canvas.seeAlso[0]} />
+                    ) : null}
                   </div>
                 ) : null}
                 {steps.length > 1 ? (
@@ -466,12 +515,16 @@ export function CanvasPreviewBlock({
   autoPlay,
   objectLinks,
   alternativeMode,
+  transitionScale,
+  imageInfoIcon,
 }: {
   canvasId: string;
   cover?: boolean;
   index: number;
   autoPlay?: boolean;
   alternativeMode?: boolean;
+  transitionScale?: boolean;
+  imageInfoIcon?: boolean;
   objectLinks: Array<{
     service: string;
     slug: string;
@@ -487,6 +540,8 @@ export function CanvasPreviewBlock({
         objectLinks={objectLinks}
         autoPlay={autoPlay}
         alternativeMode={alternativeMode}
+        transitionScale={transitionScale}
+        imageInfoIcon={imageInfoIcon}
       />
     </CanvasContext>
   );

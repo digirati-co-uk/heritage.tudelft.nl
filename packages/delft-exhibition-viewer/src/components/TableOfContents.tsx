@@ -52,7 +52,7 @@ export function TableOfContents({
                   "text-md hover:underline",
                   hashAsNumber === idx ? "underline" : "",
                 )}
-                href={`#${idx}`}
+                href={`#s${idx}`}
               >
                 {item.label}
               </LocaleString>

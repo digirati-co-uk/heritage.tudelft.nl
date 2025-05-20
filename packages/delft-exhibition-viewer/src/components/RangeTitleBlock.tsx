@@ -20,7 +20,7 @@ export function RangeTitleBlock({
     for (const entry of entries) {
       const targetId: string = entry.target.id;
       if (entry.isIntersecting && targetId === id) {
-        setHash(targetId);
+        setHash(`s${targetId}`);
         break;
       }
     }

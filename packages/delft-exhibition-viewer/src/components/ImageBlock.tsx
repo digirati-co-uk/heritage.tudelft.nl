@@ -1,6 +1,6 @@
 import type { Canvas } from "@iiif/presentation-3";
 import { type ReactNode, Suspense } from "react";
-import { LocaleString } from "react-iiif-vault";
+import { LocaleString, useVault } from "react-iiif-vault";
 import { twMerge } from "tailwind-merge";
 import { getClassName } from "../helpers/exhibition";
 import { BaseGridSection } from "./BaseGridSection";
@@ -20,6 +20,8 @@ export interface ImageBlockProps {
   }>;
   alternativeMode?: boolean;
   scrollEnabled?: boolean;
+  transitionScale?: boolean;
+  imageInfoIcon?: boolean;
 }
 
 export function ImageBlock({
@@ -30,6 +32,8 @@ export function ImageBlock({
   autoPlay,
   alternativeMode,
   scrollEnabled,
+  transitionScale,
+  imageInfoIcon,
 }: ImageBlockProps) {
   const behavior = canvas.behavior || [];
   const isLeft = behavior.includes("left");
@@ -37,7 +41,9 @@ export function ImageBlock({
   const isBottom = behavior.includes("bottom");
   const isTop = behavior.includes("top");
 
-  const showSummary = Boolean(canvas.summary && (isLeft || isRight || isBottom));
+  const showSummary = Boolean(
+    canvas.summary && (isLeft || isRight || isBottom || isTop),
+  );
 
   const className = getClassName(behavior);
 
@@ -50,6 +56,8 @@ export function ImageBlock({
         objectLinks={objectLinks}
         autoPlay={autoPlay}
         alternativeMode={alternativeMode}
+        transitionScale={transitionScale}
+        imageInfoIcon={imageInfoIcon}
       />
     </Suspense>
   );
