@@ -1,12 +1,7 @@
 import { createPaintingAnnotationsHelper } from "@iiif/helpers/painting-annotations";
 import type { Manifest } from "@iiif/presentation-3";
 import { type ReactNode, useEffect, useMemo, useRef } from "react";
-import {
-  LanguageProvider,
-  ManifestContext,
-  VaultProvider,
-  useExistingVault,
-} from "react-iiif-vault";
+import { LanguageProvider, ManifestContext, VaultProvider, useExistingVault } from "react-iiif-vault";
 import { getRenderingStrategy } from "react-iiif-vault/utils";
 import { useStore } from "zustand";
 import "./styles/lib.css";
@@ -20,10 +15,7 @@ import { NextIcon } from "./components/icons/NextIcon";
 import { PauseIcon } from "./components/icons/PauseIcon";
 import { PlayIcon } from "./components/icons/PlayIcon";
 import { PreviousIcon } from "./components/icons/PreviousIcon";
-import {
-  ExhibitionProvider,
-  createExhibitionStore,
-} from "./helpers/exhibition-store";
+import { ExhibitionProvider, createExhibitionStore } from "./helpers/exhibition-store";
 import { useHashValue } from "./helpers/use-hash-value";
 
 export type DelftPresentationProps = {
@@ -55,10 +47,7 @@ export function DelftPresentation(props: DelftPresentationProps) {
 
   // Needs to be here.
   if (props.manifest?.id && !vault.requestStatus(props.manifest.id)) {
-    vault.loadSync(
-      props.manifest.id,
-      JSON.parse(JSON.stringify(props.manifest)),
-    );
+    vault.loadSync(props.manifest.id, JSON.parse(JSON.stringify(props.manifest)));
   }
 
   const helper = createPaintingAnnotationsHelper();
@@ -69,20 +58,12 @@ export function DelftPresentation(props: DelftPresentationProps) {
         manifest: props.manifest,
         objectLinks: props.viewObjectLinks,
         startCanvasIndex,
+        firstStep: true,
       }),
-    [vault, props.manifest],
+    [vault, props.manifest]
   );
 
-  const {
-    currentStep,
-    goToStep,
-    nextStep,
-    previousStep,
-    steps,
-    play,
-    playPause,
-    isPlaying,
-  } = useStore(store);
+  const { currentStep, goToStep, nextStep, previousStep, steps, play, playPause, isPlaying } = useStore(store);
 
   const step = currentStep === -1 ? null : steps[currentStep];
 
@@ -127,12 +108,10 @@ export function DelftPresentation(props: DelftPresentationProps) {
       <VaultProvider vault={vault}>
         <ManifestContext manifest={props.manifest.id}>
           <LanguageProvider language={props.language || "en"}>
-            <div className="flex flex-col h-full w-full">
+            <div className="flex h-full w-full flex-col">
               <div
                 data-cut-corners-enabled={cutCorners}
-                className={
-                  "delft-presentation-viewer relative w-full bg-black flex-1 min-h-0"
-                }
+                className={"delft-presentation-viewer relative min-h-0 w-full flex-1 bg-black"}
               >
                 {props.manifest.items.map((canvas: any, idx) => {
                   const paintables = helper.getPaintables(canvas);
@@ -152,9 +131,7 @@ export function DelftPresentation(props: DelftPresentationProps) {
                       ],
                     });
 
-                    const foundLinks = props.viewObjectLinks.filter(
-                      (link) => link.canvasId === canvas.id,
-                    );
+                    const foundLinks = props.viewObjectLinks.filter((link) => link.canvasId === canvas.id);
 
                     if (strategy.type === "textual-content") {
                       return (
@@ -202,22 +179,21 @@ export function DelftPresentation(props: DelftPresentationProps) {
               <div>
                 <TableOfContentsBar
                   content={{
-                    tableOfContents:
-                      props.manifest?.label || "Table of contents",
+                    tableOfContents: props.manifest?.label || "Table of contents",
                   }}
                 >
                   <button
                     type="button"
-                    className="z-50 hover:bg-black/10 w-10 h-10 rounded flex items-center justify-center"
+                    className="z-50 flex h-10 w-10 items-center justify-center rounded hover:bg-black/10"
                     onClick={playPause}
                   >
                     {isPlaying ? <PauseIcon /> : <PlayIcon />}
                   </button>
 
-                  <div className="w-16 flex items-center relative">
-                    <div className="h-1 w-full bg-white/20 rounded-full" />
+                  <div className="relative flex w-16 items-center">
+                    <div className="h-1 w-full rounded-full bg-white/20" />
                     <div
-                      className="h-1 bg-white absolute top-0 left-0 transition-all rounded-full"
+                      className="absolute left-0 top-0 h-1 rounded-full bg-white transition-all"
                       style={{
                         width: `${(currentStep / steps.length) * 100}%`,
                       }}
@@ -226,7 +202,7 @@ export function DelftPresentation(props: DelftPresentationProps) {
 
                   <button
                     type="button"
-                    className="z-50 hover:bg-black/10 w-10 h-10 rounded flex items-center justify-center"
+                    className="z-50 flex h-10 w-10 items-center justify-center rounded hover:bg-black/10"
                     onClick={previousStep}
                   >
                     <PreviousIcon />
@@ -234,7 +210,7 @@ export function DelftPresentation(props: DelftPresentationProps) {
 
                   <button
                     type="button"
-                    className="z-50 hover:bg-black/10 w-10 h-10 rounded flex items-center justify-center"
+                    className="z-50 flex h-10 w-10 items-center justify-center rounded hover:bg-black/10"
                     onClick={() => nextStep()}
                   >
                     <NextIcon />

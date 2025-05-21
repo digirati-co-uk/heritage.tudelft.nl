@@ -35,6 +35,7 @@ export function ImageBlock({
   const isLeft = behavior.includes("left");
   const isRight = behavior.includes("right");
   const isBottom = behavior.includes("bottom");
+  const cover = behavior.includes("cover");
 
   const showSummary = Boolean(canvas.summary && (isLeft || isRight || isBottom));
 
@@ -44,7 +45,7 @@ export function ImageBlock({
     <Suspense fallback={<div className="h-full w-full" />}>
       <CanvasPreviewBlock
         canvasId={canvas.id}
-        cover={false}
+        cover={cover}
         index={index}
         objectLinks={objectLinks}
         autoPlay={autoPlay}
@@ -88,12 +89,14 @@ export function ImageBlock({
                 <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="#fff" />
               </svg>
             </div>
-            <div className="mb-4 font-mono text-sm uppercase">
+            <div className="text-m mb-4 font-mono uppercase">
               <LocaleString>{canvas.label}</LocaleString>
             </div>
             <div className="exhibition-info-block">
               <div>
-                <LocaleString>{canvas.summary}</LocaleString>
+                <LocaleString enableDangerouslySetInnerHTML className="whitespace-pre-wrap">
+                  {canvas.summary}
+                </LocaleString>
               </div>
               {canvas.requiredStatement && (
                 <div className="">
