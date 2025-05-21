@@ -28,12 +28,25 @@ const widthMap = {
   "w-12": "col-span-12",
 };
 
+const startMap = {
+  "start-1": "col-start-1",
+  "start-2": "col-start-2",
+  "start-3": "col-start-3",
+  "start-4": "col-start-4",
+  "start-5": "col-start-5",
+  "start-6": "col-start-6",
+  "start-7": "col-start-7",
+  "start-8": "col-start-8",
+  "start-9": "col-start-9",
+};
+
 export function getClassName(b?: string[], firstInfo = false) {
   if (!b || b.length === 0) {
     b = ["h-6", "w-12", "image"];
   }
   let h = b.find((a) => a.includes("h-")) as keyof typeof heightMap;
   const w = b.find((a) => a.includes("w-")) as keyof typeof widthMap;
+  const start = b.find((a) => a.includes("start-")) as keyof typeof startMap;
   const classNames = [];
 
   if (firstInfo && h === "h-4") {
@@ -42,5 +55,8 @@ export function getClassName(b?: string[], firstInfo = false) {
 
   classNames.push(heightMap[h]);
   classNames.push(widthMap[w]);
+  if (start && startMap[start]) {
+    classNames.push(startMap[start]);
+  }
   return classNames.join(" ");
 }
