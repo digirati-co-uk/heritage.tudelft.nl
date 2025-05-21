@@ -22,6 +22,7 @@ export interface ImageBlockProps {
   scrollEnabled?: boolean;
   transitionScale?: boolean;
   imageInfoIcon?: boolean;
+  coverImages?: boolean;
 }
 
 export function ImageBlock({
@@ -33,6 +34,7 @@ export function ImageBlock({
   alternativeMode,
   scrollEnabled,
   transitionScale,
+  coverImages = false,
   imageInfoIcon,
 }: ImageBlockProps) {
   const behavior = canvas.behavior || [];
@@ -40,6 +42,7 @@ export function ImageBlock({
   const isRight = behavior.includes("right");
   const isBottom = behavior.includes("bottom");
   const isTop = behavior.includes("top");
+  const isCover = behavior.includes("image-cover");
 
   const showSummary = Boolean(
     canvas.summary && (isLeft || isRight || isBottom || isTop),
@@ -51,7 +54,7 @@ export function ImageBlock({
     <Suspense fallback={<div className="h-full w-full" />}>
       <CanvasPreviewBlock
         canvasId={canvas.id}
-        cover={false}
+        cover={coverImages || isCover}
         index={index}
         objectLinks={objectLinks}
         autoPlay={autoPlay}

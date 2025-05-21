@@ -270,6 +270,7 @@ function CanvasPreviewBlockInner({
                 <CanvasPanel.Viewer
                   onCreated={(ctx) => void (atlas.current = ctx)}
                   containerStyle={{ height: "100%", minHeight: 0 }}
+                  runtimeOptions={config[1].runtimeOptions}
                   renderPreset={config}
                 >
                   <CanvasPanel.RenderCanvas

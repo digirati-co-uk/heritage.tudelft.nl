@@ -47,6 +47,7 @@ export type DelftExhibitionProps = {
     alternativeImageMode?: boolean;
     transitionScale?: boolean;
     imageInfoIcon?: boolean;
+    coverImages?: boolean;
   };
   content?: {
     exhibition: string;
@@ -69,6 +70,7 @@ export function DelftExhibition(props: DelftExhibitionProps) {
     hideTitle = false,
     transitionScale = false,
     imageInfoIcon = false,
+    coverImages = false,
   } = props.options || {};
 
   const { pressProps: closeButtonProps } = usePress({
@@ -204,6 +206,7 @@ export function DelftExhibition(props: DelftExhibitionProps) {
                           scrollEnabled={!enabled}
                           canvas={canvas}
                           index={idx}
+                          coverImages={coverImages}
                           objectLinks={foundLinks}
                           alternativeMode={alternativeImageMode}
                           transitionScale={transitionScale}
