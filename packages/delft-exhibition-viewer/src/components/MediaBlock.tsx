@@ -1,11 +1,7 @@
 import { Dialog } from "@headlessui/react";
 import type { Canvas } from "@iiif/presentation-3";
 import { Suspense, lazy, useState } from "react";
-import {
-  type MediaStrategy,
-  type SingleYouTubeVideo,
-  useThumbnail,
-} from "react-iiif-vault";
+import { type MediaStrategy, type SingleYouTubeVideo, useThumbnail } from "react-iiif-vault";
 import { CanvasContext } from "react-iiif-vault";
 import { LocaleString } from "react-iiif-vault";
 import { twMerge } from "tailwind-merge";
@@ -41,18 +37,9 @@ function MediaBlockInner(props: MediaBlockProps) {
       enabled={props.scrollEnabled}
       className={twMerge("cut-corners bg-black text-white", className)}
     >
-      <img
-        className="h-full w-full object-cover"
-        src={thumbnail?.id}
-        alt=""
-        onClick={() => setIsOpen(true)}
-      />
+      <img className="h-full w-full object-cover" src={thumbnail?.id} alt="" onClick={() => setIsOpen(true)} />
 
-      <Dialog
-        className="relative z-50"
-        open={isOpen}
-        onClose={() => setIsOpen(false)}
-      >
+      <Dialog className="relative z-50" open={isOpen} onClose={() => setIsOpen(false)}>
         <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
         <div className="mobile-height fixed inset-0 flex w-screen items-center p-4">
           <button
@@ -62,7 +49,7 @@ function MediaBlockInner(props: MediaBlockProps) {
             <CloseIcon fill="#fff" />
           </button>
           <Dialog.Panel className="relative flex h-full w-full flex-col justify-center overflow-y-auto overflow-x-hidden rounded bg-black">
-            <div className="relative w-full flex-1">
+            <div className="relative h-full w-full flex-1">
               {media.type === "VideoYouTube" ? (
                 <iframe
                   title="YouTube video player"
@@ -91,11 +78,7 @@ function MediaBlockInner(props: MediaBlockProps) {
                     <LocaleString>{annotation.label}</LocaleString>
                   </h3>
                 ) : null}
-                <p>
-                  {annotation?.summary ? (
-                    <LocaleString>{annotation.summary}</LocaleString>
-                  ) : null}
-                </p>
+                <p>{annotation?.summary ? <LocaleString>{annotation.summary}</LocaleString> : null}</p>
               </div>
             ) : null}
           </Dialog.Panel>
