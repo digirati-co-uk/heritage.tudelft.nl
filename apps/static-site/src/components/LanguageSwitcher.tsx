@@ -1,11 +1,11 @@
 "use client";
 
 import { Link, usePathname } from "@/navigation";
-import { useLocale } from "next-intl";
+import { useParams } from "next/navigation";
 
 export function LanguageSwitcher({ oldStyle }: { oldStyle?: boolean }) {
   const pathname = usePathname();
-  const locale = useLocale();
+  const locale = useParams().locale;
 
   const ac = "opacity-100 group-hover:opacity-50";
   const ic = "opacity-50 group-hover:opacity-100";

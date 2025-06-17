@@ -1,20 +1,14 @@
 "use client";
-import { Link, getObjectSlug } from "@/navigation";
-import viewerConfig from "@/viewers.json";
-import type { Preset } from "@atlas-viewer/atlas";
+import { getObjectSlug } from "@/navigation";
 import type { InternationalString, Manifest } from "@iiif/presentation-3";
-import { useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
-import { CanvasPanel, useSimpleViewer } from "react-iiif-vault";
 import { Box } from "../blocks/Box";
 import { DownloadImage } from "../iiif/DownloadImage";
 import { ObjectMetadata } from "../iiif/ObjectMetadata";
 import { ObjectThumbnails } from "../iiif/ObjectThumbnails";
 import { SharingAndViewingLinks } from "../iiif/SharingAndViewingLinks";
-import { ViewerSliderControls } from "../iiif/ViewerSliderControls";
-import { ViewerZoomControls } from "../iiif/ViewerZoomControls";
 import { AutoLanguage } from "./AutoLanguage";
 import { getValue } from "@iiif/helpers/i18n";
+import dynamic from "next/dynamic";
 
 interface ManifestPageProps {
   manifest: Manifest;
@@ -59,6 +53,10 @@ interface ManifestPageProps {
 
 const runtimeOptions = { maxOverZoom: 2 };
 
+const ManifestViewer = dynamic(() => import("../iiif/ManifestViewer"), {
+  ssr: false,
+});
+
 export function ManifestPage({
   related,
   manifest,
@@ -67,23 +65,6 @@ export function ManifestPage({
   exhibitionLinks,
   initialCanvasIndex,
 }: ManifestPageProps) {
-  const context = useSimpleViewer();
-  const { currentSequenceIndex } = context;
-  const previousSeqIndex = useRef(currentSequenceIndex);
-  const atlas = useRef<Preset>();
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Needs to run when currentSequenceIndex changes.
-  useEffect(() => {
-    if (currentSequenceIndex == previousSeqIndex.current) {
-      context.setCurrentCanvasIndex(initialCanvasIndex);
-    } else {
-      context.setCurrentCanvasIndex(currentSequenceIndex);
-    }
-    if (atlas.current) {
-      setTimeout(() => atlas.current?.runtime.world.goHome(true), 5);
-    }
-  }, [currentSequenceIndex]);
-
   return (
     <div>
       <h1 className="mb-4 text-4xl font-medium">
@@ -94,21 +75,8 @@ export function ManifestPage({
           <AutoLanguage>{manifest.requiredStatement.value}</AutoLanguage>
         </p>
       ) : null}
-      <div className="relative h-[800px] max-h-[70%]">
-        <CanvasPanel.Viewer
-          onCreated={(preset) => {
-            atlas.current = preset;
-          }}
-          htmlChildren={null}
-          key={manifest.id}
-          runtimeOptions={runtimeOptions}
-        >
-          <CanvasPanel.RenderCanvas
-            strategies={["3d-model", "images", "textual-content", "media"]}
-            renderViewerControls={ViewerZoomControls}
-          />
-        </CanvasPanel.Viewer>
-        <ViewerSliderControls />
+      <div className="relative h-[800px] max-h-[70%] bg-[#373737]">
+        <ManifestViewer initialCanvasIndex={initialCanvasIndex} manifest={manifest} runtimeOptions={runtimeOptions} />
       </div>
       <div className="mb-4">
         <ObjectThumbnails />

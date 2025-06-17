@@ -1,5 +1,5 @@
 import type { InternationalString } from "@iiif/presentation-3";
-import { useLocale } from "next-intl";
+import { useParams } from "next/navigation";
 
 export function AutoLanguage({
   className,
@@ -16,7 +16,7 @@ export function AutoLanguage({
   children: InternationalString | string | null | undefined;
   mapString?: (text: string) => string;
 }) {
-  const locale = useLocale();
+  const locale = useParams().locale as string;
   if (!children) {
     return null;
   }

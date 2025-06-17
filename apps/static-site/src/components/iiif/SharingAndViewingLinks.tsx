@@ -83,7 +83,7 @@ export function SharingAndViewingLinks({
                 if (!sharingExpanded && i > viewerConfig.showMax - 1) return null;
 
                 return (
-                  <li key={viewer.id} className="flex items-center gap-3">
+                  <li key={viewer.id + `${i}`} className="flex items-center gap-3">
                     <LinkIcon className="text-2xl opacity-50" />
                     <a
                       href={viewer.link.replace("{url}", resource.id)}
