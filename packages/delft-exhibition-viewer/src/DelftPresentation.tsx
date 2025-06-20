@@ -28,11 +28,20 @@ export type DelftPresentationProps = {
     targetCanvasId: string;
     component: ReactNode;
   }>;
-  options?: { cutCorners?: boolean; autoPlay?: boolean };
+  options?: {
+    cutCorners?: boolean;
+    autoPlay?: boolean;
+    isFloating?: boolean;
+    floatingPosition?:
+      | "top-left"
+      | "top-right"
+      | "bottom-left"
+      | "bottom-right";
+  };
 };
 
 export function DelftPresentation(props: DelftPresentationProps) {
-  const { cutCorners } = props.options || {};
+  const { cutCorners, floatingPosition, isFloating } = props.options || {};
   const {
     //
     store,
@@ -81,6 +90,8 @@ export function DelftPresentation(props: DelftPresentationProps) {
                           canvas={canvas}
                           index={index}
                           objectLinks={foundLinks}
+                          isFloating={isFloating}
+                          floatingPosition={floatingPosition || undefined}
                         />
                       );
                     }

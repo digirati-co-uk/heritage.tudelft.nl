@@ -1,22 +1,18 @@
 import { Suspense } from "react";
-import {
-  CanvasContext,
-  LocaleString,
-  useAnnotation,
-  useIIIFLanguage,
-} from "react-iiif-vault";
+import { CanvasContext, LocaleString } from "react-iiif-vault";
 import { twMerge } from "tailwind-merge";
-import { getClassName } from "../helpers/exhibition";
+import { getFloatingFromBehaviours } from "../helpers/exhibition";
 import { useExhibitionStep } from "../helpers/exhibition-store";
 import { useStepDetails } from "../helpers/use-step-details";
 import { BaseSlide, type BaseSlideProps } from "./BaseSlide";
 import { CanvasExhibitionBlock } from "./CanvasExhibitionBlock";
-import { CanvasPreviewBlock } from "./CanvasPreviewBlock";
 import type { ImageBlockProps } from "./ImageBlock";
 
 export function ImageBlockPresentation({
   canvas,
   objectLinks,
+  isFloating: defaultIsFloating = false,
+  floatingPosition: defaultFloatingPosition = "top-left",
   ...props
 }: ImageBlockProps & BaseSlideProps) {
   const step = useExhibitionStep();
@@ -25,6 +21,12 @@ export function ImageBlockPresentation({
   const isBottom = behavior.includes("bottom");
   const { isActive, showSummary, label, summary, showBody, toShow } =
     useStepDetails(canvas, step);
+
+  const { isFloating, floatingLeft, floatingTop } = getFloatingFromBehaviours({
+    behavior,
+    defaultIsFloating,
+    defaultFloatingPosition,
+  });
 
   const canvasViewer = (
     <Suspense fallback={<div className="h-full w-full" />}>
@@ -69,12 +71,16 @@ export function ImageBlockPresentation({
             isBottom && "w-full md:w-full",
             isActive ? "opacity-100" : "opacity-0",
             !showSummary && "hidden",
+            isFloating && "absolute max-h-[calc(100%-1rem)]",
+            isFloating && (floatingTop ? "top-2" : "bottom-2"),
+            isFloating && (floatingLeft ? "left-2" : "right-2"),
           )}
         >
           <div
             className={twMerge(
               "mb-4",
               isLeft && "place-self-end md:rotate-180",
+              isFloating && "hidden",
             )}
           >
             <svg

@@ -60,3 +60,40 @@ export function getClassName(b?: string[], firstInfo = false) {
   }
   return classNames.join(" ");
 }
+
+export function getFloatingFromBehaviours({
+  behavior,
+  defaultIsFloating = false,
+  defaultFloatingPosition = "top-left",
+}: {
+  behavior: string[];
+  defaultIsFloating?: boolean;
+  defaultFloatingPosition?: string;
+}) {
+  let isFloating = defaultIsFloating;
+  let floatingPosition = defaultFloatingPosition;
+  if (behavior.includes("floating")) {
+    isFloating = true;
+    if (behavior.includes("float-top-left")) {
+      floatingPosition = "top-left";
+    } else if (behavior.includes("float-bottom-left")) {
+      floatingPosition = "bottom-left";
+    } else if (behavior.includes("float-top-right")) {
+      floatingPosition = "top-right";
+    } else if (behavior.includes("float-bottom-right")) {
+      floatingPosition = "bottom-right";
+    }
+  }
+
+  const floatingTop =
+    floatingPosition === "top-left" || floatingPosition === "top-right";
+  const floatingLeft =
+    floatingPosition === "top-left" || floatingPosition === "bottom-left";
+
+  return {
+    isFloating,
+    floatingPosition,
+    floatingTop,
+    floatingLeft,
+  };
+}

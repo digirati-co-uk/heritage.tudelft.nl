@@ -23,6 +23,8 @@ export interface ImageBlockProps {
   transitionScale?: boolean;
   imageInfoIcon?: boolean;
   coverImages?: boolean;
+  isFloating?: boolean;
+  floatingPosition?: "top-left" | "top-right" | "bottom-left" | "bottom-right";
 }
 
 export function ImageBlock({
@@ -36,6 +38,7 @@ export function ImageBlock({
   transitionScale,
   coverImages = false,
   imageInfoIcon,
+  isFloating = true,
 }: ImageBlockProps) {
   const behavior = canvas.behavior || [];
   const isLeft = behavior.includes("left");

@@ -1,21 +1,9 @@
 import type { DefaultPresetOptions, Preset } from "@atlas-viewer/atlas";
 import { Dialog } from "@headlessui/react";
 import { expandTarget } from "@iiif/helpers";
-import {
-  type ReactNode,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { type ReactNode, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useHover } from "react-aria";
-import {
-  CanvasContext,
-  CanvasPanel,
-  useCanvas,
-  useVault,
-} from "react-iiif-vault";
+import { CanvasContext, CanvasPanel, useCanvas, useVault } from "react-iiif-vault";
 import { LocaleString } from "react-iiif-vault";
 import { LazyLoadComponent } from "react-lazy-load-image-component";
 import { twMerge } from "tailwind-merge";
@@ -23,6 +11,7 @@ import invariant from "tiny-invariant";
 import { useStore } from "zustand";
 import { createExhibitionStore } from "../helpers/exhibition-store";
 import { useCanvasHighlights } from "../helpers/use-canvas-highlights";
+import { withViewTransition } from "../helpers/with-view-transition";
 import { CloseIcon } from "./CloseIcon";
 import { RenderSeeAlso } from "./RenderSeeAlso";
 import { ViewerZoomControls } from "./ViewerZoomControls";
@@ -31,6 +20,7 @@ import { InfoIcon } from "./icons/InfoIcon";
 
 function CanvasPreviewBlockInner({
   cover,
+  index,
   autoPlay = false,
   objectLinks,
   alternativeMode,
@@ -42,6 +32,7 @@ function CanvasPreviewBlockInner({
   alternativeMode?: boolean;
   transitionScale?: boolean;
   imageInfoIcon?: boolean;
+  index: number;
   objectLinks: Array<{
     service: string;
     slug: string;
@@ -50,6 +41,7 @@ function CanvasPreviewBlockInner({
     component: ReactNode;
   }>;
 }) {
+  const container = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const vault = useVault();
   const canvas = useCanvas();
@@ -65,17 +57,7 @@ function CanvasPreviewBlockInner({
     [vault, canvas],
   );
 
-  const {
-    currentStep,
-    goToStep,
-    isPlaying,
-    nextStep,
-    pause,
-    play,
-    playPause,
-    previousStep,
-    steps,
-  } = useStore(store);
+  const { currentStep, goToStep, isPlaying, nextStep, pause, play, playPause, previousStep, steps } = useStore(store);
 
   const step = currentStep === -1 ? null : steps[currentStep];
 
@@ -150,10 +132,7 @@ function CanvasPreviewBlockInner({
 
   useLayoutEffect(() => {
     if (atlas.current && isReady && step) {
-      if (
-        step?.region?.selector?.type === "BoxSelector" ||
-        step?.region?.selector?.type === "SvgSelector"
-      ) {
+      if (step?.region?.selector?.type === "BoxSelector" || step?.region?.selector?.type === "SvgSelector") {
         atlas.current.runtime.world.gotoRegion({
           ...(step.region?.selector?.spatial as any),
           padding: 50,
@@ -178,17 +157,18 @@ function CanvasPreviewBlockInner({
   return (
     <>
       <div
+        ref={container}
         className={twMerge(
-          "exhibition-canvas-panel z-10 h-full bg-ViewerBackground",
-          transitionScale &&
-            "hover:scale-105 transition-transform duration-1000",
+          "exhibition-canvas-panel z-10 h-full bg-ViewerBackground canvas-preview-transition",
+          transitionScale && "hover:scale-105 transition-transform duration-1000",
         )}
-        onClick={() => setIsOpen(true)}
+        onClick={withViewTransition(container.current, () => setIsOpen(true), `canvas-preview-block-${index}`)}
       >
         <CanvasPanel.Viewer
           containerStyle={{
             height: "100%",
             pointerEvents: isOpen ? undefined : "none",
+            // viewTransitionName: isOpen ? "" : `canvas-preview-block-${index}`,
           }}
           renderPreset={config}
           homeOnResize
@@ -219,15 +199,7 @@ function CanvasPreviewBlockInner({
               : highlights.map((highlight, index) => {
                   const target = highlight?.selector?.spatial as any;
                   if (!target) return null;
-                  return (
-                    <box
-                      key={index}
-                      target={target}
-                      relativeStyle
-                      html
-                      style={{ border: "2px dashed red" }}
-                    />
-                  );
+                  return <box key={index} target={target} relativeStyle html style={{ border: "2px dashed red" }} />;
                 })}
           </CanvasPanel.RenderCanvas>
         </CanvasPanel.Viewer>
@@ -240,32 +212,36 @@ function CanvasPreviewBlockInner({
       <div className="absolute bottom-4 left-0 right-0 z-20 text-center font-mono text-sm text-ImageCaption">
         {canvas.requiredStatement ? (
           <div className="">
-            <LocaleString className="image-caption-inline">
-              {canvas.requiredStatement.value}
-            </LocaleString>
+            <LocaleString className="image-caption-inline">{canvas.requiredStatement.value}</LocaleString>
           </div>
         ) : (
-          <LocaleString className="image-caption-inline">
-            {canvas.label}
-          </LocaleString>
+          <LocaleString className="image-caption-inline">{canvas.label}</LocaleString>
         )}
       </div>
       <Dialog
         className="relative z-50"
         open={isOpen}
-        onClose={() => setIsOpen(false)}
+        onClose={withViewTransition(container.current, () => setIsOpen(false), `canvas-preview-block-${index}`, true)}
       >
         <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
         <div className="safe-inset fill-height fixed inset-0 z-20 flex w-screen items-center md:p-4">
           <button
             type="button"
             className="absolute right-4 top-4 z-20 flex  h-16 w-16 items-center justify-center bg-CloseBackground text-CloseText hover:bg-CloseBackgroundHover"
-            onClick={() => setIsOpen(false)}
+            onClick={withViewTransition(
+              container.current,
+              () => setIsOpen(false),
+              `canvas-preview-block-${index}`,
+              true,
+            )}
           >
             <CloseIcon fill="currentColor" />
           </button>
           <Dialog.Panel className="relative z-10 flex h-full w-full flex-col justify-center bg-InfoBlock text-InfoBlockText overflow-y-auto overflow-x-hidden md:rounded lg:flex-row">
-            <div className="flex-shink-0 sticky top-0 z-20 min-h-0 flex-1 bg-ViewerBackground lg:relative lg:order-2 lg:min-w-0">
+            <div
+              className="flex-shink-0 sticky top-0 z-20 min-h-0 flex-1 bg-ViewerBackground lg:relative lg:order-2 lg:min-w-0"
+              style={{ viewTransitionName: isOpen ? `canvas-preview-block-${index}` : "" }}
+            >
               {isOpen ? (
                 <CanvasPanel.Viewer
                   onCreated={(ctx) => void (atlas.current = ctx)}
@@ -282,13 +258,7 @@ function CanvasPreviewBlockInner({
                       const target = highlight?.selector?.spatial as any;
                       if (!target) return null;
                       return (
-                        <box
-                          key={index}
-                          target={target}
-                          relativeStyle
-                          html
-                          style={{ border: "2px dashed red" }}
-                        />
+                        <box key={index} target={target} relativeStyle html style={{ border: "2px dashed red" }} />
                       );
                     })}
 
@@ -346,36 +316,24 @@ function CanvasPreviewBlockInner({
                 {canvas.label || canvas.summary || canvas.seeAlso?.length ? (
                   <div className="mb-4 bg-InfoBlock text-InfoBlockText px-8">
                     <div>
-                      <LocaleString
-                        as="h2"
-                        className="sticky top-0 bg-InfoBlock pb-4 pt-6 font-mono delft-title"
-                      >
+                      <LocaleString as="h2" className="sticky top-0 bg-InfoBlock pb-4 pt-6 font-mono delft-title">
                         {canvas.label}
                       </LocaleString>
-                      <LocaleString
-                        className="whitespace-pre-wrap"
-                        enableDangerouslySetInnerHTML
-                      >
+                      <LocaleString className="whitespace-pre-wrap" enableDangerouslySetInnerHTML>
                         {canvas.summary}
                       </LocaleString>
                     </div>
                     {canvas.requiredStatement && (
                       <div className="mt-8 text-sm opacity-60">
-                        <LocaleString>
-                          {canvas.requiredStatement.value}
-                        </LocaleString>
+                        <LocaleString>{canvas.requiredStatement.value}</LocaleString>
                       </div>
                     )}
-                    {canvas.seeAlso?.length ? (
-                      <RenderSeeAlso resource={canvas.seeAlso[0]} />
-                    ) : null}
+                    {canvas.seeAlso?.length ? <RenderSeeAlso resource={canvas.seeAlso[0]} /> : null}
                   </div>
                 ) : null}
                 {steps.length > 1 ? (
                   <div className="flex flex-col gap-2 bg-InfoBlock text-InfoBlockText px-8 pb-8">
-                    <h3 className="sticky top-0 bg-InfoBlock pb-4 pt-6 font-mono delft-title">
-                      Annotations
-                    </h3>
+                    <h3 className="sticky top-0 bg-InfoBlock pb-4 pt-6 font-mono delft-title">Annotations</h3>
                     {steps.map((step, index) => {
                       return (
                         <VisibleAnnotationsListingItem
@@ -398,20 +356,14 @@ function CanvasPreviewBlockInner({
                   {tour && step ? (
                     <div>
                       <LocaleString>{step.label}</LocaleString>
-                      <LocaleString
-                        enableDangerouslySetInnerHTML
-                        className="whitespace-pre-wrap"
-                      >
+                      <LocaleString enableDangerouslySetInnerHTML className="whitespace-pre-wrap">
                         {step.summary}
                       </LocaleString>
                     </div>
                   ) : (
                     <div>
                       <LocaleString>{canvas.label}</LocaleString>
-                      <LocaleString
-                        enableDangerouslySetInnerHTML
-                        className="whitespace-pre-wrap"
-                      >
+                      <LocaleString enableDangerouslySetInnerHTML className="whitespace-pre-wrap">
                         {canvas.summary}
                       </LocaleString>
                     </div>
@@ -419,9 +371,7 @@ function CanvasPreviewBlockInner({
                 </div>
 
                 {!tour && objectLink ? objectLink.component : null}
-                {tour && step && step.objectLink
-                  ? (step.objectLink as any).component
-                  : null}
+                {tour && step && step.objectLink ? (step.objectLink as any).component : null}
 
                 <div className="px-4">
                   {tour && step ? (
@@ -449,17 +399,8 @@ function CanvasPreviewBlockInner({
                         className="flex items-center gap-2 font-mono underline underline-offset-4"
                         onClick={() => previousStep()}
                       >
-                        <svg
-                          className=""
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
-                            fill="#fff"
-                          />
+                        <svg className="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="#fff" />
                         </svg>
                         {stepIndex > 0 ? "Previous" : "End tour"}
                       </button>
@@ -482,19 +423,13 @@ function CanvasPreviewBlockInner({
                           height="24"
                           viewBox="0 0 24 24"
                         >
-                          <path
-                            d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
-                            fill="#fff"
-                          />
+                          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="#fff" />
                         </svg>
                       </button>
                     </div>
                   ) : (
                     steps.length > 0 && (
-                      <button
-                        className="font-mono underline underline-offset-4"
-                        onClick={() => nextStep()}
-                      >
+                      <button className="font-mono underline underline-offset-4" onClick={() => nextStep()}>
                         Start tour
                       </button>
                     )
@@ -543,23 +478,18 @@ export function CanvasPreviewBlock({
         alternativeMode={alternativeMode}
         transitionScale={transitionScale}
         imageInfoIcon={imageInfoIcon}
+        index={index}
       />
     </CanvasContext>
   );
 
   if (index < 3) {
-    return (
-      <div className="relative h-full w-full bg-ViewerBackground">{inner}</div>
-    );
+    return <div className="relative h-full w-full bg-ViewerBackground">{inner}</div>;
   }
 
   return (
     <div className="relative h-full w-full bg-ViewerBackground">
-      <LazyLoadComponent
-        placeholder={<div />}
-        visibleByDefault={false}
-        threshold={300}
-      >
+      <LazyLoadComponent placeholder={<div />} visibleByDefault={false} threshold={300}>
         {inner}
       </LazyLoadComponent>
     </div>
