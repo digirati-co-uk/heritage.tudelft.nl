@@ -57,19 +57,21 @@ export async function CollectionPage(props: CollectionPageProps) {
           </div>
           <div />
         </div>
-        <div className="cut-corners block w-full bg-black p-8 text-white" suppressHydrationWarning>
-          {props.collection.summary ? (
-            <CollectionSummary
-              content={{
-                summary: t("Summary"),
-                readMore: t("Read more"),
-              }}
-              label={props.collection.label}
-              summary={props.collection.summary}
-            />
-          ) : null}
-          {props.collection.metadata ? <CollectionMetadata metadata={props.collection.metadata} /> : null}
-        </div>
+        {props.collection.summary || props.collection.metadata ? (
+          <div className="cut-corners block w-full bg-black p-8 text-white" suppressHydrationWarning>
+            {props.collection.summary ? (
+              <CollectionSummary
+                content={{
+                  summary: t("Summary"),
+                  readMore: t("Read more"),
+                }}
+                label={props.collection.label}
+                summary={props.collection.summary}
+              />
+            ) : null}
+            {props.collection.metadata ? <CollectionMetadata metadata={props.collection.metadata} /> : null}
+          </div>
+        ) : null}
         <SharingAndViewingLinks
           resource={{
             id: props.collection.id,
