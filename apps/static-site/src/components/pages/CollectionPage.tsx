@@ -3,7 +3,7 @@ import { renderCollectionLabel } from "@/helpers/collection-label";
 import { Link, getObjectSlug } from "@/navigation";
 import type { Collection } from "@iiif/presentation-3";
 import { getTranslations } from "next-intl/server";
-import { CollectionMetadata } from "../iiif/CollectionMetadata";
+import { CollectionSummary, CollectionMetadata } from "../iiif/CollectionMetadata";
 import { SharingAndViewingLinks, type SharingAndViewingLinksContent } from "../iiif/SharingAndViewingLinks";
 import { ManifestSearch } from "../search/ManifestSearch";
 import { IIIFLogo } from "../iiif/IIIFLogo";
@@ -57,18 +57,18 @@ export async function CollectionPage(props: CollectionPageProps) {
           </div>
           <div />
         </div>
-        <div suppressHydrationWarning>
-          {props.collection.metadata || props.collection.summary ? (
-            <CollectionMetadata
+        <div className="cut-corners block w-full bg-black p-8 text-white" suppressHydrationWarning>
+          {props.collection.summary ? (
+            <CollectionSummary
               content={{
                 summary: t("Summary"),
                 readMore: t("Read more"),
               }}
               label={props.collection.label}
               summary={props.collection.summary}
-              metadata={props.collection.metadata}
             />
           ) : null}
+          {props.collection.metadata ? <CollectionMetadata metadata={props.collection.metadata} /> : null}
         </div>
         <SharingAndViewingLinks
           resource={{
