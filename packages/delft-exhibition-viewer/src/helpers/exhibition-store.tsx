@@ -315,7 +315,7 @@ export function createExhibitionStore(options: ExhibitionStoreOptions) {
 
       previousStep() {
         const currentStep = get().currentStep;
-        if (currentStep > -1) {
+        if (currentStep > 0) {
           if (get().isPlaying) {
             pause();
           }
@@ -324,7 +324,7 @@ export function createExhibitionStore(options: ExhibitionStoreOptions) {
       },
 
       goToStep(step: number) {
-        if (step >= -1 && step < get().steps.length) {
+        if (step >= 0 && step < get().steps.length) {
           set({ currentStep: step });
         }
       },

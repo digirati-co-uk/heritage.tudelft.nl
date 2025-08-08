@@ -71,7 +71,7 @@ export function ImageBlockPresentation({
             isBottom && "w-full md:w-full",
             isActive ? "opacity-100" : "opacity-0",
             !showSummary && "hidden",
-            isFloating && "absolute max-h-[calc(100%-1rem)]",
+            isFloating && "absolute max-h-[calc(100%-1rem)] z-20",
             isFloating && (floatingTop ? "top-2" : "bottom-2"),
             isFloating && (floatingLeft ? "left-2" : "right-2"),
           )}

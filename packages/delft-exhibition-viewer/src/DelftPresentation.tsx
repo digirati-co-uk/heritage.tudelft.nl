@@ -131,7 +131,7 @@ export function DelftPresentation(props: DelftPresentationProps) {
                     <div
                       className="absolute left-0 top-0 h-1 rounded-full bg-ProgressBar transition-all"
                       style={{
-                        width: `${(state.currentStep / state.steps.length) * 100}%`,
+                        width: `${(state.currentStep / (state.steps.length - 1)) * 100}%`,
                       }}
                     />
                   </div>
@@ -147,7 +147,7 @@ export function DelftPresentation(props: DelftPresentationProps) {
                   <button
                     type="button"
                     className="z-50 flex h-10 w-10 items-center justify-center rounded hover:bg-black/10"
-                    onClick={() => state.nextStep()}
+                    onClick={() => state.isPlaying ? state.nextStep(true) : state.nextStep()}
                   >
                     <NextIcon />
                   </button>
