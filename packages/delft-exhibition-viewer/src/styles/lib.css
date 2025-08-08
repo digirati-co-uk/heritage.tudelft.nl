@@ -85,8 +85,7 @@ div[data-textual-content="true"] p {
 }
 
 .safe-inset {
-  padding: env(safe-area-inset-top) env(safe-area-inset-right)
-    env(safe-area-inset-bottom) env(safe-area-inset-left);
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
 .fill-height {
@@ -114,4 +113,9 @@ div[data-textual-content="true"] p {
   /* For Firefox and offshoots */
   scrollbar-color: #f4f4f5 transparent;
   scrollbar-width: thin;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.5s;
 }
