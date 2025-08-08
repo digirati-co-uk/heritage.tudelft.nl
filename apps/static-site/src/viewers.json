@@ -20,6 +20,12 @@
       "link": "https://projectmirador.org/embed/?iiif-content={url}"
     },
     {
+      "id": "clover",
+      "enabled": ["object", "collection"],
+      "label": { "en": ["Open in Clover"] },
+      "link": "https://samvera-labs.github.io/clover-iiif/docs/viewer/demo?iiif-content={url}"
+    },
+    {
       "id": "allmaps-viewer",
       "enabled": ["object"],
       "label": { "en": ["Open in Allmaps Viewer"] },
@@ -58,11 +64,6 @@
       "id": "annona",
       "label": { "en": ["Annona"] },
       "link": "https://ncsu-libraries.github.io/annona/tools/#/display?url={url}&viewtype=iiif-storyboard&settings=%7B%22fullpage%22%3Atrue%7D"
-    },
-    {
-      "id": "clover",
-      "label": { "en": ["Clover"] },
-      "link": "https://samvera-labs.github.io/clover-iiif/docs/viewer/demo?iiif-content={url}"
     },
     {
       "id": "navplace",

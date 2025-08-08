@@ -1,4 +1,3 @@
-import type { ContentResource } from "@iiif/presentation-3";
 import { type ReactNode, useMemo } from "react";
 import {
   CanvasContext,

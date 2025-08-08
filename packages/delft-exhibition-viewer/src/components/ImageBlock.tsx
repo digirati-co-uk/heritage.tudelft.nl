@@ -45,7 +45,7 @@ export function ImageBlock({
   const isRight = behavior.includes("right");
   const isBottom = behavior.includes("bottom");
   const isTop = behavior.includes("top");
-  const isCover = behavior.includes("image-cover");
+  const isCover = behavior.includes("image-cover") || behavior.includes("cover");
 
   const showSummary = Boolean(
     canvas.summary && (isLeft || isRight || isBottom || isTop),
@@ -130,9 +130,14 @@ export function ImageBlock({
                 />
               </svg>
             </div>
-            <div className="mb-4">
-              <div className="text-m mb-4 font-mono delft-title">
-                <LocaleString>{canvas.label}</LocaleString>
+            <div className="text-m mb-4 font-mono delft-title">
+              <LocaleString>{canvas.label}</LocaleString>
+            </div>
+            <div className="exhibition-info-block">
+              <div>
+                <LocaleString enableDangerouslySetInnerHTML className="whitespace-pre-wrap">
+                  {canvas.summary}
+                </LocaleString>
               </div>
               <div className="exhibition-info-block">
                 <div>

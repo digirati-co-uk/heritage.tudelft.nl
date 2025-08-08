@@ -18,14 +18,7 @@ export interface InfoBlockProps {
   index: number;
 }
 
-export function InfoBlock({
-  id,
-  index,
-  canvas,
-  strategy,
-  firstInfo,
-  scrollEnabled,
-}: InfoBlockProps) {
+export function InfoBlock({ id, index, canvas, strategy, firstInfo, scrollEnabled }: InfoBlockProps) {
   const className = getClassName(canvas.behavior, firstInfo);
   const locale = useIIIFLanguage();
   const items = getItemsByLocale(strategy.items, locale);
@@ -54,11 +47,7 @@ export function InfoBlock({
           ""
         )}
         {items.map((item, idx) => (
-          <LocaleString
-            key={idx}
-            enableDangerouslySetInnerHTML
-            className="mb-3"
-          >
+          <LocaleString key={idx} enableDangerouslySetInnerHTML className="mb-3">
             {item.text}
           </LocaleString>
         ))}

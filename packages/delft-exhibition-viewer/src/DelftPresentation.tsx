@@ -114,8 +114,7 @@ export function DelftPresentation(props: DelftPresentationProps) {
               <div>
                 <TableOfContentsBar
                   content={{
-                    tableOfContents:
-                      props.manifest?.label || "Table of contents",
+                    tableOfContents: props.manifest?.label || "Table of contents",
                   }}
                 >
                   <button

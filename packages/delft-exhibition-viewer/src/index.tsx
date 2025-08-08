@@ -22,13 +22,11 @@ function App() {
 
   const options = {
     cutCorners: !(cutCorners === "false"),
-    fullTitleBar: fullTitleBar === "true",
+    fullTitleBar: !(fullTitleBar === "false"),
   };
 
   useEffect(() => {
-    fetch(
-      "https://heritage.tudelft.nl/iiif/stores/manifest-editor/collection.json",
-    )
+    fetch("https://heritage.tudelft.nl/iiif/stores/manifest-editor/collection.json")
       .then((r) => r.json())
       .then((col) => {
         setCollection(col);
@@ -57,10 +55,7 @@ function App() {
                 <LocaleString>{item.label}</LocaleString>
               </a>{" "}
               (
-              <a
-                href={`?manifest=${item.id}&type=presentation`}
-                className="hover:underline"
-              >
+              <a href={`?manifest=${item.id}&type=presentation`} className="hover:underline">
                 Presentation
               </a>
               )
@@ -77,27 +72,13 @@ function App() {
         {isPresentation ? (
           <div className="h-[800px]">
             {isEmbed ? (
-              <iframe
-                src={`/embed.html?manifest=${manifestId}`}
-                className="w-full h-full"
-                title="Presentation"
-              />
+              <iframe src={`/embed.html?manifest=${manifestId}`} className="h-full w-full" title="Presentation" />
             ) : (
-              <DelftPresentation
-                manifest={manifest}
-                options={options}
-                language="en"
-                viewObjectLinks={[]}
-              />
+              <DelftPresentation manifest={manifest} options={options} language="en" viewObjectLinks={[]} />
             )}
           </div>
         ) : (
-          <DelftExhibition
-            manifest={manifest}
-            options={options}
-            language="en"
-            viewObjectLinks={[]}
-          />
+          <DelftExhibition manifest={manifest} options={options} language="en" viewObjectLinks={[]} />
         )}
       </div>
     </div>

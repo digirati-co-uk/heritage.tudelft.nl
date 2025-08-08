@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { CanvasContext, LocaleString } from "react-iiif-vault";
+import { CanvasContext, LocaleString, useAnnotation, useIIIFLanguage } from "react-iiif-vault";
 import { twMerge } from "tailwind-merge";
 import { getFloatingFromBehaviours } from "../helpers/exhibition";
 import { useExhibitionStep } from "../helpers/exhibition-store";
@@ -19,8 +19,7 @@ export function ImageBlockPresentation({
   const behavior = canvas.behavior || [];
   const isLeft = behavior.includes("left");
   const isBottom = behavior.includes("bottom");
-  const { isActive, showSummary, label, summary, showBody, toShow } =
-    useStepDetails(canvas, step);
+  const { isActive, showSummary, label, summary, showBody, toShow } = useStepDetails(canvas, step);
 
   const { isFloating, floatingLeft, floatingTop } = getFloatingFromBehaviours({
     behavior,
@@ -60,7 +59,7 @@ export function ImageBlockPresentation({
             "cut-corners flex-1 md:w-2/3",
             isBottom && "w-full md:w-full",
             "aspect-square md:aspect-auto",
-            !showSummary && "w-full md:w-full",
+            !showSummary && "w-full md:w-full"
           )}
         >
           {canvasViewer}
@@ -84,9 +83,7 @@ export function ImageBlockPresentation({
             )}
           >
             <svg
-              className={twMerge(
-                isBottom ? "rotate-90" : "rotate-90 md:rotate-0",
-              )}
+              className={twMerge(isBottom ? "rotate-90" : "rotate-90 md:rotate-0")}
               xmlns="http://www.w3.org/2000/svg"
               width="24"
               height="24"
@@ -102,12 +99,7 @@ export function ImageBlockPresentation({
           <div className="text-m mb-4 font-mono delft-title">
             <LocaleString>{label}</LocaleString>
           </div>
-          <div
-            className={twMerge(
-              "exhibition-info-block overflow-y-auto",
-              isActive ? "opacity-100" : "opacity-0",
-            )}
-          >
+          <div className={twMerge("exhibition-info-block overflow-y-auto", isActive ? "opacity-100" : "opacity-0")}>
             <div>
               <LocaleString
                 enableDangerouslySetInnerHTML
@@ -120,7 +112,7 @@ export function ImageBlockPresentation({
               ? (toShow || []).map((body, n) => {
                   if (body.type === "TextualBody") {
                     return (
-                      <div className="prose-sm exhibition-html" key={n}>
+                      <div className="prose-sm exhibition-html text-white" key={n}>
                         <LocaleString enableDangerouslySetInnerHTML>
                           {body.value}
                         </LocaleString>
