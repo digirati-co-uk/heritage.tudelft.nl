@@ -105,14 +105,13 @@ export function ImageBlock({
             className={twMerge(
               "cut-corners flex flex-col bg-InfoBlock text-InfoBlockText p-5 md:w-1/3",
               (isBottom || isTop) && "w-full md:w-full",
-              isTop && "flex-col-reverse",
             )}
           >
             <div
               className={twMerge(
-                "mb-4",
+                (isBottom || isRight) && "mb-4",
                 isLeft && "place-self-end md:rotate-180",
-                isTop && "place-self-start md:rotate-180",
+                isTop && "order-3 place-self-start md:rotate-180 mt-4",
               )}
             >
               <svg
