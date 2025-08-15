@@ -34,19 +34,6 @@ export function ImageBlockPresentation({
     toShow,
   } = useStepDetails(canvas, step);
 
-  if (isActive) {
-    console.log({
-      showSummary,
-      label,
-      summary,
-      showBody,
-      toShow,
-      isLeft,
-      isBottom,
-      isTop,
-    });
-  }
-
   const { isFloating, floatingLeft, floatingTop } = getFloatingFromBehaviours({
     behavior,
     defaultIsFloating,
@@ -150,10 +137,7 @@ export function ImageBlockPresentation({
               ? (toShow || []).map((body, n) => {
                   if (body.type === "TextualBody") {
                     return (
-                      <div
-                        className="prose-sm exhibition-html text-white"
-                        key={n}
-                      >
+                      <div className="prose-sm exhibition-html" key={n}>
                         <LocaleString enableDangerouslySetInnerHTML>
                           {body.value}
                         </LocaleString>
