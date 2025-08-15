@@ -45,7 +45,8 @@ export function ImageBlock({
   const isRight = behavior.includes("right");
   const isBottom = behavior.includes("bottom");
   const isTop = behavior.includes("top");
-  const isCover = behavior.includes("image-cover") || behavior.includes("cover");
+  const isCover =
+    behavior.includes("image-cover") || behavior.includes("cover");
 
   const showSummary = Boolean(
     canvas.summary && (isLeft || isRight || isBottom || isTop),
@@ -135,19 +136,12 @@ export function ImageBlock({
             </div>
             <div className="exhibition-info-block">
               <div>
-                <LocaleString enableDangerouslySetInnerHTML className="whitespace-pre-wrap">
+                <LocaleString
+                  enableDangerouslySetInnerHTML
+                  className="whitespace-pre-wrap"
+                >
                   {canvas.summary}
                 </LocaleString>
-              </div>
-              <div className="exhibition-info-block">
-                <div>
-                  <LocaleString
-                    enableDangerouslySetInnerHTML
-                    className="whitespace-pre-wrap"
-                  >
-                    {canvas.summary}
-                  </LocaleString>
-                </div>
               </div>
             </div>
           </div>
