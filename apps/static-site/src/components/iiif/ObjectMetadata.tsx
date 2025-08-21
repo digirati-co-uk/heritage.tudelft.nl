@@ -4,6 +4,7 @@ export function ObjectMetadata() {
   return (
     <ManifestMetadata
       allowHtml={true}
+      separator="<br>"
       classes={{
         container: "m-4",
         row: "border-b border-gray-200 flex flex-col",

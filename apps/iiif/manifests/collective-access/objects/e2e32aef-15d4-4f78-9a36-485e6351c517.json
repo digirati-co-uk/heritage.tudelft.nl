@@ -1,128 +1,222 @@
 {
-  "metadata": [
-    {
-      "label": "Titel",
-      "value": "Repetitietheodoliet op een vast stelschroevenblok"
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/e2e32aef-15d4-4f78-9a36-485e6351c517.json",
+    "type": "Manifest",
+    "label": {
+        "nl": [
+            "Repetitietheodoliet op een vast stelschroevenblok"
+        ]
     },
-    {
-      "label": "Objectnaam",
-      "value": "theodoliet"
-    },
-    {
-      "label": "Inventarisnummer",
-      "value": "2000.0047.GEO"
-    },
-    {
-      "label": "Datering",
-      "value": "mid 19th century"
-    },
-    {
-      "label": "Afmetingen",
-      "value": "275,0 (h)  * 290,0 (b)  * 180,0 (d) "
-    },
-    {
-      "label": "Materiaal",
-      "value": "papier, glas"
-    },
-    {
-      "label": "Beschrijving",
-      "value": "Repetitietheodoliet op een vast stelschroevenblok voor het bepalen van horizontale richtingen en beperkte verticale richtingen (elevatie- of depressiehoek van 45 graden). Het instrument met horizontale rand en een verticaal kwadrant is voorzien van een controle-kijker. Het object is vermoedelijk van Franse makelij."
-    }
-  ],
-  "@type": "sc:Manifest",
-  "structures": [
-    {
-      "canvases": [
-        "https://dlc.services/iiif-img/7/18/f317a7d0-0a06-4c88-b975-c6cd08e15981/canvas/c0"
-      ],
-      "within": "https://dlc.services/iiif-manifest/7/18/e2e32aef-15d4-4f78-9a36-485e6351c517/range/range-0.json",
-      "@type": "sc:Range",
-      "@id": "https://dlc.services/iiif-manifest/7/18/e2e32aef-15d4-4f78-9a36-485e6351c517/range/range-0-0.json",
-      "label": "0"
-    }
-  ],
-  "@id": "https://raw.githubusercontent.com/libis/ca_tudelft_iiif/main/objects/e2e32aef-15d4-4f78-9a36-485e6351c517.json",
-  "sequences": [
-    {
-      "viewingDirection": "left-to-right",
-      "viewingHint": "paged",
-      "canvases": [
+    "metadata": [
         {
-          "images": [
-            {
-              "resource": {
-                "@type": "dctypes:Image",
-                "service": {
-                  "protocol": "http://iiif.io/api/image",
-                  "profile": "http://iiif.io/api/image/2/level1.json",
-                  "width": 3072,
-                  "@id": "https://dlc.services/iiif-img/7/18/f317a7d0-0a06-4c88-b975-c6cd08e15981",
-                  "height": 2048
-                },
-                "width": 3072,
-                "@id": "https://dlc.services/iiif-img/7/18/f317a7d0-0a06-4c88-b975-c6cd08e15981/full/1024,683/0/default.jpg",
-                "height": 2048
-              },
-              "@type": "oa:Annotation",
-              "motivation": "sc:painting",
-              "@id": "https://dlc.services/iiif-img/7/18/f317a7d0-0a06-4c88-b975-c6cd08e15981/imageanno/0",
-              "on": "https://dlc.services/iiif-img/7/18/f317a7d0-0a06-4c88-b975-c6cd08e15981/canvas/c0"
-            }
-          ],
-          "thumbnail": {
-            "@type": "dctypes:Image",
-            "service": {
-              "sizes": [
-                {
-                  "width": 1024,
-                  "height": 683
-                },
-                {
-                  "width": 400,
-                  "height": 267
-                },
-                {
-                  "width": 200,
-                  "height": 133
-                },
-                {
-                  "width": 100,
-                  "height": 67
-                }
-              ],
-              "profile": [
-                "http://iiif.io/api/image/2/level0.json",
-                {
-                  "formats": [
-                    "jpg"
-                  ],
-                  "qualities": [
-                    "color"
-                  ],
-                  "supports": [
-                    "sizeByWhListed"
-                  ]
-                }
-              ],
-              "width": 1024,
-              "@id": "https://dlc.services/thumbs/7/18/f317a7d0-0a06-4c88-b975-c6cd08e15981",
-              "@context": "http://iiif.io/api/image/2/context.json",
-              "height": 683
+            "label": {
+                "en": [
+                    "Title"
+                ],
+                "nl": [
+                    "Titel"
+                ]
             },
-            "@id": "https://dlc.services/thumbs/7/18/f317a7d0-0a06-4c88-b975-c6cd08e15981/full/full/0/default.jpg"
-          },
-          "@type": "sc:Canvas",
-          "width": 3072,
-          "@id": "https://dlc.services/iiif-img/7/18/f317a7d0-0a06-4c88-b975-c6cd08e15981/canvas/c0",
-          "label": "Image",
-          "height": 2048
+            "value": {
+                "nl": [
+                    "Repetitietheodoliet op een vast stelschroevenblok"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Object name"
+                ],
+                "nl": [
+                    "Objectnaam"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "theodoliet"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Inventory number"
+                ],
+                "nl": [
+                    "Inventarisnummer"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "2000.0047.GEO"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dating"
+                ],
+                "nl": [
+                    "Datering"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "mid 19th century"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dimensions"
+                ],
+                "nl": [
+                    "Afmetingen"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "275,0 mm (h) x 290,0 mm (b) x 180,0 mm (d)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Material"
+                ],
+                "nl": [
+                    "Materiaal"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "papier",
+                    "glas"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Description"
+                ],
+                "nl": [
+                    "Beschrijving"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Repetitietheodoliet op een vast stelschroevenblok voor het bepalen van horizontale richtingen en beperkte verticale richtingen (elevatie- of depressiehoek van 45 graden). Het instrument met horizontale rand en een verticaal kwadrant is voorzien van een controle-kijker. Het object is vermoedelijk van Franse makelij."
+                ]
+            }
         }
-      ],
-      "@type": "sc:Sequence",
-      "@id": "https://dlc.services/7/18/e2e32aef-15d4-4f78-9a36-485e6351c517/sequences/normal",
-      "label": "Current page order"
-    }
-  ],
-  "@context": "http://iiif.io/api/presentation/2/context.json",
-  "label": "Repetitietheodoliet op een vast stelschroevenblok"
+    ],
+    "navDate": "1850-01-01T00:00:00.000Z",
+    "thumbnail": [
+        {
+            "id": "https://dlc.services/thumbs/v3/7/18/f317a7d0-0a06-4c88-b975-c6cd08e15981/full/max/0/default.jpg",
+            "type": "Image",
+            "format": "image/jpeg",
+            "service": [
+                {
+                    "@context": "http://iiif.io/api/image/3/context.json",
+                    "id": "https://dlc.services/thumbs/v3/7/18/f317a7d0-0a06-4c88-b975-c6cd08e15981",
+                    "type": "ImageService3",
+                    "profile": "level0",
+                    "sizes": [
+                        {
+                            "width": 1024,
+                            "height": 683
+                        },
+                        {
+                            "width": 400,
+                            "height": 267
+                        },
+                        {
+                            "width": 200,
+                            "height": 133
+                        },
+                        {
+                            "width": 100,
+                            "height": 67
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "items": [
+        {
+            "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/e2e32aef-15d4-4f78-9a36-485e6351c517/canvas/0",
+            "type": "Canvas",
+            "height": 2048,
+            "width": 3072,
+            "thumbnail": [
+                {
+                    "id": "https://dlc.services/thumbs/v3/7/18/f317a7d0-0a06-4c88-b975-c6cd08e15981/full/max/0/default.jpg",
+                    "type": "Image",
+                    "format": "image/jpeg",
+                    "service": [
+                        {
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/18/f317a7d0-0a06-4c88-b975-c6cd08e15981",
+                            "type": "ImageService3",
+                            "profile": "level0",
+                            "sizes": [
+                                {
+                                    "width": 1024,
+                                    "height": 683
+                                },
+                                {
+                                    "width": 400,
+                                    "height": 267
+                                },
+                                {
+                                    "width": 200,
+                                    "height": 133
+                                },
+                                {
+                                    "width": 100,
+                                    "height": 67
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "items": [
+                {
+                    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/e2e32aef-15d4-4f78-9a36-485e6351c517/canvas/0/annotation-page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://dlc.services/iiif-img/v3/7/18/f317a7d0-0a06-4c88-b975-c6cd08e15981",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/e2e32aef-15d4-4f78-9a36-485e6351c517/canvas/0",
+                            "body": {
+                                "id": "https://dlc.services/iiif-img/v3/7/18/f317a7d0-0a06-4c88-b975-c6cd08e15981/full/max/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "height": 2048,
+                                "width": 3072,
+                                "service": [
+                                    {
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/18/f317a7d0-0a06-4c88-b975-c6cd08e15981",
+                                        "type": "ImageService3",
+                                        "profile": "level2"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

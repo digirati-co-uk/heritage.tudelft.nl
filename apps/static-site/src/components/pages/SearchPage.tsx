@@ -6,10 +6,10 @@ import { SearchTabs } from "../search/SearchTabs";
 import { FacetList } from "../search/FacetList";
 import { SearchWrapper, getFacets } from "../search/SearchWrapper";
 
-export function SearchPage() {
+export function SearchPage({ title }: { title: string }) {
   return (
     <div>
-      <h1 className="mb-4 mt-6 text-3xl font-medium leading-tight text-gray-900">Search</h1>
+      <h1 className="mb-4 mt-6 text-3xl font-medium leading-tight text-gray-900">{title}</h1>
 
       <SearchWrapper routing>
         <SearchBox

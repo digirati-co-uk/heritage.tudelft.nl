@@ -1,136 +1,252 @@
 {
-  "metadata": [
-    {
-      "label": "Titel",
-      "value": "Spiegeltelescoop door B.E. van der Bildt"
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/fc8273f3-4239-4be5-9d5c-00b429c88df6.json",
+    "type": "Manifest",
+    "label": {
+        "nl": [
+            "Spiegeltelescoop door B.E. van der Bildt"
+        ]
     },
-    {
-      "label": "Objectnaam",
-      "value": "telescoop"
-    },
-    {
-      "label": "Inventarisnummer",
-      "value": "2000.0054.GEO"
-    },
-    {
-      "label": "Datering",
-      "value": "1800 - 1825"
-    },
-    {
-      "label": "Maker",
-      "value": "Bildt, Bauke Eisma van der  (maker)"
-    },
-    {
-      "label": "Afmetingen",
-      "value": "375,0 (h)  * 425,0 (b)  * 230,0 (d) "
-    },
-    {
-      "label": "Materiaal",
-      "value": "metaal, glas"
-    },
-    {
-      "label": "Beschrijving",
-      "value": "Spiegeltelescoop door B.E. van der Bildt, op drie inklapbare poten voor het waarnemen van hemellichamen."
-    },
-    {
-      "label": "Documentatie",
-      "value": "http://www.telescopic-telescopes.com/reflecting_telescope.htm"
-    }
-  ],
-  "@type": "sc:Manifest",
-  "structures": [
-    {
-      "canvases": [
-        "https://dlc.services/iiif-img/7/18/dd191cb4-f4c5-47e0-929a-7c90b55abbb4/canvas/c0"
-      ],
-      "within": "https://dlc.services/iiif-manifest/7/18/fc8273f3-4239-4be5-9d5c-00b429c88df6/range/range-0.json",
-      "@type": "sc:Range",
-      "@id": "https://dlc.services/iiif-manifest/7/18/fc8273f3-4239-4be5-9d5c-00b429c88df6/range/range-0-0.json",
-      "label": "0"
-    }
-  ],
-  "@id": "https://raw.githubusercontent.com/libis/ca_tudelft_iiif/main/objects/fc8273f3-4239-4be5-9d5c-00b429c88df6.json",
-  "sequences": [
-    {
-      "viewingDirection": "left-to-right",
-      "viewingHint": "paged",
-      "canvases": [
+    "metadata": [
         {
-          "images": [
-            {
-              "resource": {
-                "@type": "dctypes:Image",
-                "service": {
-                  "protocol": "http://iiif.io/api/image",
-                  "profile": "http://iiif.io/api/image/2/level1.json",
-                  "width": 3072,
-                  "@id": "https://dlc.services/iiif-img/7/18/dd191cb4-f4c5-47e0-929a-7c90b55abbb4",
-                  "height": 2048
-                },
-                "width": 3072,
-                "@id": "https://dlc.services/iiif-img/7/18/dd191cb4-f4c5-47e0-929a-7c90b55abbb4/full/1024,683/0/default.jpg",
-                "height": 2048
-              },
-              "@type": "oa:Annotation",
-              "motivation": "sc:painting",
-              "@id": "https://dlc.services/iiif-img/7/18/dd191cb4-f4c5-47e0-929a-7c90b55abbb4/imageanno/0",
-              "on": "https://dlc.services/iiif-img/7/18/dd191cb4-f4c5-47e0-929a-7c90b55abbb4/canvas/c0"
-            }
-          ],
-          "thumbnail": {
-            "@type": "dctypes:Image",
-            "service": {
-              "sizes": [
-                {
-                  "width": 1024,
-                  "height": 683
-                },
-                {
-                  "width": 400,
-                  "height": 267
-                },
-                {
-                  "width": 200,
-                  "height": 133
-                },
-                {
-                  "width": 100,
-                  "height": 67
-                }
-              ],
-              "profile": [
-                "http://iiif.io/api/image/2/level0.json",
-                {
-                  "formats": [
-                    "jpg"
-                  ],
-                  "qualities": [
-                    "color"
-                  ],
-                  "supports": [
-                    "sizeByWhListed"
-                  ]
-                }
-              ],
-              "width": 1024,
-              "@id": "https://dlc.services/thumbs/7/18/dd191cb4-f4c5-47e0-929a-7c90b55abbb4",
-              "@context": "http://iiif.io/api/image/2/context.json",
-              "height": 683
+            "label": {
+                "en": [
+                    "Title"
+                ],
+                "nl": [
+                    "Titel"
+                ]
             },
-            "@id": "https://dlc.services/thumbs/7/18/dd191cb4-f4c5-47e0-929a-7c90b55abbb4/full/full/0/default.jpg"
-          },
-          "@type": "sc:Canvas",
-          "width": 3072,
-          "@id": "https://dlc.services/iiif-img/7/18/dd191cb4-f4c5-47e0-929a-7c90b55abbb4/canvas/c0",
-          "label": "Image",
-          "height": 2048
+            "value": {
+                "nl": [
+                    "Spiegeltelescoop door B.E. van der Bildt"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Object name"
+                ],
+                "nl": [
+                    "Objectnaam"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "telescoop"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Inventory number"
+                ],
+                "nl": [
+                    "Inventarisnummer"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "2000.0054.GEO"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dating"
+                ],
+                "nl": [
+                    "Datering"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "1800 – 1825"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Maker"
+                ],
+                "nl": [
+                    "Maker"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Bildt, Bauke Eisma van der  (maker)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dimensions"
+                ],
+                "nl": [
+                    "Afmetingen"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "375,0 mm (h) x 425,0 mm (b) x 230,0 mm (d)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Material"
+                ],
+                "nl": [
+                    "Materiaal"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "metaal",
+                    "glas"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Description"
+                ],
+                "nl": [
+                    "Beschrijving"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Spiegeltelescoop door B.E. van der Bildt, op drie inklapbare poten voor het waarnemen van hemellichamen."
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Documentation"
+                ],
+                "nl": [
+                    "Documentatie"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "http://www.telescopic-telescopes.com/reflecting_telescope.htm"
+                ]
+            }
         }
-      ],
-      "@type": "sc:Sequence",
-      "@id": "https://dlc.services/7/18/fc8273f3-4239-4be5-9d5c-00b429c88df6/sequences/normal",
-      "label": "Current page order"
-    }
-  ],
-  "@context": "http://iiif.io/api/presentation/2/context.json",
-  "label": "Spiegeltelescoop door B.E. van der Bildt"
+    ],
+    "navDate": "1800-01-01T00:00:00.000Z",
+    "thumbnail": [
+        {
+            "id": "https://dlc.services/thumbs/v3/7/18/dd191cb4-f4c5-47e0-929a-7c90b55abbb4/full/max/0/default.jpg",
+            "type": "Image",
+            "format": "image/jpeg",
+            "service": [
+                {
+                    "@context": "http://iiif.io/api/image/3/context.json",
+                    "id": "https://dlc.services/thumbs/v3/7/18/dd191cb4-f4c5-47e0-929a-7c90b55abbb4",
+                    "type": "ImageService3",
+                    "profile": "level0",
+                    "sizes": [
+                        {
+                            "width": 1024,
+                            "height": 683
+                        },
+                        {
+                            "width": 400,
+                            "height": 267
+                        },
+                        {
+                            "width": 200,
+                            "height": 133
+                        },
+                        {
+                            "width": 100,
+                            "height": 67
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "items": [
+        {
+            "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/fc8273f3-4239-4be5-9d5c-00b429c88df6/canvas/0",
+            "type": "Canvas",
+            "height": 2048,
+            "width": 3072,
+            "thumbnail": [
+                {
+                    "id": "https://dlc.services/thumbs/v3/7/18/dd191cb4-f4c5-47e0-929a-7c90b55abbb4/full/max/0/default.jpg",
+                    "type": "Image",
+                    "format": "image/jpeg",
+                    "service": [
+                        {
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/18/dd191cb4-f4c5-47e0-929a-7c90b55abbb4",
+                            "type": "ImageService3",
+                            "profile": "level0",
+                            "sizes": [
+                                {
+                                    "width": 1024,
+                                    "height": 683
+                                },
+                                {
+                                    "width": 400,
+                                    "height": 267
+                                },
+                                {
+                                    "width": 200,
+                                    "height": 133
+                                },
+                                {
+                                    "width": 100,
+                                    "height": 67
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "items": [
+                {
+                    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/fc8273f3-4239-4be5-9d5c-00b429c88df6/canvas/0/annotation-page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://dlc.services/iiif-img/v3/7/18/dd191cb4-f4c5-47e0-929a-7c90b55abbb4",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/fc8273f3-4239-4be5-9d5c-00b429c88df6/canvas/0",
+                            "body": {
+                                "id": "https://dlc.services/iiif-img/v3/7/18/dd191cb4-f4c5-47e0-929a-7c90b55abbb4/full/max/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "height": 2048,
+                                "width": 3072,
+                                "service": [
+                                    {
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/18/dd191cb4-f4c5-47e0-929a-7c90b55abbb4",
+                                        "type": "ImageService3",
+                                        "profile": "level2"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

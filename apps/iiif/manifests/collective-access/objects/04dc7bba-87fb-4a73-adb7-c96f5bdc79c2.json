@@ -1,128 +1,222 @@
 {
-  "metadata": [
-    {
-      "label": "Titel",
-      "value": "Portret van prof. M.W. Beijerinck"
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/04dc7bba-87fb-4a73-adb7-c96f5bdc79c2.json",
+    "type": "Manifest",
+    "label": {
+        "nl": [
+            "Portret van prof. M.W. Beijerinck"
+        ]
     },
-    {
-      "label": "Objectnaam",
-      "value": "schilderij"
-    },
-    {
-      "label": "Inventarisnummer",
-      "value": "2011.0009.CVB"
-    },
-    {
-      "label": "Afmetingen",
-      "value": "958,0 (h)  * 790,0 (b)  * 85,0 (d) "
-    },
-    {
-      "label": "Materiaal",
-      "value": "olieverf, linnen, hout"
-    },
-    {
-      "label": "Beschrijving",
-      "value": "Geschilderd portret van prof. dr. Martinus Willem Beijerinck, hoogleraar algemene en toegepaste microbiologie van 1895 tot 1921."
-    },
-    {
-      "label": "Voorstelling",
-      "value": "Beijerinck, M.W."
-    }
-  ],
-  "@type": "sc:Manifest",
-  "structures": [
-    {
-      "canvases": [
-        "https://dlc.services/iiif-img/7/18/8bf2104d-b8cb-4828-b2c7-809489afd080/canvas/c0"
-      ],
-      "within": "https://dlc.services/iiif-manifest/7/18/04dc7bba-87fb-4a73-adb7-c96f5bdc79c2/range/range-0.json",
-      "@type": "sc:Range",
-      "@id": "https://dlc.services/iiif-manifest/7/18/04dc7bba-87fb-4a73-adb7-c96f5bdc79c2/range/range-0-0.json",
-      "label": "0"
-    }
-  ],
-  "@id": "https://raw.githubusercontent.com/libis/ca_tudelft_iiif/main/objects/04dc7bba-87fb-4a73-adb7-c96f5bdc79c2.json",
-  "sequences": [
-    {
-      "viewingDirection": "left-to-right",
-      "viewingHint": "paged",
-      "canvases": [
+    "metadata": [
         {
-          "images": [
-            {
-              "resource": {
-                "@type": "dctypes:Image",
-                "service": {
-                  "protocol": "http://iiif.io/api/image",
-                  "profile": "http://iiif.io/api/image/2/level1.json",
-                  "width": 3826,
-                  "@id": "https://dlc.services/iiif-img/7/18/8bf2104d-b8cb-4828-b2c7-809489afd080",
-                  "height": 4605
-                },
-                "width": 3826,
-                "@id": "https://dlc.services/iiif-img/7/18/8bf2104d-b8cb-4828-b2c7-809489afd080/full/851,1024/0/default.jpg",
-                "height": 4605
-              },
-              "@type": "oa:Annotation",
-              "motivation": "sc:painting",
-              "@id": "https://dlc.services/iiif-img/7/18/8bf2104d-b8cb-4828-b2c7-809489afd080/imageanno/0",
-              "on": "https://dlc.services/iiif-img/7/18/8bf2104d-b8cb-4828-b2c7-809489afd080/canvas/c0"
-            }
-          ],
-          "thumbnail": {
-            "@type": "dctypes:Image",
-            "service": {
-              "sizes": [
-                {
-                  "width": 851,
-                  "height": 1024
-                },
-                {
-                  "width": 332,
-                  "height": 400
-                },
-                {
-                  "width": 166,
-                  "height": 200
-                },
-                {
-                  "width": 83,
-                  "height": 100
-                }
-              ],
-              "profile": [
-                "http://iiif.io/api/image/2/level0.json",
-                {
-                  "formats": [
-                    "jpg"
-                  ],
-                  "qualities": [
-                    "color"
-                  ],
-                  "supports": [
-                    "sizeByWhListed"
-                  ]
-                }
-              ],
-              "width": 851,
-              "@id": "https://dlc.services/thumbs/7/18/8bf2104d-b8cb-4828-b2c7-809489afd080",
-              "@context": "http://iiif.io/api/image/2/context.json",
-              "height": 1024
+            "label": {
+                "en": [
+                    "Title"
+                ],
+                "nl": [
+                    "Titel"
+                ]
             },
-            "@id": "https://dlc.services/thumbs/7/18/8bf2104d-b8cb-4828-b2c7-809489afd080/full/full/0/default.jpg"
-          },
-          "@type": "sc:Canvas",
-          "width": 3826,
-          "@id": "https://dlc.services/iiif-img/7/18/8bf2104d-b8cb-4828-b2c7-809489afd080/canvas/c0",
-          "label": "Image",
-          "height": 4605
+            "value": {
+                "nl": [
+                    "Portret van prof. M.W. Beijerinck"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Object name"
+                ],
+                "nl": [
+                    "Objectnaam"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "schilderij"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Inventory number"
+                ],
+                "nl": [
+                    "Inventarisnummer"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "2011.0009.CVB"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dimensions"
+                ],
+                "nl": [
+                    "Afmetingen"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "958,0 mm (h) x 790,0 mm (b) x 85,0 mm (d)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Material"
+                ],
+                "nl": [
+                    "Materiaal"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "olieverf",
+                    "linnen",
+                    "hout"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Description"
+                ],
+                "nl": [
+                    "Beschrijving"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Geschilderd portret van prof. dr. Martinus Willem Beijerinck (1851-1931), hoogleraar algemene en toegepaste microbiologie van 1895 tot 1921."
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Subject"
+                ],
+                "nl": [
+                    "Voorstelling"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Beijerinck, M.W."
+                ]
+            }
         }
-      ],
-      "@type": "sc:Sequence",
-      "@id": "https://dlc.services/7/18/04dc7bba-87fb-4a73-adb7-c96f5bdc79c2/sequences/normal",
-      "label": "Current page order"
-    }
-  ],
-  "@context": "http://iiif.io/api/presentation/2/context.json",
-  "label": "Portret van prof. M.W. Beijerinck"
+    ],
+    "thumbnail": [
+        {
+            "id": "https://dlc.services/thumbs/v3/7/18/8bf2104d-b8cb-4828-b2c7-809489afd080/full/max/0/default.jpg",
+            "type": "Image",
+            "format": "image/jpeg",
+            "service": [
+                {
+                    "@context": "http://iiif.io/api/image/3/context.json",
+                    "id": "https://dlc.services/thumbs/v3/7/18/8bf2104d-b8cb-4828-b2c7-809489afd080",
+                    "type": "ImageService3",
+                    "profile": "level0",
+                    "sizes": [
+                        {
+                            "width": 851,
+                            "height": 1024
+                        },
+                        {
+                            "width": 332,
+                            "height": 400
+                        },
+                        {
+                            "width": 166,
+                            "height": 200
+                        },
+                        {
+                            "width": 83,
+                            "height": 100
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "items": [
+        {
+            "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/04dc7bba-87fb-4a73-adb7-c96f5bdc79c2/canvas/0",
+            "type": "Canvas",
+            "height": 4605,
+            "width": 3826,
+            "thumbnail": [
+                {
+                    "id": "https://dlc.services/thumbs/v3/7/18/8bf2104d-b8cb-4828-b2c7-809489afd080/full/max/0/default.jpg",
+                    "type": "Image",
+                    "format": "image/jpeg",
+                    "service": [
+                        {
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/18/8bf2104d-b8cb-4828-b2c7-809489afd080",
+                            "type": "ImageService3",
+                            "profile": "level0",
+                            "sizes": [
+                                {
+                                    "width": 851,
+                                    "height": 1024
+                                },
+                                {
+                                    "width": 332,
+                                    "height": 400
+                                },
+                                {
+                                    "width": 166,
+                                    "height": 200
+                                },
+                                {
+                                    "width": 83,
+                                    "height": 100
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "items": [
+                {
+                    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/04dc7bba-87fb-4a73-adb7-c96f5bdc79c2/canvas/0/annotation-page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://dlc.services/iiif-img/v3/7/18/8bf2104d-b8cb-4828-b2c7-809489afd080",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/04dc7bba-87fb-4a73-adb7-c96f5bdc79c2/canvas/0",
+                            "body": {
+                                "id": "https://dlc.services/iiif-img/v3/7/18/8bf2104d-b8cb-4828-b2c7-809489afd080/full/max/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "height": 4605,
+                                "width": 3826,
+                                "service": [
+                                    {
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/18/8bf2104d-b8cb-4828-b2c7-809489afd080",
+                                        "type": "ImageService3",
+                                        "profile": "level2"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

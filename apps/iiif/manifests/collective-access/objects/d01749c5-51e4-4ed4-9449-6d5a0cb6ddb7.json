@@ -1,128 +1,222 @@
 {
-  "metadata": [
-    {
-      "label": "Titel",
-      "value": "Curvimeter"
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/d01749c5-51e4-4ed4-9449-6d5a0cb6ddb7.json",
+    "type": "Manifest",
+    "label": {
+        "nl": [
+            "Curvimeter"
+        ]
     },
-    {
-      "label": "Objectnaam",
-      "value": "curvimeter"
-    },
-    {
-      "label": "Inventarisnummer",
-      "value": "2000.0327.GEO"
-    },
-    {
-      "label": "Datering",
-      "value": "1875 - 1900"
-    },
-    {
-      "label": "Afmetingen",
-      "value": "30,0 (h)  * 280,0 (b)  * 65,0 (d) "
-    },
-    {
-      "label": "Materiaal",
-      "value": "metaal, hout"
-    },
-    {
-      "label": "Beschrijving",
-      "value": "Curvimeter een reken en/of teken instrument voor het bepalen de afstand op een kaart van een een gekromde of gebroken lijn. Een instrument voor het meten van afstanden op een kaart. De meter kan met behulp van een veerklem in de nulstand worden gezet. Loopwielomtrek: 10 centimeter, verdeeld in millimeters.; telwerk: 0 - 18 meter"
-    }
-  ],
-  "@type": "sc:Manifest",
-  "structures": [
-    {
-      "canvases": [
-        "https://dlc.services/iiif-img/7/18/31c7ad04-c424-4742-9ae1-972edb3971d1/canvas/c0"
-      ],
-      "within": "https://dlc.services/iiif-manifest/7/18/d01749c5-51e4-4ed4-9449-6d5a0cb6ddb7/range/range-0.json",
-      "@type": "sc:Range",
-      "@id": "https://dlc.services/iiif-manifest/7/18/d01749c5-51e4-4ed4-9449-6d5a0cb6ddb7/range/range-0-0.json",
-      "label": "0"
-    }
-  ],
-  "@id": "https://raw.githubusercontent.com/libis/ca_tudelft_iiif/main/objects/d01749c5-51e4-4ed4-9449-6d5a0cb6ddb7.json",
-  "sequences": [
-    {
-      "viewingDirection": "left-to-right",
-      "viewingHint": "paged",
-      "canvases": [
+    "metadata": [
         {
-          "images": [
-            {
-              "resource": {
-                "@type": "dctypes:Image",
-                "service": {
-                  "protocol": "http://iiif.io/api/image",
-                  "profile": "http://iiif.io/api/image/2/level1.json",
-                  "width": 3072,
-                  "@id": "https://dlc.services/iiif-img/7/18/31c7ad04-c424-4742-9ae1-972edb3971d1",
-                  "height": 2048
-                },
-                "width": 3072,
-                "@id": "https://dlc.services/iiif-img/7/18/31c7ad04-c424-4742-9ae1-972edb3971d1/full/1024,683/0/default.jpg",
-                "height": 2048
-              },
-              "@type": "oa:Annotation",
-              "motivation": "sc:painting",
-              "@id": "https://dlc.services/iiif-img/7/18/31c7ad04-c424-4742-9ae1-972edb3971d1/imageanno/0",
-              "on": "https://dlc.services/iiif-img/7/18/31c7ad04-c424-4742-9ae1-972edb3971d1/canvas/c0"
-            }
-          ],
-          "thumbnail": {
-            "@type": "dctypes:Image",
-            "service": {
-              "sizes": [
-                {
-                  "width": 1024,
-                  "height": 683
-                },
-                {
-                  "width": 400,
-                  "height": 267
-                },
-                {
-                  "width": 200,
-                  "height": 133
-                },
-                {
-                  "width": 100,
-                  "height": 67
-                }
-              ],
-              "profile": [
-                "http://iiif.io/api/image/2/level0.json",
-                {
-                  "formats": [
-                    "jpg"
-                  ],
-                  "qualities": [
-                    "color"
-                  ],
-                  "supports": [
-                    "sizeByWhListed"
-                  ]
-                }
-              ],
-              "width": 1024,
-              "@id": "https://dlc.services/thumbs/7/18/31c7ad04-c424-4742-9ae1-972edb3971d1",
-              "@context": "http://iiif.io/api/image/2/context.json",
-              "height": 683
+            "label": {
+                "en": [
+                    "Title"
+                ],
+                "nl": [
+                    "Titel"
+                ]
             },
-            "@id": "https://dlc.services/thumbs/7/18/31c7ad04-c424-4742-9ae1-972edb3971d1/full/full/0/default.jpg"
-          },
-          "@type": "sc:Canvas",
-          "width": 3072,
-          "@id": "https://dlc.services/iiif-img/7/18/31c7ad04-c424-4742-9ae1-972edb3971d1/canvas/c0",
-          "label": "Image",
-          "height": 2048
+            "value": {
+                "nl": [
+                    "Curvimeter"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Object name"
+                ],
+                "nl": [
+                    "Objectnaam"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "curvimeter"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Inventory number"
+                ],
+                "nl": [
+                    "Inventarisnummer"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "2000.0327.GEO"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dating"
+                ],
+                "nl": [
+                    "Datering"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "1875 – 1900"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dimensions"
+                ],
+                "nl": [
+                    "Afmetingen"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "30,0 mm (h) x 280,0 mm (b) x 65,0 mm (d)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Material"
+                ],
+                "nl": [
+                    "Materiaal"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "metaal",
+                    "hout"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Description"
+                ],
+                "nl": [
+                    "Beschrijving"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Curvimeter een reken en/of teken instrument voor het bepalen de afstand op een kaart van een een gekromde of gebroken lijn. Een instrument voor het meten van afstanden op een kaart. De meter kan met behulp van een veerklem in de nulstand worden gezet. Loopwielomtrek: 10 centimeter, verdeeld in millimeters.; telwerk: 0 - 18 meter"
+                ]
+            }
         }
-      ],
-      "@type": "sc:Sequence",
-      "@id": "https://dlc.services/7/18/d01749c5-51e4-4ed4-9449-6d5a0cb6ddb7/sequences/normal",
-      "label": "Current page order"
-    }
-  ],
-  "@context": "http://iiif.io/api/presentation/2/context.json",
-  "label": "Curvimeter"
+    ],
+    "navDate": "1875-01-01T00:00:00.000Z",
+    "thumbnail": [
+        {
+            "id": "https://dlc.services/thumbs/v3/7/18/31c7ad04-c424-4742-9ae1-972edb3971d1/full/max/0/default.jpg",
+            "type": "Image",
+            "format": "image/jpeg",
+            "service": [
+                {
+                    "@context": "http://iiif.io/api/image/3/context.json",
+                    "id": "https://dlc.services/thumbs/v3/7/18/31c7ad04-c424-4742-9ae1-972edb3971d1",
+                    "type": "ImageService3",
+                    "profile": "level0",
+                    "sizes": [
+                        {
+                            "width": 1024,
+                            "height": 683
+                        },
+                        {
+                            "width": 400,
+                            "height": 267
+                        },
+                        {
+                            "width": 200,
+                            "height": 133
+                        },
+                        {
+                            "width": 100,
+                            "height": 67
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "items": [
+        {
+            "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/d01749c5-51e4-4ed4-9449-6d5a0cb6ddb7/canvas/0",
+            "type": "Canvas",
+            "height": 2048,
+            "width": 3072,
+            "thumbnail": [
+                {
+                    "id": "https://dlc.services/thumbs/v3/7/18/31c7ad04-c424-4742-9ae1-972edb3971d1/full/max/0/default.jpg",
+                    "type": "Image",
+                    "format": "image/jpeg",
+                    "service": [
+                        {
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/18/31c7ad04-c424-4742-9ae1-972edb3971d1",
+                            "type": "ImageService3",
+                            "profile": "level0",
+                            "sizes": [
+                                {
+                                    "width": 1024,
+                                    "height": 683
+                                },
+                                {
+                                    "width": 400,
+                                    "height": 267
+                                },
+                                {
+                                    "width": 200,
+                                    "height": 133
+                                },
+                                {
+                                    "width": 100,
+                                    "height": 67
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "items": [
+                {
+                    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/d01749c5-51e4-4ed4-9449-6d5a0cb6ddb7/canvas/0/annotation-page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://dlc.services/iiif-img/v3/7/18/31c7ad04-c424-4742-9ae1-972edb3971d1",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/d01749c5-51e4-4ed4-9449-6d5a0cb6ddb7/canvas/0",
+                            "body": {
+                                "id": "https://dlc.services/iiif-img/v3/7/18/31c7ad04-c424-4742-9ae1-972edb3971d1/full/max/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "height": 2048,
+                                "width": 3072,
+                                "service": [
+                                    {
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/18/31c7ad04-c424-4742-9ae1-972edb3971d1",
+                                        "type": "ImageService3",
+                                        "profile": "level2"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  --f-font: "Tahoma", "Fira Sans", sans-serif;
+  --f-mono-font: "Fira Mono", monospace;
+  font-feature-settings: "kern", "liga", "clig", "calt";
+  font-kerning: normal;
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  @apply bg-gray-200;
+}
+
+.delft-exhibition-viewer,
+.delft-presentation-viewer {
+  --delft-title-card: rgb(250 204 21 / var(--tw-bg-opacity, 1));
+  --delft-title-card-text: #000;
+}
+
+.delft-exhibition-viewer.blue {
+  /* Example configuration */
+  --delft-title-card: #1a237e;
+  --delft-title-card-text: #fff;
+}
+
+.exhibition-html img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+}

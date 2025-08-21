@@ -1,136 +1,268 @@
 {
-  "metadata": [
-    {
-      "label": "Titel",
-      "value": "Kompas met richtkijker en kogelgewricht door Secrétan"
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/6aa20c92-1afd-42ff-8987-ae5ac8fe8514.json",
+    "type": "Manifest",
+    "label": {
+        "nl": [
+            "Kompas met richtkijker en kogelgewricht door Secrétan"
+        ]
     },
-    {
-      "label": "Objectnaam",
-      "value": "kompas"
-    },
-    {
-      "label": "Inventarisnummer",
-      "value": "2000.0002.GEO"
-    },
-    {
-      "label": "Datering",
-      "value": "1800 - 1850"
-    },
-    {
-      "label": "Maker",
-      "value": "Secrétan (Parijs)  (producent)"
-    },
-    {
-      "label": "Afmetingen",
-      "value": "195,0 (h)  * 240,0 (b)  * 235,0 (d) "
-    },
-    {
-      "label": "Materiaal",
-      "value": "metaal, hout, glas"
-    },
-    {
-      "label": "Beschrijving",
-      "value": "Boussole door Secrétan, landmeetkundig instrument voor het bepalen van richtingen t.o.v. het magnetische noorden (0 - 360 graden). Het kompas met richtkijker is voorzien van een kogelgewricht om het kompas horizontaal te stellen."
-    },
-    {
-      "label": "Documentatie",
-      "value": "Schols, C.M., \"Landmeten en Waterpassen\", Breda: K.M.A., 8e druk 1908, H.7."
-    }
-  ],
-  "@type": "sc:Manifest",
-  "structures": [
-    {
-      "canvases": [
-        "https://dlc.services/iiif-img/7/18/64f43721-eec9-4bd9-a16a-3d94333b5e4d/canvas/c0"
-      ],
-      "within": "https://dlc.services/iiif-manifest/7/18/6aa20c92-1afd-42ff-8987-ae5ac8fe8514/range/range-0.json",
-      "@type": "sc:Range",
-      "@id": "https://dlc.services/iiif-manifest/7/18/6aa20c92-1afd-42ff-8987-ae5ac8fe8514/range/range-0-0.json",
-      "label": "0"
-    }
-  ],
-  "@id": "https://raw.githubusercontent.com/libis/ca_tudelft_iiif/main/objects/6aa20c92-1afd-42ff-8987-ae5ac8fe8514.json",
-  "sequences": [
-    {
-      "viewingDirection": "left-to-right",
-      "viewingHint": "paged",
-      "canvases": [
+    "metadata": [
         {
-          "images": [
-            {
-              "resource": {
-                "@type": "dctypes:Image",
-                "service": {
-                  "protocol": "http://iiif.io/api/image",
-                  "profile": "http://iiif.io/api/image/2/level1.json",
-                  "width": 3072,
-                  "@id": "https://dlc.services/iiif-img/7/18/64f43721-eec9-4bd9-a16a-3d94333b5e4d",
-                  "height": 2048
-                },
-                "width": 3072,
-                "@id": "https://dlc.services/iiif-img/7/18/64f43721-eec9-4bd9-a16a-3d94333b5e4d/full/1024,683/0/default.jpg",
-                "height": 2048
-              },
-              "@type": "oa:Annotation",
-              "motivation": "sc:painting",
-              "@id": "https://dlc.services/iiif-img/7/18/64f43721-eec9-4bd9-a16a-3d94333b5e4d/imageanno/0",
-              "on": "https://dlc.services/iiif-img/7/18/64f43721-eec9-4bd9-a16a-3d94333b5e4d/canvas/c0"
-            }
-          ],
-          "thumbnail": {
-            "@type": "dctypes:Image",
-            "service": {
-              "sizes": [
-                {
-                  "width": 1024,
-                  "height": 683
-                },
-                {
-                  "width": 400,
-                  "height": 267
-                },
-                {
-                  "width": 200,
-                  "height": 133
-                },
-                {
-                  "width": 100,
-                  "height": 67
-                }
-              ],
-              "profile": [
-                "http://iiif.io/api/image/2/level0.json",
-                {
-                  "formats": [
-                    "jpg"
-                  ],
-                  "qualities": [
-                    "color"
-                  ],
-                  "supports": [
-                    "sizeByWhListed"
-                  ]
-                }
-              ],
-              "width": 1024,
-              "@id": "https://dlc.services/thumbs/7/18/64f43721-eec9-4bd9-a16a-3d94333b5e4d",
-              "@context": "http://iiif.io/api/image/2/context.json",
-              "height": 683
+            "label": {
+                "en": [
+                    "Title"
+                ],
+                "nl": [
+                    "Titel"
+                ]
             },
-            "@id": "https://dlc.services/thumbs/7/18/64f43721-eec9-4bd9-a16a-3d94333b5e4d/full/full/0/default.jpg"
-          },
-          "@type": "sc:Canvas",
-          "width": 3072,
-          "@id": "https://dlc.services/iiif-img/7/18/64f43721-eec9-4bd9-a16a-3d94333b5e4d/canvas/c0",
-          "label": "Image",
-          "height": 2048
+            "value": {
+                "nl": [
+                    "Kompas met richtkijker en kogelgewricht door Secrétan"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Object name"
+                ],
+                "nl": [
+                    "Objectnaam"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "kompas"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Inventory number"
+                ],
+                "nl": [
+                    "Inventarisnummer"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "2000.0002.GEO"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dating"
+                ],
+                "nl": [
+                    "Datering"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "1800 – 1850"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Maker"
+                ],
+                "nl": [
+                    "Maker"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Secrétan  (producent)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dimensions"
+                ],
+                "nl": [
+                    "Afmetingen"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "195,0 mm (h) x 240,0 mm (b) x 235,0 mm (d)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Material"
+                ],
+                "nl": [
+                    "Materiaal"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "metaal",
+                    "hout",
+                    "glas"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Place of manufacture"
+                ],
+                "nl": [
+                    "Plaats vervaardiging"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "<a href=\"https://www.geonames.org/2988507\">Parijs, Frankrijk</a>"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Description"
+                ],
+                "nl": [
+                    "Beschrijving"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Boussole door Secrétan, landmeetkundig instrument voor het bepalen van richtingen t.o.v. het magnetische noorden (0 - 360 graden). Het kompas met richtkijker is voorzien van een kogelgewricht om het kompas horizontaal te stellen."
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Documentation"
+                ],
+                "nl": [
+                    "Documentatie"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Schols, C.M., \"Landmeten en Waterpassen\", Breda: K.M.A., 8e druk 1908, H.7."
+                ]
+            }
         }
-      ],
-      "@type": "sc:Sequence",
-      "@id": "https://dlc.services/7/18/6aa20c92-1afd-42ff-8987-ae5ac8fe8514/sequences/normal",
-      "label": "Current page order"
-    }
-  ],
-  "@context": "http://iiif.io/api/presentation/2/context.json",
-  "label": "Kompas met richtkijker en kogelgewricht door Secrétan"
+    ],
+    "navDate": "1800-01-01T00:00:00.000Z",
+    "thumbnail": [
+        {
+            "id": "https://dlc.services/thumbs/v3/7/18/64f43721-eec9-4bd9-a16a-3d94333b5e4d/full/max/0/default.jpg",
+            "type": "Image",
+            "format": "image/jpeg",
+            "service": [
+                {
+                    "@context": "http://iiif.io/api/image/3/context.json",
+                    "id": "https://dlc.services/thumbs/v3/7/18/64f43721-eec9-4bd9-a16a-3d94333b5e4d",
+                    "type": "ImageService3",
+                    "profile": "level0",
+                    "sizes": [
+                        {
+                            "width": 1024,
+                            "height": 683
+                        },
+                        {
+                            "width": 400,
+                            "height": 267
+                        },
+                        {
+                            "width": 200,
+                            "height": 133
+                        },
+                        {
+                            "width": 100,
+                            "height": 67
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "items": [
+        {
+            "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/6aa20c92-1afd-42ff-8987-ae5ac8fe8514/canvas/0",
+            "type": "Canvas",
+            "height": 2048,
+            "width": 3072,
+            "thumbnail": [
+                {
+                    "id": "https://dlc.services/thumbs/v3/7/18/64f43721-eec9-4bd9-a16a-3d94333b5e4d/full/max/0/default.jpg",
+                    "type": "Image",
+                    "format": "image/jpeg",
+                    "service": [
+                        {
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/18/64f43721-eec9-4bd9-a16a-3d94333b5e4d",
+                            "type": "ImageService3",
+                            "profile": "level0",
+                            "sizes": [
+                                {
+                                    "width": 1024,
+                                    "height": 683
+                                },
+                                {
+                                    "width": 400,
+                                    "height": 267
+                                },
+                                {
+                                    "width": 200,
+                                    "height": 133
+                                },
+                                {
+                                    "width": 100,
+                                    "height": 67
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "items": [
+                {
+                    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/6aa20c92-1afd-42ff-8987-ae5ac8fe8514/canvas/0/annotation-page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://dlc.services/iiif-img/v3/7/18/64f43721-eec9-4bd9-a16a-3d94333b5e4d",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/6aa20c92-1afd-42ff-8987-ae5ac8fe8514/canvas/0",
+                            "body": {
+                                "id": "https://dlc.services/iiif-img/v3/7/18/64f43721-eec9-4bd9-a16a-3d94333b5e4d/full/max/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "height": 2048,
+                                "width": 3072,
+                                "service": [
+                                    {
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/18/64f43721-eec9-4bd9-a16a-3d94333b5e4d",
+                                        "type": "ImageService3",
+                                        "profile": "level2"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

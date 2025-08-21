@@ -1,132 +1,304 @@
 {
-  "metadata": [
-    {
-      "label": "Titel",
-      "value": "Proportielineaal"
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/45723213-7b83-4455-a284-10e1bc42b491.json",
+    "type": "Manifest",
+    "label": {
+        "nl": [
+            "Proportielineaal"
+        ]
     },
-    {
-      "label": "Objectnaam",
-      "value": "liniaal (geleidingsgereedschap)"
-    },
-    {
-      "label": "Inventarisnummer",
-      "value": "2008.0019.GEO"
-    },
-    {
-      "label": "Datering",
-      "value": "1875 - 1900"
-    },
-    {
-      "label": "Afmetingen",
-      "value": "3,0 (h)  * 120,0 (b)  * 35,0 (d) "
-    },
-    {
-      "label": "Materiaal",
-      "value": "dierlijk materiaal"
-    },
-    {
-      "label": "Beschrijving",
-      "value": "Proportieliniaal of proportionaalpasser (le compas de réduction). Hulpmiddel voor het verdelen op willekeurige schaal van afstanden op een kaart. Dit instrument werd ook nog de evenredigheidspasser genoemd. De eerste dateert van 1597."
-    },
-    {
-      "label": "Documentatie",
-      "value": "zie levensbeschrijving van Galileo Galilei"
-    }
-  ],
-  "@type": "sc:Manifest",
-  "structures": [
-    {
-      "canvases": [
-        "https://dlc.services/iiif-img/7/18/4c269765-1370-417e-aa45-0bde6efb86ca/canvas/c0"
-      ],
-      "within": "https://dlc.services/iiif-manifest/7/18/45723213-7b83-4455-a284-10e1bc42b491/range/range-0.json",
-      "@type": "sc:Range",
-      "@id": "https://dlc.services/iiif-manifest/7/18/45723213-7b83-4455-a284-10e1bc42b491/range/range-0-0.json",
-      "label": "0"
-    }
-  ],
-  "@id": "https://raw.githubusercontent.com/libis/ca_tudelft_iiif/main/objects/45723213-7b83-4455-a284-10e1bc42b491.json",
-  "sequences": [
-    {
-      "viewingDirection": "left-to-right",
-      "viewingHint": "paged",
-      "canvases": [
+    "metadata": [
         {
-          "images": [
-            {
-              "resource": {
-                "@type": "dctypes:Image",
-                "service": {
-                  "protocol": "http://iiif.io/api/image",
-                  "profile": "http://iiif.io/api/image/2/level1.json",
-                  "width": 1355,
-                  "@id": "https://dlc.services/iiif-img/7/18/4c269765-1370-417e-aa45-0bde6efb86ca",
-                  "height": 1073
-                },
-                "width": 1355,
-                "@id": "https://dlc.services/iiif-img/7/18/4c269765-1370-417e-aa45-0bde6efb86ca/full/1024,811/0/default.jpg",
-                "height": 1073
-              },
-              "@type": "oa:Annotation",
-              "motivation": "sc:painting",
-              "@id": "https://dlc.services/iiif-img/7/18/4c269765-1370-417e-aa45-0bde6efb86ca/imageanno/0",
-              "on": "https://dlc.services/iiif-img/7/18/4c269765-1370-417e-aa45-0bde6efb86ca/canvas/c0"
-            }
-          ],
-          "thumbnail": {
-            "@type": "dctypes:Image",
-            "service": {
-              "sizes": [
-                {
-                  "width": 1024,
-                  "height": 811
-                },
-                {
-                  "width": 400,
-                  "height": 317
-                },
-                {
-                  "width": 200,
-                  "height": 158
-                },
-                {
-                  "width": 100,
-                  "height": 79
-                }
-              ],
-              "profile": [
-                "http://iiif.io/api/image/2/level0.json",
-                {
-                  "formats": [
-                    "jpg"
-                  ],
-                  "qualities": [
-                    "color"
-                  ],
-                  "supports": [
-                    "sizeByWhListed"
-                  ]
-                }
-              ],
-              "width": 1024,
-              "@id": "https://dlc.services/thumbs/7/18/4c269765-1370-417e-aa45-0bde6efb86ca",
-              "@context": "http://iiif.io/api/image/2/context.json",
-              "height": 811
+            "label": {
+                "en": [
+                    "Title"
+                ],
+                "nl": [
+                    "Titel"
+                ]
             },
-            "@id": "https://dlc.services/thumbs/7/18/4c269765-1370-417e-aa45-0bde6efb86ca/full/full/0/default.jpg"
-          },
-          "@type": "sc:Canvas",
-          "width": 1355,
-          "@id": "https://dlc.services/iiif-img/7/18/4c269765-1370-417e-aa45-0bde6efb86ca/canvas/c0",
-          "label": "Image",
-          "height": 1073
+            "value": {
+                "nl": [
+                    "Proportielineaal"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Object name"
+                ],
+                "nl": [
+                    "Objectnaam"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "liniaal (geleidingsgereedschap)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Inventory number"
+                ],
+                "nl": [
+                    "Inventarisnummer"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "2008.0019.GEO"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dating"
+                ],
+                "nl": [
+                    "Datering"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "1875 – 1900"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dimensions"
+                ],
+                "nl": [
+                    "Afmetingen"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "3,0 mm (h) x 120,0 mm (b) x 35,0 mm (d)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Material"
+                ],
+                "nl": [
+                    "Materiaal"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "dierlijk materiaal"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Description"
+                ],
+                "nl": [
+                    "Beschrijving"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Proportieliniaal of proportionaalpasser (le compas de réduction). Hulpmiddel voor het verdelen op willekeurige schaal van afstanden op een kaart. Dit instrument werd ook nog de evenredigheidspasser genoemd. De eerste dateert van 1597."
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Documentation"
+                ],
+                "nl": [
+                    "Documentatie"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "zie levensbeschrijving van Galileo Galilei"
+                ]
+            }
         }
-      ],
-      "@type": "sc:Sequence",
-      "@id": "https://dlc.services/7/18/45723213-7b83-4455-a284-10e1bc42b491/sequences/normal",
-      "label": "Current page order"
-    }
-  ],
-  "@context": "http://iiif.io/api/presentation/2/context.json",
-  "label": "Proportielineaal"
+    ],
+    "navDate": "1875-01-01T00:00:00.000Z",
+    "thumbnail": [
+        {
+            "id": "https://dlc.services/thumbs/v3/7/18/4c269765-1370-417e-aa45-0bde6efb86ca/full/max/0/default.jpg",
+            "type": "Image",
+            "format": "image/jpeg",
+            "service": [
+                {
+                    "@context": "http://iiif.io/api/image/3/context.json",
+                    "id": "https://dlc.services/thumbs/v3/7/18/4c269765-1370-417e-aa45-0bde6efb86ca",
+                    "type": "ImageService3",
+                    "profile": "level0",
+                    "sizes": [
+                        {
+                            "width": 1024,
+                            "height": 811
+                        },
+                        {
+                            "width": 400,
+                            "height": 317
+                        },
+                        {
+                            "width": 200,
+                            "height": 158
+                        },
+                        {
+                            "width": 100,
+                            "height": 79
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "items": [
+        {
+            "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/45723213-7b83-4455-a284-10e1bc42b491/canvas/0",
+            "type": "Canvas",
+            "height": 1073,
+            "width": 1355,
+            "thumbnail": [
+                {
+                    "id": "https://dlc.services/thumbs/v3/7/18/4c269765-1370-417e-aa45-0bde6efb86ca/full/max/0/default.jpg",
+                    "type": "Image",
+                    "format": "image/jpeg",
+                    "service": [
+                        {
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/18/4c269765-1370-417e-aa45-0bde6efb86ca",
+                            "type": "ImageService3",
+                            "profile": "level0",
+                            "sizes": [
+                                {
+                                    "width": 1024,
+                                    "height": 811
+                                },
+                                {
+                                    "width": 400,
+                                    "height": 317
+                                },
+                                {
+                                    "width": 200,
+                                    "height": 158
+                                },
+                                {
+                                    "width": 100,
+                                    "height": 79
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "items": [
+                {
+                    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/45723213-7b83-4455-a284-10e1bc42b491/canvas/0/annotation-page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://dlc.services/iiif-img/v3/7/18/4c269765-1370-417e-aa45-0bde6efb86ca",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/45723213-7b83-4455-a284-10e1bc42b491/canvas/0",
+                            "body": {
+                                "id": "https://dlc.services/iiif-img/v3/7/18/4c269765-1370-417e-aa45-0bde6efb86ca/full/max/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "height": 1073,
+                                "width": 1355,
+                                "service": [
+                                    {
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/18/4c269765-1370-417e-aa45-0bde6efb86ca",
+                                        "type": "ImageService3",
+                                        "profile": "level2"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/45723213-7b83-4455-a284-10e1bc42b491/canvas/1",
+            "type": "Canvas",
+            "height": 2048,
+            "width": 3072,
+            "thumbnail": [
+                {
+                    "id": "https://dlc.services/thumbs/v3/7/18/e290a869-a84a-402f-9ad1-a6f26e907fab/full/max/0/default.jpg",
+                    "type": "Image",
+                    "format": "image/jpeg",
+                    "service": [
+                        {
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/18/e290a869-a84a-402f-9ad1-a6f26e907fab",
+                            "type": "ImageService3",
+                            "profile": "level0",
+                            "sizes": [
+                                {
+                                    "width": 1024,
+                                    "height": 683
+                                },
+                                {
+                                    "width": 400,
+                                    "height": 267
+                                },
+                                {
+                                    "width": 200,
+                                    "height": 134
+                                },
+                                {
+                                    "width": 100,
+                                    "height": 67
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "items": [
+                {
+                    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/45723213-7b83-4455-a284-10e1bc42b491/canvas/1/annotation-page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://dlc.services/iiif-img/v3/7/18/e290a869-a84a-402f-9ad1-a6f26e907fab",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/45723213-7b83-4455-a284-10e1bc42b491/canvas/1",
+                            "body": {
+                                "id": "https://dlc.services/iiif-img/v3/7/18/e290a869-a84a-402f-9ad1-a6f26e907fab/full/max/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "height": 2048,
+                                "width": 3072,
+                                "service": [
+                                    {
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/18/e290a869-a84a-402f-9ad1-a6f26e907fab",
+                                        "type": "ImageService3",
+                                        "profile": "level2"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

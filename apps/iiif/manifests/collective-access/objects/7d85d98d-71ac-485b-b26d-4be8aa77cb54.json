@@ -1,128 +1,222 @@
 {
-  "metadata": [
-    {
-      "label": "Titel",
-      "value": "Meetportefeuille bestaande uit aluminium plaat met houten lijst"
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/7d85d98d-71ac-485b-b26d-4be8aa77cb54.json",
+    "type": "Manifest",
+    "label": {
+        "nl": [
+            "Meetportefeuille bestaande uit aluminium plaat met houten lijst"
+        ]
     },
-    {
-      "label": "Objectnaam",
-      "value": "meetportefeuille"
-    },
-    {
-      "label": "Inventarisnummer",
-      "value": "2000.0884.GEO"
-    },
-    {
-      "label": "Datering",
-      "value": "1900 - 1925"
-    },
-    {
-      "label": "Afmetingen",
-      "value": "15,0 (h)  * 365,0 (b)  * 260,0 (d) "
-    },
-    {
-      "label": "Materiaal",
-      "value": "metaal, hout"
-    },
-    {
-      "label": "Beschrijving",
-      "value": "Meetportefeuille voor het vervaardigen van een terreinschets. Aluminium plaat met een houten lijst, voorzien van een mechanisme voor het vastklemmen van dubbel folioformaat veldwerkpapier."
-    }
-  ],
-  "@type": "sc:Manifest",
-  "structures": [
-    {
-      "canvases": [
-        "https://dlc.services/iiif-img/7/18/f416a6ad-063d-493d-ad84-31e79758eba0/canvas/c0"
-      ],
-      "within": "https://dlc.services/iiif-manifest/7/18/7d85d98d-71ac-485b-b26d-4be8aa77cb54/range/range-0.json",
-      "@type": "sc:Range",
-      "@id": "https://dlc.services/iiif-manifest/7/18/7d85d98d-71ac-485b-b26d-4be8aa77cb54/range/range-0-0.json",
-      "label": "0"
-    }
-  ],
-  "@id": "https://raw.githubusercontent.com/libis/ca_tudelft_iiif/main/objects/7d85d98d-71ac-485b-b26d-4be8aa77cb54.json",
-  "sequences": [
-    {
-      "viewingDirection": "left-to-right",
-      "viewingHint": "paged",
-      "canvases": [
+    "metadata": [
         {
-          "images": [
-            {
-              "resource": {
-                "@type": "dctypes:Image",
-                "service": {
-                  "protocol": "http://iiif.io/api/image",
-                  "profile": "http://iiif.io/api/image/2/level1.json",
-                  "width": 3072,
-                  "@id": "https://dlc.services/iiif-img/7/18/f416a6ad-063d-493d-ad84-31e79758eba0",
-                  "height": 2048
-                },
-                "width": 3072,
-                "@id": "https://dlc.services/iiif-img/7/18/f416a6ad-063d-493d-ad84-31e79758eba0/full/1024,683/0/default.jpg",
-                "height": 2048
-              },
-              "@type": "oa:Annotation",
-              "motivation": "sc:painting",
-              "@id": "https://dlc.services/iiif-img/7/18/f416a6ad-063d-493d-ad84-31e79758eba0/imageanno/0",
-              "on": "https://dlc.services/iiif-img/7/18/f416a6ad-063d-493d-ad84-31e79758eba0/canvas/c0"
-            }
-          ],
-          "thumbnail": {
-            "@type": "dctypes:Image",
-            "service": {
-              "sizes": [
-                {
-                  "width": 1024,
-                  "height": 683
-                },
-                {
-                  "width": 400,
-                  "height": 267
-                },
-                {
-                  "width": 200,
-                  "height": 133
-                },
-                {
-                  "width": 100,
-                  "height": 67
-                }
-              ],
-              "profile": [
-                "http://iiif.io/api/image/2/level0.json",
-                {
-                  "formats": [
-                    "jpg"
-                  ],
-                  "qualities": [
-                    "color"
-                  ],
-                  "supports": [
-                    "sizeByWhListed"
-                  ]
-                }
-              ],
-              "width": 1024,
-              "@id": "https://dlc.services/thumbs/7/18/f416a6ad-063d-493d-ad84-31e79758eba0",
-              "@context": "http://iiif.io/api/image/2/context.json",
-              "height": 683
+            "label": {
+                "en": [
+                    "Title"
+                ],
+                "nl": [
+                    "Titel"
+                ]
             },
-            "@id": "https://dlc.services/thumbs/7/18/f416a6ad-063d-493d-ad84-31e79758eba0/full/full/0/default.jpg"
-          },
-          "@type": "sc:Canvas",
-          "width": 3072,
-          "@id": "https://dlc.services/iiif-img/7/18/f416a6ad-063d-493d-ad84-31e79758eba0/canvas/c0",
-          "label": "Image",
-          "height": 2048
+            "value": {
+                "nl": [
+                    "Meetportefeuille bestaande uit aluminium plaat met houten lijst"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Object name"
+                ],
+                "nl": [
+                    "Objectnaam"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "meetportefeuille"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Inventory number"
+                ],
+                "nl": [
+                    "Inventarisnummer"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "2000.0884.GEO"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dating"
+                ],
+                "nl": [
+                    "Datering"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "1900 – 1925"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dimensions"
+                ],
+                "nl": [
+                    "Afmetingen"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "15,0 mm (h) x 365,0 mm (b) x 260,0 mm (d)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Material"
+                ],
+                "nl": [
+                    "Materiaal"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "metaal",
+                    "hout"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Description"
+                ],
+                "nl": [
+                    "Beschrijving"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Meetportefeuille voor het vervaardigen van een terreinschets. Aluminium plaat met een houten lijst, voorzien van een mechanisme voor het vastklemmen van dubbel folioformaat veldwerkpapier."
+                ]
+            }
         }
-      ],
-      "@type": "sc:Sequence",
-      "@id": "https://dlc.services/7/18/7d85d98d-71ac-485b-b26d-4be8aa77cb54/sequences/normal",
-      "label": "Current page order"
-    }
-  ],
-  "@context": "http://iiif.io/api/presentation/2/context.json",
-  "label": "Meetportefeuille bestaande uit aluminium plaat met houten lijst"
+    ],
+    "navDate": "1900-01-01T00:00:00.000Z",
+    "thumbnail": [
+        {
+            "id": "https://dlc.services/thumbs/v3/7/18/f416a6ad-063d-493d-ad84-31e79758eba0/full/max/0/default.jpg",
+            "type": "Image",
+            "format": "image/jpeg",
+            "service": [
+                {
+                    "@context": "http://iiif.io/api/image/3/context.json",
+                    "id": "https://dlc.services/thumbs/v3/7/18/f416a6ad-063d-493d-ad84-31e79758eba0",
+                    "type": "ImageService3",
+                    "profile": "level0",
+                    "sizes": [
+                        {
+                            "width": 1024,
+                            "height": 683
+                        },
+                        {
+                            "width": 400,
+                            "height": 267
+                        },
+                        {
+                            "width": 200,
+                            "height": 133
+                        },
+                        {
+                            "width": 100,
+                            "height": 67
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "items": [
+        {
+            "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/7d85d98d-71ac-485b-b26d-4be8aa77cb54/canvas/0",
+            "type": "Canvas",
+            "height": 2048,
+            "width": 3072,
+            "thumbnail": [
+                {
+                    "id": "https://dlc.services/thumbs/v3/7/18/f416a6ad-063d-493d-ad84-31e79758eba0/full/max/0/default.jpg",
+                    "type": "Image",
+                    "format": "image/jpeg",
+                    "service": [
+                        {
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/18/f416a6ad-063d-493d-ad84-31e79758eba0",
+                            "type": "ImageService3",
+                            "profile": "level0",
+                            "sizes": [
+                                {
+                                    "width": 1024,
+                                    "height": 683
+                                },
+                                {
+                                    "width": 400,
+                                    "height": 267
+                                },
+                                {
+                                    "width": 200,
+                                    "height": 133
+                                },
+                                {
+                                    "width": 100,
+                                    "height": 67
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "items": [
+                {
+                    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/7d85d98d-71ac-485b-b26d-4be8aa77cb54/canvas/0/annotation-page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://dlc.services/iiif-img/v3/7/18/f416a6ad-063d-493d-ad84-31e79758eba0",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/7d85d98d-71ac-485b-b26d-4be8aa77cb54/canvas/0",
+                            "body": {
+                                "id": "https://dlc.services/iiif-img/v3/7/18/f416a6ad-063d-493d-ad84-31e79758eba0/full/max/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "height": 2048,
+                                "width": 3072,
+                                "service": [
+                                    {
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/18/f416a6ad-063d-493d-ad84-31e79758eba0",
+                                        "type": "ImageService3",
+                                        "profile": "level2"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }
