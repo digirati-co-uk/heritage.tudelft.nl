@@ -1,0 +1,186 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "http://localhost:7111/manifests/delf-kernreactor-01/manifest.json",
+  "type": "Manifest",
+  "label": {
+    "nl": [
+      "Reactor Instituut Delft van de TU Delft, ca. 1995."
+    ]
+  },
+  "summary": {
+    "en": [
+      "Foto: Fotografische dienst TU Delft. Collectie: Stadsarchief Delft, 134494."
+    ]
+  },
+  "items": [
+    {
+      "id": "https://dlc.services/iiif-img/7/21/0b4f8ca373c464676451c1c2da3ec2e7/canvas/c/1",
+      "type": "Canvas",
+      "height": 2219,
+      "width": 2872,
+      "label": {
+        "none": [
+          "Canvas 1"
+        ]
+      },
+      "metadata": [
+        {
+          "label": {
+            "none": [
+              "String 1"
+            ]
+          },
+          "value": {
+            "none": [
+              "erfgoed"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "String 2"
+            ]
+          },
+          "value": {
+            "none": [
+              "kerncentrale"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "String 3"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 1"
+            ]
+          },
+          "value": {
+            "none": [
+              "53"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 2"
+            ]
+          },
+          "value": {
+            "none": [
+              "0"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 3"
+            ]
+          },
+          "value": {
+            "none": [
+              "0"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Tags"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Roles"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        }
+      ],
+      "thumbnail": [
+        {
+          "id": "https://dlc.services/thumbs/7/21/0b4f8ca373c464676451c1c2da3ec2e7/full/200,155/0/default.jpg",
+          "type": "Image",
+          "service": [
+            {
+              "@id": "https://dlc.services/thumbs/7/21/0b4f8ca373c464676451c1c2da3ec2e7",
+              "@type": "ImageService2",
+              "profile": "level0",
+              "sizes": [
+                {
+                  "width": 1024,
+                  "height": 792
+                },
+                {
+                  "width": 400,
+                  "height": 309
+                },
+                {
+                  "width": 200,
+                  "height": 155
+                },
+                {
+                  "width": 100,
+                  "height": 77
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "items": [
+        {
+          "id": "https://dlc.services/iiif-img/7/21/0b4f8ca373c464676451c1c2da3ec2e7/canvas/c/1/annotation-page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://dlc.services/iiif-img/7/21/0b4f8ca373c464676451c1c2da3ec2e7/canvas/c/1/imageanno/0",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://dlc.services/iiif-img/7/21/0b4f8ca373c464676451c1c2da3ec2e7/canvas/c/1",
+              "body": {
+                "id": "https://dlc.services/iiif-img/7/21/0b4f8ca373c464676451c1c2da3ec2e7/full/1024,792/0/default.jpg",
+                "type": "Image",
+                "height": 792,
+                "width": 1024,
+                "service": [
+                  {
+                    "@id": "https://dlc.services/iiif-img/7/21/0b4f8ca373c464676451c1c2da3ec2e7",
+                    "@type": "ImageService2",
+                    "profile": "level2",
+                    "width": 2872,
+                    "height": 2219
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "http://localhost:7111/manifests/delf-kernreactor-07/manifest.json",
+  "type": "Manifest",
+  "label": {
+    "nl": [
+      "Bij de oplevering staat de kernreactor nog helemaal aan de rand van Delft in de polder."
+    ]
+  },
+  "summary": {
+    "en": [
+      "Foto: Fotografische dienst TU Delft."
+    ]
+  },
+  "items": [
+    {
+      "id": "https://tu-delft-heritage.github.io/beeldbank-data/manifests/e6043ed0-cd1c-4740-8dc2-244229b7a85e/canvas/0",
+      "type": "Canvas",
+      "height": 2480,
+      "width": 2480,
+      "label": {
+        "en": [
+          "Untitled canvas"
+        ]
+      },
+      "thumbnail": [
+        {
+          "id": "https://dlc.services/thumbs/v3/7/15/3f5bfe14-5531-4b1a-b4dd-6cb4c0247e93/full/max/0/default.jpg",
+          "type": "Image",
+          "format": "image/jpeg",
+          "service": [
+            {
+              "@context": "http://iiif.io/api/image/3/context.json",
+              "id": "https://dlc.services/thumbs/v3/7/15/3f5bfe14-5531-4b1a-b4dd-6cb4c0247e93",
+              "type": "ImageService3",
+              "profile": "level0",
+              "sizes": [
+                {
+                  "width": 1024,
+                  "height": 1024
+                },
+                {
+                  "width": 400,
+                  "height": 400
+                },
+                {
+                  "width": 200,
+                  "height": 200
+                },
+                {
+                  "width": 100,
+                  "height": 100
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "items": [
+        {
+          "id": "https://tu-delft-heritage.github.io/beeldbank-data/manifests/e6043ed0-cd1c-4740-8dc2-244229b7a85e/canvas/0/annotation-page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://dlc.services/iiif-img/v3/7/15/3f5bfe14-5531-4b1a-b4dd-6cb4c0247e93",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://tu-delft-heritage.github.io/beeldbank-data/manifests/e6043ed0-cd1c-4740-8dc2-244229b7a85e/canvas/0",
+              "body": {
+                "id": "https://dlc.services/iiif-img/v3/7/15/3f5bfe14-5531-4b1a-b4dd-6cb4c0247e93/full/max/0/default.jpg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "height": 2480,
+                "width": 2480,
+                "service": [
+                  {
+                    "@context": "http://iiif.io/api/image/3/context.json",
+                    "id": "https://dlc.services/iiif-img/v3/7/15/3f5bfe14-5531-4b1a-b4dd-6cb4c0247e93",
+                    "type": "ImageService3",
+                    "profile": "level2"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,186 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "http://localhost:7111/manifests/delf-duparc-06/manifest.json",
+  "type": "Manifest",
+  "label": {
+    "nl": [
+      "Duparc neemt bij zijn afscheid in 1984 een ‘Chateau du Parc’ in ontvangst."
+    ]
+  },
+  "summary": {
+    "en": [
+      "Collectie: Stadsarchief Delft, archiefnummer 992."
+    ]
+  },
+  "items": [
+    {
+      "id": "https://dlc.services/iiif-img/7/21/1a5f75192d0885d1a312b6a8a65ee51a/canvas/c/6",
+      "type": "Canvas",
+      "height": 2712,
+      "width": 3703,
+      "label": {
+        "none": [
+          "Canvas 6"
+        ]
+      },
+      "metadata": [
+        {
+          "label": {
+            "none": [
+              "String 1"
+            ]
+          },
+          "value": {
+            "none": [
+              "erfgoed"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "String 2"
+            ]
+          },
+          "value": {
+            "none": [
+              "duparc"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "String 3"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 1"
+            ]
+          },
+          "value": {
+            "none": [
+              "51"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 2"
+            ]
+          },
+          "value": {
+            "none": [
+              "0"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 3"
+            ]
+          },
+          "value": {
+            "none": [
+              "0"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Tags"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Roles"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        }
+      ],
+      "thumbnail": [
+        {
+          "id": "https://dlc.services/thumbs/7/21/1a5f75192d0885d1a312b6a8a65ee51a/full/200,146/0/default.jpg",
+          "type": "Image",
+          "service": [
+            {
+              "@id": "https://dlc.services/thumbs/7/21/1a5f75192d0885d1a312b6a8a65ee51a",
+              "@type": "ImageService2",
+              "profile": "level0",
+              "sizes": [
+                {
+                  "width": 1024,
+                  "height": 750
+                },
+                {
+                  "width": 400,
+                  "height": 293
+                },
+                {
+                  "width": 200,
+                  "height": 146
+                },
+                {
+                  "width": 100,
+                  "height": 74
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "items": [
+        {
+          "id": "https://dlc.services/iiif-img/7/21/1a5f75192d0885d1a312b6a8a65ee51a/canvas/c/6/annotation-page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://dlc.services/iiif-img/7/21/1a5f75192d0885d1a312b6a8a65ee51a/canvas/c/6/imageanno/0",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://dlc.services/iiif-img/7/21/1a5f75192d0885d1a312b6a8a65ee51a/canvas/c/6",
+              "body": {
+                "id": "https://dlc.services/iiif-img/7/21/1a5f75192d0885d1a312b6a8a65ee51a/full/1024,750/0/default.jpg",
+                "type": "Image",
+                "height": 750,
+                "width": 1024,
+                "service": [
+                  {
+                    "@id": "https://dlc.services/iiif-img/7/21/1a5f75192d0885d1a312b6a8a65ee51a",
+                    "@type": "ImageService2",
+                    "profile": "level2",
+                    "width": 3703,
+                    "height": 2712
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

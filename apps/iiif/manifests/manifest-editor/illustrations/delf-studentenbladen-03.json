@@ -1,0 +1,207 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "http://localhost:7111/manifests/delf-studentenbladen-03/manifest.json",
+  "type": "Manifest",
+  "label": {
+    "nl": [
+      "Het allereerste artikel in het Technische Studententijdschrift beschreef een ingenieus en studentikoos ontwerp van een automatische pijpenstopper."
+    ]
+  },
+  "summary": {
+    "en": [
+      "Collectie: Trésor, TU Delft Library"
+    ]
+  },
+  "items": [
+    {
+      "id": "https://dlc.services/iiif-img/7/21/14d0eac4d66c5fa614f41fe053b18b95/canvas/c/15",
+      "type": "Canvas",
+      "height": 700,
+      "width": 1000,
+      "label": {
+        "none": [
+          "Canvas 15"
+        ]
+      },
+      "metadata": [
+        {
+          "label": {
+            "none": [
+              "String 1"
+            ]
+          },
+          "value": {
+            "none": [
+              "erfgoed"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "String 2"
+            ]
+          },
+          "value": {
+            "none": [
+              "studentenbladen"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "String 3"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 1"
+            ]
+          },
+          "value": {
+            "none": [
+              "82"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 2"
+            ]
+          },
+          "value": {
+            "none": [
+              "0"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 3"
+            ]
+          },
+          "value": {
+            "none": [
+              "0"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Tags"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Roles"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        }
+      ],
+      "thumbnail": [
+        {
+          "id": "https://dlc.services/thumbs/7/21/14d0eac4d66c5fa614f41fe053b18b95/full/172,200/0/default.jpg",
+          "type": "Image",
+          "service": [
+            {
+              "@id": "https://dlc.services/thumbs/7/21/14d0eac4d66c5fa614f41fe053b18b95",
+              "@type": "ImageService2",
+              "profile": "level0",
+              "sizes": [
+                {
+                  "width": 881,
+                  "height": 1024
+                },
+                {
+                  "width": 344,
+                  "height": 400
+                },
+                {
+                  "width": 172,
+                  "height": 200
+                },
+                {
+                  "width": 86,
+                  "height": 100
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "items": [
+        {
+          "id": "https://dlc.services/iiif-img/7/21/14d0eac4d66c5fa614f41fe053b18b95/canvas/c/15/annotation-page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://dlc.services/iiif-img/7/21/14d0eac4d66c5fa614f41fe053b18b95/canvas/c/15/imageanno/0",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://dlc.services/iiif-img/7/21/14d0eac4d66c5fa614f41fe053b18b95/canvas/c/15#xywh=38,44,469,545",
+              "body": {
+                "id": "https://dlc.services/iiif-img/7/21/14d0eac4d66c5fa614f41fe053b18b95/full/881,1024/0/default.jpg",
+                "type": "Image",
+                "height": 1088,
+                "width": 936,
+                "service": [
+                  {
+                    "@id": "https://dlc.services/iiif-img/7/21/14d0eac4d66c5fa614f41fe053b18b95",
+                    "@type": "ImageService2",
+                    "profile": "level2",
+                    "width": 936,
+                    "height": 1088
+                  }
+                ]
+              }
+            },
+            {
+              "id": "https://dlc.services/iiif-img/7/21/2aaac90e15a98ef55da99031fa15213e/canvas/c/16/imageanno/0",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://dlc.services/iiif-img/7/21/14d0eac4d66c5fa614f41fe053b18b95/canvas/c/15#xywh=549,98,396,539",
+              "body": {
+                "id": "https://dlc.services/iiif-img/7/21/2aaac90e15a98ef55da99031fa15213e/full/753,1024/0/default.jpg",
+                "type": "Image",
+                "height": 1080,
+                "width": 794,
+                "service": [
+                  {
+                    "@id": "https://dlc.services/iiif-img/7/21/2aaac90e15a98ef55da99031fa15213e",
+                    "@type": "ImageService2",
+                    "profile": "level2",
+                    "width": 794,
+                    "height": 1080
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

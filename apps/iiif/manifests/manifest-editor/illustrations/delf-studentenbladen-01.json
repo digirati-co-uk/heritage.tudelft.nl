@@ -1,0 +1,186 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "http://localhost:7111/manifests/delf-studentenbladen-01/manifest.json",
+  "type": "Manifest",
+  "label": {
+    "nl": [
+      "Blanco oorkonde van erelidmaatschap van het dispuut Vrije Studie, uit te reiken door het bestuur van Sociëteit Phoenix, ca. 1920."
+    ]
+  },
+  "summary": {
+    "en": [
+      "Collectie: Stadsarchief Delft, 91586"
+    ]
+  },
+  "items": [
+    {
+      "id": "https://dlc.services/iiif-img/7/21/d03a7d046a538ff3e95483cfe6a2e885/canvas/c/6",
+      "type": "Canvas",
+      "height": 10174,
+      "width": 5827,
+      "label": {
+        "none": [
+          "Canvas 6"
+        ]
+      },
+      "metadata": [
+        {
+          "label": {
+            "none": [
+              "String 1"
+            ]
+          },
+          "value": {
+            "none": [
+              "erfgoed"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "String 2"
+            ]
+          },
+          "value": {
+            "none": [
+              "studentenbladen"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "String 3"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 1"
+            ]
+          },
+          "value": {
+            "none": [
+              "73"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 2"
+            ]
+          },
+          "value": {
+            "none": [
+              "0"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 3"
+            ]
+          },
+          "value": {
+            "none": [
+              "0"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Tags"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Roles"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        }
+      ],
+      "thumbnail": [
+        {
+          "id": "https://dlc.services/thumbs/7/21/d03a7d046a538ff3e95483cfe6a2e885/full/115,200/0/default.jpg",
+          "type": "Image",
+          "service": [
+            {
+              "@id": "https://dlc.services/thumbs/7/21/d03a7d046a538ff3e95483cfe6a2e885",
+              "@type": "ImageService2",
+              "profile": "level0",
+              "sizes": [
+                {
+                  "width": 587,
+                  "height": 1024
+                },
+                {
+                  "width": 230,
+                  "height": 400
+                },
+                {
+                  "width": 115,
+                  "height": 200
+                },
+                {
+                  "width": 58,
+                  "height": 100
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "items": [
+        {
+          "id": "https://dlc.services/iiif-img/7/21/d03a7d046a538ff3e95483cfe6a2e885/canvas/c/6/annotation-page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://dlc.services/iiif-img/7/21/d03a7d046a538ff3e95483cfe6a2e885/canvas/c/6/imageanno/0",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://dlc.services/iiif-img/7/21/d03a7d046a538ff3e95483cfe6a2e885/canvas/c/6",
+              "body": {
+                "id": "https://dlc.services/iiif-img/7/21/d03a7d046a538ff3e95483cfe6a2e885/full/587,1024/0/default.jpg",
+                "type": "Image",
+                "height": 1024,
+                "width": 587,
+                "service": [
+                  {
+                    "@id": "https://dlc.services/iiif-img/7/21/d03a7d046a538ff3e95483cfe6a2e885",
+                    "@type": "ImageService2",
+                    "profile": "level2",
+                    "width": 5827,
+                    "height": 10174
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

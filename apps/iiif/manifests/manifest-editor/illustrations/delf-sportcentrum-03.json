@@ -1,0 +1,90 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "http://localhost:7111/manifests/delf-sportcentrum-03/manifest.json",
+  "type": "Manifest",
+  "label": {
+    "nl": [
+      "De pas geopende, en voor die tijd erg moderne, sporthal van de TH, 1959."
+    ]
+  },
+  "summary": {
+    "en": [
+      "Foto: Fotografische dienst TU Delft."
+    ]
+  },
+  "items": [
+    {
+      "id": "https://tu-delft-heritage.github.io/beeldbank-data/manifests/73690f9f-0351-4a25-97ee-2d805a2041fd/canvas/1",
+      "type": "Canvas",
+      "height": 2480,
+      "width": 3100,
+      "label": {
+        "en": [
+          "Untitled canvas"
+        ]
+      },
+      "thumbnail": [
+        {
+          "id": "https://dlc.services/thumbs/v3/7/15/ae68631d-618c-4db3-a842-1218d8fdd42f/full/max/0/default.jpg",
+          "type": "Image",
+          "format": "image/jpeg",
+          "service": [
+            {
+              "@context": "http://iiif.io/api/image/3/context.json",
+              "id": "https://dlc.services/thumbs/v3/7/15/ae68631d-618c-4db3-a842-1218d8fdd42f",
+              "type": "ImageService3",
+              "profile": "level0",
+              "sizes": [
+                {
+                  "width": 1024,
+                  "height": 819
+                },
+                {
+                  "width": 400,
+                  "height": 320
+                },
+                {
+                  "width": 200,
+                  "height": 160
+                },
+                {
+                  "width": 100,
+                  "height": 80
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "items": [
+        {
+          "id": "https://tu-delft-heritage.github.io/beeldbank-data/manifests/73690f9f-0351-4a25-97ee-2d805a2041fd/canvas/1/annotation-page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://dlc.services/iiif-img/v3/7/15/ae68631d-618c-4db3-a842-1218d8fdd42f",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://tu-delft-heritage.github.io/beeldbank-data/manifests/73690f9f-0351-4a25-97ee-2d805a2041fd/canvas/1",
+              "body": {
+                "id": "https://dlc.services/iiif-img/v3/7/15/ae68631d-618c-4db3-a842-1218d8fdd42f/full/max/0/default.jpg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "height": 2480,
+                "width": 3100,
+                "service": [
+                  {
+                    "@context": "http://iiif.io/api/image/3/context.json",
+                    "id": "https://dlc.services/iiif-img/v3/7/15/ae68631d-618c-4db3-a842-1218d8fdd42f",
+                    "type": "ImageService3",
+                    "profile": "level2"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
