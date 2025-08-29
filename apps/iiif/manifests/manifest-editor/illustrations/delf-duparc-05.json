@@ -1,0 +1,186 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "http://localhost:7111/manifests/delf-duparc-05/manifest.json",
+  "type": "Manifest",
+  "label": {
+    "nl": [
+      "Naast wiskunde behoren ook trams en treinen tot de grote liefdes van Duparc, hier bij een oude stoomtrein in Enkhuizen, 1993. "
+    ]
+  },
+  "summary": {
+    "en": [
+      "Collectie: Stadsarchief Delft, archiefnummer 992."
+    ]
+  },
+  "items": [
+    {
+      "id": "https://dlc.services/iiif-img/7/21/83457b1ffcc799ecaeb807f7c833ce20/canvas/c/7",
+      "type": "Canvas",
+      "height": 4530,
+      "width": 6435,
+      "label": {
+        "none": [
+          "Canvas 7"
+        ]
+      },
+      "metadata": [
+        {
+          "label": {
+            "none": [
+              "String 1"
+            ]
+          },
+          "value": {
+            "none": [
+              "erfgoed"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "String 2"
+            ]
+          },
+          "value": {
+            "none": [
+              "duparc"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "String 3"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 1"
+            ]
+          },
+          "value": {
+            "none": [
+              "52"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 2"
+            ]
+          },
+          "value": {
+            "none": [
+              "0"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 3"
+            ]
+          },
+          "value": {
+            "none": [
+              "0"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Tags"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Roles"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        }
+      ],
+      "thumbnail": [
+        {
+          "id": "https://dlc.services/thumbs/7/21/83457b1ffcc799ecaeb807f7c833ce20/full/200,141/0/default.jpg",
+          "type": "Image",
+          "service": [
+            {
+              "@id": "https://dlc.services/thumbs/7/21/83457b1ffcc799ecaeb807f7c833ce20",
+              "@type": "ImageService2",
+              "profile": "level0",
+              "sizes": [
+                {
+                  "width": 1024,
+                  "height": 721
+                },
+                {
+                  "width": 400,
+                  "height": 282
+                },
+                {
+                  "width": 200,
+                  "height": 141
+                },
+                {
+                  "width": 100,
+                  "height": 71
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "items": [
+        {
+          "id": "https://dlc.services/iiif-img/7/21/83457b1ffcc799ecaeb807f7c833ce20/canvas/c/7/annotation-page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://dlc.services/iiif-img/7/21/83457b1ffcc799ecaeb807f7c833ce20/canvas/c/7/imageanno/0",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://dlc.services/iiif-img/7/21/83457b1ffcc799ecaeb807f7c833ce20/canvas/c/7",
+              "body": {
+                "id": "https://dlc.services/iiif-img/7/21/83457b1ffcc799ecaeb807f7c833ce20/full/1024,721/0/default.jpg",
+                "type": "Image",
+                "height": 721,
+                "width": 1024,
+                "service": [
+                  {
+                    "@id": "https://dlc.services/iiif-img/7/21/83457b1ffcc799ecaeb807f7c833ce20",
+                    "@type": "ImageService2",
+                    "profile": "level2",
+                    "width": 6435,
+                    "height": 4530
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

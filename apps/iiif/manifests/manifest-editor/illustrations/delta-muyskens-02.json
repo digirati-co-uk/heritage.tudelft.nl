@@ -1,0 +1,92 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "http://localhost:7111/manifests/delta-muyskens-02/manifest.json",
+  "type": "Manifest",
+  "label": {
+    "nl": [
+      "Muysen als rector."
+    ]
+  },
+  "summary": {
+    "en": [
+      "Bron: Technische Hogeschool Delft: Rectores Magnifici 1905-1955 (Trésor, TU Delft Library)."
+    ]
+  },
+  "items": [
+    {
+      "id": "https://dlc.services/iiif-img/7/6/45b8acd5-70cd-4f04-85a9-8af2dc601df3/canvas/c/30",
+      "type": "Canvas",
+      "height": 3409,
+      "width": 2694,
+      "label": {
+        "en": [
+          ""
+        ]
+      },
+      "thumbnail": [
+        {
+          "id": "https://dlc.services/thumbs/7/6/45b8acd5-70cd-4f04-85a9-8af2dc601df3/full/158,200/0/default.jpg",
+          "type": "Image",
+          "format": "image/jpeg",
+          "service": [
+            {
+              "@context": "http://iiif.io/api/image/3/context.json",
+              "id": "https://dlc.services/thumbs/v3/7/6/45b8acd5-70cd-4f04-85a9-8af2dc601df3",
+              "type": "ImageService3",
+              "profile": "level0",
+              "sizes": [
+                {
+                  "width": 809,
+                  "height": 1024
+                },
+                {
+                  "width": 316,
+                  "height": 400
+                },
+                {
+                  "width": 158,
+                  "height": 200
+                },
+                {
+                  "width": 79,
+                  "height": 100
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "items": [
+        {
+          "id": "https://dlc.services/iiif-img/7/6/45b8acd5-70cd-4f04-85a9-8af2dc601df3/canvas/c/30/page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://dlc.services/iiif-img/7/6/45b8acd5-70cd-4f04-85a9-8af2dc601df3/canvas/c/30/page/image",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://dlc.services/iiif-img/7/6/45b8acd5-70cd-4f04-85a9-8af2dc601df3/canvas/c/30",
+              "body": {
+                "id": "https://dlc.services/iiif-img/7/6/45b8acd5-70cd-4f04-85a9-8af2dc601df3/full/809,1024/0/default.jpg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "height": 1024,
+                "width": 809,
+                "service": [
+                  {
+                    "@context": "http://iiif.io/api/image/3/context.json",
+                    "id": "https://dlc.services/iiif-img/v3/7/6/45b8acd5-70cd-4f04-85a9-8af2dc601df3",
+                    "type": "ImageService3",
+                    "profile": "level2",
+                    "width": 2694,
+                    "height": 3409
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

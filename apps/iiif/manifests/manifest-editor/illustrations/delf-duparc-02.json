@@ -1,0 +1,186 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "http://localhost:7111/manifests/delf-duparc-02/manifest.json",
+  "type": "Manifest",
+  "label": {
+    "nl": [
+      "Portret van Duparc bij zijn oratie, 1956."
+    ]
+  },
+  "summary": {
+    "en": [
+      "Collectie: Stadsarchief Delft, archiefnummer 992."
+    ]
+  },
+  "items": [
+    {
+      "id": "https://dlc.services/iiif-img/7/21/48231ade03838a9b5244ffeb5777b181/canvas/c/2",
+      "type": "Canvas",
+      "height": 3064,
+      "width": 1933,
+      "label": {
+        "none": [
+          "Canvas 2"
+        ]
+      },
+      "metadata": [
+        {
+          "label": {
+            "none": [
+              "String 1"
+            ]
+          },
+          "value": {
+            "none": [
+              "erfgoed"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "String 2"
+            ]
+          },
+          "value": {
+            "none": [
+              "duparc"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "String 3"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 1"
+            ]
+          },
+          "value": {
+            "none": [
+              "47"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 2"
+            ]
+          },
+          "value": {
+            "none": [
+              "0"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 3"
+            ]
+          },
+          "value": {
+            "none": [
+              "0"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Tags"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Roles"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        }
+      ],
+      "thumbnail": [
+        {
+          "id": "https://dlc.services/thumbs/7/21/48231ade03838a9b5244ffeb5777b181/full/127,200/0/default.jpg",
+          "type": "Image",
+          "service": [
+            {
+              "@id": "https://dlc.services/thumbs/7/21/48231ade03838a9b5244ffeb5777b181",
+              "@type": "ImageService2",
+              "profile": "level0",
+              "sizes": [
+                {
+                  "width": 647,
+                  "height": 1024
+                },
+                {
+                  "width": 253,
+                  "height": 400
+                },
+                {
+                  "width": 127,
+                  "height": 200
+                },
+                {
+                  "width": 63,
+                  "height": 100
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "items": [
+        {
+          "id": "https://dlc.services/iiif-img/7/21/48231ade03838a9b5244ffeb5777b181/canvas/c/2/annotation-page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://dlc.services/iiif-img/7/21/48231ade03838a9b5244ffeb5777b181/canvas/c/2/imageanno/0",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://dlc.services/iiif-img/7/21/48231ade03838a9b5244ffeb5777b181/canvas/c/2",
+              "body": {
+                "id": "https://dlc.services/iiif-img/7/21/48231ade03838a9b5244ffeb5777b181/full/647,1024/0/default.jpg",
+                "type": "Image",
+                "height": 1024,
+                "width": 647,
+                "service": [
+                  {
+                    "@id": "https://dlc.services/iiif-img/7/21/48231ade03838a9b5244ffeb5777b181",
+                    "@type": "ImageService2",
+                    "profile": "level2",
+                    "width": 1933,
+                    "height": 3064
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,186 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "http://localhost:7111/manifests/delf-duparc-03/manifest.json",
+  "type": "Manifest",
+  "label": {
+    "en": [
+      "Na zijn ‘ontvoering’ wordt Herman Duparc meegenomen naar het bureau."
+    ]
+  },
+  "summary": {
+    "en": [
+      "Collectie: Stadsarchief Delft, archiefnummer 992."
+    ]
+  },
+  "items": [
+    {
+      "id": "https://dlc.services/iiif-img/7/21/3500d74e015757da93dc4b6da094ceeb/canvas/c/5",
+      "type": "Canvas",
+      "height": 2775,
+      "width": 2875,
+      "label": {
+        "none": [
+          "Canvas 5"
+        ]
+      },
+      "metadata": [
+        {
+          "label": {
+            "none": [
+              "String 1"
+            ]
+          },
+          "value": {
+            "none": [
+              "erfgoed"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "String 2"
+            ]
+          },
+          "value": {
+            "none": [
+              "duparc"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "String 3"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 1"
+            ]
+          },
+          "value": {
+            "none": [
+              "50"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 2"
+            ]
+          },
+          "value": {
+            "none": [
+              "0"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 3"
+            ]
+          },
+          "value": {
+            "none": [
+              "0"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Tags"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Roles"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        }
+      ],
+      "thumbnail": [
+        {
+          "id": "https://dlc.services/thumbs/7/21/3500d74e015757da93dc4b6da094ceeb/full/200,193/0/default.jpg",
+          "type": "Image",
+          "service": [
+            {
+              "@id": "https://dlc.services/thumbs/7/21/3500d74e015757da93dc4b6da094ceeb",
+              "@type": "ImageService2",
+              "profile": "level0",
+              "sizes": [
+                {
+                  "width": 1024,
+                  "height": 989
+                },
+                {
+                  "width": 400,
+                  "height": 386
+                },
+                {
+                  "width": 200,
+                  "height": 193
+                },
+                {
+                  "width": 100,
+                  "height": 97
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "items": [
+        {
+          "id": "https://dlc.services/iiif-img/7/21/3500d74e015757da93dc4b6da094ceeb/canvas/c/5/annotation-page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://dlc.services/iiif-img/7/21/3500d74e015757da93dc4b6da094ceeb/canvas/c/5/imageanno/0",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://dlc.services/iiif-img/7/21/3500d74e015757da93dc4b6da094ceeb/canvas/c/5",
+              "body": {
+                "id": "https://dlc.services/iiif-img/7/21/3500d74e015757da93dc4b6da094ceeb/full/1024,989/0/default.jpg",
+                "type": "Image",
+                "height": 989,
+                "width": 1024,
+                "service": [
+                  {
+                    "@id": "https://dlc.services/iiif-img/7/21/3500d74e015757da93dc4b6da094ceeb",
+                    "@type": "ImageService2",
+                    "profile": "level2",
+                    "width": 2875,
+                    "height": 2775
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
