@@ -1,0 +1,191 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "https://example.org/xcwx57q4k0e-mfze4gud",
+  "type": "Manifest",
+  "label": {
+    "en": [
+      "Wing section from a De Havilland Mosquito "
+    ]
+  },
+  "summary": {
+    "en": [
+      "Credit: Johannes Schwartz"
+    ]
+  },
+  "items": [
+    {
+      "id": "https://dlc.services/iiif-img/7/37/c4213505ab24292784abcb438a35be32/canvas/c/2",
+      "type": "Canvas",
+      "height": 3544,
+      "width": 6300,
+      "label": {
+        "none": [
+          "Wing section from a De Havilland Mosquito "
+        ]
+      },
+      "metadata": [
+        {
+          "label": {
+            "none": [
+              "String 1"
+            ]
+          },
+          "value": {
+            "none": [
+              "maatwerk"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "String 2"
+            ]
+          },
+          "value": {
+            "none": [
+              "ae-basement"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "String 3"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 1"
+            ]
+          },
+          "value": {
+            "none": [
+              "1"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 2"
+            ]
+          },
+          "value": {
+            "none": [
+              "0"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 3"
+            ]
+          },
+          "value": {
+            "none": [
+              "0"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Tags"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Roles"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        }
+      ],
+      "summary": {
+        "en": [
+          "Credit: Johannes Schwartz"
+        ]
+      },
+      "thumbnail": [
+        {
+          "id": "https://dlc.services/thumbs/7/37/c4213505ab24292784abcb438a35be32/full/200,113/0/default.jpg",
+          "type": "Image",
+          "service": [
+            {
+              "@id": "https://dlc.services/thumbs/7/37/c4213505ab24292784abcb438a35be32",
+              "@type": "ImageService2",
+              "profile": "level0",
+              "sizes": [
+                {
+                  "width": 1024,
+                  "height": 576
+                },
+                {
+                  "width": 400,
+                  "height": 226
+                },
+                {
+                  "width": 200,
+                  "height": 113
+                },
+                {
+                  "width": 100,
+                  "height": 56
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "items": [
+        {
+          "id": "https://dlc.services/iiif-img/7/37/c4213505ab24292784abcb438a35be32/canvas/c/2/annotation-page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://dlc.services/iiif-img/7/37/c4213505ab24292784abcb438a35be32/canvas/c/2/imageanno/0",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://dlc.services/iiif-img/7/37/c4213505ab24292784abcb438a35be32/canvas/c/2",
+              "body": {
+                "id": "https://dlc.services/iiif-img/7/37/c4213505ab24292784abcb438a35be32/full/1024,576/0/default.jpg",
+                "type": "Image",
+                "height": 576,
+                "width": 1024,
+                "service": [
+                  {
+                    "@id": "https://dlc.services/iiif-img/7/37/c4213505ab24292784abcb438a35be32",
+                    "@type": "ImageService2",
+                    "profile": "level2",
+                    "width": 6300,
+                    "height": 3544
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
