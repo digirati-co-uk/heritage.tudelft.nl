@@ -1,128 +1,222 @@
 {
-  "metadata": [
-    {
-      "label": "Titel",
-      "value": "Printplaat in perspex bekisting"
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/a4610445-f2d6-48d6-b608-9a78674f7cfc.json",
+    "type": "Manifest",
+    "label": {
+        "nl": [
+            "Printplaat in perspex bekisting"
+        ]
     },
-    {
-      "label": "Objectnaam",
-      "value": "printplaat"
-    },
-    {
-      "label": "Inventarisnummer",
-      "value": "2000.0868.GEO"
-    },
-    {
-      "label": "Datering",
-      "value": "1950 - 1975"
-    },
-    {
-      "label": "Afmetingen",
-      "value": "25,0 (h)  * 240,0 (b)  * 220,0 (d) "
-    },
-    {
-      "label": "Materiaal",
-      "value": "kunststof, metaal"
-    },
-    {
-      "label": "Beschrijving",
-      "value": "Een elektronische printplaat in een perspex bekisting. Bij geluidsmetingen ('Doppler-metingen') gaf de schakeling informatie door van het meetinstrument naar de Hewlett Packard 21 MX rekenmachine."
-    }
-  ],
-  "@type": "sc:Manifest",
-  "structures": [
-    {
-      "canvases": [
-        "https://dlc.services/iiif-img/7/18/a7382625-755c-48fa-9e0e-ff34b2bae90d/canvas/c0"
-      ],
-      "within": "https://dlc.services/iiif-manifest/7/18/a4610445-f2d6-48d6-b608-9a78674f7cfc/range/range-0.json",
-      "@type": "sc:Range",
-      "@id": "https://dlc.services/iiif-manifest/7/18/a4610445-f2d6-48d6-b608-9a78674f7cfc/range/range-0-0.json",
-      "label": "0"
-    }
-  ],
-  "@id": "https://raw.githubusercontent.com/libis/ca_tudelft_iiif/main/objects/a4610445-f2d6-48d6-b608-9a78674f7cfc.json",
-  "sequences": [
-    {
-      "viewingDirection": "left-to-right",
-      "viewingHint": "paged",
-      "canvases": [
+    "metadata": [
         {
-          "images": [
-            {
-              "resource": {
-                "@type": "dctypes:Image",
-                "service": {
-                  "protocol": "http://iiif.io/api/image",
-                  "profile": "http://iiif.io/api/image/2/level1.json",
-                  "width": 3072,
-                  "@id": "https://dlc.services/iiif-img/7/18/a7382625-755c-48fa-9e0e-ff34b2bae90d",
-                  "height": 2048
-                },
-                "width": 3072,
-                "@id": "https://dlc.services/iiif-img/7/18/a7382625-755c-48fa-9e0e-ff34b2bae90d/full/1024,683/0/default.jpg",
-                "height": 2048
-              },
-              "@type": "oa:Annotation",
-              "motivation": "sc:painting",
-              "@id": "https://dlc.services/iiif-img/7/18/a7382625-755c-48fa-9e0e-ff34b2bae90d/imageanno/0",
-              "on": "https://dlc.services/iiif-img/7/18/a7382625-755c-48fa-9e0e-ff34b2bae90d/canvas/c0"
-            }
-          ],
-          "thumbnail": {
-            "@type": "dctypes:Image",
-            "service": {
-              "sizes": [
-                {
-                  "width": 1024,
-                  "height": 683
-                },
-                {
-                  "width": 400,
-                  "height": 267
-                },
-                {
-                  "width": 200,
-                  "height": 133
-                },
-                {
-                  "width": 100,
-                  "height": 67
-                }
-              ],
-              "profile": [
-                "http://iiif.io/api/image/2/level0.json",
-                {
-                  "formats": [
-                    "jpg"
-                  ],
-                  "qualities": [
-                    "color"
-                  ],
-                  "supports": [
-                    "sizeByWhListed"
-                  ]
-                }
-              ],
-              "width": 1024,
-              "@id": "https://dlc.services/thumbs/7/18/a7382625-755c-48fa-9e0e-ff34b2bae90d",
-              "@context": "http://iiif.io/api/image/2/context.json",
-              "height": 683
+            "label": {
+                "en": [
+                    "Title"
+                ],
+                "nl": [
+                    "Titel"
+                ]
             },
-            "@id": "https://dlc.services/thumbs/7/18/a7382625-755c-48fa-9e0e-ff34b2bae90d/full/full/0/default.jpg"
-          },
-          "@type": "sc:Canvas",
-          "width": 3072,
-          "@id": "https://dlc.services/iiif-img/7/18/a7382625-755c-48fa-9e0e-ff34b2bae90d/canvas/c0",
-          "label": "Image",
-          "height": 2048
+            "value": {
+                "nl": [
+                    "Printplaat in perspex bekisting"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Object name"
+                ],
+                "nl": [
+                    "Objectnaam"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "printplaat"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Inventory number"
+                ],
+                "nl": [
+                    "Inventarisnummer"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "2000.0868.GEO"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dating"
+                ],
+                "nl": [
+                    "Datering"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "1950 – 1975"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dimensions"
+                ],
+                "nl": [
+                    "Afmetingen"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "25,0 mm (h) x 240,0 mm (b) x 220,0 mm (d)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Material"
+                ],
+                "nl": [
+                    "Materiaal"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "kunststof",
+                    "metaal"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Description"
+                ],
+                "nl": [
+                    "Beschrijving"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Een elektronische printplaat in een perspex bekisting. Bij geluidsmetingen ('Doppler-metingen') gaf de schakeling informatie door van het meetinstrument naar de Hewlett Packard 21 MX rekenmachine."
+                ]
+            }
         }
-      ],
-      "@type": "sc:Sequence",
-      "@id": "https://dlc.services/7/18/a4610445-f2d6-48d6-b608-9a78674f7cfc/sequences/normal",
-      "label": "Current page order"
-    }
-  ],
-  "@context": "http://iiif.io/api/presentation/2/context.json",
-  "label": "Printplaat in perspex bekisting"
+    ],
+    "navDate": "1950-01-01T00:00:00.000Z",
+    "thumbnail": [
+        {
+            "id": "https://dlc.services/thumbs/v3/7/18/a7382625-755c-48fa-9e0e-ff34b2bae90d/full/max/0/default.jpg",
+            "type": "Image",
+            "format": "image/jpeg",
+            "service": [
+                {
+                    "@context": "http://iiif.io/api/image/3/context.json",
+                    "id": "https://dlc.services/thumbs/v3/7/18/a7382625-755c-48fa-9e0e-ff34b2bae90d",
+                    "type": "ImageService3",
+                    "profile": "level0",
+                    "sizes": [
+                        {
+                            "width": 1024,
+                            "height": 683
+                        },
+                        {
+                            "width": 400,
+                            "height": 267
+                        },
+                        {
+                            "width": 200,
+                            "height": 133
+                        },
+                        {
+                            "width": 100,
+                            "height": 67
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "items": [
+        {
+            "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/a4610445-f2d6-48d6-b608-9a78674f7cfc/canvas/0",
+            "type": "Canvas",
+            "height": 2048,
+            "width": 3072,
+            "thumbnail": [
+                {
+                    "id": "https://dlc.services/thumbs/v3/7/18/a7382625-755c-48fa-9e0e-ff34b2bae90d/full/max/0/default.jpg",
+                    "type": "Image",
+                    "format": "image/jpeg",
+                    "service": [
+                        {
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/18/a7382625-755c-48fa-9e0e-ff34b2bae90d",
+                            "type": "ImageService3",
+                            "profile": "level0",
+                            "sizes": [
+                                {
+                                    "width": 1024,
+                                    "height": 683
+                                },
+                                {
+                                    "width": 400,
+                                    "height": 267
+                                },
+                                {
+                                    "width": 200,
+                                    "height": 133
+                                },
+                                {
+                                    "width": 100,
+                                    "height": 67
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "items": [
+                {
+                    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/a4610445-f2d6-48d6-b608-9a78674f7cfc/canvas/0/annotation-page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://dlc.services/iiif-img/v3/7/18/a7382625-755c-48fa-9e0e-ff34b2bae90d",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/a4610445-f2d6-48d6-b608-9a78674f7cfc/canvas/0",
+                            "body": {
+                                "id": "https://dlc.services/iiif-img/v3/7/18/a7382625-755c-48fa-9e0e-ff34b2bae90d/full/max/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "height": 2048,
+                                "width": 3072,
+                                "service": [
+                                    {
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/18/a7382625-755c-48fa-9e0e-ff34b2bae90d",
+                                        "type": "ImageService3",
+                                        "profile": "level2"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

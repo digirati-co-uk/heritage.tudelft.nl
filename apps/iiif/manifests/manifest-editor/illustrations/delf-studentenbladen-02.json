@@ -1,0 +1,186 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "http://localhost:7111/manifests/delf-studentenbladen-02/manifest.json",
+  "type": "Manifest",
+  "label": {
+    "nl": [
+      "Kaft van In den Nevel ontworpen door Jan Toorop. Het anoniem gepubliceerde gedicht ‘In den Nevel’ vormde de inspiratie voor zowel de titel als de inhoud van het blad."
+    ]
+  },
+  "summary": {
+    "en": [
+      "Collectie: Trésor, TU Delft Library"
+    ]
+  },
+  "items": [
+    {
+      "id": "https://dlc.services/iiif-img/7/21/a3b7a80496877362d7a56331d38a2f11/canvas/c/1",
+      "type": "Canvas",
+      "height": 1314,
+      "width": 880,
+      "label": {
+        "none": [
+          "Canvas 1"
+        ]
+      },
+      "metadata": [
+        {
+          "label": {
+            "none": [
+              "String 1"
+            ]
+          },
+          "value": {
+            "none": [
+              "erfgoed"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "String 2"
+            ]
+          },
+          "value": {
+            "none": [
+              "studentenbladen"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "String 3"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 1"
+            ]
+          },
+          "value": {
+            "none": [
+              "68"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 2"
+            ]
+          },
+          "value": {
+            "none": [
+              "0"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 3"
+            ]
+          },
+          "value": {
+            "none": [
+              "0"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Tags"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Roles"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        }
+      ],
+      "thumbnail": [
+        {
+          "id": "https://dlc.services/thumbs/7/21/a3b7a80496877362d7a56331d38a2f11/full/134,200/0/default.jpg",
+          "type": "Image",
+          "service": [
+            {
+              "@id": "https://dlc.services/thumbs/7/21/a3b7a80496877362d7a56331d38a2f11",
+              "@type": "ImageService2",
+              "profile": "level0",
+              "sizes": [
+                {
+                  "width": 686,
+                  "height": 1024
+                },
+                {
+                  "width": 268,
+                  "height": 400
+                },
+                {
+                  "width": 134,
+                  "height": 200
+                },
+                {
+                  "width": 67,
+                  "height": 100
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "items": [
+        {
+          "id": "https://dlc.services/iiif-img/7/21/a3b7a80496877362d7a56331d38a2f11/canvas/c/1/annotation-page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://dlc.services/iiif-img/7/21/a3b7a80496877362d7a56331d38a2f11/canvas/c/1/imageanno/0",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://dlc.services/iiif-img/7/21/a3b7a80496877362d7a56331d38a2f11/canvas/c/1",
+              "body": {
+                "id": "https://dlc.services/iiif-img/7/21/a3b7a80496877362d7a56331d38a2f11/full/686,1024/0/default.jpg",
+                "type": "Image",
+                "height": 1024,
+                "width": 686,
+                "service": [
+                  {
+                    "@id": "https://dlc.services/iiif-img/7/21/a3b7a80496877362d7a56331d38a2f11",
+                    "@type": "ImageService2",
+                    "profile": "level2",
+                    "width": 880,
+                    "height": 1314
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

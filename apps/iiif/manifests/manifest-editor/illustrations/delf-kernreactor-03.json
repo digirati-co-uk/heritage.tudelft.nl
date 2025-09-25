@@ -1,0 +1,90 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "http://localhost:7111/manifests/delf-kernreactor-03/manifest.json",
+  "type": "Manifest",
+  "label": {
+    "nl": [
+      "Bij een bezoek aan de TH in 1958 toont fysicus Ralph Kronig een maquette van de in aanbouw zijnde kernreactor aan koningin Juliana en prins Bernhard."
+    ]
+  },
+  "summary": {
+    "en": [
+      "Foto: Fotografische dienst TU Delft."
+    ]
+  },
+  "items": [
+    {
+      "id": "https://tu-delft-heritage.github.io/beeldbank-data/manifests/efb7c816-9ef6-4adb-b1cd-6ce4a56d6c71/canvas/2",
+      "type": "Canvas",
+      "height": 2291,
+      "width": 3484,
+      "label": {
+        "en": [
+          "Untitled canvas"
+        ]
+      },
+      "thumbnail": [
+        {
+          "id": "https://dlc.services/thumbs/v3/7/15/8bdc7c0b-6b42-4e27-b18d-d174dd17f512/full/max/0/default.jpg",
+          "type": "Image",
+          "format": "image/jpeg",
+          "service": [
+            {
+              "@context": "http://iiif.io/api/image/3/context.json",
+              "id": "https://dlc.services/thumbs/v3/7/15/8bdc7c0b-6b42-4e27-b18d-d174dd17f512",
+              "type": "ImageService3",
+              "profile": "level0",
+              "sizes": [
+                {
+                  "width": 1024,
+                  "height": 674
+                },
+                {
+                  "width": 400,
+                  "height": 264
+                },
+                {
+                  "width": 200,
+                  "height": 132
+                },
+                {
+                  "width": 100,
+                  "height": 66
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "items": [
+        {
+          "id": "https://tu-delft-heritage.github.io/beeldbank-data/manifests/efb7c816-9ef6-4adb-b1cd-6ce4a56d6c71/canvas/2/annotation-page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://dlc.services/iiif-img/v3/7/15/8bdc7c0b-6b42-4e27-b18d-d174dd17f512",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://tu-delft-heritage.github.io/beeldbank-data/manifests/efb7c816-9ef6-4adb-b1cd-6ce4a56d6c71/canvas/2",
+              "body": {
+                "id": "https://dlc.services/iiif-img/v3/7/15/8bdc7c0b-6b42-4e27-b18d-d174dd17f512/full/max/0/default.jpg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "height": 2291,
+                "width": 3484,
+                "service": [
+                  {
+                    "@context": "http://iiif.io/api/image/3/context.json",
+                    "id": "https://dlc.services/iiif-img/v3/7/15/8bdc7c0b-6b42-4e27-b18d-d174dd17f512",
+                    "type": "ImageService3",
+                    "profile": "level2"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
