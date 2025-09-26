@@ -1,21 +1,26 @@
 {
   "@context": "http://iiif.io/api/presentation/3/context.json",
-  "id": "https://example.org/u4xxcd86oza-mfzc59ve",
+  "id": "http://localhost:7111/manifests/ae-basement-mosquito-wing/manifest.json",
   "type": "Manifest",
   "label": {
     "en": [
-      "Blank Manifest"
+      "Wing section from a De Havilland Mosquito "
+    ]
+  },
+  "summary": {
+    "en": [
+      "Photo: Johannes Schwartz"
     ]
   },
   "items": [
     {
-      "id": "https://dlc.services/iiif-img/7/37/3c7b7f545fe58dad8dadcc82aafb530e/canvas/c/3",
+      "id": "https://dlc.services/iiif-img/7/37/c4213505ab24292784abcb438a35be32/canvas/c/2",
       "type": "Canvas",
-      "height": 4500,
+      "height": 3544,
       "width": 6300,
       "label": {
         "none": [
-          "P-51 Mustang engine mounting bracket "
+          "Wing section from a De Havilland Mosquito "
         ]
       },
       "metadata": [
@@ -63,7 +68,7 @@
           },
           "value": {
             "none": [
-              "2"
+              "1"
             ]
           }
         },
@@ -123,29 +128,29 @@
       },
       "thumbnail": [
         {
-          "id": "https://dlc.services/thumbs/7/37/3c7b7f545fe58dad8dadcc82aafb530e/full/200,143/0/default.jpg",
+          "id": "https://dlc.services/thumbs/7/37/c4213505ab24292784abcb438a35be32/full/200,113/0/default.jpg",
           "type": "Image",
           "service": [
             {
-              "@id": "https://dlc.services/thumbs/7/37/3c7b7f545fe58dad8dadcc82aafb530e",
+              "@id": "https://dlc.services/thumbs/7/37/c4213505ab24292784abcb438a35be32",
               "@type": "ImageService2",
               "profile": "level0",
               "sizes": [
                 {
                   "width": 1024,
-                  "height": 732
+                  "height": 576
                 },
                 {
                   "width": 400,
-                  "height": 286
+                  "height": 226
                 },
                 {
                   "width": 200,
-                  "height": 143
+                  "height": 113
                 },
                 {
                   "width": 100,
-                  "height": 71
+                  "height": 56
                 }
               ]
             }
@@ -154,26 +159,26 @@
       ],
       "items": [
         {
-          "id": "https://dlc.services/iiif-img/7/37/3c7b7f545fe58dad8dadcc82aafb530e/canvas/c/3/annotation-page",
+          "id": "https://dlc.services/iiif-img/7/37/c4213505ab24292784abcb438a35be32/canvas/c/2/annotation-page",
           "type": "AnnotationPage",
           "items": [
             {
-              "id": "https://dlc.services/iiif-img/7/37/3c7b7f545fe58dad8dadcc82aafb530e/canvas/c/3/imageanno/0",
+              "id": "https://dlc.services/iiif-img/7/37/c4213505ab24292784abcb438a35be32/canvas/c/2/imageanno/0",
               "type": "Annotation",
               "motivation": "painting",
-              "target": "https://dlc.services/iiif-img/7/37/3c7b7f545fe58dad8dadcc82aafb530e/canvas/c/3",
+              "target": "https://dlc.services/iiif-img/7/37/c4213505ab24292784abcb438a35be32/canvas/c/2",
               "body": {
-                "id": "https://dlc.services/iiif-img/7/37/3c7b7f545fe58dad8dadcc82aafb530e/full/1024,732/0/default.jpg",
+                "id": "https://dlc.services/iiif-img/7/37/c4213505ab24292784abcb438a35be32/full/1024,576/0/default.jpg",
                 "type": "Image",
-                "height": 732,
+                "height": 576,
                 "width": 1024,
                 "service": [
                   {
-                    "@id": "https://dlc.services/iiif-img/7/37/3c7b7f545fe58dad8dadcc82aafb530e",
+                    "@id": "https://dlc.services/iiif-img/7/37/c4213505ab24292784abcb438a35be32",
                     "@type": "ImageService2",
                     "profile": "level2",
                     "width": 6300,
-                    "height": 4500
+                    "height": 3544
                   }
                 ]
               }

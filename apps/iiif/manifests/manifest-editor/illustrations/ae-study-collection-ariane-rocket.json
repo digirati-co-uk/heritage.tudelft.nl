@@ -1,21 +1,26 @@
 {
   "@context": "http://iiif.io/api/presentation/3/context.json",
-  "id": "https://example.org/hrb5hgm2cm-mfzeerew",
+  "id": "http://localhost:7111/manifests/ae-basement-ariane-rocket/manifest.json",
   "type": "Manifest",
   "label": {
     "en": [
-      "Blank Manifest"
+      "Outer skin piece from the Ariane 5 rocket "
+    ]
+  },
+  "summary": {
+    "en": [
+      "Photo: Johannes Schwartz"
     ]
   },
   "items": [
     {
-      "id": "https://dlc.services/iiif-img/7/37/0afd96406ca7defb4a405f5c963a28ab/canvas/c/8",
+      "id": "https://dlc.services/iiif-img/7/37/b7bf0c17e1dc74da0634310b02bbf04c/canvas/c/7",
       "type": "Canvas",
-      "height": 6300,
-      "width": 4200,
+      "height": 4500,
+      "width": 6300,
       "label": {
         "none": [
-          "Part of the tail from a Lockheed Constellation Aircraft  "
+          "Outer skin piece from the Ariane 5 rocket "
         ]
       },
       "metadata": [
@@ -63,7 +68,7 @@
           },
           "value": {
             "none": [
-              "7"
+              "6"
             ]
           }
         },
@@ -123,29 +128,29 @@
       },
       "thumbnail": [
         {
-          "id": "https://dlc.services/thumbs/7/37/0afd96406ca7defb4a405f5c963a28ab/full/134,200/0/default.jpg",
+          "id": "https://dlc.services/thumbs/7/37/b7bf0c17e1dc74da0634310b02bbf04c/full/200,143/0/default.jpg",
           "type": "Image",
           "service": [
             {
-              "@id": "https://dlc.services/thumbs/7/37/0afd96406ca7defb4a405f5c963a28ab",
+              "@id": "https://dlc.services/thumbs/7/37/b7bf0c17e1dc74da0634310b02bbf04c",
               "@type": "ImageService2",
               "profile": "level0",
               "sizes": [
                 {
-                  "width": 683,
-                  "height": 1024
+                  "width": 1024,
+                  "height": 732
                 },
                 {
-                  "width": 267,
-                  "height": 400
+                  "width": 400,
+                  "height": 286
                 },
                 {
-                  "width": 134,
-                  "height": 200
+                  "width": 200,
+                  "height": 143
                 },
                 {
-                  "width": 67,
-                  "height": 100
+                  "width": 100,
+                  "height": 71
                 }
               ]
             }
@@ -154,26 +159,26 @@
       ],
       "items": [
         {
-          "id": "https://dlc.services/iiif-img/7/37/0afd96406ca7defb4a405f5c963a28ab/canvas/c/8/annotation-page",
+          "id": "https://dlc.services/iiif-img/7/37/b7bf0c17e1dc74da0634310b02bbf04c/canvas/c/7/annotation-page",
           "type": "AnnotationPage",
           "items": [
             {
-              "id": "https://dlc.services/iiif-img/7/37/0afd96406ca7defb4a405f5c963a28ab/canvas/c/8/imageanno/0",
+              "id": "https://dlc.services/iiif-img/7/37/b7bf0c17e1dc74da0634310b02bbf04c/canvas/c/7/imageanno/0",
               "type": "Annotation",
               "motivation": "painting",
-              "target": "https://dlc.services/iiif-img/7/37/0afd96406ca7defb4a405f5c963a28ab/canvas/c/8",
+              "target": "https://dlc.services/iiif-img/7/37/b7bf0c17e1dc74da0634310b02bbf04c/canvas/c/7",
               "body": {
-                "id": "https://dlc.services/iiif-img/7/37/0afd96406ca7defb4a405f5c963a28ab/full/683,1024/0/default.jpg",
+                "id": "https://dlc.services/iiif-img/7/37/b7bf0c17e1dc74da0634310b02bbf04c/full/1024,732/0/default.jpg",
                 "type": "Image",
-                "height": 1024,
-                "width": 683,
+                "height": 732,
+                "width": 1024,
                 "service": [
                   {
-                    "@id": "https://dlc.services/iiif-img/7/37/0afd96406ca7defb4a405f5c963a28ab",
+                    "@id": "https://dlc.services/iiif-img/7/37/b7bf0c17e1dc74da0634310b02bbf04c",
                     "@type": "ImageService2",
                     "profile": "level2",
-                    "width": 4200,
-                    "height": 6300
+                    "width": 6300,
+                    "height": 4500
                   }
                 ]
               }

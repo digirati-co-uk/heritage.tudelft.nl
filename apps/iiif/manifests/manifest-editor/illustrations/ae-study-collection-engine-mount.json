@@ -1,21 +1,26 @@
 {
   "@context": "http://iiif.io/api/presentation/3/context.json",
-  "id": "https://example.org/xcwx57q4k0e-mfze4gud",
+  "id": "http://localhost:7111/manifests/ae-basement-engine-mount/manifest.json",
   "type": "Manifest",
   "label": {
     "en": [
-      "Blank Manifest"
+      "P-51 Mustang engine mounting bracket "
+    ]
+  },
+  "summary": {
+    "en": [
+      "Photo: Johannes Schwartz"
     ]
   },
   "items": [
     {
-      "id": "https://dlc.services/iiif-img/7/37/c4213505ab24292784abcb438a35be32/canvas/c/2",
+      "id": "https://dlc.services/iiif-img/7/37/3c7b7f545fe58dad8dadcc82aafb530e/canvas/c/3",
       "type": "Canvas",
-      "height": 3544,
+      "height": 4500,
       "width": 6300,
       "label": {
         "none": [
-          "Wing section from a De Havilland Mosquito "
+          "P-51 Mustang engine mounting bracket "
         ]
       },
       "metadata": [
@@ -63,7 +68,7 @@
           },
           "value": {
             "none": [
-              "1"
+              "2"
             ]
           }
         },
@@ -123,29 +128,29 @@
       },
       "thumbnail": [
         {
-          "id": "https://dlc.services/thumbs/7/37/c4213505ab24292784abcb438a35be32/full/200,113/0/default.jpg",
+          "id": "https://dlc.services/thumbs/7/37/3c7b7f545fe58dad8dadcc82aafb530e/full/200,143/0/default.jpg",
           "type": "Image",
           "service": [
             {
-              "@id": "https://dlc.services/thumbs/7/37/c4213505ab24292784abcb438a35be32",
+              "@id": "https://dlc.services/thumbs/7/37/3c7b7f545fe58dad8dadcc82aafb530e",
               "@type": "ImageService2",
               "profile": "level0",
               "sizes": [
                 {
                   "width": 1024,
-                  "height": 576
+                  "height": 732
                 },
                 {
                   "width": 400,
-                  "height": 226
+                  "height": 286
                 },
                 {
                   "width": 200,
-                  "height": 113
+                  "height": 143
                 },
                 {
                   "width": 100,
-                  "height": 56
+                  "height": 71
                 }
               ]
             }
@@ -154,26 +159,26 @@
       ],
       "items": [
         {
-          "id": "https://dlc.services/iiif-img/7/37/c4213505ab24292784abcb438a35be32/canvas/c/2/annotation-page",
+          "id": "https://dlc.services/iiif-img/7/37/3c7b7f545fe58dad8dadcc82aafb530e/canvas/c/3/annotation-page",
           "type": "AnnotationPage",
           "items": [
             {
-              "id": "https://dlc.services/iiif-img/7/37/c4213505ab24292784abcb438a35be32/canvas/c/2/imageanno/0",
+              "id": "https://dlc.services/iiif-img/7/37/3c7b7f545fe58dad8dadcc82aafb530e/canvas/c/3/imageanno/0",
               "type": "Annotation",
               "motivation": "painting",
-              "target": "https://dlc.services/iiif-img/7/37/c4213505ab24292784abcb438a35be32/canvas/c/2",
+              "target": "https://dlc.services/iiif-img/7/37/3c7b7f545fe58dad8dadcc82aafb530e/canvas/c/3",
               "body": {
-                "id": "https://dlc.services/iiif-img/7/37/c4213505ab24292784abcb438a35be32/full/1024,576/0/default.jpg",
+                "id": "https://dlc.services/iiif-img/7/37/3c7b7f545fe58dad8dadcc82aafb530e/full/1024,732/0/default.jpg",
                 "type": "Image",
-                "height": 576,
+                "height": 732,
                 "width": 1024,
                 "service": [
                   {
-                    "@id": "https://dlc.services/iiif-img/7/37/c4213505ab24292784abcb438a35be32",
+                    "@id": "https://dlc.services/iiif-img/7/37/3c7b7f545fe58dad8dadcc82aafb530e",
                     "@type": "ImageService2",
                     "profile": "level2",
                     "width": 6300,
-                    "height": 3544
+                    "height": 4500
                   }
                 ]
               }
