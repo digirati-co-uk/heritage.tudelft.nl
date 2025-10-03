@@ -1,0 +1,93 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "http://localhost:7111/manifests/delf-kernreactor-04/manifest.json",
+  "type": "Manifest",
+  "label": {
+    "en": [
+      "Onderzoek naar de reactorkern in de barakken aan de Ezelsveldlaan."
+    ],
+    "nl": [
+      "Onderzoek naar de reactorkern in de barakken aan de Ezelsveldlaan."
+    ]
+  },
+  "summary": {
+    "en": [
+      "Foto: Fotografische dienst TU Delft."
+    ]
+  },
+  "items": [
+    {
+      "id": "https://tu-delft-heritage.github.io/beeldbank-data/manifests/65e6eb58-539d-45cc-9cb5-c505fd8b7723/canvas/1",
+      "type": "Canvas",
+      "height": 3100,
+      "width": 2480,
+      "label": {
+        "en": [
+          "Untitled canvas"
+        ]
+      },
+      "thumbnail": [
+        {
+          "id": "https://dlc.services/thumbs/v3/7/15/a6d4b28a-2249-4d1c-989a-7daee96e50a3/full/max/0/default.jpg",
+          "type": "Image",
+          "format": "image/jpeg",
+          "service": [
+            {
+              "@context": "http://iiif.io/api/image/3/context.json",
+              "id": "https://dlc.services/thumbs/v3/7/15/a6d4b28a-2249-4d1c-989a-7daee96e50a3",
+              "type": "ImageService3",
+              "profile": "level0",
+              "sizes": [
+                {
+                  "width": 819,
+                  "height": 1024
+                },
+                {
+                  "width": 320,
+                  "height": 400
+                },
+                {
+                  "width": 160,
+                  "height": 200
+                },
+                {
+                  "width": 80,
+                  "height": 100
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "items": [
+        {
+          "id": "https://tu-delft-heritage.github.io/beeldbank-data/manifests/65e6eb58-539d-45cc-9cb5-c505fd8b7723/canvas/1/annotation-page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://dlc.services/iiif-img/v3/7/15/a6d4b28a-2249-4d1c-989a-7daee96e50a3",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://tu-delft-heritage.github.io/beeldbank-data/manifests/65e6eb58-539d-45cc-9cb5-c505fd8b7723/canvas/1",
+              "body": {
+                "id": "https://dlc.services/iiif-img/v3/7/15/a6d4b28a-2249-4d1c-989a-7daee96e50a3/full/max/0/default.jpg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "height": 3100,
+                "width": 2480,
+                "service": [
+                  {
+                    "@context": "http://iiif.io/api/image/3/context.json",
+                    "id": "https://dlc.services/iiif-img/v3/7/15/a6d4b28a-2249-4d1c-989a-7daee96e50a3",
+                    "type": "ImageService3",
+                    "profile": "level2"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

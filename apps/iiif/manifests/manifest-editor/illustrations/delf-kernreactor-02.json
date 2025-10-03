@@ -1,0 +1,124 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "http://localhost:7111/manifests/delf-kernreactor-02/manifest.json",
+  "type": "Manifest",
+  "label": {
+    "nl": [
+      "Koninklijk bezoek op de tentoonstelling Het Atoom op Schiphol, 1957."
+    ]
+  },
+  "summary": {
+    "en": [
+      "Foto: Harry Pot. Collectie: Nationaal Archief."
+    ]
+  },
+  "items": [
+    {
+      "id": "http://localhost:7111/manifests/delf-kernreactor-02/manifest.json/canvas/ccltnw3z6dq-melbbqex",
+      "type": "Canvas",
+      "height": 3606,
+      "width": 2821,
+      "label": {
+        "en": [
+          ""
+        ]
+      },
+      "thumbnail": [
+        {
+          "id": "https://service.archief.nl/iip/iipsrv?IIIF=/a8/05/e5/37/f2/a5/44/2f/be/d8/9f/c3/41/96/45/3e/76545827-55a4-448f-94f0-99cc0bdbc230.jp2/full/352,/0/default.jpg",
+          "type": "Image",
+          "format": "image/jpeg",
+          "height": 450,
+          "width": 352
+        }
+      ],
+      "items": [
+        {
+          "id": "http://localhost:7111/manifests/delf-kernreactor-02/manifest.json/canvas/ccltnw3z6dq-melbbqex/annotation-page/hsqhnfytk9-melbbqex",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "http://localhost:7111/manifests/delf-kernreactor-02/manifest.json/annotation/fza7yk9mgki-melbbqew",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "http://localhost:7111/manifests/delf-kernreactor-02/manifest.json/canvas/ccltnw3z6dq-melbbqex",
+              "body": {
+                "id": "https://service.archief.nl/iip/iipsrv?IIIF=/a8/05/e5/37/f2/a5/44/2f/be/d8/9f/c3/41/96/45/3e/76545827-55a4-448f-94f0-99cc0bdbc230.jp2/full/max/0/default.jpg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "height": 3606,
+                "width": 2821,
+                "service": [
+                  {
+                    "@context": "http://iiif.io/api/image/2/context.json",
+                    "protocol": "http://iiif.io/api/image",
+                    "width": 2821,
+                    "height": 3606,
+                    "sizes": [
+                      {
+                        "width": 176,
+                        "height": 225
+                      },
+                      {
+                        "width": 352,
+                        "height": 450
+                      },
+                      {
+                        "width": 705,
+                        "height": 901
+                      },
+                      {
+                        "width": 1410,
+                        "height": 1803
+                      }
+                    ],
+                    "tiles": [
+                      {
+                        "width": 256,
+                        "height": 256,
+                        "scaleFactors": [
+                          1,
+                          2,
+                          4,
+                          8,
+                          16
+                        ]
+                      }
+                    ],
+                    "@id": "https://service.archief.nl/iip/iipsrv?IIIF=/a8/05/e5/37/f2/a5/44/2f/be/d8/9f/c3/41/96/45/3e/76545827-55a4-448f-94f0-99cc0bdbc230.jp2",
+                    "profile": [
+                      "http://iiif.io/api/image/2/level1",
+                      {
+                        "formats": [
+                          "jpg"
+                        ],
+                        "qualities": [
+                          "native",
+                          "color",
+                          "gray",
+                          "bitonal"
+                        ],
+                        "supports": [
+                          "regionByPct",
+                          "regionSquare",
+                          "sizeByForcedWh",
+                          "sizeByWh",
+                          "sizeAboveFull",
+                          "sizeUpscaling",
+                          "rotationBy90s",
+                          "mirroring"
+                        ],
+                        "maxWidth": 5000,
+                        "maxHeight": 5000
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

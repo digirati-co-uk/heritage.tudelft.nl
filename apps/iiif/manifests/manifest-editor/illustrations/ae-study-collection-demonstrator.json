@@ -1,0 +1,191 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "http://localhost:7111/manifests/ae-basement-demonstrator/manifest.json",
+  "type": "Manifest",
+  "label": {
+    "en": [
+      "Flight stability demonstrator for teaching "
+    ]
+  },
+  "summary": {
+    "en": [
+      "Photo: Johannes Schwartz"
+    ]
+  },
+  "items": [
+    {
+      "id": "https://dlc.services/iiif-img/7/37/8ed9be24b25c02c052568bd23298db6f/canvas/c/5",
+      "type": "Canvas",
+      "height": 5040,
+      "width": 6300,
+      "label": {
+        "none": [
+          "Flight stability demonstrator for teaching "
+        ]
+      },
+      "metadata": [
+        {
+          "label": {
+            "none": [
+              "String 1"
+            ]
+          },
+          "value": {
+            "none": [
+              "maatwerk"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "String 2"
+            ]
+          },
+          "value": {
+            "none": [
+              "ae-basement"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "String 3"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 1"
+            ]
+          },
+          "value": {
+            "none": [
+              "4"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 2"
+            ]
+          },
+          "value": {
+            "none": [
+              "0"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 3"
+            ]
+          },
+          "value": {
+            "none": [
+              "0"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Tags"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Roles"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        }
+      ],
+      "summary": {
+        "en": [
+          "Credit: Johannes Schwartz"
+        ]
+      },
+      "thumbnail": [
+        {
+          "id": "https://dlc.services/thumbs/7/37/8ed9be24b25c02c052568bd23298db6f/full/200,160/0/default.jpg",
+          "type": "Image",
+          "service": [
+            {
+              "@id": "https://dlc.services/thumbs/7/37/8ed9be24b25c02c052568bd23298db6f",
+              "@type": "ImageService2",
+              "profile": "level0",
+              "sizes": [
+                {
+                  "width": 1024,
+                  "height": 819
+                },
+                {
+                  "width": 400,
+                  "height": 320
+                },
+                {
+                  "width": 200,
+                  "height": 160
+                },
+                {
+                  "width": 100,
+                  "height": 80
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "items": [
+        {
+          "id": "https://dlc.services/iiif-img/7/37/8ed9be24b25c02c052568bd23298db6f/canvas/c/5/annotation-page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://dlc.services/iiif-img/7/37/8ed9be24b25c02c052568bd23298db6f/canvas/c/5/imageanno/0",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://dlc.services/iiif-img/7/37/8ed9be24b25c02c052568bd23298db6f/canvas/c/5",
+              "body": {
+                "id": "https://dlc.services/iiif-img/7/37/8ed9be24b25c02c052568bd23298db6f/full/1024,819/0/default.jpg",
+                "type": "Image",
+                "height": 819,
+                "width": 1024,
+                "service": [
+                  {
+                    "@id": "https://dlc.services/iiif-img/7/37/8ed9be24b25c02c052568bd23298db6f",
+                    "@type": "ImageService2",
+                    "profile": "level2",
+                    "width": 6300,
+                    "height": 5040
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

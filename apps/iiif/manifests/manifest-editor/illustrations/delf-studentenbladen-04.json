@@ -1,0 +1,136 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "http://localhost:7111/manifests/delf-studentenbladen-04/manifest.json",
+  "type": "Manifest",
+  "label": {
+    "nl": [
+      "Het titelblad van de allerlaatste aflevering van het Delftsch Studenten-Weekblad, juli 1921."
+    ]
+  },
+  "summary": {
+    "en": [
+      "Collectie: Trésor, TU Delft Library"
+    ]
+  },
+  "items": [
+    {
+      "id": "http://localhost:7111/manifests/delf-studentenbladen-04/manifest.json/canvas/hr59jkiq3vq-mewqaj6q",
+      "type": "Canvas",
+      "height": 924,
+      "width": 2002,
+      "label": {
+        "en": [
+          "Untitled canvas"
+        ]
+      },
+      "thumbnail": [
+        {
+          "id": "https://dlc.services/iiif-img/7/21/670b50ed7e2d439107e820ed6c7450da/full/400,/0/default.jpg",
+          "type": "Image",
+          "format": "image/jpeg",
+          "height": 185,
+          "width": 400
+        }
+      ],
+      "items": [
+        {
+          "id": "http://localhost:7111/manifests/delf-studentenbladen-04/manifest.json/canvas/hr59jkiq3vq-mewqaj6q/annotation-page/zj6tiaft3fh-mewqaj6q",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "http://localhost:7111/manifests/delf-studentenbladen-04/manifest.json/annotation/wc84tegqcd-mewqaj6p",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "http://localhost:7111/manifests/delf-studentenbladen-04/manifest.json/canvas/hr59jkiq3vq-mewqaj6q",
+              "body": {
+                "id": "https://dlc.services/iiif-img/7/21/670b50ed7e2d439107e820ed6c7450da/full/max/0/default.jpg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "height": 924,
+                "width": 2002,
+                "service": [
+                  {
+                    "@context": "http://iiif.io/api/image/2/context.json",
+                    "@id": "https://dlc.services/iiif-img/7/21/670b50ed7e2d439107e820ed6c7450da",
+                    "@type": "iiif:Image",
+                    "profile": [
+                      "http://iiif.io/api/image/2/level2.json",
+                      {
+                        "formats": [
+                          "jpg",
+                          "tif",
+                          "gif",
+                          "png"
+                        ],
+                        "qualities": [
+                          "bitonal",
+                          "default",
+                          "gray",
+                          "color"
+                        ],
+                        "supports": [
+                          "regionByPx",
+                          "sizeByW",
+                          "sizeByWhListed",
+                          "cors",
+                          "regionSquare",
+                          "sizeByDistortedWh",
+                          "canonicalLinkHeader",
+                          "sizeByConfinedWh",
+                          "sizeByPct",
+                          "jsonldMediaType",
+                          "regionByPct",
+                          "rotationArbitrary",
+                          "sizeByH",
+                          "baseUriRedirect",
+                          "rotationBy90s",
+                          "profileLinkHeader",
+                          "sizeByForcedWh",
+                          "sizeByWh",
+                          "mirroring"
+                        ]
+                      }
+                    ],
+                    "protocol": "http://iiif.io/api/image",
+                    "width": 2002,
+                    "height": 924,
+                    "sizes": [
+                      {
+                        "width": 1024,
+                        "height": 473
+                      },
+                      {
+                        "width": 400,
+                        "height": 185
+                      },
+                      {
+                        "width": 200,
+                        "height": 92
+                      },
+                      {
+                        "width": 100,
+                        "height": 46
+                      }
+                    ],
+                    "tiles": [
+                      {
+                        "width": 512,
+                        "height": 512,
+                        "scaleFactors": [
+                          1,
+                          2,
+                          4,
+                          8
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

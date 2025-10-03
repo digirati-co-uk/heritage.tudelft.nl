@@ -1,0 +1,186 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "http://localhost:7111/manifests/delf-studentenbladen-06/manifest.json",
+  "type": "Manifest",
+  "label": {
+    "nl": [
+      "Oorkonde voor J.E. Koch, in 1946 benoemd tot erelid van de redactie van De Spiegel."
+    ]
+  },
+  "summary": {
+    "en": [
+      "Collectie: Stadsarchief Delft, 256327"
+    ]
+  },
+  "items": [
+    {
+      "id": "https://dlc.services/iiif-img/7/21/2108987e600d80132e24527986d179e2/canvas/c/20",
+      "type": "Canvas",
+      "height": 3988,
+      "width": 2585,
+      "label": {
+        "none": [
+          "Canvas 20"
+        ]
+      },
+      "metadata": [
+        {
+          "label": {
+            "none": [
+              "String 1"
+            ]
+          },
+          "value": {
+            "none": [
+              "erfgoed"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "String 2"
+            ]
+          },
+          "value": {
+            "none": [
+              "studentenbladen"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "String 3"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 1"
+            ]
+          },
+          "value": {
+            "none": [
+              "87"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 2"
+            ]
+          },
+          "value": {
+            "none": [
+              "0"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 3"
+            ]
+          },
+          "value": {
+            "none": [
+              "0"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Tags"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Roles"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        }
+      ],
+      "thumbnail": [
+        {
+          "id": "https://dlc.services/thumbs/7/21/2108987e600d80132e24527986d179e2/full/130,200/0/default.jpg",
+          "type": "Image",
+          "service": [
+            {
+              "@id": "https://dlc.services/thumbs/7/21/2108987e600d80132e24527986d179e2",
+              "@type": "ImageService2",
+              "profile": "level0",
+              "sizes": [
+                {
+                  "width": 664,
+                  "height": 1024
+                },
+                {
+                  "width": 260,
+                  "height": 400
+                },
+                {
+                  "width": 130,
+                  "height": 200
+                },
+                {
+                  "width": 65,
+                  "height": 100
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "items": [
+        {
+          "id": "https://dlc.services/iiif-img/7/21/2108987e600d80132e24527986d179e2/canvas/c/20/annotation-page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://dlc.services/iiif-img/7/21/2108987e600d80132e24527986d179e2/canvas/c/20/imageanno/0",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://dlc.services/iiif-img/7/21/2108987e600d80132e24527986d179e2/canvas/c/20",
+              "body": {
+                "id": "https://dlc.services/iiif-img/7/21/2108987e600d80132e24527986d179e2/full/664,1024/0/default.jpg",
+                "type": "Image",
+                "height": 1024,
+                "width": 664,
+                "service": [
+                  {
+                    "@id": "https://dlc.services/iiif-img/7/21/2108987e600d80132e24527986d179e2",
+                    "@type": "ImageService2",
+                    "profile": "level2",
+                    "width": 2585,
+                    "height": 3988
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

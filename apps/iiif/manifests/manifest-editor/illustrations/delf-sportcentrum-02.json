@@ -1,0 +1,186 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "http://localhost:7111/manifests/delf-sportcentrum-02/manifest.json",
+  "type": "Manifest",
+  "label": {
+    "nl": [
+      "Bernard van Leer bekijkt de buitenpiste, 1953."
+    ]
+  },
+  "summary": {
+    "en": [
+      "Foto: Privécollectie Huib van Heel."
+    ]
+  },
+  "items": [
+    {
+      "id": "https://dlc.services/iiif-img/7/21/509e153b8d46d047b8fdcbf40d9af45a/canvas/c/4",
+      "type": "Canvas",
+      "height": 1493,
+      "width": 2081,
+      "label": {
+        "none": [
+          "Canvas 4"
+        ]
+      },
+      "metadata": [
+        {
+          "label": {
+            "none": [
+              "String 1"
+            ]
+          },
+          "value": {
+            "none": [
+              "erfgoed"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "String 2"
+            ]
+          },
+          "value": {
+            "none": [
+              "sportcentrum"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "String 3"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 1"
+            ]
+          },
+          "value": {
+            "none": [
+              "66"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 2"
+            ]
+          },
+          "value": {
+            "none": [
+              "0"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 3"
+            ]
+          },
+          "value": {
+            "none": [
+              "0"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Tags"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Roles"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        }
+      ],
+      "thumbnail": [
+        {
+          "id": "https://dlc.services/thumbs/7/21/509e153b8d46d047b8fdcbf40d9af45a/full/200,143/0/default.jpg",
+          "type": "Image",
+          "service": [
+            {
+              "@id": "https://dlc.services/thumbs/7/21/509e153b8d46d047b8fdcbf40d9af45a",
+              "@type": "ImageService2",
+              "profile": "level0",
+              "sizes": [
+                {
+                  "width": 1024,
+                  "height": 735
+                },
+                {
+                  "width": 400,
+                  "height": 287
+                },
+                {
+                  "width": 200,
+                  "height": 143
+                },
+                {
+                  "width": 100,
+                  "height": 72
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "items": [
+        {
+          "id": "https://dlc.services/iiif-img/7/21/509e153b8d46d047b8fdcbf40d9af45a/canvas/c/4/annotation-page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://dlc.services/iiif-img/7/21/509e153b8d46d047b8fdcbf40d9af45a/canvas/c/4/imageanno/0",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://dlc.services/iiif-img/7/21/509e153b8d46d047b8fdcbf40d9af45a/canvas/c/4",
+              "body": {
+                "id": "https://dlc.services/iiif-img/7/21/509e153b8d46d047b8fdcbf40d9af45a/full/1024,735/0/default.jpg",
+                "type": "Image",
+                "height": 735,
+                "width": 1024,
+                "service": [
+                  {
+                    "@id": "https://dlc.services/iiif-img/7/21/509e153b8d46d047b8fdcbf40d9af45a",
+                    "@type": "ImageService2",
+                    "profile": "level2",
+                    "width": 2081,
+                    "height": 1493
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

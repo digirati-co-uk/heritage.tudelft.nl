@@ -1,0 +1,90 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "http://localhost:7111/manifests/delta-muyskens-01/manifest.json",
+  "type": "Manifest",
+  "label": {
+    "nl": [
+      "De herdenkingsplaat ontworpen door de Delftse hoogleraar Ludwig Oswald Wenckebach in de Aula."
+    ]
+  },
+  "summary": {
+    "en": [
+      "Collectie: Museumcollectie, TU Delft Library. Inventarisnummer: 2020.0001.CVB."
+    ]
+  },
+  "items": [
+    {
+      "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/52d84cce-1656-4bb9-896a-f1ec1010d1a0/canvas/0",
+      "type": "Canvas",
+      "height": 6000,
+      "width": 4262,
+      "label": {
+        "en": [
+          ""
+        ]
+      },
+      "thumbnail": [
+        {
+          "id": "https://dlc.services/thumbs/v3/7/18/f4c83934-63be-479f-aecf-573beec8058a/full/max/0/default.jpg",
+          "type": "Image",
+          "format": "image/jpeg",
+          "service": [
+            {
+              "@context": "http://iiif.io/api/image/3/context.json",
+              "id": "https://dlc.services/thumbs/v3/7/18/f4c83934-63be-479f-aecf-573beec8058a",
+              "type": "ImageService3",
+              "profile": "level0",
+              "sizes": [
+                {
+                  "width": 727,
+                  "height": 1024
+                },
+                {
+                  "width": 284,
+                  "height": 400
+                },
+                {
+                  "width": 142,
+                  "height": 200
+                },
+                {
+                  "width": 71,
+                  "height": 100
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "items": [
+        {
+          "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/52d84cce-1656-4bb9-896a-f1ec1010d1a0/canvas/0/annotation-page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://dlc.services/iiif-img/v3/7/18/f4c83934-63be-479f-aecf-573beec8058a",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/52d84cce-1656-4bb9-896a-f1ec1010d1a0/canvas/0",
+              "body": {
+                "id": "https://dlc.services/iiif-img/v3/7/18/f4c83934-63be-479f-aecf-573beec8058a/full/max/0/default.jpg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "height": 6000,
+                "width": 4262,
+                "service": [
+                  {
+                    "@context": "http://iiif.io/api/image/3/context.json",
+                    "id": "https://dlc.services/iiif-img/v3/7/18/f4c83934-63be-479f-aecf-573beec8058a",
+                    "type": "ImageService3",
+                    "profile": "level2"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,186 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "http://localhost:7111/manifests/delf-kernreactor-05/manifest.json",
+  "type": "Manifest",
+  "label": {
+    "nl": [
+      "Aan de Ezelsveldlaan worden proeven gedaan met een ‘pile’ van grafiet."
+    ]
+  },
+  "summary": {
+    "en": [
+      "Foto: Fotografische dienst TUD. Collectie: Stadsarchief Delft, 40976."
+    ]
+  },
+  "items": [
+    {
+      "id": "https://dlc.services/iiif-img/7/21/e49a5792246f8f910d37c2626adeba3d/canvas/c/6",
+      "type": "Canvas",
+      "height": 2898,
+      "width": 2135,
+      "label": {
+        "none": [
+          "Canvas 6"
+        ]
+      },
+      "metadata": [
+        {
+          "label": {
+            "none": [
+              "String 1"
+            ]
+          },
+          "value": {
+            "none": [
+              "erfgoed"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "String 2"
+            ]
+          },
+          "value": {
+            "none": [
+              "kerncentrale"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "String 3"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 1"
+            ]
+          },
+          "value": {
+            "none": [
+              "58"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 2"
+            ]
+          },
+          "value": {
+            "none": [
+              "0"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Number 3"
+            ]
+          },
+          "value": {
+            "none": [
+              "0"
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Tags"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        },
+        {
+          "label": {
+            "none": [
+              "Roles"
+            ]
+          },
+          "value": {
+            "none": [
+              ""
+            ]
+          }
+        }
+      ],
+      "thumbnail": [
+        {
+          "id": "https://dlc.services/thumbs/7/21/e49a5792246f8f910d37c2626adeba3d/full/147,200/0/default.jpg",
+          "type": "Image",
+          "service": [
+            {
+              "@id": "https://dlc.services/thumbs/7/21/e49a5792246f8f910d37c2626adeba3d",
+              "@type": "ImageService2",
+              "profile": "level0",
+              "sizes": [
+                {
+                  "width": 755,
+                  "height": 1024
+                },
+                {
+                  "width": 295,
+                  "height": 400
+                },
+                {
+                  "width": 147,
+                  "height": 200
+                },
+                {
+                  "width": 74,
+                  "height": 100
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "items": [
+        {
+          "id": "https://dlc.services/iiif-img/7/21/e49a5792246f8f910d37c2626adeba3d/canvas/c/6/annotation-page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://dlc.services/iiif-img/7/21/e49a5792246f8f910d37c2626adeba3d/canvas/c/6/imageanno/0",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://dlc.services/iiif-img/7/21/e49a5792246f8f910d37c2626adeba3d/canvas/c/6",
+              "body": {
+                "id": "https://dlc.services/iiif-img/7/21/e49a5792246f8f910d37c2626adeba3d/full/755,1024/0/default.jpg",
+                "type": "Image",
+                "height": 1024,
+                "width": 755,
+                "service": [
+                  {
+                    "@id": "https://dlc.services/iiif-img/7/21/e49a5792246f8f910d37c2626adeba3d",
+                    "@type": "ImageService2",
+                    "profile": "level2",
+                    "width": 2135,
+                    "height": 2898
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
