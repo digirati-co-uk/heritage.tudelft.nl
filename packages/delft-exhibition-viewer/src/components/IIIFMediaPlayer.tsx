@@ -5,19 +5,23 @@ import "@vidstack/react/player/styles/base.css";
 import "@vidstack/react/player/styles/default/theme.css";
 import "@vidstack/react/player/styles/default/captions.css";
 import "@vidstack/react/player/styles/default/layouts/video.css";
-import {
-  MediaPlayer,
-  MediaProvider,
-  Poster,
-  Gesture,
-  Track,
-  MediaPlayerInstance,
-  type MediaTimeUpdateEventDetail,
-} from "@vidstack/react";
-import { defaultLayoutIcons, DefaultVideoLayout } from "@vidstack/react/player/layouts/default";
 import { getValue } from "@iiif/helpers";
-import { useTranslation } from "react-i18next";
+import {
+  Gesture,
+  MediaPlayer,
+  type MediaPlayerInstance,
+  MediaProvider,
+  type MediaTimeUpdateEventDetail,
+  Poster,
+  Track,
+} from "@vidstack/react";
+import {
+  DefaultVideoLayout,
+  defaultLayoutIcons,
+} from "@vidstack/react/player/layouts/default";
 import { useRef } from "react";
+import { useTranslation } from "react-i18next";
+import { useCanvas, useThumbnail } from "react-iiif-vault";
 
 interface IIIFMediaPlayerProps {
   className?: string;
@@ -27,6 +31,7 @@ interface IIIFMediaPlayerProps {
     format: string;
     duration: number;
   };
+  autoPlay?: boolean;
   poster?: string;
   startTime?: number;
   captions?: any[];
@@ -49,6 +54,8 @@ export default function IIIFMediaPlayer(props: IIIFMediaPlayerProps) {
         lang={language}
         className="h-full w-full min-w-[275px]"
         playsInline
+        autoPlay={props.autoPlay}
+        posterLoad="eager"
         currentTime={props.startTime}
         duration={props.media.duration}
         src={[
@@ -63,6 +70,7 @@ export default function IIIFMediaPlayer(props: IIIFMediaPlayerProps) {
           {captions.map((caption: any) => {
             return (
               <Track
+                key={caption.id}
                 src={caption.id}
                 kind="subtitles"
                 label={getValue(caption.label)}
@@ -74,7 +82,13 @@ export default function IIIFMediaPlayer(props: IIIFMediaPlayerProps) {
 
           {/* Chapters from Ranges */}
           {chapters?.length ? (
-            <Track content={chapters as any} type="json" kind="chapters" label="Chapters" default />
+            <Track
+              content={chapters as any}
+              type="json"
+              kind="chapters"
+              label="Chapters"
+              default
+            />
           ) : null}
           {/* <Track content={exampleChapters} type="json" kind="chapters" label="Chapters" default /> */}
 
@@ -106,7 +120,11 @@ function Gestures() {
         event="pointerup"
         action="toggle:paused"
       />
-      <Gesture className="absolute inset-0 z-0 block h-full w-full" event="dblpointerup" action="toggle:fullscreen" />
+      <Gesture
+        className="absolute inset-0 z-0 block h-full w-full"
+        event="dblpointerup"
+        action="toggle:fullscreen"
+      />
     </>
   );
 }
