@@ -164,8 +164,9 @@ function MediaBlockInner(props: MediaBlockProps) {
                 <iframe
                   title="YouTube video player"
                   className="h-full w-full border-none object-cover"
-                  src={`https://www.youtube.com/embed/${(media as SingleYouTubeVideo).youTubeId}?enablejsapi=1&origin=${getWindowHost()}&autoplay=1&modestbranding=1&rel=0`}
-                  referrerPolicy="no-referrer"
+                  src={`https://www.youtube.com/embed/${(media as SingleYouTubeVideo).youTubeId}?enablejsapi=1&origin=${getWindowHost()}&modestbranding=1&rel=0`}
+                  // @ts-ignore
+                  referrerPolicy="no-referrer compute-pressure"
                   sandbox="allow-scripts allow-same-origin allow-presentation"
                 />
               ) : (

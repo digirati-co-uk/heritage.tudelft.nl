@@ -51,6 +51,8 @@ export function DelftPresentation(props: DelftPresentationProps) {
     toRenderables,
   } = useExhibitionStore(props);
 
+  const isSingleStep = state.steps.length === 1;
+
   return (
     <ExhibitionProvider store={store}>
       <VaultProvider vault={vault}>
@@ -114,42 +116,52 @@ export function DelftPresentation(props: DelftPresentationProps) {
               <div>
                 <TableOfContentsBar
                   content={{
-                    tableOfContents: props.manifest?.label || "Table of contents",
+                    tableOfContents:
+                      props.manifest?.label || "Table of contents",
                   }}
+                  hideTable={isSingleStep}
                 >
-                  <button
-                    type="button"
-                    className="z-50 flex h-10 w-10 items-center justify-center rounded hover:bg-black/10"
-                    onClick={state.playPause}
-                  >
-                    {state.isPlaying ? <PauseIcon /> : <PlayIcon />}
-                  </button>
+                  {!isSingleStep ? (
+                    <>
+                      <button
+                        type="button"
+                        className="z-50 flex h-10 w-10 items-center justify-center rounded hover:bg-black/10"
+                        onClick={state.playPause}
+                      >
+                        {state.isPlaying ? <PauseIcon /> : <PlayIcon />}
+                      </button>
 
-                  <div className="relative flex w-16 items-center">
-                    <div className="h-1 w-full rounded-full bg-ProgressBar opacity-20" />
-                    <div
-                      className="absolute left-0 top-0 h-1 rounded-full bg-ProgressBar transition-all"
-                      style={{
-                        width: `${(state.currentStep / (state.steps.length - 1)) * 100}%`,
-                      }}
-                    />
-                  </div>
+                      <div className="relative flex w-16 items-center">
+                        <div className="h-1 w-full rounded-full bg-ProgressBar opacity-20" />
+                        <div
+                          className="absolute left-0 top-0 h-1 rounded-full bg-ProgressBar transition-all"
+                          style={{
+                            width: `${(state.currentStep / (state.steps.length - 1)) * 100}%`,
+                          }}
+                        />
+                      </div>
 
-                  <button
-                    type="button"
-                    className="z-50 flex h-10 w-10 items-center justify-center rounded hover:bg-black/10"
-                    onClick={() => state.previousStep()}
-                  >
-                    <PreviousIcon />
-                  </button>
+                      <button
+                        type="button"
+                        className="z-50 flex h-10 w-10 items-center justify-center rounded hover:bg-black/10"
+                        onClick={() => state.previousStep()}
+                      >
+                        <PreviousIcon />
+                      </button>
 
-                  <button
-                    type="button"
-                    className="z-50 flex h-10 w-10 items-center justify-center rounded hover:bg-black/10"
-                    onClick={() => state.isPlaying ? state.nextStep(true) : state.nextStep()}
-                  >
-                    <NextIcon />
-                  </button>
+                      <button
+                        type="button"
+                        className="z-50 flex h-10 w-10 items-center justify-center rounded hover:bg-black/10"
+                        onClick={() =>
+                          state.isPlaying
+                            ? state.nextStep(true)
+                            : state.nextStep()
+                        }
+                      >
+                        <NextIcon />
+                      </button>
+                    </>
+                  ) : null}
                 </TableOfContentsBar>
               </div>
             </div>

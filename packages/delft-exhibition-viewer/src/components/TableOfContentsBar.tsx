@@ -17,6 +17,7 @@ import { ContentsIcon } from "./icons/ContentsIcon";
 export function TableOfContentsBar({
   initialOpen = false,
   hideInitial = false,
+  hideTable = false,
   fixed = false,
   content,
   onPlay,
@@ -25,6 +26,7 @@ export function TableOfContentsBar({
   hideInitial?: boolean;
   initialOpen?: boolean;
   fixed?: boolean;
+  hideTable?: boolean;
   content: { tableOfContents: string | InternationalString };
   onPlay?: () => void;
   children?: React.ReactNode;
@@ -96,13 +98,15 @@ export function TableOfContentsBar({
               </button>
             </div>
             <div className="flex flex-row items-center gap-2 text-3xl flex-shrink-0">
-              <button
-                className="z-50 hover:bg-black/10 w-10 h-10 rounded flex items-center justify-center"
-                {...toggleProps.pressProps}
-                aria-label={`${isTocOpen ? "Hide" : "Show"} table of contents`}
-              >
-                <ContentsIcon />
-              </button>
+              {hideTable ? null : (
+                <button
+                  className="z-50 hover:bg-black/10 w-10 h-10 rounded flex items-center justify-center"
+                  {...toggleProps.pressProps}
+                  aria-label={`${isTocOpen ? "Hide" : "Show"} table of contents`}
+                >
+                  <ContentsIcon />
+                </button>
+              )}
 
               {/* Additional controls. */}
               {children}
