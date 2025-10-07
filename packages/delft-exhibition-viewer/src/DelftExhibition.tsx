@@ -32,6 +32,7 @@ import { TopIcon } from "./components/icons/TopIcon";
 
 export type DelftExhibitionProps = {
   manifest: Manifest;
+  canvasId?: string;
   language: string | undefined;
   viewObjectLinks: Array<{
     service: string;
@@ -43,6 +44,9 @@ export type DelftExhibitionProps = {
   options?: {
     hideTitle?: boolean;
     fullTitleBar?: boolean;
+    hideTableOfContents?: boolean;
+    disablePresentation?: boolean;
+    hideTitleCard?: boolean;
     cutCorners?: boolean;
     alternativeImageMode?: boolean;
     transitionScale?: boolean;
@@ -66,11 +70,14 @@ export function DelftExhibition(props: DelftExhibitionProps) {
   const {
     cutCorners = true,
     fullTitleBar = false,
+    hideTitleCard = !!props.canvasId,
+    disablePresentation = !!props.canvasId,
     alternativeImageMode = true,
     hideTitle = false,
     transitionScale = false,
     imageInfoIcon = false,
     coverImages = false,
+    hideTableOfContents = !!props.canvasId,
   } = props.options || {};
 
   const { pressProps: closeButtonProps } = usePress({
@@ -92,30 +99,32 @@ export function DelftExhibition(props: DelftExhibitionProps) {
       <ManifestContext manifest={props.manifest.id}>
         <LanguageProvider language={props.language || "en"}>
           <div className="delft-exhibition-viewer w-full">
-            <Dialog
-              className="relative z-50"
-              open={enabled}
-              onClose={() => setEnabled(false)}
-            >
-              <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
-              <div className="mobile-height fixed inset-0 flex w-screen items-center lg:p-4">
-                <button
-                  className="absolute top-3 right-3 lg:right-8 lg:top-8 z-30 flex h-8 w-8 items-center justify-center rounded bg-CloseBackground text-CloseText hover:bg-CloseBackgroundHover"
-                  {...closeButtonProps}
-                >
-                  <CloseIcon fill="currentColor" />
-                </button>
-                <Dialog.Panel className="relative flex h-full w-full justify-center overflow-y-auto overflow-x-hidden rounded bg-white">
-                  {enabled ? (
-                    <Suspense>
-                      <Presentation {...props} options={{ autoPlay: true }} />
-                    </Suspense>
-                  ) : null}
-                </Dialog.Panel>
-              </div>
-            </Dialog>
+            {disablePresentation ? null : (
+              <Dialog
+                className="relative z-50"
+                open={enabled}
+                onClose={() => setEnabled(false)}
+              >
+                <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+                <div className="mobile-height fixed inset-0 flex w-screen items-center lg:p-4">
+                  <button
+                    className="absolute top-3 right-3 lg:right-8 lg:top-8 z-30 flex h-8 w-8 items-center justify-center rounded bg-CloseBackground text-CloseText hover:bg-CloseBackgroundHover"
+                    {...closeButtonProps}
+                  >
+                    <CloseIcon fill="currentColor" />
+                  </button>
+                  <Dialog.Panel className="relative flex h-full w-full justify-center overflow-y-auto overflow-x-hidden rounded bg-white">
+                    {enabled ? (
+                      <Suspense>
+                        <Presentation {...props} options={{ autoPlay: true }} />
+                      </Suspense>
+                    ) : null}
+                  </Dialog.Panel>
+                </div>
+              </Dialog>
+            )}
 
-            {hideTitle ? (
+            {hideTitle || hideTitleCard ? (
               <div id="top" />
             ) : (
               <TableOfContentsHeader
@@ -126,31 +135,33 @@ export function DelftExhibition(props: DelftExhibitionProps) {
               />
             )}
 
-            <TableOfContentsBar
-              fixed
-              content={{
-                tableOfContents:
-                  props.content?.tableOfContents || "Table of Contents",
-              }}
-              onPlay={() => setEnabled(true)}
-            >
-              <a
-                href="#top"
-                aria-label={"Back to top"}
-                className="z-50 hover:bg-black/10 w-10 h-10 rounded flex items-center justify-center"
+            {hideTableOfContents ? null : (
+              <TableOfContentsBar
+                fixed
+                content={{
+                  tableOfContents:
+                    props.content?.tableOfContents || "Table of Contents",
+                }}
+                onPlay={() => setEnabled(true)}
               >
-                <TopIcon />
-              </a>
+                <a
+                  href="#top"
+                  aria-label={"Back to top"}
+                  className="z-50 hover:bg-black/10 w-10 h-10 rounded flex items-center justify-center"
+                >
+                  <TopIcon />
+                </a>
 
-              <button
-                className="z-50 hover:bg-black/10 w-10 h-10 rounded flex items-center justify-center"
-                aria-label="Play"
-                {...playButtonProps}
-              >
-                <span className="sr-only">Play</span>
-                <PlayIcon />
-              </button>
-            </TableOfContentsBar>
+                <button
+                  className="z-50 hover:bg-black/10 w-10 h-10 rounded flex items-center justify-center"
+                  aria-label="Play"
+                  {...playButtonProps}
+                >
+                  <span className="sr-only">Play</span>
+                  <PlayIcon />
+                </button>
+              </TableOfContentsBar>
+            )}
 
             <div ref={containerRef} data-cut-corners-enabled={cutCorners}>
               <div
@@ -159,11 +170,16 @@ export function DelftExhibition(props: DelftExhibitionProps) {
                   enabled ? "opacity-0" : "",
                 )}
               >
-                {!fullTitleBar ? (
+                {!fullTitleBar && !hideTitleCard ? (
                   <TitlePanel manifest={props.manifest} />
                 ) : null}
                 {(props.manifest.items || []).map((canvas: any, idx) => {
                   if (!canvas) return null;
+
+                  if (props.canvasId && canvas.id !== props.canvasId) {
+                    return null;
+                  }
+
                   try {
                     const paintables = helper.getPaintables(canvas);
                     const strategy = getRenderingStrategy({
