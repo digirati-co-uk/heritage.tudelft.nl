@@ -65,14 +65,14 @@ export function TableOfContentsBar({
   return (
     <div className="relative">
       {!fixed && isTocOpen ? (
-        <div className="absolute bottom-0 z-30 mb-14 px-14 py-4 text-TextPrimary overflow-y-auto bg-ControlBar left-0 right-0">
+        <div className="delft-toc-contents absolute bottom-0 z-30 mb-14 px-14 py-4 text-TextPrimary overflow-y-auto bg-ControlBar left-0 right-0">
           <TableOfContents items={items} treeLabel={tree?.label} />
         </div>
       ) : null}
 
       <div
         className={twMerge(
-          "z-30 h-14 flex items-center flex-col justify-center bg-ControlBar",
+          "delft-toc-bar z-30 h-14 flex items-center flex-col justify-center bg-ControlBar",
           "transition-opacity drop-shadow-lg px-4",
 
           fixed && "fixed bottom-0 left-0 right-0 px-4 lg:px-9",
@@ -128,7 +128,7 @@ export function TableOfContentsBar({
           open={isTocOpen}
           onClose={() => setTocOpen(false)}
         >
-          <Dialog.Panel className="z-40 flex w-full max-w-screen-xl flex-col px-10 py-6 text-TextPrimary border-b overflow-y-auto border-ControlBarBorder">
+          <Dialog.Panel className="delft-toc-contents z-40 flex w-full max-w-screen-xl flex-col px-10 py-6 text-TextPrimary border-b overflow-y-auto border-ControlBarBorder">
             <TableOfContents treeLabel={tree?.label} items={items} />
           </Dialog.Panel>
         </Dialog>

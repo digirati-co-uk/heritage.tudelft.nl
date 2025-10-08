@@ -8,11 +8,12 @@
   },
   "scripts": {
     "build": "iiif-hss build --out ./build --scripts ./scripts",
-    "dev": "IIIF_URL=http://localhost:7111 iiif-hss-dev"
+    "dev": "IIIF_URL=http://localhost:7111 bun exec iiif-hss-dev"
   },
   "dependencies": {
     "@iiif/helpers": "^1.2.19",
     "iiif-hss": "^1.0.1",
+    "sqlite3": "^5.1.7",
     "yaml": "^2.7.0"
   }
 }

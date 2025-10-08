@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "exhibition-viewer/dist/lib.css";
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -261,8 +263,47 @@ div.block-editor-toggle {
   @apply bottom-2 left-2 rounded w-32 h-10 z-40 items-center flex;
 }
 
-.delft-exhibition-viewer,
-.delft-presentation-viewer {
-  --delft-title-card: rgb(250 204 21 / var(--tw-bg-opacity, 1));
+body.dev .delft-toc-bar {
+  padding-bottom: 50px;
+  height: 100px;
+}
+
+body.dev .delft-toc-contents {
+  /*margin-bottom: 100px;*/
+}
+
+:root {
+  /* Base colors */
+  --delft-bg-primary: rgb(229 231 235); /* gray-200 */
+  --delft-bg-secondary: #fff;
+  --delft-bg-overlay: rgba(0, 0, 0, 0.3);
+
+  /* Text colors */
+  --delft-text-primary: #fff;
+  --delft-text-secondary: #000;
+  --delft-image-caption: #fff;
+  --delft-annotation-selected: rgb(250, 204, 21);
+
+  /* UI elements */
+  --delft-control-bar: #6d6e70;
+  --delft-control-bar-border: #5a5b5d;
+  --delft-control-hover: rgba(0, 0, 0, 0.1);
+
+  --delft-progress-bar: #fff;
+
+  --delft-close-background: #000;
+  --delft-close-background-hover: #373737;
+  --delft-close-text: #fff;
+
+  /* Title elements */
+  --delft-title-card: rgb(250 204 21 / var(--tw-bg-opacity, 1)); /* yellow-400 */
   --delft-title-card-text: #000;
+
+  /* Info blocks */
+  --delft-info-block: #000;
+  --delft-info-block-text: #fff;
+
+  /* Viewer elements */
+  --delft-viewer-background: #373737;
+  --delft-title-transform: uppercase;
 }

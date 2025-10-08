@@ -8,6 +8,7 @@ export default defineConfig((options: Options) => ({
   platform: "browser",
   entry: {
     index: "src/bundle.ts",
+    lib: "src/styles/lib.css",
   },
   minify: false,
   splitting: false,
@@ -33,11 +34,8 @@ export default defineConfig((options: Options) => ({
   ],
   globalName: "DelftExhibitionViewer",
   esbuildOptions: (opt) => {
-    opt.jsx = 'automatic';
-    opt.external = [
-      "react",
-      "react/jsx-runtime",
-    ];
+    opt.jsx = "automatic";
+    opt.external = ["react", "react/jsx-runtime"];
   },
   esbuildPlugins: [],
   ...options,

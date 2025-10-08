@@ -10,7 +10,6 @@ import localFont from "next/font/local";
 import { type ReactNode, lazy } from "react";
 import BlockEditor from "../../blocks/block-editor";
 import { Provider } from "../provider";
-import "exhibition-viewer/dist/index.css";
 
 const IIIFDevRefresh = lazy(() => import("../../components/IIIFDevRefresh"));
 
@@ -44,8 +43,8 @@ if (process.env.NODE_ENV !== "production") {
   import("@page-blocks/react/dist/index.css");
   // @ts-expect-error typescript can't resolve CSS
   import("@page-blocks/web-components/dist/index.css");
-  // @ts-expect-error typescript can't resolve CSS
-  import("exhibition-viewer/dist/index.css");
+  // // @ts-expect-error typescript can't resolve CSS
+  // import("exhibition-viewer/dist/index.css");
 }
 
 const foundersGrotesk = localFont({
@@ -96,6 +95,8 @@ export async function generateStaticParams() {
   return [{ locale: "nl" }, { locale: "en" }];
 }
 
+const devClass = process.env.NODE_ENV === "development" ? "dev" : "";
+
 export default function RootLayout({
   children,
   params,
@@ -107,7 +108,7 @@ export default function RootLayout({
   return (
     <html lang={params.locale}>
       <body
-        className={`bg-gray-200 ${foundersGrotesk.variable} ${foundersGroteskMono.variable} font-sans`}
+        className={`bg-gray-200 ${foundersGrotesk.variable} ${foundersGroteskMono.variable} font-sans ${devClass}`}
       >
         <Provider>
           <SlotContext name="locale" value={params.locale}>
