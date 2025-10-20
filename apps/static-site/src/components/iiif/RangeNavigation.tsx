@@ -7,7 +7,7 @@ type RangeNavigationProps = {
 };
 export function RangeNavigation({ manifest }: RangeNavigationProps) {
   const context = useSimpleViewer();
-  const { currentSequenceIndex, setCurrentCanvasId } = context;
+  const { setCurrentCanvasId } = context;
   const ranges = manifest.structures?.filter(
     (struct) => struct.type === "Range",
   );
