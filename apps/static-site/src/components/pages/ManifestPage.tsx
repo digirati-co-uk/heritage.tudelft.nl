@@ -16,7 +16,7 @@ import { ViewerZoomControls } from "../iiif/ViewerZoomControls";
 import { AutoLanguage } from "./AutoLanguage";
 import { getValue } from "@iiif/helpers/i18n";
 import { createRangeHelper } from "@iiif/helpers";
-import { vault } from "@/app/provider";
+import { useVault } from "react-iiif-vault";
 import { RangeNormalized } from "@iiif/presentation-3-normalized";
 
 interface ManifestPageProps {
@@ -71,14 +71,15 @@ export function ManifestPage({
   initialCanvasIndex,
 }: ManifestPageProps) {
   const context = useSimpleViewer();
-  const { currentSequenceIndex } = context;
+  const vault = useVault();
+  const { currentSequenceIndex, setCurrentCanvasId } = context;
   const previousSeqIndex = useRef(currentSequenceIndex);
   const atlas = useRef<Preset>();
-  const rangeHelper = createRangeHelper();
+  const rangeHelper = createRangeHelper(vault);
   const ranges = manifest.structures?.filter(
     (struct) => struct.type === "Range",
   );
-  console.log(ranges);
+  console.log("ranges", ranges);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Needs to run when currentSequenceIndex changes.
   useEffect(() => {
@@ -102,19 +103,28 @@ export function ManifestPage({
           <AutoLanguage>{manifest.requiredStatement.value}</AutoLanguage>
         </p>
       ) : null}
-      {ranges && ranges.length > 0 && (
+      {ranges && ranges.length > 0 ? (
         <div className="flex flex-row gap-2">
           {ranges.map((range) => {
             return (
               <div key={range.id}>
                 <div>range id: {range.id}</div>
-                {rangeHelper.findAllCanvasesInRange(range).map((canvas) => {
+                {/* {rangeHelper.findAllCanvasesInRange(range).map((canvas) => {
                   return <div>canvas id: {canvas.id}</div>;
+                })} */}
+                {range.items?.map((item) => {
+                  return (
+                    <button onClick={() => setCurrentCanvasId(item.id)}>
+                      {item.id}
+                    </button>
+                  );
                 })}
               </div>
             );
           })}
         </div>
+      ) : (
+        <>no ranges</>
       )}
       <div className="relative h-[800px] max-h-[70%]">
         <CanvasPanel.Viewer
