@@ -1,5 +1,5 @@
 "use client";
-import { Link, getObjectSlug } from "@/navigation";
+import { getObjectSlug } from "@/navigation";
 import viewerConfig from "@/viewers.json";
 import type { Preset } from "@atlas-viewer/atlas";
 import type { InternationalString, Manifest } from "@iiif/presentation-3";
@@ -13,11 +13,10 @@ import { ObjectThumbnails } from "../iiif/ObjectThumbnails";
 import { SharingAndViewingLinks } from "../iiif/SharingAndViewingLinks";
 import { ViewerSliderControls } from "../iiif/ViewerSliderControls";
 import { ViewerZoomControls } from "../iiif/ViewerZoomControls";
+import { RangeNavigation } from "../iiif/RangeNavigation";
 import { AutoLanguage } from "./AutoLanguage";
 import { getValue } from "@iiif/helpers/i18n";
-import { createRangeHelper } from "@iiif/helpers";
 import { useVault } from "react-iiif-vault";
-import { RangeNormalized } from "@iiif/presentation-3-normalized";
 
 interface ManifestPageProps {
   manifest: Manifest;
@@ -75,11 +74,6 @@ export function ManifestPage({
   const { currentSequenceIndex, setCurrentCanvasId } = context;
   const previousSeqIndex = useRef(currentSequenceIndex);
   const atlas = useRef<Preset>();
-  const rangeHelper = createRangeHelper(vault);
-  const ranges = manifest.structures?.filter(
-    (struct) => struct.type === "Range",
-  );
-  console.log("ranges", ranges);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Needs to run when currentSequenceIndex changes.
   useEffect(() => {
@@ -103,29 +97,6 @@ export function ManifestPage({
           <AutoLanguage>{manifest.requiredStatement.value}</AutoLanguage>
         </p>
       ) : null}
-      {ranges && ranges.length > 0 ? (
-        <div className="flex flex-row gap-2">
-          {ranges.map((range) => {
-            return (
-              <div key={range.id}>
-                <div>range id: {range.id}</div>
-                {/* {rangeHelper.findAllCanvasesInRange(range).map((canvas) => {
-                  return <div>canvas id: {canvas.id}</div>;
-                })} */}
-                {range.items?.map((item) => {
-                  return (
-                    <button onClick={() => setCurrentCanvasId(item.id)}>
-                      {item.id}
-                    </button>
-                  );
-                })}
-              </div>
-            );
-          })}
-        </div>
-      ) : (
-        <>no ranges</>
-      )}
       <div className="relative h-[800px] max-h-[70%]">
         <CanvasPanel.Viewer
           onCreated={(preset) => {
@@ -210,6 +181,8 @@ export function ManifestPage({
             }}
             content={content}
           />
+
+          <RangeNavigation manifest={manifest} />
 
           <DownloadImage content={content} />
         </div>
