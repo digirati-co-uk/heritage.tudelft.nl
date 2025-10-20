@@ -15,6 +15,9 @@ import { ViewerSliderControls } from "../iiif/ViewerSliderControls";
 import { ViewerZoomControls } from "../iiif/ViewerZoomControls";
 import { AutoLanguage } from "./AutoLanguage";
 import { getValue } from "@iiif/helpers/i18n";
+import { createRangeHelper } from "@iiif/helpers";
+import { vault } from "@/app/provider";
+import { RangeNormalized } from "@iiif/presentation-3-normalized";
 
 interface ManifestPageProps {
   manifest: Manifest;
@@ -71,6 +74,11 @@ export function ManifestPage({
   const { currentSequenceIndex } = context;
   const previousSeqIndex = useRef(currentSequenceIndex);
   const atlas = useRef<Preset>();
+  const rangeHelper = createRangeHelper();
+  const ranges = manifest.structures?.filter(
+    (struct) => struct.type === "Range",
+  );
+  console.log(ranges);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Needs to run when currentSequenceIndex changes.
   useEffect(() => {
@@ -94,6 +102,20 @@ export function ManifestPage({
           <AutoLanguage>{manifest.requiredStatement.value}</AutoLanguage>
         </p>
       ) : null}
+      {ranges && ranges.length > 0 && (
+        <div className="flex flex-row gap-2">
+          {ranges.map((range) => {
+            return (
+              <div key={range.id}>
+                <div>range id: {range.id}</div>
+                {rangeHelper.findAllCanvasesInRange(range).map((canvas) => {
+                  return <div>canvas id: {canvas.id}</div>;
+                })}
+              </div>
+            );
+          })}
+        </div>
+      )}
       <div className="relative h-[800px] max-h-[70%]">
         <CanvasPanel.Viewer
           onCreated={(preset) => {
@@ -119,7 +141,9 @@ export function ManifestPage({
 
           {(related.length !== 0 || meta.partOfCollections?.length !== 0) && (
             <>
-              <h3 className="mb-5 mt-10 text-3xl font-medium">{content.relatedObjects}</h3>
+              <h3 className="mb-5 mt-10 text-3xl font-medium">
+                {content.relatedObjects}
+              </h3>
               <div className="mb-4 grid md:grid-cols-3">
                 {(meta.partOfCollections || []).map((collection, i) => (
                   <Box
