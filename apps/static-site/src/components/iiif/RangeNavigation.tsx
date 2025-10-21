@@ -14,8 +14,8 @@ export function RangeNavigation({ manifest }: RangeNavigationProps) {
   const { setCurrentCanvasId } = context;
   const vault = useVault();
   const mani = useManifest();
-  const ranges = mani?.structures?.filter((struct) => struct.type === "Range");
-  const toc = rangesToTableOfContentsTree(vault, ranges);
+  const structures = mani?.structures ?? [];
+  const toc = rangesToTableOfContentsTree(vault, structures);
 
   return (
     <div className="overflow-hidden font-mono">
