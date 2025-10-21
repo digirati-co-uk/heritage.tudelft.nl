@@ -1,11 +1,27 @@
 import { useMemo, useState } from "react";
-import { useSimpleViewer, useVault, useManifest } from "react-iiif-vault";
+import {
+  useSimpleViewer,
+  useVault,
+  useManifest,
+  useVaultSelector,
+  CanvasContext,
+} from "react-iiif-vault";
 import {
   getValue,
   rangesToTableOfContentsTree,
   type RangeTableOfContentsNode,
 } from "@iiif/helpers";
 import type { SharingAndViewingLinksContent } from "./SharingAndViewingLinks";
+import {
+  Button,
+  Collection,
+  Tree,
+  TreeItem,
+  TreeItemContent,
+  type Key,
+} from "react-aria-components";
+import { TreeRangeItem } from "./TreeRangeItem";
+import { TreeCanvasItem } from "./TreeCanvasItem";
 
 export function RangeNavigation({
   content,
@@ -13,6 +29,7 @@ export function RangeNavigation({
   content: SharingAndViewingLinksContent;
 }) {
   const [tocExpanded, setTocExpanded] = useState<boolean>(true);
+
   const context = useSimpleViewer();
   const { setCurrentCanvasId } = context;
   const vault = useVault();
@@ -22,6 +39,45 @@ export function RangeNavigation({
     () => rangesToTableOfContentsTree(vault, structures),
     [structures],
   );
+  const maxNodeSize = 500; // @todo config?
+
+  function flattenedRanges(range: RangeTableOfContentsNode) {
+    const flatList: {
+      item: RangeTableOfContentsNode;
+      parent: RangeTableOfContentsNode | null;
+    }[] = [];
+    flatList.push({ item: range, parent: null });
+    for (const item of range.items || []) {
+      flatList.push({ item, parent: range });
+      if (item.type === "Range") {
+        flatList.push(...flattenedRanges(item));
+      }
+    }
+    return flatList;
+  }
+
+  const { range, flatItems } = useVaultSelector((_, vault) => {
+    const structures = vault.get(mani!.structures || []);
+    const range =
+      rangesToTableOfContentsTree(structures, undefined, {
+        showNoNav: true,
+      })! || {};
+    const flatItems = flattenedRanges(range);
+    return { structures, range, flatItems };
+  });
+
+  const expandAllKeys = useMemo<Key[]>(
+    () =>
+      flatItems
+        .filter(({ item }) => item.type === "Range" && item.items?.length)
+        .filter(({ item }) => (item.items?.length || 0) < maxNodeSize)
+        //
+        .map(({ item }) => item.id as Key),
+    [flatItems],
+  );
+
+  const [expandedKeys, setExpandedKeys] =
+    useState<Iterable<Key>>(expandAllKeys);
 
   // find at least one valid entry
   let tocEmpty = true;
@@ -39,13 +95,65 @@ export function RangeNavigation({
     }
   }
 
+  function RenderItem({
+    item,
+    parent,
+  }: {
+    item: RangeTableOfContentsNode;
+    parent?: RangeTableOfContentsNode;
+  }) {
+    const showCanvases = true;
+    if (item.type === "Canvas") {
+      if (!item.resource || !showCanvases) {
+        return null;
+      }
+
+      return (
+        <CanvasContext canvas={item.resource?.source.id}>
+          <TreeCanvasItem rangeItem={item} parent={parent} />
+        </CanvasContext>
+      );
+    }
+
+    return (
+      <TreeRangeItem
+        range={item}
+        hasChildItems={!!item.items}
+        parentId={parent?.id}
+      >
+        <Collection items={item.items || []}>
+          {(t) => <RenderItem item={t} parent={item} />}
+        </Collection>
+      </TreeRangeItem>
+    );
+  }
+
   const dispItems = tocExpanded ? toc?.items : toc?.items?.slice(0, 2);
 
   return tocEmpty ? null : (
     <div className="overflow-hidden font-mono">
       <div className="cut-corners w-full place-self-start bg-black p-5 text-white">
         <h3 className="mb-4 uppercase">{getValue(toc?.label)}</h3>
-        {dispItems?.map((range: RangeTableOfContentsNode) => {
+        <Tree
+          aria-label={getValue(toc?.label)}
+          items={dispItems}
+          expandedKeys={expandedKeys}
+          onExpandedChange={setExpandedKeys}
+          selectionMode="single"
+          onAction={(key) => {
+            const el = document.getElementById(`workbench-${String(key)}`);
+            el?.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+              inline: "start",
+            });
+          }}
+        >
+          {function renderItem(item) {
+            return <RenderItem item={item} />;
+          }}
+        </Tree>
+        {/* {dispItems?.map((range: RangeTableOfContentsNode) => {
           return (
             <div key={range?.id}>
               {range.items?.map((item: RangeTableOfContentsNode) => {
@@ -61,7 +169,7 @@ export function RangeNavigation({
               })}
             </div>
           );
-        })}
+        })} */}
 
         {toc?.items?.length && toc?.items?.length > 2 && (
           <button
