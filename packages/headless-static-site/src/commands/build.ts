@@ -32,6 +32,8 @@ import { enrich } from "./build/3-enrich.ts";
 import { emit } from "./build/4-emit.ts";
 import { indices } from "./build/5-indices.ts";
 import { generateCommand } from "./generate.ts";
+import { extractFilesList } from "../extract/extract-files-list.ts";
+import { filesRewrite } from "../enrich/files-rewrite.ts";
 
 export type BuildOptions = {
   config?: string;
@@ -72,6 +74,8 @@ const defaultRun = [
   homepageProperty.id,
   extractMetadataAnalysis.id,
   extractFolderCollections.id,
+  extractFilesList.id,
+  filesRewrite.id,
 ];
 
 const buildInRewrites: Rewrite[] = [
@@ -89,6 +93,7 @@ const builtInExtractions: Extraction[] = [
   extractRemoteSource,
   extractFolderCollections,
   extractPlaintext,
+  extractFilesList,
   // This is really slow, so we don't run it by default.
   extractPartOfCollection,
 ];
@@ -99,6 +104,7 @@ const buildInEnrichments: Enrichment[] = [
   manifestSqlite,
   enrichTypesense,
   typesensePlaintext,
+  filesRewrite,
   // pdiiif
 ];
 
@@ -106,6 +112,7 @@ const builtInEnrichmentsMap = {
   [homepageProperty.id]: homepageProperty,
   [canvasThumbnail.id]: canvasThumbnail,
   [translateMetadata.id]: translateMetadata,
+  [filesRewrite.id]: filesRewrite,
   // [pdiiif.id]: pdiiif,
 };
 
