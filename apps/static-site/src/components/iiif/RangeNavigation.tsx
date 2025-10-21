@@ -17,7 +17,22 @@ export function RangeNavigation({ manifest }: RangeNavigationProps) {
   const structures = mani?.structures ?? [];
   const toc = rangesToTableOfContentsTree(vault, structures);
 
-  return (
+  let tocEmpty = true;
+  if (toc?.items && toc.items.length > 0) {
+    for (const range of toc?.items) {
+      if (range.items && range.items.length > 0) {
+        for (const item of range.items) {
+          if (item.id && getValue(range.label)) {
+            tocEmpty = false;
+            break;
+          }
+        }
+      }
+      if (!tocEmpty) break;
+    }
+  }
+
+  return tocEmpty ? null : (
     <div className="overflow-hidden font-mono">
       <div className="cut-corners w-full place-self-start bg-black p-5 text-white">
         <h3 className="mb-4 uppercase">Table of Contents</h3>
