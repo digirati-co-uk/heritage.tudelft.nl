@@ -1,10 +1,8 @@
 "use client";
 import { getObjectSlug } from "@/navigation";
-import viewerConfig from "@/viewers.json";
 import type { Preset } from "@atlas-viewer/atlas";
 import type { InternationalString, Manifest } from "@iiif/presentation-3";
-import { useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
+import { useEffect, useRef } from "react";
 import { CanvasPanel, useSimpleViewer } from "react-iiif-vault";
 import { Box } from "../blocks/Box";
 import { DownloadImage } from "../iiif/DownloadImage";
@@ -16,7 +14,6 @@ import { ViewerZoomControls } from "../iiif/ViewerZoomControls";
 import { RangeNavigation } from "../iiif/RangeNavigation";
 import { AutoLanguage } from "./AutoLanguage";
 import { getValue } from "@iiif/helpers/i18n";
-import { useVault } from "react-iiif-vault";
 
 interface ManifestPageProps {
   manifest: Manifest;
@@ -70,7 +67,6 @@ export function ManifestPage({
   initialCanvasIndex,
 }: ManifestPageProps) {
   const context = useSimpleViewer();
-  const vault = useVault();
   const { currentSequenceIndex, setCurrentCanvasId } = context;
   const previousSeqIndex = useRef(currentSequenceIndex);
   const atlas = useRef<Preset>();
