@@ -17,6 +17,7 @@ export function RangeNavigation({ manifest }: RangeNavigationProps) {
   const structures = mani?.structures ?? [];
   const toc = rangesToTableOfContentsTree(vault, structures);
 
+  // find at least one valid entry
   let tocEmpty = true;
   if (toc?.items && toc.items.length > 0) {
     for (const range of toc?.items) {
