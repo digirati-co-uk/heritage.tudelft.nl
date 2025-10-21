@@ -1,5 +1,5 @@
+import { useMemo } from "react";
 import { useSimpleViewer, useVault, useManifest } from "react-iiif-vault";
-import type { Manifest } from "@iiif/presentation-3";
 import {
   getValue,
   rangesToTableOfContentsTree,
@@ -12,7 +12,10 @@ export function RangeNavigation() {
   const vault = useVault();
   const mani = useManifest();
   const structures = mani?.structures ?? [];
-  const toc = rangesToTableOfContentsTree(vault, structures);
+  const toc = useMemo(
+    () => rangesToTableOfContentsTree(vault, structures),
+    [structures],
+  );
 
   // find at least one valid entry
   let tocEmpty = true;
