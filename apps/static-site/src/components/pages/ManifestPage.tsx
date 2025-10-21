@@ -178,7 +178,7 @@ export function ManifestPage({
             content={content}
           />
 
-          <RangeNavigation manifest={manifest} />
+          <RangeNavigation />
 
           <DownloadImage content={content} />
         </div>

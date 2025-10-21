@@ -6,10 +6,7 @@ import {
   type RangeTableOfContentsNode,
 } from "@iiif/helpers";
 
-type RangeNavigationProps = {
-  manifest: Manifest;
-};
-export function RangeNavigation({ manifest }: RangeNavigationProps) {
+export function RangeNavigation() {
   const context = useSimpleViewer();
   const { setCurrentCanvasId } = context;
   const vault = useVault();
