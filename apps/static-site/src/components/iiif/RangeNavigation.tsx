@@ -30,7 +30,6 @@ export function RangeNavigation({ manifest }: RangeNavigationProps) {
                     key={item.id}
                     onClick={() => setCurrentCanvasId(item.id)}
                     className="underline hover:text-slate-300"
-                    rel="noreferrer"
                   >
                     {getValue(range.label)}
                   </button>
