@@ -1,8 +1,4 @@
 import { getValue, type RangeTableOfContentsNode } from "@iiif/helpers";
-
-// import { PlusIcon } from "@manifest-editor/ui/icons/PlusIcon";
-// import { ResizeHandleIcon } from "@manifest-editor/ui/icons/ResizeHandleIcon";
-import { useCallback } from "react";
 import type {
   TreeItemContentRenderProps,
   TreeItemProps,
@@ -10,18 +6,11 @@ import type {
 import {
   Button,
   Checkbox,
-  Dialog,
-  Menu,
-  MenuItem,
-  MenuTrigger,
-  Popover,
   TreeItem,
   TreeItemContent,
 } from "react-aria-components";
 import { LocaleString, useVault } from "react-iiif-vault";
 import { twMerge } from "tailwind-merge";
-// import { ChevronDownIcon } from "./ChevronDownIcon";
-// import { useRangeTreeOptions } from "./RangeTree";
 
 interface TreeRangeItemProps extends Partial<TreeItemProps> {
   range: RangeTableOfContentsNode;
@@ -29,14 +18,11 @@ interface TreeRangeItemProps extends Partial<TreeItemProps> {
 }
 
 export function TreeRangeItem(props: TreeRangeItemProps) {
-  //const { back } = useEditingStack();
   const vault = useVault();
-  //const isActive = props.range.id === range?.resource.source?.id;
-  //const activeId = range?.resource.source?.id;
   const isNoNav = props.range.isNoNav;
-
   const items = props.range.items ?? [];
-  const hasChildRanges = items.some((i) => i.type === "Range");
+  //const hasChildRanges = items.some((i) => i.type === "Range");
+  const hasChildRanges = items.some((i) => i.isRangeLeaf);
   const hasCanvases = items.some((i) => i.type === "Canvas");
   const isEditing = false;
   const showCanvases = true;
@@ -56,7 +42,6 @@ export function TreeRangeItem(props: TreeRangeItemProps) {
         {({
           isExpanded,
           selectionBehavior,
-          isDropTarget,
           selectionMode,
         }: TreeItemContentRenderProps) => (
           <>
@@ -65,16 +50,7 @@ export function TreeRangeItem(props: TreeRangeItemProps) {
             )}
 
             {hasVisibleChildren ? (
-              <Button slot="chevron">
-                {/* <ChevronDownIcon
-                  className={twMerge("text-xl")}
-                  style={{
-                    transition: "transform .2s",
-                    transform: `rotate(${isExpanded ? "0deg" : "-90deg"})`,
-                  }}
-                /> */}
-                {isExpanded ? <>-</> : <>+</>}
-              </Button>
+              <Button slot="chevron">{isExpanded ? <>-</> : <>+</>}</Button>
             ) : (
               <span
                 slot="chevron"
@@ -82,28 +58,16 @@ export function TreeRangeItem(props: TreeRangeItemProps) {
                 tabIndex={-1}
                 className="pointer-events-none"
               >
-                {/* <ChevronDownIcon
-                  className={twMerge(
-                    "text-xl",
-                    "opacity-20 cursor-not-allowed",
-                  )}
-                  style={{
-                    transition: "transform .2s",
-                    transform: `rotate(${isExpanded ? "0deg" : "-90deg"})`,
-                  }}
-                /> */}
-                <>-</>
+                <span>&nbsp;</span>
               </span>
             )}
 
             <div
               className={twMerge(
                 "flex items-center gap-2 border-b border-gray-200 flex-1 min-w-0",
-                isDropTarget && "bg-me-primary-100/50",
                 !showCanvases &&
                   props.range.isRangeLeaf &&
                   "border-transparent",
-                //isActive && "border-transparent",
               )}
             >
               <LocaleString className="truncate whitespace-nowrap flex-1 min-w-0">

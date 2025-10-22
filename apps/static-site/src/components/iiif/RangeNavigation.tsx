@@ -12,14 +12,7 @@ import {
   type RangeTableOfContentsNode,
 } from "@iiif/helpers";
 import type { SharingAndViewingLinksContent } from "./SharingAndViewingLinks";
-import {
-  Button,
-  Collection,
-  Tree,
-  TreeItem,
-  TreeItemContent,
-  type Key,
-} from "react-aria-components";
+import { Collection, Tree, type Key } from "react-aria-components";
 import { TreeRangeItem } from "./TreeRangeItem";
 import { TreeCanvasItem } from "./TreeCanvasItem";
 
@@ -56,11 +49,6 @@ export function RangeNavigation({
   }
 
   const { range, flatItems } = useVaultSelector((_, vault) => {
-    //const structures = vault.get(mani!.structures || []);
-    // const range =
-    //   rangesToTableOfContentsTree(vault, structures,  {
-    //     showNoNav: true,
-    //   })! || {};
     const range = rangesToTableOfContentsTree(vault, structures)! || {};
     const flatItems = flattenedRanges(range);
     return { structures, range, flatItems };
@@ -71,7 +59,6 @@ export function RangeNavigation({
       flatItems
         .filter(({ item }) => item.type === "Range" && item.items?.length)
         .filter(({ item }) => (item.items?.length || 0) < maxNodeSize)
-        //
         .map(({ item }) => item.id as Key),
     [flatItems],
   );
@@ -142,14 +129,14 @@ export function RangeNavigation({
     <div className="overflow-hidden font-mono">
       <div className="cut-corners w-full place-self-start bg-black p-5 text-white">
         <h3 className="mb-4 uppercase">{getValue(toc?.label)}</h3>
+
         <Tree
           aria-label={getValue(toc?.label)}
           items={dispItems}
           expandedKeys={expandedKeys}
           onExpandedChange={setExpandedKeys}
           selectionMode="single"
-          onAction={(key) => {
-            //const el = document.getElementById(`workbench-${String(key)}`);
+          onAction={() => {
             const el = document.querySelector("h1");
             el?.scrollIntoView({
               behavior: "smooth",
@@ -162,23 +149,6 @@ export function RangeNavigation({
             return <RenderItem item={item} />;
           }}
         </Tree>
-        {/* {dispItems?.map((range: RangeTableOfContentsNode) => {
-          return (
-            <div key={range?.id}>
-              {range.items?.map((item: RangeTableOfContentsNode) => {
-                return (
-                  <button
-                    key={item.id}
-                    onClick={() => setCurrentCanvasId(item.id)}
-                    className="underline hover:text-slate-300"
-                  >
-                    {getValue(range.label)}
-                  </button>
-                );
-              })}
-            </div>
-          );
-        })} */}
 
         {toc?.items?.length && toc?.items?.length > 2 && (
           <button
