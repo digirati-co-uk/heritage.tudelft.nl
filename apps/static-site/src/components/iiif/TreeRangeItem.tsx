@@ -1,4 +1,5 @@
 import { getValue, type RangeTableOfContentsNode } from "@iiif/helpers";
+import { useLayoutEffect, useState } from "react";
 
 import type {
   TreeItemContentRenderProps,
@@ -28,11 +29,22 @@ export function TreeRangeItem(props: TreeRangeItemProps) {
   const items = props.range.items ?? [];
   const hasChildRanges = items.some((i) => i.type === "Range");
   const hasVisibleChildren = hasChildRanges;
+  const isClient = () => typeof document !== "undefined";
 
-  const thisLeaf = document.getElementById(`leaf_${props.range.id}`);
-  const treeItem = thisLeaf?.closest(".react-aria-TreeItem");
-  const treeItemLevel = treeItem?.getAttribute("data-level");
-  const treeItemLevelNum = treeItemLevel ? Number.parseInt(treeItemLevel) : 0;
+  const thisLeaf = isClient()
+    ? document?.getElementById(`leaf_${props.range.id}`)
+    : null;
+  const treeItem = isClient()
+    ? thisLeaf?.closest(".react-aria-TreeItem")
+    : null;
+  const treeItemLevel = isClient()
+    ? treeItem?.getAttribute("data-level")
+    : null;
+  const treeItemLevelNum = isClient()
+    ? treeItemLevel
+      ? Number.parseInt(treeItemLevel)
+      : 0
+    : 0;
 
   return (
     <TreeItem
