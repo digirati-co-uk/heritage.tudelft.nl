@@ -1,5 +1,4 @@
 import { getValue, type RangeTableOfContentsNode } from "@iiif/helpers";
-import { useLayoutEffect, useState } from "react";
 
 import type {
   TreeItemContentRenderProps,
@@ -25,7 +24,6 @@ interface TreeRangeItemProps extends Partial<TreeItemProps> {
 }
 
 export function TreeRangeItem(props: TreeRangeItemProps) {
-  const isNoNav = props.range.isNoNav;
   const items = props.range.items ?? [];
   const hasChildRanges = items.some((i) => i.type === "Range");
   const hasVisibleChildren = hasChildRanges;
@@ -48,10 +46,7 @@ export function TreeRangeItem(props: TreeRangeItemProps) {
 
   return (
     <TreeItem
-      className={twMerge(
-        "react-aria-TreeItem hover:bg-gray-700 flex items-center gap-2 p-1.5",
-        isNoNav ? "opacity-40" : "",
-      )}
+      className="react-aria-TreeItem hover:bg-gray-700 flex items-center gap-2 p-1.5"
       textValue={getValue(props.range.label)}
       id={props.range.id}
       {...props}
