@@ -27,6 +27,7 @@ export function RangeNavigation({
   const vault = useVault();
   const mani = useManifest();
   const structures = mani?.structures ?? [];
+  console.log(structures);
   const toc = useMemo(
     () => rangesToTableOfContentsTree(vault, structures),
     [structures],
@@ -82,6 +83,17 @@ export function RangeNavigation({
     }
   }
 
+  function scrollToTitle() {
+    console.log("scrolling to ");
+    const el = document.querySelector("h1");
+    console.log("scrolling to", el);
+    el?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+      inline: "start",
+    });
+  }
+
   function RenderItem({
     item,
     parent,
@@ -104,6 +116,7 @@ export function RangeNavigation({
             parent={parent}
             onClick={() => {
               setCurrentCanvasId(item.id);
+              scrollToTitle();
             }}
           />
         </CanvasContext>
@@ -115,6 +128,11 @@ export function RangeNavigation({
         range={item}
         hasChildItems={!!item.items}
         parentId={parent?.id}
+        onClick={() => {
+          item.firstCanvas?.source?.id &&
+            setCurrentCanvasId(item.firstCanvas?.source?.id);
+          scrollToTitle();
+        }}
       >
         <Collection items={item.items || []}>
           {(t) => <RenderItem item={t} parent={item} />}
@@ -129,21 +147,20 @@ export function RangeNavigation({
     <div className="overflow-hidden font-mono">
       <div className="cut-corners w-full place-self-start bg-black p-5 text-white">
         <h3 className="mb-4 uppercase">{getValue(toc?.label)}</h3>
-
         <Tree
           aria-label={getValue(toc?.label)}
           items={dispItems}
           expandedKeys={expandedKeys}
           onExpandedChange={setExpandedKeys}
           selectionMode="single"
-          onAction={() => {
-            const el = document.querySelector("h1");
-            el?.scrollIntoView({
-              behavior: "smooth",
-              block: "start",
-              inline: "start",
-            });
-          }}
+          //   onAction={() => {
+          //     const el = document.querySelector("h1");
+          //     el?.scrollIntoView({
+          //       behavior: "smooth",
+          //       block: "start",
+          //       inline: "start",
+          //     });
+          //   }}
         >
           {function renderItem(item) {
             return <RenderItem item={item} />;

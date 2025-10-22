@@ -12,6 +12,16 @@ import {
 import { LocaleString, useVault } from "react-iiif-vault";
 import { twMerge } from "tailwind-merge";
 
+function Indent({ level }: { level: number }) {
+  const arr = [];
+  for (let i = 0; i < level - 1; i++) {
+    arr.push(".");
+  }
+  return arr.map(() => {
+    return <span>.</span>;
+  });
+}
+
 interface TreeRangeItemProps extends Partial<TreeItemProps> {
   range: RangeTableOfContentsNode;
   parentId?: string;
@@ -21,12 +31,16 @@ export function TreeRangeItem(props: TreeRangeItemProps) {
   const vault = useVault();
   const isNoNav = props.range.isNoNav;
   const items = props.range.items ?? [];
-  //const hasChildRanges = items.some((i) => i.type === "Range");
-  const hasChildRanges = items.some((i) => i.isRangeLeaf);
+  const hasChildRanges = items.some((i) => i.type === "Range");
   const hasCanvases = items.some((i) => i.type === "Canvas");
   const isEditing = false;
   const showCanvases = true;
   const hasVisibleChildren = hasChildRanges || (showCanvases && hasCanvases);
+
+  const thisLeaf = document.getElementById(`leaf_${props.range.id}`);
+  const treeItem = thisLeaf?.closest(".react-aria-TreeItem");
+  const treeItemLevel = treeItem?.getAttribute("data-level");
+  const treeItemLevelNum = treeItemLevel ? Number.parseInt(treeItemLevel) : 0;
 
   return (
     <TreeItem
@@ -48,19 +62,21 @@ export function TreeRangeItem(props: TreeRangeItemProps) {
             {selectionBehavior === "toggle" && selectionMode !== "none" && (
               <Checkbox slot="selection" />
             )}
-
-            {hasVisibleChildren ? (
-              <Button slot="chevron">{isExpanded ? <>-</> : <>+</>}</Button>
-            ) : (
-              <span
-                slot="chevron"
-                aria-hidden
-                tabIndex={-1}
-                className="pointer-events-none"
-              >
-                <span>&nbsp;</span>
-              </span>
-            )}
+            <Indent level={treeItemLevelNum} />
+            <div id={`leaf_${props.range.id}`}>
+              {hasVisibleChildren ? (
+                <Button slot="chevron">{isExpanded ? <>-</> : <>+</>}</Button>
+              ) : (
+                <span
+                  slot="chevron"
+                  aria-hidden
+                  tabIndex={-1}
+                  className="pointer-events-none"
+                >
+                  <span>&nbsp;</span>
+                </span>
+              )}
+            </div>
 
             <div
               className={twMerge(
