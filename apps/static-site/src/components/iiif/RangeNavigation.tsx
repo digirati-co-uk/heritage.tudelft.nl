@@ -29,7 +29,6 @@ export function RangeNavigation({
   content: SharingAndViewingLinksContent;
 }) {
   const [tocExpanded, setTocExpanded] = useState<boolean>(true);
-
   const context = useSimpleViewer();
   const { setCurrentCanvasId } = context;
   const vault = useVault();
@@ -57,11 +56,12 @@ export function RangeNavigation({
   }
 
   const { range, flatItems } = useVaultSelector((_, vault) => {
-    const structures = vault.get(mani!.structures || []);
-    const range =
-      rangesToTableOfContentsTree(structures, undefined, {
-        showNoNav: true,
-      })! || {};
+    //const structures = vault.get(mani!.structures || []);
+    // const range =
+    //   rangesToTableOfContentsTree(vault, structures,  {
+    //     showNoNav: true,
+    //   })! || {};
+    const range = rangesToTableOfContentsTree(vault, structures)! || {};
     const flatItems = flattenedRanges(range);
     return { structures, range, flatItems };
   });
