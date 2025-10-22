@@ -7,6 +7,7 @@ import type {
 import { Checkbox, TreeItem, TreeItemContent } from "react-aria-components";
 import { LocaleString, useCanvas } from "react-iiif-vault";
 import { twMerge } from "tailwind-merge";
+import { TreeIndent } from "./TreeRangeItem";
 
 interface TreeCanvasItemProps extends Partial<TreeItemProps> {
   rangeItem: RangeTableOfContentsNode;
@@ -26,6 +27,11 @@ export function TreeCanvasItem(props: TreeCanvasItemProps) {
     ? `${props.parent.resource.id}$__$${props.rangeItem.id}`
     : props.rangeItem.id;
 
+  const thisLeaf = document.getElementById(`leaf_${props.rangeItem.id}`);
+  const treeItem = thisLeaf?.closest(".react-aria-TreeItem");
+  const treeItemLevel = treeItem?.getAttribute("data-level");
+  const treeItemLevelNum = treeItemLevel ? Number.parseInt(treeItemLevel) : 0;
+
   return (
     <TreeItem
       className={twMerge(
@@ -40,18 +46,21 @@ export function TreeCanvasItem(props: TreeCanvasItemProps) {
       <TreeItemContent>
         {({ selectionBehavior, selectionMode }: TreeItemContentRenderProps) => (
           <>
-            {selectionBehavior === "toggle" && selectionMode !== "none" && (
-              <Checkbox slot="selection" />
-            )}
-            <button
-              onClick={props.onClick}
-              className={twMerge(
-                `flex flex-1 min-w-0 truncate whitespace-nowrap items-center gap-2 flex-shrink-0`,
-                isActive && "pl-4",
+            <TreeIndent level={treeItemLevelNum} />
+            <div id={`leaf_${props.rangeItem.id}`}>
+              {selectionBehavior === "toggle" && selectionMode !== "none" && (
+                <Checkbox slot="selection" />
               )}
-            >
-              <LocaleString className="ml-4">{canvas.label}</LocaleString>
-            </button>
+              <button
+                onClick={props.onClick}
+                className={twMerge(
+                  `flex flex-1 min-w-0 truncate whitespace-nowrap items-center gap-2 flex-shrink-0`,
+                  isActive && "pl-4",
+                )}
+              >
+                <LocaleString className="ml-4">{canvas.label}</LocaleString>
+              </button>
+            </div>
           </>
         )}
       </TreeItemContent>

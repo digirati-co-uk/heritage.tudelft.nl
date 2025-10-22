@@ -1,4 +1,5 @@
 import { getValue, type RangeTableOfContentsNode } from "@iiif/helpers";
+import { NODE_BASE_RESOLVE_OPTIONS } from "next/dist/build/webpack-config";
 import type {
   TreeItemContentRenderProps,
   TreeItemProps,
@@ -12,14 +13,15 @@ import {
 import { LocaleString, useVault } from "react-iiif-vault";
 import { twMerge } from "tailwind-merge";
 
-function Indent({ level }: { level: number }) {
+export function TreeIndent({ level }: { level: number }) {
   const arr = [];
   for (let i = 0; i < level - 1; i++) {
     arr.push(".");
   }
   return arr.map(() => {
-    return <span>.</span>;
+    return <span>&nbsp;</span>;
   });
+  //return <div className="w-[calc(var level)+1rem)]"></div>;
 }
 
 interface TreeRangeItemProps extends Partial<TreeItemProps> {
@@ -62,7 +64,7 @@ export function TreeRangeItem(props: TreeRangeItemProps) {
             {selectionBehavior === "toggle" && selectionMode !== "none" && (
               <Checkbox slot="selection" />
             )}
-            <Indent level={treeItemLevelNum} />
+            <TreeIndent level={treeItemLevelNum} />
             <div id={`leaf_${props.range.id}`}>
               {hasVisibleChildren ? (
                 <Button slot="chevron">{isExpanded ? <>-</> : <>+</>}</Button>
