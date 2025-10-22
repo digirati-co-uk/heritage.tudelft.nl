@@ -115,7 +115,9 @@ export function RangeNavigation({
           <TreeCanvasItem
             rangeItem={item}
             parent={parent}
-            onClick={() => setCurrentCanvasId(item.id)}
+            onClick={() => {
+              setCurrentCanvasId(item.id);
+            }}
           />
         </CanvasContext>
       );
@@ -147,7 +149,8 @@ export function RangeNavigation({
           onExpandedChange={setExpandedKeys}
           selectionMode="single"
           onAction={(key) => {
-            const el = document.getElementById(`workbench-${String(key)}`);
+            //const el = document.getElementById(`workbench-${String(key)}`);
+            const el = document.querySelector("h1");
             el?.scrollIntoView({
               behavior: "smooth",
               block: "start",
