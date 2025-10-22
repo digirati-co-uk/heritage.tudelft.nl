@@ -83,9 +83,7 @@ export function RangeNavigation({
   }
 
   function scrollToTitle() {
-    console.log("scrolling to ");
-    const el = document.querySelector("h1");
-    console.log("scrolling to", el);
+    const el = document.querySelector("main");
     el?.scrollIntoView({
       behavior: "smooth",
       block: "start",
@@ -115,7 +113,9 @@ export function RangeNavigation({
             parent={parent}
             onClick={() => {
               setCurrentCanvasId(item.id);
-              scrollToTitle();
+              setTimeout(() => {
+                scrollToTitle();
+              }, 500);
             }}
           />
         </CanvasContext>
@@ -130,7 +130,9 @@ export function RangeNavigation({
         onClick={() => {
           item.firstCanvas?.source?.id &&
             setCurrentCanvasId(item.firstCanvas?.source?.id);
-          scrollToTitle();
+          setTimeout(() => {
+            scrollToTitle();
+          }, 500);
         }}
       >
         <Collection items={item.items || []}>
@@ -152,14 +154,6 @@ export function RangeNavigation({
           expandedKeys={expandedKeys}
           onExpandedChange={setExpandedKeys}
           selectionMode="single"
-          //   onAction={() => {
-          //     const el = document.querySelector("h1");
-          //     el?.scrollIntoView({
-          //       behavior: "smooth",
-          //       block: "start",
-          //       inline: "start",
-          //     });
-          //   }}
         >
           {function renderItem(item) {
             return <RenderItem item={item} />;
