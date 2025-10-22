@@ -14,10 +14,7 @@ import { LocaleString, useVault } from "react-iiif-vault";
 import { twMerge } from "tailwind-merge";
 
 export function TreeIndent({ level }: { level: number }) {
-  const arr = [];
-  for (let i = 0; i < level - 1; i++) {
-    arr.push(".");
-  }
+  const arr = Array(level);
   return arr.map(() => {
     return <span>&nbsp;</span>;
   });

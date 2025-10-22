@@ -27,7 +27,6 @@ export function RangeNavigation({
   const vault = useVault();
   const mani = useManifest();
   const structures = mani?.structures ?? [];
-  console.log(structures);
   const toc = useMemo(
     () => rangesToTableOfContentsTree(vault, structures),
     [structures],
@@ -103,7 +102,7 @@ export function RangeNavigation({
     parent?: RangeTableOfContentsNode;
     onClick?: () => void;
   }) {
-    const showCanvases = true;
+    const showCanvases = false;
     if (item.type === "Canvas") {
       if (!item.resource || !showCanvases) {
         return null;
