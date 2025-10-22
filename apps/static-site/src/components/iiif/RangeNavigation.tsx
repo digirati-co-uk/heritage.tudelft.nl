@@ -98,9 +98,11 @@ export function RangeNavigation({
   function RenderItem({
     item,
     parent,
+    onClick,
   }: {
     item: RangeTableOfContentsNode;
     parent?: RangeTableOfContentsNode;
+    onClick?: () => void;
   }) {
     const showCanvases = true;
     if (item.type === "Canvas") {
@@ -110,7 +112,11 @@ export function RangeNavigation({
 
       return (
         <CanvasContext canvas={item.resource?.source.id}>
-          <TreeCanvasItem rangeItem={item} parent={parent} />
+          <TreeCanvasItem
+            rangeItem={item}
+            parent={parent}
+            onClick={() => setCurrentCanvasId(item.id)}
+          />
         </CanvasContext>
       );
     }

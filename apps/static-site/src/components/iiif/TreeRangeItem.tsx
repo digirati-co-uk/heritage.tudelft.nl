@@ -45,8 +45,7 @@ export function TreeRangeItem(props: TreeRangeItemProps) {
   return (
     <TreeItem
       className={twMerge(
-        "react-aria-TreeItem hover:bg-gray-100 flex items-center gap-2 p-1.5",
-        //isActive ? "bg-me-primary-500 hover:bg-me-primary-600 text-white" : "",
+        "react-aria-TreeItem hover:bg-gray-700 flex items-center gap-2 p-1.5",
         isNoNav ? "opacity-40" : "",
       )}
       textValue={getValue(props.range.label)}
@@ -74,7 +73,7 @@ export function TreeRangeItem(props: TreeRangeItemProps) {
                     transform: `rotate(${isExpanded ? "0deg" : "-90deg"})`,
                   }}
                 /> */}
-                <>V</>
+                {isExpanded ? <>-</> : <>+</>}
               </Button>
             ) : (
               <span
@@ -93,7 +92,7 @@ export function TreeRangeItem(props: TreeRangeItemProps) {
                     transform: `rotate(${isExpanded ? "0deg" : "-90deg"})`,
                   }}
                 /> */}
-                <>V</>
+                <>-</>
               </span>
             )}
 

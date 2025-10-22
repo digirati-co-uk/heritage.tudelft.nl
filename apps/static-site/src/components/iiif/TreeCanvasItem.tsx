@@ -11,6 +11,7 @@ import { twMerge } from "tailwind-merge";
 interface TreeCanvasItemProps extends Partial<TreeItemProps> {
   rangeItem: RangeTableOfContentsNode;
   parent?: RangeTableOfContentsNode;
+  onClick?: () => void;
 }
 
 export function TreeCanvasItem(props: TreeCanvasItemProps) {
@@ -28,7 +29,7 @@ export function TreeCanvasItem(props: TreeCanvasItemProps) {
   return (
     <TreeItem
       className={twMerge(
-        "react-aria-TreeItem relative hover:bg-gray-100 flex items-center gap-2 overflow-x-clip px-1.5",
+        "react-aria-TreeItem relative hover:bg-gray-700 flex items-center gap-2 overflow-x-clip px-1.5",
         isActive && "pt-8 react-aria-TreeItem-active",
       )}
       textValue={getValue(canvas.label)}
@@ -42,15 +43,15 @@ export function TreeCanvasItem(props: TreeCanvasItemProps) {
             {selectionBehavior === "toggle" && selectionMode !== "none" && (
               <Checkbox slot="selection" />
             )}
-            <div
+            <button
+              onClick={props.onClick}
               className={twMerge(
                 `flex flex-1 min-w-0 truncate whitespace-nowrap items-center gap-2 flex-shrink-0`,
                 isActive && "pl-4",
               )}
             >
-              {/* <AddImageIcon className="text-xl flex-shrink-0" /> */}[ + ]
-              <LocaleString>{canvas.label}</LocaleString>
-            </div>
+              <LocaleString className="ml-4">{canvas.label}</LocaleString>
+            </button>
           </>
         )}
       </TreeItemContent>
