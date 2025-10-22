@@ -4,7 +4,6 @@ import {
   useVault,
   useManifest,
   useVaultSelector,
-  CanvasContext,
 } from "react-iiif-vault";
 import {
   getValue,
@@ -14,7 +13,6 @@ import {
 import type { SharingAndViewingLinksContent } from "./SharingAndViewingLinks";
 import { Collection, Tree, type Key } from "react-aria-components";
 import { TreeRangeItem } from "./TreeRangeItem";
-import { TreeCanvasItem } from "./TreeCanvasItem";
 
 export function RangeNavigation({
   content,
@@ -94,32 +92,12 @@ export function RangeNavigation({
   function RenderItem({
     item,
     parent,
-    onClick,
   }: {
     item: RangeTableOfContentsNode;
     parent?: RangeTableOfContentsNode;
-    onClick?: () => void;
   }) {
-    const showCanvases = false;
     if (item.type === "Canvas") {
-      if (!item.resource || !showCanvases) {
-        return null;
-      }
-
-      return (
-        <CanvasContext canvas={item.resource?.source.id}>
-          <TreeCanvasItem
-            rangeItem={item}
-            parent={parent}
-            onClick={() => {
-              setCurrentCanvasId(item.id);
-              setTimeout(() => {
-                scrollToTitle();
-              }, 500);
-            }}
-          />
-        </CanvasContext>
-      );
+      return null;
     }
 
     return (
@@ -132,7 +110,7 @@ export function RangeNavigation({
             setCurrentCanvasId(item.firstCanvas?.source?.id);
           setTimeout(() => {
             scrollToTitle();
-          }, 500);
+          }, 300);
         }}
       >
         <Collection items={item.items || []}>
