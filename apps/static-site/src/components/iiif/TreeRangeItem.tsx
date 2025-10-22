@@ -1,5 +1,5 @@
 import { getValue, type RangeTableOfContentsNode } from "@iiif/helpers";
-import { NODE_BASE_RESOLVE_OPTIONS } from "next/dist/build/webpack-config";
+
 import type {
   TreeItemContentRenderProps,
   TreeItemProps,
@@ -21,7 +21,6 @@ export function TreeIndent({ level }: { level: number }) {
   return arr.map(() => {
     return <span>&nbsp;</span>;
   });
-  //return <div className="w-[calc(var level)+1rem)]"></div>;
 }
 
 interface TreeRangeItemProps extends Partial<TreeItemProps> {
@@ -36,7 +35,7 @@ export function TreeRangeItem(props: TreeRangeItemProps) {
   const hasChildRanges = items.some((i) => i.type === "Range");
   const hasCanvases = items.some((i) => i.type === "Canvas");
   const isEditing = false;
-  const showCanvases = true;
+  const showCanvases = false;
   const hasVisibleChildren = hasChildRanges || (showCanvases && hasCanvases);
 
   const thisLeaf = document.getElementById(`leaf_${props.range.id}`);
