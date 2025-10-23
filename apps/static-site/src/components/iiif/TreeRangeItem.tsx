@@ -38,7 +38,6 @@ export function TreeRangeItem(props: TreeRangeItemProps) {
       <TreeItemContent>
         {({ isExpanded }: TreeItemContentRenderProps) => (
           <>
-            {/* <div> */}
             {hasVisibleChildren ? (
               <Button slot="chevron">{isExpanded ? <>-</> : <>+</>}</Button>
             ) : (
@@ -51,7 +50,6 @@ export function TreeRangeItem(props: TreeRangeItemProps) {
                 <span>&nbsp;</span>
               </span>
             )}
-            {/* </div> */}
 
             <div
               className={twMerge(
