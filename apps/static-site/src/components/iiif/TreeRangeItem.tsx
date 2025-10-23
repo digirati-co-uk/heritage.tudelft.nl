@@ -28,19 +28,10 @@ export function TreeRangeItem(props: TreeRangeItemProps) {
       <TreeItemContent>
         {({ isExpanded }: TreeItemContentRenderProps) => (
           <>
-            {hasVisibleChildren ? (
+            {hasVisibleChildren && (
               <Button slot="chevron" aria-label="expand">
                 {isExpanded ? <>-</> : <>+</>}
               </Button>
-            ) : (
-              <span
-                slot="chevron"
-                aria-hidden
-                tabIndex={-1}
-                className="pointer-events-none"
-              >
-                <span>&nbsp;</span>
-              </span>
             )}
 
             <div

@@ -46,49 +46,6 @@ export function RangeNavigation({
     return flatList;
   }
 
-  const { range, flatItems } = useVaultSelector((_, vault) => {
-    const range = rangesToTableOfContentsTree(vault, structures)! || {};
-    const flatItems = flattenedRanges(range);
-    return { structures, range, flatItems };
-  });
-
-  const expandAllKeys = useMemo<Key[]>(
-    () =>
-      flatItems
-        .filter(({ item }) => item.type === "Range" && item.items?.length)
-        .filter(({ item }) => (item.items?.length || 0) < maxNodeSize)
-        .map(({ item }) => item.id as Key),
-    [flatItems],
-  );
-
-  const [expandedKeys, setExpandedKeys] =
-    useState<Iterable<Key>>(expandAllKeys);
-
-  // find at least one valid entry
-  let tocEmpty = true;
-  if (toc?.items && toc.items.length > 0) {
-    for (const range of toc?.items) {
-      if (range.items && range.items.length > 0) {
-        for (const item of range.items) {
-          if (item.id && getValue(range.label)) {
-            tocEmpty = false;
-            break;
-          }
-        }
-      }
-      if (!tocEmpty) break;
-    }
-  }
-
-  function scrollToTitle() {
-    const el = document.querySelector("main");
-    el?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-      inline: "start",
-    });
-  }
-
   function RenderItem({
     item,
     parent,
@@ -99,7 +56,6 @@ export function RangeNavigation({
     if (item.type === "Canvas") {
       return null;
     }
-
     return (
       <TreeRangeItem
         range={item}
@@ -120,9 +76,36 @@ export function RangeNavigation({
     );
   }
 
+  const { flatItems } = useVaultSelector((_, vault) => {
+    const range = rangesToTableOfContentsTree(vault, structures)! || {};
+    const flatItems = flattenedRanges(range);
+    return { structures, range, flatItems };
+  });
+
+  const expandAllKeys = useMemo<Key[]>(
+    () =>
+      flatItems
+        .filter(({ item }) => item.type === "Range" && item.items?.length)
+        .filter(({ item }) => (item.items?.length || 0) < maxNodeSize)
+        .map(({ item }) => item.id as Key),
+    [flatItems],
+  );
+
+  const [expandedKeys, setExpandedKeys] =
+    useState<Iterable<Key>>(expandAllKeys);
+
+  function scrollToTitle() {
+    const el = document.querySelector("main");
+    el?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+      inline: "start",
+    });
+  }
+
   const dispItems = tocExpanded ? toc?.items : toc?.items?.slice(0, 2);
 
-  return tocEmpty ? null : (
+  return !dispItems ? null : (
     <div className="overflow-hidden font-mono">
       <div className="cut-corners w-full place-self-start bg-black p-5 text-white">
         <h3 className="mb-4 uppercase">{getValue(toc?.label)}</h3>
