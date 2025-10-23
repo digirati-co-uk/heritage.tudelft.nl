@@ -27,22 +27,6 @@ export function TreeRangeItem(props: TreeRangeItemProps) {
   const items = props.range.items ?? [];
   const hasChildRanges = items.some((i) => i.type === "Range");
   const hasVisibleChildren = hasChildRanges;
-  const isClient = () => typeof document !== "undefined";
-
-  const thisLeaf = isClient()
-    ? document?.getElementById(`leaf_${props.range.id}`)
-    : null;
-  const treeItem = isClient()
-    ? thisLeaf?.closest(".react-aria-TreeItem")
-    : null;
-  const treeItemLevel = isClient()
-    ? treeItem?.getAttribute("data-level")
-    : null;
-  const treeItemLevelNum = isClient()
-    ? treeItemLevel
-      ? Number.parseInt(treeItemLevel)
-      : 0
-    : 0;
 
   return (
     <TreeItem
@@ -54,7 +38,6 @@ export function TreeRangeItem(props: TreeRangeItemProps) {
       <TreeItemContent>
         {({ isExpanded }: TreeItemContentRenderProps) => (
           <>
-            <TreeIndent level={treeItemLevelNum} />
             <div id={`leaf_${props.range.id}`}>
               {hasVisibleChildren ? (
                 <Button slot="chevron">{isExpanded ? <>-</> : <>+</>}</Button>
