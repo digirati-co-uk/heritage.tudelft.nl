@@ -8,16 +8,6 @@ import { Button, TreeItem, TreeItemContent } from "react-aria-components";
 import { LocaleString, useVault } from "react-iiif-vault";
 import { twMerge } from "tailwind-merge";
 
-export function TreeIndent({ level }: { level: number }) {
-  const arr: any[] = [];
-  for (let i = 0; i < level; i++) {
-    arr.push("");
-  }
-  return arr.map(() => {
-    return <span>&nbsp;</span>;
-  });
-}
-
 interface TreeRangeItemProps extends Partial<TreeItemProps> {
   range: RangeTableOfContentsNode;
   parentId?: string;
