@@ -272,6 +272,12 @@ body.dev .delft-toc-contents {
   /*margin-bottom: 100px;*/
 }
 
+/* object tree navigation indents */
+.react-aria-TreeItem {
+  margin-left: calc((var(--tree-item-level) - 1) * 1em);
+  cursor: pointer;
+}
+
 :root {
   /* Base colors */
   --delft-bg-primary: rgb(229 231 235); /* gray-200 */
