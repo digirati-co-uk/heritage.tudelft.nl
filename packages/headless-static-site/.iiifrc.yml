@@ -14,6 +14,8 @@ run:
   - metadata-analysis
   - folder-collections
   - typesense-manifests
+  - extract-files-list
+  - enrich-files-rewrite
 
 collections:
   index:
@@ -116,6 +118,20 @@ stores:
     slugTemplates:
       - wellcome-collection
       - wellcome-manifest
+
+file_templates:
+  plaintext.txt:
+    type: "Text"
+    format: "text/plain"
+    label: "View raw text"
+    property: rendering
+  dataset.json:
+    type: "Dataset"
+    format: "application/json"
+    profile: "https://api.wellcomecollection.org/catalogue/v2/context.json"
+    label: "Wellcome Collection Catalogue API"
+    property: seeAlso
+
 
 config:
   extract-label-string:

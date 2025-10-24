@@ -27,6 +27,8 @@ console.log(`Server running: http://localhost:${server.port}`);
 const runningServer = serve(server);
 injectWebSocket(runningServer);
 
+const cacheFlag = !process.argv.includes("--no-cache");
+
 // @todo make this optional?
-await server.request("/build?cache=true&emit=true");
+await server.request(`/build?cache=${cacheFlag ? "true" : "false"}&emit=true`);
 await server.request("/watch");
