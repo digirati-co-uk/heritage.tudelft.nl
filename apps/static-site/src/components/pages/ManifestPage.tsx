@@ -1,10 +1,8 @@
 "use client";
-import { Link, getObjectSlug } from "@/navigation";
-import viewerConfig from "@/viewers.json";
+import { getObjectSlug } from "@/navigation";
 import type { Preset } from "@atlas-viewer/atlas";
 import type { InternationalString, Manifest } from "@iiif/presentation-3";
-import { useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
+import { useEffect, useRef } from "react";
 import { CanvasPanel, useSimpleViewer } from "react-iiif-vault";
 import { Box } from "../blocks/Box";
 import { DownloadImage } from "../iiif/DownloadImage";
@@ -13,6 +11,7 @@ import { ObjectThumbnails } from "../iiif/ObjectThumbnails";
 import { SharingAndViewingLinks } from "../iiif/SharingAndViewingLinks";
 import { ViewerSliderControls } from "../iiif/ViewerSliderControls";
 import { ViewerZoomControls } from "../iiif/ViewerZoomControls";
+import { RangeNavigation } from "../iiif/RangeNavigation";
 import { AutoLanguage } from "./AutoLanguage";
 import { getValue } from "@iiif/helpers/i18n";
 
@@ -68,7 +67,7 @@ export function ManifestPage({
   initialCanvasIndex,
 }: ManifestPageProps) {
   const context = useSimpleViewer();
-  const { currentSequenceIndex } = context;
+  const { currentSequenceIndex, setCurrentCanvasId } = context;
   const previousSeqIndex = useRef(currentSequenceIndex);
   const atlas = useRef<Preset>();
 
@@ -119,7 +118,9 @@ export function ManifestPage({
 
           {(related.length !== 0 || meta.partOfCollections?.length !== 0) && (
             <>
-              <h3 className="mb-5 mt-10 text-3xl font-medium">{content.relatedObjects}</h3>
+              <h3 className="mb-5 mt-10 text-3xl font-medium">
+                {content.relatedObjects}
+              </h3>
               <div className="mb-4 grid md:grid-cols-3">
                 {(meta.partOfCollections || []).map((collection, i) => (
                   <Box
@@ -176,6 +177,8 @@ export function ManifestPage({
             }}
             content={content}
           />
+
+          <RangeNavigation content={content} />
 
           <DownloadImage content={content} />
         </div>
