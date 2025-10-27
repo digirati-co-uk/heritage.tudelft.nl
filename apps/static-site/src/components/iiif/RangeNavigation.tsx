@@ -13,11 +13,14 @@ import {
 import type { SharingAndViewingLinksContent } from "./SharingAndViewingLinks";
 import { Collection, Tree, type Key } from "react-aria-components";
 import { TreeRangeItem } from "./TreeRangeItem";
+import { encodeContentState } from "@iiif/helpers";
 
 export function RangeNavigation({
   content,
+  onNavigate,
 }: {
   content: SharingAndViewingLinksContent;
+  onNavigate?: (uri: string) => void;
 }) {
   const [tocExpanded, setTocExpanded] = useState<boolean>(true);
   const context = useSimpleViewer();
@@ -30,6 +33,34 @@ export function RangeNavigation({
     [structures],
   );
   const maxNodeSize = 500; // @todo config?
+
+  function stateCreateAndEncode(uri: string) {
+    const state = {
+      "@context": "http://iiif.io/api/presentation/3/context.json",
+      id: "https://example.org/import/1",
+      type: "Annotation",
+      motivation: ["contentState"],
+      target: {
+        id: `${uri}#xywh=100,200,100,200`,
+        type: "Canvas",
+        partOf: [
+          {
+            id: mani?.id,
+            type: "Manifest",
+          },
+        ],
+      },
+    };
+    const stateStr = JSON.stringify(state);
+    const encoded = encodeContentState(stateStr);
+    return encoded;
+  }
+
+  function updateURIState(uri: string) {
+    const urlSp = new URLSearchParams();
+    console.log("setting uri state", uri);
+    urlSp.set("state", uri);
+  }
 
   function flattenedRanges(range: RangeTableOfContentsNode) {
     const flatList: {
@@ -64,6 +95,8 @@ export function RangeNavigation({
         onClick={() => {
           item.firstCanvas?.source?.id &&
             setCurrentCanvasId(item.firstCanvas?.source?.id);
+          const encoded = stateCreateAndEncode(item.firstCanvas?.source?.id);
+          updateURIState(encoded);
           setTimeout(() => {
             scrollToTitle();
           }, 300);

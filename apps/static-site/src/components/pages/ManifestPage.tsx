@@ -74,7 +74,8 @@ export function ManifestPage({
 }: ManifestPageProps) {
   const context = useSimpleViewer();
   const { currentSequenceIndex, setCurrentCanvasId } = context;
-  const previousSeqIndex = useRef(currentSequenceIndex);
+  //const previousSeqIndex = useRef(currentSequenceIndex);
+  const [previousSeqIndex, setPreviousSeqIndex] = useState<number>(0);
   const atlas = useRef<Preset>();
   const searchParams = useSearchParams();
   const [region, setRegion] = useState<{
@@ -103,14 +104,14 @@ export function ManifestPage({
     //const stateURI = `${stateCanvasId}#xywh=${xywh}`;
     //console.log("state URI", stateURI);
 
-    if (stateCanvasId && !currentSequenceIndex) {
-      setCurrentCanvasId(stateCanvasId);
-    } else if (currentSequenceIndex != previousSeqIndex.current) {
+    // If chosen canvas has changed, go there. Otherwise go to any canvas specified by content state.
+    const tempPrevIdx = currentSequenceIndex;
+    if (currentSequenceIndex != previousSeqIndex) {
       context.setCurrentCanvasIndex(currentSequenceIndex);
-    } else {
-      context.setCurrentCanvasIndex(initialCanvasIndex);
+    } else if (stateCanvasId && !currentSequenceIndex) {
+      setCurrentCanvasId(stateCanvasId);
     }
-
+    setPreviousSeqIndex(tempPrevIdx);
     if (atlas.current) {
       setTimeout(() => atlas.current?.runtime.world.goHome(true), 5);
     }
