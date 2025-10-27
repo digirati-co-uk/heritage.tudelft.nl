@@ -81,9 +81,9 @@ export function ManifestPage({
   const [region, setRegion] = useState<{
     x: number;
     y: number;
-    width: number;
-    height: number;
-  }>({ x: 0, y: 0, width: 10, height: 10 });
+    width?: number;
+    height?: number;
+  }>({ x: 0, y: 0, width: undefined, height: undefined });
 
   //isStateValid && stateCanvasId && setCurrentCanvasId(stateCanvasId);
   //xywh && tell viewer to zoom to region
@@ -97,9 +97,14 @@ export function ManifestPage({
     const normalisedState =
       isStateValid && parsedState && normaliseContentState(parsedState);
     const stateCanvasId = normalisedState?.target[0].source.id;
-    const box = normalisedState?.target[0].selector.spatial;
+    const stateRegion = normalisedState?.target[0].selector.spatial;
     console.log("normalisedState", normalisedState);
-    //setRegion({ x: box.x, y: box.y, width: box.w, height: box.height });
+    setRegion({
+      x: stateRegion?.x ?? 0,
+      y: stateRegion?.y ?? 0,
+      width: stateRegion?.width ?? undefined,
+      height: stateRegion?.height ?? undefined,
+    });
     //const xywh = `${box.x},${box.y},${box.width},${box.height}`;
     //const stateURI = `${stateCanvasId}#xywh=${xywh}`;
     //console.log("state URI", stateURI);
@@ -134,12 +139,16 @@ export function ManifestPage({
         <CanvasPanel.Viewer
           onCreated={(preset) => {
             atlas.current = preset;
-            // preset.runtime.world.gotoRegion({
-            //   x: region!.x,
-            //   y: region!.y,
-            //   width: region!.width,
-            //   height: region!.height,
-            // });
+            console.log("onCreated", region);
+            if (region.width && region.height) {
+              console.log("zooming", region);
+              preset.runtime.world.gotoRegion({
+                x: region.x,
+                y: region.y,
+                width: region.width,
+                height: region.height,
+              });
+            }
           }}
           htmlChildren={null}
           key={manifest.id}
