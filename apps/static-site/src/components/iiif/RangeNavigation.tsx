@@ -34,6 +34,8 @@ export function RangeNavigation({
   );
   const maxNodeSize = 500; // @todo config?
 
+  // This is a temporary function to encode the chosen canvas with a zoom region in to content state
+  // That encoded state is used for testing the ability to decode and reflect that state
   function stateCreateAndEncode(uri: string) {
     const state = {
       "@context": "http://iiif.io/api/presentation/3/context.json",
@@ -53,6 +55,7 @@ export function RangeNavigation({
     };
     const stateStr = JSON.stringify(state);
     const encoded = encodeContentState(stateStr);
+    console.log("encoded state", encoded);
     return encoded;
   }
 
@@ -96,7 +99,7 @@ export function RangeNavigation({
           item.firstCanvas?.source?.id &&
             setCurrentCanvasId(item.firstCanvas?.source?.id);
           const encoded = stateCreateAndEncode(item.firstCanvas?.source?.id);
-          updateURIState(encoded);
+          //updateURIState(encoded);
           setTimeout(() => {
             scrollToTitle();
           }, 300);
