@@ -106,8 +106,11 @@ export function ManifestPage({
 
     // If chosen canvas has changed, go there. Otherwise go to any canvas specified by content state.
     const tempPrevIdx = currentSequenceIndex;
+
     if (currentSequenceIndex != previousSeqIndex) {
       context.setCurrentCanvasIndex(currentSequenceIndex);
+    } else if (initialCanvasIndex) {
+      context.setCurrentCanvasIndex(initialCanvasIndex);
     } else if (stateCanvasId && !currentSequenceIndex) {
       setCurrentCanvasId(stateCanvasId);
     }
