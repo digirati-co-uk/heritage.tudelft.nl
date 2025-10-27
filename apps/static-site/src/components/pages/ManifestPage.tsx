@@ -2,7 +2,7 @@
 import { getObjectSlug } from "@/navigation";
 import type { Preset } from "@atlas-viewer/atlas";
 import type { InternationalString, Manifest } from "@iiif/presentation-3";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CanvasPanel, useSimpleViewer } from "react-iiif-vault";
 import { Box } from "../blocks/Box";
 import { DownloadImage } from "../iiif/DownloadImage";
@@ -14,6 +14,12 @@ import { ViewerZoomControls } from "../iiif/ViewerZoomControls";
 import { RangeNavigation } from "../iiif/RangeNavigation";
 import { AutoLanguage } from "./AutoLanguage";
 import { getValue } from "@iiif/helpers/i18n";
+import {
+  parseContentState,
+  validateContentState,
+  normaliseContentState,
+} from "@iiif/helpers";
+import { useSearchParams } from "next/navigation";
 
 interface ManifestPageProps {
   manifest: Manifest;
@@ -70,14 +76,41 @@ export function ManifestPage({
   const { currentSequenceIndex, setCurrentCanvasId } = context;
   const previousSeqIndex = useRef(currentSequenceIndex);
   const atlas = useRef<Preset>();
+  const searchParams = useSearchParams();
+  const [region, setRegion] = useState<{
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  }>({ x: 0, y: 0, width: 10, height: 10 });
+
+  //isStateValid && stateCanvasId && setCurrentCanvasId(stateCanvasId);
+  //xywh && tell viewer to zoom to region
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Needs to run when currentSequenceIndex changes.
   useEffect(() => {
-    if (currentSequenceIndex == previousSeqIndex.current) {
-      context.setCurrentCanvasIndex(initialCanvasIndex);
-    } else {
+    console.log("effect");
+    const state = searchParams.get("state");
+    const parsedState = state && parseContentState(state);
+    const isStateValid = parsedState && validateContentState(parsedState);
+    const normalisedState =
+      isStateValid && parsedState && normaliseContentState(parsedState);
+    const stateCanvasId = normalisedState?.target[0].source.id;
+    const box = normalisedState?.target[0].selector.spatial;
+    console.log("normalisedState", normalisedState);
+    //setRegion({ x: box.x, y: box.y, width: box.w, height: box.height });
+    //const xywh = `${box.x},${box.y},${box.width},${box.height}`;
+    //const stateURI = `${stateCanvasId}#xywh=${xywh}`;
+    //console.log("state URI", stateURI);
+
+    if (stateCanvasId && !currentSequenceIndex) {
+      setCurrentCanvasId(stateCanvasId);
+    } else if (currentSequenceIndex != previousSeqIndex.current) {
       context.setCurrentCanvasIndex(currentSequenceIndex);
+    } else {
+      context.setCurrentCanvasIndex(initialCanvasIndex);
     }
+
     if (atlas.current) {
       setTimeout(() => atlas.current?.runtime.world.goHome(true), 5);
     }
@@ -97,6 +130,12 @@ export function ManifestPage({
         <CanvasPanel.Viewer
           onCreated={(preset) => {
             atlas.current = preset;
+            // preset.runtime.world.gotoRegion({
+            //   x: region!.x,
+            //   y: region!.y,
+            //   width: region!.width,
+            //   height: region!.height,
+            // });
           }}
           htmlChildren={null}
           key={manifest.id}
