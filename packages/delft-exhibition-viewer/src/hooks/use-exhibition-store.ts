@@ -1,9 +1,11 @@
 import { createPaintingAnnotationsHelper } from "@iiif/helpers";
 import { useCallback, useEffect, useMemo } from "react";
-import { getRenderingStrategy, useExistingVault } from "react-iiif-vault";
+import { getRenderingStrategy, useExistingVault, type RenderingStrategy } from "react-iiif-vault";
 import { useStore } from "zustand";
-import { createExhibitionStore } from "../helpers/exhibition-store";
+import { createExhibitionStore, type ExhibitionStore } from "../helpers/exhibition-store";
 import { useHashValue } from "../helpers/use-hash-value";
+import type { CanvasNormalized } from "@iiif/presentation-3-normalized";
+import type { Reference } from "@iiif/presentation-3";
 
 export function useExhibitionStore(props: {
   manifest: any;
@@ -11,7 +13,20 @@ export function useExhibitionStore(props: {
   options?: {
     autoPlay?: boolean;
   };
-}) {
+}): {
+  step: any;
+  store: ReturnType<typeof createExhibitionStore>;
+  state: ExhibitionStore;
+  vault: ReturnType<typeof useExistingVault>;
+  paintingHelper: ReturnType<typeof createPaintingAnnotationsHelper>,
+  toRenderables: (canvas: CanvasNormalized | Reference<"Canvas">, canvasIndex: number) => (null | ({
+    index: number,
+    canvas: CanvasNormalized,
+    strategy: RenderingStrategy,
+    foundLinks: any[],
+  })),
+} {
+
   const vault = useExistingVault();
 
   // Need to load the manifest.

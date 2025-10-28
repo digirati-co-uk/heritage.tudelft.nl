@@ -7,9 +7,10 @@ import { getClassName } from "../helpers/exhibition";
 import { getItemsByLocale } from "../helpers/get-items-by-locale";
 import { BaseGridSection } from "./BaseGridSection";
 import ReadMoreBlock from "./ReadMore";
+import type { CanvasNormalized } from "@iiif/presentation-3-normalized";
 
 export interface InfoBlockProps {
-  canvas: Canvas;
+  canvas: CanvasNormalized;
   strategy: TextualContentStrategy;
   firstInfo?: boolean;
   locale: string;
@@ -18,7 +19,14 @@ export interface InfoBlockProps {
   index: number;
 }
 
-export function InfoBlock({ id, index, canvas, strategy, firstInfo, scrollEnabled }: InfoBlockProps) {
+export function InfoBlock({
+  id,
+  index,
+  canvas,
+  strategy,
+  firstInfo,
+  scrollEnabled,
+}: InfoBlockProps) {
   const className = getClassName(canvas.behavior, firstInfo);
   const locale = useIIIFLanguage();
   const items = getItemsByLocale(strategy.items, locale);
@@ -47,7 +55,11 @@ export function InfoBlock({ id, index, canvas, strategy, firstInfo, scrollEnable
           ""
         )}
         {items.map((item, idx) => (
-          <LocaleString key={idx} enableDangerouslySetInnerHTML className="mb-3">
+          <LocaleString
+            key={idx}
+            enableDangerouslySetInnerHTML
+            className="mb-3"
+          >
             {item.text}
           </LocaleString>
         ))}

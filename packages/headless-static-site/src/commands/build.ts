@@ -3,7 +3,7 @@ import { cwd, env } from "node:process";
 import type { Command } from "commander";
 import { canvasThumbnail } from "../enrich/canvas-thumbnail.ts";
 import { homepageProperty } from "../enrich/homepage-property";
-import { manifestSqlite } from "../enrich/manifest-sqlite.ts";
+// import { manifestSqlite } from "../enrich/manifest-sqlite.ts";
 import { translateMetadata } from "../enrich/translate-metadata.ts";
 import { enrichTypesense } from "../enrich/typesense-index.ts";
 import { typesensePlaintext } from "../enrich/typesense-plaintext.ts";
@@ -101,7 +101,7 @@ const buildInEnrichments: Enrichment[] = [
   homepageProperty,
   canvasThumbnail,
   translateMetadata,
-  manifestSqlite,
+  // manifestSqlite,
   enrichTypesense,
   typesensePlaintext,
   filesRewrite,

@@ -31,9 +31,22 @@
   },
   "packageManager": "bun@1.1.0",
   "overrides": {
-    "@atlas-viewer/atlas": "^2.3.3"
+    "@atlas-viewer/atlas": "^2.3.3",
+    "@page-blocks/client": "https://pkg.csb.dev/stephenwf/page-blocks/commit/cedc6768/@page-blocks/client/_pkg.tgz",
+    "@page-blocks/core": "https://pkg.csb.dev/stephenwf/page-blocks/commit/cedc6768/@page-blocks/core/_pkg.tgz",
+    "@page-blocks/file-system": "https://pkg.csb.dev/stephenwf/page-blocks/commit/cedc6768/@page-blocks/file-system/_pkg.tgz",
+    "@page-blocks/next": "https://pkg.csb.dev/stephenwf/page-blocks/commit/cedc6768/@page-blocks/next/_pkg.tgz",
+    "@page-blocks/node": "https://pkg.csb.dev/stephenwf/page-blocks/commit/cedc6768/@page-blocks/node/_pkg.tgz",
+    "@page-blocks/react": "https://pkg.csb.dev/stephenwf/page-blocks/commit/cedc6768/@page-blocks/react/_pkg.tgz",
+    "@page-blocks/react-client": "https://pkg.csb.dev/stephenwf/page-blocks/commit/cedc6768/@page-blocks/react-client/_pkg.tgz",
+    "@page-blocks/react-editor": "https://pkg.csb.dev/stephenwf/page-blocks/commit/cedc6768/@page-blocks/react-editor/_pkg.tgz",
+    "@page-blocks/screenshots": "https://pkg.csb.dev/stephenwf/page-blocks/commit/cedc6768/@page-blocks/screenshots/_pkg.tgz",
+    "@page-blocks/web-components": "https://pkg.csb.dev/stephenwf/page-blocks/commit/cedc6768/@page-blocks/web-components/_pkg.tgz"
   },
-  "workspaces": ["apps/*", "packages/*"],
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "dependencies": {
     "bun-types": "*",
     "@atlas-viewer/atlas": "^2.3.3",

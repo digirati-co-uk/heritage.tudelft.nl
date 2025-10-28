@@ -1,14 +1,14 @@
-import type { Canvas } from "@iiif/presentation-3";
 import { type ReactNode, Suspense } from "react";
 import { LocaleString, useVault } from "react-iiif-vault";
 import { twMerge } from "tailwind-merge";
 import { getClassName } from "../helpers/exhibition";
 import { BaseGridSection } from "./BaseGridSection";
 import { CanvasPreviewBlock } from "./CanvasPreviewBlock";
+import type { CanvasNormalized } from "@iiif/presentation-3-normalized";
 
 export interface ImageBlockProps {
   index: number;
-  canvas: Canvas;
+  canvas: CanvasNormalized;
   autoPlay?: boolean;
   id?: string;
   objectLinks: Array<{

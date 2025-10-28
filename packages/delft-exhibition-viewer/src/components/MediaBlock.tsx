@@ -13,9 +13,10 @@ import { twMerge } from "tailwind-merge";
 import { getClassName } from "../helpers/exhibition";
 import { BaseGridSection } from "./BaseGridSection";
 import { CloseIcon } from "./CloseIcon";
+import type { CanvasNormalized } from "@iiif/presentation-3-normalized";
 
 export interface MediaBlockProps {
-  canvas: Canvas;
+  canvas: CanvasNormalized;
   strategy: MediaStrategy;
   index: number;
   id?: string;
