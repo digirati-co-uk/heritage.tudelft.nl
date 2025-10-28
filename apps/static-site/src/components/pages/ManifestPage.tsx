@@ -74,7 +74,6 @@ export function ManifestPage({
 }: ManifestPageProps) {
   const context = useSimpleViewer();
   const { currentSequenceIndex, setCurrentCanvasId } = context;
-  //const previousSeqIndex = useRef(currentSequenceIndex);
   const [previousSeqIndex, setPreviousSeqIndex] = useState<number>(0);
   const atlas = useRef<Preset>();
   const searchParams = useSearchParams();
@@ -85,12 +84,8 @@ export function ManifestPage({
     height?: number;
   }>({ x: 0, y: 0, width: undefined, height: undefined });
 
-  //isStateValid && stateCanvasId && setCurrentCanvasId(stateCanvasId);
-  //xywh && tell viewer to zoom to region
-
   // biome-ignore lint/correctness/useExhaustiveDependencies: Needs to run when currentSequenceIndex changes.
   useEffect(() => {
-    console.log("effect");
     const state = searchParams.get("state");
     const parsedState = state && parseContentState(state);
     const isStateValid = parsedState && validateContentState(parsedState);
@@ -98,16 +93,13 @@ export function ManifestPage({
       isStateValid && parsedState && normaliseContentState(parsedState);
     const stateCanvasId = normalisedState?.target[0].source.id;
     const stateRegion = normalisedState?.target[0].selector.spatial;
-    console.log("normalisedState", normalisedState);
+    console.log("normalisedState", normalisedState); // will be removed
     setRegion({
       x: stateRegion?.x ?? 0,
       y: stateRegion?.y ?? 0,
       width: stateRegion?.width ?? undefined,
       height: stateRegion?.height ?? undefined,
     });
-    //const xywh = `${box.x},${box.y},${box.width},${box.height}`;
-    //const stateURI = `${stateCanvasId}#xywh=${xywh}`;
-    //console.log("state URI", stateURI);
 
     // If chosen canvas has changed, go there. Otherwise go to any canvas specified by content state.
     const tempPrevIdx = currentSequenceIndex;
@@ -139,9 +131,9 @@ export function ManifestPage({
         <CanvasPanel.Viewer
           onCreated={(preset) => {
             atlas.current = preset;
-            console.log("onCreated", region);
+            console.log("onCreated", region); // will be removed
             if (region.width && region.height) {
-              console.log("zooming", region);
+              console.log("zooming", region); // will be removed
               preset.runtime.world.gotoRegion({
                 x: region.x,
                 y: region.y,

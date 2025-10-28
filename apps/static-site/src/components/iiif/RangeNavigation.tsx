@@ -17,10 +17,8 @@ import { encodeContentState } from "@iiif/helpers";
 
 export function RangeNavigation({
   content,
-  onNavigate,
 }: {
   content: SharingAndViewingLinksContent;
-  onNavigate?: (uri: string) => void;
 }) {
   const [tocExpanded, setTocExpanded] = useState<boolean>(true);
   const context = useSimpleViewer();
@@ -59,12 +57,6 @@ export function RangeNavigation({
     return encoded;
   }
 
-  function updateURIState(uri: string) {
-    const urlSp = new URLSearchParams();
-    console.log("setting uri state", uri);
-    urlSp.set("state", uri);
-  }
-
   function flattenedRanges(range: RangeTableOfContentsNode) {
     const flatList: {
       item: RangeTableOfContentsNode;
@@ -98,8 +90,7 @@ export function RangeNavigation({
         onClick={() => {
           item.firstCanvas?.source?.id &&
             setCurrentCanvasId(item.firstCanvas?.source?.id);
-          const encoded = stateCreateAndEncode(item.firstCanvas?.source?.id);
-          //updateURIState(encoded);
+          stateCreateAndEncode(item.firstCanvas?.source?.id); // This will be removed. Call temp function to create an example content state to test with.
           setTimeout(() => {
             scrollToTitle();
           }, 300);
