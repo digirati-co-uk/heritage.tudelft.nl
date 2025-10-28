@@ -86,8 +86,15 @@ export function ManifestPage({
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Needs to run when currentSequenceIndex changes.
   useEffect(() => {
-    const state = searchParams.get("state");
-    const parsedState = state && parseContentState(state);
+    const state = searchParams.get("iiif-content");
+    let parsedState;
+    if (state) {
+      try {
+        parsedState = state && parseContentState(state);
+      } catch {
+        // ignore bad iiif-content param
+      }
+    }
     const isStateValid = parsedState && validateContentState(parsedState);
     const normalisedState =
       isStateValid && parsedState && normaliseContentState(parsedState);
