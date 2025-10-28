@@ -227,6 +227,13 @@ export function ManifestPage({
               type: "object",
             }}
             content={content}
+            canvasURI="http://a_canvas_uri"
+            zoomRegion={{
+              x: 0,
+              y: 0,
+              width: 200,
+              height: 100,
+            }}
           />
 
           <RangeNavigation content={content} />
