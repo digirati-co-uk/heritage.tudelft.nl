@@ -6,14 +6,8 @@ import { EditInManifestEditor } from "../atoms/EditInManifestEditor";
 import { AutoLanguage } from "../pages/AutoLanguage";
 import { IIIFLogo } from "./IIIFLogo";
 import { type ZoomRegion, SharingOptions } from "./SharingOptions";
-import {
-  DialogTrigger,
-  Modal,
-  Button,
-  Dialog,
-  Heading,
-  ModalOverlay,
-} from "react-aria-components";
+import { Dialog } from "@headlessui/react";
+import { CloseIcon } from "../atoms/CloseIcon";
 
 export type SharingAndViewingLinksContent = {
   sharingViewers: string;
@@ -60,6 +54,8 @@ export function SharingAndViewingLinks({
   const configuredViewers = viewerConfig.viewers.filter((viewer) =>
     viewer.enabled?.includes(resource.type),
   );
+
+  console.log(canvasURI, zoomRegion);
 
   return (
     <>
@@ -126,35 +122,36 @@ export function SharingAndViewingLinks({
               })}
               <li key="sharing-options" className="flex items-center gap-3">
                 <LinkIcon className="text-2xl opacity-50" />
-                <DialogTrigger>
-                  <Button>Open dialog</Button>
-                  <ModalOverlay className="fixed top-0 left-0 z-50 w-full h-full backdrop-blur-md flex flex-row justify-center align-middle">
-                    <Modal
-                      isOpen={sharingOptionsOpen}
-                      onOpenChange={setSharingOptionsOpen}
-                    >
-                      <Dialog className="w-[50vw] h-[50vh] bg-emerald-100 p-10 m-auto">
-                        <Heading slot="title">Notice</Heading>
-                        <p>Click outside to close this dialog.</p>
-                        <button onClick={() => setSharingOptionsOpen(false)}>
-                          Close
-                        </button>
-                      </Dialog>
-                    </Modal>
-                  </ModalOverlay>
-                </DialogTrigger>
                 <button
-                  onClick={() => {
-                    setSharingOptionsOpen(!sharingOptionsOpen);
-                  }}
-                  className="underline hover:text-slate-300"
-                  rel="noreferrer"
+                  className="underline"
+                  onClick={() => setSharingOptionsOpen(!sharingOptionsOpen)}
                 >
                   <AutoLanguage>Sharing options</AutoLanguage>
-                  <span className="ml-2 no-underline!">
-                    {sharingOptionsOpen ? "-" : "+"}
-                  </span>
                 </button>
+                <Dialog
+                  className="relative z-50"
+                  open={sharingOptionsOpen}
+                  onClose={() => setSharingOptionsOpen(false)}
+                >
+                  <div className="fixed inset-0 bg-black/30 flex flex-row" />
+                  <div className="w-[50vw] h-96] fixed inset-0 justify-self-center p-4">
+                    <button
+                      className="absolute right-8 top-8 z-20 flex h-12 w-12 items-center justify-center rounded"
+                      onClick={() => setSharingOptionsOpen(false)}
+                    >
+                      <CloseIcon />
+                    </button>
+                    <Dialog.Panel className="relative flex h-full w-full flex-col justify-center overflow-y-auto overflow-x-hidden rounded bg-white">
+                      <div className="min-h-0 flex-1 p-4 mt-8">
+                        <SharingOptions
+                          manifestId={resource.id}
+                          initCanvasURI={canvasURI}
+                          initZoomRegion={zoomRegion}
+                        />
+                      </div>
+                    </Dialog.Panel>
+                  </div>
+                </Dialog>
               </li>
               {/* {sharingOptionsOpen && (
                 <SharingOptions
