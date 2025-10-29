@@ -1,6 +1,6 @@
 "use client";
 import { getObjectSlug } from "@/navigation";
-import { type Preset } from "@atlas-viewer/atlas";
+import type { Preset } from "@atlas-viewer/atlas";
 import type { InternationalString, Manifest } from "@iiif/presentation-3";
 import { useEffect, useRef } from "react";
 import { CanvasPanel, useSimpleViewer } from "react-iiif-vault";
