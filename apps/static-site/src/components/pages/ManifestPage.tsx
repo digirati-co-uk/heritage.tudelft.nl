@@ -1,12 +1,8 @@
 "use client";
 import { getObjectSlug } from "@/navigation";
-import {
-  AtlasContext,
-  RegionHighlight,
-  type Preset,
-} from "@atlas-viewer/atlas";
+import { type Preset } from "@atlas-viewer/atlas";
 import type { InternationalString, Manifest } from "@iiif/presentation-3";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { CanvasPanel, useSimpleViewer } from "react-iiif-vault";
 import { Box } from "../blocks/Box";
 import { DownloadImage } from "../iiif/DownloadImage";
@@ -81,12 +77,6 @@ export function ManifestPage({
   const previousSeqIndex = useRef(currentSequenceIndex);
   const atlas = useRef<Preset>();
   const searchParams = useSearchParams();
-  // const [region, setRegion] = useState<{
-  //   x: number;
-  //   y: number;
-  //   width?: number;
-  //   height?: number;
-  // }>({ x: 0, y: 0, width: undefined, height: undefined });
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Needs to run when currentSequenceIndex changes.
   useEffect(() => {
@@ -116,25 +106,16 @@ export function ManifestPage({
     const stateCanvasId = normalisedState?.target[0].source.id;
     setCurrentCanvasId(stateCanvasId);
     const stateRegion = normalisedState?.target[0].selector.spatial;
-    console.log("normalisedState", normalisedState); // will be removed
-    console.log("region", stateRegion);
-    console.log(atlas);
-    if (atlas.current && stateRegion.width && stateRegion.height) {
-      // not working: atlas.current is undefined
-      console.log("atlas current", stateRegion);
-      atlas.current?.runtime.world.gotoRegion({
-        x: stateRegion.x,
-        y: stateRegion.y,
-        width: stateRegion.width,
-        height: stateRegion.height,
-      });
-    }
-    // setRegion({
-    //   x: stateRegion?.x ?? 0,
-    //   y: stateRegion?.y ?? 0,
-    //   width: stateRegion?.width ?? undefined,
-    //   height: stateRegion?.height ?? undefined,
-    // });
+    setTimeout(
+      () =>
+        atlas.current?.runtime.world.gotoRegion({
+          x: stateRegion.x,
+          y: stateRegion.y,
+          width: stateRegion.width,
+          height: stateRegion.height,
+        }),
+      100,
+    );
   }, []);
 
   return (
@@ -151,16 +132,6 @@ export function ManifestPage({
         <CanvasPanel.Viewer
           onCreated={(preset) => {
             atlas.current = preset;
-            //console.log("onCreated", region); // will be removed
-            // if (region.width && region.height) {
-            //   console.log("zooming", region); // will be removed
-            //   preset.runtime.world.gotoRegion({
-            //     x: region.x,
-            //     y: region.y,
-            //     width: region.width,
-            //     height: region.height,
-            //   });
-            // }
           }}
           htmlChildren={null}
           key={manifest.id}
