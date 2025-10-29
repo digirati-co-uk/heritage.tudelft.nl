@@ -83,14 +83,17 @@ export function SharingOptions({
   const [specifyCanvas, setSpecifyCanvas] = useState<boolean>(false);
   const [specifyRegion, setSpecifyRegion] = useState<boolean>(false);
   return (
-    <div className="p-8 m-8 max-w-[70vw] max-h-[70vh] flex flex-col gap-3">
-      <h3>
-        <AutoLanguage>Sharing Link</AutoLanguage>
-      </h3>
+    <li key="sharing-options" className="flex items-center gap-3">
       <ul className="gap-3">
-        <li className="bg-gray-200 p-2">{sharingLink}</li>
+        <li>
+          <h3>
+            <AutoLanguage>Sharing Link</AutoLanguage>
+          </h3>
+        </li>
+        <li className="bg-gray-800 p-2 border border-black">{sharingLink}</li>
         <li className="flex flex-row gap-2">
-          <Checkbox
+          <input
+            type="checkbox"
             onClick={() => {
               setSpecifyCanvas(!specifyCanvas);
               setSharingLink(
@@ -101,12 +104,12 @@ export function SharingOptions({
                 }),
               );
             }}
-          >
-            Specify canvas
-          </Checkbox>
+          />
+          Specify canvas
         </li>
         <li className="flex flex-row gap-2">
-          <Checkbox
+          <input
+            type="checkbox"
             onClick={() => {
               setSpecifyRegion(!specifyRegion);
               setSharingLink(
@@ -117,11 +120,10 @@ export function SharingOptions({
                 }),
               );
             }}
-          >
-            Specify zoom region
-          </Checkbox>
+          />
+          Specify zoom region
         </li>
       </ul>
-    </div>
+    </li>
   );
 }

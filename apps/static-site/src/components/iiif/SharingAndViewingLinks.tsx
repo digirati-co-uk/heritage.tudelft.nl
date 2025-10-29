@@ -6,6 +6,14 @@ import { EditInManifestEditor } from "../atoms/EditInManifestEditor";
 import { AutoLanguage } from "../pages/AutoLanguage";
 import { IIIFLogo } from "./IIIFLogo";
 import { type ZoomRegion, SharingOptions } from "./SharingOptions";
+import {
+  DialogTrigger,
+  Modal,
+  Button,
+  Dialog,
+  Heading,
+  ModalOverlay,
+} from "react-aria-components";
 
 export type SharingAndViewingLinksContent = {
   sharingViewers: string;
@@ -55,13 +63,6 @@ export function SharingAndViewingLinks({
 
   return (
     <>
-      {sharingOptionsOpen && (
-        <SharingOptions
-          manifestId={resource.id}
-          initCanvasURI={canvasURI}
-          initZoomRegion={zoomRegion}
-        />
-      )}
       {resource.type === "object" ? (
         // Could change in the future to allow editing of collections
         <EditInManifestEditor id={resource.id} preset="manifest" />
@@ -71,7 +72,6 @@ export function SharingAndViewingLinks({
           <div className="cut-corners w-full place-self-start bg-black p-5 text-white">
             <h3 className="mb-4 uppercase">{content.sharingViewers}</h3>
             <ul className="text-md flex list-none flex-col gap-1 underline-offset-4">
-              <li>options open? {sharingOptionsOpen.toString()}</li>
               <li className="flex items-center gap-4">
                 <IIIFLogo
                   className="translate-x-[2px] text-xl text-slate-300"
@@ -126,6 +126,23 @@ export function SharingAndViewingLinks({
               })}
               <li key="sharing-options" className="flex items-center gap-3">
                 <LinkIcon className="text-2xl opacity-50" />
+                <DialogTrigger>
+                  <Button>Open dialog</Button>
+                  <ModalOverlay className="fixed top-0 left-0 z-50 w-full h-full backdrop-blur-md flex flex-row justify-center align-middle">
+                    <Modal
+                      isOpen={sharingOptionsOpen}
+                      onOpenChange={setSharingOptionsOpen}
+                    >
+                      <Dialog className="w-[50vw] h-[50vh] bg-emerald-100 p-10 m-auto">
+                        <Heading slot="title">Notice</Heading>
+                        <p>Click outside to close this dialog.</p>
+                        <button onClick={() => setSharingOptionsOpen(false)}>
+                          Close
+                        </button>
+                      </Dialog>
+                    </Modal>
+                  </ModalOverlay>
+                </DialogTrigger>
                 <button
                   onClick={() => {
                     setSharingOptionsOpen(!sharingOptionsOpen);
@@ -134,8 +151,18 @@ export function SharingAndViewingLinks({
                   rel="noreferrer"
                 >
                   <AutoLanguage>Sharing options</AutoLanguage>
+                  <span className="ml-2 no-underline!">
+                    {sharingOptionsOpen ? "-" : "+"}
+                  </span>
                 </button>
               </li>
+              {/* {sharingOptionsOpen && (
+                <SharingOptions
+                  manifestId={resource.id}
+                  initCanvasURI={canvasURI}
+                  initZoomRegion={zoomRegion}
+                />
+              )} */}
               {configuredViewers.length > viewerConfig.showMax ? (
                 <li className="mt-4">
                   <button

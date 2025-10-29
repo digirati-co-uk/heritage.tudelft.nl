@@ -2,7 +2,7 @@
 import { getObjectSlug } from "@/navigation";
 import type { Preset } from "@atlas-viewer/atlas";
 import type { InternationalString, Manifest } from "@iiif/presentation-3";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CanvasPanel, useSimpleViewer } from "react-iiif-vault";
 import { Box } from "../blocks/Box";
 import { DownloadImage } from "../iiif/DownloadImage";
@@ -12,6 +12,7 @@ import { SharingAndViewingLinks } from "../iiif/SharingAndViewingLinks";
 import { ViewerSliderControls } from "../iiif/ViewerSliderControls";
 import { ViewerZoomControls } from "../iiif/ViewerZoomControls";
 import { RangeNavigation } from "../iiif/RangeNavigation";
+import type { ZoomRegion } from "../iiif/SharingOptions";
 import { AutoLanguage } from "./AutoLanguage";
 import { getValue } from "@iiif/helpers/i18n";
 import {
@@ -20,6 +21,14 @@ import {
   normaliseContentState,
 } from "@iiif/helpers";
 import { useSearchParams } from "next/navigation";
+
+import {
+  DialogTrigger,
+  Modal,
+  Button,
+  Dialog,
+  Heading,
+} from "react-aria-components";
 
 interface ManifestPageProps {
   manifest: Manifest;
@@ -76,6 +85,8 @@ export function ManifestPage({
   const { currentSequenceIndex, setCurrentCanvasId } = context;
   const previousSeqIndex = useRef(currentSequenceIndex);
   const atlas = useRef<Preset>();
+  const [sharingOptionsOpen, setSharingOptionsOpen] = useState(false);
+  const stateRegion = useRef<ZoomRegion>(null);
   const searchParams = useSearchParams();
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Needs to run when currentSequenceIndex changes.
@@ -105,119 +116,119 @@ export function ManifestPage({
       isStateValid && parsedState && normaliseContentState(parsedState);
     const stateCanvasId = normalisedState?.target[0].source.id;
     setCurrentCanvasId(stateCanvasId);
-    const stateRegion = normalisedState?.target[0].selector.spatial;
-    setTimeout(
-      () =>
-        atlas.current?.runtime.world.gotoRegion({
-          x: stateRegion.x,
-          y: stateRegion.y,
-          width: stateRegion.width,
-          height: stateRegion.height,
-        }),
-      100,
-    );
+    stateRegion.current = normalisedState?.target[0].selector.spatial;
   }, []);
 
   return (
-    <div>
-      <h1 className="mb-4 text-4xl font-medium">
-        <AutoLanguage>{manifest.label || content.untitled}</AutoLanguage>
-      </h1>
-      {manifest.requiredStatement ? (
-        <p>
-          <AutoLanguage>{manifest.requiredStatement.value}</AutoLanguage>
-        </p>
-      ) : null}
-      <div className="relative h-[800px] max-h-[70%]">
-        <CanvasPanel.Viewer
-          onCreated={(preset) => {
-            atlas.current = preset;
-          }}
-          htmlChildren={null}
-          key={manifest.id}
-          runtimeOptions={runtimeOptions}
-        >
-          <CanvasPanel.RenderCanvas
-            strategies={["3d-model", "images", "textual-content", "media"]}
-            renderViewerControls={ViewerZoomControls}
-          />
-        </CanvasPanel.Viewer>
-        <ViewerSliderControls />
-      </div>
-      <div className="mb-4">
-        <ObjectThumbnails />
-      </div>
-      <div className="grid-cols-3 md:grid">
-        <div className="col-span-2">
-          <ObjectMetadata />
-
-          {(related.length !== 0 || meta.partOfCollections?.length !== 0) && (
-            <>
-              <h3 className="mb-5 mt-10 text-3xl font-medium">
-                {content.relatedObjects}
-              </h3>
-              <div className="mb-4 grid md:grid-cols-3">
-                {(meta.partOfCollections || []).map((collection, i) => (
-                  <Box
-                    key={collection.slug}
-                    title={getValue(collection.label)}
-                    unfiltered
-                    fallbackBackgroundColor="bg-cyan-500"
-                    small
-                    dark
-                    link={`/${getObjectSlug(collection.slug)}`}
-                    type="Collection"
-                  />
-                ))}
-                {related.map((item, i) => {
-                  if (item === null) return null;
-
-                  return (
-                    <Box
-                      key={item.slug}
-                      title={item.label}
-                      unfiltered
-                      small
-                      backgroundImage={item.thumbnail}
-                      link={`/${getObjectSlug(item.slug)}`}
-                      type="Object"
-                    />
-                  );
-                })}
-              </div>
-            </>
-          )}
-        </div>
-        <div className="col-span-1">
-          {exhibitionLinks.map((item, i) => {
-            if (item === null) return null;
-
-            return (
-              <Box
-                key={item.slug}
-                title={item.label}
-                unfiltered
-                backgroundColor="bg-yellow-400"
-                small
-                backgroundImage={item.thumbnail}
-                link={`/${getObjectSlug(item.slug)}`}
-                type="Exhibition"
-              />
-            );
-          })}
-          <SharingAndViewingLinks
-            resource={{
-              id: manifest.id,
-              type: "object",
+    <>
+      <div>
+        <h1 className="mb-4 text-4xl font-medium">
+          <AutoLanguage>{manifest.label || content.untitled}</AutoLanguage>
+        </h1>
+        {manifest.requiredStatement ? (
+          <p>
+            <AutoLanguage>{manifest.requiredStatement.value}</AutoLanguage>
+          </p>
+        ) : null}
+        <div className="relative h-[800px] max-h-[70%]">
+          <CanvasPanel.Viewer
+            onCreated={(preset) => {
+              atlas.current = preset;
+              stateRegion.current?.width &&
+                stateRegion.current.height &&
+                atlas.current?.runtime.world.gotoRegion({
+                  x: stateRegion.current?.x,
+                  y: stateRegion.current?.y,
+                  width: stateRegion.current?.width,
+                  height: stateRegion.current?.height,
+                });
             }}
-            content={content}
-          />
+            htmlChildren={null}
+            key={manifest.id}
+            runtimeOptions={runtimeOptions}
+          >
+            <CanvasPanel.RenderCanvas
+              strategies={["3d-model", "images", "textual-content", "media"]}
+              renderViewerControls={ViewerZoomControls}
+            />
+          </CanvasPanel.Viewer>
+          <ViewerSliderControls />
+        </div>
+        <div className="mb-4">
+          <ObjectThumbnails />
+        </div>
+        <div className="grid-cols-3 md:grid">
+          <div className="col-span-2">
+            <ObjectMetadata />
 
-          <RangeNavigation content={content} />
+            {(related.length !== 0 || meta.partOfCollections?.length !== 0) && (
+              <>
+                <h3 className="mb-5 mt-10 text-3xl font-medium">
+                  {content.relatedObjects}
+                </h3>
+                <div className="mb-4 grid md:grid-cols-3">
+                  {(meta.partOfCollections || []).map((collection, i) => (
+                    <Box
+                      key={collection.slug}
+                      title={getValue(collection.label)}
+                      unfiltered
+                      fallbackBackgroundColor="bg-cyan-500"
+                      small
+                      dark
+                      link={`/${getObjectSlug(collection.slug)}`}
+                      type="Collection"
+                    />
+                  ))}
+                  {related.map((item, i) => {
+                    if (item === null) return null;
 
-          <DownloadImage content={content} />
+                    return (
+                      <Box
+                        key={item.slug}
+                        title={item.label}
+                        unfiltered
+                        small
+                        backgroundImage={item.thumbnail}
+                        link={`/${getObjectSlug(item.slug)}`}
+                        type="Object"
+                      />
+                    );
+                  })}
+                </div>
+              </>
+            )}
+          </div>
+          <div className="col-span-1">
+            {exhibitionLinks.map((item, i) => {
+              if (item === null) return null;
+
+              return (
+                <Box
+                  key={item.slug}
+                  title={item.label}
+                  unfiltered
+                  backgroundColor="bg-yellow-400"
+                  small
+                  backgroundImage={item.thumbnail}
+                  link={`/${getObjectSlug(item.slug)}`}
+                  type="Exhibition"
+                />
+              );
+            })}
+            <SharingAndViewingLinks
+              resource={{
+                id: manifest.id,
+                type: "object",
+              }}
+              content={content}
+            />
+
+            <RangeNavigation content={content} />
+
+            <DownloadImage content={content} />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
