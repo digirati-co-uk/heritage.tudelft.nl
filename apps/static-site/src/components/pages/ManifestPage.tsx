@@ -1,5 +1,5 @@
 "use client";
-import { getObjectSlug } from "@/navigation";
+import { getObjectSlug } from "@/i18n/navigation";
 import type { Preset } from "@atlas-viewer/atlas";
 import type { InternationalString, Manifest } from "@iiif/presentation-3";
 import { useEffect, useRef } from "react";
@@ -73,7 +73,7 @@ export function ManifestPage({
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Needs to run when currentSequenceIndex changes.
   useEffect(() => {
-    if (currentSequenceIndex == previousSeqIndex.current) {
+    if (currentSequenceIndex === previousSeqIndex.current) {
       context.setCurrentCanvasIndex(initialCanvasIndex);
     } else {
       context.setCurrentCanvasIndex(currentSequenceIndex);

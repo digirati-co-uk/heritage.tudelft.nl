@@ -1,15 +1,12 @@
-const { withContentlayer } = require("next-contentlayer");
-const withNextIntl = require("next-intl/plugin")("./src/i18n.ts");
+import { withContentlayer } from "next-contentlayer";
+import type { NextConfig } from 'next';
+import createNextIntlPlugin from 'next-intl/plugin';
 
-/** @type {import('next').NextConfig} */
-const config = {
+const nextConfig: NextConfig = {
   // output: "export",
   transpilePackages: ["@repo/ui"],
   typescript: {
     ignoreBuildErrors: true,
-  },
-  eslint: {
-    ignoreDuringBuilds: true,
   },
   async redirects() {
     return [
@@ -20,6 +17,9 @@ const config = {
       },
     ];
   },
+
 };
 
-module.exports = withNextIntl(withContentlayer(config));
+const withNextIntl = createNextIntlPlugin();
+
+export default withNextIntl(withContentlayer(nextConfig));

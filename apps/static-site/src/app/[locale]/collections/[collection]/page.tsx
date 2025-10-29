@@ -11,25 +11,31 @@ import { baseURL, makeTitle, getDefaultMetaMdx } from "@/helpers/metadata";
 export async function generateMetadata({
   params,
 }: {
-  params: { collection: string; locale: string };
+  params: Promise<{ collection: string; locale: string }>;
 }): Promise<Metadata> {
+  const { collection: collectionId, locale } = await params;
   const t = await getTranslations();
-  const slug = `collections/${params.collection}`;
+  const slug = `collections/${collectionId}`;
   const { collection } = await loadCollection(slug);
-  const defaultMeta = getDefaultMetaMdx({ params: { locale: params.locale } });
-  const collTitle = getValue(collection.label, { language: params.locale, fallbackLanguages: ["nl", "en"] });
+  const defaultMeta = getDefaultMetaMdx({ params: { locale } });
+  const collTitle = getValue(collection.label, {
+    language: locale,
+    fallbackLanguages: ["nl", "en"],
+  });
   const description =
-    getValue(collection.summary, { language: params.locale, fallbackLanguages: ["nl", "en"] }) ??
-    defaultMeta.description;
+    getValue(collection.summary, {
+      language: locale,
+      fallbackLanguages: ["nl", "en"],
+    }) ?? defaultMeta.description;
   const title = makeTitle([collTitle, defaultMeta.title]);
-  const url = `/collections/${params.collection}`;
+  const url = `/collections/${collection}`;
   // this page currently uses the default meta image as a 'collection image' is not available.
   return {
     metadataBase: new URL(baseURL),
     description: description,
     title: title,
     openGraph: {
-      locale: params.locale,
+      locale: locale,
       siteName: defaultMeta.title,
       title: title,
       type: "website",
@@ -45,14 +51,23 @@ export async function generateMetadata({
   };
 }
 
-export default async function Collection({ params }: { params: { collection: string; locale: string } }) {
-  setRequestLocale(params.locale);
-  const slug = `collections/${params.collection}`;
-  const { collection, meta } = await loadCollection(slug);
+export default async function Collection({
+  params,
+}: {
+  params: Promise<{ collection: string; locale: string }>;
+}) {
+  const { collection, locale } = await params;
+  setRequestLocale(locale);
+  const slug = `collections/${collection}`;
+  const { collection: collectionData, meta } = await loadCollection(slug);
 
   return (
     <Page>
-      <CollectionPage collection={collection as any} meta={meta as any} slug={slug} />
+      <CollectionPage
+        collection={collectionData as any}
+        meta={meta as any}
+        slug={slug}
+      />
     </Page>
   );
 }

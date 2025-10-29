@@ -22,12 +22,11 @@ export function ManifestLoaderInner(props: { manifest: any; children: any }) {
   const canvasIdEnc = searchParams.get("canvasId");
   const canvasId = canvasIdEnc ? atob(canvasIdEnc) : undefined;
 
-  if (
-    props.manifest &&
-    props.manifest.id &&
-    !vault.requestStatus(props.manifest.id)
-  ) {
-    vault.loadSync(props.manifest.id, props.manifest);
+  if (props.manifest?.id && !vault.requestStatus(props.manifest.id)) {
+    vault.loadSync(
+      props.manifest.id,
+      JSON.parse(JSON.stringify(props.manifest)),
+    );
   }
 
   return (

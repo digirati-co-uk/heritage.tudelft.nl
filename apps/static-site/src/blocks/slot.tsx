@@ -6,7 +6,7 @@ import { directory } from "@/components/directory";
 interface SlotProps {
   context: Record<string, string>;
   name: string;
-  children?: any;
+  children: any;
   className?: string;
 }
 

@@ -1,4 +1,4 @@
-import { Link } from "@/navigation";
+import { Link } from "@/i18n/navigation";
 import { InternationalString } from "@iiif/presentation-3";
 
 export function CollectionItemHit({

@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import "exhibition-viewer/dist/lib.css";
-
 * {
   box-sizing: border-box;
   padding: 0;
@@ -260,7 +258,7 @@ body.pb-editing .featured-card-grid {
 }
 
 div.block-editor-toggle {
-  @apply bottom-2 left-2 rounded w-32 h-10 z-40 items-center flex;
+  @apply bottom-4 left-20 rounded w-32 h-10 z-40 items-center flex;
 }
 
 body.dev .delft-toc-bar {
@@ -302,7 +300,9 @@ body.dev .delft-toc-contents {
   --delft-close-text: #fff;
 
   /* Title elements */
-  --delft-title-card: rgb(250 204 21 / var(--tw-bg-opacity, 1)); /* yellow-400 */
+  --delft-title-card: rgb(
+    250 204 21 / var(--tw-bg-opacity, 1)
+  ); /* yellow-400 */
   --delft-title-card-text: #000;
 
   /* Info blocks */

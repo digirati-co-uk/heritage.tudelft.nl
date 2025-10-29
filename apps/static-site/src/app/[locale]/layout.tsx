@@ -1,4 +1,6 @@
+import "exhibition-viewer/lib";
 import "../globals.css";
+
 import { SlotContext } from "@/blocks/slot-context";
 import { GlobalFooter } from "@/components/GlobalFooter";
 import { GlobalHeader } from "@/components/GlobalHeader";
@@ -10,20 +12,26 @@ import localFont from "next/font/local";
 import { type ReactNode, lazy } from "react";
 import BlockEditor from "../../blocks/block-editor";
 import { Provider } from "../provider";
+import { notFound } from "next/navigation";
+import { routing } from "@/i18n/routing";
+import { hasLocale, NextIntlClientProvider } from "next-intl";
 
 const IIIFDevRefresh = lazy(() => import("../../components/IIIFDevRefresh"));
 
 export async function generateMetadata({
   params,
-}: { params: { locale: string } }): Promise<Metadata> {
-  const t = await getTranslations();
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale });
   const path = "/";
   const page = getMdx({
-    params: { pageName: "Home", path: path, locale: params.locale },
+    params: { pageName: "Home", path: path, locale: locale },
   });
   const description = page.description;
   return getBasicMetadata({
-    locale: params.locale,
+    locale: locale,
     siteName: page.title,
     title: page.title,
     description: description,
@@ -97,33 +105,41 @@ export async function generateStaticParams() {
 
 const devClass = process.env.NODE_ENV === "development" ? "dev" : "";
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
   params,
 }: {
   children: ReactNode;
-  params: { locale: string };
-}): JSX.Element {
-  setRequestLocale(params.locale);
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) {
+    notFound();
+  }
+
+  setRequestLocale(locale);
+
   return (
-    <html lang={params.locale}>
+    <html lang={locale}>
       <body
         className={`bg-gray-200 ${foundersGrotesk.variable} ${foundersGroteskMono.variable} font-sans ${devClass}`}
       >
         <Provider>
-          <SlotContext name="locale" value={params.locale}>
-            <GlobalHeader />
-            <main className="flex w-full flex-col items-center">
-              {children}
-            </main>
-            {process.env.NODE_ENV !== "production" ? (
-              <>
-                <BlockEditor showToggle rsc />
-                <IIIFDevRefresh />
-              </>
-            ) : null}
-            <GlobalFooter />
-          </SlotContext>
+          <NextIntlClientProvider locale={locale}>
+            <SlotContext name="locale" value={locale}>
+              <GlobalHeader />
+              <main className="flex w-full flex-col items-center">
+                {children}
+              </main>
+              {process.env.NODE_ENV !== "production" ? (
+                <>
+                  <BlockEditor showToggle rsc />
+                  <IIIFDevRefresh />
+                </>
+              ) : null}
+              <GlobalFooter />
+            </SlotContext>
+          </NextIntlClientProvider>
         </Provider>
       </body>
     </html>

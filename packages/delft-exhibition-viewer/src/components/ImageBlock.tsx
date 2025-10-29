@@ -55,7 +55,7 @@ export function ImageBlock({
   const className = getClassName(behavior);
 
   const canvasViewer = (
-    <Suspense fallback={<div className="h-full w-full" />}>
+    <Suspense fallback={<div className="h-full w-full bg-[red]" />}>
       <CanvasPreviewBlock
         canvasId={canvas.id}
         cover={coverImages || isCover}

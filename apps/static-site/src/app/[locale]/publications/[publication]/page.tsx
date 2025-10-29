@@ -2,26 +2,32 @@ import { Page } from "@/components/Page";
 import { PublicationPage } from "@/components/pages/PublicationPage";
 import { allPublications } from "contentlayer/generated";
 import { setRequestLocale } from "next-intl/server";
-import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 import { getValue } from "@iiif/helpers";
 import { baseURL, makeTitle, getDefaultMetaMdx } from "@/helpers/metadata";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { publication: string; locale: string };
+export async function generateMetadata(data: {
+  params: Promise<{ publication: string; locale: string }>;
 }): Promise<Metadata> {
+  const params = await data.params;
   const t = await getTranslations();
   const defaultMeta = getDefaultMetaMdx({ params: { locale: params.locale } });
-  const getValueParams = { language: params.locale, fallbackLanguages: ["nl", "en"] };
+  const getValueParams = {
+    language: params.locale,
+    fallbackLanguages: ["nl", "en"],
+  };
   const publicationInLanguage = allPublications.find(
-    (post) => post.id === params.publication && post.lang === params.locale
+    (post) => post.id === params.publication && post.lang === params.locale,
   );
-  const publication = publicationInLanguage || allPublications.find((post) => post.id === params.publication);
+  const publication =
+    publicationInLanguage ||
+    allPublications.find((post) => post.id === params.publication);
   const pubTitle = publication && getValue(publication.title, getValueParams);
   const title = makeTitle([pubTitle, defaultMeta.title]);
-  const description = (publication && getValue(publication.description, getValueParams)) ?? defaultMeta.description;
+  const description =
+    (publication && getValue(publication.description, getValueParams)) ??
+    defaultMeta.description;
   const author = {
     name: (publication && getValue(publication.author, getValueParams)) || "",
   };
@@ -41,32 +47,44 @@ export async function generateMetadata({
       siteName: defaultMeta.title,
       title: title,
       type: "article",
-      url: publication ? `${publicationsURL}/${publication.id}` : publicationsURL,
+      url: publication
+        ? `${publicationsURL}/${publication.id}`
+        : publicationsURL,
       images: [
         {
           url: publication?.image ?? defaultMeta.image ?? "",
-          width: publication?.image ? publication?.imageWidth : defaultMeta.imageWidth,
-          height: publication?.image ? publication?.imageHeight : defaultMeta.imageHeight,
+          width: publication?.image
+            ? publication?.imageWidth
+            : defaultMeta.imageWidth,
+          height: publication?.image
+            ? publication?.imageHeight
+            : defaultMeta.imageHeight,
         },
       ],
     },
   };
 }
 
-
-export default async function Publication({ params }: { params: { publication: string; locale: string } }) {
-  setRequestLocale(params.locale);
+export default async function Publication({
+  params,
+}: {
+  params: Promise<{ publication: string; locale: string }>;
+}) {
+  const { locale, publication: publicationId } = await params;
+  setRequestLocale(locale);
 
   const publicationInLanguage = allPublications.find(
-    (post) => post.id === params.publication && post.lang === params.locale
+    (post) => post.id === publicationId && post.lang === locale,
   );
-  const publication = publicationInLanguage || allPublications.find((post) => post.id === params.publication);
+  const publication =
+    publicationInLanguage ||
+    allPublications.find((post) => post.id === publicationId);
 
   if (!publication) throw new Error("Publication not found");
 
   return (
     <Page>
-      <PublicationPage publication={publication} locale={params.locale} />
+      <PublicationPage publication={publication} locale={locale} />
     </Page>
   );
 }

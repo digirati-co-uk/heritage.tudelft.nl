@@ -14,29 +14,30 @@ import ExhibitionPage from "../../../../components/pages/ExhibitionPage";
 export async function generateMetadata({
   params,
 }: {
-  params: { exhibition: string; locale: string };
+  params: Promise<{ exhibition: string; locale: string }>;
 }): Promise<Metadata> {
   const t = await getTranslations();
-  const defaultMeta = getDefaultMetaMdx({ params: { locale: params.locale } });
-  const manifestSlug = `manifests/${params.exhibition}`;
+  const { exhibition, locale } = await params;
+  const defaultMeta = getDefaultMetaMdx({ params: { locale } });
+  const manifestSlug = `manifests/${exhibition}`;
   const meta = await loadManifestMeta(manifestSlug);
   const exTitle = getValue(meta.intlLabel, {
-    language: params.locale,
+    language: locale,
     fallbackLanguages: ["nl", "en"],
   });
   const description =
     getValue(meta.intlSummary, {
-      language: params.locale,
+      language: locale,
       fallbackLanguages: ["nl", "en"],
     }) ?? defaultMeta.description;
   const title = makeTitle([exTitle, defaultMeta.title]);
-  const url = `/exhibitions/${params.exhibition}`;
+  const url = `/exhibitions/${exhibition}`;
   return {
     metadataBase: new URL(baseURL),
     description: description,
     title: title,
     openGraph: {
-      locale: params.locale,
+      locale: locale,
       siteName: defaultMeta.title,
       title: title,
       type: "website",
@@ -56,33 +57,34 @@ export async function generateMetadata({
 
 export default async function Exhibition({
   params,
-}: { params: { exhibition: string; locale: string } }) {
-  setRequestLocale(params.locale);
+}: {
+  params: Promise<{ exhibition: string; locale: string }>;
+}) {
+  const { exhibition, locale } = await params;
+
+  setRequestLocale(locale);
   const t = await getTranslations();
-  const manifestSlug = `manifests/${params.exhibition}`;
+  const manifestSlug = `manifests/${exhibition}`;
   const { manifest, meta } = await loadManifest(manifestSlug);
   const viewObjectLinks =
     imageServiceLinks[manifestSlug as keyof typeof imageServiceLinks] || [];
 
   return (
     <Page>
-      <SlotContext name="exhibition" value={params.exhibition}>
-        <ManifestLoader manifest={{ ...manifest }}>
+      <SlotContext name="exhibition" value={exhibition}>
+        <ManifestLoader manifest={manifest}>
           <ExhibitionPage
             manifest={manifest}
             meta={meta as any}
-            slug={params.exhibition}
+            slug={exhibition}
             viewObjectLinks={viewObjectLinks}
-            locale={params.locale}
+            locale={locale}
             content={{
               exhibition: t("Exhibition"),
               tableOfContents: t("Table of contents"),
             }}
           />
-          <Slot
-            name="exhibition"
-            context={{ locale: params.locale, exhibition: params.exhibition }}
-          />
+          <Slot name="exhibition" context={{ locale, exhibition }} />
         </ManifestLoader>
       </SlotContext>
     </Page>

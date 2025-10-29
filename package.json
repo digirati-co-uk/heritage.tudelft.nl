@@ -9,39 +9,48 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
-    "@repo/typescript-config": "*",
+    "@repo/typescript-config": "workspace:*",
     "@tailwindcss/typography": "^0.5.10",
     "@types/bun": "^1.1.6",
     "autoprefixer": "^10.4.16",
-    "contentlayer": "^0.3.4",
+    "contentlayer": "*",
     "github-slugger": "^2.0.0",
-    "next": "14.1.0",
-    "next-intl": "^3.26.3",
+    "next": "16.0.0",
+    "next-intl": "^4.4.0",
     "playwright": "^1.40.1",
     "postcss": "^8.4.33",
     "prettier": "^3.1.0",
     "prettier-plugin-tailwindcss": "0.5.11",
     "rehype-slug": "^6.0.0",
-    "remark-gfm": "^4.0.0",
+    "remark-gfm": "^4.0.1",
     "tailwindcss": "^3.4.1",
     "turbo": "latest"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
-  "packageManager": "bun@1.1.0",
-  "overrides": {
-    "@atlas-viewer/atlas": "^2.3.3",
-    "@page-blocks/client": "https://pkg.csb.dev/stephenwf/page-blocks/commit/cedc6768/@page-blocks/client/_pkg.tgz",
-    "@page-blocks/core": "https://pkg.csb.dev/stephenwf/page-blocks/commit/cedc6768/@page-blocks/core/_pkg.tgz",
-    "@page-blocks/file-system": "https://pkg.csb.dev/stephenwf/page-blocks/commit/cedc6768/@page-blocks/file-system/_pkg.tgz",
-    "@page-blocks/next": "https://pkg.csb.dev/stephenwf/page-blocks/commit/cedc6768/@page-blocks/next/_pkg.tgz",
-    "@page-blocks/node": "https://pkg.csb.dev/stephenwf/page-blocks/commit/cedc6768/@page-blocks/node/_pkg.tgz",
-    "@page-blocks/react": "https://pkg.csb.dev/stephenwf/page-blocks/commit/cedc6768/@page-blocks/react/_pkg.tgz",
-    "@page-blocks/react-client": "https://pkg.csb.dev/stephenwf/page-blocks/commit/cedc6768/@page-blocks/react-client/_pkg.tgz",
-    "@page-blocks/react-editor": "https://pkg.csb.dev/stephenwf/page-blocks/commit/cedc6768/@page-blocks/react-editor/_pkg.tgz",
-    "@page-blocks/screenshots": "https://pkg.csb.dev/stephenwf/page-blocks/commit/cedc6768/@page-blocks/screenshots/_pkg.tgz",
-    "@page-blocks/web-components": "https://pkg.csb.dev/stephenwf/page-blocks/commit/cedc6768/@page-blocks/web-components/_pkg.tgz"
+  "packageManager": "pnpm@9.12.1",
+  "pnpm": {
+    "overrides": {
+      "react-iiif-vault": "^2.0.2",
+      "@iiif/parser": "2.2.5",
+      "@iiif/helpers": "^1.5.4",
+      "react": "19.2.0",
+      "react-dom": "19.2.0",
+      "mdx-bundler": "9.2.1",
+      "@tanstack/react-query": "^5.90.5",
+      "@atlas-viewer/atlas": "3.0.0",
+      "@page-blocks/client": "https://pkg.csb.dev/stephenwf/page-blocks/commit/782f897a/@page-blocks/client/_pkg.tgz",
+      "@page-blocks/core": "https://pkg.csb.dev/stephenwf/page-blocks/commit/782f897a/@page-blocks/core/_pkg.tgz",
+      "@page-blocks/file-system": "https://pkg.csb.dev/stephenwf/page-blocks/commit/782f897a/@page-blocks/file-system/_pkg.tgz",
+      "@page-blocks/next": "https://pkg.csb.dev/stephenwf/page-blocks/commit/782f897a/@page-blocks/next/_pkg.tgz",
+      "@page-blocks/node": "https://pkg.csb.dev/stephenwf/page-blocks/commit/782f897a/@page-blocks/node/_pkg.tgz",
+      "@page-blocks/react": "https://pkg.csb.dev/stephenwf/page-blocks/commit/782f897a/@page-blocks/react/_pkg.tgz",
+      "@page-blocks/react-client": "https://pkg.csb.dev/stephenwf/page-blocks/commit/782f897a/@page-blocks/react-client/_pkg.tgz",
+      "@page-blocks/react-editor": "https://pkg.csb.dev/stephenwf/page-blocks/commit/782f897a/@page-blocks/react-editor/_pkg.tgz",
+      "@page-blocks/screenshots": "https://pkg.csb.dev/stephenwf/page-blocks/commit/782f897a/@page-blocks/screenshots/_pkg.tgz",
+      "@page-blocks/web-components": "https://pkg.csb.dev/stephenwf/page-blocks/commit/782f897a/@page-blocks/web-components/_pkg.tgz"
+    }
   },
   "workspaces": [
     "apps/*",
@@ -49,7 +58,7 @@
   ],
   "dependencies": {
     "bun-types": "*",
-    "@atlas-viewer/atlas": "^2.3.3",
+    "@atlas-viewer/atlas": "^3.0.0",
     "@types/react-lazy-load-image-component": "^1.6.3",
     "react-instantsearch-router-nextjs": "^7.7.0",
     "react-social-icons": "^6.14.0"

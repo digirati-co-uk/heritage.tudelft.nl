@@ -1,6 +1,6 @@
 "use client";
 
-import { Link, usePathname } from "@/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import { useLocale } from "next-intl";
 
 export function LanguageSwitcher({ oldStyle }: { oldStyle?: boolean }) {
@@ -17,7 +17,12 @@ export function LanguageSwitcher({ oldStyle }: { oldStyle?: boolean }) {
         href={pathname}
         locale={locale === "en" ? "nl" : "en"}
       >
-        <svg viewBox="0 0 40 45" xmlns="http://www.w3.org/2000/svg" width={22} height={22}>
+        <svg
+          viewBox="0 0 40 45"
+          xmlns="http://www.w3.org/2000/svg"
+          width={22}
+          height={22}
+        >
           <path
             className={locale === "nl" ? ac : ic}
             fill="#FFF"
@@ -37,12 +42,20 @@ export function LanguageSwitcher({ oldStyle }: { oldStyle?: boolean }) {
     <div>
       <ul className="flex gap-2">
         <li>
-          <Link className={locale === "en" ? "text-white" : "text-gray-400"} href={pathname} locale="en">
+          <Link
+            className={locale === "en" ? "text-white" : "text-gray-400"}
+            href={pathname}
+            locale="en"
+          >
             EN
           </Link>
         </li>
         <li>
-          <Link href={pathname} className={locale === "nl" ? "text-white" : "text-gray-400"} locale="nl">
+          <Link
+            href={pathname}
+            className={locale === "nl" ? "text-white" : "text-gray-400"}
+            locale="nl"
+          >
             NL
           </Link>
         </li>

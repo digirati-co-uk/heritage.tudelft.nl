@@ -33,7 +33,7 @@ export function InfoBlock({
   const vault = useVault();
   const annotationPage = vault.get(canvas.annotations || []);
   const annotations = vault.get(
-    annotationPage.flatMap((page) => page.items || []),
+    annotationPage.flatMap((page) => page?.items || []),
   );
 
   return (

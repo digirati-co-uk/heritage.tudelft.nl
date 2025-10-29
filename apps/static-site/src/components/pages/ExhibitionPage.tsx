@@ -1,4 +1,5 @@
 "use client";
+
 import type { Manifest } from "@iiif/presentation-3";
 import { DelftExhibition } from "exhibition-viewer";
 import { EditInManifestEditor } from "../atoms/EditInManifestEditor";
@@ -22,7 +23,7 @@ export interface ExhibitionPageProps {
 
 const useOldHeader = ["corona-chronicles"];
 
-export default async function ExhibitionPage(props: ExhibitionPageProps) {
+export default function ExhibitionPage(props: ExhibitionPageProps) {
   return (
     <>
       <EditInManifestEditor preset="exhibition" id={props.manifest.id} />

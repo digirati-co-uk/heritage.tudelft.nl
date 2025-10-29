@@ -1,10 +1,9 @@
 import { Slot } from "@/blocks/slot";
 import { SlotContext } from "@/blocks/slot-context";
 import type { Publication } from "contentlayer/generated";
-import { useMDXComponent } from "next-contentlayer/hooks";
 import { getTranslations } from "next-intl/server";
-import { useId } from "react";
 import { Illustration } from "../blocks/Illustration";
+import { MDXWrapper } from "../MDXWrapper";
 
 export interface PublicationPageProps {
   publication: Publication;
@@ -18,7 +17,6 @@ interface PublicationHeading {
 }
 
 export async function PublicationPage(props: PublicationPageProps) {
-  const MDXContent = useMDXComponent(props.publication.body.code);
   const CustomSlot = (inner: any) => {
     return (
       <Slot
@@ -98,11 +96,12 @@ export async function PublicationPage(props: PublicationPageProps) {
         <div className="h-full lg:col-span-2">
           <article className="prose md:prose-xl max-w-full leading-snug md:leading-normal">
             <SlotContext name="publication" value={props.publication.id}>
-              <MDXContent
-                components={{
-                  Slot: CustomSlot,
-                  Illustration,
-                  Small,
+              <MDXWrapper
+                code={props.publication.body.code}
+                locale={props.locale}
+                context={{
+                  publication: props.publication.id,
+                  locale: props.locale,
                 }}
               />
             </SlotContext>

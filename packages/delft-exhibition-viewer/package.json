@@ -15,16 +15,26 @@
         "default": "./dist/index.js"
       }
     },
+    "./lib": {
+      "require": {
+        "types": "./dist/lib.d.cts",
+        "default": "./dist/lib.cjs"
+      },
+      "import": {
+        "types": "./dist/lib.d.ts",
+        "default": "./dist/lib.js"
+      }
+    },
     "./dist/index.css": "./dist/index.css",
     "./dist/lib.css": "./dist/lib.css"
   },
   "scripts": {
     "start": "vite",
-    "dev": "tsup --watch",
-    "build": "vite build && tsup",
-    "bundle": "tsup",
+    "dev": "tsdown --watch",
+    "build": "vite build && tsdown",
+    "bundle": "tsdown",
     "lint": "publint",
-    "prepack": "tsup"
+    "prepack": "tsdown"
   },
   "sideEffects": false,
   "dependencies": {
@@ -54,7 +64,7 @@
     "@types/reveal.js": "^5.0.4",
     "@vitejs/plugin-react": "^4.3.4",
     "tailwindcss": "^3.4.1",
-    "tsup": "^8.0.2",
+    "tsdown": "^0.15.11",
     "publint": "^0.3.2",
     "vite": "^6.0.7",
     "@types/bun": "latest"

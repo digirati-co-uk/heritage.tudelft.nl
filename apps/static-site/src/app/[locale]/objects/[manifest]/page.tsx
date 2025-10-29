@@ -12,23 +12,30 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 export async function generateMetadata({
   params,
 }: {
-  params: { manifest: string; locale: string };
+  params: Promise<{ manifest: string; locale: string }>;
 }): Promise<Metadata> {
+  const { manifest: manifestId, locale } = await params;
   const t = await getTranslations();
-  const defaultMeta = getDefaultMetaMdx({ params: { locale: params.locale } });
-  const manifestSlug = `manifests/${params.manifest}`;
+  const defaultMeta = getDefaultMetaMdx({ params: { locale } });
+  const manifestSlug = `manifests/${manifestId}`;
   const meta = await loadManifestMeta(manifestSlug);
-  const objTitle = getValue(meta.intlLabel, { language: params.locale, fallbackLanguages: ["nl", "en"] });
+  const objTitle = getValue(meta.intlLabel, {
+    language: locale,
+    fallbackLanguages: ["nl", "en"],
+  });
   const description =
-    getValue(meta.intlSummary, { language: params.locale, fallbackLanguages: ["nl", "en"] }) ?? defaultMeta.description;
+    getValue(meta.intlSummary, {
+      language: locale,
+      fallbackLanguages: ["nl", "en"],
+    }) ?? defaultMeta.description;
   const title = makeTitle([objTitle, defaultMeta.title]);
-  const url = `/objects/${params.manifest}`;
+  const url = `/objects/${manifestId}`;
   return {
     metadataBase: new URL(baseURL),
     description: description,
     title: title,
     openGraph: {
-      locale: params.locale,
+      locale: locale,
       siteName: defaultMeta.title,
       title: title,
       type: "website",
@@ -37,7 +44,9 @@ export async function generateMetadata({
         {
           url: meta.thumbnail.id ?? defaultMeta.image ?? "",
           width: meta.thumbnail ? meta.thumbnail.width : defaultMeta.imageWidth,
-          height: meta.thumbnail ? meta.thumbnail.height : defaultMeta.imageHeight,
+          height: meta.thumbnail
+            ? meta.thumbnail.height
+            : defaultMeta.imageHeight,
         },
       ],
     },
@@ -48,16 +57,19 @@ export default async function ManifestP({
   params,
   searchParams,
 }: {
-  params: { locale: string; manifest: string };
+  params: Promise<{ locale: string; manifest: string }>;
   searchParams: { id: string };
 }) {
-  setRequestLocale(params.locale);
-  const t = await getTranslations();
-  const idNum = searchParams?.id ? parseInt(searchParams.id) : 0;
+  const { locale, manifest: manifestId } = await params;
 
-  const manifestSlug = `manifests/${params.manifest}`;
+  setRequestLocale(locale);
+  const t = await getTranslations();
+  const idNum = searchParams?.id ? Number.parseInt(searchParams.id, 10) : 0;
+
+  const manifestSlug = `manifests/${manifestId}`;
   const { manifest, meta } = await loadManifest(manifestSlug);
-  const exhibitions = imageServiceLinks[manifestSlug as keyof typeof imageServiceLinks] || [];
+  const exhibitions =
+    imageServiceLinks[manifestSlug as keyof typeof imageServiceLinks] || [];
 
   const relatedItems = related[manifestSlug as keyof typeof related] || [];
   const relatedSnippets = (
@@ -75,7 +87,7 @@ export default async function ManifestP({
         } catch (e) {
           return null;
         }
-      })
+      }),
     )
   ).filter((x) => x !== null);
 
@@ -94,7 +106,7 @@ export default async function ManifestP({
         } catch (e) {
           return null;
         }
-      })
+      }),
     )
   ).filter((x) => x !== null);
 

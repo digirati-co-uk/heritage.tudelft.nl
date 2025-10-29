@@ -1,6 +1,6 @@
 "use client";
 
-import { Link, getObjectSlug } from "@/navigation";
+import { Link, getObjectSlug } from "@/i18n/navigation";
 import { Dialog } from "@headlessui/react";
 import { useState } from "react";
 import { CanvasPanel, useManifest } from "react-iiif-vault";
@@ -22,7 +22,11 @@ export function ObjectViewer({
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
-      <Dialog className="relative z-50" open={isOpen} onClose={() => setIsOpen(false)}>
+      <Dialog
+        className="relative z-50"
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
+      >
         <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
         <div className="mobile-height fixed inset-0 flex w-screen flex-row items-center p-4">
           <button
