@@ -1,8 +1,8 @@
 import type { DefaultPresetOptions, Preset } from "@atlas-viewer/atlas";
 import { Dialog } from "@headlessui/react";
-import { expandTarget } from "@iiif/helpers";
 import {
   type ReactNode,
+  useCallback,
   useEffect,
   useLayoutEffect,
   useMemo,
@@ -45,6 +45,7 @@ export interface CanvasPreviewBlockProps {
     targetCanvasId: string;
     component: ReactNode;
   }>;
+  viewTransition?: boolean;
 }
 
 function CanvasPreviewBlockInner({
@@ -55,12 +56,12 @@ function CanvasPreviewBlockInner({
   alternativeMode,
   transitionScale = false,
   imageInfoIcon = false,
+  viewTransition = false,
 }: CanvasPreviewBlockProps) {
   const container = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const vault = useVault();
   const canvas = useCanvas();
-  const highlights = useCanvasHighlights();
   const store = useMemo(
     () =>
       createExhibitionStore({
@@ -145,11 +146,23 @@ function CanvasPreviewBlockInner({
       [
         "default-preset",
         {
-          runtimeOptions: { visibilityRatio: 0.5, maxOverZoom: 3 },
-          interactive: isOpen,
+          runtimeOptions: { visibilityRatio: 0.5 },
+          interactive: false,
         } as DefaultPresetOptions,
       ] as any,
-    [isOpen],
+    [],
+  );
+
+  const openConfig = useMemo(
+    () =>
+      [
+        "default-preset",
+        {
+          runtimeOptions: { visibilityRatio: 0.5 },
+          interactive: true,
+        } as DefaultPresetOptions,
+      ] as any,
+    [],
   );
 
   const tour = currentStep !== -1;
@@ -184,6 +197,34 @@ function CanvasPreviewBlockInner({
     return null;
   }, [objectLinks, stepIndex, tour]);
 
+  const containerStyle = useMemo(
+    () => ({
+      height: "100%",
+      pointerEvents: isOpen ? undefined : "none",
+      // viewTransitionName: isOpen ? "" : `canvas-preview-block-${index}`,
+    }),
+    [isOpen],
+  );
+
+  const onCreated = useCallback((preset: Preset) => {
+    const clear = preset.runtime.registerHook("useAfterFrame", () => {
+      const renderers = (preset.renderer as any).renderers;
+      const canvasRenderer = renderers[0]?.canvas ? renderers[0] : null;
+      if (!canvasRenderer) {
+        setIsReady(true);
+        clear();
+      }
+      if ((canvasRenderer as any).isReady()) {
+        preset.runtime.updateNextFrame();
+        setTimeout(() => {
+          setIsReady(true);
+        }, 300);
+        clear();
+      }
+    });
+    setTimeout(() => preset.runtime.updateNextFrame(), 1000);
+  }, []);
+
   return (
     <>
       <div
@@ -197,52 +238,19 @@ function CanvasPreviewBlockInner({
           container.current,
           () => setIsOpen(true),
           `canvas-preview-block-${index}`,
+          false,
+          viewTransition,
         )}
       >
         <CanvasPanel.Viewer
-          containerStyle={{
-            height: "100%",
-            pointerEvents: isOpen ? undefined : "none",
-            // viewTransitionName: isOpen ? "" : `canvas-preview-block-${index}`,
-          }}
+          containerStyle={containerStyle}
           renderPreset={config}
           homeOnResize
           homeCover={cover || !hasMultipleAnnotations}
-          onCreated={(preset) => {
-            const clear = preset.runtime.registerHook("useAfterFrame", () => {
-              const renderers = (preset.renderer as any).renderers;
-              const canvasRenderer = renderers[0]?.canvas ? renderers[0] : null;
-              if (!canvasRenderer) {
-                setIsReady(true);
-                clear();
-              }
-              if ((canvasRenderer as any).isReady()) {
-                preset.runtime.updateNextFrame();
-                setTimeout(() => {
-                  setIsReady(true);
-                }, 300);
-                clear();
-              }
-            });
-            setTimeout(() => preset.runtime.updateNextFrame(), 1000);
-          }}
+          onCreated={onCreated}
         >
           <CanvasPanel.RenderCanvas strategies={["images"]} enableSizes={false}>
-            {highlights.length > 1
-              ? null
-              : highlights.map((highlight, index) => {
-                  const target = highlight?.selector?.spatial as any;
-                  if (!target) return null;
-                  return (
-                    <box
-                      key={index}
-                      target={target}
-                      relativeStyle
-                      html
-                      style={{ border: "2px dashed red" }}
-                    />
-                  );
-                })}
+            <Highlights />
           </CanvasPanel.RenderCanvas>
         </CanvasPanel.Viewer>
       </div>
@@ -272,19 +280,21 @@ function CanvasPreviewBlockInner({
           () => setIsOpen(false),
           `canvas-preview-block-${index}`,
           true,
+          viewTransition,
         )}
       >
         <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
         <div className="safe-inset fill-height fixed inset-0 z-20 flex w-screen items-center md:p-4">
           <button
             type="button"
-            className="absolute right-4 top-4 z-20 flex  h-16 w-16 items-center justify-center bg-CloseBackground text-CloseText hover:bg-CloseBackgroundHover"
             onClick={withViewTransition(
               container.current,
               () => setIsOpen(false),
               `canvas-preview-block-${index}`,
               true,
+              viewTransition,
             )}
+            className="absolute right-4 top-4 z-20 flex  h-16 w-16 items-center justify-center bg-CloseBackground text-CloseText hover:bg-CloseBackgroundHover"
           >
             <CloseIcon fill="currentColor" />
           </button>
@@ -301,27 +311,15 @@ function CanvasPreviewBlockInner({
                 <CanvasPanel.Viewer
                   onCreated={(ctx) => void (atlas.current = ctx)}
                   containerStyle={{ height: "100%", minHeight: 0 }}
-                  runtimeOptions={config[1].runtimeOptions}
-                  renderPreset={config}
+                  runtimeOptions={openConfig[1].runtimeOptions}
+                  renderPreset={openConfig}
                 >
                   <CanvasPanel.RenderCanvas
                     strategies={["images"]}
                     enableSizes={false}
                     renderViewerControls={() => <ViewerZoomControls />}
                   >
-                    {highlights.map((highlight, index) => {
-                      const target = highlight?.selector?.spatial as any;
-                      if (!target) return null;
-                      return (
-                        <box
-                          key={index}
-                          target={target}
-                          relativeStyle
-                          html
-                          style={{ border: "2px dashed red" }}
-                        />
-                      );
-                    })}
+                    <Highlights />
 
                     {steps.map((step, index) => {
                       if (step.region && step.region.selector?.spatial) {
@@ -565,5 +563,29 @@ export function CanvasPreviewBlock(props: CanvasPreviewBlockProps) {
         {inner}
       </LazyLoadComponent>
     </div>
+  );
+}
+
+function Highlights() {
+  const highlights = useCanvasHighlights();
+  if (!highlights || highlights.length === 0) return null;
+  if (highlights.length > 1) return null;
+
+  return (
+    <>
+      {highlights.map((highlight, index) => {
+        const target = highlight?.selector?.spatial as any;
+        if (!target) return null;
+        return (
+          <box
+            key={index}
+            target={target}
+            relativeStyle
+            html
+            style={{ border: "2px dashed red" }}
+          />
+        );
+      })}
+    </>
   );
 }

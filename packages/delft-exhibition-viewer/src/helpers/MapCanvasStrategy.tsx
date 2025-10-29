@@ -1,10 +1,11 @@
 import {
   useCanvas,
-  useRenderingStrategy,
+  useStaticRenderingStrategy,
   type RenderingStrategy,
 } from "react-iiif-vault";
 import { MapCanvases, type MapCanvasesProps } from "./MapCanvases";
 import type { CanvasNormalized } from "@iiif/presentation-3-normalized";
+import { memo } from "react";
 type RenderingStrategyMappedByType = {
   [K in RenderingStrategy as K["type"]]: K;
 };
@@ -47,7 +48,7 @@ export function MapCanvasStrategy<
   );
 }
 
-export function MapStrategyInner({
+export const MapStrategyInner = memo(function MapStrategyInner({
   index,
   children,
 }: {
@@ -55,11 +56,11 @@ export function MapStrategyInner({
   children: MapCanvasStrategyProps["children"];
 }) {
   const canvas = useCanvas();
-  const [strategy] = useRenderingStrategy();
+  const strategy = useStaticRenderingStrategy();
 
   if (!canvas) return null;
   if (children[strategy.type]) {
     return (children[strategy.type] as any)({ index, canvas, strategy });
   }
   return null;
-}
+});

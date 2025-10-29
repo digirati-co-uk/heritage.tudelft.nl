@@ -42,7 +42,7 @@ function MiniPage({ manifest }: { manifest: Manifest }) {
             culpa qui officia deserunt mollit anim id est laborum
           </p>
 
-          <p className="mb-8 text-md">
+          <div className="mb-8 text-md">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
             ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
@@ -80,7 +80,7 @@ function MiniPage({ manifest }: { manifest: Manifest }) {
             voluptate velit esse cillum dolore eu fugiat nulla pariatur.
             Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
             officia deserunt mollit anim id est laborum
-          </p>
+          </div>
           <p className="mb-8 text-md">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
