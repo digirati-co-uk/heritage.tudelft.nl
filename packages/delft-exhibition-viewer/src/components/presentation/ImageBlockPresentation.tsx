@@ -6,12 +6,17 @@ import {
   useIIIFLanguage,
 } from "react-iiif-vault";
 import { twMerge } from "tailwind-merge";
-import { getFloatingFromBehaviours } from "../helpers/exhibition";
-import { useExhibitionStep } from "../helpers/exhibition-store";
-import { useStepDetails } from "../helpers/use-step-details";
-import { BaseSlide, type BaseSlideProps } from "./BaseSlide";
-import { CanvasExhibitionBlock } from "./CanvasExhibitionBlock";
-import type { ImageBlockProps } from "./ImageBlock";
+import { getFloatingFromBehaviours } from "../../helpers/exhibition";
+import { useExhibitionStep } from "../../helpers/exhibition-store";
+import { useStepDetails } from "../../helpers/use-step-details";
+import { BaseSlide, type BaseSlideProps } from "@/components/shared/BaseSlide";
+import { CanvasPresentationBlock } from "@/components/presentation/CanvasPresentationBlock";
+import type { ImageBlockProps } from "@/components/exhibition/ImageBlock";
+
+interface ImageBlockPresentationProps extends ImageBlockProps, BaseSlideProps {
+  isFloating?: boolean;
+  floatingPosition?: "top-left" | "top-right" | "bottom-left" | "bottom-right";
+}
 
 export function ImageBlockPresentation({
   canvas,
@@ -19,7 +24,7 @@ export function ImageBlockPresentation({
   isFloating: defaultIsFloating = false,
   floatingPosition: defaultFloatingPosition = "top-left",
   ...props
-}: ImageBlockProps & BaseSlideProps) {
+}: ImageBlockPresentationProps) {
   const step = useExhibitionStep();
   const behavior = canvas.behavior || [];
   const {
@@ -43,7 +48,7 @@ export function ImageBlockPresentation({
   const canvasViewer = (
     <Suspense fallback={<div className="h-full w-full" />}>
       <CanvasContext canvas={canvas.id}>
-        <CanvasExhibitionBlock
+        <CanvasPresentationBlock
           fullWidth={!showSummary}
           canvasId={canvas.id}
           cover={false}

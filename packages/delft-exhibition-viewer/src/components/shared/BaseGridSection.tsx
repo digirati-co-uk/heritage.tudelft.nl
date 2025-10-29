@@ -1,7 +1,7 @@
-import { type HTMLAttributes, type ReactNode, useEffect, useRef } from "react";
+import type { HTMLAttributes, ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 import { useIntersectionObserver } from "usehooks-ts";
-import { useHashValue } from "../helpers/use-hash-value";
+import { useHashValue } from "@/helpers/use-hash-value";
 
 interface BaseGridSectionProps extends HTMLAttributes<HTMLDivElement> {
   id: string;
@@ -18,7 +18,7 @@ export function BaseGridSection({
   enabled = true,
   ...props
 }: BaseGridSectionProps) {
-  const [hash, setHash] = useHashValue();
+  const [, setHash] = useHashValue();
 
   const [ref, entry] = useIntersectionObserver({
     threshold: 0.75,
@@ -37,7 +37,7 @@ export function BaseGridSection({
       id={`s${id}`}
       ref={ref}
       data-step-id={id}
-      className={twMerge("scroll-m-8", className)}
+      className={`scroll-m-8 ${className}`}
       {...props}
     >
       {children}

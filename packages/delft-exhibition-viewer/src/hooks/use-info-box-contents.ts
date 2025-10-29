@@ -1,11 +1,9 @@
-import { type ReactNode, useMemo } from "react";
+import { useMemo } from "react";
 import {
-  CanvasContext,
   useCanvas,
   useIIIFLanguage,
   useVault,
 } from "react-iiif-vault";
-import { LocaleString } from "react-iiif-vault";
 
 export function useInfoBlockContents() {
   const canvas = useCanvas();
@@ -49,36 +47,4 @@ export function useInfoBlockContents() {
 
     return returnItems;
   }, [annotations, vault, locale, canvas]);
-}
-
-export function InfoBlockContentsInner({ fallback }: { fallback?: ReactNode }) {
-  const annotationsToShow = useInfoBlockContents();
-
-  return (
-    <article className="prose prose-lg h-fit max-w-2xl leading-snug md:leading-normal">
-      {annotationsToShow.length === 0 ? fallback || null : null}
-      {annotationsToShow.map(({ body, annotationId, locale }, key) => {
-        return (
-          <LocaleString
-            key={annotationId + key + locale}
-            className="mb-3"
-            enableDangerouslySetInnerHTML
-          >
-            {body.value}
-          </LocaleString>
-        );
-      })}
-    </article>
-  );
-}
-
-export default function InfoBlockContents(props: {
-  canvasId: string;
-  fallback?: ReactNode;
-}) {
-  return (
-    <CanvasContext canvas={props.canvasId}>
-      <InfoBlockContentsInner fallback={props.fallback} />
-    </CanvasContext>
-  );
 }

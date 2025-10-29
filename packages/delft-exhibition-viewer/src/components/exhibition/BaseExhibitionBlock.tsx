@@ -1,73 +1,31 @@
-import { type ReactNode, Suspense } from "react";
-import { LocaleString, useVault } from "react-iiif-vault";
+import { getClassName } from "@/helpers/exhibition";
+import { LocaleString, useCanvas } from "react-iiif-vault";
 import { twMerge } from "tailwind-merge";
-import { getClassName } from "../helpers/exhibition";
-import { BaseGridSection } from "./BaseGridSection";
-import { CanvasPreviewBlock } from "./CanvasPreviewBlock";
-import type { CanvasNormalized } from "@iiif/presentation-3-normalized";
+import { BaseGridSection } from "../shared/BaseGridSection";
 
-export interface ImageBlockProps {
-  index: number;
-  canvas: CanvasNormalized;
-  autoPlay?: boolean;
+interface BaseExhibitionBlockProps {
   id?: string;
-  objectLinks: Array<{
-    service: string;
-    slug: string;
-    canvasId: string;
-    targetCanvasId: string;
-    component: ReactNode;
-  }>;
-  alternativeMode?: boolean;
+  index: number;
   scrollEnabled?: boolean;
-  transitionScale?: boolean;
-  imageInfoIcon?: boolean;
-  coverImages?: boolean;
-  isFloating?: boolean;
-  floatingPosition?: "top-left" | "top-right" | "bottom-left" | "bottom-right";
+  children: React.ReactNode;
 }
 
-export function ImageBlock({
-  index,
-  canvas,
-  id,
-  objectLinks,
-  autoPlay,
-  alternativeMode,
-  scrollEnabled,
-  transitionScale,
-  coverImages = false,
-  imageInfoIcon,
-  isFloating = true,
-}: ImageBlockProps) {
-  const behavior = canvas.behavior || [];
+export function BaseExhibitionBlock(props: BaseExhibitionBlockProps) {
+  const { id, index, scrollEnabled, children } = props;
+  const canvas = useCanvas();
+  const behavior = canvas?.behavior || [];
   const isLeft = behavior.includes("left");
   const isRight = behavior.includes("right");
   const isBottom = behavior.includes("bottom");
   const isTop = behavior.includes("top");
   const isCover =
     behavior.includes("image-cover") || behavior.includes("cover");
-
   const showSummary = Boolean(
-    canvas.summary && (isLeft || isRight || isBottom || isTop),
+    canvas?.summary && (isLeft || isRight || isBottom || isTop),
   );
-
   const className = getClassName(behavior);
 
-  const canvasViewer = (
-    <Suspense fallback={<div className="h-full w-full bg-[red]" />}>
-      <CanvasPreviewBlock
-        canvasId={canvas.id}
-        cover={coverImages || isCover}
-        index={index}
-        objectLinks={objectLinks}
-        autoPlay={autoPlay}
-        alternativeMode={alternativeMode}
-        transitionScale={transitionScale}
-        imageInfoIcon={imageInfoIcon}
-      />
-    </Suspense>
-  );
+  if (!canvas) return null;
 
   return (
     <BaseGridSection
@@ -99,7 +57,7 @@ export function ImageBlock({
               "aspect-square md:aspect-auto",
             )}
           >
-            {canvasViewer}
+            {children}
           </div>
           <div
             className={twMerge(
@@ -146,7 +104,7 @@ export function ImageBlock({
           </div>
         </div>
       ) : (
-        canvasViewer
+        children
       )}
     </BaseGridSection>
   );

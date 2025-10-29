@@ -1,16 +1,11 @@
 import type { DefaultPresetOptions, Preset } from "@atlas-viewer/atlas";
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
-import {
-  CanvasContext,
-  CanvasPanel,
-  useCanvas,
-  useVault,
-} from "react-iiif-vault";
-import { useExhibition, useExhibitionStep } from "../helpers/exhibition-store";
-import type { ObjectLink } from "../helpers/object-links";
-import { useCanvasHighlights } from "../helpers/use-canvas-highlights";
+import { useLayoutEffect, useMemo, useRef, useState } from "react";
+import { CanvasPanel, useCanvas } from "react-iiif-vault";
+import { useExhibitionStep } from "@/helpers/exhibition-store";
+import type { ObjectLink } from "@/helpers/object-links";
+import { useCanvasHighlights } from "@/helpers/use-canvas-highlights";
 
-interface CanvasExhibitionBlockProps {
+interface CanvasPresentationBlockProps {
   canvasId: string;
   cover?: boolean;
   index: number;
@@ -18,7 +13,7 @@ interface CanvasExhibitionBlockProps {
   fullWidth?: boolean;
 }
 
-export function CanvasExhibitionBlock(props: CanvasExhibitionBlockProps) {
+export function CanvasPresentationBlock(props: CanvasPresentationBlockProps) {
   const canvas = useCanvas();
   const step = useExhibitionStep();
   const atlas = useRef<Preset | null>(null);
@@ -28,7 +23,7 @@ export function CanvasExhibitionBlock(props: CanvasExhibitionBlockProps) {
       [
         "default-preset",
         {
-          runtimeOptions: { visibilityRatio: 0.5, maxOverZoom: 3 },
+          runtimeOptions: { visibilityRatio: 0.75, maxOverZoom: 3 },
           interactive: true,
         } as DefaultPresetOptions,
       ] as any,
@@ -45,6 +40,7 @@ export function CanvasExhibitionBlock(props: CanvasExhibitionBlockProps) {
 
   const region = step?.region?.selector?.spatial;
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Needed for window size changes.
   useLayoutEffect(() => {
     if (atlas.current && isReady && stepCurrent) {
       if (

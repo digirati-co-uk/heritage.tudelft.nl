@@ -1,19 +1,17 @@
-import type { Canvas } from "@iiif/presentation-3";
 import { Suspense } from "react";
 import type { TextualContentStrategy } from "react-iiif-vault";
 import { LocaleString, useIIIFLanguage, useVault } from "react-iiif-vault";
 import { twMerge } from "tailwind-merge";
-import { getClassName } from "../helpers/exhibition";
-import { getItemsByLocale } from "../helpers/get-items-by-locale";
-import { BaseGridSection } from "./BaseGridSection";
-import ReadMoreBlock from "./ReadMore";
+import { getClassName } from "@/helpers/exhibition";
+import { getItemsByLocale } from "@/helpers/get-items-by-locale";
+import { BaseGridSection } from "@/components/shared/BaseGridSection";
+import { ReadMoreBlock } from "@/components/shared/ReadMore";
 import type { CanvasNormalized } from "@iiif/presentation-3-normalized";
 
 export interface InfoBlockProps {
   canvas: CanvasNormalized;
   strategy: TextualContentStrategy;
   firstInfo?: boolean;
-  locale: string;
   id?: string;
   scrollEnabled?: boolean;
   index: number;
@@ -72,8 +70,7 @@ export function InfoBlock({
               </div>
             }
           >
-            {/* @todo pass on the annotations to component */}
-            <ReadMoreBlock canvasId={canvas.id} />
+            <ReadMoreBlock />
           </Suspense>
         ) : (
           ""

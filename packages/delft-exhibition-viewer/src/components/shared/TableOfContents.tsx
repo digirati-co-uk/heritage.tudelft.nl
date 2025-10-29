@@ -1,8 +1,8 @@
 import type { InternationalString } from "@iiif/presentation-3";
 import { LocaleString, useManifest } from "react-iiif-vault";
 import { twMerge } from "tailwind-merge";
-import { useHashValue } from "../helpers/use-hash-value";
-import { IIIFIcon } from "./icons/IIIFIcon";
+import { useHashValue } from "@/helpers/use-hash-value";
+import { IIIFIcon } from "@/components/icons/IIIFIcon";
 
 export function TableOfContents({
   items,

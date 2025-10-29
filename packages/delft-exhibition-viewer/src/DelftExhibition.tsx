@@ -1,34 +1,26 @@
 import { Dialog } from "@headlessui/react";
-import { createPaintingAnnotationsHelper } from "@iiif/helpers/painting-annotations";
-import type { InternationalString, Manifest } from "@iiif/presentation-3";
-import {
-  type ReactNode,
-  Suspense,
-  lazy,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import type { Manifest } from "@iiif/presentation-3";
+import { type ReactNode, Suspense, lazy, useRef, useState } from "react";
 import {
   LanguageProvider,
   ManifestContext,
   VaultProvider,
   useExistingVault,
 } from "react-iiif-vault";
-import { getRenderingStrategy } from "react-iiif-vault/utils";
-import { ImageBlock } from "./components/ImageBlock";
-import { InfoBlock } from "./components/InfoBlock";
-import { MediaBlock } from "./components/MediaBlock";
-import { TitlePanel } from "./components/TitleBlock";
+import { ImageBlock } from "@/components/exhibition/ImageBlock";
+import { InfoBlock } from "@/components/exhibition/InfoBlock";
+import { MediaBlock } from "@/components/exhibition/MediaBlock";
+import { TitlePanel } from "./components/exhibition/TitleBlock";
 import "./styles/lib.css";
 import { usePress } from "react-aria";
 import { twMerge } from "tailwind-merge";
 import { useMediaQuery } from "usehooks-ts";
-import { CloseIcon } from "./components/CloseIcon";
-import { TableOfContentsBar } from "./components/TableOfContentsBar";
-import { TableOfContentsHeader } from "./components/TableOfContentsHeader";
+import { CloseIcon } from "@/components/icons/CloseIcon";
+import { TableOfContentsBar } from "./components/shared/TableOfContentsBar";
+import { TableOfContentsHeader } from "./components/shared/TableOfContentsHeader";
 import { PlayIcon } from "./components/icons/PlayIcon";
 import { TopIcon } from "./components/icons/TopIcon";
+import { MapCanvasStrategy } from "./helpers/MapCanvasStrategy";
 
 export type DelftExhibitionProps = {
   manifest: Manifest;
@@ -66,7 +58,7 @@ export function DelftExhibition(props: DelftExhibitionProps) {
   const [enabled, setEnabled] = useState(false);
   const vault = useExistingVault();
   const matches = useMediaQuery("(min-width: 1200px)");
-  const helper = createPaintingAnnotationsHelper();
+
   const {
     cutCorners = true,
     fullTitleBar = false,
@@ -173,55 +165,24 @@ export function DelftExhibition(props: DelftExhibitionProps) {
                 {!fullTitleBar && !hideTitleCard ? (
                   <TitlePanel manifest={props.manifest} />
                 ) : null}
-                {(props.manifest.items || []).map((canvas: any, idx) => {
-                  if (!canvas) return null;
 
-                  if (props.canvasId && canvas.id !== props.canvasId) {
-                    return null;
-                  }
-
-                  try {
-                    const paintables = helper.getPaintables(canvas);
-                    const strategy = getRenderingStrategy({
-                      canvas,
-                      loadImageService: (t) => t,
-                      paintables,
-                      supports: [
-                        "empty",
-                        "images",
-                        "media",
-                        "video",
-                        "3d-model",
-                        "textual-content",
-                        "complex-timeline",
-                      ],
-                    });
-
-                    const foundLinks = props.viewObjectLinks.filter(
-                      (link) => link.canvasId === canvas.id,
-                    );
-
-                    if (strategy.type === "textual-content") {
-                      return (
-                        <InfoBlock
-                          key={idx}
-                          scrollEnabled={!enabled}
-                          index={idx}
-                          firstInfo={fullTitleBar && idx === 1}
-                          canvas={canvas}
-                          strategy={strategy}
-                          locale={props.language || "en"}
-                        />
+                <MapCanvasStrategy
+                  onlyCanvasId={props.canvasId}
+                  items={props.manifest.items || []}
+                >
+                  {{
+                    // When its images.
+                    images: ({ index, canvas }) => {
+                      const foundLinks = props.viewObjectLinks.filter(
+                        (link) => link.canvasId === canvas.id,
                       );
-                    }
 
-                    if (strategy.type === "images") {
                       return (
                         <ImageBlock
-                          key={idx}
+                          key={index}
                           scrollEnabled={!enabled}
                           canvas={canvas}
-                          index={idx}
+                          index={index}
                           coverImages={coverImages}
                           objectLinks={foundLinks}
                           alternativeMode={alternativeImageMode}
@@ -229,34 +190,38 @@ export function DelftExhibition(props: DelftExhibitionProps) {
                           imageInfoIcon={imageInfoIcon}
                         />
                       );
-                    }
+                    },
 
-                    if (strategy.type === "media") {
-                      return (
-                        <Suspense
-                          key={idx}
-                          fallback={
-                            <div
-                              className={"cut-corners bg-black text-white"}
-                            />
-                          }
-                        >
-                          <MediaBlock
-                            key={idx}
-                            scrollEnabled={!enabled}
-                            canvas={canvas}
-                            strategy={strategy}
-                            index={idx}
-                          />
-                        </Suspense>
-                      );
-                    }
+                    // Textual content
+                    "textual-content": ({ index, canvas, strategy }) => (
+                      <InfoBlock
+                        scrollEnabled={!enabled}
+                        index={index}
+                        firstInfo={fullTitleBar && index === 1}
+                        canvas={canvas}
+                        strategy={strategy}
+                      />
+                    ),
 
-                    return null;
-                  } catch (e) {
-                    return null;
-                  }
-                })}
+                    // Media content
+                    media: ({ index, canvas, strategy }) => (
+                      <Suspense
+                        key={index}
+                        fallback={
+                          <div className={"cut-corners bg-black text-white"} />
+                        }
+                      >
+                        <MediaBlock
+                          key={index}
+                          scrollEnabled={!enabled}
+                          canvas={canvas}
+                          strategy={strategy}
+                          index={index}
+                        />
+                      </Suspense>
+                    ),
+                  }}
+                </MapCanvasStrategy>
               </div>
             </div>
           </div>

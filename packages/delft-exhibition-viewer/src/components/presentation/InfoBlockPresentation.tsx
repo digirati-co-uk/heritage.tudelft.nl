@@ -1,9 +1,8 @@
 import { LocaleString, useIIIFLanguage } from "react-iiif-vault";
-import { twMerge } from "tailwind-merge";
-import { getItemsByLocale } from "../helpers/get-items-by-locale";
-import { BaseSlide, type BaseSlideProps } from "./BaseSlide";
-import type { InfoBlockProps } from "./InfoBlock";
-import InfoBlockContents from "./InfoBlockContents";
+import { getItemsByLocale } from "../../helpers/get-items-by-locale";
+import { BaseSlide, type BaseSlideProps } from "@/components/shared/BaseSlide";
+import type { InfoBlockProps } from "@/components/exhibition/InfoBlock";
+import InfoBlockContents from "../shared/InfoBlockContents";
 
 export function InfoBlockPresentation({
   canvas,

@@ -10,9 +10,9 @@ import {
   useVaultSelector,
 } from "react-iiif-vault";
 import { twMerge } from "tailwind-merge";
-import { useHashValue } from "../helpers/use-hash-value";
+import { useHashValue } from "../../helpers/use-hash-value";
 import { TableOfContents } from "./TableOfContents";
-import { ContentsIcon } from "./icons/ContentsIcon";
+import { ContentsIcon } from "../icons/ContentsIcon";
 
 export function TableOfContentsBar({
   initialOpen = false,

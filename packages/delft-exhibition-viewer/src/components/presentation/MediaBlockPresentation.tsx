@@ -4,9 +4,9 @@ import {
   type SingleYouTubeVideo,
   useThumbnail,
 } from "react-iiif-vault";
-import { BaseSlide, type BaseSlideProps } from "./BaseSlide";
-import IIIFMediaPlayer from "./IIIFMediaPlayer";
-import type { MediaBlockProps } from "./MediaBlock";
+import { BaseSlide, type BaseSlideProps } from "@/components/shared/BaseSlide";
+import IIIFMediaPlayer from "../shared/IIIFMediaPlayer";
+import type { MediaBlockProps } from "@/components/exhibition/MediaBlock";
 
 function getWindowHost() {
   return typeof window !== "undefined" ? window.location.host : "";

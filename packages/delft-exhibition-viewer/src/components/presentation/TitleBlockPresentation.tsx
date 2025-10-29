@@ -1,7 +1,6 @@
 import type { Manifest } from "@iiif/presentation-3";
 import { LocaleString } from "react-iiif-vault";
-import { twMerge } from "tailwind-merge";
-import { BaseSlide, type BaseSlideProps } from "./BaseSlide";
+import { BaseSlide, type BaseSlideProps } from "@/components/shared/BaseSlide";
 
 export function TitleBlockPresentation({
   manifest,

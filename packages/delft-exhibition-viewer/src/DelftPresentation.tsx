@@ -6,17 +6,17 @@ import {
   VaultProvider,
 } from "react-iiif-vault";
 import "./styles/lib.css";
-import { ImageBlockPresentation } from "./components/ImageBlockPresentation";
-import { InfoBlockPresentation } from "./components/InfoBlockPresentation";
-import { MediaBlockPresentation } from "./components/MediaBlockPresentation";
+import { ImageBlockPresentation } from "@/components/presentation/ImageBlockPresentation";
+import { InfoBlockPresentation } from "@/components/presentation/InfoBlockPresentation";
+import { MediaBlockPresentation } from "@/components/presentation/MediaBlockPresentation";
 import "./styles/presentation.css";
-import { TableOfContentsBar } from "./components/TableOfContentsBar";
-import { NextIcon } from "./components/icons/NextIcon";
-import { PauseIcon } from "./components/icons/PauseIcon";
-import { PlayIcon } from "./components/icons/PlayIcon";
-import { PreviousIcon } from "./components/icons/PreviousIcon";
-import { ExhibitionProvider } from "./helpers/exhibition-store";
-import { useExhibitionStore } from "./hooks/use-exhibition-store";
+import { TableOfContentsBar } from "@/components/shared/TableOfContentsBar";
+import { NextIcon } from "@/components/icons/NextIcon";
+import { PauseIcon } from "@/components/icons/PauseIcon";
+import { PlayIcon } from "@/components/icons/PlayIcon";
+import { PreviousIcon } from "@/components/icons/PreviousIcon";
+import { ExhibitionProvider } from "@/helpers/exhibition-store";
+import { useExhibitionStore } from "@/hooks/use-exhibition-store";
 
 export type DelftPresentationProps = {
   manifest: Manifest;
@@ -79,7 +79,6 @@ export function DelftPresentation(props: DelftPresentationProps) {
                           active={isActive}
                           canvas={canvas}
                           strategy={strategy}
-                          locale={props.language || "en"}
                         />
                       );
                     }
