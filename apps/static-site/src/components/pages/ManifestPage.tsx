@@ -21,6 +21,13 @@ import {
 } from "@iiif/helpers";
 import { useSearchParams } from "next/navigation";
 
+type ZoomRegion = {
+  x: number;
+  y: number;
+  width: number | undefined;
+  height: number | undefined;
+};
+
 interface ManifestPageProps {
   manifest: Manifest;
   meta: {
@@ -76,6 +83,7 @@ export function ManifestPage({
   const { currentSequenceIndex, setCurrentCanvasId } = context;
   const previousSeqIndex = useRef(currentSequenceIndex);
   const atlas = useRef<Preset>();
+  const stateRegion = useRef<ZoomRegion>(null);
   const searchParams = useSearchParams();
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Needs to run when currentSequenceIndex changes.
@@ -105,17 +113,7 @@ export function ManifestPage({
       isStateValid && parsedState && normaliseContentState(parsedState);
     const stateCanvasId = normalisedState?.target[0].source.id;
     setCurrentCanvasId(stateCanvasId);
-    const stateRegion = normalisedState?.target[0].selector.spatial;
-    setTimeout(
-      () =>
-        atlas.current?.runtime.world.gotoRegion({
-          x: stateRegion.x,
-          y: stateRegion.y,
-          width: stateRegion.width,
-          height: stateRegion.height,
-        }),
-      100,
-    );
+    stateRegion.current = normalisedState?.target[0].selector.spatial;
   }, []);
 
   return (
@@ -132,6 +130,14 @@ export function ManifestPage({
         <CanvasPanel.Viewer
           onCreated={(preset) => {
             atlas.current = preset;
+            stateRegion.current?.width &&
+              stateRegion.current.height &&
+              atlas.current?.runtime.world.gotoRegion({
+                x: stateRegion.current?.x,
+                y: stateRegion.current?.y,
+                width: stateRegion.current?.width,
+                height: stateRegion.current?.height,
+              });
           }}
           htmlChildren={null}
           key={manifest.id}
