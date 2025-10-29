@@ -24,8 +24,8 @@ import { useSearchParams } from "next/navigation";
 type ZoomRegion = {
   x: number;
   y: number;
-  width: number | undefined;
-  height: number | undefined;
+  width: number;
+  height: number;
 };
 
 interface ManifestPageProps {
@@ -130,14 +130,9 @@ export function ManifestPage({
         <CanvasPanel.Viewer
           onCreated={(preset) => {
             atlas.current = preset;
-            stateRegion.current?.width &&
-              stateRegion.current.height &&
-              atlas.current?.runtime.world.gotoRegion({
-                x: stateRegion.current?.x,
-                y: stateRegion.current?.y,
-                width: stateRegion.current?.width,
-                height: stateRegion.current?.height,
-              });
+            if (stateRegion.current) {
+              atlas.current?.runtime.world.gotoRegion(stateRegion.current);
+            }
           }}
           htmlChildren={null}
           key={manifest.id}
