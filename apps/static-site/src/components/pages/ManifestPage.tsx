@@ -2,7 +2,7 @@
 import { getObjectSlug } from "@/navigation";
 import type { Preset } from "@atlas-viewer/atlas";
 import type { InternationalString, Manifest } from "@iiif/presentation-3";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { CanvasPanel, useSimpleViewer } from "react-iiif-vault";
 import { Box } from "../blocks/Box";
 import { DownloadImage } from "../iiif/DownloadImage";
@@ -74,17 +74,22 @@ export function ManifestPage({
 }: ManifestPageProps) {
   const context = useSimpleViewer();
   const { currentSequenceIndex, setCurrentCanvasId } = context;
-  const [previousSeqIndex, setPreviousSeqIndex] = useState<number>(0);
+  const previousSeqIndex = useRef(currentSequenceIndex);
   const atlas = useRef<Preset>();
   const searchParams = useSearchParams();
-  const [region, setRegion] = useState<{
-    x: number;
-    y: number;
-    width?: number;
-    height?: number;
-  }>({ x: 0, y: 0, width: undefined, height: undefined });
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Needs to run when currentSequenceIndex changes.
+  useEffect(() => {
+    if (currentSequenceIndex == previousSeqIndex.current) {
+      context.setCurrentCanvasIndex(initialCanvasIndex);
+    } else {
+      context.setCurrentCanvasIndex(currentSequenceIndex);
+    }
+    if (atlas.current) {
+      setTimeout(() => atlas.current?.runtime.world.goHome(true), 5);
+    }
+  }, [currentSequenceIndex]);
+
   useEffect(() => {
     const state = searchParams.get("iiif-content");
     let parsedState;
@@ -99,30 +104,19 @@ export function ManifestPage({
     const normalisedState =
       isStateValid && parsedState && normaliseContentState(parsedState);
     const stateCanvasId = normalisedState?.target[0].source.id;
+    setCurrentCanvasId(stateCanvasId);
     const stateRegion = normalisedState?.target[0].selector.spatial;
-    console.log("normalisedState", normalisedState); // will be removed
-    setRegion({
-      x: stateRegion?.x ?? 0,
-      y: stateRegion?.y ?? 0,
-      width: stateRegion?.width ?? undefined,
-      height: stateRegion?.height ?? undefined,
-    });
-
-    // If chosen canvas has changed, go there. Otherwise go to any canvas specified by content state.
-    const tempPrevIdx = currentSequenceIndex;
-
-    if (currentSequenceIndex != previousSeqIndex) {
-      context.setCurrentCanvasIndex(currentSequenceIndex);
-    } else if (initialCanvasIndex) {
-      context.setCurrentCanvasIndex(initialCanvasIndex);
-    } else if (stateCanvasId && !currentSequenceIndex) {
-      setCurrentCanvasId(stateCanvasId);
-    }
-    setPreviousSeqIndex(tempPrevIdx);
-    if (atlas.current) {
-      setTimeout(() => atlas.current?.runtime.world.goHome(true), 5);
-    }
-  }, [currentSequenceIndex]);
+    setTimeout(
+      () =>
+        atlas.current?.runtime.world.gotoRegion({
+          x: stateRegion.x,
+          y: stateRegion.y,
+          width: stateRegion.width,
+          height: stateRegion.height,
+        }),
+      100,
+    );
+  }, []);
 
   return (
     <div>
@@ -138,16 +132,6 @@ export function ManifestPage({
         <CanvasPanel.Viewer
           onCreated={(preset) => {
             atlas.current = preset;
-            console.log("onCreated", region); // will be removed
-            if (region.width && region.height) {
-              console.log("zooming", region); // will be removed
-              preset.runtime.world.gotoRegion({
-                x: region.x,
-                y: region.y,
-                width: region.width,
-                height: region.height,
-              });
-            }
           }}
           htmlChildren={null}
           key={manifest.id}
@@ -227,13 +211,6 @@ export function ManifestPage({
               type: "object",
             }}
             content={content}
-            canvasURI="http://a_canvas_uri"
-            zoomRegion={{
-              x: 0,
-              y: 0,
-              width: 200,
-              height: 100,
-            }}
           />
 
           <RangeNavigation content={content} />
