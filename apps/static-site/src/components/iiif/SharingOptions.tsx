@@ -13,10 +13,12 @@ export type ZoomRegion = {
 function updateSharingLink({
   manifestId,
   canvasURI,
+  canvasSeqIdx,
   zoomRegion,
 }: {
   manifestId: string;
   canvasURI: string | undefined;
+  canvasSeqIdx: number;
   zoomRegion: ZoomRegion | undefined;
 }) {
   return canvasURI
@@ -33,6 +35,18 @@ function serialiseRegion(zoomRegion: ZoomRegion | undefined) {
     return `#xywh=${zoomRegion.x},${zoomRegion.y},${zoomRegion.width},${zoomRegion.height}`;
   }
   return "";
+}
+
+function customSharingURI({
+  manifestId,
+  canvasSeqIdx = 0,
+  zoomRegion,
+}: {
+  manifestId: string;
+  canvasSeqIdx: number;
+  zoomRegion: ZoomRegion | undefined;
+}) {
+  return `${manifestId}?id=${canvasSeqIdx}&xywh=${serialiseRegion(zoomRegion)};`;
 }
 
 function stateCreateAndEncode({
@@ -75,7 +89,7 @@ export function SharingOptions({
   initCanvasURI?: string;
   initZoomRegion?: ZoomRegion;
 }) {
-  const [canvasURI, setCanvasURI] = useState<string>(initCanvasURI ?? "");
+  const [canvasURI, setCanvasURI] = useState<string>(initCanvasURI ?? ""); // setters for future if we allow canvas and region reselection in the Sharing Options dialog.
   const [zoomRegion, setZoomRegion] = useState<ZoomRegion | undefined>(
     initZoomRegion,
   );
@@ -101,6 +115,7 @@ export function SharingOptions({
             type="checkbox"
             onClick={() => {
               setSpecifyCanvas(!specifyCanvas);
+              cons;
               setSharingLink(
                 updateSharingLink({
                   manifestId: manifestId,

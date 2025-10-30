@@ -232,6 +232,7 @@ export function ManifestPage({
               id: manifest.id,
               type: "object",
             }}
+            canvasSeqIdx={currentSequenceIndex}
             canvasURI={stateCanvasURI.current}
             zoomRegion={stateRegion.current}
             content={content}

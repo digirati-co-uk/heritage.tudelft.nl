@@ -39,6 +39,7 @@ export function SharingAndViewingLinks({
   resource,
   content,
   canvasURI,
+  canvasSeqIdx,
   zoomRegion,
 }: {
   resource: {
@@ -47,6 +48,7 @@ export function SharingAndViewingLinks({
   };
   content: SharingAndViewingLinksContent;
   canvasURI?: string;
+  canvasSeqIdx: number;
   zoomRegion?: ZoomRegion;
 }) {
   const [sharingExpanded, setSharingExpanded] = useState(false);
@@ -146,6 +148,7 @@ export function SharingAndViewingLinks({
                         <SharingOptions
                           manifestId={resource.id}
                           initCanvasURI={canvasURI}
+                          initCanvasSeqIdx={canvasSeqIdx}
                           initZoomRegion={zoomRegion}
                         />
                       </div>
