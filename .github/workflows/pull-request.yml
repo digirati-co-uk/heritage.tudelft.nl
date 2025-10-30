@@ -12,28 +12,24 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Setup bun.sh environment
-        uses: oven-sh/setup-bun@v1
+      - name: Setup node
+        uses: actions/setup-node@v1
         with:
-          bun-version: latest
+          node-version: 20
 
-      - name: Cache buns dependencies
-        uses: actions/cache@v4
+      - uses: pnpm/action-setup@v3
         with:
-          path: ~/.bun/install/cache
-          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-bun-
-
-      - name: Run bun install
-        run: bun install --frozen-lockfile
+          version: 9
+          run_install: |
+            - recursive: true
+              args: [--frozen-lockfile, --strict-peer-dependencies]
 
       - name: Build HSS
         working-directory: packages/headless-static-site
-        run: bun run build
+        run: pnpm run build
 
       - name: Link HSS CLI
-        run: bun install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       - name: Cache .iiif/cache
         uses: actions/cache@v4
@@ -47,9 +43,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: apps/static-site/.next/cache
-          key: ${{ runner.os }}-iiif-cache-${{ hashFiles('**/bun.lock') }}--${{ hashFiles('app/static-site/src/**/*.ts', 'app/static-site/src/**/*.tsx') }}
+          key: ${{ runner.os }}-iiif-cache-${{ hashFiles('**/pnpm-lock.yaml') }}--${{ hashFiles('app/static-site/src/**/*.ts', 'app/static-site/src/**/*.tsx') }}
           restore-keys: |
-            ${{ runner.os }}-iiif-cache-${{ hashFiles('**/bun.lock') }}
+            ${{ runner.os }}-iiif-cache-${{ hashFiles('**/pnpm-lock.yaml') }}
 
       - name: "Cleanup Netlify folder"
         run: |
