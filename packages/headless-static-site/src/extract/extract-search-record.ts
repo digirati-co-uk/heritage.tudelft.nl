@@ -9,7 +9,7 @@ export const extractSearchRecord: Extraction = {
   search: {
     // The name of the index is `manifests`, this extraction hooks in and extends the index.
     manifests: {
-      indices: true, // or list of valid ones.
+      allIndices: true,
       schema: {
         enable_nested_fields: true,
         fields: [

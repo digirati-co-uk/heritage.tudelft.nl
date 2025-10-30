@@ -225,6 +225,7 @@ export async function build(
         storeCollections: emitted.storeCollections,
         indexCollection: emitted.indexCollection,
         searchIndexes: enrichments.searchIndexes,
+        allIndices: enrichments.allIndices,
         siteMap: emitted.siteMap,
       },
       buildConfig

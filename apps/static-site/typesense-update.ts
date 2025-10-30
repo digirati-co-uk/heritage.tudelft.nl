@@ -36,12 +36,12 @@ async function readJsonFile(path: string) {
   return JSON.parse(await readFile(path, "utf-8"));
 }
 
-if (existsSync(join(IIIF_DIRECTORY, "meta/typesense/manifests.schema.json"))) {
+if (existsSync(join(IIIF_DIRECTORY, "meta/search/manifests.schema.json"))) {
   const schema = await readJsonFile(
-    join(IIIF_DIRECTORY, "/meta/typesense/manifests.schema.json"),
+    join(IIIF_DIRECTORY, "/meta/search/manifests.schema.json"),
   );
   const data = (
-    await readFile(join(IIIF_DIRECTORY, "/meta/typesense/manifests.jsonl"))
+    await readFile(join(IIIF_DIRECTORY, "/meta/search/manifests.jsonl"))
   ).toString();
 
   const jsonDocuments = data.split("\n").map((line) => JSON.parse(line));

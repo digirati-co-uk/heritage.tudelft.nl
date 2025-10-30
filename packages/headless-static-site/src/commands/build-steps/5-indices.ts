@@ -21,6 +21,7 @@ export async function indices(
     overrides,
     collections,
     searchIndexes,
+    allIndices,
   }: {
     allResources: Array<ActiveResourceJson>;
     indexCollection?: Record<string, any>;
@@ -31,6 +32,7 @@ export async function indices(
     overrides?: Record<string, string>;
     collections?: Record<string, string[]>;
     searchIndexes?: SearchIndexes;
+    allIndices?: Record<string, string[]>;
   },
   { options, server, buildDir, config, cacheDir, topicsDir, collectionRewrites, files }: BuildConfig
 ) {
@@ -300,10 +302,24 @@ export async function indices(
     await files.mkdir(searchRoot);
 
     const indexes = Object.keys(searchIndexes);
+    const allIndiciesKeys = Object.keys(allIndices || {});
     for (const index of indexes) {
       const searchIndex = searchIndexes[index];
       const schema = join(searchRoot, `${index}.schema.json`);
       const data = join(searchRoot, `${index}.jsonl`);
+      const indiciesToAddToIndex = searchIndex.allIndices ? allIndiciesKeys : searchIndex.indices || [];
+
+      // Need to add dynamic indices.
+      for (const indicesToAdd of indiciesToAddToIndex) {
+        if (allIndices?.[indicesToAdd]) {
+          searchIndex.schema.fields.push({
+            name: `topic_${indicesToAdd}`,
+            type: "string[]",
+            facet: true,
+            optional: true,
+          });
+        }
+      }
 
       await writeJson(schema, {
         name: index,
@@ -318,6 +334,8 @@ export async function indices(
   await writeJson(join(buildDir, "config", "slugs.json"), config.slugs || {});
 
   await writeJson(join(buildDir, "config", "stores.json"), config.stores);
+
+  await writeJson(join(buildDir, "meta/all-indices.json"), allIndices);
 
   if (siteMap) {
     await writeJson(join(buildDir, "meta/sitemap.json"), siteMap);

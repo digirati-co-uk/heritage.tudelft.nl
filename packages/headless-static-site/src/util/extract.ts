@@ -31,6 +31,7 @@ export type SearchIndexes = {
     records: Array<Record<string, any>>;
     keys: string[];
     indexName: string;
+    facets?: string[];
   };
 };
 
@@ -73,7 +74,8 @@ type SearchFieldType =
   | "auto";
 
 export interface SearchExtractionConfig {
-  indices: boolean; // @todo or list of valid ones.
+  allIndices?: boolean;
+  indices?: string[]; // @todo or list of valid ones.
   schema: {
     enable_nested_fields?: boolean;
     fields: Array<{
