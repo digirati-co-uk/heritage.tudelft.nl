@@ -53,7 +53,7 @@ jobs:
         id: netlify_iiif
         working-directory: apps/iiif
         run: |
-          deploy_json=$(npx netlify-cli@17.34.3 deploy \
+          deploy_json=$(npx netlify-cli@23.9.5 deploy \
             --build \
             --prod \
             --json \
@@ -68,7 +68,7 @@ jobs:
       - name: Static site Netlify deploy (production)
         id: netlify_static_site
         run: |
-          deploy_json=$(npx netlify-cli@17.34.3 deploy \
+          deploy_json=$(npx netlify-cli@23.9.5 deploy \
             --build \
             --json \
             --prod \

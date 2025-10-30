@@ -59,7 +59,7 @@ jobs:
         if: (contains(github.event.pull_request.labels.*.name, 'debug-build'))
         working-directory: apps/iiif
         run: |
-          npx netlify-cli@17.34.3 deploy \
+          npx netlify-cli@23.9.5 deploy \
             --build \
             --alias=deploy-debug-${{ github.event.number }} \
             --message="Deploy preview from GitHub Actions (debug)"
@@ -78,7 +78,7 @@ jobs:
         id: netlify_static_site_debug
         if: (contains(github.event.pull_request.labels.*.name, 'debug-build'))
         run: |
-          npx netlify-cli@17.34.3 deploy \
+          npx netlify-cli@23.9.5 deploy \
             --build \
             --filter=static-site \
             --alias=deploy-debug-${{ github.event.number }} \
@@ -100,7 +100,7 @@ jobs:
         if: (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy-preview'))
         working-directory: apps/iiif
         run: |
-          deploy_json=$(npx netlify-cli@17.34.3 deploy \
+          deploy_json=$(npx netlify-cli@23.9.5 deploy \
             --build \
             --alias=deploy-preview-${{ github.event.number }} \
             --json \
@@ -122,7 +122,7 @@ jobs:
         id: netlify_static_site
         if: (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy-preview'))
         run: |
-          deploy_json=$(npx netlify-cli@17.34.3 deploy \
+          deploy_json=$(npx netlify-cli@23.9.5 deploy \
             --build \
             --filter=static-site \
             --alias=deploy-preview-${{ github.event.number }} \
