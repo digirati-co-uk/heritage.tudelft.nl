@@ -1,111 +1,35 @@
 import { AutoLanguage } from "../pages/AutoLanguage";
-import { encodeContentState } from "@iiif/helpers";
+import {
+  type ZoomRegion,
+  updateStateSharingLink,
+  updateCustomSharingLink,
+} from "@/helpers/content-state";
 import { useState, useEffect } from "react";
 import { CopyToClipboard } from "../atoms/CopyToClipboard";
 import { CopyToClipboardIcon } from "../atoms/CopyToClipboardIcon";
 import { useAtlasStore } from "react-iiif-vault";
 import { useStore } from "zustand";
 
-export type ZoomRegion = {
-  x: number;
-  y: number;
-  width?: number;
-  height?: number;
-};
-
-function updateStateSharingLink({
-  manifestId,
-  canvasURI,
-  zoomRegion,
-}: {
-  manifestId: string;
-  canvasURI: string | undefined;
-  zoomRegion: ZoomRegion | undefined;
-}) {
-  console.log(canvasURI, zoomRegion);
-  return canvasURI
-    ? stateCreateAndEncode({
-        manifestId: manifestId,
-        canvasURI: canvasURI,
-        zoomRegion: zoomRegion,
-      })
-    : manifestId;
-}
-
-function updateCustomSharingLink({
-  manifestId,
-  canvasSeqIdx = 0,
-  zoomRegion,
-}: {
-  manifestId: string;
-  canvasSeqIdx: number;
-  zoomRegion: ZoomRegion | undefined;
-}) {
-  const canvasPart = canvasSeqIdx ? `?id=${canvasSeqIdx}` : "";
-  const regionPart = zoomRegion ? `xywh=${serialiseRegion(zoomRegion)}` : "";
-  const sep = canvasSeqIdx && zoomRegion ? "&" : zoomRegion ? "?" : "";
-  return `${manifestId}${canvasPart}${sep}${regionPart}`;
-}
-
-function serialiseRegion(zoomRegion: ZoomRegion | undefined) {
-  if (zoomRegion?.width && zoomRegion?.height) {
-    return `${zoomRegion.x},${zoomRegion.y},${zoomRegion.width},${zoomRegion.height}`;
-  }
-  return "";
-}
-
-function stateCreateAndEncode({
-  manifestId,
-  canvasURI,
-  zoomRegion,
-}: {
-  manifestId: string;
-  canvasURI: string | undefined;
-  zoomRegion: ZoomRegion | undefined;
-}) {
-  const state = {
-    "@context": "http://iiif.io/api/presentation/3/context.json",
-    id: "https://example.org/import/1",
-    type: "Annotation",
-    motivation: ["contentState"],
-    target: {
-      id: `${canvasURI}#xywh=${serialiseRegion(zoomRegion)}`,
-      type: "Canvas",
-      partOf: [
-        {
-          id: manifestId,
-          type: "Manifest",
-        },
-      ],
-    },
-  };
-  const stateStr = JSON.stringify(state);
-  const encoded = encodeContentState(stateStr);
-  const stateLink = `${manifestId}?iiif-content=${encoded}`;
-  console.log(stateLink);
-  return stateLink;
-}
-
 export function SharingOptions({
-  onChange,
+  //onChange,
   manifestId,
   initCanvasURI,
   initCanvasSeqIdx = 0,
   initZoomRegion,
 }: {
-  onChange: (
-    viewports: Record<
-      string,
-      { x: number; y: number; width: number; height: number }
-    >,
-  ) => void;
+  // onChange: (
+  //   viewports: Record<
+  //     string,
+  //     { x: number; y: number; width: number; height: number }
+  //   >,
+  // ) => void;
   manifestId: string;
   initCanvasURI?: string;
   initCanvasSeqIdx?: number;
-  initZoomRegion?: ZoomRegion;
+  initZoomRegion?: ZoomRegion | null;
 }) {
   const [canvasURI, setCanvasURI] = useState<string>(initCanvasURI ?? ""); // setters for future if we allow canvas and region reselection in the Sharing Options dialog.
-  const [zoomRegion, setZoomRegion] = useState<ZoomRegion | undefined>(
+  const [zoomRegion, setZoomRegion] = useState<ZoomRegion | null | undefined>(
     initZoomRegion,
   );
   const [stateSharingLink, setStateSharingLink] = useState<string>(manifestId);
@@ -117,9 +41,8 @@ export function SharingOptions({
   const canvasViewports = useStore(atlas, (s) => s.canvasViewports);
 
   useEffect(() => {
-    onChange(canvasViewports);
-    //console.log(canvasViewports);
-  }, [canvasViewports, onChange]);
+    setZoomRegion(canvasViewports[canvasURI]);
+  }, [canvasViewports]);
 
   useEffect(() => {
     const stateSharingLink = updateStateSharingLink({
@@ -139,44 +62,31 @@ export function SharingOptions({
   return (
     <div>
       <ul className="flex flex-col gap-3">
-        <li>
-          <h3>
-            <AutoLanguage>Sharing Link</AutoLanguage>
-          </h3>
+        <li className="flex flex-col gap-3">
+          <h2 className="text-xl">
+            <AutoLanguage>Share Link to this resource.</AutoLanguage>
+          </h2>
+          <span className="bg-gray-100 p-3">
+            <ul>
+              <li>
+                - Check the checkboxes for your link to open the current Canvas
+                and Zoom Region.
+              </li>
+              <li>
+                - Links can be shared in two formats:
+                <br />
+                <ul className="ml-2">
+                  <li>- Short link that can be used on this site only,</li>
+                  <li>
+                    - IIIF Content State; a longer link that can be viewed on
+                    this site, or in any IIIF viewer.
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </span>
         </li>
-        <li className="bg-gray-100 p-2 flex flex-col">
-          <CopyToClipboard
-            href={stateSharingLink}
-            copiedText="Copied!"
-            target="_blank"
-            className="pointer"
-          >
-            <div className="flex flex-row gap-2">
-              <CopyToClipboardIcon />
-              <span>IIIF Content State</span>
-            </div>
-          </CopyToClipboard>
-          <div className="min-h-12 flex flex-wrap border border-black p-2 break-all">
-            {stateSharingLink}
-          </div>
-        </li>
-        <li className="bg-gray-100 p-2 flex flex-col">
-          <CopyToClipboard
-            href={stateSharingLink}
-            copiedText="Copied!"
-            target="_blank"
-            className="pointer"
-          >
-            <div className="flex flex-row gap-2">
-              <CopyToClipboardIcon />
-              <span>id and region parameters</span>
-            </div>
-          </CopyToClipboard>
-          <div className="min-h-12 flex flex-wrap border border-black p-2 break-all">
-            {customSharingLink}
-          </div>
-        </li>
-        <li className="flex flex-row gap-2">
+        <li className="flex flex-row gap-2 ml-4">
           <input
             type="checkbox"
             onClick={() => {
@@ -186,7 +96,7 @@ export function SharingOptions({
           Include current canvas {specifyCanvas.toString()}
           {canvasURI && <div>{canvasURI}</div>}
         </li>
-        <li className="flex flex-row gap-2">
+        <li className="flex flex-row gap-2 ml-4">
           <input
             type="checkbox"
             onClick={() => {
@@ -200,6 +110,40 @@ export function SharingOptions({
               {zoomRegion?.height}
             </span>
           )}
+        </li>
+        <li className="bg-gray-100 p-3 flex flex-col">
+          <CopyToClipboard
+            href={stateSharingLink}
+            copiedText="Copied!"
+            target="_blank"
+            className="pointer"
+            rel="noreferrer"
+          >
+            <div className="flex flex-row gap-2">
+              <CopyToClipboardIcon />
+              <span>Short link for use on this site (copy to clipboard)</span>
+            </div>
+          </CopyToClipboard>
+          <div className="min-h-12 flex flex-wrap border border-black p-2 break-all">
+            {customSharingLink}
+          </div>
+        </li>
+        <li className="bg-gray-100 p-3 flex flex-col">
+          <CopyToClipboard
+            href={stateSharingLink}
+            copiedText="Copied!"
+            target="_blank"
+            className="pointer"
+            rel="noreferrer"
+          >
+            <div className="flex flex-row gap-2">
+              <CopyToClipboardIcon />
+              <span>IIIF Content State (copy to clipboard)</span>
+            </div>
+          </CopyToClipboard>
+          <div className="min-h-12 flex flex-wrap border border-black p-2 break-all">
+            {stateSharingLink}
+          </div>
         </li>
       </ul>
     </div>

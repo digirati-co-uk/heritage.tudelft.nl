@@ -9,7 +9,7 @@ import {
 import { getValue } from "@iiif/helpers/i18n";
 import type { InternationalString, Manifest } from "@iiif/presentation-3";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   CanvasPanel,
   useSimpleViewer,
@@ -26,6 +26,7 @@ import { ViewerZoomControls } from "../iiif/ViewerZoomControls";
 import { AutoLanguage } from "./AutoLanguage";
 import { parseXywh } from "@/helpers/content-state";
 import type { ZoomRegion } from "@/helpers/content-state";
+import { SharingOptionsDialog } from "../iiif/SharingOptionsDialog";
 
 interface ManifestPageProps {
   manifest: Manifest;
@@ -84,12 +85,15 @@ export function ManifestPage({
   const previousSeqIndex = useRef(currentSequenceIndex);
   const atlas = useRef<Preset | null>(null);
   const stateRegion = useRef<ZoomRegion | null>(null);
+  const [sharingOptionsOpen, setSharingOptionsOpen] = useState<boolean>(false);
   const searchParams = useSearchParams();
   const contentState = searchParams.get("iiif-content");
   const canvasId = searchParams.get("c");
   const xywh = searchParams.get("xywh");
 
   function setRegion(xyzh: string) {}
+
+  console.log("sharingOptionsOpen", sharingOptionsOpen);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Needs to run when currentSequenceIndex changes.
   useEffect(() => {
@@ -158,6 +162,16 @@ export function ManifestPage({
 
   return (
     <AtlasStoreProvider>
+      {sharingOptionsOpen && (
+        <SharingOptionsDialog
+          manifestId={manifest.id}
+          canvasURI={manifest.items?.[currentSequenceIndex]?.id}
+          canvasSeqIdx={currentSequenceIndex}
+          zoomRegion={stateRegion.current}
+          sharingOptionsOpen={sharingOptionsOpen}
+          setSharingOptionsOpen={setSharingOptionsOpen}
+        />
+      )}
       <div>
         <h1 className="mb-4 text-4xl font-medium">
           <AutoLanguage>{manifest.label || content.untitled}</AutoLanguage>
@@ -252,10 +266,9 @@ export function ManifestPage({
                 id: manifest.id,
                 type: "object",
               }}
-              canvasSeqIdx={currentSequenceIndex}
-              canvasURI={manifest.items?.[currentSequenceIndex]?.id}
-              zoomRegion={stateRegion.current}
               content={content}
+              sharingOptionsOpen={sharingOptionsOpen}
+              setSharingOptionsOpen={setSharingOptionsOpen}
             />
 
             <RangeNavigation content={content} />

@@ -1,3 +1,5 @@
+import { encodeContentState } from "@iiif/helpers";
+
 export type ZoomRegion = {
   x: number;
   y: number;
@@ -18,4 +20,77 @@ export function parseXywh(xywh: string) {
     };
   }
   return undefined;
+}
+
+export function updateStateSharingLink({
+  manifestId,
+  canvasURI,
+  zoomRegion,
+}: {
+  manifestId: string;
+  canvasURI: string | undefined;
+  zoomRegion: ZoomRegion | null | undefined;
+}) {
+  console.log(canvasURI, zoomRegion);
+  return canvasURI
+    ? stateCreateAndEncode({
+        manifestId: manifestId,
+        canvasURI: canvasURI,
+        zoomRegion: zoomRegion,
+      })
+    : manifestId;
+}
+
+export function updateCustomSharingLink({
+  manifestId,
+  canvasSeqIdx = 0,
+  zoomRegion,
+}: {
+  manifestId: string;
+  canvasSeqIdx: number;
+  zoomRegion: ZoomRegion | null | undefined;
+}) {
+  const canvasPart = canvasSeqIdx ? `?id=${canvasSeqIdx}` : "";
+  const regionPart = zoomRegion ? `xywh=${serialiseRegion(zoomRegion)}` : "";
+  const sep = canvasSeqIdx && zoomRegion ? "&" : zoomRegion ? "?" : "";
+  return `${manifestId}${canvasPart}${sep}${regionPart}`;
+}
+
+function serialiseRegion(zoomRegion: ZoomRegion | null | undefined) {
+  if (zoomRegion?.width && zoomRegion?.height) {
+    return `${zoomRegion.x},${zoomRegion.y},${zoomRegion.width},${zoomRegion.height}`;
+  }
+  return "";
+}
+
+function stateCreateAndEncode({
+  manifestId,
+  canvasURI,
+  zoomRegion,
+}: {
+  manifestId: string;
+  canvasURI: string | undefined;
+  zoomRegion: ZoomRegion | null | undefined;
+}) {
+  const state = {
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    id: "https://example.org/import/1",
+    type: "Annotation",
+    motivation: ["contentState"],
+    target: {
+      id: `${canvasURI}#xywh=${serialiseRegion(zoomRegion)}`,
+      type: "Canvas",
+      partOf: [
+        {
+          id: manifestId,
+          type: "Manifest",
+        },
+      ],
+    },
+  };
+  const stateStr = JSON.stringify(state);
+  const encoded = encodeContentState(stateStr);
+  const stateLink = `${manifestId}?iiif-content=${encoded}`;
+  console.log(stateLink);
+  return stateLink;
 }

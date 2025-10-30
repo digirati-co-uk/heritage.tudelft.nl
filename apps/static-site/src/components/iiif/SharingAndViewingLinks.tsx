@@ -5,9 +5,6 @@ import { CopyToClipboard } from "../atoms/CopyToClipboard";
 import { EditInManifestEditor } from "../atoms/EditInManifestEditor";
 import { AutoLanguage } from "../pages/AutoLanguage";
 import { IIIFLogo } from "./IIIFLogo";
-import { type ZoomRegion, SharingOptions } from "./SharingOptions";
-import { Dialog } from "@headlessui/react";
-import { CloseIcon } from "../atoms/CloseIcon";
 
 export type SharingAndViewingLinksContent = {
   sharingViewers: string;
@@ -38,21 +35,18 @@ export function LinkIcon(props: SVGProps<SVGSVGElement>) {
 export function SharingAndViewingLinks({
   resource,
   content,
-  canvasURI,
-  canvasSeqIdx,
-  zoomRegion,
+  sharingOptionsOpen,
+  setSharingOptionsOpen,
 }: {
   resource: {
     id: string;
     type: string;
   };
   content: SharingAndViewingLinksContent;
-  canvasURI?: string;
-  canvasSeqIdx: number;
-  zoomRegion?: ZoomRegion;
+  sharingOptionsOpen: boolean;
+  setSharingOptionsOpen: (open: boolean) => void;
 }) {
   const [sharingExpanded, setSharingExpanded] = useState(false);
-  const [sharingOptionsOpen, setSharingOptionsOpen] = useState(false);
   const configuredViewers = viewerConfig.viewers.filter((viewer) =>
     viewer.enabled?.includes(resource.type),
   );
@@ -128,32 +122,6 @@ export function SharingAndViewingLinks({
                 >
                   <AutoLanguage>Sharing options</AutoLanguage>
                 </button>
-                <Dialog
-                  className="relative z-50"
-                  open={sharingOptionsOpen}
-                  onClose={() => setSharingOptionsOpen(false)}
-                >
-                  <div className="fixed inset-0 bg-black/30 flex flex-row" />
-                  <div className="w-[50vw] h-96] fixed inset-0 justify-self-center p-4">
-                    <button
-                      className="absolute right-8 top-8 z-20 flex h-12 w-12 items-center justify-center rounded"
-                      onClick={() => setSharingOptionsOpen(false)}
-                    >
-                      <CloseIcon />
-                    </button>
-                    <Dialog.Panel className="relative flex h-full w-full flex-col justify-center overflow-y-auto overflow-x-hidden rounded bg-white">
-                      <div className="min-h-0 flex-1 p-4 mt-8">
-                        <SharingOptions
-                          manifestId={resource.id}
-                          initCanvasURI={canvasURI}
-                          initCanvasSeqIdx={canvasSeqIdx}
-                          initZoomRegion={zoomRegion}
-                          onChange={(changed) => console.log(changed)}
-                        />
-                      </div>
-                    </Dialog.Panel>
-                  </div>
-                </Dialog>
               </li>
               {configuredViewers.length > viewerConfig.showMax ? (
                 <li className="mt-4">
