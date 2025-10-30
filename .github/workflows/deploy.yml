@@ -14,18 +14,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Setup node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: "pnpm"
-
       - uses: pnpm/action-setup@v3
         with:
           version: 9
           run_install: |
             - recursive: true
               args: [--frozen-lockfile, --strict-peer-dependencies]
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
 
       - name: Build HSS
         working-directory: packages/headless-static-site
@@ -34,10 +39,12 @@ jobs:
       - name: Link HSS CLI
         run: pnpm install --frozen-lockfile
 
-      - name: Cache Next.js build cache
-        uses: actions/cache@v4
+      - uses: actions/cache@v4
         with:
-          path: apps/static-site/.next/cache
+          path: |
+            ${{ env.STORE_PATH }}
+            ${{ github.workspace }}/apps/docs/.next/cache
+            ${{ github.workspace }}/apps/static-site/.next/cache
           key: ${{ runner.os }}-iiif-cache-${{ hashFiles('**/pnpm-lock.yaml') }}--${{ hashFiles('app/static-site/src/**/*.ts', 'app/static-site/src/**/*.tsx') }}
           restore-keys: |
             ${{ runner.os }}-iiif-cache-${{ hashFiles('**/pnpm-lock.yaml') }}
