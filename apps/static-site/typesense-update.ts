@@ -5,13 +5,13 @@ import { argv, cwd } from "node:process";
 import Typesense from "typesense";
 import { allPublications } from "./.contentlayer/generated/index.mjs";
 
-const TYPESENSE_API_KEY = process.env["TYPESENSE_API_KEY"] || "xyz";
-const TYPESENSE_HOST = process.env["TYPESENSE_HOST"] || "localhost";
-const TYPESENSE_PORT = process.env["TYPESENSE_PORT"]
-  ? Number.parseInt(process.env["TYPESENSE_PORT"])
+const TYPESENSE_API_KEY = process.env.TYPESENSE_API_KEY || "xyz";
+const TYPESENSE_HOST = process.env.TYPESENSE_HOST || "localhost";
+const TYPESENSE_PORT = process.env.TYPESENSE_PORT
+  ? Number.parseInt(process.env.TYPESENSE_PORT)
   : 8108;
-const TYPESENSE_PROTOCOL = process.env["TYPESENSE_PROTOCOL"] || "http";
-const INDEX_NAME = process.env["TYPESENSE_COLLECTION_NAME"] || "manifests";
+const TYPESENSE_PROTOCOL = process.env.TYPESENSE_PROTOCOL || "http";
+const INDEX_NAME = process.env.TYPESENSE_COLLECTION_NAME || "manifests";
 
 export const typesenseServerConfig = {
   apiKey: TYPESENSE_API_KEY,

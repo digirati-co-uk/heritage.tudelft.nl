@@ -32,7 +32,7 @@
   "packageManager": "pnpm@9.12.1",
   "pnpm": {
     "overrides": {
-      "react-iiif-vault": "2.0.4",
+      "react-iiif-vault": "2.0.5",
       "@iiif/parser": "2.2.5",
       "@iiif/helpers": "^1.5.4",
       "react": "19.2.0",
@@ -52,10 +52,7 @@
       "@page-blocks/web-components": "https://pkg.csb.dev/stephenwf/page-blocks/commit/782f897a/@page-blocks/web-components/_pkg.tgz"
     }
   },
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
+  "workspaces": ["apps/*", "packages/*"],
   "dependencies": {
     "bun-types": "*",
     "@atlas-viewer/atlas": "^3.0.0",

@@ -1,20 +1,20 @@
+import { facetConfig } from "@/facets";
 import manifestSchema from "@repo/iiif/build/meta/search/manifests.schema.json";
 import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter";
 
 const TYPESENSE_API_KEY =
-  process.env["NEXT_PUBLIC_TYPESENSE_API_KEY"] ||
+  process.env.NEXT_PUBLIC_TYPESENSE_API_KEY ||
   "8EOitKCMTbxUKPZNqUEoQS9M2RGvpkZS";
 const TYPESENSE_HOST =
-  process.env["NEXT_PUBLIC_TYPESENSE_HOST"] ||
+  process.env.NEXT_PUBLIC_TYPESENSE_HOST ||
   "63flhve71t2un5xgp.a1.typesense.net";
-const TYPESENSE_PORT = process.env["NEXT_PUBLIC_TYPESENSE_PORT"]
-  ? Number.parseInt(process.env["NEXT_PUBLIC_TYPESENSE_PORT"])
+const TYPESENSE_PORT = process.env.NEXT_PUBLIC_TYPESENSE_PORT
+  ? Number.parseInt(process.env.NEXT_PUBLIC_TYPESENSE_PORT)
   : 443;
 const TYPESENSE_PROTOCOL =
-  process.env["NEXT_PUBLIC_TYPESENSE_PROTOCOL"] || "https";
+  process.env.NEXT_PUBLIC_TYPESENSE_PROTOCOL || "https";
 const TYPESENSE_COLLECTION_NAME =
-  process.env["NEXT_PUBLIC_TYPESENSE_COLLECTION_NAME"] ||
-  "production-manifests";
+  process.env.NEXT_PUBLIC_TYPESENSE_COLLECTION_NAME || "production-manifests";
 
 export const typesenseServerConfig = {
   apiKey: TYPESENSE_API_KEY,
@@ -28,17 +28,43 @@ export const typesenseServerConfig = {
 };
 
 export function createTypesense() {
-  const facets = manifestSchema.fields
+  // Get all topic fields from schema
+  const allTopicFields = manifestSchema.fields
     .map((field) => {
       if (!field.name.startsWith("topic_")) return false;
       return field.name;
     })
     .filter((t) => t) as string[];
 
+  // Apply facet config filtering and ordering
+  const facets = allTopicFields
+    .map((field) => field.replace("topic_", "")) // Remove topic_ prefix for config matching
+    .filter((facet) => !facetConfig.exclude.includes(facet)); // Apply exclusions
+
+  // Apply ordering based on facetConfig.order
+  const orderedFacets: string[] = [];
+  const unorderedFacets: string[] = [];
+
+  // First, add facets in the specified order
+  for (const orderedFacet of facetConfig.order) {
+    if (facets.includes(orderedFacet)) {
+      orderedFacets.push(`topic_${orderedFacet}`);
+    }
+  }
+
+  // Then, add remaining facets that weren't in the order config
+  for (const facet of facets) {
+    if (!facetConfig.order.includes(facet)) {
+      unorderedFacets.push(`topic_${facet}`);
+    }
+  }
+
+  const finalFacets = [...orderedFacets, ...unorderedFacets];
+
   const client = new TypesenseInstantSearchAdapter({
     server: typesenseServerConfig,
     additionalSearchParameters: {
-      query_by: `label,summary,type,plaintext,${facets.join(",")}`,
+      query_by: `label,summary,type,plaintext,${finalFacets.join(",")}`,
       highlight_fields: "label,summary",
       highlight_start_tag: "<mark>",
       highlight_end_tag: "</mark>",
@@ -46,7 +72,8 @@ export function createTypesense() {
   });
 
   return {
-    facets,
+    facets: finalFacets,
+    facetConfig,
     client,
     index: TYPESENSE_COLLECTION_NAME,
   };
