@@ -18,6 +18,7 @@ import {
   parseContentState,
   validateContentState,
   normaliseContentState,
+  ContentState,
 } from "@iiif/helpers";
 import { useSearchParams } from "next/navigation";
 
@@ -85,6 +86,7 @@ export function ManifestPage({
   const atlas = useRef<Preset>();
   const stateRegion = useRef<ZoomRegion>(null);
   const searchParams = useSearchParams();
+  const contentState = searchParams.get("iiif-content");
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Needs to run when currentSequenceIndex changes.
   useEffect(() => {
@@ -99,22 +101,36 @@ export function ManifestPage({
   }, [currentSequenceIndex]);
 
   useEffect(() => {
-    const state = searchParams.get("iiif-content");
-    let parsedState;
-    if (state) {
-      try {
-        parsedState = state && parseContentState(state);
-      } catch {
-        // ignore bad iiif-content param
+    if (!contentState) return;
+
+    try {
+      const parsedState = parseContentState(contentState);
+      if (!validateContentState(parsedState)) return;
+
+      const normalisedState = normaliseContentState(parsedState);
+      const mainTarget = normalisedState.target[0];
+      if (!mainTarget) return;
+
+      if (mainTarget.source.type !== "Canvas") return;
+
+      // Grab the Canvas ID and optional Manifest ID from the content state
+      const stateCanvasId = mainTarget.source.id;
+      const stateManifestId = mainTarget.source.partOf?.[0]?.id;
+
+      // Manifest doesn't match the current manifest
+      if (stateManifestId && stateManifestId !== manifest.id) return;
+
+      // We can apply the content state now.
+      setCurrentCanvasId(stateCanvasId);
+      if (mainTarget.selector?.spatial) {
+        // We have a valid region to go to.
+        // Note: this could technically be a "point" which wouldn't have a height/width.
+        stateRegion.current = mainTarget.selector.spatial as ZoomRegion;
       }
+    } catch {
+      // ignore bad iiif-content param
     }
-    const isStateValid = parsedState && validateContentState(parsedState);
-    const normalisedState =
-      isStateValid && parsedState && normaliseContentState(parsedState);
-    const stateCanvasId = normalisedState?.target[0].source.id;
-    setCurrentCanvasId(stateCanvasId);
-    stateRegion.current = normalisedState?.target[0].selector.spatial;
-  }, []);
+  }, [manifest.id, contentState, setCurrentCanvasId]);
 
   return (
     <div>
