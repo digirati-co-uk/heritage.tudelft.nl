@@ -119,19 +119,6 @@ stores:
       - wellcome-collection
       - wellcome-manifest
 
-file_templates:
-  plaintext.txt:
-    type: "Text"
-    format: "text/plain"
-    label: "View raw text"
-    property: rendering
-  dataset.json:
-    type: "Dataset"
-    format: "application/json"
-    profile: "https://api.wellcomecollection.org/catalogue/v2/context.json"
-    label: "Wellcome Collection Catalogue API"
-    property: seeAlso
-
 
 config:
   extract-label-string:
@@ -139,6 +126,20 @@ config:
 
   manifest-sqlite:
     enableTopics: true
+
+  extract-files-list:
+    file_templates:
+      plaintext.txt:
+        type: "Text"
+        format: "text/plain"
+        label: "View raw text"
+        property: rendering
+      dataset.json:
+        type: "Dataset"
+        format: "application/json"
+        profile: "https://api.wellcomecollection.org/catalogue/v2/context.json"
+        label: "Wellcome Collection Catalogue API"
+        property: seeAlso
 
 slugs:
   wellcome-manifest:

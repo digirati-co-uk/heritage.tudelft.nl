@@ -1,9 +1,11 @@
-import { statSync } from "fs";
+import { existsSync, statSync } from "node:fs";
+import fs from "node:fs/promises";
+import { join } from "node:path";
 import type { Extraction } from "../util/extract.ts";
-import fs from "fs/promises";
-import { join } from "path";
 
-export const extractFilesList: Extraction = {
+export const extractFilesList: Extraction<{
+  file_templates: Record<string, any>;
+}> = {
   id: "extract-files-list",
   name: "Extract files list",
   types: ["Manifest", "Canvas"],
@@ -11,9 +13,9 @@ export const extractFilesList: Extraction = {
     const cache = await api.caches.value;
     return !cache.dims;
   },
-  async handler(manifest, api) {
+  async handler(manifest, api, config) {
     const filesDir = join(api.build.cacheDir, manifest.slug, "files");
-    const filesExist = await fs.exists(filesDir);
+    const filesExist = existsSync(filesDir);
 
     if (filesExist) {
       const files = await fs.readdir(filesDir, { recursive: true });
@@ -29,12 +31,13 @@ export const extractFilesList: Extraction = {
         return true;
       });
 
-      if (api.config.file_templates) {
+      if (config.file_templates) {
         const filesDetail: Record<string, any> = {};
         for (const file of files) {
           const fileName = file.split("/").pop() || file;
+          console.log("filename", fileName);
           if (!fileName) continue;
-          const detail = api.config.file_templates[fileName];
+          const detail = config.file_templates[fileName];
           if (detail) {
             filesDetail[file] = {
               id: file,

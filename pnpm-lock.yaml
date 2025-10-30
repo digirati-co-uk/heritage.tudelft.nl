@@ -231,6 +231,9 @@ importers:
       zod:
         specifier: ^3.22.4
         version: 3.25.76
+      zustand:
+        specifier: ^4.5.2
+        version: 4.5.7(@types/react@19.2.2)(react@19.2.0)
     devDependencies:
       '@netlify/plugin-nextjs':
         specifier: ^5.14.4
@@ -337,7 +340,7 @@ importers:
         version: 5.2.1
       '@vitejs/plugin-react':
         specifier: ^4.3.4
-        version: 4.7.0(vite@6.4.1(@types/node@20.19.24)(jiti@1.21.7)(yaml@2.8.1))
+        version: 4.7.0(vite@6.4.1(@types/node@20.19.24)(jiti@2.6.1)(yaml@2.8.1))
       publint:
         specifier: ^0.3.2
         version: 0.3.15
@@ -349,7 +352,7 @@ importers:
         version: 0.15.11(publint@0.3.15)(typescript@5.9.3)
       vite:
         specifier: ^6.0.7
-        version: 6.4.1(@types/node@20.19.24)(jiti@1.21.7)(yaml@2.8.1)
+        version: 6.4.1(@types/node@20.19.24)(jiti@2.6.1)(yaml@2.8.1)
 
   packages/headless-static-site:
     dependencies:
@@ -9108,7 +9111,7 @@ snapshots:
       media-captions: 1.0.4
       react: 19.2.0
 
-  '@vitejs/plugin-react@4.7.0(vite@6.4.1(@types/node@20.19.24)(jiti@1.21.7)(yaml@2.8.1))':
+  '@vitejs/plugin-react@4.7.0(vite@6.4.1(@types/node@20.19.24)(jiti@2.6.1)(yaml@2.8.1))':
     dependencies:
       '@babel/core': 7.28.5
       '@babel/plugin-transform-react-jsx-self': 7.27.1(@babel/core@7.28.5)
@@ -9116,7 +9119,7 @@ snapshots:
       '@rolldown/pluginutils': 1.0.0-beta.27
       '@types/babel__core': 7.20.5
       react-refresh: 0.17.0
-      vite: 6.4.1(@types/node@20.19.24)(jiti@1.21.7)(yaml@2.8.1)
+      vite: 6.4.1(@types/node@20.19.24)(jiti@2.6.1)(yaml@2.8.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -13284,7 +13287,7 @@ snapshots:
       '@types/node': 20.19.24
       fsevents: 2.3.3
 
-  vite@6.4.1(@types/node@20.19.24)(jiti@1.21.7)(yaml@2.8.1):
+  vite@6.4.1(@types/node@20.19.24)(jiti@2.6.1)(yaml@2.8.1):
     dependencies:
       esbuild: 0.25.11
       fdir: 6.5.0(picomatch@4.0.3)
@@ -13295,7 +13298,7 @@ snapshots:
     optionalDependencies:
       '@types/node': 20.19.24
       fsevents: 2.3.3
-      jiti: 1.21.7
+      jiti: 2.6.1
       yaml: 2.8.1
 
   vitest@2.1.9(@types/node@20.19.24)(jsdom@22.1.0):

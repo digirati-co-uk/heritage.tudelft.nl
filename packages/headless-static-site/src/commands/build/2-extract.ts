@@ -99,9 +99,11 @@ export async function extract(
           // log(`Skipping ${extraction.id} for ${manifest.slug}`);
           continue;
         }
+        const extractionConfig = config.config?.[extraction.id];
         const storeConfig = extractionConfigs[extraction.id] || {};
         const extractConfig = Object.assign(
           {},
+          extractionConfig,
           storeConfig,
           config.stores[manifest.storeId].config?.[extraction.id] || {}
         );
