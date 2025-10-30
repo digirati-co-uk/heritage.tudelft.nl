@@ -6,6 +6,7 @@ import { ImageServiceLoader } from "@atlas-viewer/iiif-image-api";
 import chalk from "chalk";
 import { IIIFJSONStore } from "../stores/iiif-json";
 import { IIIFRemoteStore } from "../stores/iiif-remote";
+import { combineSearchConfigs } from "./combine-search-configs";
 import type { Enrichment } from "./enrich";
 import type { Extraction } from "./extract";
 import { FileHandler } from "./file-handler";
@@ -179,11 +180,44 @@ export async function getBuildConfig(options: BuildOptions, builtIns: BuildBuilt
     return `${configUrl}/${slug}/${type.toLowerCase()}.json`;
   };
 
+  // Search.
+  const searchIndexes = [];
+  let defaultIndex = null;
+  if (config.search) {
+    for (const index of config.search.indexNames || []) {
+      if (index === "manifest") {
+        defaultIndex = "manifest";
+      }
+      const searchConfigs = [];
+      for (const extraction of extractions) {
+        if (extraction.search?.[index]) {
+          searchConfigs.push(extraction.search[index]);
+        }
+      }
+      for (const enrichment of enrichments) {
+        if (enrichment.search?.[index]) {
+          searchConfigs.push(enrichment.search[index]);
+        }
+      }
+      if (searchConfigs.length) {
+        searchIndexes.push(combineSearchConfigs(index, searchConfigs));
+      }
+    }
+  }
+
+  const search = {
+    indexNames: config.search?.indexNames || defaultIndex ? [defaultIndex as string] : [],
+    defaultIndex: config.search?.defaultIndex || defaultIndex,
+    indexes: searchIndexes,
+    emitRecord: config.search?.emitRecord || false,
+  };
+
   return {
     files,
     options,
     server,
     configUrl,
+    search,
     config,
     extractions,
     allRewrites,

@@ -13,7 +13,6 @@ run:
   - manifest-sqlite
   - metadata-analysis
   - folder-collections
-  - typesense-manifests
   - extract-files-list
   - enrich-files-rewrite
 
@@ -128,7 +127,7 @@ config:
     enableTopics: true
 
   extract-files-list:
-    file_templates:
+    fileTemplates:
       plaintext.txt:
         type: "Text"
         format: "text/plain"

@@ -4,7 +4,7 @@ import { join } from "node:path";
 import type { Extraction } from "../util/extract.ts";
 
 export const extractFilesList: Extraction<{
-  file_templates: Record<string, any>;
+  fileTemplates: Record<string, any>;
 }> = {
   id: "extract-files-list",
   name: "Extract files list",
@@ -31,13 +31,12 @@ export const extractFilesList: Extraction<{
         return true;
       });
 
-      if (config.file_templates) {
+      if (config.fileTemplates) {
         const filesDetail: Record<string, any> = {};
         for (const file of files) {
           const fileName = file.split("/").pop() || file;
-          console.log("filename", fileName);
           if (!fileName) continue;
-          const detail = config.file_templates[fileName];
+          const detail = config.fileTemplates[fileName];
           if (detail) {
             filesDetail[file] = {
               id: file,

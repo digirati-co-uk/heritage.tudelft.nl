@@ -16,8 +16,12 @@ run:
   - metadata-analysis
   - site-collections
   - delft-image-source
-  - typesense-manifests
+  - extract-search-record
 
+search:
+  indexNames: ["manifests"]
+  defaultIndex: manifests
+  emitRecord: true
 
 collections:
   index:
@@ -29,7 +33,7 @@ config:
     height: 1080
 
   extract-files-list:
-    file_templates:
+    fileTemplates:
       schema.json:
         _injectId: '@id'
         type: "Dataset"

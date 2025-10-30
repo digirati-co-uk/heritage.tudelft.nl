@@ -8,6 +8,7 @@ export const run = base.run;
 export const collections = base.collections;
 export const stores = base.stores;
 export const config = base.config;
+export const search = base.search;
 
 const url = env["IIIF_PREVIEW_URL"] || env["IIIF_URL"] || "http://localhost:3000";
 

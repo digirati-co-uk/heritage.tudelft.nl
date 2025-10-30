@@ -4,6 +4,7 @@ import type { Collection } from "@iiif/presentation-3";
 import slug from "slug";
 import { stringify } from "yaml";
 import { createCollection } from "../../util/create-collection.ts";
+import type { SearchIndexes } from "../../util/extract.ts";
 import { loadJson } from "../../util/load-json.ts";
 import type { ActiveResourceJson } from "../../util/store.ts";
 import type { BuildConfig } from "../build.ts";
@@ -19,6 +20,7 @@ export async function indices(
     editable,
     overrides,
     collections,
+    searchIndexes,
   }: {
     allResources: Array<ActiveResourceJson>;
     indexCollection?: Record<string, any>;
@@ -28,6 +30,7 @@ export async function indices(
     editable?: Record<string, string>;
     overrides?: Record<string, string>;
     collections?: Record<string, string[]>;
+    searchIndexes?: SearchIndexes;
   },
   { options, server, buildDir, config, cacheDir, topicsDir, collectionRewrites, files }: BuildConfig
 ) {
@@ -289,6 +292,25 @@ export async function indices(
     await writeJson(join(buildDir, "collections/collection.json"), topLevelCollectionJson);
 
     await Promise.all(storeCollectionsJson);
+  }
+
+  // Search indexes.
+  if (searchIndexes) {
+    const searchRoot = join(buildDir, "meta/search");
+    await files.mkdir(searchRoot);
+
+    const indexes = Object.keys(searchIndexes);
+    for (const index of indexes) {
+      const searchIndex = searchIndexes[index];
+      const schema = join(searchRoot, `${index}.schema.json`);
+      const data = join(searchRoot, `${index}.jsonl`);
+
+      await writeJson(schema, {
+        name: index,
+        ...searchIndex.schema,
+      });
+      await files.writeFile(data, searchIndex.records.map((record) => JSON.stringify(record)).join("\n"));
+    }
   }
 
   // Standard files
