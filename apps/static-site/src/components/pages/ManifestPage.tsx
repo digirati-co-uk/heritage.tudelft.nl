@@ -131,7 +131,7 @@ export function ManifestPage({
           onCreated={(preset) => {
             atlas.current = preset;
             if (stateRegion.current) {
-              atlas.current?.runtime.world.gotoRegion(stateRegion.current);
+              preset.runtime.world.gotoRegion(stateRegion.current);
             }
           }}
           htmlChildren={null}
