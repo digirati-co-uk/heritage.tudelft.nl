@@ -54,7 +54,7 @@ extract(
               for (const item of toAdd) {
                 const wasFound =
                   (linkMapping[manifest] || []).find((i) => i.service === link) ||
-                  toAdd.find((i) => i.service === item.service);
+                  toLink.find((i) => i.service === item.service);
 
                 if (!wasFound) {
                   // Maybe this is wrong..
