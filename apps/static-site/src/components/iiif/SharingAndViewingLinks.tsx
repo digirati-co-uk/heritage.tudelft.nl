@@ -148,6 +148,7 @@ export function SharingAndViewingLinks({
                           initCanvasURI={canvasURI}
                           initCanvasSeqIdx={canvasSeqIdx}
                           initZoomRegion={zoomRegion}
+                          onChange={(changed) => console.log(changed)}
                         />
                       </div>
                     </Dialog.Panel>

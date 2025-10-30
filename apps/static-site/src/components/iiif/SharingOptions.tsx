@@ -4,6 +4,8 @@ import { Checkbox } from "../atoms/Checkbox";
 import { useState, useEffect } from "react";
 import { CopyToClipboard } from "../atoms/CopyToClipboard";
 import { CopyToClipboardIcon } from "../atoms/CopyToClipboardIcon";
+import { useAtlasStore } from "react-iiif-vault";
+import { useStore } from "zustand";
 
 export type ZoomRegion = {
   x: number;
@@ -86,11 +88,18 @@ function stateCreateAndEncode({
 }
 
 export function SharingOptions({
+  onChange,
   manifestId,
   initCanvasURI,
   initCanvasSeqIdx = 0,
   initZoomRegion,
 }: {
+  onChange: (
+    viewports: Record<
+      string,
+      { x: number; y: number; width: number; height: number }
+    >,
+  ) => void;
   manifestId: string;
   initCanvasURI?: string;
   initCanvasSeqIdx?: number;
@@ -105,6 +114,13 @@ export function SharingOptions({
     useState<string>(manifestId);
   const [specifyCanvas, setSpecifyCanvas] = useState<boolean>(false);
   const [specifyRegion, setSpecifyRegion] = useState<boolean>(false);
+  const atlas = useAtlasStore();
+  const canvasViewports = useStore(atlas, (s) => s.canvasViewports);
+
+  useEffect(() => {
+    onChange(canvasViewports);
+    //console.log(canvasViewports);
+  }, [canvasViewports, onChange]);
 
   useEffect(() => {
     const stateSharingLink = updateStateSharingLink({
