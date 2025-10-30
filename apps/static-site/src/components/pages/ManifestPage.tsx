@@ -20,6 +20,7 @@ import {
   normaliseContentState,
 } from "@iiif/helpers";
 import { useSearchParams } from "next/navigation";
+import { MenuItem } from "react-aria-components";
 
 type ZoomRegion = {
   x: number;
@@ -98,7 +99,7 @@ export function ManifestPage({
   const { currentSequenceIndex, setCurrentCanvasId } = context;
   const previousSeqIndex = useRef(currentSequenceIndex);
   const atlas = useRef<Preset>();
-  const stateRegion = useRef<ZoomRegion>(null);
+  const stateRegion = useRef<ZoomRegion>();
   const stateCanvasURI = useRef<string>();
   const searchParams = useSearchParams();
   const state = searchParams.get("iiif-content");
@@ -139,6 +140,13 @@ export function ManifestPage({
 
   return (
     <div>
+      <div className="border border-red-800">
+        Canvas URI: {stateCanvasURI.current}
+        <br />
+        seq: {currentSequenceIndex}
+        <br />
+        uri: {manifest.items[currentSequenceIndex]?.id}
+      </div>
       <h1 className="mb-4 text-4xl font-medium">
         <AutoLanguage>{manifest.label || content.untitled}</AutoLanguage>
       </h1>
@@ -233,7 +241,7 @@ export function ManifestPage({
               type: "object",
             }}
             canvasSeqIdx={currentSequenceIndex}
-            canvasURI={stateCanvasURI.current}
+            canvasURI={manifest.items?.[currentSequenceIndex]?.id}
             zoomRegion={stateRegion.current}
             content={content}
           />

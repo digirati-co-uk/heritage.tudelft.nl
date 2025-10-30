@@ -57,8 +57,6 @@ export function SharingAndViewingLinks({
     viewer.enabled?.includes(resource.type),
   );
 
-  console.log(canvasURI, zoomRegion);
-
   return (
     <>
       {resource.type === "object" ? (
@@ -156,13 +154,6 @@ export function SharingAndViewingLinks({
                   </div>
                 </Dialog>
               </li>
-              {/* {sharingOptionsOpen && (
-                <SharingOptions
-                  manifestId={resource.id}
-                  initCanvasURI={canvasURI}
-                  initZoomRegion={zoomRegion}
-                />
-              )} */}
               {configuredViewers.length > viewerConfig.showMax ? (
                 <li className="mt-4">
                   <button
