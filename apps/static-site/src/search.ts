@@ -13,7 +13,7 @@ const TYPESENSE_PORT = process.env.NEXT_PUBLIC_TYPESENSE_PORT
   : 443;
 const TYPESENSE_PROTOCOL =
   process.env.NEXT_PUBLIC_TYPESENSE_PROTOCOL || "https";
-const TYPESENSE_COLLECTION_NAME =
+export const TYPESENSE_COLLECTION_NAME =
   process.env.NEXT_PUBLIC_TYPESENSE_COLLECTION_NAME || "production-manifests";
 
 export const typesenseServerConfig = {

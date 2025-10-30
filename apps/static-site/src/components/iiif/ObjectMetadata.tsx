@@ -1,5 +1,6 @@
 import { facetConfig } from "@/facets";
 import { Link } from "@/i18n/navigation";
+import { TYPESENSE_COLLECTION_NAME } from "@/search";
 import { getValue } from "@iiif/helpers";
 import { ManifestMetadata, useIIIFLanguage } from "react-iiif-vault";
 
@@ -21,7 +22,9 @@ export function ObjectMetadata() {
                 {values.map((value) => {
                   return (
                     <li key={value} className="underline">
-                      <Link href={`/search?manifests[refinementList][topic_${label}][0]=${value}`}>{value}</Link>
+                      <Link href={`/search?${TYPESENSE_COLLECTION_NAME}[refinementList][topic_${label}][0]=${value}`}>
+                        {value}
+                      </Link>
                     </li>
                   );
                 })}
