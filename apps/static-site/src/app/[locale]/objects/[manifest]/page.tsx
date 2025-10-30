@@ -1,12 +1,12 @@
 import { ManifestLoader } from "@/app/provider";
 import { Page } from "@/components/Page";
 import { ManifestPage } from "@/components/pages/ManifestPage";
+import { baseURL, getDefaultMetaMdx, makeTitle } from "@/helpers/metadata";
 import { loadManifest, loadManifestMeta } from "@/iiif";
+import { getValue } from "@iiif/helpers";
+import imageServiceLinks from "@repo/iiif/build/meta/image-service-links.json";
 import related from "@repo/iiif/build/meta/related-objects.json";
 import type { Metadata } from "next";
-import { getValue } from "@iiif/helpers";
-import { baseURL, makeTitle, getDefaultMetaMdx } from "@/helpers/metadata";
-import imageServiceLinks from "@repo/iiif/build/meta/image-service-links.json";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 export async function generateMetadata({
@@ -44,9 +44,7 @@ export async function generateMetadata({
         {
           url: meta.thumbnail.id ?? defaultMeta.image ?? "",
           width: meta.thumbnail ? meta.thumbnail.width : defaultMeta.imageWidth,
-          height: meta.thumbnail
-            ? meta.thumbnail.height
-            : defaultMeta.imageHeight,
+          height: meta.thumbnail ? meta.thumbnail.height : defaultMeta.imageHeight,
         },
       ],
     },
@@ -68,10 +66,24 @@ export default async function ManifestP({
 
   const manifestSlug = `manifests/${manifestId}`;
   const { manifest, meta } = await loadManifest(manifestSlug);
-  const exhibitions =
-    imageServiceLinks[manifestSlug as keyof typeof imageServiceLinks] || [];
+  const exhibitionsUnfiltered: any[] = imageServiceLinks[manifestSlug as keyof typeof imageServiceLinks] || [];
+  const exhibitions = [];
+  const seenIds: string[] = [];
 
-  const relatedItems = related[manifestSlug as keyof typeof related] || [];
+  for (const exhibition of exhibitionsUnfiltered) {
+    if (seenIds.includes(exhibition.slug)) continue;
+    exhibitions.push(exhibition);
+    seenIds.push(exhibition.slug);
+  }
+
+  const relatedItemsUnfiltered: any[] = related[manifestSlug as keyof typeof related] || [];
+  const relatedItems = [];
+  for (const item of relatedItemsUnfiltered) {
+    if (seenIds.includes(item.slug)) continue;
+    relatedItems.push(item);
+    seenIds.push(item.slug);
+  }
+
   const relatedSnippets = (
     await Promise.all(
       relatedItems.map(async (slug) => {
