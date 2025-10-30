@@ -14,6 +14,19 @@ import { ViewerZoomControls } from "../iiif/ViewerZoomControls";
 import { RangeNavigation } from "../iiif/RangeNavigation";
 import { AutoLanguage } from "./AutoLanguage";
 import { getValue } from "@iiif/helpers/i18n";
+import {
+  parseContentState,
+  validateContentState,
+  normaliseContentState,
+} from "@iiif/helpers";
+import { useSearchParams } from "next/navigation";
+
+type ZoomRegion = {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+};
 
 interface ManifestPageProps {
   manifest: Manifest;
@@ -70,6 +83,8 @@ export function ManifestPage({
   const { currentSequenceIndex, setCurrentCanvasId } = context;
   const previousSeqIndex = useRef(currentSequenceIndex);
   const atlas = useRef<Preset>();
+  const stateRegion = useRef<ZoomRegion>(null);
+  const searchParams = useSearchParams();
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Needs to run when currentSequenceIndex changes.
   useEffect(() => {
@@ -82,6 +97,24 @@ export function ManifestPage({
       setTimeout(() => atlas.current?.runtime.world.goHome(true), 5);
     }
   }, [currentSequenceIndex]);
+
+  useEffect(() => {
+    const state = searchParams.get("iiif-content");
+    let parsedState;
+    if (state) {
+      try {
+        parsedState = state && parseContentState(state);
+      } catch {
+        // ignore bad iiif-content param
+      }
+    }
+    const isStateValid = parsedState && validateContentState(parsedState);
+    const normalisedState =
+      isStateValid && parsedState && normaliseContentState(parsedState);
+    const stateCanvasId = normalisedState?.target[0].source.id;
+    setCurrentCanvasId(stateCanvasId);
+    stateRegion.current = normalisedState?.target[0].selector.spatial;
+  }, []);
 
   return (
     <div>
@@ -97,6 +130,9 @@ export function ManifestPage({
         <CanvasPanel.Viewer
           onCreated={(preset) => {
             atlas.current = preset;
+            if (stateRegion.current) {
+              preset.runtime.world.gotoRegion(stateRegion.current);
+            }
           }}
           htmlChildren={null}
           key={manifest.id}

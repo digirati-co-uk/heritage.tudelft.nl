@@ -11,8 +11,8 @@ import {
   type RangeTableOfContentsNode,
 } from "@iiif/helpers";
 import type { SharingAndViewingLinksContent } from "./SharingAndViewingLinks";
-import { Collection, Tree, type Key } from "react-aria-components";
 import { TreeRangeItem } from "./TreeRangeItem";
+import { Collection, Tree, type Key } from "react-aria-components";
 
 export function RangeNavigation({
   content,
