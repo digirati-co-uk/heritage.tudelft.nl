@@ -1,20 +1,14 @@
 import { Slot } from "@/blocks/slot";
 import { Page } from "@/components/Page";
-import { setRequestLocale } from "next-intl/server";
+import { getBasicMetadata, getDefaultMetaMdx, getMdx, makeTitle } from "@/helpers/metadata";
 import type { Metadata } from "next";
+import { setRequestLocale } from "next-intl/server";
 import { getTranslations } from "next-intl/server";
-import {
-  getBasicMetadata,
-  makeTitle,
-  getMdx,
-  getDefaultMetaMdx,
-} from "@/helpers/metadata";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { locale: string };
+export async function generateMetadata(data: {
+  params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
+  const params = await data.params;
   const t = await getTranslations();
   const path = "/exhibitions";
   const defaultMeta = getDefaultMetaMdx({ params: { locale: params.locale } });

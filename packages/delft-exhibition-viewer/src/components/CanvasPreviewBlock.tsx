@@ -400,6 +400,9 @@ function CanvasPreviewBlockInner({
                     ) : null}
                   </div>
                 ) : null}
+                {steps.length === 0 ? <div>
+                  {objectLink?.component || null}
+                </div> : null}
                 {steps.length > 1 ? (
                   <div className="flex flex-col gap-2 bg-InfoBlock text-InfoBlockText px-8 pb-8">
                     <h3 className="sticky top-0 bg-InfoBlock pb-4 pt-6 font-mono delft-title">
@@ -547,12 +550,13 @@ export function CanvasPreviewBlock(props: CanvasPreviewBlockProps) {
     <CanvasPreviewBlockInner {...props} />
   );
 
-  if (props.index < 3) {
+  // if (props.index < 3) {
     return (
       <div className="relative h-full w-full bg-ViewerBackground">{inner}</div>
     );
-  }
+  // }
 
+  // @todo come back to this, breaking some things.
   return (
     <div className="relative h-full w-full bg-ViewerBackground">
       <LazyLoadComponent

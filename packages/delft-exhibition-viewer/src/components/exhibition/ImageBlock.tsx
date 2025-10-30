@@ -22,6 +22,7 @@ export function ImageBlock({
   coverImages,
   ...props
 }: ImageBlockProps) {
+
   const behavior = canvas?.behavior || [];
 
   return (

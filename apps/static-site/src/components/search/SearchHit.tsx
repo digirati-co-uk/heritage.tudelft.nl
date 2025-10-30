@@ -1,5 +1,5 @@
 import { Link } from "@/i18n/navigation";
-import { InternationalString } from "@iiif/presentation-3";
+import type { InternationalString } from "@iiif/presentation-3";
 
 export function SearchHit({
   hit,
@@ -19,11 +19,7 @@ export function SearchHit({
     <article className="mb-10 flex gap-4">
       <div className="cut-corners h-32 w-32 bg-slate-400">
         <Link href={url}>
-          <img
-            src={hit.thumbnail}
-            className="h-32 w-32 rounded-lg object-cover"
-            alt=""
-          />
+          <img src={hit.thumbnail} className="h-32 w-32 rounded-lg object-cover" alt="" />
         </Link>
       </div>
       <section className="flex-1">

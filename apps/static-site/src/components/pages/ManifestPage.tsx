@@ -1,26 +1,21 @@
 "use client";
 import { getObjectSlug } from "@/i18n/navigation";
 import type { Preset } from "@atlas-viewer/atlas";
+import { normaliseContentState, parseContentState, validateContentState } from "@iiif/helpers";
+import { getValue } from "@iiif/helpers/i18n";
 import type { InternationalString, Manifest } from "@iiif/presentation-3";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { CanvasPanel, useSimpleViewer } from "react-iiif-vault";
 import { Box } from "../blocks/Box";
 import { DownloadImage } from "../iiif/DownloadImage";
 import { ObjectMetadata } from "../iiif/ObjectMetadata";
 import { ObjectThumbnails } from "../iiif/ObjectThumbnails";
+import { RangeNavigation } from "../iiif/RangeNavigation";
 import { SharingAndViewingLinks } from "../iiif/SharingAndViewingLinks";
 import { ViewerSliderControls } from "../iiif/ViewerSliderControls";
 import { ViewerZoomControls } from "../iiif/ViewerZoomControls";
-import { RangeNavigation } from "../iiif/RangeNavigation";
 import { AutoLanguage } from "./AutoLanguage";
-import { getValue } from "@iiif/helpers/i18n";
-import {
-  parseContentState,
-  validateContentState,
-  normaliseContentState,
-  ContentState,
-} from "@iiif/helpers";
-import { useSearchParams } from "next/navigation";
 
 type ZoomRegion = {
   x: number;
@@ -81,12 +76,13 @@ export function ManifestPage({
   initialCanvasIndex,
 }: ManifestPageProps) {
   const context = useSimpleViewer();
-  const { currentSequenceIndex, setCurrentCanvasId } = context;
+  const { currentSequenceIndex, setCurrentCanvasId, setCurrentCanvasIndex } = context;
   const previousSeqIndex = useRef(currentSequenceIndex);
-  const atlas = useRef<Preset>();
+  const atlas = useRef<Preset | null>(null);
   const stateRegion = useRef<ZoomRegion>(null);
   const searchParams = useSearchParams();
   const contentState = searchParams.get("iiif-content");
+  const canvasId = searchParams.get("c");
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Needs to run when currentSequenceIndex changes.
   useEffect(() => {
@@ -101,6 +97,21 @@ export function ManifestPage({
   }, [currentSequenceIndex]);
 
   useEffect(() => {
+    if (canvasId && !contentState) {
+      // Case for canvas ID only.
+      // Future: xywh too.
+
+      if (canvasId.startsWith("http")) {
+        setCurrentCanvasId(canvasId);
+        return;
+      }
+      const parsed = Number.parseInt(canvasId, 10);
+      if (!Number.isNaN(parsed)) {
+        setCurrentCanvasIndex(parsed);
+      }
+      return;
+    }
+
     if (!contentState) return;
 
     try {
@@ -130,7 +141,7 @@ export function ManifestPage({
     } catch {
       // ignore bad iiif-content param
     }
-  }, [manifest.id, contentState, setCurrentCanvasId]);
+  }, [canvasId, manifest.id, contentState, setCurrentCanvasId, setCurrentCanvasIndex]);
 
   return (
     <div>
@@ -170,9 +181,7 @@ export function ManifestPage({
 
           {(related.length !== 0 || meta.partOfCollections?.length !== 0) && (
             <>
-              <h3 className="mb-5 mt-10 text-3xl font-medium">
-                {content.relatedObjects}
-              </h3>
+              <h3 className="mb-5 mt-10 text-3xl font-medium">{content.relatedObjects}</h3>
               <div className="mb-4 grid md:grid-cols-3">
                 {(meta.partOfCollections || []).map((collection, i) => (
                   <Box

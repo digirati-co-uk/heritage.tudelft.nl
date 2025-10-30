@@ -1,13 +1,15 @@
 import { existsSync } from "node:fs";
 import { readFile, readdir } from "node:fs/promises";
-import Typesense from "typesense";
-import { allPublications } from "./.contentlayer/generated";
 import { join, resolve } from "node:path";
 import { argv, cwd } from "node:process";
+import Typesense from "typesense";
+import { allPublications } from "./.contentlayer/generated/index.mjs";
 
 const TYPESENSE_API_KEY = process.env["TYPESENSE_API_KEY"] || "xyz";
 const TYPESENSE_HOST = process.env["TYPESENSE_HOST"] || "localhost";
-const TYPESENSE_PORT = process.env["TYPESENSE_PORT"] ? parseInt(process.env["TYPESENSE_PORT"]) : 8108;
+const TYPESENSE_PORT = process.env["TYPESENSE_PORT"]
+  ? Number.parseInt(process.env["TYPESENSE_PORT"])
+  : 8108;
 const TYPESENSE_PROTOCOL = process.env["TYPESENSE_PROTOCOL"] || "http";
 const INDEX_NAME = process.env["TYPESENSE_COLLECTION_NAME"] || "manifests";
 
@@ -35,21 +37,29 @@ async function readJsonFile(path: string) {
 }
 
 if (existsSync(join(IIIF_DIRECTORY, "meta/typesense/manifests.schema.json"))) {
-  const schema = await readJsonFile(join(IIIF_DIRECTORY, "/meta/typesense/manifests.schema.json"));
-  const data = (await readFile(join(IIIF_DIRECTORY, "/meta/typesense/manifests.jsonl"))).toString();
+  const schema = await readJsonFile(
+    join(IIIF_DIRECTORY, "/meta/typesense/manifests.schema.json"),
+  );
+  const data = (
+    await readFile(join(IIIF_DIRECTORY, "/meta/typesense/manifests.jsonl"))
+  ).toString();
 
   const jsonDocuments = data.split("\n").map((line) => JSON.parse(line));
 
   const collections = await client.collections().retrieve();
-  const manifestsCollection = collections.find((collection) => collection.name === INDEX_NAME);
+  const manifestsCollection = collections.find(
+    (collection) => collection.name === INDEX_NAME,
+  );
   const needsRecreation = !manifestsCollection || recreateIndex;
   if (manifestsCollection && recreateIndex) {
     await client.collections(INDEX_NAME).delete();
   }
 
-  const exhibitions = (await readdir(join(cwd(), "../iiif", "manifests", "manifest-editor", "exhibitions"))).map(
-    (name: string) => `manifests/${name.replace(".json", "")}`
-  );
+  const exhibitions = (
+    await readdir(
+      join(cwd(), "../iiif", "manifests", "manifest-editor", "exhibitions"),
+    )
+  ).map((name: string) => `manifests/${name.replace(".json", "")}`);
 
   const processedDocuments = jsonDocuments.map((document: any) => {
     if (exhibitions.includes(document.slug)) {
@@ -77,13 +87,18 @@ if (existsSync(join(IIIF_DIRECTORY, "meta/typesense/manifests.schema.json"))) {
   }
 
   try {
-    await client.collections(INDEX_NAME).documents().import(processedDocuments, { action: "upsert" });
+    await client
+      .collections(INDEX_NAME)
+      .documents()
+      .import(processedDocuments, { action: "upsert" });
   } catch (err) {
     if (err) {
       console.log("Import failed", err);
 
       if ((err as any).importResults) {
-        const failedDocuments = (err as any).importResults.filter((result: any) => result.success === false);
+        const failedDocuments = (err as any).importResults.filter(
+          (result: any) => result.success === false,
+        );
 
         for (const failed of failedDocuments) {
           //
@@ -100,7 +115,9 @@ if (existsSync(join(IIIF_DIRECTORY, "meta/typesense/manifests.schema.json"))) {
     }
   }
 
-  console.log(`Imported ${jsonDocuments.length} documents into the '${INDEX_NAME}' collection`);
+  console.log(
+    `Imported ${jsonDocuments.length} documents into the '${INDEX_NAME}' collection`,
+  );
 
   if (allPublications.length) {
     // @todo import publications
@@ -115,8 +132,13 @@ if (existsSync(join(IIIF_DIRECTORY, "meta/typesense/manifests.schema.json"))) {
         plaintext: publication.body.raw,
       });
 
-      await client.collections(INDEX_NAME).documents().import(jsonDocuments, { action: "upsert" });
+      await client
+        .collections(INDEX_NAME)
+        .documents()
+        .import(jsonDocuments, { action: "upsert" });
     }
-    console.log(`Imported ${jsonDocuments.length} publications into the '${INDEX_NAME}' collection`);
+    console.log(
+      `Imported ${jsonDocuments.length} publications into the '${INDEX_NAME}' collection`,
+    );
   }
 }

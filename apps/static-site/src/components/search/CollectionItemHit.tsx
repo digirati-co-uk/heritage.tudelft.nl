@@ -1,5 +1,5 @@
 import { Link } from "@/i18n/navigation";
-import { InternationalString } from "@iiif/presentation-3";
+import type { InternationalString } from "@iiif/presentation-3";
 
 export function CollectionItemHit({
   hit,
@@ -15,7 +15,7 @@ export function CollectionItemHit({
 }) {
   const url = `/${hit.slug}`;
   const result = hit._highlightResult as any;
-  let thumbnail = hit.thumbnail;
+  const thumbnail = hit.thumbnail;
   if (thumbnail) {
     thumbnail.replace("/200,/", "/400,/");
   }

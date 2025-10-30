@@ -82,6 +82,9 @@ export function VisibleAnnotationsListingItem({
             return null;
           })
         : null}
+      {step.objectLink
+        ? (step.objectLink as any).component
+        : null}
     </div>
   );
 }

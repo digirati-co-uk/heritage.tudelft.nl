@@ -1,6 +1,9 @@
 import type { Collection } from "@iiif/presentation-3";
 
-let IIIF_URL = process.env["IIIF_URL"] || process.env["NEXT_PUBLIC_IIIF_URL"] || "http://localhost:7111/";
+let IIIF_URL =
+  process.env["IIIF_URL"] ||
+  process.env["NEXT_PUBLIC_IIIF_URL"] ||
+  "http://localhost:7111/";
 
 if (!IIIF_URL.endsWith("/")) {
   IIIF_URL += "/";
@@ -11,11 +14,17 @@ const fetchOptions: RequestInit = {
 };
 
 export async function loadCollection(slug: string) {
-  const collectionReq = fetch(`${IIIF_URL}${slug}/collection.json`, fetchOptions);
+  const collectionReq = fetch(
+    `${IIIF_URL}${slug}/collection.json`,
+    fetchOptions,
+  );
   // const metaReq = fetch(`${IIIF_URL}${slug}/meta.json`);
   const ret: { collection: Collection; meta: any } = { meta: {} } as any;
 
-  const [collection, meta] = await Promise.all([collectionReq, Promise.resolve({ ok: false })]);
+  const [collection, meta] = await Promise.all([
+    collectionReq,
+    Promise.resolve({ ok: false }),
+  ]);
 
   if (meta.ok) {
     // ret.meta = await meta.json();
@@ -33,6 +42,10 @@ export async function loadCollectionMeta(slug: string) {
     const json = await resp.json();
     return json;
   }
+}
+
+export async function loadMeta(name: string) {
+  return fetch(`${IIIF_URL}/meta/${name}`, fetchOptions).then((r) => r.json());
 }
 
 export async function loadManifest(slug: string) {

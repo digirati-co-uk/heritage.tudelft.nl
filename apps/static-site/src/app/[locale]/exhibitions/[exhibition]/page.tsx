@@ -3,9 +3,9 @@ import { Slot } from "@/blocks/slot";
 import { SlotContext } from "@/blocks/slot-context";
 import { Page } from "@/components/Page";
 import { baseURL, getDefaultMetaMdx, makeTitle } from "@/helpers/metadata";
-import { loadManifest, loadManifestMeta } from "@/iiif";
+import { loadManifest, loadManifestMeta, loadMeta } from "@/iiif";
 import { getValue } from "@iiif/helpers";
-import imageServiceLinks from "@repo/iiif/build/meta/image-service-links.json";
+import type imageServiceLinks from "@repo/iiif/build/meta/image-service-links.json";
 import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { getTranslations } from "next-intl/server";
@@ -46,9 +46,7 @@ export async function generateMetadata({
         {
           url: meta.thumbnail?.id ?? defaultMeta.image ?? "",
           width: meta.thumbnail ? meta.thumbnail.width : defaultMeta.imageWidth,
-          height: meta.thumbnail
-            ? meta.thumbnail.height
-            : defaultMeta.imageHeight,
+          height: meta.thumbnail ? meta.thumbnail.height : defaultMeta.imageHeight,
         },
       ],
     },
@@ -66,8 +64,16 @@ export default async function Exhibition({
   const t = await getTranslations();
   const manifestSlug = `manifests/${exhibition}`;
   const { manifest, meta } = await loadManifest(manifestSlug);
-  const viewObjectLinks =
-    imageServiceLinks[manifestSlug as keyof typeof imageServiceLinks] || [];
+  const allImageServiceLinks = (await loadMeta("image-service-links.json")) as Record<
+    string,
+    Array<{
+      slug: string;
+      service: string;
+      canvasId: string;
+      targetCanvasId: string;
+    }>
+  >;
+  const viewObjectLinks = allImageServiceLinks[manifestSlug] || [];
 
   return (
     <Page>

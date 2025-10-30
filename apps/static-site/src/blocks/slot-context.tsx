@@ -1,8 +1,7 @@
 "use client";
-import { SlotContext as BaseSlotContext } from "@page-blocks/react-client";
-import type { FC } from "react";
 import { directory } from "@/components/directory";
 import { createRemoteLoader } from "@page-blocks/client";
+import { SlotContext as BaseSlotContext } from "@page-blocks/react-client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const queryClient = new QueryClient();
@@ -14,7 +13,7 @@ interface SlotProps {
   className?: string;
 }
 
-export const SlotContext = ((props: any) => {
+export function SlotContext(props: any) {
   const options = { resolver: directory.resolver };
   const loader = createRemoteLoader(options as any);
 
@@ -25,4 +24,4 @@ export const SlotContext = ((props: any) => {
       </BaseSlotContext>
     </QueryClientProvider>
   );
-}) as any as FC<any>;
+}
