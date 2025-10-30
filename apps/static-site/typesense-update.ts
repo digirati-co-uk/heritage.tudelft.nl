@@ -1,7 +1,7 @@
 import { existsSync } from "node:fs";
 import { readFile, readdir } from "node:fs/promises";
 import Typesense from "typesense";
-import { allPublications } from ".contentlayer/generated";
+import { allPublications } from "./.contentlayer/generated";
 import { join, resolve } from "node:path";
 import { argv, cwd } from "node:process";
 
