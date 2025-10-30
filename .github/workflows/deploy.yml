@@ -29,7 +29,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: "pnpm"
 
       - name: Build HSS
@@ -90,7 +90,7 @@ jobs:
       - name: Build IIIF Search
         working-directory: apps/static-site
         run: |
-          bun run ./typesense-update.ts
+          node ./typesense-update.ts
         env:
           TYPESENSE_API_KEY: ${{ secrets.TYPESENSE_ADMIN_API_KEY }}
           TYPESENSE_HOST: 63flhve71t2un5xgp.a1.typesense.net

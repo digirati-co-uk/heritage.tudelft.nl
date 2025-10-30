@@ -22,7 +22,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: "pnpm"
 
       - name: Build HSS
@@ -145,7 +145,7 @@ jobs:
         if: (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy-preview'))
         working-directory: apps/static-site
         run: |
-          bun run ./typesense-update.ts --recreate-index
+          node ./typesense-update.ts --recreate-index
         env:
           TYPESENSE_API_KEY: ${{ secrets.TYPESENSE_ADMIN_API_KEY }}
           TYPESENSE_HOST: 63flhve71t2un5xgp.a1.typesense.net
