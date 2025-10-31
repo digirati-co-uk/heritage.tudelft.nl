@@ -157,8 +157,6 @@ export function ManifestPage({
     setCurrentCanvasIndex,
   ]);
 
-  console.log(manifest.items?.[currentSequenceIndex]?.label);
-
   return (
     <AtlasStoreProvider>
       {sharingOptionsOpen && (

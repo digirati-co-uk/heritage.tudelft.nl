@@ -7,6 +7,7 @@ import { AutoLanguage } from "../pages/AutoLanguage";
 import { IIIFLogo } from "./IIIFLogo";
 import { LinkIcon } from "../icons/LinkIcon";
 import { OpenModalIcon } from "../icons/OpenModalIcon";
+import { useTranslations } from "next-intl";
 
 export type SharingAndViewingLinksContent = {
   sharingViewers: string;
@@ -35,6 +36,7 @@ export function SharingAndViewingLinks({
   const configuredViewers = viewerConfig.viewers.filter((viewer) =>
     viewer.enabled?.includes(resource.type),
   );
+  const t = useTranslations();
 
   return (
     <>
@@ -105,7 +107,7 @@ export function SharingAndViewingLinks({
                   className="underline ml-1"
                   onClick={() => setSharingOptionsOpen(!sharingOptionsOpen)}
                 >
-                  <AutoLanguage>Sharing options</AutoLanguage>
+                  {t("Sharing options")}
                 </button>
               </li>
               {configuredViewers.length > viewerConfig.showMax ? (

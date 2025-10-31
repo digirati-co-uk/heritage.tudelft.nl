@@ -43,7 +43,6 @@ export function SharingOptionsDialog({
               initCanvasSeqIdx={canvasSeqIdx}
               initCanvasLabel={canvasLabel}
               initZoomRegion={zoomRegion}
-              //onChange={(changed) => console.log(changed)}
             />
           </div>
         </Dialog.Panel>

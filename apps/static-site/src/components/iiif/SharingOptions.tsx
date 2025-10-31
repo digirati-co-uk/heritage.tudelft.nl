@@ -12,6 +12,7 @@ import { useState, useEffect } from "react";
 import { CopyToClipboard } from "../atoms/CopyToClipboard";
 import { CopyToClipboardIcon } from "../icons/CopyToClipboardIcon";
 import { LinkIcon } from "../icons/LinkIcon";
+import { useTranslations } from "next-intl";
 
 export function SharingOptions({
   manifestId,
@@ -40,7 +41,7 @@ export function SharingOptions({
   const configuredViewers = viewerConfig.viewers.filter((viewer) =>
     viewer.enabled?.includes("object"),
   );
-  console.log(configuredViewers);
+  const t = useTranslations();
 
   useEffect(() => {
     setZoomRegion(canvasViewports[canvasURI]);
@@ -67,7 +68,7 @@ export function SharingOptions({
       <ul className="flex flex-col gap-3">
         <li className="flex flex-col gap-3">
           <h2 className="text-2xl mb-2">
-            <AutoLanguage>Share a link to this resource.</AutoLanguage>
+            {t("Share a link to this resource")}
           </h2>
         </li>
         <li className="flex flex-row gap-2 ml-4 md:items-center">
@@ -80,14 +81,14 @@ export function SharingOptions({
             }}
           />
           <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
-            <div className="w-52">Include current canvas:</div>
+            <div className="w-60">{t("Include current canvas")}:</div>
             <div className="text-gray-600 flex flex-col md:flex-row gap-1 md:gap-3">
               <div>
-                Page number:{" "}
+                {t("Page number")}:{" "}
                 <span className="text-gray-900">{initCanvasSeqIdx + 1}</span>
               </div>
               <div>
-                Label:{" "}
+                {t("Label")}:{" "}
                 <span className="text-gray-900">
                   "<AutoLanguage>{initCanvasLabel}</AutoLanguage>"
                 </span>
@@ -106,7 +107,7 @@ export function SharingOptions({
             }}
           />
           <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
-            <div className="w-52">Include current zoom region:</div>
+            <div className="w-60">{t("Include current zoom region")}:</div>
             {zoomRegion && (
               <div className="text-gray-600 flex flex-col md:flex-row gap-1 md:gap-3">
                 <div className="flex flex-col gap-1 md:flex-row md:gap-3">
@@ -126,19 +127,19 @@ export function SharingOptions({
                   </div>
                   <div className="flex flex-col md:flex-row md:gap-3">
                     <div>
-                      width:{" "}
+                      {t("width")}:{" "}
                       <span className="text-gray-900">
                         {+zoomRegion?.width.toFixed(2)}
                       </span>
                     </div>
                     <div>
-                      height:{" "}
+                      {t("height")}:{" "}
                       <span className="text-gray-900">
                         {+zoomRegion?.height.toFixed(2)}
                       </span>
                     </div>
                   </div>
-                  <div>(rounded)</div>
+                  <div>({t("rounded")})</div>
                 </div>
               </div>
             )}
@@ -147,7 +148,7 @@ export function SharingOptions({
         <li className="bg-gray-100 p-3 pb-4 flex flex-col">
           <CopyToClipboard
             href={stateSharingLink}
-            copiedText="Copied!"
+            copiedText={t("Copied")}
             target="_blank"
             className="pointer"
             rel="noreferrer"
@@ -158,7 +159,10 @@ export function SharingOptions({
                 width="1.3em"
                 height="1.3em"
               />
-              <span>Short link for use on this site (copy to clipboard)</span>
+              <span>
+                {t("Short link for use on this site")} ({t("copy to clipboard")}
+                )
+              </span>
             </div>
             <div className="border border-black">
               <div className="min-h-12 flex flex-wrap p-2 truncate [mask-image:linear-gradient(to_left,transparent,black_100%)]">
@@ -170,7 +174,7 @@ export function SharingOptions({
         <li className="bg-gray-100 p-3 pb-4 flex flex-col">
           <CopyToClipboard
             href={stateSharingLink}
-            copiedText="Copied!"
+            copiedText={t("Copied")}
             target="_blank"
             className="pointer"
             rel="noreferrer"
@@ -181,7 +185,9 @@ export function SharingOptions({
                 width="1.3em"
                 height="1.3em"
               />
-              <span>IIIF Content State (copy to clipboard)</span>
+              <span>
+                {t("IIIF Content State")} ({t("copy to clipboard")})
+              </span>
             </div>
             <div className="border border-black">
               <div className="min-h-12 max-h-12 flex flex-wrap p-2 truncate [mask-image:linear-gradient(to_left,transparent,black_100%)]">
@@ -196,7 +202,10 @@ export function SharingOptions({
               .filter((v) => ["theseus", "clover"].includes(v.id))
               .map((viewer) => {
                 return (
-                  <li className="flex flex-row gap-2 items-center ml-3">
+                  <li
+                    key={`sharinglink_${viewer.id}`}
+                    className="flex flex-row gap-2 items-center ml-3"
+                  >
                     <LinkIcon className="text-2xl opacity-50" />
                     <a
                       href={viewer.link.replace("{url}", stateSharingLink)}

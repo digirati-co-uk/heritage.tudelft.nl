@@ -32,7 +32,6 @@ export function updateStateSharingLink({
   canvasURI: string | undefined;
   zoomRegion: ZoomRegion | null | undefined;
 }) {
-  console.log(canvasURI, zoomRegion);
   return canvasURI
     ? stateCreateAndEncode({
         manifestId: manifestId,
