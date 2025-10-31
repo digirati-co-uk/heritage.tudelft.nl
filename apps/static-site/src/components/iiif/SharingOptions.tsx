@@ -48,6 +48,7 @@ export function SharingOptions({
   }, [canvasViewports]);
 
   useEffect(() => {
+    if (!specifyCanvas) setSpecifyRegion(false);
     const stateSharingLink = updateStateSharingLink({
       manifestId: manifestId,
       canvasURI: specifyCanvas ? canvasURI : "",
@@ -70,10 +71,12 @@ export function SharingOptions({
             <AutoLanguage>Share a link to this resource.</AutoLanguage>
           </h2>
         </li>
-        <li className="flex flex-row gap-2 ml-4">
+        <li className="flex flex-row gap-2 ml-4 items-center">
           <input
+            className="w-5 h-5"
             type="checkbox"
-            onClick={() => {
+            checked={specifyCanvas}
+            onChange={() => {
               setSpecifyCanvas(!specifyCanvas);
             }}
           />
@@ -91,10 +94,13 @@ export function SharingOptions({
             </div>
           </div>
         </li>
-        <li className="flex flex-row gap-2 ml-4 mb-3">
+        <li className="flex flex-row gap-2 ml-4 mb-3 items-center">
           <input
+            className="w-5 h-5"
             type="checkbox"
-            onClick={() => {
+            checked={specifyRegion}
+            disabled={!specifyCanvas}
+            onChange={() => {
               setSpecifyRegion(!specifyRegion);
             }}
           />
@@ -126,11 +132,12 @@ export function SharingOptions({
                     {+zoomRegion?.height.toFixed(2)}
                   </span>
                 </div>
+                <div>(rounded)</div>
               </div>
             </div>
           )}
         </li>
-        <li className="bg-gray-100 p-3 flex flex-col">
+        <li className="bg-gray-100 p-3 pb-4 flex flex-col">
           <CopyToClipboard
             href={stateSharingLink}
             copiedText="Copied!"
@@ -138,16 +145,18 @@ export function SharingOptions({
             className="pointer"
             rel="noreferrer"
           >
-            <div className="flex flex-row gap-2">
-              <CopyToClipboardIcon />
+            <div className="flex flex-row gap-2 items-center mb-1">
+              <CopyToClipboardIcon className="text-gray-600" />
               <span>Short link for use on this site (copy to clipboard)</span>
             </div>
-            <div className="min-h-12 flex flex-wrap border border-black p-2 break-all">
-              {customSharingLink}
+            <div className="border border-black">
+              <div className="min-h-12 flex flex-wrap p-2 truncate [mask-image:linear-gradient(to_left,transparent,black_100%)]">
+                {customSharingLink}
+              </div>
             </div>
           </CopyToClipboard>
         </li>
-        <li className="bg-gray-100 p-3 flex flex-col">
+        <li className="bg-gray-100 p-3 pb-4 flex flex-col">
           <CopyToClipboard
             href={stateSharingLink}
             copiedText="Copied!"
@@ -155,12 +164,14 @@ export function SharingOptions({
             className="pointer"
             rel="noreferrer"
           >
-            <div className="flex flex-row gap-2">
-              <CopyToClipboardIcon />
+            <div className="flex flex-row gap-2 items-center mb-1">
+              <CopyToClipboardIcon className="text-gray-600" />
               <span>IIIF Content State (copy to clipboard)</span>
             </div>
-            <div className="min-h-12 flex flex-wrap border border-black p-2 break-all">
-              {stateSharingLink}
+            <div className="border border-black">
+              <div className="min-h-12 max-h-12 flex flex-wrap p-2 truncate [mask-image:linear-gradient(to_left,transparent,black_100%)]">
+                {stateSharingLink}
+              </div>
             </div>
           </CopyToClipboard>
         </li>
