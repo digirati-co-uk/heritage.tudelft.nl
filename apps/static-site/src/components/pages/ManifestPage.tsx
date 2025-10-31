@@ -89,6 +89,7 @@ export function ManifestPage({
   const searchParams = useSearchParams();
   const contentState = searchParams.get("iiif-content");
   const canvasId = searchParams.get("c");
+  const initialId = searchParams.get("id");
   const xywh = searchParams.get("xywh");
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: Needs to run when currentSequenceIndex changes.
@@ -104,16 +105,20 @@ export function ManifestPage({
   }, [currentSequenceIndex]);
 
   useEffect(() => {
-    if (canvasId && !contentState) {
+    if ((canvasId || initialId) && !contentState) {
       const parsedRegion = parseXywh(xywh);
       if (parsedRegion) {
         stateRegion.current = parsedRegion as ZoomRegion;
       }
-      if (canvasId.startsWith("http")) {
+      if (canvasId?.startsWith("http")) {
         setCurrentCanvasId(canvasId);
         return;
       }
-      const parsed = Number.parseInt(canvasId, 10);
+      const parsed = canvasId
+        ? Number.parseInt(canvasId, 10)
+        : initialId
+          ? Number.parseInt(initialId, 10)
+          : 0;
       if (!Number.isNaN(parsed)) {
         setCurrentCanvasIndex(parsed);
       }
