@@ -4,7 +4,7 @@ import { Link, getObjectSlug } from "@/i18n/navigation";
 import { Dialog } from "@headlessui/react";
 import { useState } from "react";
 import { CanvasPanel, useManifest } from "react-iiif-vault";
-import { CloseIcon } from "../atoms/CloseIcon";
+import { CloseIcon } from "../icons/CloseIcon";
 import { AutoLanguage } from "../pages/AutoLanguage";
 
 export function ObjectViewer({

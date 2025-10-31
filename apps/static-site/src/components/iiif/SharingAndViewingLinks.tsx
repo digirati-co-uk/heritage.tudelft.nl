@@ -1,10 +1,12 @@
 "use client";
 import viewerConfig from "@/viewers.json";
-import { type SVGProps, useState } from "react";
+import { useState } from "react";
 import { CopyToClipboard } from "../atoms/CopyToClipboard";
 import { EditInManifestEditor } from "../atoms/EditInManifestEditor";
 import { AutoLanguage } from "../pages/AutoLanguage";
 import { IIIFLogo } from "./IIIFLogo";
+import { LinkIcon } from "../icons/LinkIcon";
+import { OpenModalIcon } from "../icons/OpenModalIcon";
 
 export type SharingAndViewingLinksContent = {
   sharingViewers: string;
@@ -14,23 +16,6 @@ export type SharingAndViewingLinksContent = {
   copiedMessage: string;
   iiifLabel: string;
 };
-
-export function LinkIcon(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="1em"
-      height="1em"
-      viewBox="0 0 24 24"
-      {...props}
-    >
-      <path
-        fill="currentColor"
-        d="M11 17H7q-2.075 0-3.537-1.463T2 12t1.463-3.537T7 7h4v2H7q-1.25 0-2.125.875T4 12t.875 2.125T7 15h4zm-3-4v-2h8v2zm5 4v-2h4q1.25 0 2.125-.875T20 12t-.875-2.125T17 9h-4V7h4q2.075 0 3.538 1.463T22 12t-1.463 3.538T17 17z"
-      ></path>
-    </svg>
-  );
-}
 
 export function SharingAndViewingLinks({
   resource,
@@ -115,9 +100,9 @@ export function SharingAndViewingLinks({
                 );
               })}
               <li key="sharing-options" className="flex items-center gap-3">
-                <LinkIcon className="text-2xl opacity-50" />
+                <OpenModalIcon className="text-2xl opacity-50" />
                 <button
-                  className="underline"
+                  className="underline ml-1"
                   onClick={() => setSharingOptionsOpen(!sharingOptionsOpen)}
                 >
                   <AutoLanguage>Sharing options</AutoLanguage>

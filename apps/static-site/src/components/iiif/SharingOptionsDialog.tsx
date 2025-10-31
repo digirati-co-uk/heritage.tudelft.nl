@@ -1,13 +1,14 @@
 import { Dialog } from "@headlessui/react";
-import { CloseIcon } from "../atoms/CloseIcon";
+import { CloseIcon } from "../icons/CloseIcon";
 import { SharingOptions } from "./SharingOptions";
-import { useState } from "react";
 import { ZoomRegion } from "@/helpers/content-state";
+import { InternationalString } from "@iiif/presentation-3";
 
 export function SharingOptionsDialog({
   manifestId,
   canvasURI,
   canvasSeqIdx,
+  canvasLabel,
   zoomRegion,
   sharingOptionsOpen,
   setSharingOptionsOpen,
@@ -15,6 +16,7 @@ export function SharingOptionsDialog({
   manifestId: string;
   canvasURI?: string;
   canvasSeqIdx: number;
+  canvasLabel: InternationalString | null | undefined;
   zoomRegion?: ZoomRegion | null;
   sharingOptionsOpen: boolean;
   setSharingOptionsOpen: (open: boolean) => void;
@@ -34,11 +36,12 @@ export function SharingOptionsDialog({
           <CloseIcon />
         </button>
         <Dialog.Panel className="relative flex h-full w-full flex-col justify-center overflow-y-auto overflow-x-hidden rounded bg-white">
-          <div className="min-h-0 flex-1 p-4 mt-8">
+          <div className="min-h-0 flex-1 p-4 mt-2">
             <SharingOptions
               manifestId={manifestId}
               initCanvasURI={canvasURI}
               initCanvasSeqIdx={canvasSeqIdx}
+              initCanvasLabel={canvasLabel}
               initZoomRegion={zoomRegion}
               //onChange={(changed) => console.log(changed)}
             />

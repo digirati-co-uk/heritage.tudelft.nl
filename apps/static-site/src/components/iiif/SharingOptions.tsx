@@ -6,15 +6,17 @@ import {
 } from "@/helpers/content-state";
 import { useState, useEffect } from "react";
 import { CopyToClipboard } from "../atoms/CopyToClipboard";
-import { CopyToClipboardIcon } from "../atoms/CopyToClipboardIcon";
+import { CopyToClipboardIcon } from "../icons/CopyToClipboardIcon";
 import { useAtlasStore } from "react-iiif-vault";
 import { useStore } from "zustand";
+import { InternationalString } from "@iiif/presentation-3";
 
 export function SharingOptions({
   //onChange,
   manifestId,
   initCanvasURI,
   initCanvasSeqIdx = 0,
+  initCanvasLabel,
   initZoomRegion,
 }: {
   // onChange: (
@@ -26,6 +28,7 @@ export function SharingOptions({
   manifestId: string;
   initCanvasURI?: string;
   initCanvasSeqIdx?: number;
+  initCanvasLabel: InternationalString | null | undefined;
   initZoomRegion?: ZoomRegion | null;
 }) {
   const [canvasURI, setCanvasURI] = useState<string>(initCanvasURI ?? ""); // setters for future if we allow canvas and region reselection in the Sharing Options dialog.
@@ -60,31 +63,12 @@ export function SharingOptions({
   }, [specifyCanvas, specifyRegion]);
 
   return (
-    <div>
+    <div className="text-lg">
       <ul className="flex flex-col gap-3">
         <li className="flex flex-col gap-3">
-          <h2 className="text-xl">
-            <AutoLanguage>Share Link to this resource.</AutoLanguage>
+          <h2 className="text-2xl mb-2">
+            <AutoLanguage>Share a link to this resource.</AutoLanguage>
           </h2>
-          <span className="bg-gray-100 p-3">
-            <ul>
-              <li>
-                - Check the checkboxes for your link to open the current Canvas
-                and Zoom Region.
-              </li>
-              <li>
-                - Links can be shared in two formats:
-                <br />
-                <ul className="ml-2">
-                  <li>- Short link that can be used on this site only,</li>
-                  <li>
-                    - IIIF Content State; a longer link that can be viewed on
-                    this site, or in any IIIF viewer.
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </span>
         </li>
         <li className="flex flex-row gap-2 ml-4">
           <input
@@ -93,22 +77,57 @@ export function SharingOptions({
               setSpecifyCanvas(!specifyCanvas);
             }}
           />
-          Include current canvas {specifyCanvas.toString()}
-          {canvasURI && <div>{canvasURI}</div>}
+          <div className="w-52">Include current canvas:</div>
+          <div className="text-gray-600 flex flex-row gap-3">
+            <div>
+              Page number:{" "}
+              <span className="text-gray-900">{initCanvasSeqIdx + 1}</span>
+            </div>
+            <div>
+              Label:{" "}
+              <span className="text-gray-900">
+                "<AutoLanguage>{initCanvasLabel}</AutoLanguage>"
+              </span>
+            </div>
+          </div>
         </li>
-        <li className="flex flex-row gap-2 ml-4">
+        <li className="flex flex-row gap-2 ml-4 mb-3">
           <input
             type="checkbox"
             onClick={() => {
               setSpecifyRegion(!specifyRegion);
             }}
           />
-          Include current zoom region {specifyRegion.toString()}
+          <div className="w-52">Include current zoom region:</div>
           {zoomRegion && (
-            <span>
-              {zoomRegion?.x},{zoomRegion?.y},{zoomRegion?.width},
-              {zoomRegion?.height}
-            </span>
+            <div className="text-gray-600">
+              <div className="flex flex-row gap-3">
+                <div>
+                  x:{" "}
+                  <span className="text-gray-900">
+                    {+zoomRegion?.x.toFixed(2)}
+                  </span>
+                </div>
+                <div>
+                  y:{" "}
+                  <span className="text-gray-900">
+                    {+zoomRegion?.y.toFixed(2)}
+                  </span>
+                </div>
+                <div>
+                  width:{" "}
+                  <span className="text-gray-900">
+                    {+zoomRegion?.width.toFixed(2)}
+                  </span>
+                </div>
+                <div>
+                  height:{" "}
+                  <span className="text-gray-900">
+                    {+zoomRegion?.height.toFixed(2)}
+                  </span>
+                </div>
+              </div>
+            </div>
           )}
         </li>
         <li className="bg-gray-100 p-3 flex flex-col">
@@ -123,10 +142,10 @@ export function SharingOptions({
               <CopyToClipboardIcon />
               <span>Short link for use on this site (copy to clipboard)</span>
             </div>
+            <div className="min-h-12 flex flex-wrap border border-black p-2 break-all">
+              {customSharingLink}
+            </div>
           </CopyToClipboard>
-          <div className="min-h-12 flex flex-wrap border border-black p-2 break-all">
-            {customSharingLink}
-          </div>
         </li>
         <li className="bg-gray-100 p-3 flex flex-col">
           <CopyToClipboard
@@ -140,10 +159,10 @@ export function SharingOptions({
               <CopyToClipboardIcon />
               <span>IIIF Content State (copy to clipboard)</span>
             </div>
+            <div className="min-h-12 flex flex-wrap border border-black p-2 break-all">
+              {stateSharingLink}
+            </div>
           </CopyToClipboard>
-          <div className="min-h-12 flex flex-wrap border border-black p-2 break-all">
-            {stateSharingLink}
-          </div>
         </li>
       </ul>
     </div>

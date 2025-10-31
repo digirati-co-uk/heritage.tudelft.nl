@@ -91,8 +91,6 @@ export function ManifestPage({
   const canvasId = searchParams.get("c");
   const xywh = searchParams.get("xywh");
 
-  function setRegion(xyzh: string) {}
-
   // biome-ignore lint/correctness/useExhaustiveDependencies: Needs to run when currentSequenceIndex changes.
   useEffect(() => {
     if (currentSequenceIndex === previousSeqIndex.current) {
@@ -108,11 +106,9 @@ export function ManifestPage({
   useEffect(() => {
     if (canvasId && !contentState) {
       const parsedRegion = parseXywh(xywh);
-      console.log("parsedRegion", parsedRegion);
       if (parsedRegion) {
         stateRegion.current = parsedRegion as ZoomRegion;
       }
-
       if (canvasId.startsWith("http")) {
         setCurrentCanvasId(canvasId);
         return;
@@ -161,6 +157,8 @@ export function ManifestPage({
     setCurrentCanvasIndex,
   ]);
 
+  console.log(manifest.items?.[currentSequenceIndex]?.label);
+
   return (
     <AtlasStoreProvider>
       {sharingOptionsOpen && (
@@ -168,6 +166,7 @@ export function ManifestPage({
           manifestId={manifest.id}
           canvasURI={manifest.items?.[currentSequenceIndex]?.id}
           canvasSeqIdx={currentSequenceIndex}
+          canvasLabel={manifest.items?.[currentSequenceIndex]?.label}
           zoomRegion={stateRegion.current}
           sharingOptionsOpen={sharingOptionsOpen}
           setSharingOptionsOpen={setSharingOptionsOpen}
