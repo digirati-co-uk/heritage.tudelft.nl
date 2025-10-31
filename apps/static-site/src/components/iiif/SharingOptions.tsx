@@ -71,32 +71,34 @@ export function SharingOptions({
             <AutoLanguage>Share a link to this resource.</AutoLanguage>
           </h2>
         </li>
-        <li className="flex flex-row gap-2 ml-4 items-center">
+        <li className="flex flex-row gap-2 ml-4 md:items-center">
           <input
-            className="w-5 h-5"
+            className="w-5 h-5 min-w-5 mt-1 md:mt-0"
             type="checkbox"
             checked={specifyCanvas}
             onChange={() => {
               setSpecifyCanvas(!specifyCanvas);
             }}
           />
-          <div className="w-52">Include current canvas:</div>
-          <div className="text-gray-600 flex flex-row gap-3">
-            <div>
-              Page number:{" "}
-              <span className="text-gray-900">{initCanvasSeqIdx + 1}</span>
-            </div>
-            <div>
-              Label:{" "}
-              <span className="text-gray-900">
-                "<AutoLanguage>{initCanvasLabel}</AutoLanguage>"
-              </span>
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+            <div className="w-52">Include current canvas:</div>
+            <div className="text-gray-600 flex flex-col md:flex-row gap-1 md:gap-3">
+              <div>
+                Page number:{" "}
+                <span className="text-gray-900">{initCanvasSeqIdx + 1}</span>
+              </div>
+              <div>
+                Label:{" "}
+                <span className="text-gray-900">
+                  "<AutoLanguage>{initCanvasLabel}</AutoLanguage>"
+                </span>
+              </div>
             </div>
           </div>
         </li>
-        <li className="flex flex-row gap-2 ml-4 mb-3 items-center">
+        <li className="flex flex-row gap-2 ml-4 mb-3 md:items-center">
           <input
-            className="w-5 h-5"
+            className="w-5 h-5 min-w-5 mt-1 md:mt-0"
             type="checkbox"
             checked={specifyRegion}
             disabled={!specifyCanvas}
@@ -104,38 +106,44 @@ export function SharingOptions({
               setSpecifyRegion(!specifyRegion);
             }}
           />
-          <div className="w-52">Include current zoom region:</div>
-          {zoomRegion && (
-            <div className="text-gray-600">
-              <div className="flex flex-row gap-3">
-                <div>
-                  x:{" "}
-                  <span className="text-gray-900">
-                    {+zoomRegion?.x.toFixed(2)}
-                  </span>
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+            <div className="w-52">Include current zoom region:</div>
+            {zoomRegion && (
+              <div className="text-gray-600 flex flex-col md:flex-row gap-1 md:gap-3">
+                <div className="flex flex-col gap-1 md:flex-row md:gap-3">
+                  <div className="flex flex-col md:flex-row md:gap-3">
+                    <div>
+                      x:{" "}
+                      <span className="text-gray-900">
+                        {+zoomRegion?.x.toFixed(2)}
+                      </span>
+                    </div>
+                    <div>
+                      y:{" "}
+                      <span className="text-gray-900">
+                        {+zoomRegion?.y.toFixed(2)}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex flex-col md:flex-row md:gap-3">
+                    <div>
+                      width:{" "}
+                      <span className="text-gray-900">
+                        {+zoomRegion?.width.toFixed(2)}
+                      </span>
+                    </div>
+                    <div>
+                      height:{" "}
+                      <span className="text-gray-900">
+                        {+zoomRegion?.height.toFixed(2)}
+                      </span>
+                    </div>
+                  </div>
+                  <div>(rounded)</div>
                 </div>
-                <div>
-                  y:{" "}
-                  <span className="text-gray-900">
-                    {+zoomRegion?.y.toFixed(2)}
-                  </span>
-                </div>
-                <div>
-                  width:{" "}
-                  <span className="text-gray-900">
-                    {+zoomRegion?.width.toFixed(2)}
-                  </span>
-                </div>
-                <div>
-                  height:{" "}
-                  <span className="text-gray-900">
-                    {+zoomRegion?.height.toFixed(2)}
-                  </span>
-                </div>
-                <div>(rounded)</div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </li>
         <li className="bg-gray-100 p-3 pb-4 flex flex-col">
           <CopyToClipboard
@@ -146,7 +154,11 @@ export function SharingOptions({
             rel="noreferrer"
           >
             <div className="flex flex-row gap-2 items-center mb-1">
-              <CopyToClipboardIcon className="text-gray-600" />
+              <CopyToClipboardIcon
+                className="text-gray-600 min-w-6"
+                width="1.3em"
+                height="1.3em"
+              />
               <span>Short link for use on this site (copy to clipboard)</span>
             </div>
             <div className="border border-black">
@@ -165,7 +177,11 @@ export function SharingOptions({
             rel="noreferrer"
           >
             <div className="flex flex-row gap-2 items-center mb-1">
-              <CopyToClipboardIcon className="text-gray-600" />
+              <CopyToClipboardIcon
+                className="text-gray-600 min-w-6"
+                width="1.3em"
+                height="1.3em"
+              />
               <span>IIIF Content State (copy to clipboard)</span>
             </div>
             <div className="border border-black">
