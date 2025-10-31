@@ -163,8 +163,7 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 .safe-inset {
-  padding: env(safe-area-inset-top) env(safe-area-inset-right)
-    env(safe-area-inset-bottom) env(safe-area-inset-left);
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
 .fill-height {
@@ -300,9 +299,7 @@ body.dev .delft-toc-contents {
   --delft-close-text: #fff;
 
   /* Title elements */
-  --delft-title-card: rgb(
-    250 204 21 / var(--tw-bg-opacity, 1)
-  ); /* yellow-400 */
+  --delft-title-card: rgb(250 204 21 / var(--tw-bg-opacity, 1)); /* yellow-400 */
   --delft-title-card-text: #000;
 
   /* Info blocks */

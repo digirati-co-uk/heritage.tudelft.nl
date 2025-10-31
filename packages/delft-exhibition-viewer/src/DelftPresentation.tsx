@@ -1,20 +1,15 @@
 import type { Manifest } from "@iiif/presentation-3";
 import type { ReactNode } from "react";
-import {
-  LanguageProvider,
-  ManifestContext,
-  VaultProvider,
-} from "react-iiif-vault";
+import { LanguageProvider, ManifestContext, VaultProvider } from "react-iiif-vault";
 import "./styles/lib.css";
-import { ImageBlockPresentation } from "@/components/presentation/ImageBlockPresentation";
-import { InfoBlockPresentation } from "@/components/presentation/InfoBlockPresentation";
-import { MediaBlockPresentation } from "@/components/presentation/MediaBlockPresentation";
-import "./styles/presentation.css";
-import { TableOfContentsBar } from "@/components/shared/TableOfContentsBar";
 import { NextIcon } from "@/components/icons/NextIcon";
 import { PauseIcon } from "@/components/icons/PauseIcon";
 import { PlayIcon } from "@/components/icons/PlayIcon";
 import { PreviousIcon } from "@/components/icons/PreviousIcon";
+import { ImageBlockPresentation } from "@/components/presentation/ImageBlockPresentation";
+import { InfoBlockPresentation } from "@/components/presentation/InfoBlockPresentation";
+import { MediaBlockPresentation } from "@/components/presentation/MediaBlockPresentation";
+import { TableOfContentsBar } from "@/components/shared/TableOfContentsBar";
 import { ExhibitionProvider } from "@/helpers/exhibition-store";
 import { useExhibitionStore } from "@/hooks/use-exhibition-store";
 
@@ -32,11 +27,7 @@ export type DelftPresentationProps = {
     cutCorners?: boolean;
     autoPlay?: boolean;
     isFloating?: boolean;
-    floatingPosition?:
-      | "top-left"
-      | "top-right"
-      | "bottom-left"
-      | "bottom-right";
+    floatingPosition?: "top-left" | "top-right" | "bottom-left" | "bottom-right";
   };
 };
 
@@ -61,9 +52,7 @@ export function DelftPresentation(props: DelftPresentationProps) {
             <div className="flex h-full w-full flex-col">
               <div
                 data-cut-corners-enabled={cutCorners}
-                className={
-                  "delft-presentation-viewer relative min-h-0 w-full flex-1 bg-black"
-                }
+                className={"delft-presentation-viewer relative min-h-0 w-full flex-1 bg-black"}
               >
                 {props.manifest.items
                   .map(toRenderables)
@@ -115,8 +104,7 @@ export function DelftPresentation(props: DelftPresentationProps) {
               <div>
                 <TableOfContentsBar
                   content={{
-                    tableOfContents:
-                      props.manifest?.label || "Table of contents",
+                    tableOfContents: props.manifest?.label || "Table of contents",
                   }}
                   hideTable={isSingleStep}
                 >
@@ -151,11 +139,7 @@ export function DelftPresentation(props: DelftPresentationProps) {
                       <button
                         type="button"
                         className="z-50 flex h-10 w-10 items-center justify-center rounded hover:bg-black/10"
-                        onClick={() =>
-                          state.isPlaying
-                            ? state.nextStep(true)
-                            : state.nextStep()
-                        }
+                        onClick={() => (state.isPlaying ? state.nextStep(true) : state.nextStep())}
                       >
                         <NextIcon />
                       </button>
