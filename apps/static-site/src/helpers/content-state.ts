@@ -7,7 +7,8 @@ export type ZoomRegion = {
   height: number;
 };
 
-export function parseXywh(xywh: string) {
+export function parseXywh(xywh: string | null | undefined) {
+  if (!xywh) return undefined;
   const regex = /\d+,\d+,\d+,\d+$/;
   if (regex.test(xywh)) {
     const arr = xywh.split(",");

@@ -93,8 +93,6 @@ export function ManifestPage({
 
   function setRegion(xyzh: string) {}
 
-  console.log("sharingOptionsOpen", sharingOptionsOpen);
-
   // biome-ignore lint/correctness/useExhaustiveDependencies: Needs to run when currentSequenceIndex changes.
   useEffect(() => {
     if (currentSequenceIndex === previousSeqIndex.current) {
@@ -109,8 +107,11 @@ export function ManifestPage({
 
   useEffect(() => {
     if (canvasId && !contentState) {
-      // Case for canvas ID only.
-      // Future: xywh too.
+      const parsedRegion = parseXywh(xywh);
+      console.log("parsedRegion", parsedRegion);
+      if (parsedRegion) {
+        stateRegion.current = parsedRegion as ZoomRegion;
+      }
 
       if (canvasId.startsWith("http")) {
         setCurrentCanvasId(canvasId);
