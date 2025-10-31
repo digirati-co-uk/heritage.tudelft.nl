@@ -1,30 +1,25 @@
-import { AutoLanguage } from "../pages/AutoLanguage";
+import { useAtlasStore } from "react-iiif-vault";
+import { InternationalString } from "@iiif/presentation-3";
 import {
   type ZoomRegion,
   updateStateSharingLink,
   updateCustomSharingLink,
 } from "@/helpers/content-state";
+import viewerConfig from "@/viewers.json";
+import { useStore } from "zustand";
+import { AutoLanguage } from "../pages/AutoLanguage";
 import { useState, useEffect } from "react";
 import { CopyToClipboard } from "../atoms/CopyToClipboard";
 import { CopyToClipboardIcon } from "../icons/CopyToClipboardIcon";
-import { useAtlasStore } from "react-iiif-vault";
-import { useStore } from "zustand";
-import { InternationalString } from "@iiif/presentation-3";
+import { LinkIcon } from "../icons/LinkIcon";
 
 export function SharingOptions({
-  //onChange,
   manifestId,
   initCanvasURI,
   initCanvasSeqIdx = 0,
   initCanvasLabel,
   initZoomRegion,
 }: {
-  // onChange: (
-  //   viewports: Record<
-  //     string,
-  //     { x: number; y: number; width: number; height: number }
-  //   >,
-  // ) => void;
   manifestId: string;
   initCanvasURI?: string;
   initCanvasSeqIdx?: number;
@@ -42,6 +37,10 @@ export function SharingOptions({
   const [specifyRegion, setSpecifyRegion] = useState<boolean>(false);
   const atlas = useAtlasStore();
   const canvasViewports = useStore(atlas, (s) => s.canvasViewports);
+  const configuredViewers = viewerConfig.viewers.filter((viewer) =>
+    viewer.enabled?.includes("object"),
+  );
+  console.log(configuredViewers);
 
   useEffect(() => {
     setZoomRegion(canvasViewports[canvasURI]);
@@ -190,6 +189,27 @@ export function SharingOptions({
               </div>
             </div>
           </CopyToClipboard>
+        </li>
+        <li>
+          <ul className="flex flex-col gap mt-1">
+            {configuredViewers
+              .filter((v) => ["theseus", "clover"].includes(v.id))
+              .map((viewer) => {
+                return (
+                  <li className="flex flex-row gap-2 items-center ml-3">
+                    <LinkIcon className="text-2xl opacity-50" />
+                    <a
+                      href={viewer.link.replace("{url}", stateSharingLink)}
+                      target="_blank"
+                      className="underline hover:text-slate-600"
+                      rel="noreferrer"
+                    >
+                      <AutoLanguage>{viewer.label}</AutoLanguage>
+                    </a>
+                  </li>
+                );
+              })}
+          </ul>
         </li>
       </ul>
     </div>

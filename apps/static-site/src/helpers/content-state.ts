@@ -91,7 +91,5 @@ function stateCreateAndEncode({
   };
   const stateStr = JSON.stringify(state);
   const encoded = encodeContentState(stateStr);
-  const stateLink = `${manifestId}?iiif-content=${encoded}`;
-  console.log(stateLink);
-  return stateLink;
+  return encoded;
 }
