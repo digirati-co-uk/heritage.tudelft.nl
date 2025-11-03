@@ -1,5 +1,5 @@
 import { encodeContentState } from "@iiif/helpers";
-import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 export type ZoomRegion = {
   x: number;
@@ -56,8 +56,8 @@ export function updateCustomSharingLink({
   const canvasPart = canvasSeqIdx ? `?id=${canvasSeqIdx}` : "";
   const regionPart = zoomRegion ? `xywh=${serialiseRegion(zoomRegion)}` : "";
   const sep = canvasSeqIdx && zoomRegion ? "&" : zoomRegion ? "?" : "";
-  //return `${manifestId}${canvasPart}${sep}${regionPart}`;
-  return `${pathname}${canvasPart}${sep}${regionPart}`;
+  const relativeUrl = `${pathname}${canvasPart}${sep}${regionPart}`;
+  return `https://heritage.tudelft.nl${relativeUrl}`;
 }
 
 function serialiseRegion(zoomRegion: ZoomRegion | null | undefined) {
