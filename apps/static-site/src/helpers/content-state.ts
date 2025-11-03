@@ -1,5 +1,4 @@
 import { encodeContentState } from "@iiif/helpers";
-import Link from "next/link";
 
 export type ZoomRegion = {
   x: number;
@@ -44,12 +43,10 @@ export function updateStateSharingLink({
 
 export function updateCustomSharingLink({
   pathname,
-  manifestId,
   canvasSeqIdx = 0,
   zoomRegion,
 }: {
   pathname: string;
-  manifestId: string;
   canvasSeqIdx: number;
   zoomRegion: ZoomRegion | null | undefined;
 }) {

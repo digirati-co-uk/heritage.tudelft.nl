@@ -67,7 +67,6 @@ export function SharingOptions({
     setStateSharingLink(stateSharingLink);
     const customSharingLink = updateCustomSharingLink({
       pathname: pathname,
-      manifestId: manifestId,
       canvasSeqIdx: specifyCanvas ? initCanvasSeqIdx : 0,
       zoomRegion: specifyRegion ? zoomRegion : undefined,
     });
