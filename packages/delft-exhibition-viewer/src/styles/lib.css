@@ -92,7 +92,7 @@
 }
 
 /* Atlas styling */
-.atlas-container {
+.exhibition-canvas-panel {
   min-width: 0;
   min-height: 0;
   --atlas-container-flex: 1 1 0px;
@@ -192,4 +192,14 @@ div[data-textual-content="true"] p {
   display: flex;
   flex-direction: column;
   height: 100%;
+}
+
+.mdx-editor-toolbar {
+  position: sticky;
+  top: 0;
+}
+
+.exhibition-slideshow-slide {
+  flex: 0 0 100%;
+  display: flex;
 }

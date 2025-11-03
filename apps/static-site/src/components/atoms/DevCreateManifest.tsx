@@ -1,3 +1,4 @@
+"use server";
 import { createManifestBySlug } from "@/actions/create-manifest-actions";
 import { revalidatePath } from "next/cache";
 

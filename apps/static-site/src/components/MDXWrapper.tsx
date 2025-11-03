@@ -1,7 +1,9 @@
-import { useMemo } from "react";
 import { Slot } from "@/blocks/slot";
-import { Illustration } from "./blocks/Illustration";
 import { getMDXComponent } from "mdx-bundler/client";
+import { useMemo } from "react";
+import { ArticleExhibition } from "./blocks/ArticleExhibition";
+import { Illustration } from "./blocks/Illustration";
+import { IllustrationServer } from "./blocks/IllustrationServer";
 
 export function MDXWrapper({
   code,
@@ -21,9 +23,7 @@ export function MDXWrapper({
         <div>
           <h3>Error rendering article</h3>
           <ul>
-            <li>
-              Ensure that frontmatter does not have strings wrapped in quotes
-            </li>
+            <li>Ensure that frontmatter does not have strings wrapped in quotes</li>
             <li>Avoid using empty values in the frontmatter</li>
             {/* Add other issues that might arise here. */}
           </ul>
@@ -36,7 +36,9 @@ export function MDXWrapper({
     return <Slot context={{ ...context, locale }} {...inner} />;
   };
 
-  return <MDXContent components={{ Slot: CustomSlot, Illustration, Small }} />;
+  return (
+    <MDXContent components={{ Slot: CustomSlot, Illustration: IllustrationServer, ArticleExhibition, Small } as any} />
+  );
 }
 
 function Small(props: any) {

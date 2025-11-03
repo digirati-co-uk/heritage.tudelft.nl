@@ -1,30 +1,26 @@
-import { Dialog } from "@headlessui/react";
-import type { Manifest } from "@iiif/presentation-3";
-import { type ReactNode, Suspense, lazy, useRef, useState } from "react";
-import {
-  LanguageProvider,
-  ManifestContext,
-  VaultProvider,
-  useExistingVault,
-} from "react-iiif-vault";
 import { ImageBlock } from "@/components/exhibition/ImageBlock";
 import { InfoBlock } from "@/components/exhibition/InfoBlock";
 import { MediaBlock } from "@/components/exhibition/MediaBlock";
+import { Dialog } from "@headlessui/react";
+import type { Manifest } from "@iiif/presentation-3";
+import { type ReactNode, Suspense, lazy, useRef, useState } from "react";
+import { LanguageProvider, ManifestContext, VaultProvider, useExistingVault } from "react-iiif-vault";
 import { TitlePanel } from "./components/exhibition/TitleBlock";
 import "./styles/lib.css";
+import { CloseIcon } from "@/components/icons/CloseIcon";
 import { usePress } from "react-aria";
 import { twMerge } from "tailwind-merge";
 import { useMediaQuery } from "usehooks-ts";
-import { CloseIcon } from "@/components/icons/CloseIcon";
-import { TableOfContentsBar } from "./components/shared/TableOfContentsBar";
-import { TableOfContentsHeader } from "./components/shared/TableOfContentsHeader";
 import { PlayIcon } from "./components/icons/PlayIcon";
 import { TopIcon } from "./components/icons/TopIcon";
+import { TableOfContentsBar } from "./components/shared/TableOfContentsBar";
+import { TableOfContentsHeader } from "./components/shared/TableOfContentsHeader";
 import { MapCanvasStrategy } from "./helpers/MapCanvasStrategy";
 
 export type DelftExhibitionProps = {
   manifest: Manifest;
   canvasId?: string;
+  vaultManifestId?: string;
   language: string | undefined;
   viewObjectLinks: Array<{
     service: string;
@@ -36,6 +32,7 @@ export type DelftExhibitionProps = {
   options?: {
     hideTitle?: boolean;
     fullTitleBar?: boolean;
+    fullWidthGrid?: boolean;
     hideTableOfContents?: boolean;
     disablePresentation?: boolean;
     hideTitleCard?: boolean;
@@ -69,6 +66,7 @@ export function DelftExhibition(props: DelftExhibitionProps) {
     transitionScale = false,
     imageInfoIcon = false,
     coverImages = false,
+    fullWidthGrid = false,
     hideTableOfContents = !!props.canvasId,
   } = props.options || {};
 
@@ -80,10 +78,7 @@ export function DelftExhibition(props: DelftExhibitionProps) {
   });
 
   if (props.manifest?.id && !vault.requestStatus(props.manifest.id)) {
-    vault.loadSync(
-      props.manifest.id,
-      JSON.parse(JSON.stringify(props.manifest)),
-    );
+    vault.loadSync(props.manifest.id, JSON.parse(JSON.stringify(props.manifest)));
   }
 
   return (
@@ -92,11 +87,7 @@ export function DelftExhibition(props: DelftExhibitionProps) {
         <LanguageProvider language={props.language || "en"}>
           <div className="delft-exhibition-viewer w-full">
             {disablePresentation ? null : (
-              <Dialog
-                className="relative z-50"
-                open={enabled}
-                onClose={() => setEnabled(false)}
-              >
+              <Dialog className="relative z-50" open={enabled} onClose={() => setEnabled(false)}>
                 <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
                 <div className="mobile-height fixed inset-0 flex w-screen items-center lg:p-4">
                   <button
@@ -131,8 +122,7 @@ export function DelftExhibition(props: DelftExhibitionProps) {
               <TableOfContentsBar
                 fixed
                 content={{
-                  tableOfContents:
-                    props.content?.tableOfContents || "Table of Contents",
+                  tableOfContents: props.content?.tableOfContents || "Table of Contents",
                 }}
                 onPlay={() => setEnabled(true)}
               >
@@ -158,24 +148,17 @@ export function DelftExhibition(props: DelftExhibitionProps) {
             <div ref={containerRef} data-cut-corners-enabled={cutCorners}>
               <div
                 className={twMerge(
-                  "delft-exhibition-viewer slides w-full mb-12 auto-rows-auto grid-cols-12 content-center justify-center lg:grid",
+                  "delft-exhibition-viewer slides w-full auto-rows-auto grid-cols-12 content-center justify-center lg:grid",
                   enabled ? "opacity-0" : "",
                 )}
               >
-                {!fullTitleBar && !hideTitleCard ? (
-                  <TitlePanel manifest={props.manifest} />
-                ) : null}
+                {!fullTitleBar && !hideTitleCard ? <TitlePanel manifest={props.manifest} /> : null}
 
-                <MapCanvasStrategy
-                  onlyCanvasId={props.canvasId}
-                  items={props.manifest.items || []}
-                >
+                <MapCanvasStrategy onlyCanvasId={props.canvasId} items={props.manifest.items || []}>
                   {{
                     // When its images.
                     images: ({ index, canvas }) => {
-                      const foundLinks = props.viewObjectLinks.filter(
-                        (link) => link.canvasId === canvas.id,
-                      );
+                      const foundLinks = props.viewObjectLinks.filter((link) => link.canvasId === canvas.id);
 
                       return (
                         <ImageBlock
@@ -183,6 +166,7 @@ export function DelftExhibition(props: DelftExhibitionProps) {
                           scrollEnabled={!enabled}
                           canvas={canvas}
                           index={index}
+                          fullWidthGrid={fullWidthGrid}
                           coverImages={coverImages}
                           objectLinks={foundLinks}
                           alternativeMode={alternativeImageMode}
@@ -205,18 +189,14 @@ export function DelftExhibition(props: DelftExhibitionProps) {
 
                     // Media content
                     media: ({ index, canvas, strategy }) => (
-                      <Suspense
-                        key={index}
-                        fallback={
-                          <div className={"cut-corners bg-black text-white"} />
-                        }
-                      >
+                      <Suspense key={index} fallback={<div className={"cut-corners bg-black text-white"} />}>
                         <MediaBlock
                           key={index}
                           scrollEnabled={!enabled}
                           canvas={canvas}
                           strategy={strategy}
                           index={index}
+                          fullWidthGrid={fullWidthGrid}
                         />
                       </Suspense>
                     ),

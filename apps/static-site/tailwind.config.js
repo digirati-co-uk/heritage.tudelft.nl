@@ -6,6 +6,7 @@ export default {
     "src/**/*.{tsx,ts}",
     "content/**/*.{md,mdx}",
     "../../packages/delft-exhibition-viewer/src/**/*.{tsx,ts,.css}",
+    "node_modules/iiif-browser/**/*.{js,css}",
   ],
   theme: {
     extend: {
