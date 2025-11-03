@@ -5,10 +5,8 @@ import { Slot } from "@/blocks/slot";
 import { SlotContext } from "@/blocks/slot-context";
 import type { Publication } from "contentlayer/generated";
 import { getTranslations } from "next-intl/server";
-import { refresh, revalidatePath } from "next/cache";
-import { useCallback, useState } from "react";
+import { revalidatePath } from "next/cache";
 import { MDXWrapper } from "../MDXWrapper";
-import { Illustration } from "../blocks/Illustration";
 import { PublicationPageEditor } from "../editor/PublicationPageEditor";
 
 export interface PublicationPageProps {
