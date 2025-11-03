@@ -61,11 +61,13 @@ export function RangeNavigation({
         hasChildItems={!!item.items}
         parentId={parent?.id}
         onClick={() => {
-          item.firstCanvas?.source?.id &&
-            setCurrentCanvasId(item.firstCanvas?.source?.id);
-          setTimeout(() => {
-            scrollToTitle();
-          }, 300);
+          if (!item.items?.some((i) => i.type === "Range")) {
+            item.firstCanvas?.source?.id &&
+              setCurrentCanvasId(item.firstCanvas?.source?.id);
+            setTimeout(() => {
+              scrollToTitle();
+            }, 300);
+          }
         }}
       >
         <Collection items={item.items || []}>
