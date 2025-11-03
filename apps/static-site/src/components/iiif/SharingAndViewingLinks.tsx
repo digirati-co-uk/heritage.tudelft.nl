@@ -30,7 +30,7 @@ export function SharingAndViewingLinks({
   };
   content: SharingAndViewingLinksContent;
   sharingOptionsOpen: boolean;
-  setSharingOptionsOpen: (open: boolean) => void;
+  setSharingOptionsOpen?: (open: boolean) => void;
 }) {
   const [sharingExpanded, setSharingExpanded] = useState(false);
   const configuredViewers = viewerConfig.viewers.filter((viewer) =>
@@ -101,15 +101,17 @@ export function SharingAndViewingLinks({
                   </li>
                 );
               })}
-              <li key="sharing-options" className="flex items-center gap-3">
-                <OpenModalIcon className="text-2xl opacity-50" />
-                <button
-                  className="underline ml-1"
-                  onClick={() => setSharingOptionsOpen(!sharingOptionsOpen)}
-                >
-                  {t("Sharing options")}
-                </button>
-              </li>
+              {setSharingOptionsOpen && (
+                <li key="sharing-options" className="flex items-center gap-3">
+                  <OpenModalIcon className="text-2xl opacity-50" />
+                  <button
+                    className="underline ml-1"
+                    onClick={() => setSharingOptionsOpen(!sharingOptionsOpen)}
+                  >
+                    {t("Sharing options")}
+                  </button>
+                </li>
+              )}
               {configuredViewers.length > viewerConfig.showMax ? (
                 <li className="mt-4">
                   <button
