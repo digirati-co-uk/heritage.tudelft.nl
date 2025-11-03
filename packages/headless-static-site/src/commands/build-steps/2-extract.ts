@@ -5,6 +5,7 @@ import { makeProgressBar } from "../../util/make-progress-bar.ts";
 import { createStoreRequestCache } from "../../util/store-request-cache.ts";
 import type { ActiveResourceJson } from "../../util/store.ts";
 import type { BuildConfig } from "../build.ts";
+import { createResourceHandler } from "../../util/create-resource-handler.ts";
 
 export async function extract(
   {
@@ -99,12 +100,16 @@ export async function extract(
           // log(`Skipping ${extraction.id} for ${manifest.slug}`);
           continue;
         }
+        const extractionConfig = config.config?.[extraction.id];
         const storeConfig = extractionConfigs[extraction.id] || {};
         const extractConfig = Object.assign(
           {},
+          extractionConfig,
           storeConfig,
           config.stores[manifest.storeId].config?.[extraction.id] || {}
         );
+        const filesDir = join(cacheDir, manifest.slug, "files");
+        const resourceFiles = createResourceHandler(filesDir, files);
         const valid =
           !options.cache ||
           (await extraction.invalidate(
@@ -114,6 +119,8 @@ export async function extract(
               resource,
               build: buildConfig,
               fileHandler: files,
+              resourceFiles,
+              filesDir,
             },
             extractConfig
           ));
@@ -127,9 +134,12 @@ export async function extract(
               meta: cachedResource.meta,
               indices: cachedResource.indices,
               caches: cachedResource.caches,
+              searchRecord: cachedResource.searchRecord,
               config,
               build: buildConfig,
               requestCache,
+              resourceFiles,
+              filesDir,
             },
             extractConfig
           );
@@ -179,6 +189,7 @@ export async function extract(
               storeConfig,
               config.stores[manifest.storeId].config?.[canvasExtraction.id] || {}
             );
+            const resourceFiles = createResourceHandler(canvasCache.filesDir, files);
             const valid =
               !options.cache ||
               (await canvasExtraction.invalidate(
@@ -188,6 +199,8 @@ export async function extract(
                   resource: canvas,
                   build: buildConfig,
                   fileHandler: files,
+                  resourceFiles,
+                  filesDir: canvasCache.filesDir,
                 },
                 extractConfig
               ));
@@ -202,9 +215,12 @@ export async function extract(
                 meta: canvasCache.meta,
                 indices: canvasCache.indices,
                 caches: canvasCache.caches,
+                searchRecord: canvasCache.searchRecord,
                 config,
                 build: buildConfig,
                 requestCache,
+                resourceFiles,
+                filesDir: canvasCache.filesDir,
               },
               extractConfig
             );

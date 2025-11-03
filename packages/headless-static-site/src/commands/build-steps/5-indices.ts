@@ -4,6 +4,7 @@ import type { Collection } from "@iiif/presentation-3";
 import slug from "slug";
 import { stringify } from "yaml";
 import { createCollection } from "../../util/create-collection.ts";
+import type { SearchIndexes } from "../../util/extract.ts";
 import { loadJson } from "../../util/load-json.ts";
 import type { ActiveResourceJson } from "../../util/store.ts";
 import type { BuildConfig } from "../build.ts";
@@ -19,6 +20,8 @@ export async function indices(
     editable,
     overrides,
     collections,
+    searchIndexes,
+    allIndices,
   }: {
     allResources: Array<ActiveResourceJson>;
     indexCollection?: Record<string, any>;
@@ -28,6 +31,8 @@ export async function indices(
     editable?: Record<string, string>;
     overrides?: Record<string, string>;
     collections?: Record<string, string[]>;
+    searchIndexes?: SearchIndexes;
+    allIndices?: Record<string, string[]>;
   },
   { options, server, buildDir, config, cacheDir, topicsDir, collectionRewrites, files }: BuildConfig
 ) {
@@ -291,11 +296,46 @@ export async function indices(
     await Promise.all(storeCollectionsJson);
   }
 
+  // Search indexes.
+  if (searchIndexes) {
+    const searchRoot = join(buildDir, "meta/search");
+    await files.mkdir(searchRoot);
+
+    const indexes = Object.keys(searchIndexes);
+    const allIndiciesKeys = Object.keys(allIndices || {});
+    for (const index of indexes) {
+      const searchIndex = searchIndexes[index];
+      const schema = join(searchRoot, `${index}.schema.json`);
+      const data = join(searchRoot, `${index}.jsonl`);
+      const indiciesToAddToIndex = searchIndex.allIndices ? allIndiciesKeys : searchIndex.indices || [];
+
+      // Need to add dynamic indices.
+      for (const indicesToAdd of indiciesToAddToIndex) {
+        if (allIndices?.[indicesToAdd]) {
+          searchIndex.schema.fields.push({
+            name: `topic_${indicesToAdd}`,
+            type: "string[]",
+            facet: true,
+            optional: true,
+          });
+        }
+      }
+
+      await writeJson(schema, {
+        name: index,
+        ...searchIndex.schema,
+      });
+      await files.writeFile(data, searchIndex.records.map((record) => JSON.stringify(record)).join("\n"));
+    }
+  }
+
   // Standard files
   await files.mkdir(join(buildDir, "config"));
   await writeJson(join(buildDir, "config", "slugs.json"), config.slugs || {});
 
   await writeJson(join(buildDir, "config", "stores.json"), config.stores);
+
+  await writeJson(join(buildDir, "meta/all-indices.json"), allIndices);
 
   if (siteMap) {
     await writeJson(join(buildDir, "meta/sitemap.json"), siteMap);

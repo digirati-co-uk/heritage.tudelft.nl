@@ -8,6 +8,8 @@ import { isEmpty } from "../../util/is-empty.ts";
 import { makeProgressBar } from "../../util/make-progress-bar.ts";
 import type { ActiveResourceJson } from "../../util/store.ts";
 import type { BuildConfig } from "../build.ts";
+import type { extract } from "./2-extract.ts";
+import type { enrich } from "./3-enrich.ts";
 
 export async function emit(
   {
@@ -19,7 +21,7 @@ export async function emit(
     allPaths?: Record<string, string>;
     idsToSlugs?: Record<string, { slug: string; type: string }>;
   },
-  { options, server, cacheDir, buildDir, log, imageServiceLoader, files }: BuildConfig
+  { options, server, cacheDir, buildDir, log, imageServiceLoader, files, search }: BuildConfig
 ) {
   if (!options.emit) {
     return {};
@@ -106,6 +108,7 @@ export async function emit(
           "vault.json": join(manifestCacheDirectory, "vault.json"),
           "meta.json": join(manifestCacheDirectory, "meta.json"),
           "indices.json": join(manifestCacheDirectory, "indices.json"),
+          "search-record.json": join(manifestCacheDirectory, "search-record.json"),
         };
 
         // const folderPath = allPaths[manifest.path];
@@ -270,6 +273,16 @@ export async function emit(
           join(manifestBuildDirectory, "meta.json"),
           { overwrite: true }
         );
+
+        if (search.emitRecord && existsSync(join(cacheDir, manifest.slug, "search-record.json"))) {
+          // Temporary? Or config?
+          files.copy(
+            // 3. Save the meta file to disk
+            join(cacheDir, manifest.slug, "search-record.json"),
+            join(manifestBuildDirectory, "search-record.json"),
+            { overwrite: true }
+          );
+        }
 
         files.copy(join(cacheDir, manifest.slug, "indices.json"), join(manifestBuildDirectory, "indices.json"), {
           overwrite: true,

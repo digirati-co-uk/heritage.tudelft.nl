@@ -131,8 +131,7 @@ div[data-textual-content="true"] p {
 }
 
 .safe-inset {
-  padding: env(safe-area-inset-top) env(safe-area-inset-right)
-    env(safe-area-inset-bottom) env(safe-area-inset-left);
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
 .fill-height {
@@ -165,6 +164,20 @@ div[data-textual-content="true"] p {
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation-duration: 0.5s;
+}
+
+.delft-presentation-viewer {
+  grid-template-areas: "slide";
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  display: grid;
+}
+
+.delft-presentation-viewer .delft-slide {
+  grid-area: slide;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .delft-presentation-viewer {

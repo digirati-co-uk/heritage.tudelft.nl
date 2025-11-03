@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  react-iiif-vault: 2.0.4
+  react-iiif-vault: 2.0.5
   '@iiif/parser': 2.2.5
   '@iiif/helpers': ^1.5.4
   react: 19.2.0
@@ -205,8 +205,8 @@ importers:
         specifier: 19.2.0
         version: 19.2.0(react@19.2.0)
       react-iiif-vault:
-        specifier: 2.0.4
-        version: 2.0.4(@atlas-viewer/atlas@3.0.1(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+        specifier: 2.0.5
+        version: 2.0.5(@atlas-viewer/atlas@3.0.1(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       react-instantsearch:
         specifier: ^7.6.0
         version: 7.17.0(algoliasearch@5.41.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -231,6 +231,9 @@ importers:
       zod:
         specifier: ^3.22.4
         version: 3.25.76
+      zustand:
+        specifier: ^4.5.2
+        version: 4.5.7(@types/react@19.2.2)(react@19.2.0)
     devDependencies:
       '@netlify/plugin-nextjs':
         specifier: ^5.14.4
@@ -302,8 +305,8 @@ importers:
         specifier: ^16.2.1
         version: 16.2.1(i18next@25.6.0(typescript@5.9.3))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(typescript@5.9.3)
       react-iiif-vault:
-        specifier: 2.0.4
-        version: 2.0.4(@atlas-viewer/atlas@3.0.1(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@types/react@18.3.26)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+        specifier: 2.0.5
+        version: 2.0.5(@atlas-viewer/atlas@3.0.1(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@types/react@18.3.26)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       react-lazy-load-image-component:
         specifier: ^1.6.0
         version: 1.6.3(react@19.2.0)
@@ -5223,8 +5226,8 @@ packages:
       typescript:
         optional: true
 
-  react-iiif-vault@2.0.4:
-    resolution: {integrity: sha512-kGsv6bPOAUSBQLUh7FxglyjvJCttyEtsWeMFEc4oKamQEy/ViRZ9AhUA3dlR+u2W9KlkPMAwuk3OITgLq4Fk0A==}
+  react-iiif-vault@2.0.5:
+    resolution: {integrity: sha512-k1bxM7fjr859beAfO6gw1BQdVVyk/XhRN6+P5Wl6w+Kv+Px8m98oQx4Age2BfgdyH3Mp8U5K+oRtlPdz9WBgtw==}
     peerDependencies:
       '@atlas-viewer/atlas': 3.0.1
       react: 19.2.0
@@ -12154,7 +12157,7 @@ snapshots:
       react-dom: 19.2.0(react@19.2.0)
       typescript: 5.9.3
 
-  react-iiif-vault@2.0.4(@atlas-viewer/atlas@3.0.1(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@types/react@18.3.26)(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
+  react-iiif-vault@2.0.5(@atlas-viewer/atlas@3.0.1(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@types/react@18.3.26)(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
     dependencies:
       '@atlas-viewer/atlas': 3.0.1(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       '@floating-ui/react': 0.27.16(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -12176,7 +12179,7 @@ snapshots:
       - '@types/react'
       - immer
 
-  react-iiif-vault@2.0.4(@atlas-viewer/atlas@3.0.1(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
+  react-iiif-vault@2.0.5(@atlas-viewer/atlas@3.0.1(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@types/react@19.2.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
     dependencies:
       '@atlas-viewer/atlas': 3.0.1(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       '@floating-ui/react': 0.27.16(react-dom@19.2.0(react@19.2.0))(react@19.2.0)

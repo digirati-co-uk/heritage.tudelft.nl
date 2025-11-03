@@ -19,7 +19,6 @@ export function RangeNavigation({
 }: {
   content: SharingAndViewingLinksContent;
 }) {
-  const [tocExpanded, setTocExpanded] = useState<boolean>(true);
   const context = useSimpleViewer();
   const { setCurrentCanvasId } = context;
   const vault = useVault();
@@ -62,11 +61,13 @@ export function RangeNavigation({
         hasChildItems={!!item.items}
         parentId={parent?.id}
         onClick={() => {
-          item.firstCanvas?.source?.id &&
-            setCurrentCanvasId(item.firstCanvas?.source?.id);
-          setTimeout(() => {
-            scrollToTitle();
-          }, 300);
+          if (!item.items?.some((i) => i.type === "Range")) {
+            item.firstCanvas?.source?.id &&
+              setCurrentCanvasId(item.firstCanvas?.source?.id);
+            setTimeout(() => {
+              scrollToTitle();
+            }, 300);
+          }
         }}
       >
         <Collection items={item.items || []}>
@@ -91,11 +92,10 @@ export function RangeNavigation({
     [flatItems],
   );
 
-  const [expandedKeys, setExpandedKeys] =
-    useState<Iterable<Key>>(expandAllKeys);
+  const [expandedKeys, setExpandedKeys] = useState<Iterable<Key>>([]);
 
   function scrollToTitle() {
-    const el = document.querySelector("main");
+    const el = document.querySelector(".atlas-container");
     el?.scrollIntoView({
       behavior: "smooth",
       block: "start",
@@ -103,15 +103,28 @@ export function RangeNavigation({
     });
   }
 
-  const dispItems = tocExpanded ? toc?.items : toc?.items?.slice(0, 2);
-
-  return !dispItems ? null : (
+  return !toc?.items ? null : (
     <div className="overflow-hidden font-mono">
       <div className="cut-corners w-full place-self-start bg-black p-5 text-white">
-        <h3 className="mb-4 uppercase">{getValue(toc?.label)}</h3>
+        <h3 className="uppercase">{getValue(toc?.label)}</h3>
+        <div className="mb-3">
+          <button
+            onClick={() => setExpandedKeys(expandAllKeys)}
+            className="mt-4 uppercase hover:text-slate-300 hover:underline"
+          >
+            expand all +
+          </button>
+          {" | "}
+          <button
+            onClick={() => setExpandedKeys([])}
+            className="mt-4 uppercase hover:text-slate-300 hover:underline"
+          >
+            collapse all -
+          </button>
+        </div>
         <Tree
           aria-label={getValue(toc?.label)}
-          items={dispItems}
+          items={toc.items}
           expandedKeys={expandedKeys}
           onExpandedChange={setExpandedKeys}
           selectionMode="single"
@@ -120,15 +133,6 @@ export function RangeNavigation({
             return <RenderItem item={item} />;
           }}
         </Tree>
-
-        {toc?.items?.length && toc?.items?.length > 2 && (
-          <button
-            onClick={() => setTocExpanded(!tocExpanded)}
-            className="mt-4 uppercase hover:text-slate-300 hover:underline"
-          >
-            {tocExpanded ? `${content.showLess} -` : `${content.showMore} +`}
-          </button>
-        )}
       </div>
     </div>
   );

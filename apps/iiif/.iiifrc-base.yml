@@ -10,11 +10,19 @@ run:
   - delft-extract-labels
   - extract-part-of-collection
   - extract-thumbnail-local
+  - extract-files-list
+  - enrich-files-rewrite
   - manifest-sqlite
   - metadata-analysis
   - site-collections
   - delft-image-source
-  - typesense-manifests
+  - extract-search-record
+  - delft-test-extract-schema
+
+search:
+  indexNames: ["manifests"]
+  defaultIndex: manifests
+  emitRecord: true
 
 collections:
   index:
@@ -25,11 +33,21 @@ config:
     width: 1080
     height: 1080
 
+  extract-files-list:
+    fileTemplates:
+      schema.json:
+        _injectId: '@id'
+        type: "Dataset"
+        format: "application/json"
+        label: "Product Schema"
+        property: seeAlso
+
 stores:
   collective-access:
     type: iiif-json
     path: ./manifests/collective-access
     destination: manifests
+    subFiles: true
     pattern: "**/*.{json,yaml,yml}"
     run:
       - extract-topics

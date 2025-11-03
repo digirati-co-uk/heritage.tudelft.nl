@@ -1,8 +1,11 @@
 import { join } from "node:path";
 import PQueue from "p-queue";
 import { createCacheResource } from "../../util/cached-resource.ts";
+import { createResourceHandler } from "../../util/create-resource-handler.ts";
 import type { Enrichment } from "../../util/enrich.ts";
+import type { SearchIndexes, SearchRecordReturn } from "../../util/extract.ts";
 import { makeProgressBar } from "../../util/make-progress-bar.ts";
+import { mergeIndices } from "../../util/merge-indices.ts";
 import { createStoreRequestCache } from "../../util/store-request-cache.ts";
 import type { ActiveResourceJson } from "../../util/store.ts";
 import type { BuildConfig } from "../build.ts";
@@ -19,6 +22,7 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
     allEnrichments,
     requestCacheDir,
     files,
+    search,
   } = buildConfig;
 
   const start = Date.now();
@@ -33,6 +37,49 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
     run: {} as Record<string, number>,
     total: 0,
   };
+
+  // Search setup.
+  const searchIndexes: SearchIndexes = Object.fromEntries(
+    search.indexes.map((index) => [
+      index.indexName,
+      {
+        ...index,
+        records: [] as Array<Record<string, any>>,
+        keys: (index.schema.fields || []).map((field) => field.name),
+      },
+    ])
+  );
+  function addToSearchIndex(search: Partial<SearchRecordReturn>, indices: Record<string, string[]>) {
+    if (search.indexes && search.record) {
+      for (const index of search.indexes) {
+        if (searchIndexes[index]) {
+          const record = Object.fromEntries(
+            Object.entries(search.record).filter(([key]) => searchIndexes[index].keys.includes(key))
+          );
+          if (searchIndexes[index].allIndices) {
+            const keys = Object.keys(indices);
+            for (const facet of keys) {
+              record[`topic_${facet}`] = indices[facet];
+            }
+          } else if (searchIndexes[index].indices?.length) {
+            for (const facet of searchIndexes[index].indices || []) {
+              if (indices[facet]) {
+                record[`topic_${facet}`] = indices[facet];
+              }
+            }
+          }
+          searchIndexes[index].records.push(record);
+        }
+      }
+    }
+  }
+
+  // All indcies found.
+  const allIndices: Record<string, string[]> = {};
+  function recordIndices(indices: Record<string, string[]>) {
+    mergeIndices(allIndices, indices);
+  }
+
   const enrichmentConfigs: Record<string, any> = {};
   const temp: Record<string, Record<string, any>> = {};
   for (const enrichment of allEnrichments) {
@@ -110,6 +157,7 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
     const runEnrichment = async (enrichment: Enrichment) => {
       const startTime = Date.now();
       const filesDir = join(cacheDir, manifest.slug, "files");
+      const resourceFiles = createResourceHandler(filesDir, files);
       const storeConfig = enrichmentConfigs[enrichment.id] || {};
       const enrichmentConfig = Object.assign(
         {},
@@ -126,6 +174,8 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
             resource,
             config,
             files: filesDir,
+            resourceFiles,
+            fileHandler: files,
           },
           enrichmentConfig
         ));
@@ -140,17 +190,20 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
           meta: cachedResource.meta,
           indices: cachedResource.indices,
           caches: cachedResource.caches,
+          searchRecord: cachedResource.searchRecord,
           config,
           builder,
           resource,
           files: filesDir,
           requestCache,
           fileHandler: files,
+          resourceFiles,
         },
         enrichmentConfig
       );
 
       cachedResource.handleResponse(result, enrichment);
+
       stats.run[enrichment.id] = (stats.run[enrichment.id] || 0) + (Date.now() - startTime);
     };
 
@@ -173,6 +226,9 @@ ${errors.map((e, n) => `  ${n + 1})  ${(e as any)?.reason?.message}`).join(", ")
     }
 
     // savingFiles.push(cachedResource.save());
+    const indices = await cachedResource.indices.value;
+    addToSearchIndex(await cachedResource.searchRecord.value, indices);
+    recordIndices(indices);
     await cachedResource.save();
 
     progress.increment();
@@ -213,6 +269,8 @@ ${errors.map((e, n) => `  ${n + 1})  ${(e as any)?.reason?.message}`).join(", ")
             storeConfig,
             config.stores[manifest.storeId].config?.[enrichment.id] || {}
           );
+          const resourceFiles = createResourceHandler(cachedCanvasResource.filesDir, files);
+
           const valid =
             !options.cache ||
             (await enrichment.invalidate(
@@ -222,6 +280,8 @@ ${errors.map((e, n) => `  ${n + 1})  ${(e as any)?.reason?.message}`).join(", ")
                 resource: canvas,
                 config,
                 files: cachedCanvasResource.filesDir,
+                resourceFiles,
+                fileHandler: files,
               },
               enrichmentConfig
             ));
@@ -246,12 +306,14 @@ ${errors.map((e, n) => `  ${n + 1})  ${(e as any)?.reason?.message}`).join(", ")
               meta: cachedCanvasResource.meta,
               indices: cachedCanvasResource.indices,
               caches: cachedCanvasResource.caches,
+              searchRecord: cachedCanvasResource.searchRecord,
               config: config,
               builder,
               resource: canvas,
               files: cachedCanvasResource.filesDir,
               requestCache,
               fileHandler: files,
+              resourceFiles,
             },
             enrichmentConfig
           );
@@ -280,6 +342,9 @@ ${errors.map((e, n) => `  ${n + 1}) ${(e as any)?.reason?.message}`).join(", ")}
             );
           }
 
+          const indices = await cachedResource.indices.value;
+          addToSearchIndex(await cachedCanvasResource.searchRecord.value, indices);
+          recordIndices(indices);
           savingFiles.push(cachedCanvasResource.save());
 
           progress.increment();
@@ -332,5 +397,7 @@ ${errors.map((e, n) => `  ${n + 1}) ${(e as any)?.reason?.message}`).join(", ")}
 
   return {
     stats,
+    searchIndexes,
+    allIndices,
   };
 }

@@ -1,9 +1,9 @@
 import { Page } from "@/components/Page";
 import { SearchPage } from "@/components/pages/SearchPage";
+import { getBasicMetadata, getDefaultMetaMdx, getMdx, makeTitle } from "@/helpers/metadata";
+import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
-import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
-import { Metadata } from "next";
-import { getBasicMetadata, makeTitle, getMdx, getDefaultMetaMdx } from "@/helpers/metadata";
+import { getTranslations } from "next-intl/server";
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const t = await getTranslations();
@@ -27,12 +27,13 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   });
 }
 
-export default async function Search({ params }: { params: { locale: string } }) {
-  setRequestLocale(params.locale);
-  const page = getMdx({ params: { pageName: "Search", path: "/search", locale: params.locale } });
+export default async function Search({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const page = getMdx({ params: { pageName: "Search", path: "/search", locale: locale } });
   return (
     <Page>
-      <SearchPage title={page.title} />
+      <SearchPage title={page.title} locale={locale} />
     </Page>
   );
 }
