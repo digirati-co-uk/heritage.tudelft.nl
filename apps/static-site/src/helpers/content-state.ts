@@ -54,7 +54,7 @@ export function updateCustomSharingLink({
   const regionPart = zoomRegion ? `xywh=${serialiseRegion(zoomRegion)}` : "";
   const sep = canvasSeqIdx && zoomRegion ? "&" : zoomRegion ? "?" : "";
   const relativeUrl = `${pathname}${canvasPart}${sep}${regionPart}`;
-  return `https://heritage.tudelft.nl${relativeUrl}`;
+  return `${window.location.protocol}//${window.location.host}${relativeUrl}`;
 }
 
 function serialiseRegion(zoomRegion: ZoomRegion | null | undefined) {
