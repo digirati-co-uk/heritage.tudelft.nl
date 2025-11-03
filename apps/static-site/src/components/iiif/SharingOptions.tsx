@@ -44,7 +44,15 @@ export function SharingOptions({
   const t = useTranslations();
 
   useEffect(() => {
-    setZoomRegion(canvasViewports[canvasURI]);
+    const fullZoomRegion = canvasViewports[canvasURI];
+    fullZoomRegion?.width &&
+      fullZoomRegion?.height &&
+      setZoomRegion({
+        x: Math.round(fullZoomRegion?.x ?? 0),
+        y: Math.round(fullZoomRegion?.y ?? 0),
+        width: Math.round(fullZoomRegion?.width),
+        height: Math.round(fullZoomRegion?.height),
+      });
   }, [canvasViewports]);
 
   useEffect(() => {
