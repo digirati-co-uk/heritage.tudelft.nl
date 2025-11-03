@@ -87,12 +87,14 @@ export function SharingOptions({
                 {t("Page number")}:{" "}
                 <span className="text-gray-900">{initCanvasSeqIdx + 1}</span>
               </div>
-              <div>
-                {t("Label")}:{" "}
-                <span className="text-gray-900">
-                  "<AutoLanguage>{initCanvasLabel}</AutoLanguage>"
-                </span>
-              </div>
+              {
+                <div>
+                  {t("Label")}:{" "}
+                  <span className="text-gray-900">
+                    <AutoLanguage>{initCanvasLabel}</AutoLanguage>
+                  </span>
+                </div>
+              }
             </div>
           </div>
         </li>
@@ -115,13 +117,13 @@ export function SharingOptions({
                     <div>
                       x:{" "}
                       <span className="text-gray-900">
-                        {+zoomRegion?.x.toFixed(2)}
+                        {Math.round(zoomRegion?.x)}
                       </span>
                     </div>
                     <div>
                       y:{" "}
                       <span className="text-gray-900">
-                        {+zoomRegion?.y.toFixed(2)}
+                        {Math.round(zoomRegion?.y)}
                       </span>
                     </div>
                   </div>
@@ -129,17 +131,16 @@ export function SharingOptions({
                     <div>
                       {t("width")}:{" "}
                       <span className="text-gray-900">
-                        {+zoomRegion?.width.toFixed(2)}
+                        {Math.round(zoomRegion?.width)}
                       </span>
                     </div>
                     <div>
                       {t("height")}:{" "}
                       <span className="text-gray-900">
-                        {+zoomRegion?.height.toFixed(2)}
+                        {Math.round(zoomRegion?.height)}
                       </span>
                     </div>
                   </div>
-                  <div>({t("rounded")})</div>
                 </div>
               </div>
             )}
@@ -147,7 +148,7 @@ export function SharingOptions({
         </li>
         <li className="bg-gray-100 p-3 pb-4 flex flex-col">
           <CopyToClipboard
-            href={stateSharingLink}
+            href={customSharingLink}
             copiedText={t("Copied")}
             target="_blank"
             className="pointer"

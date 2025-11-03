@@ -3,6 +3,7 @@ import { CloseIcon } from "../icons/CloseIcon";
 import { SharingOptions } from "./SharingOptions";
 import { ZoomRegion } from "@/helpers/content-state";
 import { InternationalString } from "@iiif/presentation-3";
+import { useTranslations } from "next-intl";
 
 export function SharingOptionsDialog({
   manifestId,
@@ -21,6 +22,8 @@ export function SharingOptionsDialog({
   sharingOptionsOpen: boolean;
   setSharingOptionsOpen: (open: boolean) => void;
 }) {
+  const t = useTranslations();
+
   return (
     <Dialog
       className="relative z-50"
@@ -30,7 +33,8 @@ export function SharingOptionsDialog({
       <div className="fixed inset-0 bg-black/30 flex flex-row" />
       <div className="w-[90vw] h-[90vh] xl:w-[80vw] md:h-[60vh] fixed inset-0 justify-self-center p-4">
         <button
-          className="absolute right-8 top-8 z-20 flex h-12 w-12 items-center justify-center rounded"
+          aria-label={t("Close")}
+          className="absolute right-8 top-8 z-20 flex h-8 w-8 items-center justify-center rounded  hover:bg-slate-100"
           onClick={() => setSharingOptionsOpen(false)}
         >
           <CloseIcon />
