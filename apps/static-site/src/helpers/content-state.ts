@@ -1,4 +1,5 @@
 import { encodeContentState } from "@iiif/helpers";
+import { usePathname } from "next/navigation";
 
 export type ZoomRegion = {
   x: number;
@@ -42,10 +43,12 @@ export function updateStateSharingLink({
 }
 
 export function updateCustomSharingLink({
+  pathname,
   manifestId,
   canvasSeqIdx = 0,
   zoomRegion,
 }: {
+  pathname: string;
   manifestId: string;
   canvasSeqIdx: number;
   zoomRegion: ZoomRegion | null | undefined;
@@ -53,7 +56,8 @@ export function updateCustomSharingLink({
   const canvasPart = canvasSeqIdx ? `?id=${canvasSeqIdx}` : "";
   const regionPart = zoomRegion ? `xywh=${serialiseRegion(zoomRegion)}` : "";
   const sep = canvasSeqIdx && zoomRegion ? "&" : zoomRegion ? "?" : "";
-  return `${manifestId}${canvasPart}${sep}${regionPart}`;
+  //return `${manifestId}${canvasPart}${sep}${regionPart}`;
+  return `${pathname}${canvasPart}${sep}${regionPart}`;
 }
 
 function serialiseRegion(zoomRegion: ZoomRegion | null | undefined) {

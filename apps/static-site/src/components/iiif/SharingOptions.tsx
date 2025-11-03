@@ -13,6 +13,7 @@ import { CopyToClipboard } from "../atoms/CopyToClipboard";
 import { CopyToClipboardIcon } from "../icons/CopyToClipboardIcon";
 import { LinkIcon } from "../icons/LinkIcon";
 import { useTranslations } from "next-intl";
+import { usePathname } from "next/navigation";
 
 export function SharingOptions({
   manifestId,
@@ -42,6 +43,7 @@ export function SharingOptions({
     viewer.enabled?.includes("object"),
   );
   const t = useTranslations();
+  const pathname = usePathname();
 
   useEffect(() => {
     const fullZoomRegion = canvasViewports[canvasURI];
@@ -64,6 +66,7 @@ export function SharingOptions({
     });
     setStateSharingLink(stateSharingLink);
     const customSharingLink = updateCustomSharingLink({
+      pathname: pathname,
       manifestId: manifestId,
       canvasSeqIdx: specifyCanvas ? initCanvasSeqIdx : 0,
       zoomRegion: specifyRegion ? zoomRegion : undefined,
