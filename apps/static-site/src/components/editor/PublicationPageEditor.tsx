@@ -35,6 +35,7 @@ export function PublicationPageEditor({
   const [date, setDate] = useState(publication.date || "");
   const [author, setAuthor] = useState(publication.author || "");
   const [showTableOfContents, setShowTableOfContents] = useState(publication.toc || false);
+  const [showSeeAlso, setShowSeeAlso] = useState(publication.seeAlso || false);
   const [image, setImage] = useState(publication.image || "");
 
   const unsavedChanges =
@@ -43,6 +44,7 @@ export function PublicationPageEditor({
     date !== publication.date ||
     author !== publication.author ||
     showTableOfContents !== publication.toc ||
+    showSeeAlso !== publication.seeAlso ||
     image !== publication.image;
 
   const onSave = () => {
@@ -60,6 +62,9 @@ export function PublicationPageEditor({
     }
     if (showTableOfContents) {
       frontmatter += "\ntoc: true";
+    }
+    if (showSeeAlso) {
+      frontmatter += "\nseeAlso: true";
     }
     if (image) {
       frontmatter += `\nimage: ${image}`;
@@ -137,6 +142,21 @@ export function PublicationPageEditor({
                   />
                   <label htmlFor="show-toc" className="text-sm font-medium">
                     Show Table of Contents
+                  </label>
+                </div>
+              </div>
+
+              <div>
+                <div className="flex items-center space-x-2">
+                  <input
+                    id="show-see-also"
+                    type="checkbox"
+                    checked={showSeeAlso}
+                    onChange={(e) => setShowSeeAlso(e.target.checked)}
+                    className="rounded border-gray-600 bg-gray-800 text-blue-500 focus:ring-blue-500 focus:ring-offset-0"
+                  />
+                  <label htmlFor="show-see-also" className="text-sm font-medium">
+                    Show See Also
                   </label>
                 </div>
               </div>
