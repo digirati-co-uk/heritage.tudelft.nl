@@ -4,6 +4,7 @@ import type { Preset } from "@atlas-viewer/atlas";
 import { normaliseContentState, parseContentState, validateContentState } from "@iiif/helpers";
 import { getValue } from "@iiif/helpers/i18n";
 import type { InternationalString, Manifest } from "@iiif/presentation-3";
+import type { Publication } from "contentlayer/generated";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { CanvasPanel, useSimpleViewer } from "react-iiif-vault";
@@ -55,13 +56,14 @@ interface ManifestPageProps {
     download: string;
     currentPage: string;
     copiedMessage: string;
+    publication: string;
   };
   exhibitionLinks: Array<null | {
     label: string;
     slug: string;
     thumbnail?: string;
   }>;
-
+  articles: Publication[];
   initialCanvasIndex: number;
 }
 
@@ -74,6 +76,7 @@ export function ManifestPage({
   content,
   exhibitionLinks,
   initialCanvasIndex,
+  articles,
 }: ManifestPageProps) {
   const context = useSimpleViewer();
   const { currentSequenceIndex, setCurrentCanvasId, setCurrentCanvasIndex } = context;
@@ -183,6 +186,23 @@ export function ManifestPage({
             <>
               <h3 className="mb-5 mt-10 text-3xl font-medium">{content.relatedObjects}</h3>
               <div className="mb-4 grid md:grid-cols-3">
+                {exhibitionLinks.map((item, i) => {
+                  if (item === null) return null;
+
+                  return (
+                    <Box
+                      key={item.slug}
+                      title={item.label}
+                      unfiltered
+                      backgroundColor="bg-yellow-400"
+                      small
+                      backgroundImage={item.thumbnail}
+                      link={`/${item.slug.replace("manifests/", "exhibitions/")}`}
+                      type="Exhibition"
+                    />
+                  );
+                })}
+
                 {(meta.partOfCollections || []).map((collection, i) => (
                   <Box
                     key={collection.slug}
@@ -195,6 +215,21 @@ export function ManifestPage({
                     type="Collection"
                   />
                 ))}
+                {articles.map((publication, i) => {
+                  return (
+                    <div key={publication._id}>
+                      <Box
+                        key={publication._id}
+                        link={`/publications/${publication.id}`}
+                        dark
+                        small
+                        type={content.publication}
+                        title={publication.title}
+                        subtitle={publication.author}
+                      />
+                    </div>
+                  );
+                })}
                 {related.map((item, i) => {
                   if (item === null) return null;
 
@@ -215,22 +250,6 @@ export function ManifestPage({
           )}
         </div>
         <div className="col-span-1">
-          {exhibitionLinks.map((item, i) => {
-            if (item === null) return null;
-
-            return (
-              <Box
-                key={item.slug}
-                title={item.label}
-                unfiltered
-                backgroundColor="bg-yellow-400"
-                small
-                backgroundImage={item.thumbnail}
-                link={`/${getObjectSlug(item.slug)}`}
-                type="Exhibition"
-              />
-            );
-          })}
           <SharingAndViewingLinks
             resource={{
               id: manifest.id,
