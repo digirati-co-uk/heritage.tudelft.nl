@@ -29,7 +29,15 @@ extract(
       for (const [manifestSlug, imageServicesItems] of Object.entries(temp)) {
         for (const ctx of imageServicesItems) {
           const canvasId = ctx.canvasId;
-          const imageServiceId = ctx.id;
+          let imageServiceId = ctx.id;
+
+          if (imageServiceId.includes("/thumbs/")) {
+            imageServiceId = imageServiceId.replace("/thumbs/", "/iiif-img/");
+          }
+          if (imageServiceId.includes("/iiif-img/v3/")) {
+            imageServiceId = imageServiceId.replace("/iiif-img/v3/", "/iiif-img/");
+          }
+
           reverseMapping[imageServiceId] = reverseMapping[imageServiceId] || [];
           reverseMapping[imageServiceId].push({
             manifest: manifestSlug,
