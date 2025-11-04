@@ -1,19 +1,17 @@
+import { directory } from "@/components/directory";
 import { CustomSlot } from "@page-blocks/react";
 import type { FC } from "react";
 import { fileSystemLoader } from "./server";
-import { directory } from "@/components/directory";
 
 interface SlotProps {
   context: Record<string, string>;
   name: string;
-  children: any;
+  children?: React.ReactElement;
   className?: string;
 }
 
 export const Slot = (async (props: SlotProps) => {
-  const slotResponse = await fileSystemLoader.query(props.context, [
-    props.name,
-  ]);
+  const slotResponse = await fileSystemLoader.query(props.context, [props.name]);
   const options = { resolver: directory.resolver, blocks: directory.blocks };
 
   return (
