@@ -6,12 +6,15 @@ import { SlotContext } from "@/blocks/slot-context";
 import type { Publication } from "contentlayer/generated";
 import { getTranslations } from "next-intl/server";
 import { revalidatePath } from "next/cache";
+import { Suspense } from "react";
 import { MDXWrapper } from "../MDXWrapper";
+import { ArticleFeaturedIIIF } from "../blocks/ArticleFeaturedIIIF";
 import { PublicationPageEditor } from "../editor/PublicationPageEditor";
 
 export interface PublicationPageProps {
   publication: Publication;
   locale: string;
+  featured: React.ReactNode;
 }
 
 interface PublicationHeading {
@@ -97,6 +100,7 @@ export async function PublicationPage(props: PublicationPageProps) {
                 </ul>
               </div>
             ) : null}
+            <Suspense fallback={null}>{props.featured}</Suspense>
           </div>
         </div>
         <div className="h-full lg:col-span-2">
