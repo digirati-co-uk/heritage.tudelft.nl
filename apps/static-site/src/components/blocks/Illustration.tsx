@@ -1,18 +1,20 @@
 "use client";
 import { ManifestLoader } from "@/app/provider";
-import { IIIF_URL, loadManifest, relativeIIIFUrl } from "@/iiif";
+import type { ViewObjectLink } from "@/helpers/get-view-object-links";
+import { IIIF_URL } from "@/iiif";
 import { fetch } from "@iiif/helpers";
-import { createThumbnailHelper } from "@iiif/helpers/thumbnail";
-import imageServiceLinks from "@repo/iiif/build/meta/image-service-links.json";
 import { useQuery } from "@tanstack/react-query";
-import { SingleCanvasThumbnail, ThumbnailFallbackImage, useThumbnail, useVault } from "react-iiif-vault";
-import { DevCreateManifest } from "../atoms/DevCreateManifest";
-import { DevEditManifest } from "../atoms/DevEditManifest";
+import { SingleCanvasThumbnail, useVault } from "react-iiif-vault";
 import { CanvasContext } from "../context-wrappers";
 import { ObjectViewer } from "../iiif/ObjectViewer";
 import { AutoLanguage } from "../pages/AutoLanguage";
 
-export function Illustration(props: { source?: string; manifest?: string; canvas?: string }) {
+export function Illustration(props: {
+  source?: string;
+  manifest?: string;
+  canvas?: string;
+  viewObjectLinks?: Array<ViewObjectLink>;
+}) {
   const uuid = props.source?.split(".json")[0];
   const slug = uuid ? `manifests/${uuid}` : null;
   const manifestId = props.manifest || `/${slug}/manifest.json`;
@@ -30,8 +32,7 @@ export function Illustration(props: { source?: string; manifest?: string; canvas
     vault.loadSync(data.id, JSON.parse(JSON.stringify(data)));
   }
 
-  const links = slug ? imageServiceLinks[slug as keyof typeof imageServiceLinks] || [] : [];
-  const link = links[0] || null;
+  const link = props.viewObjectLinks ? props.viewObjectLinks[0] || null : null;
 
   // if (error) return <DevCreateManifest slug={slug} />;
   if (!data) return null; // loading.
@@ -57,7 +58,7 @@ export function Illustration(props: { source?: string; manifest?: string; canvas
             objectLink={link?.slug}
             objectCanvasId={link?.targetCanvasId}
           >
-            <CanvasContext canvas={props.canvas}>
+            <CanvasContext canvas={props.canvas as string}>
               <SingleCanvasThumbnail
                 classes={{
                   imageWrapper: "h-full w-full cursor-pointer",

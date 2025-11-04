@@ -1,8 +1,7 @@
 import { Slot } from "@/blocks/slot";
 import { getMDXComponent } from "mdx-bundler/client";
 import { useMemo } from "react";
-import { ArticleExhibition } from "./blocks/ArticleExhibition";
-import { Illustration } from "./blocks/Illustration";
+import { ArticleExhibitionServer } from "./blocks/ArticleExhibitionServer";
 import { IllustrationServer } from "./blocks/IllustrationServer";
 
 export function MDXWrapper({
@@ -37,7 +36,11 @@ export function MDXWrapper({
   };
 
   return (
-    <MDXContent components={{ Slot: CustomSlot, Illustration: IllustrationServer, ArticleExhibition, Small } as any} />
+    <MDXContent
+      components={
+        { Slot: CustomSlot, Illustration: IllustrationServer, ArticleExhibition: ArticleExhibitionServer, Small } as any
+      }
+    />
   );
 }
 

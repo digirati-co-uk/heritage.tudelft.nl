@@ -1,25 +1,18 @@
 "use client";
-import { IIIF_URL } from "@/iiif";
-import { fetch } from "@iiif/helpers";
-import { useQuery } from "@tanstack/react-query";
+import type { ViewObjectLink } from "@/helpers/get-view-object-links";
+import { useLoadManifest } from "@/hooks/use-load-manifest";
+import { useViewObjectLinks } from "@/hooks/use-view-object-links";
 import { DelftExhibition } from "exhibition-viewer";
-import { useVault } from "react-iiif-vault";
 
-export function ArticleExhibition(props: { manifest: string; canvas: string }) {
-  const { data: manifest } = useQuery({
-    queryKey: ["manifest", props.manifest],
-    queryFn: () => {
-      if (!props.manifest) {
-        return null;
-      }
+export interface ArticleExhibitionProps {
+  manifest: string;
+  canvas: string;
+  viewObjectLinks?: ViewObjectLink[];
+}
 
-      if (props.manifest.startsWith("http")) {
-        return fetch(props.manifest);
-      }
-
-      return fetch(`${IIIF_URL}${props.manifest}`);
-    },
-  });
+export function ArticleExhibition(props: ArticleExhibitionProps) {
+  const { data: manifest } = useLoadManifest(props);
+  const viewObjectLinks = useViewObjectLinks(props.viewObjectLinks);
 
   if (!manifest) {
     return null;
@@ -35,7 +28,7 @@ export function ArticleExhibition(props: { manifest: string; canvas: string }) {
           fullWidthGrid: true,
         }}
         language="en"
-        viewObjectLinks={[]}
+        viewObjectLinks={viewObjectLinks}
       />
     </div>
   );
