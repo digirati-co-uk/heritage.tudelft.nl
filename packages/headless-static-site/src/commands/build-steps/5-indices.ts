@@ -90,6 +90,8 @@ export async function indices(
             .filter(Boolean),
         };
 
+        await writeJson(join(buildDir, "meta", "index-collection.json"), indexCollection);
+
         (collectionSnippet as any)["hss:totalItems"] = collection.items.length;
         await files.mkdir(join(buildDir, collectionSlug));
         await writeJson(join(buildDir, collectionSlug, "collection.json"), collection);
@@ -243,10 +245,16 @@ export async function indices(
       label: "Index",
       ...(config.collections?.index || {}),
       configUrl,
-      slug: "",
     }) as Collection;
 
-    indexCollectionJson.items = Object.values(indexCollection);
+    const indexCollectionJsonCollections = Object.values(indexCollection).filter((t) => t.type === "Collection");
+    const indexCollectionJsonManifests = Object.values(indexCollection).filter((t) => t.type === "Manifest");
+
+    indexCollectionJson.items = [
+      // Manifests then Collections.
+      ...indexCollectionJsonManifests,
+      ...indexCollectionJsonCollections,
+    ];
 
     await writeJson(join(buildDir, "collection.json"), indexCollectionJson);
   }

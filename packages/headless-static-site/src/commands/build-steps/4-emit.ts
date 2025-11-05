@@ -100,7 +100,8 @@ export async function emit(
       const manifestBuildDirectory = join(buildDir, slug);
 
       queue.add(async () => {
-        const url = manifest.saveToDisk ? `${configUrl}/${slug}/manifest.json` : manifest.path;
+        const extension = manifest.type === "Manifest" ? "manifest.json" : "collection.json";
+        const url = manifest.saveToDisk ? `${configUrl}/${slug}/${extension}` : manifest.path;
 
         const manifestBuildDirectory = join(buildDir, slug);
         const manifestCacheDirectory = join(cacheDir, slug);
@@ -181,7 +182,7 @@ export async function emit(
 
         const snippet = {
           id: url,
-          type: manifest.type,
+          type: resource.type,
           label: resource.label,
           "hss:slug": manifest.slug,
           thumbnail:

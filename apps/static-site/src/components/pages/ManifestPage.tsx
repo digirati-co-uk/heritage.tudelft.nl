@@ -1,32 +1,25 @@
 "use client";
+import { parseXywh } from "@/helpers/content-state";
+import type { ZoomRegion } from "@/helpers/content-state";
 import { getObjectSlug } from "@/i18n/navigation";
 import type { Preset } from "@atlas-viewer/atlas";
-import {
-  normaliseContentState,
-  parseContentState,
-  validateContentState,
-} from "@iiif/helpers";
+import { normaliseContentState, parseContentState, validateContentState } from "@iiif/helpers";
 import { getValue } from "@iiif/helpers/i18n";
 import type { InternationalString, Manifest } from "@iiif/presentation-3";
+import type { Publication } from "contentlayer/generated";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import {
-  CanvasPanel,
-  useSimpleViewer,
-  AtlasStoreProvider,
-} from "react-iiif-vault";
+import { AtlasStoreProvider, CanvasPanel, useSimpleViewer } from "react-iiif-vault";
 import { Box } from "../blocks/Box";
 import { DownloadImage } from "../iiif/DownloadImage";
 import { ObjectMetadata } from "../iiif/ObjectMetadata";
 import { ObjectThumbnails } from "../iiif/ObjectThumbnails";
 import { RangeNavigation } from "../iiif/RangeNavigation";
 import { SharingAndViewingLinks } from "../iiif/SharingAndViewingLinks";
+import { SharingOptionsDialog } from "../iiif/SharingOptionsDialog";
 import { ViewerSliderControls } from "../iiif/ViewerSliderControls";
 import { ViewerZoomControls } from "../iiif/ViewerZoomControls";
 import { AutoLanguage } from "./AutoLanguage";
-import { parseXywh } from "@/helpers/content-state";
-import type { ZoomRegion } from "@/helpers/content-state";
-import { SharingOptionsDialog } from "../iiif/SharingOptionsDialog";
 
 interface ManifestPageProps {
   manifest: Manifest;
@@ -59,13 +52,14 @@ interface ManifestPageProps {
     download: string;
     currentPage: string;
     copiedMessage: string;
+    publication: string;
   };
   exhibitionLinks: Array<null | {
     label: string;
     slug: string;
     thumbnail?: string;
   }>;
-
+  articles: Publication[];
   initialCanvasIndex: number;
 }
 
@@ -78,10 +72,10 @@ export function ManifestPage({
   content,
   exhibitionLinks,
   initialCanvasIndex,
+  articles,
 }: ManifestPageProps) {
   const context = useSimpleViewer();
-  const { currentSequenceIndex, setCurrentCanvasId, setCurrentCanvasIndex } =
-    context;
+  const { currentSequenceIndex, setCurrentCanvasId, setCurrentCanvasIndex } = context;
   const previousSeqIndex = useRef(currentSequenceIndex);
   const atlas = useRef<Preset | null>(null);
   const stateRegion = useRef<ZoomRegion | null>(null);
@@ -114,11 +108,7 @@ export function ManifestPage({
         setCurrentCanvasId(canvasId);
         return;
       }
-      const parsed = canvasId
-        ? Number.parseInt(canvasId, 10)
-        : initialId
-          ? Number.parseInt(initialId, 10)
-          : 0;
+      const parsed = canvasId ? Number.parseInt(canvasId, 10) : initialId ? Number.parseInt(initialId, 10) : 0;
       if (!Number.isNaN(parsed)) {
         setCurrentCanvasIndex(parsed);
       }
@@ -154,13 +144,7 @@ export function ManifestPage({
     } catch {
       // ignore bad iiif-content param
     }
-  }, [
-    canvasId,
-    manifest.id,
-    contentState,
-    setCurrentCanvasId,
-    setCurrentCanvasIndex,
-  ]);
+  }, [canvasId, manifest.id, contentState, setCurrentCanvasId, setCurrentCanvasIndex]);
 
   return (
     <AtlasStoreProvider>
@@ -212,10 +196,25 @@ export function ManifestPage({
 
             {(related.length !== 0 || meta.partOfCollections?.length !== 0) && (
               <>
-                <h3 className="mb-5 mt-10 text-3xl font-medium">
-                  {content.relatedObjects}
-                </h3>
+                <h3 className="mb-5 mt-10 text-3xl font-medium">{content.relatedObjects}</h3>
                 <div className="mb-4 grid md:grid-cols-3">
+                  {exhibitionLinks.map((item, i) => {
+                    if (item === null) return null;
+
+                    return (
+                      <Box
+                        key={item.slug}
+                        title={item.label}
+                        unfiltered
+                        backgroundColor="bg-yellow-400"
+                        small
+                        backgroundImage={item.thumbnail}
+                        link={`/${item.slug.replace("manifests/", "exhibitions/")}`}
+                        type="Exhibition"
+                      />
+                    );
+                  })}
+
                   {(meta.partOfCollections || []).map((collection, i) => (
                     <Box
                       key={collection.slug}
@@ -228,6 +227,21 @@ export function ManifestPage({
                       type="Collection"
                     />
                   ))}
+                  {articles.map((publication, i) => {
+                    return (
+                      <div key={publication._id}>
+                        <Box
+                          key={publication._id}
+                          link={`/publications/${publication.id}`}
+                          dark
+                          small
+                          type={content.publication}
+                          title={publication.title}
+                          subtitle={publication.author}
+                        />
+                      </div>
+                    );
+                  })}
                   {related.map((item, i) => {
                     if (item === null) return null;
 
@@ -248,22 +262,6 @@ export function ManifestPage({
             )}
           </div>
           <div className="col-span-1">
-            {exhibitionLinks.map((item, i) => {
-              if (item === null) return null;
-
-              return (
-                <Box
-                  key={item.slug}
-                  title={item.label}
-                  unfiltered
-                  backgroundColor="bg-yellow-400"
-                  small
-                  backgroundImage={item.thumbnail}
-                  link={`/${getObjectSlug(item.slug)}`}
-                  type="Exhibition"
-                />
-              );
-            })}
             <SharingAndViewingLinks
               resource={{
                 id: manifest.id,

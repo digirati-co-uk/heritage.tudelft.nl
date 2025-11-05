@@ -1,6 +1,7 @@
 import { ManifestLoader } from "@/app/provider";
 import { Page } from "@/components/Page";
 import { ManifestPage } from "@/components/pages/ManifestPage";
+import { getArticlesForObject } from "@/helpers/get-articles-for-object";
 import { baseURL, getDefaultMetaMdx, makeTitle } from "@/helpers/metadata";
 import { loadManifest, loadManifestMeta } from "@/iiif";
 import { getValue } from "@iiif/helpers";
@@ -44,9 +45,7 @@ export async function generateMetadata({
         {
           url: meta.thumbnail.id ?? defaultMeta.image ?? "",
           width: meta.thumbnail ? meta.thumbnail.width : defaultMeta.imageWidth,
-          height: meta.thumbnail
-            ? meta.thumbnail.height
-            : defaultMeta.imageHeight,
+          height: meta.thumbnail ? meta.thumbnail.height : defaultMeta.imageHeight,
         },
       ],
     },
@@ -58,34 +57,36 @@ export default async function ManifestP({
   searchParams,
 }: {
   params: Promise<{ locale: string; manifest: string }>;
-  searchParams: { id: string };
+  searchParams: Promise<{ id: string }>;
 }) {
   const { locale, manifest: manifestId } = await params;
+  const { id } = await searchParams;
 
   setRequestLocale(locale);
   const t = await getTranslations();
+  const idNum = id ? Number.parseInt(id, 10) : 0;
 
   const manifestSlug = `manifests/${manifestId}`;
   const { manifest, meta } = await loadManifest(manifestSlug);
-  const exhibitionsUnfiltered: any[] =
-    imageServiceLinks[manifestSlug as keyof typeof imageServiceLinks] || [];
+  const exhibitionsUnfiltered: any[] = imageServiceLinks[manifestSlug as keyof typeof imageServiceLinks] || [];
   const exhibitions = [];
   const seenIds: string[] = [];
 
   for (const exhibition of exhibitionsUnfiltered) {
     if (seenIds.includes(exhibition.slug)) continue;
-    exhibitions.push(exhibition);
     seenIds.push(exhibition.slug);
+    exhibitions.push(exhibition);
   }
 
-  const relatedItemsUnfiltered: any[] =
-    related[manifestSlug as keyof typeof related] || [];
+  const relatedItemsUnfiltered: any[] = related[manifestSlug as keyof typeof related] || [];
   const relatedItems = [];
   for (const item of relatedItemsUnfiltered) {
     if (seenIds.includes(item.slug)) continue;
     relatedItems.push(item);
     seenIds.push(item.slug);
   }
+
+  const articles = getArticlesForObject(manifestSlug);
 
   const relatedSnippets = (
     await Promise.all(
@@ -106,7 +107,7 @@ export default async function ManifestP({
     )
   ).filter((x) => x !== null);
 
-  const exhibitionLinks = (
+  const exhibitionRawLinks = (
     await Promise.all(
       exhibitions.map(async ({ slug }) => {
         try {
@@ -124,6 +125,14 @@ export default async function ManifestP({
       }),
     )
   ).filter((x) => x !== null);
+
+  const exhibitionLinks = exhibitionRawLinks.filter((item) => {
+    return (item.meta.partOfCollections || []).find((t: any) => t.slug === "collections/exhibitions");
+  });
+
+  const illustrationLinks = exhibitionRawLinks.filter((item) => {
+    return (item.meta.partOfCollections || []).find((t: any) => t.slug === "collections/illustrations");
+  });
 
   return (
     <Page>
@@ -144,7 +153,9 @@ export default async function ManifestP({
             download: t("Download"),
             currentPage: t("Permalink"),
             copiedMessage: t("Copied"),
+            publication: t("Publication"),
           }}
+          articles={articles}
           exhibitionLinks={exhibitionLinks}
           manifest={manifest}
           meta={meta}
