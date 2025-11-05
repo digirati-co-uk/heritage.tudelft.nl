@@ -18,6 +18,22 @@ export function TreeRangeItem(props: TreeRangeItemProps) {
   const hasChildRanges = items.some((i) => i.type === "Range");
   const hasVisibleChildren = hasChildRanges;
 
+  // branch with children is clickable to expand/collapse
+  function Branch() {
+    return (
+      <div
+        className={twMerge(
+          "flex items-center gap-2 border-b border-gray-200 flex-1 min-w-0",
+          props.range.isRangeLeaf && "border-transparent",
+        )}
+      >
+        <LocaleString className="truncate whitespace-nowrap flex-1 min-w-0">
+          {props.range.label || "Untitled range"}
+        </LocaleString>
+      </div>
+    );
+  }
+
   return (
     <TreeItem
       className="react-aria-TreeItem hover:bg-gray-700 flex items-center gap-2 p-1.5"
@@ -28,20 +44,14 @@ export function TreeRangeItem(props: TreeRangeItemProps) {
       <TreeItemContent>
         {({ isExpanded }: TreeItemContentRenderProps) => (
           <>
-            {hasVisibleChildren && (
-              <Button slot="chevron">{isExpanded ? <>-</> : <>+</>}</Button>
+            {hasVisibleChildren ? (
+              <Button slot="chevron" className="flex flex-row gap-2">
+                <div>{isExpanded ? <>-</> : <>+</>}</div>
+                <Branch />
+              </Button>
+            ) : (
+              <Branch />
             )}
-
-            <div
-              className={twMerge(
-                "flex items-center gap-2 border-b border-gray-200 flex-1 min-w-0",
-                props.range.isRangeLeaf && "border-transparent",
-              )}
-            >
-              <LocaleString className="truncate whitespace-nowrap flex-1 min-w-0">
-                {props.range.label || "Untitled range"}
-              </LocaleString>
-            </div>
           </>
         )}
       </TreeItemContent>

@@ -4,10 +4,14 @@ import { Dialog } from "@headlessui/react";
 import type { InternationalString, MetadataItem } from "@iiif/presentation-3";
 import { useState } from "react";
 import { Metadata } from "react-iiif-vault";
-import { CloseIcon } from "../atoms/CloseIcon";
+import { CloseIcon } from "../icons/CloseIcon";
 import { AutoLanguage } from "../pages/AutoLanguage";
 
-export function CollectionMetadata({ metadata }: { metadata?: MetadataItem[] }) {
+export function CollectionMetadata({
+  metadata,
+}: {
+  metadata?: MetadataItem[];
+}) {
   return (
     <Metadata
       allowHtml
@@ -39,11 +43,18 @@ export function CollectionSummary({
     <div>
       <h3 className="font-mono uppercase">{content.summary}</h3>
 
-      <AutoLanguage first className="mb-5 block max-h-64 overflow-hidden text-ellipsis text-xl">
+      <AutoLanguage
+        first
+        className="mb-5 block max-h-64 overflow-hidden text-ellipsis text-xl"
+      >
         {summary}
       </AutoLanguage>
 
-      <Dialog className="relative z-50" open={isOpen} onClose={() => setIsOpen(false)}>
+      <Dialog
+        className="relative z-50"
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
+      >
         <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
         <div className="mobile-height fixed inset-0 flex w-screen items-center p-4">
           <button
@@ -64,7 +75,10 @@ export function CollectionSummary({
           </Dialog.Panel>
         </div>
       </Dialog>
-      <button onClick={() => setIsOpen(true)} className="my-4 block underline underline-offset-4">
+      <button
+        onClick={() => setIsOpen(true)}
+        className="my-4 block underline underline-offset-4"
+      >
         {content.readMore}
       </button>
     </div>

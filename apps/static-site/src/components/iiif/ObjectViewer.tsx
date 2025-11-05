@@ -6,7 +6,7 @@ import { useState } from "react";
 import { usePress } from "react-aria";
 import { Button } from "react-aria-components";
 import { CanvasPanel, useManifest } from "react-iiif-vault";
-import { CloseIcon } from "../atoms/CloseIcon";
+import { CloseIcon } from "../icons/CloseIcon";
 import { AutoLanguage } from "../pages/AutoLanguage";
 
 export function ObjectViewer({
