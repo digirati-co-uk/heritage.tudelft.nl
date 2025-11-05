@@ -6,7 +6,13 @@
     "dev": "next dev -H 0.0.0.0 --webpack",
     "build:content": "contentlayer build",
     "build": "contentlayer build && next build",
-    "start": "next start"
+    "start": "next start",
+    "search": "tsx search-cli.ts",
+    "search:manifests": "tsx search-cli.ts index-manifests",
+    "search:canvases": "tsx search-cli.ts index-canvases",
+    "search:all": "tsx search-cli.ts index-all",
+    "search:status": "tsx search-cli.ts status",
+    "search:clean": "tsx search-cli.ts clean"
   },
   "dependencies": {
     "@headlessui/react": "1.7.18",
@@ -49,12 +55,18 @@
     "@netlify/plugin-nextjs": "^5.14.4",
     "@repo/iiif": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "@types/js-yaml": "^4.0.6",
     "@types/node": "^17.0.12",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "chalk": "^5.3.0",
+    "cli-progress": "^3.12.0",
+    "commander": "^13.0.0",
     "exhibition-viewer": "workspace:*",
+    "js-yaml": "^4.1.0",
     "next-contentlayer": "^0.3.4",
     "playwright": "^1.39.0",
+    "tsx": "^4.20.6",
     "typescript": "^5.2.2"
   }
 }

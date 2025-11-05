@@ -42,10 +42,6 @@ extract(
     // const search = await api.resourceFiles.loadJson("search-export.json");
     // if (!search) return {};
 
-    console.log("Canvas Hash ID:", canvasHashId);
-    console.log("Manifest Hash ID:", manifestHashId);
-    console.log("Found Index:", foundIndex);
-
     return {
       search: {
         indexes: ["canvases"],

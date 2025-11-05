@@ -95,7 +95,7 @@ jobs:
       - name: Build IIIF Search
         working-directory: apps/static-site
         run: |
-          bun run ./typesense-update.ts
+          pnpm search:all --recreate-manifests
         env:
           TYPESENSE_API_KEY: ${{ secrets.TYPESENSE_ADMIN_API_KEY }}
           TYPESENSE_HOST: 63flhve71t2un5xgp.a1.typesense.net
