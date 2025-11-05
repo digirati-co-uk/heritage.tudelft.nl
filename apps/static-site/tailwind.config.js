@@ -3,6 +3,7 @@ import typography from "@tailwindcss/typography";
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
+    "**/*.tsx",
     "src/**/*.{tsx,ts}",
     "content/**/*.{md,mdx}",
     "../../packages/delft-exhibition-viewer/src/**/*.{tsx,ts,.css}",
