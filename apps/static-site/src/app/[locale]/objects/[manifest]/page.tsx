@@ -44,7 +44,9 @@ export async function generateMetadata({
         {
           url: meta.thumbnail.id ?? defaultMeta.image ?? "",
           width: meta.thumbnail ? meta.thumbnail.width : defaultMeta.imageWidth,
-          height: meta.thumbnail ? meta.thumbnail.height : defaultMeta.imageHeight,
+          height: meta.thumbnail
+            ? meta.thumbnail.height
+            : defaultMeta.imageHeight,
         },
       ],
     },
@@ -62,11 +64,11 @@ export default async function ManifestP({
 
   setRequestLocale(locale);
   const t = await getTranslations();
-  const idNum = searchParams?.id ? Number.parseInt(searchParams.id, 10) : 0;
 
   const manifestSlug = `manifests/${manifestId}`;
   const { manifest, meta } = await loadManifest(manifestSlug);
-  const exhibitionsUnfiltered: any[] = imageServiceLinks[manifestSlug as keyof typeof imageServiceLinks] || [];
+  const exhibitionsUnfiltered: any[] =
+    imageServiceLinks[manifestSlug as keyof typeof imageServiceLinks] || [];
   const exhibitions = [];
   const seenIds: string[] = [];
 
@@ -76,7 +78,8 @@ export default async function ManifestP({
     seenIds.push(exhibition.slug);
   }
 
-  const relatedItemsUnfiltered: any[] = related[manifestSlug as keyof typeof related] || [];
+  const relatedItemsUnfiltered: any[] =
+    related[manifestSlug as keyof typeof related] || [];
   const relatedItems = [];
   for (const item of relatedItemsUnfiltered) {
     if (seenIds.includes(item.slug)) continue;
@@ -146,7 +149,7 @@ export default async function ManifestP({
           manifest={manifest}
           meta={meta}
           related={relatedSnippets}
-          initialCanvasIndex={Number.isNaN(idNum) ? 0 : idNum}
+          initialCanvasIndex={0}
         />
       </ManifestLoader>
     </Page>
