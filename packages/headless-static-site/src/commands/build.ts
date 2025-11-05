@@ -213,7 +213,6 @@ export async function build(
 
   const enrichments = await time("Enriching resources", enrich(stores, buildConfig));
 
-  const emitted = await time("Emitting files", emit(stores, buildConfig));
   const emitted = await time(
     "Emitting files",
     emit(stores, buildConfig, { canvasSearchIndex: enrichments.canvasSearchIndex })

@@ -142,6 +142,7 @@ app.get("/watch", async (ctx) => {
             });
             emitter.emit("file-refresh", { path: realPath });
           } catch (e) {
+            console.log("==== watch error ====");
             console.log(e);
           }
         }

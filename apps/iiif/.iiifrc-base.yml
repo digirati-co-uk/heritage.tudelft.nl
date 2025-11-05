@@ -67,10 +67,12 @@ stores:
     type: iiif-json
     path: ./manifests/dlcs
     destination: manifests
+    subFiles: true
     pattern: "**/*.{json,yaml,yml}"
     run:
       - extract-topics
       - folder-collections
+      - delft-test-search-within
     config:
       extract-topics:
         topicTypes:

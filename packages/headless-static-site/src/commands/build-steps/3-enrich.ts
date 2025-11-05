@@ -199,27 +199,31 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
         return;
       }
 
-      const result = await enrichment.handler(
-        manifest,
-        {
-          meta: cachedResource.meta,
-          indices: cachedResource.indices,
-          caches: cachedResource.caches,
-          searchRecord: cachedResource.searchRecord,
-          config,
-          builder,
-          resource,
-          files: filesDir,
-          requestCache,
-          fileHandler: files,
-          resourceFiles,
-        },
-        enrichmentConfig
-      );
+      try {
+        const result = await enrichment.handler(
+          manifest,
+          {
+            meta: cachedResource.meta,
+            indices: cachedResource.indices,
+            caches: cachedResource.caches,
+            searchRecord: cachedResource.searchRecord,
+            config,
+            builder,
+            resource,
+            files: filesDir,
+            requestCache,
+            fileHandler: files,
+            resourceFiles,
+          },
+          enrichmentConfig
+        );
 
-      cachedResource.handleResponse(result, enrichment);
+        cachedResource.handleResponse(result, enrichment);
 
-      stats.run[enrichment.id] = (stats.run[enrichment.id] || 0) + (Date.now() - startTime);
+        stats.run[enrichment.id] = (stats.run[enrichment.id] || 0) + (Date.now() - startTime);
+      } catch (err: any) {
+        console.log("[skipped]", enrichment.id, "\nmanifest:", manifest?.id);
+      }
     };
 
     const processedEnrichments = [];

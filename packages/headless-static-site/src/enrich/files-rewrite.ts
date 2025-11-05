@@ -23,7 +23,7 @@ export const filesRewrite: Enrichment = {
       if (!meta.files?.length) return {};
 
       const found = api.builder.vault.get(resource.id);
-      if (!found) {
+      if (!found?.id) {
         return {};
       }
 
@@ -59,7 +59,19 @@ export const filesRewrite: Enrichment = {
       const filesInManifest: string[] = [];
 
       for (const currentItem of toSearch) {
-        for (const property of ["thumbnail", "seeAlso", "service", "services", "rendering", "annotations"]) {
+        // @todo "service", "services", differently since they are not references.
+        for (const property of ["thumbnail", "seeAlso", "rendering", "annotations"]) {
+          if (currentItem[property]?.length) {
+            for (const item of currentItem[property]) {
+              const id = item.id || item["@id"];
+              if (!id) continue;
+
+              // @todo manually edit the field, not changing ID.
+            }
+          }
+        }
+
+        for (const property of ["thumbnail", "seeAlso", "rendering", "annotations"]) {
           if (currentItem[property]?.length) {
             for (const item of currentItem[property]) {
               const validFile = validFiles[toRef(item)!.id];

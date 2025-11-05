@@ -46,7 +46,11 @@ export const IIIFJSONStore: Store<IIIFJSONStore> = {
       //
       // All files that are in a folder with the same name as the file, are considered sub-files if this
       // option is enabled. This allows for relative links to resources such as Annotation Lists to work.
-      const allFilesWithoutExtension = allFiles.map(fileNameToPath);
+      const allFilteredFiles = allFiles.filter((t) => {
+        return !t.endsWith("_collection.yml") && !t.endsWith("_collection.yaml");
+      });
+      const allFilesWithoutExtension = allFilteredFiles.map(fileNameToPath);
+
       for (let i = 0; i < allFilesWithoutExtension.length; i++) {
         const file = allFilesWithoutExtension[i];
         let dupe = false;
@@ -57,12 +61,12 @@ export const IIIFJSONStore: Store<IIIFJSONStore> = {
             if (!subFileMap[toCompare]) {
               subFileMap[toCompare] = [];
             }
-            subFileMap[toCompare].push(allFiles[i]);
+            subFileMap[toCompare].push(allFilteredFiles[i]);
             break;
           }
         }
         if (!dupe) {
-          newAllFiles.push([allFiles[i], allFilesWithoutExtension[i]]);
+          newAllFiles.push([allFilteredFiles[i], allFilesWithoutExtension[i]]);
         }
       }
     } else {
@@ -206,7 +210,7 @@ export const IIIFJSONStore: Store<IIIFJSONStore> = {
                 const isFile = (await stat(filePath)).isFile();
                 if (isFile) {
                   const destination = join(filesDir, file);
-                  await move(filePath, destination, { overwrite: true });
+                  await copy(filePath, destination, { overwrite: true });
                 }
               }
             }

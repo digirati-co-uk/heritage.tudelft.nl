@@ -2,7 +2,14 @@
 
 import { createHash } from "node:crypto";
 import { existsSync } from "node:fs";
-import { readFile, readdir, stat, writeFile } from "node:fs/promises";
+import {
+  exists,
+  mkdir,
+  readFile,
+  readdir,
+  stat,
+  writeFile,
+} from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { argv, cwd, exit } from "node:process";
 import chalk from "chalk";
@@ -12,6 +19,7 @@ import * as yaml from "js-yaml";
 import Typesense from "typesense";
 
 const IIIF_DIRECTORY = resolve(cwd(), "../iiif/.iiif/build");
+const IIIF_SOURCE_DIRECTORY = resolve(cwd(), "../iiif");
 const LOCK_FILE_PATH = resolve(cwd(), "search-lock.yaml");
 
 // Environment configuration
@@ -386,10 +394,7 @@ async function indexCanvases(options: {
   const progressBar = options.silent
     ? null
     : new cliProgress.SingleBar({
-        format:
-          "Indexing |" +
-          chalk.cyan("{bar}") +
-          "| {percentage}% | {value}/{total} manifests",
+        format: `Indexing |${chalk.cyan("{bar}")}| {percentage}% | {value}/{total} manifests`,
         barCompleteChar: "\u2588",
         barIncompleteChar: "\u2591",
         hideCursor: true,
@@ -455,13 +460,13 @@ async function indexCanvases(options: {
             .filter((line) => line.trim())
             .map((line) => {
               try {
-                const doc = JSON.parse(line);
-                return {
-                  ...doc,
-                  manifest: manifestId,
-                  id:
-                    doc.id || `${manifestId}:${doc.position || Math.random()}`,
-                };
+                return JSON.parse(line);
+                // return {
+                //   ...doc,
+                //   manifest: manifestId,
+                //   id:
+                //     doc.id || `${manifestId}:${doc.position || Math.random()}`,
+                // };
               } catch (e) {
                 logger.warn(`Invalid JSON line in ${entry.path || entry.url}`);
                 return null;
@@ -521,10 +526,27 @@ async function indexCanvases(options: {
             }
           }
         }
-      } catch (error) {
-        logger.error(`Error processing ${manifestId}: ${error}`);
+      } catch (err: any) {
+        if (err.importResults) {
+          const failedDocuments = err.importResults.filter(
+            (result: any) => result.success === false,
+          );
+
+          for (const failed of failedDocuments) {
+            const doc = JSON.parse(failed.document);
+            console.log(doc);
+            logger.error(`Failed to import ${doc.type}: ${failed.error}`);
+            exit();
+          }
+
+          if (!options.allowErrors) {
+            throw new Error("Import failed with errors");
+          }
+        }
+
+        logger.error(`Error processing ${manifestId}: ${err}`);
         if (!options.allowErrors) {
-          throw error;
+          throw err;
         }
       }
     }
@@ -575,6 +597,88 @@ async function showStatus(options: { silent?: boolean }): Promise<void> {
     logger.error(`Failed to get status: ${error}`);
     exit(1);
   }
+}
+
+async function importCanvasData(options: {
+  manifest: string;
+  url?: string;
+  file?: string;
+  silent?: boolean;
+  pretty?: boolean;
+}) {
+  const logger = createLogger(options.silent);
+
+  let resultsObject = null;
+
+  const filePath = join(IIIF_SOURCE_DIRECTORY, options.manifest);
+  if (!existsSync(filePath)) {
+    logger.error(`File ${filePath} does not exist`);
+    exit(1);
+  }
+
+  if (options.url) {
+    const indexFile = await fetch(options.url).then((r) => r.json());
+    resultsObject = indexFile.result || indexFile; // support either.
+  }
+
+  if (options.file) {
+    const fileContent = await readFile(options.file, "utf8");
+    const results = JSON.parse(fileContent);
+    resultsObject = results.result || results;
+  }
+
+  if (!resultsObject) {
+    logger.error("No results found");
+    exit(1);
+  }
+
+  console.log(Object.keys(resultsObject));
+
+  if (!resultsObject.canvases) {
+    logger.error("No canvases found in results");
+    exit(1);
+  }
+
+  // manifests/collective-access/objects/81838beb-788e-4f41-820c-cecae2746733.json
+  const canvasesDirectory = join(
+    filePath.slice(0, filePath.length - ".json".length),
+    "canvases",
+  );
+
+  // Make the canvases directory.
+  await mkdir(canvasesDirectory, { recursive: true });
+
+  const progressBar = options.silent
+    ? null
+    : new cliProgress.SingleBar({
+        format: `Indexing |${chalk.cyan("{bar}")}| {percentage}% | {value}/{total} manifests`,
+        barCompleteChar: "\u2588",
+        barIncompleteChar: "\u2591",
+        hideCursor: true,
+      });
+
+  if (!options.silent) {
+    progressBar?.start(resultsObject.canvases.length, 0);
+  }
+
+  for (let i = 0; i < resultsObject.canvases.length; i++) {
+    const canvasIdx = i;
+    const canvas = resultsObject.canvases[i];
+    await mkdir(join(canvasesDirectory, `${canvasIdx}`), { recursive: true });
+    await writeFile(
+      join(canvasesDirectory, `${canvasIdx}/ocr.json`),
+      JSON.stringify(canvas, null, options.pretty ? 2 : undefined),
+    );
+    if (!options.silent) {
+      progressBar?.increment();
+    }
+  }
+
+  if (!options.silent) {
+    progressBar?.stop();
+  }
+
+  logger.success(`Imported ${resultsObject.canvases.length} canvases`);
 }
 
 // CLI Setup
@@ -654,6 +758,23 @@ program
   .action(async (options) => {
     try {
       await showStatus(options);
+      exit(0);
+    } catch (error) {
+      console.error(chalk.red(`Error: ${error}`));
+      exit(1);
+    }
+  });
+
+program
+  .command("import <manifest>")
+  .description("Import canvas OCR from a JSON file")
+  .option("--url <url>", "URL to the JSON file")
+  .option("--file <file>", "Path to the JSON file")
+  .option("--silent", "Run in CI mode with minimal output", false)
+  .option("--pretty", "Pretty print the output", false)
+  .action(async (manifest, options) => {
+    try {
+      await importCanvasData({ manifest, ...options });
       exit(0);
     } catch (error) {
       console.error(chalk.red(`Error: ${error}`));
