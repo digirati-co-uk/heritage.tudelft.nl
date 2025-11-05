@@ -1,33 +1,25 @@
 "use client";
+import { parseXywh } from "@/helpers/content-state";
+import type { ZoomRegion } from "@/helpers/content-state";
 import { getObjectSlug } from "@/i18n/navigation";
 import type { Preset } from "@atlas-viewer/atlas";
-import {
-  normaliseContentState,
-  parseContentState,
-  validateContentState,
-} from "@iiif/helpers";
+import { normaliseContentState, parseContentState, validateContentState } from "@iiif/helpers";
 import { getValue } from "@iiif/helpers/i18n";
 import type { InternationalString, Manifest } from "@iiif/presentation-3";
 import type { Publication } from "contentlayer/generated";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import {
-  CanvasPanel,
-  useSimpleViewer,
-  AtlasStoreProvider,
-} from "react-iiif-vault";
+import { AtlasStoreProvider, CanvasPanel, useSimpleViewer } from "react-iiif-vault";
 import { Box } from "../blocks/Box";
 import { DownloadImage } from "../iiif/DownloadImage";
 import { ObjectMetadata } from "../iiif/ObjectMetadata";
 import { ObjectThumbnails } from "../iiif/ObjectThumbnails";
 import { RangeNavigation } from "../iiif/RangeNavigation";
 import { SharingAndViewingLinks } from "../iiif/SharingAndViewingLinks";
+import { SharingOptionsDialog } from "../iiif/SharingOptionsDialog";
 import { ViewerSliderControls } from "../iiif/ViewerSliderControls";
 import { ViewerZoomControls } from "../iiif/ViewerZoomControls";
 import { AutoLanguage } from "./AutoLanguage";
-import { parseXywh } from "@/helpers/content-state";
-import type { ZoomRegion } from "@/helpers/content-state";
-import { SharingOptionsDialog } from "../iiif/SharingOptionsDialog";
 
 interface ManifestPageProps {
   manifest: Manifest;
@@ -83,8 +75,7 @@ export function ManifestPage({
   articles,
 }: ManifestPageProps) {
   const context = useSimpleViewer();
-  const { currentSequenceIndex, setCurrentCanvasId, setCurrentCanvasIndex } =
-    context;
+  const { currentSequenceIndex, setCurrentCanvasId, setCurrentCanvasIndex } = context;
   const previousSeqIndex = useRef(currentSequenceIndex);
   const atlas = useRef<Preset | null>(null);
   const stateRegion = useRef<ZoomRegion | null>(null);
@@ -117,11 +108,7 @@ export function ManifestPage({
         setCurrentCanvasId(canvasId);
         return;
       }
-      const parsed = canvasId
-        ? Number.parseInt(canvasId, 10)
-        : initialId
-          ? Number.parseInt(initialId, 10)
-          : 0;
+      const parsed = canvasId ? Number.parseInt(canvasId, 10) : initialId ? Number.parseInt(initialId, 10) : 0;
       if (!Number.isNaN(parsed)) {
         setCurrentCanvasIndex(parsed);
       }
@@ -157,136 +144,129 @@ export function ManifestPage({
     } catch {
       // ignore bad iiif-content param
     }
-  }, [
-    canvasId,
-    manifest.id,
-    contentState,
-    setCurrentCanvasId,
-    setCurrentCanvasIndex,
-  ]);
+  }, [canvasId, manifest.id, contentState, setCurrentCanvasId, setCurrentCanvasIndex]);
 
   return (
-  <AtlasStoreProvider>
-    {sharingOptionsOpen && (
-      <SharingOptionsDialog
-        manifestId={manifest.id}
-        canvasURI={manifest.items?.[currentSequenceIndex]?.id}
-        canvasSeqIdx={currentSequenceIndex}
-        canvasLabel={manifest.items?.[currentSequenceIndex]?.label}
-        zoomRegion={stateRegion.current}
-        sharingOptionsOpen={sharingOptionsOpen}
-        setSharingOptionsOpen={setSharingOptionsOpen}
-      />
-    )}
-    <div>
-      <h1 className="mb-4 text-4xl font-medium">
-        <AutoLanguage>{manifest.label || content.untitled}</AutoLanguage>
-      </h1>
-      {manifest.requiredStatement ? (
-        <p>
-          <AutoLanguage>{manifest.requiredStatement.value}</AutoLanguage>
-        </p>
-      ) : null}
-      <div className="relative h-[800px] max-h-[70%]">
-        <CanvasPanel.Viewer
-          onCreated={(preset) => {
-            atlas.current = preset;
-            if (stateRegion.current) {
-              preset.runtime.world.gotoRegion(stateRegion.current);
-            }
-          }}
-          htmlChildren={null}
-          key={manifest.id}
-          runtimeOptions={runtimeOptions}
-        >
-          <CanvasPanel.RenderCanvas
-            strategies={["3d-model", "images", "textual-content", "media"]}
-            renderViewerControls={ViewerZoomControls}
-          />
-        </CanvasPanel.Viewer>
-        <ViewerSliderControls />
-      </div>
-      <div className="mb-4">
-        <ObjectThumbnails />
-      </div>
-      <div className="grid-cols-3 md:grid">
-        <div className="col-span-2">
-          <ObjectMetadata />
-
-          {(related.length !== 0 || meta.partOfCollections?.length !== 0) && (
-            <>
-              <h3 className="mb-5 mt-10 text-3xl font-medium">{content.relatedObjects}</h3>
-              <div className="mb-4 grid md:grid-cols-3">
-                {exhibitionLinks.map((item, i) => {
-                  if (item === null) return null;
-
-                  return (
-                    <Box
-                      key={item.slug}
-                      title={item.label}
-                      unfiltered
-                      backgroundColor="bg-yellow-400"
-                      small
-                      backgroundImage={item.thumbnail}
-                      link={`/${item.slug.replace("manifests/", "exhibitions/")}`}
-                      type="Exhibition"
-                    />
-                  );
-                })}
-
-                {(meta.partOfCollections || []).map((collection, i) => (
-                  <Box
-                    key={collection.slug}
-                    title={getValue(collection.label)}
-                    unfiltered
-                    fallbackBackgroundColor="bg-cyan-500"
-                    small
-                    dark
-                    link={`/${getObjectSlug(collection.slug)}`}
-                    type="Collection"
-                  />
-                ))}
-                {articles.map((publication, i) => {
-                  return (
-                    <div key={publication._id}>
-                      <Box
-                        key={publication._id}
-                        link={`/publications/${publication.id}`}
-                        dark
-                        small
-                        type={content.publication}
-                        title={publication.title}
-                        subtitle={publication.author}
-                      />
-                    </div>
-                  );
-                })}
-                {related.map((item, i) => {
-                  if (item === null) return null;
-
-                  return (
-                    <Box
-                      key={item.slug}
-                      title={item.label}
-                      unfiltered
-                      small
-                      backgroundImage={item.thumbnail}
-                      link={`/${getObjectSlug(item.slug)}`}
-                      type="Object"
-                    />
-                  );
-                })}
-              </div>
-            </>
-          )}
-        </div>
-        <div className="col-span-1">
-          <SharingAndViewingLinks
-            resource={{
-              id: manifest.id,
-              type: "object",
+    <AtlasStoreProvider>
+      {sharingOptionsOpen && (
+        <SharingOptionsDialog
+          manifestId={manifest.id}
+          canvasURI={manifest.items?.[currentSequenceIndex]?.id}
+          canvasSeqIdx={currentSequenceIndex}
+          canvasLabel={manifest.items?.[currentSequenceIndex]?.label}
+          zoomRegion={stateRegion.current}
+          sharingOptionsOpen={sharingOptionsOpen}
+          setSharingOptionsOpen={setSharingOptionsOpen}
+        />
+      )}
+      <div>
+        <h1 className="mb-4 text-4xl font-medium">
+          <AutoLanguage>{manifest.label || content.untitled}</AutoLanguage>
+        </h1>
+        {manifest.requiredStatement ? (
+          <p>
+            <AutoLanguage>{manifest.requiredStatement.value}</AutoLanguage>
+          </p>
+        ) : null}
+        <div className="relative h-[800px] max-h-[70%]">
+          <CanvasPanel.Viewer
+            onCreated={(preset) => {
+              atlas.current = preset;
+              if (stateRegion.current) {
+                preset.runtime.world.gotoRegion(stateRegion.current);
+              }
             }}
+            htmlChildren={null}
+            key={manifest.id}
+            runtimeOptions={runtimeOptions}
+          >
+            <CanvasPanel.RenderCanvas
+              strategies={["3d-model", "images", "textual-content", "media"]}
+              renderViewerControls={ViewerZoomControls}
+            />
+          </CanvasPanel.Viewer>
+          <ViewerSliderControls />
+        </div>
+        <div className="mb-4">
+          <ObjectThumbnails />
+        </div>
+        <div className="grid-cols-3 md:grid">
+          <div className="col-span-2">
+            <ObjectMetadata />
 
+            {(related.length !== 0 || meta.partOfCollections?.length !== 0) && (
+              <>
+                <h3 className="mb-5 mt-10 text-3xl font-medium">{content.relatedObjects}</h3>
+                <div className="mb-4 grid md:grid-cols-3">
+                  {exhibitionLinks.map((item, i) => {
+                    if (item === null) return null;
+
+                    return (
+                      <Box
+                        key={item.slug}
+                        title={item.label}
+                        unfiltered
+                        backgroundColor="bg-yellow-400"
+                        small
+                        backgroundImage={item.thumbnail}
+                        link={`/${item.slug.replace("manifests/", "exhibitions/")}`}
+                        type="Exhibition"
+                      />
+                    );
+                  })}
+
+                  {(meta.partOfCollections || []).map((collection, i) => (
+                    <Box
+                      key={collection.slug}
+                      title={getValue(collection.label)}
+                      unfiltered
+                      fallbackBackgroundColor="bg-cyan-500"
+                      small
+                      dark
+                      link={`/${getObjectSlug(collection.slug)}`}
+                      type="Collection"
+                    />
+                  ))}
+                  {articles.map((publication, i) => {
+                    return (
+                      <div key={publication._id}>
+                        <Box
+                          key={publication._id}
+                          link={`/publications/${publication.id}`}
+                          dark
+                          small
+                          type={content.publication}
+                          title={publication.title}
+                          subtitle={publication.author}
+                        />
+                      </div>
+                    );
+                  })}
+                  {related.map((item, i) => {
+                    if (item === null) return null;
+
+                    return (
+                      <Box
+                        key={item.slug}
+                        title={item.label}
+                        unfiltered
+                        small
+                        backgroundImage={item.thumbnail}
+                        link={`/${getObjectSlug(item.slug)}`}
+                        type="Object"
+                      />
+                    );
+                  })}
+                </div>
+              </>
+            )}
+          </div>
+          <div className="col-span-1">
+            <SharingAndViewingLinks
+              resource={{
+                id: manifest.id,
+                type: "object",
+              }}
               content={content}
               sharingOptionsOpen={sharingOptionsOpen}
               setSharingOptionsOpen={setSharingOptionsOpen}

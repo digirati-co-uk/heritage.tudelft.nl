@@ -45,9 +45,7 @@ export async function generateMetadata({
         {
           url: meta.thumbnail.id ?? defaultMeta.image ?? "",
           width: meta.thumbnail ? meta.thumbnail.width : defaultMeta.imageWidth,
-          height: meta.thumbnail
-            ? meta.thumbnail.height
-            : defaultMeta.imageHeight,
+          height: meta.thumbnail ? meta.thumbnail.height : defaultMeta.imageHeight,
         },
       ],
     },
@@ -68,11 +66,9 @@ export default async function ManifestP({
   const t = await getTranslations();
   const idNum = id ? Number.parseInt(id, 10) : 0;
 
-
   const manifestSlug = `manifests/${manifestId}`;
   const { manifest, meta } = await loadManifest(manifestSlug);
-  const exhibitionsUnfiltered: any[] =
-    imageServiceLinks[manifestSlug as keyof typeof imageServiceLinks] || [];
+  const exhibitionsUnfiltered: any[] = imageServiceLinks[manifestSlug as keyof typeof imageServiceLinks] || [];
   const exhibitions = [];
   const seenIds: string[] = [];
 
@@ -82,8 +78,7 @@ export default async function ManifestP({
     exhibitions.push(exhibition);
   }
 
-  const relatedItemsUnfiltered: any[] =
-    related[manifestSlug as keyof typeof related] || [];
+  const relatedItemsUnfiltered: any[] = related[manifestSlug as keyof typeof related] || [];
   const relatedItems = [];
   for (const item of relatedItemsUnfiltered) {
     if (seenIds.includes(item.slug)) continue;
