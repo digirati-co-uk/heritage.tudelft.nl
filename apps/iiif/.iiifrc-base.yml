@@ -18,9 +18,10 @@ run:
   - delft-image-source
   - extract-search-record
   - delft-test-extract-schema
+  - delft-test-search-within
 
 search:
-  indexNames: ["manifests"]
+  indexNames: ["manifests", "canvases"]
   defaultIndex: manifests
   emitRecord: true
 

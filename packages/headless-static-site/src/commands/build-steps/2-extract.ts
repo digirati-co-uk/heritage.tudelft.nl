@@ -1,11 +1,11 @@
 import { join } from "node:path";
 import PQueue from "p-queue";
 import { createCacheResource } from "../../util/cached-resource.ts";
+import { createResourceHandler } from "../../util/create-resource-handler.ts";
 import { makeProgressBar } from "../../util/make-progress-bar.ts";
 import { createStoreRequestCache } from "../../util/store-request-cache.ts";
 import type { ActiveResourceJson } from "../../util/store.ts";
 import type { BuildConfig } from "../build.ts";
-import { createResourceHandler } from "../../util/create-resource-handler.ts";
 
 export async function extract(
   {
@@ -197,6 +197,8 @@ export async function extract(
                 {
                   caches: canvasCache.caches,
                   resource: canvas,
+                  parentResource: manifest,
+                  parent: resource,
                   build: buildConfig,
                   fileHandler: files,
                   resourceFiles,
@@ -212,6 +214,8 @@ export async function extract(
               canvasResource,
               {
                 resource: canvas,
+                parentResource: manifest,
+                parent: resource,
                 meta: canvasCache.meta,
                 indices: canvasCache.indices,
                 caches: canvasCache.caches,

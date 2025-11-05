@@ -13,7 +13,7 @@ import type { Enrichment } from "../util/enrich";
 export const filesRewrite: Enrichment = {
   id: "enrich-files-rewrite",
   name: "Rewrite local paths to files",
-  types: ["Manifest"],
+  types: ["Manifest", "Canvas"],
   async invalidate(resource, api) {
     return true;
   },
@@ -86,7 +86,14 @@ export const filesRewrite: Enrichment = {
 
       // Here we can handle the fileDetails.
       const details = meta.filesDetail || ({} as Record<string, Record<string, any>>);
-      for (const file of meta.files) {
+      const filesForResource = meta.files.filter((file: string) => {
+        if (resource.type === "Canvas") {
+          return true;
+        }
+
+        return !file.startsWith("canvases/");
+      });
+      for (const file of filesForResource) {
         const detail = details[file];
         if (!detail) continue;
 

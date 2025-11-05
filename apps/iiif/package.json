@@ -4,10 +4,10 @@
   "type": "module",
   "main": "./index.js",
   "exports": {
-    "./build/*": "./build/*"
+    "./build/*": "./.iiif/build/*"
   },
   "scripts": {
-    "build": "iiif-hss build --out ./build --scripts ./scripts",
+    "build": "iiif-hss build --scripts ./scripts",
     "dev": "IIIF_URL=http://localhost:7111 bun exec iiif-hss-dev"
   },
   "dependencies": {

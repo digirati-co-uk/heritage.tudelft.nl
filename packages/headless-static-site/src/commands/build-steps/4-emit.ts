@@ -21,7 +21,8 @@ export async function emit(
     allPaths?: Record<string, string>;
     idsToSlugs?: Record<string, { slug: string; type: string }>;
   },
-  { options, server, cacheDir, buildDir, log, imageServiceLoader, files, search }: BuildConfig
+  { options, server, cacheDir, buildDir, log, imageServiceLoader, files, search }: BuildConfig,
+  { canvasSearchIndex }: { canvasSearchIndex?: Record<string, Record<string, any[]>> }
 ) {
   if (!options.emit) {
     return {};
@@ -36,6 +37,14 @@ export async function emit(
   };
   const queue = new PQueue();
   const canvasQueue = new PQueue({ autoStart: false });
+
+  const canvasSearchIndexFile: Record<
+    string,
+    Array<{
+      index: string;
+      path: string;
+    }>
+  > = {};
 
   const siteMap: Record<
     string,
@@ -268,6 +277,27 @@ export async function emit(
           files.saveJson(join(manifestBuildDirectory, fileName), resource);
         }
 
+        if (canvasSearchIndex?.[manifest.slug]) {
+          const searchIndexesToEmit = Object.keys(canvasSearchIndex[manifest.slug]);
+          if (searchIndexesToEmit.length) {
+            canvasSearchIndexFile[manifest.slug] = canvasSearchIndexFile[manifest.slug] || [];
+            for (const searchIndex of searchIndexesToEmit) {
+              const indexDetails = canvasSearchIndex[manifest.slug][searchIndex];
+              if (indexDetails.length) {
+                const indexFile = `${searchIndex}.search.jsonl`;
+                canvasSearchIndexFile[manifest.slug].push({
+                  index: searchIndex,
+                  path: join(manifest.slug, indexFile),
+                });
+                await files.writeFile(
+                  join(manifestBuildDirectory, indexFile),
+                  indexDetails.map((item) => JSON.stringify(item)).join("\n")
+                );
+              }
+            }
+          }
+        }
+
         files.copy(
           // 3. Save the meta file to disk
           join(cacheDir, manifest.slug, "meta.json"),
@@ -340,6 +370,9 @@ export async function emit(
   progress.stop();
 
   stats.total = Date.now() - start;
+
+  // Emit the canvasSearchIndexFile
+  await files.saveJson(join(buildDir, "meta", "canvas-search-index.json"), canvasSearchIndexFile);
 
   return {
     stats,

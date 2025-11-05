@@ -9,6 +9,8 @@ import type { createStoreRequestCache } from "./store-request-cache.ts";
 export interface ExtractionInvalidateApi {
   caches: LazyValue<Record<string, any>>;
   resource: any;
+  parentResource?: ActiveResourceJson;
+  parent?: any;
   build: BuildConfig;
   fileHandler: FileHandler;
   filesDir: string;
@@ -81,6 +83,7 @@ export interface SearchExtractionConfig {
     fields: Array<{
       name: string;
       type: SearchFieldType;
+      reference?: string;
       facet?: boolean;
       optional?: boolean;
       index?: boolean;
@@ -134,6 +137,8 @@ export interface Extraction<Config = any, Temp = any, TempInject = any> {
       config: IIIFRC;
       build: BuildConfig;
       resourceFiles: ResourceFilesApi;
+      parentResource?: ActiveResourceJson;
+      parent?: any;
       filesDir: string;
       requestCache: ReturnType<typeof createStoreRequestCache>;
     },

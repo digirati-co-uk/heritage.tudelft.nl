@@ -1,10 +1,10 @@
 import { existsSync } from "node:fs";
-import { mkdir, stat, writeFile } from "node:fs/promises";
+import { mkdir, readdir, stat, writeFile } from "node:fs/promises";
 import { dirname, join, relative } from "node:path";
 import { cwd } from "node:process";
 import { Vault } from "@iiif/helpers";
 import type { Manifest } from "@iiif/presentation-3";
-import { copy, pathExists } from "fs-extra/esm";
+import { copy, move, pathExists } from "fs-extra/esm";
 import objectHash from "object-hash";
 import { isEmpty } from "../util/is-empty";
 import { readAllFiles } from "../util/read-all-files";
@@ -91,35 +91,21 @@ export const IIIFJSONStore: Store<IIIFJSONStore> = {
       }
 
       // Virtual resource.
-      if (
-        file.endsWith("/_collection.yml") ||
-        file.endsWith("/_collection.yaml")
-      ) {
-        const manifestsToInclude = newAllFiles.filter(
-          ([manifestFile, full]) => {
-            if (!full.startsWith(fileWithoutExtension)) return false;
-            if (manifestFile === file) return false;
-            // We only want ones one level down.
-            const relativeDir = relative(dirname(file), manifestFile);
-            return !relativeDir.includes("/");
-          },
-        );
+      if (file.endsWith("/_collection.yml") || file.endsWith("/_collection.yaml")) {
+        const manifestsToInclude = newAllFiles.filter(([manifestFile, full]) => {
+          if (!full.startsWith(fileWithoutExtension)) return false;
+          if (manifestFile === file) return false;
+          // We only want ones one level down.
+          const relativeDir = relative(dirname(file), manifestFile);
+          return !relativeDir.includes("/");
+        });
 
         const loadedMetadata = await fs.readYaml(file);
-        const {
-          label,
-          summary,
-          metadata,
-          type: _1,
-          items: _2,
-          ...rest
-        } = loadedMetadata;
+        const { label, summary, metadata, type: _1, items: _2, ...rest } = loadedMetadata;
         const virtualCollection = {
           id: `virtual://${fileWithoutExtension}`,
           type: "Collection",
-          label: label
-            ? stringToLang(label)
-            : fileWithoutExtension.split("/").pop() || fileWithoutExtension,
+          label: label ? stringToLang(label) : fileWithoutExtension.split("/").pop() || fileWithoutExtension,
           summary: summary ? stringToLang(summary) : undefined,
           metadata: metadata
             ? metadata.map((item: any) => ({
@@ -128,22 +114,17 @@ export const IIIFJSONStore: Store<IIIFJSONStore> = {
               }))
             : undefined,
           // @todo metadata.
-          items: manifestsToInclude.map(
-            ([manifestFile, fileWithoutExtension]) => {
-              const relativePath = relative(dirname(file), manifestFile);
-              return {
-                id: `./${relativePath}`,
-                type: "Manifest",
-              };
-            },
-          ),
+          items: manifestsToInclude.map(([manifestFile, fileWithoutExtension]) => {
+            const relativePath = relative(dirname(file), manifestFile);
+            return {
+              id: `./${relativePath}`,
+              type: "Manifest",
+            };
+          }),
           ...rest,
         };
 
-        const filePath = join(
-          virtualCollectionsPath,
-          `${fileWithoutExtension}.json`,
-        );
+        const filePath = join(virtualCollectionsPath, `${fileWithoutExtension}.json`);
         await mkdir(dirname(filePath), { recursive: true });
         await writeFile(filePath, JSON.stringify(virtualCollection, null, 2));
         await fs.loadJson(filePath);
@@ -175,11 +156,7 @@ export const IIIFJSONStore: Store<IIIFJSONStore> = {
     return manifests;
   },
 
-  async invalidate(
-    store: IIIFJSONStore,
-    resource: ParsedResource,
-    caches: ProtoResourceDirectory["caches.json"],
-  ) {
+  async invalidate(store: IIIFJSONStore, resource: ParsedResource, caches: ProtoResourceDirectory["caches.json"]) {
     if (!caches.load) {
       return true;
     }
@@ -188,12 +165,7 @@ export const IIIFJSONStore: Store<IIIFJSONStore> = {
     return key !== caches.load;
   },
 
-  async load(
-    store: IIIFJSONStore,
-    resource,
-    directory,
-    api,
-  ): Promise<ProtoResourceDirectory> {
+  async load(store: IIIFJSONStore, resource, directory, api): Promise<ProtoResourceDirectory> {
     const files = api.files;
     const cacheKey = await getKey(store, resource);
     const json = await files.loadJson(resource.path, true);
@@ -208,13 +180,37 @@ export const IIIFJSONStore: Store<IIIFJSONStore> = {
       const subFilesFolderPath = resource.path.replace(".json", "");
       const subFilesFolder = existsSync(subFilesFolderPath);
       if (subFilesFolder) {
-        if (
-          subFilesFolder &&
-          (await pathExists(subFilesFolderPath)) &&
-          !isEmpty(subFilesFolderPath)
-        ) {
+        if (subFilesFolder && (await pathExists(subFilesFolderPath)) && !isEmpty(subFilesFolderPath)) {
           const destination = join(cwd(), directory, "files");
-          await copy(subFilesFolderPath, destination, { overwrite: true });
+          await copy(subFilesFolderPath, destination, {
+            overwrite: true,
+            filter: (file) => {
+              return file !== "canvases";
+            },
+          });
+          const canvasesOriginDir = join(subFilesFolderPath, "canvases");
+          if (await pathExists(canvasesOriginDir)) {
+            const canvasesDir = join(cwd(), directory, "canvases");
+            await copy(canvasesOriginDir, canvasesDir, { overwrite: true });
+            // /canvases/0/some-file.json -> /canvases/0/files/some-file.json
+            const canvasIndexes = await readdir(canvasesDir);
+            for (const canvasIndex of canvasIndexes) {
+              const canvasPath = join(canvasesDir, canvasIndex);
+              // Move files individually.
+              const filesDir = join(canvasPath, "files");
+              const files = await readdir(canvasPath);
+              await mkdir(filesDir, { recursive: true });
+              for (const file of files) {
+                const filePath = join(canvasPath, file);
+                // Check if directory or files
+                const isFile = (await stat(filePath)).isFile();
+                if (isFile) {
+                  const destination = join(filesDir, file);
+                  await move(filePath, destination, { overwrite: true });
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -230,12 +226,7 @@ export const IIIFJSONStore: Store<IIIFJSONStore> = {
           const { id, type, ...rest } = item;
 
           const loadedManifest = await files.loadJson(
-            join(
-              cwd(),
-              resource.source.path,
-              resource.source.relativePath || "",
-              item.id,
-            ),
+            join(cwd(), resource.source.path, resource.source.relativePath || "", item.id)
           );
           const newId = loadedManifest.id || loadedManifest["@id"];
           const newType = loadedManifest.type || loadedManifest["@type"];
@@ -245,11 +236,7 @@ export const IIIFJSONStore: Store<IIIFJSONStore> = {
             ...rest,
           });
         } catch (err) {
-          console.error(
-            "Warning: error loading virtual collection item",
-            item.id,
-            err,
-          );
+          console.error("Warning: error loading virtual collection item", item.id, err);
         }
       }
       json.items = newItems;
@@ -273,15 +260,12 @@ export const IIIFJSONStore: Store<IIIFJSONStore> = {
         virtual: resource.virtual,
       },
       vault,
-      { load: cacheKey },
+      { load: cacheKey }
     );
   },
 };
 
-export async function getKey(
-  store: { subFiles?: boolean },
-  resource: ParsedResource,
-) {
+export async function getKey(store: { subFiles?: boolean }, resource: ParsedResource) {
   const file = await stat(resource.path);
   const key = `${file.mtime}-${file.ctime}-${file.size}`;
 

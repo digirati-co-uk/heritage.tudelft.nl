@@ -45,11 +45,21 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
       {
         ...index,
         records: [] as Array<Record<string, any>>,
-        keys: (index.schema.fields || []).map((field) => field.name),
+        keys: (index.schema.fields || []).map((field) => {
+          if (field.name.includes(".")) {
+            const parts = field.name.split(".");
+            return parts[0]; // object keys.
+          }
+          return field.name;
+        }),
       },
     ])
   );
+
+  const canvasSearchIndex: Record<string, Record<string, any[]>> = {};
+
   function addToSearchIndex(search: Partial<SearchRecordReturn>, indices: Record<string, string[]>) {
+    const result: Array<{ index: string; record: any }> = [];
     if (search.indexes && search.record) {
       for (const index of search.indexes) {
         if (searchIndexes[index]) {
@@ -68,10 +78,15 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
               }
             }
           }
-          searchIndexes[index].records.push(record);
+          if (Object.keys(record).length) {
+            searchIndexes[index].records.push(record);
+            result.push({ index, record });
+          }
         }
       }
     }
+
+    return result;
   }
 
   // All indcies found.
@@ -343,7 +358,14 @@ ${errors.map((e, n) => `  ${n + 1}) ${(e as any)?.reason?.message}`).join(", ")}
           }
 
           const indices = await cachedResource.indices.value;
-          addToSearchIndex(await cachedCanvasResource.searchRecord.value, indices);
+          const record = await cachedCanvasResource.searchRecord.value;
+          const searchIndexResult = addToSearchIndex(record, indices);
+          for (const result of searchIndexResult) {
+            // Add to manifest
+            canvasSearchIndex[manifest.slug] = canvasSearchIndex[manifest.slug] || {};
+            canvasSearchIndex[manifest.slug][result.index] = canvasSearchIndex[manifest.slug][result.index] || [];
+            canvasSearchIndex[manifest.slug][result.index].push(result.record);
+          }
           recordIndices(indices);
           savingFiles.push(cachedCanvasResource.save());
 
@@ -398,6 +420,7 @@ ${errors.map((e, n) => `  ${n + 1}) ${(e as any)?.reason?.message}`).join(", ")}
   return {
     stats,
     searchIndexes,
+    canvasSearchIndex,
     allIndices,
   };
 }
