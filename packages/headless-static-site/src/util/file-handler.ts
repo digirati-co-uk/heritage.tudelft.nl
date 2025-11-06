@@ -150,6 +150,8 @@ export class FileHandler {
 
   async writeFile(path: string, data: any) {
     const filePath = this.resolve(path);
+    const dirName = path.split("/").slice(0, -1).join("/");
+    await this.fs.promises.mkdir(dirName, { recursive: true });
     await this.fs.promises.writeFile(filePath, data);
   }
 

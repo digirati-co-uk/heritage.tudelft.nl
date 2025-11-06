@@ -1,0 +1,1178 @@
+---
+title: Custom extract scripts
+---
+
+# Custom Extract Scripts
+
+Custom extraction scripts allow you to extend the headless static site with domain-specific processing logic. These scripts are JavaScript files that run during the build process to extract metadata, transform content, and generate additional data from your IIIF resources.
+
+## Getting Started
+
+### Script Location
+
+Place your custom scripts in a `scripts/` directory in your project root (or specify a different path with the `--scripts` option):
+
+```ansi
+your-project/
+├── .iiifrc.yml
+├── content/
+├── scripts/
+│   ├── custom-metadata.js
+│   ├── image-analysis.js
+│   └── search-enhancement.js
+└── package.json
+```
+
+### Basic Extract Script
+
+Here's a simple extraction script that extracts custom metadata:
+
+```ts filename="/your-project/scripts/custom-metadata.js#L1-25"
+import { extract } from "iiif-hss";
+
+extract(
+  {
+    id: "custom-metadata",
+    name: "Custom Metadata Extractor",
+    types: ["Manifest"],
+    invalidate: async () => true,
+  },
+  async (resource, api, config) => {
+    // Access the IIIF resource
+    const manifest = api.resource;
+
+    // Extract custom data
+    const customData = extractCustomFields(manifest.metadata);
+
+    // Return the extracted data
+    return {
+      meta: { customData },
+      indices: {
+        subjects: customData.subjects || [],
+        creators: customData.creators || [],
+      },
+    };
+  },
+);
+
+function extractCustomFields(metadata = []) {
+  // Your custom extraction logic here
+  return { subjects: [], creators: [] };
+}
+```
+
+## API Reference
+
+### The `extract()` Function
+
+The `extract()` function registers a custom extraction step:
+
+```ts filename="/your-project/api-example.js#L1-10"
+extract(
+  {
+    // Configuration object
+    id: "unique-step-id",
+    name: "Human readable name",
+    types: ["Manifest", "Collection", "Canvas"],
+    // ... other options
+  },
+  async (resource, api, config) => {
+    // Handler function
+    return {
+      /* extraction result */
+    };
+  },
+);
+```
+
+### Configuration Object
+
+#### Required Properties
+
+- `id` (string): Unique identifier for your extraction step
+- `name` (string): Human-readable name for logging
+- `types` (string[]): Resource types to process (`"Manifest"`, `"Collection"`, `"Canvas"`)
+
+#### Optional Properties
+
+```ts filename="/your-project/config-options.js#L1-20"
+{
+  id: "my-extractor",
+  name: "My Custom Extractor",
+  types: ["Manifest"],
+
+  // Invalidation function - determines when to re-run
+  invalidate: async (resource, api, config) => {
+    const cache = await api.caches.value;
+    return !cache.myData; // Re-run if cache is missing
+  },
+
+  // Collection phase - runs after all individual resources
+  collect: async (temp, api, config) => {
+    // Process aggregated data from all resources
+    return { temp: processedAggregateData };
+  },
+
+  // Search index configuration
+  search: {
+    manifests: {
+      fields: [
+        { name: "customField", type: "string", facet: true }
+      ]
+    }
+  }
+}
+```
+
+### Handler Function API
+
+The handler function receives three parameters:
+
+#### 1. `resource` - Resource Information
+
+```ts filename="/your-project/resource-api.js#L1-10"
+async (resource, api, config) => {
+  // Resource metadata
+  console.log(resource.id); // IIIF resource ID
+  console.log(resource.type); // "Manifest", "Collection", "Canvas"
+  console.log(resource.slug); // URL slug
+  console.log(resource.storeId); // Source store identifier
+  console.log(resource.source); // Source information (disk/remote)
+
+  // Vault integration for accessing loaded IIIF data
+  const vault = resource.vault;
+};
+```
+
+#### 2. `api` - Processing API
+
+```ts filename="/your-project/api-reference.js#L1-25"
+async (resource, api, config) => {
+  // Access the loaded IIIF resource
+  const manifest = api.resource;
+
+  // Lazy-loaded values (use .value to access)
+  const metadata = await api.meta.value;
+  const indices = await api.indices.value;
+  const caches = await api.caches.value;
+  const searchRecord = await api.searchRecord.value;
+
+  // File system access
+  const filesExist = await api.resourceFiles.exists("schema.json");
+  const schema = await api.resourceFiles.loadJson("schema.json");
+  await api.resourceFiles.saveText("output.txt", "content");
+
+  // Global configuration and build context
+  const buildConfig = api.build;
+  const globalConfig = api.config;
+
+  // File directory paths
+  console.log(api.filesDir); // Directory for this resource's files
+
+  // HTTP request cache for external APIs
+  const data = await api.requestCache.fetch("https://api.example.com/data");
+};
+```
+
+#### 3. `config` - Step Configuration
+
+Configuration passed from your `.iiifrc.yml` file:
+
+```yaml filename="/your-project/config-example.yml#L1-10"
+# In .iiifrc.yml
+config:
+  my-extractor:
+    apiKey: "secret-key"
+    threshold: 0.8
+    fields: ["title", "description"]
+```
+
+```ts filename="/your-project/config-usage.js#L1-8"
+async (resource, api, config) => {
+  // Access configuration values
+  const apiKey = config.apiKey;
+  const threshold = config.threshold || 0.5;
+  const fields = config.fields || [];
+
+  // Use configuration in your logic
+};
+```
+
+### Return Values
+
+Your handler can return various data types:
+
+```ts filename="/your-project/return-values.js#L1-30"
+return {
+  // Metadata attached to the resource, will be saved in the `meta.json` file
+  meta: {
+    extractedData: "some value",
+    processedAt: new Date().toISOString(),
+  },
+
+  // Relationships between resources. Will be used to created Collections + Search indexes
+  indices: {
+    subjects: ["Art", "History", "Culture"],
+    creators: ["Jane Doe", "John Smith"],
+    dates: ["1850-1900"],
+  },
+
+  // Cache data for invalidation
+  caches: {
+    myExtractorVersion: "1.2.0",
+    processedHash: "abc123",
+  },
+
+  // Search record data
+  search: {
+    record: {
+      customSearchField: "searchable text",
+      facetValue: "category",
+    },
+  },
+
+  // Temporary data for collect phase
+  temp: {
+    aggregateThis: "data for collection phase",
+  },
+
+  // Collections this resource belongs to (will be created at build time)
+  collections: ["themed-collection-1", "special-items"],
+};
+```
+
+## Real-World Examples
+
+### Example 1: Metadata Enhancement
+
+Extract and normalize metadata from different sources:
+
+```ts filename="/your-project/scripts/metadata-enhancement.js#L1-45"
+import { extract } from "iiif-hss";
+import { getValue } from "@iiif/helpers";
+
+extract(
+  {
+    id: "metadata-enhancement",
+    name: "Metadata Enhancement",
+    types: ["Manifest"],
+    invalidate: async () => true,
+  },
+  async (resource, api, config) => {
+    const manifest = api.resource;
+    const metadata = manifest.metadata || [];
+
+    const enhanced = {
+      normalizedTitles: [],
+      dates: [],
+      subjects: [],
+      creators: [],
+      languages: [],
+    };
+
+    // Process each metadata field
+    for (const field of metadata) {
+      const label = getMetadataLabel(field.label);
+      const value = getValue(field.value);
+
+      switch (label.toLowerCase()) {
+        case "title":
+        case "titel":
+          enhanced.normalizedTitles.push(value);
+          break;
+
+        case "date":
+        case "datering":
+          const dateRange = parseDateRange(value);
+          if (dateRange) enhanced.dates.push(dateRange);
+          break;
+
+        case "subject":
+        case "onderwerp":
+          enhanced.subjects.push(...parseSubjects(value));
+          break;
+
+        case "creator":
+        case "maker":
+          enhanced.creators.push(...parseCreators(value));
+          break;
+
+        case "language":
+        case "taal":
+          enhanced.languages.push(normalizeLanguage(value));
+          break;
+      }
+    }
+
+    return {
+      meta: { enhanced },
+      indices: enhanced,
+    };
+  },
+);
+
+function getMetadataLabel(label) {
+  return Object.values(label)[0]?.[0] || "";
+}
+
+function parseDateRange(dateStr) {
+  // Parse date ranges like "1850-1900" or "c. 1875"
+  const match = dateStr.match(/(\d{4})-(\d{4})/);
+  return match ? `${match[1]}-${match[2]}` : null;
+}
+
+function parseSubjects(subjectStr) {
+  return subjectStr
+    .split(/[,;]/)
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
+function parseCreators(creatorStr) {
+  return creatorStr
+    .split(/[,;]/)
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
+function normalizeLanguage(lang) {
+  const langMap = { nederlands: "nl", english: "en", français: "fr" };
+  return langMap[lang.toLowerCase()] || lang;
+}
+```
+
+### Example 2: External API Integration
+
+Fetch additional data from external APIs:
+
+```ts filename="/your-project/scripts/external-api-enrichment.js#L1-55"
+import { extract } from "iiif-hss";
+
+extract(
+  {
+    id: "external-api-enrichment",
+    name: "External API Enrichment",
+    types: ["Manifest"],
+    invalidate: async (resource, api, config) => {
+      const cache = await api.caches.value;
+      // Re-run weekly or if cache is missing
+      const week = 7 * 24 * 60 * 60 * 1000;
+      return !cache.lastFetch || Date.now() - cache.lastFetch > week;
+    },
+    search: {
+      manifests: {
+        fields: [
+          { name: "externalTags", type: "string[]", facet: true },
+          { name: "similarityScore", type: "float", optional: true },
+        ],
+      },
+    },
+  },
+  async (resource, api, config) => {
+    const manifest = api.resource;
+    const { apiKey, endpoint } = config;
+
+    if (!apiKey || !endpoint) {
+      console.warn("External API configuration missing");
+      return { caches: { lastFetch: Date.now() } };
+    }
+
+    try {
+      // Extract identifiers for external lookup
+      const identifiers = extractIdentifiers(manifest);
+      if (!identifiers.length) return {};
+
+      // Fetch from external API using cached requests
+      const apiUrl = `${endpoint}/enrich?id=${identifiers[0]}&key=${apiKey}`;
+      const externalData = await api.requestCache.fetch(apiUrl);
+
+      if (!externalData) return {};
+
+      // Process external data
+      const enrichment = {
+        externalTags: externalData.tags || [],
+        relatedItems: externalData.related || [],
+        confidence: externalData.confidence || 0,
+      };
+
+      return {
+        meta: {
+          externalEnrichment: enrichment,
+          apiSource: endpoint,
+        },
+        indices: {
+          tags: enrichment.externalTags,
+          relatedIds: enrichment.relatedItems,
+        },
+        search: {
+          record: {
+            externalTags: enrichment.externalTags,
+            similarityScore: enrichment.confidence,
+          },
+        },
+        caches: {
+          lastFetch: Date.now(),
+          apiVersion: externalData.version,
+        },
+      };
+    } catch (error) {
+      console.error("External API enrichment failed:", error);
+      return {
+        caches: {
+          lastFetch: Date.now(),
+          error: error.message,
+        },
+      };
+    }
+  },
+);
+
+function extractIdentifiers(manifest) {
+  const identifiers = [];
+
+  // Look for identifiers in metadata
+  if (manifest.metadata) {
+    for (const field of manifest.metadata) {
+      const label = Object.values(field.label)[0]?.[0]?.toLowerCase();
+      if (label === "identifier" || label === "inventarisnummer") {
+        const value = Object.values(field.value)[0]?.[0];
+        if (value) identifiers.push(value);
+      }
+    }
+  }
+
+  return identifiers;
+}
+```
+
+### Example 3: Image Analysis with Collection Phase
+
+Analyze images and aggregate results:
+
+```ts filename="/your-project/scripts/image-analysis.js#L1-80"
+import { extract } from "iiif-hss";
+import { createThumbnailHelper } from "@iiif/helpers";
+
+extract(
+  {
+    id: "image-analysis",
+    name: "Image Analysis",
+    types: ["Manifest"],
+    invalidate: async (resource, api, config) => {
+      const cache = await api.caches.value;
+      return !cache.analyzed;
+    },
+    collect: async (temp, api, config) => {
+      // Aggregate analysis results
+      const colorPalette = {};
+      const dimensions = { widths: [], heights: [] };
+
+      for (const [slug, data] of Object.entries(temp)) {
+        if (data.dominantColors) {
+          for (const color of data.dominantColors) {
+            colorPalette[color] = (colorPalette[color] || 0) + 1;
+          }
+        }
+
+        if (data.dimensions) {
+          dimensions.widths.push(data.dimensions.width);
+          dimensions.heights.push(data.dimensions.height);
+        }
+      }
+
+      // Save aggregate analysis
+      const aggregateAnalysis = {
+        totalAnalyzed: Object.keys(temp).length,
+        commonColors: Object.entries(colorPalette)
+          .sort(([, a], [, b]) => b - a)
+          .slice(0, 10)
+          .map(([color]) => color),
+        averageDimensions: {
+          width: Math.round(
+            dimensions.widths.reduce((a, b) => a + b, 0) /
+              dimensions.widths.length,
+          ),
+          height: Math.round(
+            dimensions.heights.reduce((a, b) => a + b, 0) /
+              dimensions.heights.length,
+          ),
+        },
+      };
+
+      await api.fileHandler.saveJson(
+        `${api.build.filesDir}/meta/image-analysis-summary.json`,
+        aggregateAnalysis,
+      );
+
+      return { temp: aggregateAnalysis };
+    },
+  },
+  async (resource, api, config) => {
+    const manifest = api.resource;
+    const vault = resource.vault;
+    const helper = createThumbnailHelper(vault);
+
+    try {
+      // Get best thumbnail for analysis
+      const thumbnail = await helper.getBestThumbnailAtSize(manifest, {
+        width: 400,
+        height: 400,
+      });
+
+      if (!thumbnail?.best) {
+        return { caches: { analyzed: false } };
+      }
+
+      // Analyze the image (mock analysis - replace with real image processing)
+      const analysis = await analyzeImage(thumbnail.best.id, api.requestCache);
+
+      if (!analysis) {
+        return { caches: { analyzed: false } };
+      }
+
+      return {
+        meta: {
+          imageAnalysis: analysis,
+          thumbnailUsed: thumbnail.best.id,
+        },
+        indices: {
+          colors: analysis.dominantColors || [],
+          imageFeatures: analysis.features || [],
+        },
+        temp: analysis, // Pass to collect phase
+        caches: { analyzed: true, version: "1.0" },
+      };
+    } catch (error) {
+      console.error("Image analysis failed:", error);
+      return { caches: { analyzed: false, error: error.message } };
+    }
+  },
+);
+
+async function analyzeImage(imageUrl, requestCache) {
+  // Mock image analysis - replace with actual image processing library
+  // This could use libraries like sharp, canvas, or external APIs
+
+  try {
+    // Simulate API call to image analysis service
+    const mockAnalysis = {
+      dominantColors: ["#2C3E50", "#E74C3C", "#F39C12"],
+      brightness: Math.random(),
+      contrast: Math.random(),
+      dimensions: {
+        width: 800 + Math.floor(Math.random() * 400),
+        height: 600 + Math.floor(Math.random() * 400),
+      },
+      features: ["portrait", "indoor", "historical"],
+      confidence: 0.85,
+    };
+
+    return mockAnalysis;
+  } catch (error) {
+    console.error("Image analysis error:", error);
+    return null;
+  }
+}
+```
+
+### Example 4: Cross-Reference Relationships
+
+Build relationships between resources:
+
+```ts filename="/your-project/scripts/cross-references.js#L1-65"
+import { extract } from "iiif-hss";
+import { writeFile } from "node:fs/promises";
+import { join } from "node:path";
+
+extract(
+  {
+    id: "cross-references",
+    name: "Cross-Reference Builder",
+    types: ["Manifest"],
+    collect: async (temp, api) => {
+      // Build relationship map
+      const relationships = {};
+      const identifierToSlug = {};
+
+      // First pass: build identifier map
+      for (const [slug, data] of Object.entries(temp)) {
+        if (data.identifier) {
+          identifierToSlug[data.identifier] = slug;
+        }
+      }
+
+      // Second pass: resolve relationships
+      for (const [slug, data] of Object.entries(temp)) {
+        if (data.relatedIdentifiers?.length) {
+          const relatedSlugs = data.relatedIdentifiers
+            .map((id) => identifierToSlug[id])
+            .filter(Boolean);
+
+          if (relatedSlugs.length) {
+            relationships[slug] = relatedSlugs;
+          }
+        }
+      }
+
+      // Save relationships to file
+      const relationshipFile = join(
+        api.build.filesDir,
+        "meta",
+        "relationships.json",
+      );
+      await writeFile(relationshipFile, JSON.stringify(relationships, null, 2));
+
+      return { temp: relationships };
+    },
+  },
+  async (resource, api, config) => {
+    const manifest = api.resource;
+    const metadata = manifest.metadata || [];
+
+    let identifier = null;
+    const relatedIdentifiers = [];
+
+    // Extract identifiers and relationships from metadata
+    for (const field of metadata) {
+      const label = getFirstLabel(field.label);
+      const value = getFirstValue(field.value);
+
+      if (!label || !value) continue;
+
+      // Main identifier
+      if (label.match(/inventarisnummer|identifier|catalog.?number/i)) {
+        identifier = normalizeIdentifier(value);
+      }
+
+      // Related items
+      if (label.match(/related|gerelateerd|see.?also/i)) {
+        const extracted = extractIdentifiersFromText(value);
+        relatedIdentifiers.push(...extracted);
+      }
+    }
+
+    return {
+      temp: { identifier, relatedIdentifiers },
+      meta: {
+        primaryIdentifier: identifier,
+        relatedCount: relatedIdentifiers.length,
+      },
+      indices: {
+        identifiers: identifier ? [identifier] : [],
+        hasRelated: relatedIdentifiers.length > 0 ? ["true"] : ["false"],
+      },
+    };
+  },
+);
+
+function getFirstLabel(label) {
+  return Object.values(label)[0]?.[0] || null;
+}
+
+function getFirstValue(value) {
+  return Object.values(value)[0]?.[0] || null;
+}
+
+function normalizeIdentifier(id) {
+  // Normalize identifier format (e.g., "ABC.123.456" -> "123.456.ABC")
+  const match = id.match(/([A-Z]{3})\.(\d{4})\.(\d{4})/);
+  return match ? `${match[2]}.${match[3]}.${match[1]}` : id;
+}
+
+function extractIdentifiersFromText(text) {
+  const regex = /([A-Z]{3}\.\d{4}\.\d{4})/g;
+  return [...text.matchAll(regex)].map((match) =>
+    normalizeIdentifier(match[1]),
+  );
+}
+```
+
+## Advanced Features
+
+### Search Integration
+
+Add custom fields to search indexes:
+
+```ts filename="/your-project/search-integration.js#L1-25"
+extract(
+  {
+    id: "search-enhancer",
+    name: "Search Enhancement",
+    types: ["Manifest"],
+    search: {
+      manifests: {
+        fields: [
+          { name: "customCategory", type: "string", facet: true },
+          { name: "dateCreated", type: "int32", optional: true },
+          { name: "tags", type: "string[]", facet: true },
+          { name: "qualityScore", type: "float", optional: true },
+          { name: "hasImages", type: "bool", index: true },
+        ],
+      },
+    },
+  },
+  async (resource, api, config) => {
+    // Your extraction logic...
+
+    return {
+      search: {
+        record: {
+          customCategory: "manuscripts",
+          dateCreated: 1875,
+          tags: ["medieval", "illuminated", "religious"],
+          qualityScore: 0.92,
+          hasImages: true,
+        },
+      },
+    };
+  },
+);
+```
+
+### Canvas-Level Processing
+
+Process individual canvas elements:
+
+```ts filename="/your-project/canvas-processing.js#L1-30"
+extract(
+  {
+    id: "canvas-analyzer",
+    name: "Canvas Analyzer",
+    types: ["Canvas"],
+    invalidate: async (canvas, api) => {
+      const cache = await api.caches.value;
+      return !cache.processed;
+    },
+  },
+  async (resource, api, config) => {
+    const canvas = api.resource;
+
+    // Analyze canvas properties
+    const analysis = {
+      dimensions: {
+        width: canvas.width,
+        height: canvas.height,
+        aspectRatio: canvas.width / canvas.height,
+      },
+      hasText: false,
+      imageCount: 0,
+      annotationCount: 0,
+    };
+
+    // Count annotations and images
+    if (canvas.items) {
+      for (const annotationPage of canvas.items) {
+        if (annotationPage.items) {
+          analysis.annotationCount += annotationPage.items.length;
+
+          for (const annotation of annotationPage.items) {
+            if (annotation.body?.type === "Image") {
+              analysis.imageCount++;
+            }
+            if (annotation.body?.type === "TextualBody") {
+              analysis.hasText = true;
+            }
+          }
+        }
+      }
+    }
+
+    return {
+      meta: { canvasAnalysis: analysis },
+      caches: { processed: true },
+    };
+  },
+);
+```
+
+## Caching and Performance
+
+### Effective Caching Strategies
+
+```ts filename="/your-project/caching-strategies.js#L1-40"
+extract(
+  {
+    id: "performance-example",
+    name: "Performance Example",
+    types: ["Manifest"],
+
+    // Sophisticated invalidation logic
+    invalidate: async (resource, api, config) => {
+      const cache = await api.caches.value;
+
+      // Version-based invalidation
+      if (cache.extractorVersion !== "2.1.0") {
+        return true;
+      }
+
+      // Time-based invalidation (daily updates)
+      const day = 24 * 60 * 60 * 1000;
+      if (!cache.lastRun || Date.now() - cache.lastRun > day) {
+        return true;
+      }
+
+      // Content-based invalidation
+      const currentHash = await getContentHash(resource);
+      if (cache.contentHash !== currentHash) {
+        return true;
+      }
+
+      // Resource file changes
+      if (await api.resourceFiles.exists("metadata.json")) {
+        const metadataStats = await api.resourceFiles.stat("metadata.json");
+        if (
+          !cache.metadataModified ||
+          cache.metadataModified < metadataStats.mtime.getTime()
+        ) {
+          return true;
+        }
+      }
+
+      return false; // Use cached version
+    },
+  },
+  async (resource, api, config) => {
+    // Expensive processing here...
+    const result = await performExpensiveOperation();
+
+    return {
+      meta: { result },
+      caches: {
+        extractorVersion: "2.1.0",
+        lastRun: Date.now(),
+        contentHash: await getContentHash(resource),
+        metadataModified: (await api.resourceFiles.exists("metadata.json"))
+          ? (await api.resourceFiles.stat("metadata.json")).mtime.getTime()
+          : null,
+      },
+    };
+  },
+);
+
+async function getContentHash(resource) {
+  // Create hash of resource content for change detection
+  const crypto = require("crypto");
+  const content = JSON.stringify(resource, null, 0);
+  return crypto.createHash("sha256").update(content).digest("hex");
+}
+
+async function performExpensiveOperation() {
+  // Simulate expensive operation
+  return "processed_data";
+}
+```
+
+### Batch Processing Optimization
+
+```ts filename="/your-project/batch-processing.js#L1-35"
+extract(
+  {
+    id: "batch-processor",
+    name: "Batch Processor",
+    types: ["Manifest"],
+
+    // Collect phase for batch operations
+    collect: async (temp, api, config) => {
+      const allItems = Object.values(temp);
+
+      if (allItems.length === 0) return;
+
+      // Batch API calls
+      const batches = chunkArray(allItems, 50); // Process in batches of 50
+      const results = [];
+
+      for (const batch of batches) {
+        const batchResults = await processBatch(batch, api.requestCache);
+        results.push(...batchResults);
+      }
+
+      // Save batch results
+      await api.fileHandler.saveJson(
+        `${api.build.filesDir}/meta/batch-results.json`,
+        results,
+      );
+
+      return { temp: results };
+    },
+  },
+  async (resource, api, config) => {
+    // Just collect data for batch processing
+    return {
+      temp: {
+        id: resource.id,
+        slug: resource.slug,
+        data: extractRelevantData(api.resource),
+      },
+    };
+  },
+);
+
+function chunkArray(array, size) {
+  const chunks = [];
+  for (let i = 0; i < array.length; i += size) {
+    chunks.push(array.slice(i, i + size));
+  }
+  return chunks;
+}
+
+async function processBatch(batch, requestCache) {
+  // Batch API call or processing
+  const ids = batch.map((item) => item.id);
+  return await requestCache.fetch(`/api/batch?ids=${ids.join(",")}`);
+}
+
+function extractRelevantData(manifest) {
+  return {
+    /* relevant data */
+  };
+}
+```
+
+## Best Practices
+
+### Error Handling
+
+```ts filename="/your-project/error-handling.js#L1-35"
+extract(
+  {
+    id: "robust-extractor",
+    name: "Robust Extractor",
+    types: ["Manifest"],
+  },
+  async (resource, api, config) => {
+    try {
+      // Main processing logic
+      const result = await processResource(resource, api, config);
+
+      return {
+        meta: {
+          result,
+          processedAt: new Date().toISOString(),
+          status: "success",
+        },
+        caches: { lastSuccessful: Date.now() },
+      };
+    } catch (error) {
+      // Log error but don't fail the build
+      console.error(`Error processing ${resource.slug}:`, error);
+
+      // Return partial/fallback data
+      return {
+        meta: {
+          error: error.message,
+          status: "error",
+          processedAt: new Date().toISOString(),
+        },
+        caches: {
+          lastError: Date.now(),
+          errorMessage: error.message,
+        },
+      };
+    }
+  },
+);
+
+async function processResource(resource, api, config) {
+  // Validate inputs
+  if (!api.resource) {
+    throw new Error("No resource data available");
+  }
+
+  // Graceful degradation
+  const manifest = api.resource;
+  const metadata = manifest.metadata || [];
+
+  if (metadata.length === 0) {
+    console.warn(`No metadata found for ${resource.slug}`);
+    return { warning: "No metadata available" };
+  }
+
+  // Process with validation
+  return await doActualProcessing(metadata);
+}
+
+async function doActualProcessing(metadata) {
+  // Your processing logic here
+  return { processed: true };
+}
+```
+
+### Configuration Management
+
+```ts filename="/your-project/config-management.js#L1-25"
+extract(
+  {
+    id: "configurable-extractor",
+    name: "Configurable Extractor",
+    types: ["Manifest"],
+  },
+  async (resource, api, config) => {
+    // Provide sensible defaults
+    const settings = {
+      enabled: true,
+      threshold: 0.5,
+      maxResults: 10,
+      apiTimeout: 5000,
+      ...config, // Override with user configuration
+    };
+
+    // Validate configuration
+    if (
+      typeof settings.threshold !== "number" ||
+      settings.threshold < 0 ||
+      settings.threshold > 1
+    ) {
+      console.warn("Invalid threshold, using default 0.5");
+      settings.threshold = 0.5;
+    }
+
+    if (!settings.enabled) {
+      return { meta: { skipped: true } };
+    }
+
+    // Use configuration in processing
+    const results = await processWithSettings(api.resource, settings);
+
+    return { meta: { results, settings: settings } };
+  },
+);
+
+async function processWithSettings(resource, settings) {
+  // Processing logic using settings
+  return [];
+}
+```
+
+## Debugging and Testing
+
+### Debug Logging
+
+```ts filename="/your-project/debug-logging.js#L1-20"
+extract(
+  {
+    id: "debug-example",
+    name: "Debug Example",
+    types: ["Manifest"],
+  },
+  async (resource, api, config) => {
+    const debug = api.build.options.debug;
+
+    if (debug) {
+      console.log(`Processing ${resource.slug}`);
+      console.log("Resource type:", resource.type);
+      console.log("Store ID:", resource.storeId);
+      console.log("Config:", JSON.stringify(config, null, 2));
+    }
+
+    const startTime = Date.now();
+    const result = await processResource(resource, api, config);
+
+    if (debug) {
+      console.log(`Processed ${resource.slug} in ${Date.now() - startTime}ms`);
+    }
+
+    return result;
+  },
+);
+```
+
+## Configuration in .iiifrc.yml
+
+Add your custom extractors to the processing pipeline:
+
+```yaml filename="/your-project/iiifrc-example.yml#L1-20"
+# .iiifrc.yml
+server:
+  url: http://localhost:7111
+
+run:
+  - extract-label-string
+  - extract-thumbnail
+  - my-custom-extractor # Your custom script
+  - external-api-enrichment # Another custom script
+  - manifest-sqlite
+
+stores:
+  my-content:
+    type: iiif-json
+    path: ./content
+    run:
+      - custom-metadata # Store-specific extractor
+
+config:
+  my-custom-extractor:
+    apiKey: "your-secret-key"
+    threshold: 0.8
+    enableFeature: true
+
+  external-api-enrichment:
+    endpoint: "https://api.example.com"
+    timeout: 10000
+```
+
+## Common Patterns and Utilities
+
+### Metadata Processing Helpers
+
+```ts filename="/your-project/metadata-helpers.js#L1-40"
+// Common utility functions for metadata processing
+
+export function getMetadataField(metadata, fieldNames) {
+  if (!Array.isArray(metadata)) return null;
+
+  const names = Array.isArray(fieldNames) ? fieldNames : [fieldNames];
+
+  for (const field of metadata) {
+    const label = getFirstLabel(field.label);
+    if (
+      names.some((name) => label.toLowerCase().includes(name.toLowerCase()))
+    ) {
+      return getFirstValue(field.value);
+    }
+  }
+  return null;
+}
+
+export function getFirstLabel(label) {
+  if (!label) return "";
+  const values = Object.values(label);
+  return values[0]?.[0] || "";
+}
+
+export function getFirstValue(value) {
+  if (!value) return "";
+  const values = Object.values(value);
+  return values[0]?.[0] || "";
+}
+
+export function getAllLabels(label) {
+  if (!label) return [];
+  return Object.values(label).flat();
+}
+
+export function getAllValues(value) {
+  if (!value) return [];
+  return Object.values(value).flat();
+}
+
+export function parseCommaSeparated(value) {
+  return value
+    .split(/[,;]/)
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
+export function extractDates(text) {
+  const patterns = [
+    /(\d{4})-(\d{4})/, // 1850-1900
+    /c\.?\s*(\d{4})/, // c. 1875
+    /(\d{4})/, // 1875
+  ];
+
+  for (const pattern of patterns) {
+    const match = text.match(pattern);
+    if (match) return match[1];
+  }
+  return null;
+}
+```
