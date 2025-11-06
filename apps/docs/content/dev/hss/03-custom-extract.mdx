@@ -946,9 +946,11 @@ extract(
 
       return {
         meta: {
-          result,
-          processedAt: new Date().toISOString(),
-          status: "success",
+          robustExtractor: {
+            result,
+            processedAt: new Date().toISOString(),
+            status: "success",
+          },
         },
         caches: { lastSuccessful: Date.now() },
       };
@@ -956,12 +958,14 @@ extract(
       // Log error but don't fail the build
       console.error(`Error processing ${resource.slug}:`, error);
 
-      // Return partial/fallback data
+      // Return partial/fallback data, with a key specific to your workflow.
       return {
         meta: {
-          error: error.message,
-          status: "error",
-          processedAt: new Date().toISOString(),
+          robustExtractor: {
+            error: error.message,
+            status: "error",
+            processedAt: new Date().toISOString(),
+          },
         },
         caches: {
           lastError: Date.now(),
