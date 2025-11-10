@@ -40,17 +40,26 @@ const startMap = {
   "start-9": "col-start-9",
 };
 
-export function getClassName(b?: string[], firstInfo = false) {
+export function getClassName(
+  b?: string[],
+  firstInfo = false,
+  options: { fullWidthGrid?: boolean } = {},
+) {
   if (!b || b.length === 0) {
     b = ["h-6", "w-12", "image"];
   }
   let h = b.find((a) => a.includes("h-")) as keyof typeof heightMap;
-  const w = b.find((a) => a.includes("w-")) as keyof typeof widthMap;
-  const start = b.find((a) => a.includes("start-")) as keyof typeof startMap;
+  let w = b.find((a) => a.includes("w-")) as keyof typeof widthMap;
+  let start = b.find((a) => a.includes("start-")) as keyof typeof startMap;
   const classNames = [];
 
   if (firstInfo && h === "h-4") {
     h = "h-8";
+  }
+
+  if (options.fullWidthGrid) {
+    w = "w-12";
+    start = undefined as any;
   }
 
   classNames.push(heightMap[h]);

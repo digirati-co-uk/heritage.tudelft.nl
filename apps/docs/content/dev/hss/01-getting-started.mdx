@@ -1,0 +1,100 @@
+---
+title: Getting started
+---
+
+# Getting started
+
+The Headless static site is a CLI tool that takes a folder of IIIF manifests and Collections and runs them through
+a series of steps to produce a combined output that is suitable for powered static sites.
+
+<img src="/hss/01-pipeline.svg" />
+
+## Hello world example
+
+To get started, let's download a piece of IIIF from the cookbook.
+
+```sh
+mkdir content
+curl https://iiif.io/api/cookbook/recipe/0001-mvm-image/manifest.json > ./content/0001-mvm-image.json
+```
+
+Then create a `iiifrc.yml` for configuration
+
+```yaml
+server:
+  url: http://localhost:7111 # this will be the URL for your Manifests.
+
+stores:
+  content:
+    type: iiif-json
+    path: ./content
+    pattern: "**/*.json"
+```
+
+Now you can run the build command using `npx` or `pnpx`
+
+```sh
+> pnpx iiif-hss build
+
+Done in 7ms
+```
+
+This process has created a folder `.iiif/build` with the output of the pipeline for our single manifest.
+
+```
+> tree .iiif/build
+
+.iiif/build
+├── collection.json
+├── collections
+│   └── collection.json
+├── config
+│   ├── slugs.json
+│   └── stores.json
+├── content
+│   └── 0001-mvm-image
+│       ├── indices.json
+│       ├── manifest.json
+│       └── meta.json
+├── manifests
+│   └── collection.json
+├── meta
+│   ├── all-indices.json
+│   ├── editable.json
+│   ├── indices.json
+│   ├── manifests.db
+│   ├── metadata-analysis.json
+│   ├── overrides.json
+│   ├── search
+│   └── sitemap.json
+└── stores
+    └── default
+        └── collection.json
+```
+
+There is a _lot_ of files here, so let's break them down.
+
+### `/content`
+
+This directory is our build IIIF, by default it will do a few things:
+
+- Upgrade the IIIF to Presentation v3
+- Update the URL with the one configured
+- Move it into a folder with the name of the file. (`content/0001-mvm-image.json` becomes `content/0001-mvm-image/manifest.json`)
+- Create some files alongside the Manifest
+  - `manifest.json` - The IIIF Manifest itself.
+  - `meta.json` - this is data that has been extracted from the Manifest. By default the label and number of items. This can be useful for loading snippets on a static site for listing pages. You can also use it for more complex use-cases.
+  - `indices.json` - this will be explained later, but it allows you to group manifests together into Collections
+
+### Collections
+
+The pipeline will also create a variety of IIIF Collections. By default this will be:
+
+- One top level collection at `/collection.json`
+- A list of all Collections at `/collections/collection.json`
+- A list of all Manifests at `/manifests/collection.json`
+- A Collection for each "store" in your configuration `/stores/[name]/collection.json`
+
+### `/meta`
+
+This folder contains output from the process as a whole, this can be things like a sitemap which lists all resources, or analysis on the metadata to better inform configuration. This is also where combined files that are not IIIF live, such as search indexes.

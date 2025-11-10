@@ -1,10 +1,6 @@
 /**
  * Adapted from https://theseusviewer.org
  */
-import "@vidstack/react/player/styles/base.css";
-import "@vidstack/react/player/styles/default/theme.css";
-import "@vidstack/react/player/styles/default/captions.css";
-import "@vidstack/react/player/styles/default/layouts/video.css";
 import { getValue } from "@iiif/helpers";
 import {
   Gesture,
@@ -15,10 +11,7 @@ import {
   Poster,
   Track,
 } from "@vidstack/react";
-import {
-  DefaultVideoLayout,
-  defaultLayoutIcons,
-} from "@vidstack/react/player/layouts/default";
+import { DefaultVideoLayout, defaultLayoutIcons } from "@vidstack/react/player/layouts/default";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useCanvas, useThumbnail } from "react-iiif-vault";
@@ -82,13 +75,7 @@ export default function IIIFMediaPlayer(props: IIIFMediaPlayerProps) {
 
           {/* Chapters from Ranges */}
           {chapters?.length ? (
-            <Track
-              content={chapters as any}
-              type="json"
-              kind="chapters"
-              label="Chapters"
-              default
-            />
+            <Track content={chapters as any} type="json" kind="chapters" label="Chapters" default />
           ) : null}
           {/* <Track content={exampleChapters} type="json" kind="chapters" label="Chapters" default /> */}
 
@@ -120,11 +107,7 @@ function Gestures() {
         event="pointerup"
         action="toggle:paused"
       />
-      <Gesture
-        className="absolute inset-0 z-0 block h-full w-full"
-        event="dblpointerup"
-        action="toggle:fullscreen"
-      />
+      <Gesture className="absolute inset-0 z-0 block h-full w-full" event="dblpointerup" action="toggle:fullscreen" />
     </>
   );
 }

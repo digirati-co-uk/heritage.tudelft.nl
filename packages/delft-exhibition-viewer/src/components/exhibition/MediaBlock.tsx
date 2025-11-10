@@ -1,16 +1,12 @@
+import { CloseIcon } from "@/components/icons/CloseIcon";
 import { Dialog } from "@headlessui/react";
+import { getValue } from "@iiif/helpers";
+import type { CanvasNormalized } from "@iiif/presentation-3-normalized";
 import { Suspense, lazy, useState } from "react";
 import { usePress } from "react-aria";
-import {
-  type MediaStrategy,
-  type SingleYouTubeVideo,
-  useThumbnail,
-} from "react-iiif-vault";
+import { type MediaStrategy, type SingleYouTubeVideo, useThumbnail } from "react-iiif-vault";
 import { LocaleString } from "react-iiif-vault";
-import { CloseIcon } from "@/components/icons/CloseIcon";
-import type { CanvasNormalized } from "@iiif/presentation-3-normalized";
 import { BaseExhibitionBlock } from "./BaseExhibitionBlock";
-import { getValue } from "@iiif/helpers";
 
 export interface MediaBlockProps {
   canvas: CanvasNormalized;
@@ -18,6 +14,7 @@ export interface MediaBlockProps {
   index: number;
   id?: string;
   scrollEnabled?: boolean;
+  fullWidthGrid?: boolean;
 }
 
 function getWindowHost() {
@@ -46,6 +43,7 @@ export function MediaBlock(props: MediaBlockProps) {
       id={props.id}
       index={props.index}
       scrollEnabled={props.scrollEnabled}
+      fullWidthGrid={props.fullWidthGrid}
     >
       <img
         {...pressProps}
@@ -53,15 +51,8 @@ export function MediaBlock(props: MediaBlockProps) {
         src={thumbnail?.id}
         alt={getValue(label) || "An image of the canvas"}
       />
-      <Dialog
-        className="relative z-50"
-        open={isOpen}
-        onClose={() => setIsOpen(false)}
-      >
-        <div
-          className="fixed inset-0 bg-BackgroundOverlay"
-          aria-hidden="true"
-        />
+      <Dialog className="relative z-50" open={isOpen} onClose={() => setIsOpen(false)}>
+        <div className="fixed inset-0 bg-BackgroundOverlay" aria-hidden="true" />
         <div className="mobile-height fixed inset-0 flex w-screen items-center p-4">
           <button
             className="absolute right-6 top-6 z-20 flex h-16 w-16 items-center justify-center rounded bg-ControlBar hover:bg-ControlHover"

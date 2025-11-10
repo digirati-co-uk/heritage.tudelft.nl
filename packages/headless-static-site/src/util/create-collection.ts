@@ -14,7 +14,7 @@ export function createCollection({
 } & Partial<Omit<Collection, "label" | "sumary">>): Omit<Collection, "items"> {
   return {
     "@context": "http://iiif.io/api/presentation/3/context.json",
-    id: `${configUrl}/${slug}/collection.json`,
+    id: `${configUrl}/${slug ? `${slug}/` : ""}collection.json`,
     type: "Collection" as const,
     label: typeof label === "string" ? { en: [label] } : label,
     summary: collection.summary

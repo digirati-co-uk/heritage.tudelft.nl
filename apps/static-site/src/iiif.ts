@@ -1,6 +1,6 @@
 import type { Collection } from "@iiif/presentation-3";
 
-let IIIF_URL =
+export let IIIF_URL =
   process.env["IIIF_URL"] ||
   process.env["NEXT_PUBLIC_IIIF_URL"] ||
   "http://localhost:7111/";
@@ -12,6 +12,13 @@ if (!IIIF_URL.endsWith("/")) {
 const fetchOptions: RequestInit = {
   cache: process.env.NODE_ENV === "production" ? "default" : "no-store",
 };
+
+export function relativeIIIFUrl(remoteOrLocal: string) {
+  if (remoteOrLocal.startsWith(IIIF_URL)) {
+    return remoteOrLocal.slice(IIIF_URL.length - 1);
+  }
+  return remoteOrLocal;
+}
 
 export async function loadCollection(slug: string) {
   const collectionReq = fetch(

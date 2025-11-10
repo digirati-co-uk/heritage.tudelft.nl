@@ -2,6 +2,7 @@ import { ManifestLoader } from "@/app/provider";
 import { Slot } from "@/blocks/slot";
 import { SlotContext } from "@/blocks/slot-context";
 import { Page } from "@/components/Page";
+import { getViewObjectLinks } from "@/helpers/get-view-object-links";
 import { baseURL, getDefaultMetaMdx, makeTitle } from "@/helpers/metadata";
 import { loadManifest, loadManifestMeta, loadMeta } from "@/iiif";
 import { getValue } from "@iiif/helpers";
@@ -64,16 +65,7 @@ export default async function Exhibition({
   const t = await getTranslations();
   const manifestSlug = `manifests/${exhibition}`;
   const { manifest, meta } = await loadManifest(manifestSlug);
-  const allImageServiceLinks = (await loadMeta("image-service-links.json")) as Record<
-    string,
-    Array<{
-      slug: string;
-      service: string;
-      canvasId: string;
-      targetCanvasId: string;
-    }>
-  >;
-  const viewObjectLinks = allImageServiceLinks[manifestSlug] || [];
+  const viewObjectLinks = await getViewObjectLinks(manifestSlug);
 
   return (
     <Page>

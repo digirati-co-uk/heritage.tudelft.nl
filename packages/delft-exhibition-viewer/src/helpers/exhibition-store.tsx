@@ -145,7 +145,25 @@ function getCanvasTourSteps({
       region = expandTarget(target.target as any);
     }
 
-    const objectLink = imageService ? objectLinks.find((link) => link.service === imageService) || null : null;
+    const objectLink = imageService
+      ? objectLinks.find((link) => {
+          if (link.service === imageService) {
+            return true;
+          }
+          // DLCS "canonical" hack.
+          if (imageService.replace("/iiif-img/v3/", "/iiif-img/") === link.service) {
+            return true;
+          }
+          if (imageService.replace("/iiif-img/v2/", "/iiif-img/") === link.service) {
+            return true;
+          }
+          if (imageService.replace("/thumbs/", "/iiif-img/") === link.service) {
+            return true;
+          }
+
+          return false;
+        }) || null
+      : null;
 
     steps.push({
       label: target.label || null,
@@ -214,9 +232,7 @@ export function createExhibitionStore(options: ExhibitionStoreOptions) {
     allSteps.push(...steps);
   }
 
-  let startIndex = allSteps.findIndex(
-    (step) => step.canvasIndex === startCanvasIndex,
-  );
+  let startIndex = allSteps.findIndex((step) => step.canvasIndex === startCanvasIndex);
   if (startIndex === -1) {
     startIndex = 0;
   }
