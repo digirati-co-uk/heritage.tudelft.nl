@@ -59,44 +59,37 @@ const foundersGroteskMono = localFont({
   ],
 });
 
-export default async function GlobalNotFound({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await params;
+export default async function GlobalNotFound() {
   //const t = useTranslations();
   const t = (arg: string) => arg;
   return (
-    <html lang={locale}>
+    <html lang="en">
       <body>
-        <NextIntlClientProvider locale={locale}>
-          <div
-            className={`bg-gray-200 ${foundersGrotesk.variable} ${foundersGroteskMono.variable} font-sans flex flex-col max-h-[100vh] min-h-[100vh] justify-between`}
-          >
-            <GlobalHeader />
-            <main className="flex w-full flex-col items-center grow">
-              <div className="w-full max-w-screen-xl px-5 py-10 lg:px-10 flex flex-col gap-2 prose md:prose-xl">
-                <h2>{t("Not found")} (404)</h2>
-                <span>{t("The page you requested has not been found")}.</span>
-                <span>
-                  {t(
-                    "Please use the navigation above to browse or search the site",
-                  )}
-                  .
-                </span>
-                <span>
-                  <a href="" className="underline">
-                    {t("Reload this page")}.
-                  </a>
-                </span>
-              </div>
-            </main>
-            <div>
-              <GlobalFooter />
+        <div
+          className={`bg-gray-200 ${foundersGrotesk.variable} ${foundersGroteskMono.variable} font-sans flex flex-col max-h-[100vh] min-h-[100vh] justify-between`}
+        >
+          <GlobalHeader />
+          <main className="flex w-full flex-col items-center grow">
+            <div className="w-full max-w-screen-xl px-5 py-10 lg:px-10 flex flex-col gap-2 prose md:prose-xl">
+              <h2>{t("Not found")} (404)</h2>
+              <span>{t("The page you requested has not been found")}.</span>
+              <span>
+                {t(
+                  "Please use the navigation above to browse or search the site",
+                )}
+                .
+              </span>
+              <span>
+                <a href="" className="underline">
+                  {t("Reload this page")}.
+                </a>
+              </span>
             </div>
+          </main>
+          <div>
+            <GlobalFooter />
           </div>
-        </NextIntlClientProvider>
+        </div>
       </body>
     </html>
   );

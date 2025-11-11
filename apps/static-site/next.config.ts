@@ -4,9 +4,9 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
   // output: "export",
-  experimental: {
-    globalNotFound: true,
-  },
+  // experimental: {
+  //   globalNotFound: true,
+  // },
   transpilePackages: ["@repo/ui"],
   typescript: {
     ignoreBuildErrors: true,
