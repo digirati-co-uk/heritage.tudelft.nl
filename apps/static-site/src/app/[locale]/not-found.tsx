@@ -16,7 +16,7 @@ export default function NotFoundPage() {
           </span>
           <span>
             <a href="" className="underline">
-              {t("Reload this page")}.
+              {t("Retry this page")}.
             </a>
           </span>
         </div>
