@@ -55,7 +55,7 @@ if (process.env.NODE_ENV !== "production") {
   // import("exhibition-viewer/dist/index.css");
 }
 
-const foundersGrotesk = localFont({
+export const foundersGrotesk = localFont({
   variable: "--f-font",
   preload: true,
   src: [
@@ -82,7 +82,7 @@ const foundersGrotesk = localFont({
   ],
 });
 
-const foundersGroteskMono = localFont({
+export const foundersGroteskMono = localFont({
   variable: "--f-mono-font",
   preload: true,
   src: [
