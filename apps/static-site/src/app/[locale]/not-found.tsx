@@ -10,7 +10,6 @@ export default function NotFoundPage() {
       <main className="flex w-full flex-col items-center grow">
         <div className="w-full xl:min-h-[60vh] max-w-screen-xl px-5 py-10 lg:px-10 flex flex-col gap-2 prose md:prose-xl">
           <h2>{t("Not found")} (404)</h2>
-          <span>/app/locale/not-found.tsx</span>
           <span>{t("The page you requested has not been found")}.</span>
           <span>
             {t("Please use the navigation above to browse or search the site")}.
