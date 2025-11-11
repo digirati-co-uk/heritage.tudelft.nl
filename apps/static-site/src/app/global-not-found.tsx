@@ -61,11 +61,28 @@ export default function GlobalNotFound() {
       <body>
         <NextIntlClientProvider>
           <div
-            className={`${foundersGrotesk.variable} ${foundersGroteskMono.variable}`}
+            className={`bg-gray-200 ${foundersGrotesk.variable} ${foundersGroteskMono.variable} font-sans flex flex-col max-h-[100vh] min-h-[100vh] justify-between`}
           >
             <GlobalHeader />
-            <div>404 page oops</div>
-            <GlobalFooter />
+            <main className="flex w-full flex-col items-center grow">
+              <div className="w-full max-w-screen-xl px-5 py-10 lg:px-10 flex flex-col gap-2 prose md:prose-xl">
+                <h2>Not found (404)</h2>
+                <span>The page you requested has not been found.</span>
+                <span>
+                  Please use the navigation above to browse or search the
+                  site.{" "}
+                </span>
+                <span>
+                  <a href="" className="underline">
+                    Click here
+                  </a>{" "}
+                  to try to reload this page.
+                </span>
+              </div>
+            </main>
+            <div>
+              <GlobalFooter />
+            </div>
           </div>
         </NextIntlClientProvider>
       </body>
