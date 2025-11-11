@@ -13,6 +13,11 @@ const fetchOptions: RequestInit = {
   cache: process.env.NODE_ENV === "production" ? "default" : "no-store",
 };
 
+const fetchRetryOptions = {
+  retries: 1,
+  retryDelay: 100,
+};
+
 export function relativeIIIFUrl(remoteOrLocal: string) {
   if (remoteOrLocal.startsWith(IIIF_URL)) {
     return remoteOrLocal.slice(IIIF_URL.length - 1);
@@ -21,10 +26,10 @@ export function relativeIIIFUrl(remoteOrLocal: string) {
 }
 
 export async function loadCollection(slug: string) {
-  const collectionReq = fetch(
-    `${IIIF_URL}${slug}/collection.json`,
-    fetchOptions,
-  );
+  const collectionReq = fetch(`${IIIF_URL}${slug}/collection.json`, {
+    ...fetchOptions,
+    ...fetchRetryOptions,
+  });
   // const metaReq = fetch(`${IIIF_URL}${slug}/meta.json`);
   const ret: { collection: Collection; meta: any } = { meta: {} } as any;
 
@@ -56,8 +61,14 @@ export async function loadMeta(name: string) {
 }
 
 export async function loadManifest(slug: string) {
-  const manifestReq = fetch(`${IIIF_URL}${slug}/manifest.json`, fetchOptions);
-  const metaReq = fetch(`${IIIF_URL}${slug}/meta.json`, fetchOptions);
+  const manifestReq = fetch(`${IIIF_URL}${slug}/manifest.json`, {
+    ...fetchOptions,
+    ...fetchRetryOptions,
+  });
+  const metaReq = fetch(`${IIIF_URL}${slug}/meta.json`, {
+    ...fetchOptions,
+    ...fetchRetryOptions,
+  });
 
   return Promise.all([manifestReq, metaReq]).then(async ([manifest, meta]) => {
     return {
@@ -68,7 +79,10 @@ export async function loadManifest(slug: string) {
 }
 
 export async function loadManifestMeta(slug: string) {
-  const resp = await fetch(`${IIIF_URL}${slug}/meta.json`, fetchOptions);
+  const resp = await fetch(`${IIIF_URL}${slug}/meta.json`, {
+    ...fetchOptions,
+    ...fetchRetryOptions,
+  });
   if (resp.ok) {
     return resp.json();
   }
