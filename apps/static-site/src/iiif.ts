@@ -1,5 +1,7 @@
 import type { Collection } from "@iiif/presentation-3";
 
+import fetchRetry from "fetch-retry";
+
 export let IIIF_URL =
   process.env["IIIF_URL"] ||
   process.env["NEXT_PUBLIC_IIIF_URL"] ||
@@ -18,6 +20,8 @@ const fetchRetryOptions = {
   retryDelay: 100,
 };
 
+const myFetch = fetchRetry(fetch, fetchRetryOptions);
+
 export function relativeIIIFUrl(remoteOrLocal: string) {
   if (remoteOrLocal.startsWith(IIIF_URL)) {
     return remoteOrLocal.slice(IIIF_URL.length - 1);
@@ -26,7 +30,7 @@ export function relativeIIIFUrl(remoteOrLocal: string) {
 }
 
 export async function loadCollection(slug: string) {
-  const collectionReq = fetch(`${IIIF_URL}${slug}/collection.json`, {
+  const collectionReq = myFetch(`${IIIF_URL}${slug}/collection.json`, {
     ...fetchOptions,
     ...fetchRetryOptions,
   });
@@ -48,7 +52,7 @@ export async function loadCollection(slug: string) {
 }
 
 export async function loadCollectionMeta(slug: string) {
-  const resp = await fetch(`${IIIF_URL}${slug}/meta.json`);
+  const resp = await myFetch(`${IIIF_URL}${slug}/meta.json`);
 
   if (resp.ok) {
     const json = await resp.json();
@@ -57,15 +61,17 @@ export async function loadCollectionMeta(slug: string) {
 }
 
 export async function loadMeta(name: string) {
-  return fetch(`${IIIF_URL}/meta/${name}`, fetchOptions).then((r) => r.json());
+  return myFetch(`${IIIF_URL}/meta/${name}`, fetchOptions).then((r) =>
+    r.json(),
+  );
 }
 
 export async function loadManifest(slug: string) {
-  const manifestReq = fetch(`${IIIF_URL}${slug}/manifest.json`, {
+  const manifestReq = myFetch(`${IIIF_URL}${slug}/manifest.json`, {
     ...fetchOptions,
     ...fetchRetryOptions,
   });
-  const metaReq = fetch(`${IIIF_URL}${slug}/meta.json`, {
+  const metaReq = myFetch(`${IIIF_URL}${slug}/meta.json`, {
     ...fetchOptions,
     ...fetchRetryOptions,
   });
@@ -79,7 +85,7 @@ export async function loadManifest(slug: string) {
 }
 
 export async function loadManifestMeta(slug: string) {
-  const resp = await fetch(`${IIIF_URL}${slug}/meta.json`, {
+  const resp = await myFetch(`${IIIF_URL}${slug}/meta.json`, {
     ...fetchOptions,
     ...fetchRetryOptions,
   });
