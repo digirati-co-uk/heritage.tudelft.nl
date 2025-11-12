@@ -197,12 +197,15 @@ export function SharingOptions({
                 height="1.3em"
               />
               <span>
-                {t("IIIF Content State")} ({t("copy to clipboard")})
+                {specifyCanvas
+                  ? t("IIIF Manifest with Content State")
+                  : t("IIIF Manifest")}{" "}
+                ({t("copy to clipboard")})
               </span>
             </div>
             <div className="border border-black">
               <div className="min-h-12 max-h-12 flex flex-wrap p-2 truncate [mask-image:linear-gradient(to_left,transparent,black_100%)]">
-                {stateSharingLink}
+                {`${manifestId}?iiifContent=${stateSharingLink}`}
               </div>
             </div>
           </CopyToClipboard>

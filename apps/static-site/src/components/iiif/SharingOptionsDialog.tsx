@@ -31,7 +31,7 @@ export function SharingOptionsDialog({
       onClose={() => setSharingOptionsOpen(false)}
     >
       <div className="fixed inset-0 bg-black/30 flex flex-row" />
-      <div className="w-[90vw] h-[90vh] xl:w-[80vw] md:h-[60vh] fixed inset-0 justify-self-center p-4">
+      <div className="w-[90vw] h-[50rem] max-h-[100vh] xl:w-[80vw] md:h-[34rem] fixed inset-0 justify-self-center p-4">
         <button
           aria-label={t("Close")}
           className="absolute right-8 top-8 z-20 flex h-8 w-8 items-center justify-center rounded  hover:bg-slate-100"
