@@ -5,8 +5,10 @@ import { Command } from "commander";
 import { buildCommand } from "./commands/build";
 import { generateCommand } from "./commands/generate.ts";
 import { initCommand } from "./commands/init.ts";
+import { searchIndexCommand } from "./commands/search-index.ts";
 import { serveCommand } from "./commands/serve.ts";
 import { validateCommand } from "./commands/validate.ts";
+import "dotenv/config";
 
 const program = new Command();
 
@@ -60,5 +62,15 @@ program
   .command("init")
   .description("Initialize config")
   .action(initCommand);
+
+program
+  //
+  .command("index")
+  .description("Manage search index")
+  .option("--typesense", "Index into Typesense index")
+  .option("--iiif-build-dir <path>", "Path to IIIF build directory")
+  .option("--frozen-lockfile", "Do not update lock file")
+  .option("--check-remote", "Check remote records hashes")
+  .action(searchIndexCommand);
 
 program.parse(argv);
