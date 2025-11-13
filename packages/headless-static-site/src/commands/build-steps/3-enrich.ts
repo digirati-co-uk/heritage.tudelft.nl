@@ -2,8 +2,8 @@ import { join } from "node:path";
 import PQueue from "p-queue";
 import { createCacheResource } from "../../util/cached-resource.ts";
 import { createResourceHandler } from "../../util/create-resource-handler.ts";
-import type { Enrichment } from "../../util/enrich.ts";
-import type { SearchIndexes, SearchRecordReturn } from "../../util/extract.ts";
+import type { CanvasSearchIndex, Enrichment } from "../../util/enrich.ts";
+import type { RemoteRecordLink, SearchIndexes, SearchRecordReturn } from "../../util/extract.ts";
 import { makeProgressBar } from "../../util/make-progress-bar.ts";
 import { mergeIndices } from "../../util/merge-indices.ts";
 import { createStoreRequestCache } from "../../util/store-request-cache.ts";
@@ -45,6 +45,7 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
       {
         ...index,
         records: [] as Array<Record<string, any>>,
+        remoteRecords: {} as Record<string, RemoteRecordLink[]>,
         keys: (index.schema.fields || []).map((field) => {
           if (field.name.includes(".")) {
             const parts = field.name.split(".");
@@ -56,10 +57,10 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
     ])
   );
 
-  const canvasSearchIndex: Record<string, Record<string, any[]>> = {};
+  const canvasSearchIndex: CanvasSearchIndex = {};
 
   function addToSearchIndex(search: Partial<SearchRecordReturn>, indices: Record<string, string[]>) {
-    const result: Array<{ index: string; record: any }> = [];
+    const result: Array<{ index: string; record?: any; remoteRecords?: RemoteRecordLink[] }> = [];
     if (search.indexes && search.record) {
       for (const index of search.indexes) {
         if (searchIndexes[index]) {
@@ -77,6 +78,9 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
                 record[`topic_${facet}`] = indices[facet];
               }
             }
+          }
+          if (search.remoteRecords?.[index]) {
+            result.push({ index, remoteRecords: search.remoteRecords?.[index] });
           }
           if (Object.keys(record).length) {
             searchIndexes[index].records.push(record);
@@ -365,10 +369,24 @@ ${errors.map((e, n) => `  ${n + 1}) ${(e as any)?.reason?.message}`).join(", ")}
           const record = await cachedCanvasResource.searchRecord.value;
           const searchIndexResult = addToSearchIndex(record, indices);
           for (const result of searchIndexResult) {
-            // Add to manifest
-            canvasSearchIndex[manifest.slug] = canvasSearchIndex[manifest.slug] || {};
-            canvasSearchIndex[manifest.slug][result.index] = canvasSearchIndex[manifest.slug][result.index] || [];
-            canvasSearchIndex[manifest.slug][result.index].push(result.record);
+            if (result.index) {
+              canvasSearchIndex[manifest.slug] = canvasSearchIndex[manifest.slug] || {};
+              canvasSearchIndex[manifest.slug][result.index] = canvasSearchIndex[manifest.slug][result.index] || {
+                records: [],
+                remoteRecords: [],
+              };
+              if (result.remoteRecords) {
+                for (const remote of result.remoteRecords) {
+                  if (!canvasSearchIndex[manifest.slug][result.index].remoteRecords.find((r) => r.url === remote.url)) {
+                    canvasSearchIndex[manifest.slug][result.index].remoteRecords.push(remote);
+                  }
+                }
+              }
+              if (result.record) {
+                // Add to manifest
+                canvasSearchIndex[manifest.slug][result.index].records.push(result.record);
+              }
+            }
           }
           recordIndices(indices);
           savingFiles.push(cachedCanvasResource.save());

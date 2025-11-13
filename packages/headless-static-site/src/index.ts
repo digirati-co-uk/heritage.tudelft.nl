@@ -26,6 +26,7 @@ program
   .option("--no-enrich", "Disable enrichment")
   .option("--no-client", "Disable client.js building")
   .option("--no-generate", "Disable IIIF generator")
+  .option("--remoteRecords", "Fetch remote records")
   .option("--html", "Include HTML in build")
   .option("--python", "Allow python scripts")
   .option("--topics", "Flush topic data to /topics folder")

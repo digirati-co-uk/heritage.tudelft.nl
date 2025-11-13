@@ -57,6 +57,7 @@ export type BuildOptions = {
   topics?: boolean;
   out?: string;
   ui?: boolean;
+  remoteRecords?: boolean;
 
   // Programmatic only
   onBuild?: () => void | Promise<void>;
@@ -177,6 +178,7 @@ export async function build(
       enrich: true,
       dev: false,
       emit: true,
+      remoteRecords: false,
       ...options,
     },
     {

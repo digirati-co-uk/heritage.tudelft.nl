@@ -4,12 +4,11 @@ import { Vault, createThumbnailHelper } from "@iiif/helpers";
 import type { Collection, Manifest } from "@iiif/presentation-3";
 import PQueue from "p-queue";
 import { getValue } from "../../extract/extract-label-string.ts";
+import type { CanvasSearchIndex, CanvasSearchIndexFile } from "../../util/enrich.ts";
 import { isEmpty } from "../../util/is-empty.ts";
 import { makeProgressBar } from "../../util/make-progress-bar.ts";
 import type { ActiveResourceJson } from "../../util/store.ts";
 import type { BuildConfig } from "../build.ts";
-import type { extract } from "./2-extract.ts";
-import type { enrich } from "./3-enrich.ts";
 
 export async function emit(
   {
@@ -22,7 +21,7 @@ export async function emit(
     idsToSlugs?: Record<string, { slug: string; type: string }>;
   },
   { options, server, cacheDir, buildDir, log, imageServiceLoader, files, search }: BuildConfig,
-  { canvasSearchIndex }: { canvasSearchIndex?: Record<string, Record<string, any[]>> }
+  { canvasSearchIndex }: { canvasSearchIndex?: CanvasSearchIndex }
 ) {
   if (!options.emit) {
     return {};
@@ -38,13 +37,7 @@ export async function emit(
   const queue = new PQueue();
   const canvasQueue = new PQueue({ autoStart: false });
 
-  const canvasSearchIndexFile: Record<
-    string,
-    Array<{
-      index: string;
-      path: string;
-    }>
-  > = {};
+  const canvasSearchIndexFile: CanvasSearchIndexFile = {};
 
   const siteMap: Record<
     string,
@@ -283,15 +276,35 @@ export async function emit(
             canvasSearchIndexFile[manifest.slug] = canvasSearchIndexFile[manifest.slug] || [];
             for (const searchIndex of searchIndexesToEmit) {
               const indexDetails = canvasSearchIndex[manifest.slug][searchIndex];
-              if (indexDetails.length) {
+              const { records, remoteRecords } = indexDetails;
+
+              if (remoteRecords.length) {
+                for (const remoteRecord of remoteRecords) {
+                  if (remoteRecord.url) {
+                    canvasSearchIndexFile[manifest.slug].push({
+                      index: searchIndex,
+                      type: "remote",
+                      canvasIndex: remoteRecord.canvasIndex,
+                      canvas: remoteRecord.canvas,
+                      format: remoteRecord.format,
+                      url: remoteRecord.url,
+                      recordId: remoteRecord.recordId,
+                    });
+                  }
+                }
+              }
+
+              if (records.length) {
                 const indexFile = `${searchIndex}.search.jsonl`;
                 canvasSearchIndexFile[manifest.slug].push({
                   index: searchIndex,
+                  type: "file",
+                  format: "record-jsonl",
                   path: join(manifest.slug, indexFile),
                 });
                 await files.writeFile(
                   join(manifestBuildDirectory, indexFile),
-                  indexDetails.map((item) => JSON.stringify(item)).join("\n")
+                  records.map((item) => JSON.stringify(item)).join("\n")
                 );
               }
             }
@@ -372,6 +385,7 @@ export async function emit(
   stats.total = Date.now() - start;
 
   // Emit the canvasSearchIndexFile
+  // @todo also emit meta/search/{index}.mapping.json
   await files.saveJson(join(buildDir, "meta", "canvas-search-index.json"), canvasSearchIndexFile);
 
   return {
