@@ -16,11 +16,6 @@ const meta: MetaRecord = {
   dev: {
     type: "page",
     title: "Developers",
-    items: {
-      hss: {
-        title: "Headless static site",
-      },
-    },
   },
   nextraStarter: {
     title: "Links",
