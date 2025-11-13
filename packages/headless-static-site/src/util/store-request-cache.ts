@@ -3,6 +3,7 @@ import nfs from "node:fs";
 import { join } from "node:path";
 import objectHash from "object-hash";
 import type { IFS } from "unionfs";
+import { RemoteRecordLink } from "./extract";
 
 export function createStoreRequestCache(storeKey: string, cacheDir: string, noCache = false, customFs?: IFS) {
   const fs = customFs?.promises || nfs.promises;

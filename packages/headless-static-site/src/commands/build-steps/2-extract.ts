@@ -1,11 +1,11 @@
 import { join } from "node:path";
 import PQueue from "p-queue";
 import { createCacheResource } from "../../util/cached-resource.ts";
+import { createResourceHandler } from "../../util/create-resource-handler.ts";
 import { makeProgressBar } from "../../util/make-progress-bar.ts";
 import { createStoreRequestCache } from "../../util/store-request-cache.ts";
 import type { ActiveResourceJson } from "../../util/store.ts";
 import type { BuildConfig } from "../build.ts";
-import { createResourceHandler } from "../../util/create-resource-handler.ts";
 
 export async function extract(
   {
@@ -189,6 +189,8 @@ export async function extract(
               storeConfig,
               config.stores[manifest.storeId].config?.[canvasExtraction.id] || {}
             );
+            const filesDir = join(cacheDir, manifest.slug, "files");
+            const manifestResourceFiles = createResourceHandler(filesDir, files);
             const resourceFiles = createResourceHandler(canvasCache.filesDir, files);
             const valid =
               !options.cache ||
@@ -197,6 +199,9 @@ export async function extract(
                 {
                   caches: canvasCache.caches,
                   resource: canvas,
+                  parentResource: manifest,
+                  parentResourceFiles: manifestResourceFiles,
+                  parent: resource,
                   build: buildConfig,
                   fileHandler: files,
                   resourceFiles,
@@ -212,6 +217,9 @@ export async function extract(
               canvasResource,
               {
                 resource: canvas,
+                parentResource: manifest,
+                parentResourceFiles: manifestResourceFiles,
+                parent: resource,
                 meta: canvasCache.meta,
                 indices: canvasCache.indices,
                 caches: canvasCache.caches,

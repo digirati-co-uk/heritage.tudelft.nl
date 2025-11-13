@@ -13,7 +13,7 @@ import type { Enrichment } from "../util/enrich";
 export const filesRewrite: Enrichment = {
   id: "enrich-files-rewrite",
   name: "Rewrite local paths to files",
-  types: ["Manifest"],
+  types: ["Manifest", "Canvas"],
   async invalidate(resource, api) {
     return true;
   },
@@ -23,7 +23,7 @@ export const filesRewrite: Enrichment = {
       if (!meta.files?.length) return {};
 
       const found = api.builder.vault.get(resource.id);
-      if (!found) {
+      if (!found?.id) {
         return {};
       }
 
@@ -59,7 +59,19 @@ export const filesRewrite: Enrichment = {
       const filesInManifest: string[] = [];
 
       for (const currentItem of toSearch) {
-        for (const property of ["thumbnail", "seeAlso", "service", "services", "rendering", "annotations"]) {
+        // @todo "service", "services", differently since they are not references.
+        for (const property of ["thumbnail", "seeAlso", "rendering", "annotations"]) {
+          if (currentItem[property]?.length) {
+            for (const item of currentItem[property]) {
+              const id = item.id || item["@id"];
+              if (!id) continue;
+
+              // @todo manually edit the field, not changing ID.
+            }
+          }
+        }
+
+        for (const property of ["thumbnail", "seeAlso", "rendering", "annotations"]) {
           if (currentItem[property]?.length) {
             for (const item of currentItem[property]) {
               const validFile = validFiles[toRef(item)!.id];
@@ -86,7 +98,14 @@ export const filesRewrite: Enrichment = {
 
       // Here we can handle the fileDetails.
       const details = meta.filesDetail || ({} as Record<string, Record<string, any>>);
-      for (const file of meta.files) {
+      const filesForResource = meta.files.filter((file: string) => {
+        if (resource.type === "Canvas") {
+          return true;
+        }
+
+        return !file.startsWith("canvases/");
+      });
+      for (const file of filesForResource) {
         const detail = details[file];
         if (!detail) continue;
 

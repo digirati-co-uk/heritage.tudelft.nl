@@ -2,8 +2,8 @@ import { join } from "node:path";
 import PQueue from "p-queue";
 import { createCacheResource } from "../../util/cached-resource.ts";
 import { createResourceHandler } from "../../util/create-resource-handler.ts";
-import type { Enrichment } from "../../util/enrich.ts";
-import type { SearchIndexes, SearchRecordReturn } from "../../util/extract.ts";
+import type { CanvasSearchIndex, Enrichment } from "../../util/enrich.ts";
+import type { RemoteRecordLink, SearchIndexes, SearchRecordReturn } from "../../util/extract.ts";
 import { makeProgressBar } from "../../util/make-progress-bar.ts";
 import { mergeIndices } from "../../util/merge-indices.ts";
 import { createStoreRequestCache } from "../../util/store-request-cache.ts";
@@ -45,11 +45,22 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
       {
         ...index,
         records: [] as Array<Record<string, any>>,
-        keys: (index.schema.fields || []).map((field) => field.name),
+        remoteRecords: {} as Record<string, RemoteRecordLink[]>,
+        keys: (index.schema.fields || []).map((field) => {
+          if (field.name.includes(".")) {
+            const parts = field.name.split(".");
+            return parts[0]; // object keys.
+          }
+          return field.name;
+        }),
       },
     ])
   );
+
+  const canvasSearchIndex: CanvasSearchIndex = {};
+
   function addToSearchIndex(search: Partial<SearchRecordReturn>, indices: Record<string, string[]>) {
+    const result: Array<{ index: string; record?: any; remoteRecords?: RemoteRecordLink[] }> = [];
     if (search.indexes && search.record) {
       for (const index of search.indexes) {
         if (searchIndexes[index]) {
@@ -68,10 +79,18 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
               }
             }
           }
-          searchIndexes[index].records.push(record);
+          if (search.remoteRecords?.[index]) {
+            result.push({ index, remoteRecords: search.remoteRecords?.[index] });
+          }
+          if (Object.keys(record).length) {
+            searchIndexes[index].records.push(record);
+            result.push({ index, record });
+          }
         }
       }
     }
+
+    return result;
   }
 
   // All indcies found.
@@ -184,27 +203,31 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
         return;
       }
 
-      const result = await enrichment.handler(
-        manifest,
-        {
-          meta: cachedResource.meta,
-          indices: cachedResource.indices,
-          caches: cachedResource.caches,
-          searchRecord: cachedResource.searchRecord,
-          config,
-          builder,
-          resource,
-          files: filesDir,
-          requestCache,
-          fileHandler: files,
-          resourceFiles,
-        },
-        enrichmentConfig
-      );
+      try {
+        const result = await enrichment.handler(
+          manifest,
+          {
+            meta: cachedResource.meta,
+            indices: cachedResource.indices,
+            caches: cachedResource.caches,
+            searchRecord: cachedResource.searchRecord,
+            config,
+            builder,
+            resource,
+            files: filesDir,
+            requestCache,
+            fileHandler: files,
+            resourceFiles,
+          },
+          enrichmentConfig
+        );
 
-      cachedResource.handleResponse(result, enrichment);
+        cachedResource.handleResponse(result, enrichment);
 
-      stats.run[enrichment.id] = (stats.run[enrichment.id] || 0) + (Date.now() - startTime);
+        stats.run[enrichment.id] = (stats.run[enrichment.id] || 0) + (Date.now() - startTime);
+      } catch (err: any) {
+        console.log("[skipped]", enrichment.id, "\nmanifest:", manifest?.id);
+      }
     };
 
     const processedEnrichments = [];
@@ -343,7 +366,28 @@ ${errors.map((e, n) => `  ${n + 1}) ${(e as any)?.reason?.message}`).join(", ")}
           }
 
           const indices = await cachedResource.indices.value;
-          addToSearchIndex(await cachedCanvasResource.searchRecord.value, indices);
+          const record = await cachedCanvasResource.searchRecord.value;
+          const searchIndexResult = addToSearchIndex(record, indices);
+          for (const result of searchIndexResult) {
+            if (result.index) {
+              canvasSearchIndex[manifest.slug] = canvasSearchIndex[manifest.slug] || {};
+              canvasSearchIndex[manifest.slug][result.index] = canvasSearchIndex[manifest.slug][result.index] || {
+                records: [],
+                remoteRecords: [],
+              };
+              if (result.remoteRecords) {
+                for (const remote of result.remoteRecords) {
+                  if (!canvasSearchIndex[manifest.slug][result.index].remoteRecords.find((r) => r.url === remote.url)) {
+                    canvasSearchIndex[manifest.slug][result.index].remoteRecords.push(remote);
+                  }
+                }
+              }
+              if (result.record) {
+                // Add to manifest
+                canvasSearchIndex[manifest.slug][result.index].records.push(result.record);
+              }
+            }
+          }
           recordIndices(indices);
           savingFiles.push(cachedCanvasResource.save());
 
@@ -398,6 +442,7 @@ ${errors.map((e, n) => `  ${n + 1}) ${(e as any)?.reason?.message}`).join(", ")}
   return {
     stats,
     searchIndexes,
+    canvasSearchIndex,
     allIndices,
   };
 }

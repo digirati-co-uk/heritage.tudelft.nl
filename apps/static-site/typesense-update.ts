@@ -30,7 +30,7 @@ const client = new Typesense.Client(typesenseServerConfig);
 const recreateIndex = argv.includes("--recreate-index");
 const allowErrors = argv.includes("--allow-errors");
 
-const IIIF_DIRECTORY = resolve(cwd(), "../iiif/build");
+const IIIF_DIRECTORY = resolve(cwd(), "../iiif/.iiif/build");
 
 async function readJsonFile(path: string) {
   return JSON.parse(await readFile(path, "utf-8"));
