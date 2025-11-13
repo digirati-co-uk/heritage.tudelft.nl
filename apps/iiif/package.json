@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build": "iiif-hss build --scripts ./scripts",
-    "search:index": "iiif-hss index --typesense --iiif-build-dir=./.iiif/build",
+    "search:index": "iiif-hss index --iiif-build-dir=./.iiif/build",
     "dev": "IIIF_URL=http://localhost:7111 bun exec iiif-hss-dev"
   },
   "dependencies": {

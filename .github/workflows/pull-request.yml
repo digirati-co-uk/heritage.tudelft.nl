@@ -150,13 +150,26 @@ jobs:
         if: (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy-preview'))
         working-directory: apps/static-site
         run: |
-          pnpm search:all --recreate-manifests
+          pnpm search:manifests --recreate-manifests
         env:
           TYPESENSE_API_KEY: ${{ secrets.TYPESENSE_ADMIN_API_KEY }}
           TYPESENSE_HOST: 63flhve71t2un5xgp.a1.typesense.net
           TYPESENSE_PORT: 443
           TYPESENSE_PROTOCOL: https
           TYPESENSE_COLLECTION_NAME: preview-manifests
+
+      - name: Build IIIF Search (Partial canvases)
+        if: (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy-preview'))
+        working-directory: apps/iiif
+        run: |
+          pnpm search:index --typesense --frozen-lockfile
+        env:
+          TYPESENSE_API_KEY: ${{ secrets.TYPESENSE_ADMIN_API_KEY }}
+          TYPESENSE_HOST: 63flhve71t2un5xgp.a1.typesense.net
+          TYPESENSE_PORT: 443
+          TYPESENSE_PROTOCOL: https
+          TYPESENSE_COLLECTION_NAME: preview-manifests
+          SEARCH_INDEX_MAPPING: "manifests:preview-manifests,canvases:preview-canvases"
 
       - name: Find Comment
         uses: peter-evans/find-comment@v3
