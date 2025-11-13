@@ -1,4 +1,3 @@
-import { getValue } from "@iiif/helpers";
 import { extract } from "iiif-hss";
 
 extract(
@@ -9,6 +8,7 @@ extract(
     invalidate: async (_, api) => true,
     search: {
       canvases: {
+        emitCombined: false,
         allIndices: false,
         schema: {
           enable_nested_fields: true,
@@ -32,7 +32,7 @@ extract(
           ],
         },
       },
-    },
+    }, // delft/test-ocr/839007461-alto/Het Huis Bouwkunde_0142_alto.xml
   },
   async (resource, api, config) => {
     if (!(await api.resourceFiles.exists("ocr.json"))) {
@@ -41,12 +41,16 @@ extract(
     if (!api.parentResource || !api.parent) return {};
 
     const items = api.parent.items || [];
-    const foundIndex = items.findIndex((item) => item.id === api.resource.id);
+    const foundIndex = items.findIndex(
+      (item: any) => item.id === api.resource.id,
+    );
 
     const ocr = await api.resourceFiles.loadJson("ocr.json");
     const canvasHashId = resource.slug.replace("manifests/", "");
     const manifestHashId = api.parentResource.slug.replace("manifests/", "");
 
+    // Everything in this section is to correct the OCR based on the height/width difference. Can be skipped
+    // if the data is good.
     const width = api.resource.width;
     const height = api.resource.height;
     const imageWidth = ocr.imageWidth || 1;
@@ -69,9 +73,6 @@ extract(
         }),
       };
     });
-
-    // const search = await api.resourceFiles.loadJson("search-export.json");
-    // if (!search) return {};
 
     return {
       search: {
