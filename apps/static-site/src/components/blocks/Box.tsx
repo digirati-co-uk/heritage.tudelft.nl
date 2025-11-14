@@ -1,6 +1,6 @@
 import { block } from "@page-blocks/react";
 import { z } from "zod";
-import { Link } from "@/navigation";
+import { Link } from "@/i18n/navigation";
 import {
   boxCollectionSource,
   boxExhibitionSource,
@@ -43,8 +43,16 @@ export function Box(props: z.infer<typeof boxProps>) {
   const fullHeight = props.fullHeight ? "h-full" : "aspect-square";
 
   return (
-    <div className={twMerge(`cut-corners group relative flex`, props.className, fullHeight)}>
-      <div className={`z-1 absolute inset-0 overflow-hidden ${fallbackBackground}`}>
+    <div
+      className={twMerge(
+        `cut-corners group relative flex`,
+        props.className,
+        fullHeight,
+      )}
+    >
+      <div
+        className={`z-1 absolute inset-0 overflow-hidden ${fallbackBackground}`}
+      >
         {props.backgroundImage ? (
           <img
             alt=""
@@ -53,7 +61,9 @@ export function Box(props: z.infer<typeof boxProps>) {
           />
         ) : null}
         {props.backgroundColor ? (
-          <div className={`absolute inset-0 mix-blend-multiply ${props.backgroundColor} pointer-events-none`}></div>
+          <div
+            className={`absolute inset-0 mix-blend-multiply ${props.backgroundColor} pointer-events-none`}
+          ></div>
         ) : null}
       </div>
       <Link
@@ -62,8 +72,12 @@ export function Box(props: z.infer<typeof boxProps>) {
           props.dark ? "text-black" : "text-white"
         }  flex h-full w-full flex-col justify-between gap-3 no-underline`}
       >
-        <div className="text-md text-center font-mono uppercase">{props.type}</div>
-        <div className={`mx-auto text-center ${titleSize} font-medium`}>{props.title}</div>
+        <div className="text-md text-center font-mono uppercase">
+          {props.type}
+        </div>
+        <div className={`mx-auto text-center ${titleSize} font-medium`}>
+          {props.title}
+        </div>
         <div className="text-center">{props.subtitle || " "}</div>
       </Link>
     </div>
@@ -91,7 +105,7 @@ export const PublicationBox = block(
       },
     ],
   },
-  Box.bind(null)
+  Box.bind(null),
 );
 
 export const CollectionBox = block(
@@ -115,7 +129,7 @@ export const CollectionBox = block(
       },
     ],
   },
-  Box.bind(null)
+  Box.bind(null),
 );
 
 export const ManifestBox = block(
@@ -139,7 +153,7 @@ export const ManifestBox = block(
       },
     ],
   },
-  Box.bind(null)
+  Box.bind(null),
 );
 
 export const ExhibitionBox = block(
@@ -163,5 +177,5 @@ export const ExhibitionBox = block(
       },
     ],
   },
-  Box.bind(null)
+  Box.bind(null),
 );

@@ -1,5 +1,5 @@
-import { Link } from "@/navigation";
-import { InternationalString } from "@iiif/presentation-3";
+import { Link } from "@/i18n/navigation";
+import type { InternationalString } from "@iiif/presentation-3";
 
 export function SearchHit({
   hit,

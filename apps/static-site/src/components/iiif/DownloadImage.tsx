@@ -1,12 +1,32 @@
 "use client";
-import { CanvasContext, useCanvas, useRenderingStrategy, useSimpleViewer } from "react-iiif-vault";
+import type { ContentResource, Reference } from "@iiif/presentation-3";
+import { type SVGProps, useMemo } from "react";
+import {
+  CanvasContext,
+  LocaleString,
+  useCanvas,
+  useManifest,
+  useRenderingStrategy,
+  useSimpleViewer,
+  useVault,
+} from "react-iiif-vault";
 import { AutoLanguage } from "../pages/AutoLanguage";
-import { SVGProps } from "react";
 
 export function DownloadImage({ content }: { content: { downloadImage: string; download: string } }) {
   const { currentSequenceIndex, sequence, items } = useSimpleViewer();
-
-  const canvases = (sequence[currentSequenceIndex] || []).map((t) => items[t] as any);
+  const manifest = useManifest();
+  const vault = useVault();
+  const canvases = useMemo(
+    () => (sequence[currentSequenceIndex] || []).map((t) => items[t] as any),
+    [sequence, items, currentSequenceIndex],
+  );
+  const seeAlso = useMemo(() => {
+    return vault.get<ContentResource>([
+      //
+      ...(manifest?.seeAlso || []),
+      ...canvases.flatMap((canvas) => canvas.seeAlso || []),
+    ]) as ContentResource[];
+  }, [manifest, canvases, vault]);
 
   return (
     <div className="overflow-hidden font-mono">
@@ -19,6 +39,13 @@ export function DownloadImage({ content }: { content: { downloadImage: string; d
             </CanvasContext>
           );
         })}
+        {seeAlso.length ? (
+          <ul className="text-md list-none underline-offset-4">
+            {seeAlso.map((resource) => (
+              <DownloadSeeAlso key={resource.id} resource={resource} />
+            ))}
+          </ul>
+        ) : null}
       </div>
     </div>
   );
@@ -43,6 +70,18 @@ export function DownloadIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+export function DataIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}>
+      {/* Icon from Google Material Icons by Material Design Authors - https://github.com/material-icons/material-icons/blob/master/LICENSE */}
+      <path
+        fill="currentColor"
+        d="M4 7v2c0 .55-.45 1-1 1H2v4h1c.55 0 1 .45 1 1v2c0 1.65 1.35 3 3 3h3v-2H7c-.55 0-1-.45-1-1v-2c0-1.3-.84-2.42-2-2.83v-.34C5.16 11.42 6 10.3 6 9V7c0-.55.45-1 1-1h3V4H7C5.35 4 4 5.35 4 7m17 3c-.55 0-1-.45-1-1V7c0-1.65-1.35-3-3-3h-3v2h3c.55 0 1 .45 1 1v2c0 1.3.84 2.42 2 2.83v.34c-1.16.41-2 1.52-2 2.83v2c0 .55-.45 1-1 1h-3v2h3c1.65 0 3-1.35 3-3v-2c0-.55.45-1 1-1h1v-4z"
+      />
+    </svg>
+  );
+}
+
 function calculateDimensions(fullWidth: number, fullHeight: number, maxArea: number) {
   const aspectRatio = fullWidth / fullHeight;
   const maxHeight = Math.sqrt(maxArea / aspectRatio);
@@ -54,12 +93,27 @@ function calculateDimensions(fullWidth: number, fullHeight: number, maxArea: num
   };
 }
 
+function DownloadSeeAlso({ resource }: { resource: ContentResource }) {
+  if (resource.type === "Dataset") {
+    return (
+      <li className="flex items-center gap-2">
+        <DataIcon className="text-2xl text-slate-300 opacity-50" />
+        <a className="underline" href={resource.id}>
+          <LocaleString>{(resource as any).label || "Dataset"}</LocaleString>
+        </a>
+      </li>
+    );
+  }
+
+  return null;
+}
+
 function DownloadImageInner({ single, content }: { single?: boolean; content: { downloadImage: string } }) {
   const canvas = useCanvas();
   const [strategy] = useRenderingStrategy();
 
   if (strategy.type === "images") {
-    let { width, height } = strategy.image;
+    const { width, height } = strategy.image;
     const service = strategy.image.service;
     const maxArea = service?.maxArea;
     // DLCS returns full image in spite of maxArea property

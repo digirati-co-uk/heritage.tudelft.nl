@@ -26,9 +26,7 @@ app.use(async (c, next) => {
     function set(key: string, value: string) {
       c.res.headers.set(key, value);
     }
-    const didRequestPrivateNetwork = c.req.header(
-      "access-control-request-private-network",
-    );
+    const didRequestPrivateNetwork = c.req.header("access-control-request-private-network");
     if (didRequestPrivateNetwork) {
       set("Access-Control-Allow-Private-Network", "true");
     }
@@ -40,13 +38,9 @@ app.use(
   cors({
     origin: "*",
     allowMethods: ["GET", "POST"],
-    exposeHeaders: [
-      "Content-Type",
-      "X-IIIF-Post-Url",
-      "Access-Control-Allow-Private-Network",
-    ],
+    exposeHeaders: ["Content-Type", "X-IIIF-Post-Url", "Access-Control-Allow-Private-Network"],
     allowHeaders: ["Content-Type", "Access-Control-Request-Private-Network"],
-  }),
+  })
 );
 
 const emitter = mitt<{
@@ -96,9 +90,7 @@ app.get("/config", async (ctx) => {
   const config = await getConfig();
   return ctx.json({
     isWatching: isWatching,
-    pendingFiles: Array.from(fileHandler.openJsonChanged.keys()).filter(
-      Boolean,
-    ),
+    pendingFiles: Array.from(fileHandler.openJsonChanged.keys()).filter(Boolean),
     ...config,
   });
 });
@@ -170,9 +162,7 @@ app.get("/unwatch", async (ctx) => {
 });
 
 app.get("/build/save", async (ctx) => {
-  const total = Array.from(fileHandler.openJsonChanged.keys()).filter(
-    Boolean,
-  ).length;
+  const total = Array.from(fileHandler.openJsonChanged.keys()).filter(Boolean).length;
   if (total) {
     await fileHandler.saveAll();
   }
@@ -197,19 +187,18 @@ app.get(
       debug: z.string().optional(),
       enrich: z.string().optional(),
       extract: z.string().optional(),
-    }),
+    })
   ),
   async (ctx) => {
-    const { buildConfig, emitted, enrichments, extractions, parsed, stores } =
-      await cachedBuild({
-        cache: ctx.req.query("cache") !== "false",
-        generate: ctx.req.query("generate") !== "false",
-        exact: ctx.req.query("exact"),
-        emit: ctx.req.query("emit") !== "false",
-        debug: ctx.req.query("debug") === "true",
-        enrich: ctx.req.query("enrich") !== "false",
-        extract: ctx.req.query("extract") !== "false",
-      });
+    const { buildConfig, emitted, enrichments, extractions, parsed, stores } = await cachedBuild({
+      cache: ctx.req.query("cache") !== "false",
+      generate: ctx.req.query("generate") !== "false",
+      exact: ctx.req.query("exact"),
+      emit: ctx.req.query("emit") !== "false",
+      debug: ctx.req.query("debug") === "true",
+      enrich: ctx.req.query("enrich") !== "false",
+      extract: ctx.req.query("extract") !== "false",
+    });
 
     const { files, log, fileTypeCache, ...config } = buildConfig;
 
@@ -228,7 +217,7 @@ app.get(
     emitter.emit("full-rebuild", report);
 
     return ctx.json(report);
-  },
+  }
 );
 
 app.post(
@@ -245,7 +234,7 @@ app.post(
       debug: z.string().optional(),
       enrich: z.string().optional(),
       extract: z.string().optional(),
-    }),
+    })
   ),
   async (ctx) => {
     const body = await ctx.req.json();
@@ -254,8 +243,7 @@ app.post(
       state.shouldRebuild = false;
     }
 
-    const { buildConfig, emitted, enrichments, extractions, parsed, stores } =
-      await cachedBuild(body);
+    const { buildConfig, emitted, enrichments, extractions, parsed, stores } = await cachedBuild(body);
 
     const report = {
       emitted: {
@@ -272,7 +260,7 @@ app.post(
     emitter.emit("full-rebuild", report);
 
     return ctx.json(report);
-  },
+  }
 );
 
 app.get("/*", async (ctx, next) => {
@@ -342,9 +330,10 @@ app.post("/*", async (ctx) => {
 });
 
 // @ts-ignore
-if (import.meta.main) {
-  await app.request("/build?cache=true&emit=true");
-}
+// if (import.meta.main) {
+//   console.log("BUILD CACHE?");
+//   await app.request("/build?cache=true&emit=true");
+// }
 
 export default {
   request: app.request,

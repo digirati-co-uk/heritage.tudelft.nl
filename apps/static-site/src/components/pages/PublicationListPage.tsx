@@ -1,6 +1,12 @@
-import { Publication } from "contentlayer/generated";
-import { getTranslations } from "next-intl/server";
+import { existsSync } from "node:fs";
+import { writeFile } from "node:fs/promises";
+import { join } from "node:path";
+import { cwd } from "node:process";
+import type { Publication } from "contentlayer/generated";
+import { slug } from "github-slugger";
+import { revalidatePath } from "next/cache";
 import { Box } from "../blocks/Box";
+import { NewArticle } from "../blocks/NewArticle";
 
 export interface PublicationListPageProps {
   publications: Publication[];
@@ -23,7 +29,7 @@ export async function PublicationListPage(props: PublicationListPageProps) {
       state[next.id]![next.lang] = next;
       return state;
     },
-    {} as Record<string, Record<string, Publication>>
+    {} as Record<string, Record<string, Publication>>,
   );
 
   // Remove duplicates
@@ -39,8 +45,30 @@ export async function PublicationListPage(props: PublicationListPageProps) {
   return (
     <>
       <div className="mb-8 grid-cols-1 md:grid md:grid-cols-3">
+        {process.env.NODE_ENV === "development" && (
+          <NewArticle
+            onCreate={async (data) => {
+              "use server";
+
+              const titleSlug = slug(data.title);
+              const filePath = join(cwd(), "content/publications", props.locale, `${titleSlug}.mdx`);
+              if (existsSync(filePath)) {
+                return titleSlug;
+              }
+              let markdown = "---\n";
+              markdown += `date: ${new Date().toISOString().split("T")[0]}\n`;
+              markdown += `title: ${data.title}\n`;
+              markdown += "---\n";
+              markdown += `# ${data.title}`;
+
+              await writeFile(filePath, markdown);
+              revalidatePath("/[locale]/publications");
+              return titleSlug;
+            }}
+          />
+        )}
         {publications.map((_publication) => {
-          const publication = (articleMap[_publication.id] || {})[props.locale] || _publication;
+          const publication = articleMap[_publication.id]?.[props.locale] || _publication;
           return (
             <div key={publication._id}>
               <Box

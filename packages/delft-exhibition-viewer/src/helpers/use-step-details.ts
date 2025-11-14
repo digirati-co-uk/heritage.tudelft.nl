@@ -12,6 +12,7 @@ export function useStepDetails(
   const isLeft = behavior.includes("left");
   const isRight = behavior.includes("right");
   const isBottom = behavior.includes("bottom");
+  const isTop = behavior.includes("top");
 
   const isActive = step?.canvasId === canvas.id;
   const region = step?.region;
@@ -19,7 +20,7 @@ export function useStepDetails(
     ? step?.body.filter((t) => t.type === "TextualBody")
     : [];
   const showSummary =
-    Boolean(canvas.summary && (isLeft || isRight || isBottom)) ||
+    Boolean(canvas.summary && (isLeft || isRight || isBottom || isTop)) ||
     (isActive && region && step.label) ||
     (region && textualBodies.length > 0);
 
@@ -40,5 +41,9 @@ export function useStepDetails(
     showSummary,
     showBody,
     toShow,
+    isLeft,
+    isRight,
+    isBottom,
+    isTop,
   };
 }

@@ -20,6 +20,12 @@ export interface IIIFRC {
     collections?: Record<string, Partial<Collection>>;
     topics?: Record<string, Partial<Collection>>;
   };
+  search?: {
+    indexNames?: string[];
+    defaultIndex?: string;
+    emitRecord?: boolean;
+  };
+  fileTemplates?: Record<string, any>;
 }
 
 export interface GenericStore {
