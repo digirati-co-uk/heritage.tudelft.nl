@@ -2,30 +2,28 @@
   "name": "exhibition-viewer",
   "type": "module",
   "version": "1.0.10",
-  "main": "dist/index.cjs",
-  "module": "dist/index.js",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "bugs": "https://github.com/digirati-co-uk/heritage.tudelft.nl/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/digirati-co-uk/heritage.tudelft.nl.git",
+    "directory": "packages/delft-exhibition-viewer"
+  },
   "exports": {
     ".": {
-      "require": {
-        "types": "./dist/index.d.cts",
-        "default": "./dist/index.cjs"
-      },
-      "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
-      }
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     },
     "./lib": {
-      "require": {
-        "types": "./dist/lib.d.cts",
-        "default": "./dist/lib.cjs"
-      },
-      "import": {
-        "types": "./dist/lib.d.ts",
-        "default": "./dist/lib.js"
-      }
+      "import": "./dist/lib.js",
+      "require": "./dist/lib.cjs"
     },
-    "./dist/index.css": "./dist/index.css",
+    "./library": {
+      "import": "./dist/library.js",
+      "require": "./dist/library.cjs"
+    },
+    "./package.json": "./package.json",
     "./dist/lib.css": "./dist/lib.css"
   },
   "scripts": {
@@ -73,5 +71,6 @@
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
-  }
+  },
+  "types": "./dist/index.d.cts"
 }
