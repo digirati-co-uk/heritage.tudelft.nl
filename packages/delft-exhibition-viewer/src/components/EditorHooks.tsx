@@ -31,5 +31,5 @@ export function Hookable<Type extends keyof EditorHooks, Hook = FuncArc<EditorHo
   ...props
 }: { type: keyof EditorHooks; children: React.ReactNode } & Exclude<Hook, "original">) {
   const hooks = useContext(EditorHooksContext);
-  return hooks[type] ? hooks[type]({ ...props, original: children } as any) : null;
+  return hooks[type] ? hooks[type]({ ...props, original: children } as any) : children;
 }
