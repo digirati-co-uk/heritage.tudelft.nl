@@ -1,17 +1,12 @@
+import type { ImageBlockProps } from "@/components/exhibition/ImageBlock";
+import { CanvasPresentationBlock } from "@/components/presentation/CanvasPresentationBlock";
+import { BaseSlide, type BaseSlideProps } from "@/components/shared/BaseSlide";
 import { Suspense } from "react";
-import {
-  CanvasContext,
-  LocaleString,
-  useAnnotation,
-  useIIIFLanguage,
-} from "react-iiif-vault";
+import { CanvasContext, LocaleString, useAnnotation, useIIIFLanguage } from "react-iiif-vault";
 import { twMerge } from "tailwind-merge";
 import { getFloatingFromBehaviours } from "../../helpers/exhibition";
 import { useExhibitionStep } from "../../helpers/exhibition-store";
 import { useStepDetails } from "../../helpers/use-step-details";
-import { BaseSlide, type BaseSlideProps } from "@/components/shared/BaseSlide";
-import { CanvasPresentationBlock } from "@/components/presentation/CanvasPresentationBlock";
-import type { ImageBlockProps } from "@/components/exhibition/ImageBlock";
 
 interface ImageBlockPresentationProps extends ImageBlockProps, BaseSlideProps {
   isFloating?: boolean;
@@ -26,18 +21,12 @@ export function ImageBlockPresentation({
   ...props
 }: ImageBlockPresentationProps) {
   const step = useExhibitionStep();
+  const active = step?.canvasId === canvas.id;
   const behavior = canvas.behavior || [];
-  const {
-    isLeft,
-    isBottom,
-    isTop,
-    isActive,
-    showSummary,
-    label,
-    summary,
-    showBody,
-    toShow,
-  } = useStepDetails(canvas, step);
+  const { isLeft, isBottom, isTop, isActive, showSummary, label, summary, showBody, toShow } = useStepDetails(
+    canvas,
+    step,
+  );
 
   const { isFloating, floatingLeft, floatingTop } = getFloatingFromBehaviours({
     behavior,
@@ -60,11 +49,7 @@ export function ImageBlockPresentation({
   );
 
   return (
-    <BaseSlide
-      className={"mb-8 bg-InfoBlock"}
-      index={props.index}
-      active={props.active}
-    >
+    <BaseSlide className={"mb-8 bg-InfoBlock"} index={props.index} active={active}>
       <div
         className={twMerge(
           "h-full md:flex",
@@ -94,47 +79,24 @@ export function ImageBlockPresentation({
             isFloating && (floatingLeft ? "left-2" : "right-2"),
           )}
         >
-          <div
-            className={twMerge(
-              "mb-4",
-              isLeft && "place-self-end md:rotate-180",
-              isFloating && "hidden",
-            )}
-          >
+          <div className={twMerge("mb-4", isLeft && "place-self-end md:rotate-180", isFloating && "hidden")}>
             <svg
-              className={twMerge(
-                isBottom
-                  ? "rotate-90"
-                  : isTop
-                    ? "-rotate-90"
-                    : "rotate-90 md:rotate-0",
-              )}
+              className={twMerge(isBottom ? "rotate-90" : isTop ? "-rotate-90" : "rotate-90 md:rotate-0")}
               xmlns="http://www.w3.org/2000/svg"
               width="24"
               height="24"
               viewBox="0 0 24 24"
             >
               <title>Arrow</title>
-              <path
-                d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
-                fill="currentColor"
-              />
+              <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="currentColor" />
             </svg>
           </div>
           <div className="text-m mb-4 font-mono delft-title">
             <LocaleString>{label}</LocaleString>
           </div>
-          <div
-            className={twMerge(
-              "exhibition-info-block overflow-y-auto",
-              isActive ? "opacity-100" : "opacity-0",
-            )}
-          >
+          <div className={twMerge("exhibition-info-block overflow-y-auto", isActive ? "opacity-100" : "opacity-0")}>
             <div>
-              <LocaleString
-                enableDangerouslySetInnerHTML
-                className="whitespace-pre-wrap"
-              >
+              <LocaleString enableDangerouslySetInnerHTML className="whitespace-pre-wrap">
                 {summary}
               </LocaleString>
             </div>
@@ -143,9 +105,7 @@ export function ImageBlockPresentation({
                   if (body.type === "TextualBody") {
                     return (
                       <div className="prose-sm exhibition-html" key={n}>
-                        <LocaleString enableDangerouslySetInnerHTML>
-                          {body.value}
-                        </LocaleString>
+                        <LocaleString enableDangerouslySetInnerHTML>{body.value}</LocaleString>
                       </div>
                     );
                   }

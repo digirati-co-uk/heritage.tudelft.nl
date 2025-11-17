@@ -66,6 +66,10 @@ export function ExhibitionProvider({
   return <ExhibitionContext.Provider value={store}>{children}</ExhibitionContext.Provider>;
 }
 
+export function useExhibitionStepCanvas() {
+  return useExhibitionStep()?.canvasId;
+}
+
 export function useExhibition() {
   const store = useContext(ExhibitionContext);
   invariant(store, "useExhibition must be used within a ExhibitionProvider");

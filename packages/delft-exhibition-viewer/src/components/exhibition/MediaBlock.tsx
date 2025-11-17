@@ -52,8 +52,8 @@ export function MediaBlock(props: MediaBlockProps) {
         alt={getValue(label) || "An image of the canvas"}
       />
       <Dialog className="relative z-50" open={isOpen} onClose={() => setIsOpen(false)}>
-        <div className="fixed inset-0 bg-BackgroundOverlay" aria-hidden="true" />
-        <div className="mobile-height fixed inset-0 flex w-screen items-center p-4">
+        <div className="fixed modal-top left-0 right-0 bottom-0 bg-BackgroundOverlay" aria-hidden="true" />
+        <div className="mobile-height fixed modal-top left-0 right-0 bottom-0 flex w-screen items-center p-4">
           <button
             className="absolute right-6 top-6 z-20 flex h-16 w-16 items-center justify-center rounded bg-ControlBar hover:bg-ControlHover"
             {...closePressProps}

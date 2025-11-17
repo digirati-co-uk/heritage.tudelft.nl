@@ -1,33 +1,26 @@
-import { Suspense } from "react";
-import {
-  LocaleString,
-  type SingleYouTubeVideo,
-  useThumbnail,
-} from "react-iiif-vault";
-import { BaseSlide, type BaseSlideProps } from "@/components/shared/BaseSlide";
-import IIIFMediaPlayer from "../shared/IIIFMediaPlayer";
 import type { MediaBlockProps } from "@/components/exhibition/MediaBlock";
+import { BaseSlide, type BaseSlideProps } from "@/components/shared/BaseSlide";
+import { useExhibitionStep } from "@/helpers/exhibition-store";
+import { Suspense } from "react";
+import { LocaleString, type SingleYouTubeVideo, useThumbnail } from "react-iiif-vault";
+import IIIFMediaPlayer from "../shared/IIIFMediaPlayer";
 
 function getWindowHost() {
   return typeof window !== "undefined" ? window.location.host : "";
 }
 
-export function MediaBlockPresentation(
-  props: BaseSlideProps & MediaBlockProps,
-) {
+export function MediaBlockPresentation(props: BaseSlideProps & MediaBlockProps) {
   const media = props.strategy.media as SingleYouTubeVideo;
   const annotation = media.annotation;
   const thumbnail = useThumbnail({ width: 1024, height: 1024 });
+  const step = useExhibitionStep();
+  const active = step?.canvasId === props.canvas.id;
 
   const label = annotation.label || props.canvas.label;
   const summary = annotation.summary || props.canvas.summary;
 
   return (
-    <BaseSlide
-      className={"flex flex-col items-center bg-black px-8 pb-8"}
-      index={props.index}
-      active={props.active}
-    >
+    <BaseSlide className={"flex flex-col items-center bg-black px-8 pb-8"} index={props.index} active={active}>
       <div className="h-full w-full flex-1 relative">
         {media.type === "VideoYouTube" ? (
           <iframe

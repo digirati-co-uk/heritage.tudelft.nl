@@ -2,30 +2,32 @@
   "name": "exhibition-viewer",
   "type": "module",
   "version": "1.0.10",
-  "main": "dist/index.cjs",
-  "module": "dist/index.js",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "bugs": "https://github.com/digirati-co-uk/heritage.tudelft.nl/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/digirati-co-uk/heritage.tudelft.nl.git",
+    "directory": "packages/delft-exhibition-viewer"
+  },
   "exports": {
     ".": {
-      "require": {
-        "types": "./dist/index.d.cts",
-        "default": "./dist/index.cjs"
-      },
-      "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
-      }
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     },
     "./lib": {
-      "require": {
-        "types": "./dist/lib.d.cts",
-        "default": "./dist/lib.cjs"
-      },
-      "import": {
-        "types": "./dist/lib.d.ts",
-        "default": "./dist/lib.js"
-      }
+      "import": "./dist/lib.js",
+      "require": "./dist/lib.cjs"
     },
-    "./dist/index.css": "./dist/index.css",
+    "./library": {
+      "import": "./dist/library.js",
+      "require": "./dist/library.cjs"
+    },
+    "./tailwind": {
+      "import": "./dist/tailwind.js",
+      "require": "./dist/tailwind.cjs"
+    },
+    "./package.json": "./package.json",
     "./dist/lib.css": "./dist/lib.css"
   },
   "scripts": {
@@ -39,8 +41,8 @@
   "sideEffects": false,
   "dependencies": {
     "@headlessui/react": "1.7.18",
-    "@iiif/helpers": "^1.3.1",
     "@iiif/parser": "2.2.5",
+    "@iiif/helpers": "1.5.4",
     "@iiif/presentation-3": "^2.1.3",
     "@iiif/presentation-3-normalized": "0.9.7",
     "@types/react": "18",
@@ -53,7 +55,7 @@
     "react-aria": "^3.37.0",
     "react-dom": "^18.3.1",
     "react-i18next": "^16.2.1",
-    "react-iiif-vault": "^2.0.5",
+    "react-iiif-vault": "2.0.5",
     "react-lazy-load-image-component": "^1.6.0",
     "reveal.js": "^5.1.0",
     "tailwind-merge": "^2.2.1",
@@ -73,5 +75,6 @@
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
-  }
+  },
+  "types": "./dist/index.d.cts"
 }
