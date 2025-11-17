@@ -34,6 +34,22 @@
   --delft-title-transform: uppercase;
 }
 
+.exhibition-info-block h2 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-family: var(--font-mono);
+  text-transform: var(--delft-title-transform);
+}
+.exhibition-info-block p {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.exhibition-info-block a {
+  text-decoration-line: underline;
+  text-underline-offset: 4px;
+}
+
 .delft-title {
   text-transform: var(--delft-title-transform);
 }
@@ -80,15 +96,8 @@
 
 /* Exhibition editorial */
 
-.exhibition-info-block h2 {
-  @apply my-4 text-center font-mono;
-  text-transform: var(--delft-title-transform);
-}
-.exhibition-info-block p {
-  @apply my-4;
-}
-.exhibition-info-block a {
-  @apply underline underline-offset-4;
+.modal-top {
+  top: var(--ev-modal-top, 0);
 }
 
 /* Atlas styling */

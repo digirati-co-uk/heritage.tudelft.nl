@@ -17,6 +17,7 @@ export default defineConfig((options) => ({
     index: "src/bundle.ts",
     lib: "src/styles/lib.css",
     library: "src/library.ts",
+    tailwind: "src/tailwind.ts",
   },
   globalName: "DelftExhibitionViewer",
   ignoreWatch: [".turbo"],

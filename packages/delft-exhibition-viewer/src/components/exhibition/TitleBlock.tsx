@@ -1,8 +1,9 @@
 import type { Manifest } from "@iiif/presentation-3";
+import type { ManifestNormalized } from "@iiif/presentation-3-normalized";
 import { LocaleString } from "react-iiif-vault";
 import invariant from "tiny-invariant";
 
-export function TitlePanel({ manifest }: { manifest: Manifest }) {
+export function TitlePanel({ manifest }: { manifest: Manifest|ManifestNormalized }) {
   invariant(manifest, "Manifest not found");
 
   return (

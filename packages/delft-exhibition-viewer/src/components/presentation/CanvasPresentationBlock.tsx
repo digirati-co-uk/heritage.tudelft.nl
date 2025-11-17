@@ -1,9 +1,9 @@
-import type { DefaultPresetOptions, Preset } from "@atlas-viewer/atlas";
-import { useLayoutEffect, useMemo, useRef, useState } from "react";
-import { CanvasPanel, useCanvas } from "react-iiif-vault";
 import { useExhibitionStep } from "@/helpers/exhibition-store";
 import type { ObjectLink } from "@/helpers/object-links";
 import { useCanvasHighlights } from "@/helpers/use-canvas-highlights";
+import type { DefaultPresetOptions, Preset } from "@atlas-viewer/atlas";
+import { useLayoutEffect, useMemo, useRef, useState } from "react";
+import { CanvasPanel, useCanvas } from "react-iiif-vault";
 
 interface CanvasPresentationBlockProps {
   canvasId: string;
@@ -43,10 +43,7 @@ export function CanvasPresentationBlock(props: CanvasPresentationBlockProps) {
   // biome-ignore lint/correctness/useExhaustiveDependencies: Needed for window size changes.
   useLayoutEffect(() => {
     if (atlas.current && isReady && stepCurrent) {
-      if (
-        step?.region?.selector?.type === "BoxSelector" ||
-        step?.region?.selector?.type === "SvgSelector"
-      ) {
+      if (step?.region?.selector?.type === "BoxSelector" || step?.region?.selector?.type === "SvgSelector") {
         atlas.current.runtime.setHomePosition({
           ...(step.region?.selector?.spatial as any),
           padding: 50,
@@ -63,7 +60,7 @@ export function CanvasPresentationBlock(props: CanvasPresentationBlockProps) {
   }
 
   return (
-    <div className="text-ImageCaption flex flex-col flex-1 min-w-0 min-h-0 h-full">
+    <div className="exhibition-canvas-panel text-ImageCaption flex flex-col flex-1 min-w-0 min-h-0 h-full">
       <CanvasPanel.Viewer
         homePosition={region as any}
         renderPreset={config}
@@ -119,15 +116,7 @@ export function CanvasPresentationBlock(props: CanvasPresentationBlockProps) {
                   );
                 }
 
-                return (
-                  <box
-                    key={index}
-                    target={target}
-                    relativeStyle
-                    html
-                    style={{ border: "2px dashed red" }}
-                  />
-                );
+                return <box key={index} target={target} relativeStyle html style={{ border: "2px dashed red" }} />;
               })}
         </CanvasPanel.RenderCanvas>
       </CanvasPanel.Viewer>

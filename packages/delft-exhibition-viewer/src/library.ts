@@ -4,6 +4,7 @@ export * from "./components/RenderSeeAlso";
 export * from "./components/TableOfContentsModal";
 export * from "./components/ViewerZoomControls";
 export * from "./components/VisibleAnnotationListItem";
+export * from "./components/EditorHooks";
 
 // Exhibition components
 export * from "./components/exhibition/BaseExhibitionBlock";

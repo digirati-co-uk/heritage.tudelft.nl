@@ -23,6 +23,10 @@
       "import": "./dist/library.js",
       "require": "./dist/library.cjs"
     },
+    "./tailwind": {
+      "import": "./dist/tailwind.js",
+      "require": "./dist/tailwind.cjs"
+    },
     "./package.json": "./package.json",
     "./dist/lib.css": "./dist/lib.css"
   },
@@ -37,8 +41,8 @@
   "sideEffects": false,
   "dependencies": {
     "@headlessui/react": "1.7.18",
-    "@iiif/helpers": "^1.3.1",
     "@iiif/parser": "2.2.5",
+    "@iiif/helpers": "1.5.4",
     "@iiif/presentation-3": "^2.1.3",
     "@iiif/presentation-3-normalized": "0.9.7",
     "@types/react": "18",
@@ -51,7 +55,7 @@
     "react-aria": "^3.37.0",
     "react-dom": "^18.3.1",
     "react-i18next": "^16.2.1",
-    "react-iiif-vault": "^2.0.5",
+    "react-iiif-vault": "2.0.5",
     "react-lazy-load-image-component": "^1.6.0",
     "reveal.js": "^5.1.0",
     "tailwind-merge": "^2.2.1",

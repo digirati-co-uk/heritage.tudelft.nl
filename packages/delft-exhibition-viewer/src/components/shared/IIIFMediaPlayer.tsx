@@ -82,7 +82,7 @@ export default function IIIFMediaPlayer(props: IIIFMediaPlayerProps) {
           {/* This is the Placeholder Canvas from the IIIF Canvas */}
           {props.poster ? (
             <Poster
-              className="bg-ViewerBackground absolute inset-0 block h-full w-full object-contain opacity-0 transition-opacity data-[visible]:opacity-100"
+              className="exhibition-canvas-panel bg-ViewerBackground absolute inset-0 block h-full w-full object-contain opacity-0 transition-opacity data-[visible]:opacity-100"
               src={props.poster}
             />
           ) : null}

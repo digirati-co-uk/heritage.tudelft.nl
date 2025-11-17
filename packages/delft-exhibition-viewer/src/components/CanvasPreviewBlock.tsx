@@ -12,6 +12,7 @@ import { useStore } from "zustand";
 import { createExhibitionStore } from "../helpers/exhibition-store";
 import { useCanvasHighlights } from "../helpers/use-canvas-highlights";
 import { withViewTransition } from "../helpers/with-view-transition";
+import { Hookable } from "./EditorHooks";
 import { RenderSeeAlso } from "./RenderSeeAlso";
 import { ViewerZoomControls } from "./ViewerZoomControls";
 import { VisibleAnnotationsListingItem } from "./VisibleAnnotationListItem";
@@ -215,17 +216,19 @@ function CanvasPreviewBlockInner({
           viewTransition,
         )}
       >
-        <CanvasPanel.Viewer
-          containerStyle={containerStyle}
-          renderPreset={config}
-          homeOnResize
-          homeCover={cover || !hasMultipleAnnotations}
-          onCreated={onCreated}
-        >
-          <CanvasPanel.RenderCanvas strategies={["images"]} enableSizes={false}>
-            <Highlights />
-          </CanvasPanel.RenderCanvas>
-        </CanvasPanel.Viewer>
+        <Hookable type="canvasPreviewEditor" resource={canvas}>
+          <CanvasPanel.Viewer
+            containerStyle={containerStyle}
+            renderPreset={config}
+            homeOnResize
+            homeCover={cover || !hasMultipleAnnotations}
+            onCreated={onCreated}
+          >
+            <CanvasPanel.RenderCanvas strategies={["images"]} enableSizes={false}>
+              <Highlights />
+            </CanvasPanel.RenderCanvas>
+          </CanvasPanel.Viewer>
+        </Hookable>
       </div>
       {imageInfoIcon && (
         <div className="absolute top-4 right-4 z-20 text-ImageCaption text-2xl pointer-events-none">
@@ -238,7 +241,9 @@ function CanvasPreviewBlockInner({
             <LocaleString className="image-caption-inline">{canvas.requiredStatement.value}</LocaleString>
           </div>
         ) : (
-          <LocaleString className="image-caption-inline">{canvas.label}</LocaleString>
+          <Hookable type="localeStringEditor" property="label" resource={canvas}>
+            <LocaleString className="image-caption-inline">{canvas.label}</LocaleString>
+          </Hookable>
         )}
       </div>
       <Dialog
@@ -252,8 +257,8 @@ function CanvasPreviewBlockInner({
           viewTransition,
         )}
       >
-        <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
-        <div className="safe-inset fill-height fixed inset-0 z-20 flex w-screen items-center md:p-4">
+        <div className="fixed modal-top left-0 right-0 bottom-0 bg-black/30" aria-hidden="true" />
+        <div className="safe-inset fill-height fixed modal-top left-0 right-0 bottom-0 z-20 flex w-screen items-center md:p-4">
           <button
             type="button"
             onClick={withViewTransition(
@@ -269,7 +274,7 @@ function CanvasPreviewBlockInner({
           </button>
           <Dialog.Panel className="relative z-10 flex h-full w-full flex-col justify-center bg-InfoBlock text-InfoBlockText overflow-y-auto overflow-x-hidden md:rounded lg:flex-row">
             <div
-              className="flex-shink-0 sticky top-0 z-20 min-h-0 flex-1 bg-ViewerBackground lg:relative lg:order-2 lg:min-w-0"
+              className="exhibition-canvas-panel flex-shink-0 sticky top-0 z-20 min-h-0 flex-1 bg-ViewerBackground lg:relative lg:order-2 lg:min-w-0"
               style={{
                 viewTransitionName: isOpen ? `canvas-preview-block-${index}` : "",
               }}
@@ -342,12 +347,16 @@ function CanvasPreviewBlockInner({
                 {canvas.label || canvas.summary || canvas.seeAlso?.length ? (
                   <div className="mb-4 bg-InfoBlock text-InfoBlockText px-8">
                     <div>
-                      <LocaleString as="h2" className="sticky top-0 bg-InfoBlock pb-4 pt-6 font-mono delft-title">
-                        {canvas.label}
-                      </LocaleString>
-                      <LocaleString className="whitespace-pre-wrap" enableDangerouslySetInnerHTML>
-                        {canvas.summary}
-                      </LocaleString>
+                      <Hookable type="localeStringEditor" property="label" resource={canvas}>
+                        <LocaleString as="h2" className="sticky top-0 bg-InfoBlock pb-4 pt-6 font-mono delft-title">
+                          {canvas.label}
+                        </LocaleString>
+                      </Hookable>
+                      <Hookable type="localeStringEditor" property="summary" resource={canvas}>
+                        <LocaleString className="whitespace-pre-wrap" enableDangerouslySetInnerHTML>
+                          {canvas.summary}
+                        </LocaleString>
+                      </Hookable>
                     </div>
                     {canvas.requiredStatement && (
                       <div className="mt-8 text-sm opacity-60">
@@ -389,10 +398,14 @@ function CanvasPreviewBlockInner({
                     </div>
                   ) : (
                     <div>
-                      <LocaleString>{canvas.label}</LocaleString>
-                      <LocaleString enableDangerouslySetInnerHTML className="whitespace-pre-wrap">
-                        {canvas.summary}
-                      </LocaleString>
+                      <Hookable type="localeStringEditor" property="label" resource={canvas}>
+                        <LocaleString>{canvas.label}</LocaleString>
+                      </Hookable>
+                      <Hookable type="localeStringEditor" property="summary" resource={canvas}>
+                        <LocaleString enableDangerouslySetInnerHTML className="whitespace-pre-wrap">
+                          {canvas.summary}
+                        </LocaleString>
+                      </Hookable>
                     </div>
                   )}
                 </div>
