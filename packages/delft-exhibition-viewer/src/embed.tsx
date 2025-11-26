@@ -15,10 +15,14 @@ function Embed({ manifest }: { manifest: Manifest }) {
   const manifestId = search.get("manifest");
   const cutCorners = search.get("cut-corners");
   const fullTitleBar = search.get("full-title-bar");
+  const isFloating = search.get("floating") === "true";
+  const floatingPosition = search.get("floating-position") as any;
 
   const options = {
     cutCorners: !(cutCorners === "false"),
     fullTitleBar: fullTitleBar === "true",
+    isFloating,
+    floatingPosition,
   };
 
   if (!manifest) {

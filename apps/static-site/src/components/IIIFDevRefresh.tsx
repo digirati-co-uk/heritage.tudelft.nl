@@ -37,7 +37,7 @@ export default function IIIFDevRefresh() {
   };
 
   return (
-    <div className="fixed bottom-2 left-36 flex h-10 items-center bg-white p-3 rounded z-40">
+    <div className="fixed bottom-4 left-48 flex h-10 items-center bg-white p-3 rounded z-40">
       <div className={twMerge("iiif-logo", isRefreshing && "animate-pulse")} />
       <button
         type="button"
