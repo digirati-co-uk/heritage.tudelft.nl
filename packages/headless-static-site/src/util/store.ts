@@ -24,7 +24,7 @@ export interface Store<T> {
     resource: ParsedResource,
     directory: string,
     api: Omit<StoreApi, "getSlug">
-  ): Promise<ProtoResourceDirectory>;
+  ): Promise<ProtoResourceDirectory | null>;
 }
 
 export interface ProtoResourceDirectory {

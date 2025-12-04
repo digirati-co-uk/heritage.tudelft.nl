@@ -55,6 +55,7 @@ stores:
     type: iiif-json
     path: ./delft
     pattern: "**/*.{json,yml}"
+    subFiles: true
     run:
       - delft-labels
       - extract-thumbnail
