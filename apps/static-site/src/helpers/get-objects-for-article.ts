@@ -1,7 +1,8 @@
-import imageServiceLinks from "@repo/iiif/build/meta/image-service-links.json";
+import { getImageServiceLinks } from "@/iiif";
 import type { Publication } from "contentlayer/generated";
 
-export function getObjectsForArticle(publication: Publication) {
+export async function getObjectsForArticle(publication: Publication) {
+  const imageServiceLinks = await getImageServiceLinks();
   const objects = [];
   for (const slug of publication.referencedIIIF) {
     const links = imageServiceLinks[slug as keyof typeof imageServiceLinks];

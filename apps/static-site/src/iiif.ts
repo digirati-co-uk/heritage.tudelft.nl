@@ -1,4 +1,5 @@
 import type { Collection } from "@iiif/presentation-3";
+import { cache } from "react";
 
 export let IIIF_URL =
   process.env["IIIF_URL"] ||
@@ -75,3 +76,22 @@ export async function loadManifestMeta(slug: string) {
 
   return null;
 }
+
+export const getRelatedObjects = cache(() =>
+  fetch(`${IIIF_URL}meta/related-objects.json`, fetchOptions).then((r) =>
+    r.json(),
+  ),
+);
+
+export const getImageServiceLinks = cache(
+  (): Promise<{
+    [slug: string]: [
+      {
+        slug: string;
+        service: string;
+        canvasId: string;
+        targetCanvasId: string;
+      },
+    ];
+  }> => fetch(`${IIIF_URL}meta/image-service-links.json`).then((r) => r.json()),
+);

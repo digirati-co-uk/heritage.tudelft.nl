@@ -11,7 +11,9 @@ export async function ArticleFeaturedIIIF(props: { publication: Publication; con
 
   const objects = (
     await Promise.all(
-      getObjectsForArticle(props.publication).map(async (item) => {
+      (
+        await getObjectsForArticle(props.publication)
+      ).map(async (item) => {
         try {
           const { manifest, meta } = await loadManifest(item.slug);
           return {

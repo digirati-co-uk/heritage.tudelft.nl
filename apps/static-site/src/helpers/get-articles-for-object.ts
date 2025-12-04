@@ -1,7 +1,9 @@
-import imageServiceLinks from "@repo/iiif/build/meta/image-service-links.json";
+import { getImageServiceLinks } from "@/iiif";
 import { allPublications } from "contentlayer/generated";
 
-export function getArticlesForObject(slug: string) {
+export async function getArticlesForObject(slug: string) {
+  const imageServiceLinks = await getImageServiceLinks();
+
   return allPublications.filter((publication) => {
     if (publication.referencedIIIF.includes(slug)) {
       return true;

@@ -1,19 +1,15 @@
-import { useAtlasStore } from "react-iiif-vault";
-import { InternationalString } from "@iiif/presentation-3";
-import {
-  type ZoomRegion,
-  updateStateSharingLink,
-  updateCustomSharingLink,
-} from "@/helpers/content-state";
+import { type ZoomRegion, updateCustomSharingLink, updateStateSharingLink } from "@/helpers/content-state";
 import viewerConfig from "@/viewers.json";
+import type { InternationalString } from "@iiif/presentation-3";
+import { useTranslations } from "next-intl";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useAtlasStore } from "react-iiif-vault";
 import { useStore } from "zustand";
-import { AutoLanguage } from "../pages/AutoLanguage";
-import { useState, useEffect } from "react";
 import { CopyToClipboard } from "../atoms/CopyToClipboard";
 import { CopyToClipboardIcon } from "../icons/CopyToClipboardIcon";
 import { LinkIcon } from "../icons/LinkIcon";
-import { useTranslations } from "next-intl";
-import { usePathname } from "next/navigation";
+import { AutoLanguage } from "../pages/AutoLanguage";
 
 export function SharingOptions({
   manifestId,
@@ -29,19 +25,14 @@ export function SharingOptions({
   initZoomRegion?: ZoomRegion | null;
 }) {
   const [canvasURI, setCanvasURI] = useState<string>(initCanvasURI ?? ""); // setters for future if we allow canvas and region reselection in the Sharing Options dialog.
-  const [zoomRegion, setZoomRegion] = useState<ZoomRegion | null | undefined>(
-    initZoomRegion,
-  );
+  const [zoomRegion, setZoomRegion] = useState<ZoomRegion | null | undefined>(initZoomRegion);
   const [stateSharingLink, setStateSharingLink] = useState<string>(manifestId);
-  const [customSharingLink, setCustomSharingLink] =
-    useState<string>(manifestId);
+  const [customSharingLink, setCustomSharingLink] = useState<string>(manifestId);
   const [specifyCanvas, setSpecifyCanvas] = useState<boolean>(false);
   const [specifyRegion, setSpecifyRegion] = useState<boolean>(false);
   const atlas = useAtlasStore();
   const canvasViewports = useStore(atlas, (s) => s.canvasViewports);
-  const configuredViewers = viewerConfig.viewers.filter((viewer) =>
-    viewer.enabled?.includes("object"),
-  );
+  const configuredViewers = viewerConfig.viewers.filter((viewer) => viewer.enabled?.includes("object"));
   const t = useTranslations();
   const pathname = usePathname();
 
@@ -77,25 +68,25 @@ export function SharingOptions({
     <div className="text-lg">
       <ul className="flex flex-col gap-3">
         <li className="flex flex-col gap-3">
-          <h2 className="text-2xl mb-2">
-            {t("Share a link to this resource")}
-          </h2>
+          <h2 className="text-2xl mb-2">{t("Share a link to this resource")}</h2>
         </li>
         <li className="flex flex-row gap-2 ml-4 md:items-center">
           <input
             className="w-5 h-5 min-w-5 mt-1 md:mt-0"
             type="checkbox"
+            id="specify-canvas"
             checked={specifyCanvas}
             onChange={() => {
               setSpecifyCanvas(!specifyCanvas);
             }}
           />
           <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
-            <div className="w-60">{t("Include current canvas")}:</div>
+            <label htmlFor="specify-canvas" className="w-60">
+              {t("Include current canvas")}:
+            </label>
             <div className="text-gray-600 flex flex-col md:flex-row gap-1 md:gap-3">
               <div>
-                {t("Page number")}:{" "}
-                <span className="text-gray-900">{initCanvasSeqIdx + 1}</span>
+                {t("Page number")}: <span className="text-gray-900">{initCanvasSeqIdx + 1}</span>
               </div>
               {
                 <div>
@@ -112,6 +103,7 @@ export function SharingOptions({
           <input
             className="w-5 h-5 min-w-5 mt-1 md:mt-0"
             type="checkbox"
+            id="specify-region"
             checked={specifyRegion}
             disabled={!specifyCanvas}
             onChange={() => {
@@ -119,36 +111,26 @@ export function SharingOptions({
             }}
           />
           <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
-            <div className="w-60">{t("Include current zoom region")}:</div>
+            <label htmlFor="specify-region" className="w-60">
+              {t("Include current zoom region")}:
+            </label>
             {zoomRegion && (
               <div className="text-gray-600 flex flex-col md:flex-row gap-1 md:gap-3">
                 <div className="flex flex-col gap-1 md:flex-row md:gap-3">
                   <div className="flex flex-col md:flex-row md:gap-3">
                     <div>
-                      x:{" "}
-                      <span className="text-gray-900">
-                        {Math.round(zoomRegion?.x)}
-                      </span>
+                      x: <span className="text-gray-900">{Math.round(zoomRegion?.x)}</span>
                     </div>
                     <div>
-                      y:{" "}
-                      <span className="text-gray-900">
-                        {Math.round(zoomRegion?.y)}
-                      </span>
+                      y: <span className="text-gray-900">{Math.round(zoomRegion?.y)}</span>
                     </div>
                   </div>
                   <div className="flex flex-col md:flex-row md:gap-3">
                     <div>
-                      {t("width")}:{" "}
-                      <span className="text-gray-900">
-                        {Math.round(zoomRegion?.width)}
-                      </span>
+                      {t("width")}: <span className="text-gray-900">{Math.round(zoomRegion?.width)}</span>
                     </div>
                     <div>
-                      {t("height")}:{" "}
-                      <span className="text-gray-900">
-                        {Math.round(zoomRegion?.height)}
-                      </span>
+                      {t("height")}: <span className="text-gray-900">{Math.round(zoomRegion?.height)}</span>
                     </div>
                   </div>
                 </div>
@@ -165,14 +147,9 @@ export function SharingOptions({
             rel="noreferrer"
           >
             <div className="flex flex-row gap-2 items-center mb-1">
-              <CopyToClipboardIcon
-                className="text-gray-600 min-w-6"
-                width="1.3em"
-                height="1.3em"
-              />
+              <CopyToClipboardIcon className="text-gray-600 min-w-6" width="1.3em" height="1.3em" />
               <span>
-                {t("Short link for use on this site")} ({t("copy to clipboard")}
-                )
+                {t("Short link for use on this site")} ({t("copy to clipboard")})
               </span>
             </div>
             <div className="border border-black">
@@ -191,21 +168,14 @@ export function SharingOptions({
             rel="noreferrer"
           >
             <div className="flex flex-row gap-2 items-center mb-1">
-              <CopyToClipboardIcon
-                className="text-gray-600 min-w-6"
-                width="1.3em"
-                height="1.3em"
-              />
+              <CopyToClipboardIcon className="text-gray-600 min-w-6" width="1.3em" height="1.3em" />
               <span>
-                {specifyCanvas
-                  ? t("IIIF Manifest with Content State")
-                  : t("IIIF Manifest")}{" "}
-                ({t("copy to clipboard")})
+                {specifyCanvas ? t("IIIF Manifest with Content State") : t("IIIF Manifest")} ({t("copy to clipboard")})
               </span>
             </div>
             <div className="border border-black">
               <div className="min-h-12 max-h-12 flex flex-wrap p-2 truncate [mask-image:linear-gradient(to_left,transparent,black_100%)]">
-                {`${manifestId}?iiifContent=${stateSharingLink}`}
+                {manifestId === stateSharingLink ? manifestId : `${manifestId}?iiifContent=${stateSharingLink}`}
               </div>
             </div>
           </CopyToClipboard>
@@ -216,10 +186,7 @@ export function SharingOptions({
               .filter((v) => ["theseus", "clover"].includes(v.id))
               .map((viewer) => {
                 return (
-                  <li
-                    key={`sharinglink_${viewer.id}`}
-                    className="flex flex-row gap-2 items-center ml-3"
-                  >
+                  <li key={`sharinglink_${viewer.id}`} className="flex flex-row gap-2 items-center ml-3">
                     <LinkIcon className="text-2xl opacity-50" />
                     <a
                       href={viewer.link.replace("{url}", stateSharingLink)}

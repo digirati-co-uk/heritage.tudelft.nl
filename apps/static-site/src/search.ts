@@ -1,6 +1,6 @@
 import { facetConfig } from "@/facets";
-import manifestSchema from "@repo/iiif/build/meta/search/manifests.schema.json";
 import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter";
+import { IIIF_URL } from "./iiif.client";
 
 const TYPESENSE_API_KEY =
   process.env.NEXT_PUBLIC_TYPESENSE_API_KEY ||
@@ -27,14 +27,18 @@ export const typesenseServerConfig = {
   ],
 };
 
-export function createTypesense() {
+export async function createTypesense() {
+  const manifestSchema: any = await fetch(
+    `${IIIF_URL}meta/search/manifests.schema.json`,
+  ).then((r) => r.json());
+
   // Get all topic fields from schema
   const allTopicFields = manifestSchema.fields
-    .map((field) => {
+    .map((field: any) => {
       if (!field.name.startsWith("topic_")) return false;
       return field.name;
     })
-    .filter((t) => t) as string[];
+    .filter((t: any) => t) as string[];
 
   // Apply facet config filtering and ordering
   const facets = allTopicFields

@@ -146,38 +146,37 @@ export async function emit(
           label: getValue(resource.label),
         };
 
+        let thumbnail = null;
         if (manifest.type === "Manifest") {
           siteMap[manifest.slug].canvases = resource.items?.length;
-        }
 
-        let thumbnail = null;
+          const maybeThumbnail = await getThumbnail();
+          if (maybeThumbnail) {
+            thumbnail = { best: maybeThumbnail };
+          }
 
-        const maybeThumbnail = await getThumbnail();
-        if (maybeThumbnail) {
-          thumbnail = { best: maybeThumbnail };
-        }
-
-        if (!thumbnail) {
-          thumbnail = resource.thumbnail
-            ? null
-            : await helper.getBestThumbnailAtSize(
-                resource,
-                {
-                  maxWidth: 512,
-                  maxHeight: 512,
-                },
-                false
-              );
-        }
-        if (!thumbnail?.best && !resource.thumbnail) {
-          thumbnail = await helper.getBestThumbnailAtSize(
-            resource,
-            {
-              maxWidth: 512,
-              maxHeight: 512,
-            },
-            true
-          );
+          if (!thumbnail) {
+            thumbnail = resource.thumbnail
+              ? null
+              : await helper.getBestThumbnailAtSize(
+                  resource,
+                  {
+                    maxWidth: 512,
+                    maxHeight: 512,
+                  },
+                  false
+                );
+          }
+          if (!thumbnail?.best && !resource.thumbnail) {
+            thumbnail = await helper.getBestThumbnailAtSize(
+              resource,
+              {
+                maxWidth: 512,
+                maxHeight: 512,
+              },
+              true
+            );
+          }
         }
 
         const snippet = {

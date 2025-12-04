@@ -1,12 +1,11 @@
 import { Page } from "@/components/Page";
 import { CollectionPage } from "@/components/pages/CollectionPage";
+import { baseURL, getDefaultMetaMdx, makeTitle } from "@/helpers/metadata";
 import { loadCollection } from "@/iiif";
+import { getValue } from "@iiif/helpers";
+import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { getTranslations } from "next-intl/server";
-// import siteMap from "@repo/iiif/build/meta/sitemap.json";
-import { Metadata } from "next";
-import { getValue } from "@iiif/helpers";
-import { baseURL, makeTitle, getDefaultMetaMdx } from "@/helpers/metadata";
 
 export async function generateMetadata({
   params,
@@ -63,11 +62,7 @@ export default async function Collection({
 
   return (
     <Page>
-      <CollectionPage
-        collection={collectionData as any}
-        meta={meta as any}
-        slug={slug}
-      />
+      <CollectionPage collection={collectionData as any} meta={meta as any} slug={slug} />
     </Page>
   );
 }

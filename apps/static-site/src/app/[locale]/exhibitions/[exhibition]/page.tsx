@@ -6,7 +6,6 @@ import { getViewObjectLinks } from "@/helpers/get-view-object-links";
 import { baseURL, getDefaultMetaMdx, makeTitle } from "@/helpers/metadata";
 import { loadManifest, loadManifestMeta, loadMeta } from "@/iiif";
 import { getValue } from "@iiif/helpers";
-import type imageServiceLinks from "@repo/iiif/build/meta/image-service-links.json";
 import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { getTranslations } from "next-intl/server";

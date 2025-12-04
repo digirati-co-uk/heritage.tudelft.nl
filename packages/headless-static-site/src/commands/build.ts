@@ -235,7 +235,13 @@ export async function build(
   await buildConfig.fileTypeCache.save();
 
   if (options.emit) {
-    await fileHandler.saveAll();
+    const { failedToWrite } = await fileHandler.saveAll();
+    if (failedToWrite.length) {
+      buildConfig.log(`Failed to write ${failedToWrite.length} files`);
+      if (buildConfig.options.debug) {
+        buildConfig.log(failedToWrite);
+      }
+    }
   }
 
   return {

@@ -3,7 +3,7 @@
 import { createTypesense } from "@/search";
 import { InstantSearch } from "react-instantsearch";
 
-const ts = createTypesense();
+const ts = await createTypesense();
 
 export function getFacets() {
   return ts.facets;

@@ -63,7 +63,7 @@ export function DelftSlideshow(props: DelftSlideshowProps) {
 
   return (
     <VaultProvider vault={vault}>
-      <div className="flex flex-col h-full w-full min-h-0">
+      <div className="exhibition-viewer flex flex-col h-full w-full min-h-0">
         <div className="overflow-hidden bg-black relative flex-1" ref={emblaRef}>
           <div className="flex h-full">
             <MapCanvasStrategy onlyCanvasId={props.canvasId} items={props.manifest.items || []}>

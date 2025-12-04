@@ -25,4 +25,4 @@ export const Slot = (async (props: SlotProps) => {
       {props.children}
     </CustomSlot>
   );
-}) as any as FC<SlotProps>;
+}) as any as (props: SlotProps) => React.ReactNode;

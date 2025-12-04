@@ -1,3 +1,6 @@
+// @ts-expect-error
+import postcssImport from "postcss-import";
+import postcss from "rollup-plugin-postcss";
 import { defineConfig } from "tsdown";
 
 export default defineConfig((options) => ({
@@ -5,10 +8,11 @@ export default defineConfig((options) => ({
   exports: {
     customExports: (exports) => {
       exports["./dist/lib.css"] = "./dist/lib.css";
+      exports["./dist/index.css"] = "./dist/index.css";
       return exports;
     },
   },
-  clean: !options.watch,
+  clean: false,
   minify: !options.watch,
   target: ["es2021"],
   format: ["esm", "cjs"],
@@ -24,4 +28,10 @@ export default defineConfig((options) => ({
   outputOptions: {
     inlineDynamicImports: true,
   },
+  plugins: [
+    postcss({
+      plugins: [postcssImport()],
+      extract: "index.css",
+    }),
+  ],
 }));

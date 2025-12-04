@@ -28,7 +28,8 @@
       "require": "./dist/tailwind.cjs"
     },
     "./package.json": "./package.json",
-    "./dist/lib.css": "./dist/lib.css"
+    "./dist/lib.css": "./dist/lib.css",
+    "./dist/index.css": "./dist/index.css"
   },
   "scripts": {
     "start": "vite",
@@ -65,6 +66,9 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
+    "postcss-import": "^16.1.0",
+    "postcss-nested": "^7.0.2",
+    "rollup-plugin-postcss": "^4.0.2",
     "@types/bun": "latest",
     "@types/reveal.js": "^5.0.4",
     "@vitejs/plugin-react": "^4.3.4",

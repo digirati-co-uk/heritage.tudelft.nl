@@ -3,10 +3,8 @@ import { Page } from "@/components/Page";
 import { ManifestPage } from "@/components/pages/ManifestPage";
 import { getArticlesForObject } from "@/helpers/get-articles-for-object";
 import { baseURL, getDefaultMetaMdx, makeTitle } from "@/helpers/metadata";
-import { loadManifest, loadManifestMeta } from "@/iiif";
+import { getImageServiceLinks, getRelatedObjects, loadManifest, loadManifestMeta } from "@/iiif";
 import { getValue } from "@iiif/helpers";
-import imageServiceLinks from "@repo/iiif/build/meta/image-service-links.json";
-import related from "@repo/iiif/build/meta/related-objects.json";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
@@ -65,6 +63,8 @@ export default async function ManifestP({
   setRequestLocale(locale);
   const t = await getTranslations();
   const idNum = id ? Number.parseInt(id, 10) : 0;
+  const related = await getRelatedObjects();
+  const imageServiceLinks = await getImageServiceLinks();
 
   const manifestSlug = `manifests/${manifestId}`;
   const { manifest, meta } = await loadManifest(manifestSlug);
@@ -86,7 +86,7 @@ export default async function ManifestP({
     seenIds.push(item.slug);
   }
 
-  const articles = getArticlesForObject(manifestSlug);
+  const articles = await getArticlesForObject(manifestSlug);
 
   const relatedSnippets = (
     await Promise.all(

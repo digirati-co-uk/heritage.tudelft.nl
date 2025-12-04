@@ -169,13 +169,18 @@ export class FileHandler {
       .map((k) => [k, this.openBinaryMap.get(k)] as const);
 
     const progress = makeProgressBar("Writing files", files.length + binaryFiles.length, this.ui);
-
+    const failedToWrite: any[] = [];
     for (const [filePath, data] of files) {
-      queue.add(async () => await this.writeFile(filePath, JSON.stringify(data, null, 2)));
+      queue.add(
+        async () =>
+          await this.writeFile(filePath, JSON.stringify(data, null, 2)).catch((err) =>
+            failedToWrite.push({ filePath, err })
+          )
+      );
     }
 
     for (const [filePath, data] of binaryFiles) {
-      queue.add(async () => await this.writeFile(filePath, data));
+      queue.add(async () => await this.writeFile(filePath, data).catch((err) => failedToWrite.push({ filePath, err })));
     }
 
     // Copy fields.
@@ -183,7 +188,7 @@ export class FileHandler {
     for (const key of copyKeys) {
       // biome-ignore lint/style/noNonNullAssertion: This is from the copyTargets map.
       const { from, options } = this.copyTargets.get(key)!;
-      queue.add(async () => await copy(from, key, options));
+      queue.add(async () => await copy(from, key, options).catch((err) => failedToWrite.push({ filePath: key, err })));
     }
 
     queue.on("completed", () => progress.increment());
@@ -195,6 +200,8 @@ export class FileHandler {
     this.copyTargets.clear();
     this.openJsonChanged.clear();
     this.openBinaryChanged.clear();
+
+    return { failedToWrite };
   }
 
   async cachePathExists(to: string) {

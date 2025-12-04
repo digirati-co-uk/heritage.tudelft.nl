@@ -69,7 +69,7 @@ export function PresentationInner(props: DelftPresentationProps) {
   if (!manifest) return;
 
   return (
-    <div className="flex h-full w-full flex-col">
+    <div className="exhibition-viewer flex h-full w-full flex-col">
       <div
         data-cut-corners-enabled={cutCorners}
         className={"delft-presentation-viewer relative min-h-0 w-full flex-1 bg-black"}

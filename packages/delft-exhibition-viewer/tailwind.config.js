@@ -2,6 +2,7 @@ import { colors, typography } from "./src/tailwind";
 
 /** @type {import('tailwindcss').Config} */
 export default {
+  important: "exhibition-viewer",
   content: ["src/**/*.{tsx,ts}"],
   theme: {
     extend: {

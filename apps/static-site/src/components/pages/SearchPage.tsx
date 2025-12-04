@@ -1,5 +1,6 @@
 "use client";
 
+import { use } from "react";
 import { LanguageProvider } from "react-iiif-vault";
 import { Hits, Pagination, SearchBox } from "react-instantsearch";
 import { FacetList } from "../search/FacetList";
@@ -8,6 +9,8 @@ import { SearchTabs } from "../search/SearchTabs";
 import { SearchWrapper, getFacets } from "../search/SearchWrapper";
 
 export function SearchPage({ title, locale }: { title: string; locale: string }) {
+  const facets = getFacets();
+
   return (
     <LanguageProvider language={locale}>
       <div>
@@ -46,7 +49,7 @@ export function SearchPage({ title, locale }: { title: string; locale: string })
               />
             </div>
             <div className="w-full md:w-1/4">
-              {getFacets().map((facet) => {
+              {facets.map((facet) => {
                 return <FacetList key={facet} facet={facet} />;
               })}
             </div>

@@ -1,20 +1,19 @@
 import "exhibition-viewer/lib";
 import "../globals.css";
-
 import { SlotContext } from "@/blocks/slot-context";
 import { GlobalFooter } from "@/components/GlobalFooter";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { getBasicMetadata, getMdx } from "@/helpers/metadata";
+import { routing } from "@/i18n/routing";
 import type { Metadata } from "next";
+import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { getTranslations } from "next-intl/server";
 import localFont from "next/font/local";
+import { notFound } from "next/navigation";
 import { type ReactNode, lazy } from "react";
 import BlockEditor from "../../blocks/block-editor";
 import { Provider } from "../provider";
-import { notFound } from "next/navigation";
-import { routing } from "@/i18n/routing";
-import { hasLocale, NextIntlClientProvider } from "next-intl";
 
 const IIIFDevRefresh = lazy(() => import("../../components/IIIFDevRefresh"));
 
@@ -121,16 +120,12 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
-      <body
-        className={`bg-gray-200 ${foundersGrotesk.variable} ${foundersGroteskMono.variable} font-sans ${devClass}`}
-      >
+      <body className={`bg-gray-200 ${foundersGrotesk.variable} ${foundersGroteskMono.variable} font-sans ${devClass}`}>
         <Provider>
           <NextIntlClientProvider locale={locale}>
             <SlotContext name="locale" value={locale}>
               <GlobalHeader />
-              <main className="flex w-full flex-col items-center">
-                {children}
-              </main>
+              <main className="flex w-full flex-col items-center">{children}</main>
               {process.env.NODE_ENV !== "production" ? (
                 <>
                   <BlockEditor showToggle rsc />
