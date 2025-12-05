@@ -6,18 +6,34 @@ import { Hits, Pagination, SearchBox } from "react-instantsearch";
 import { FacetList } from "../search/FacetList";
 import { SearchHit } from "../search/SearchHit";
 import { SearchTabs } from "../search/SearchTabs";
-import { SearchWrapper, getFacets } from "../search/SearchWrapper";
+import { SearchWrapper, getFacets, ts } from "../search/SearchWrapper";
+import { updateSearchAdapter } from "../../search";
 
-export function SearchPage({ title, locale }: { title: string; locale: string }) {
+export function SearchPage({
+  title,
+  locale,
+}: {
+  title: string;
+  locale: string;
+}) {
   const facets = getFacets();
+
+  function queryHook(query: string, search: (q: string) => void) {
+    const { client } = ts;
+    updateSearchAdapter(query, client);
+    search(query);
+  }
 
   return (
     <LanguageProvider language={locale}>
       <div>
-        <h1 className="mb-4 mt-6 text-3xl font-medium leading-tight text-gray-900">{title}</h1>
+        <h1 className="mb-4 mt-6 text-3xl font-medium leading-tight text-gray-900">
+          {title}
+        </h1>
 
         <SearchWrapper routing>
           <SearchBox
+            queryHook={queryHook}
             classNames={{
               root: "py-2",
               form: "flex bg-white gap-1",
