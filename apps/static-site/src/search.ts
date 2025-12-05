@@ -26,12 +26,12 @@ export const typesenseServerConfig = {
       protocol: TYPESENSE_PROTOCOL,
     },
   ],
-}
+};
 
 const searchConfiguration: TypesenseInstantsearchAdapterOptions = {
   server: typesenseServerConfig,
-  additionalSearchParameters: {}
-}
+  additionalSearchParameters: {},
+};
 
 export async function createTypesense() {
   const manifestSchema: any = await fetch(
@@ -77,6 +77,7 @@ export async function createTypesense() {
     highlight_start_tag: "<mark>",
     highlight_end_tag: "</mark>",
     sort_by: "_rand():asc",
+    per_page: 20,
   };
 
   const client = new TypesenseInstantSearchAdapter(searchConfiguration);
@@ -90,11 +91,14 @@ export async function createTypesense() {
 }
 
 // Helper function to toggle random sorting at runtime:
-export function updateSearchAdapter(query: string, adapter: TypesenseInstantSearchAdapter) {
+export function updateSearchAdapter(
+  query: string,
+  adapter: TypesenseInstantSearchAdapter,
+) {
   const params = searchConfiguration.additionalSearchParameters;
   const enable = query.trim().length === 0;
   if (params) {
-      params.sort_by = enable ? "_rand():asc": ""
+    params.sort_by = enable ? "_rand():asc" : "";
   }
   adapter.updateConfiguration(searchConfiguration);
 }
