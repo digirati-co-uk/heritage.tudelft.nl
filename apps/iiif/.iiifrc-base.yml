@@ -16,7 +16,7 @@ run:
   - metadata-analysis
   - site-collections
   - delft-image-source
-  - extract-search-record
+  - delft-extract-search-record
   - delft-test-extract-schema
 
 search:
@@ -26,7 +26,11 @@ search:
 
 collections:
   index:
-    label: { "en": ["TU Delft Academic Heritage"], "nl": ["Academisch Erfgoed TU Delft"] }
+    label:
+      {
+        "en": ["TU Delft Academic Heritage"],
+        "nl": ["Academisch Erfgoed TU Delft"],
+      }
 
 config:
   extract-thumbnail-local:
@@ -36,7 +40,7 @@ config:
   extract-files-list:
     fileTemplates:
       schema.json:
-        _injectId: '@id'
+        _injectId: "@id"
         type: "Dataset"
         format: "application/json"
         label: "Product Schema"
