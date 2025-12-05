@@ -1,10 +1,16 @@
 import { AutoLanguage } from "@/components/pages/AutoLanguage";
 import { renderCollectionLabel } from "@/helpers/collection-label";
-import { Link, getObjectSlug } from "@/navigation";
+import { Link, getObjectSlug } from "@/i18n/navigation";
 import type { Collection } from "@iiif/presentation-3";
 import { getTranslations } from "next-intl/server";
-import { CollectionSummary, CollectionMetadata } from "../iiif/CollectionMetadata";
-import { SharingAndViewingLinks, type SharingAndViewingLinksContent } from "../iiif/SharingAndViewingLinks";
+import {
+  CollectionSummary,
+  CollectionMetadata,
+} from "../iiif/CollectionMetadata";
+import {
+  SharingAndViewingLinks,
+  type SharingAndViewingLinksContent,
+} from "../iiif/SharingAndViewingLinks";
 import { ManifestSearch } from "../search/ManifestSearch";
 import { IIIFLogo } from "../iiif/IIIFLogo";
 
@@ -37,10 +43,14 @@ export async function CollectionPage(props: CollectionPageProps) {
     <div className="grid-cols-1 gap-8 md:grid md:grid-cols-3">
       <div className="col-span-1">
         <div className="cut-corners flex w-full flex-col justify-between bg-cyan-500 p-4 md:aspect-square">
-          <div className="text-center font-mono text-sm uppercase">{t("Collection")}</div>
+          <div className="text-center font-mono text-sm uppercase">
+            {t("Collection")}
+          </div>
           <div className="flex flex-col items-center justify-center gap-4">
             <h1 className="text-center text-3xl font-medium">
-              <AutoLanguage mapString={renderCollectionLabel}>{props.collection.label}</AutoLanguage>
+              <AutoLanguage mapString={renderCollectionLabel}>
+                {props.collection.label}
+              </AutoLanguage>
             </h1>
             <div>
               <a
@@ -58,7 +68,10 @@ export async function CollectionPage(props: CollectionPageProps) {
           <div />
         </div>
         {props.collection.summary || props.collection.metadata ? (
-          <div className="cut-corners block w-full bg-black p-8 text-white" suppressHydrationWarning>
+          <div
+            className="cut-corners block w-full bg-black p-8 text-white"
+            suppressHydrationWarning
+          >
             {props.collection.summary ? (
               <CollectionSummary
                 content={{
@@ -69,7 +82,9 @@ export async function CollectionPage(props: CollectionPageProps) {
                 summary={props.collection.summary}
               />
             ) : null}
-            {props.collection.metadata ? <CollectionMetadata metadata={props.collection.metadata} /> : null}
+            {props.collection.metadata ? (
+              <CollectionMetadata metadata={props.collection.metadata} />
+            ) : null}
           </div>
         ) : null}
         <SharingAndViewingLinks
@@ -104,7 +119,9 @@ export async function CollectionPage(props: CollectionPageProps) {
         <div className="b=9 grid grid-cols-1 gap-4 md:grid-cols-2">
           {props.collection.items.map((manifest) => {
             // @todo fix the bug in hss.
-            const slug = getObjectSlug(manifest["hss:slug"] || getSlugFromId(manifest.id));
+            const slug = getObjectSlug(
+              manifest["hss:slug"] || getSlugFromId(manifest.id),
+            );
             let thumbnail = (manifest.thumbnail || [])[0]?.id;
 
             if (thumbnail) {

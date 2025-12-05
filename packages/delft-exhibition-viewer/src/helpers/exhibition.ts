@@ -28,18 +28,81 @@ const widthMap = {
   "w-12": "col-span-12",
 };
 
-export function getClassName(b?: string[], firstInfo = false) {
+const startMap = {
+  "start-1": "col-start-1",
+  "start-2": "col-start-2",
+  "start-3": "col-start-3",
+  "start-4": "col-start-4",
+  "start-5": "col-start-5",
+  "start-6": "col-start-6",
+  "start-7": "col-start-7",
+  "start-8": "col-start-8",
+  "start-9": "col-start-9",
+};
+
+export function getClassName(
+  b?: string[],
+  firstInfo = false,
+  options: { fullWidthGrid?: boolean } = {},
+) {
   if (!b || b.length === 0) {
-    b = ["h-8", "w-8", "image"];
+    b = ["h-6", "w-12", "image"];
   }
   let h = b.find((a) => a.includes("h-")) as keyof typeof heightMap;
-  const w = b.find((a) => a.includes("w-")) as keyof typeof widthMap;
+  let w = b.find((a) => a.includes("w-")) as keyof typeof widthMap;
+  let start = b.find((a) => a.includes("start-")) as keyof typeof startMap;
   const classNames = [];
 
   if (firstInfo && h === "h-4") {
     h = "h-8";
   }
+
+  if (options.fullWidthGrid) {
+    w = "w-12";
+    start = undefined as any;
+  }
+
   classNames.push(heightMap[h]);
   classNames.push(widthMap[w]);
+  if (start && startMap[start]) {
+    classNames.push(startMap[start]);
+  }
   return classNames.join(" ");
+}
+
+export function getFloatingFromBehaviours({
+  behavior,
+  defaultIsFloating = false,
+  defaultFloatingPosition = "top-left",
+}: {
+  behavior: string[];
+  defaultIsFloating?: boolean;
+  defaultFloatingPosition?: string;
+}) {
+  let isFloating = defaultIsFloating;
+  let floatingPosition = defaultFloatingPosition;
+  if (behavior.includes("floating")) {
+    isFloating = true;
+    if (behavior.includes("float-top-left")) {
+      floatingPosition = "top-left";
+    } else if (behavior.includes("float-bottom-left")) {
+      floatingPosition = "bottom-left";
+    } else if (behavior.includes("float-top-right")) {
+      floatingPosition = "top-right";
+    } else if (behavior.includes("float-bottom-right")) {
+      floatingPosition = "bottom-right";
+    }
+  }
+
+  const floatingTop =
+    floatingPosition === "top-left" || floatingPosition === "top-right";
+  const floatingLeft =
+    floatingPosition === "top-left" || floatingPosition === "bottom-left";
+
+  return {
+    isFloating,
+    floatingPosition,
+    floatingTop,
+    floatingLeft,
+  };
 }

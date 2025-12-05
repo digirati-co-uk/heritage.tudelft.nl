@@ -53,7 +53,6 @@ export async function validateCommand(options: ValidateOptions, command?: Comman
   if (config.slugs && existsSync(buildMeta)) {
     console.log("Validating built site map");
     const loaded = await loadJson(buildMeta, true);
-    console.log(loaded);
     const keys = Object.keys(loaded);
     for (const key of keys) {
       const item = loaded[key];

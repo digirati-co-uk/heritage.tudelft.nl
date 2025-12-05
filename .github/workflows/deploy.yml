@@ -19,37 +19,46 @@ jobs:
         with:
           bun-version: latest
 
-      - name: Cache buns dependencies
-        uses: actions/cache@v4
+      - uses: pnpm/action-setup@v3
         with:
-          path: ~/.bun/install/cache
-          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-bun-
+          version: 9
+          run_install: |
+            - recursive: true
+              args: [--frozen-lockfile, --strict-peer-dependencies]
 
-      - name: Run bun install
-        run: bun install --frozen-lockfile
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: "pnpm"
 
       - name: Build HSS
         working-directory: packages/headless-static-site
-        run: bun run build
+        run: pnpm run build
 
       - name: Link HSS CLI
-        run: bun install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
-      - name: Cache Next.js build cache
-        uses: actions/cache@v4
+      - uses: actions/cache@v4
         with:
-          path: apps/static-site/.next/cache
-          key: ${{ runner.os }}-iiif-cache-${{ hashFiles('**/bun.lock') }}--${{ hashFiles('app/static-site/src/**/*.ts', 'app/static-site/src/**/*.tsx') }}
+          path: |
+            ${{ env.STORE_PATH }}
+            ${{ github.workspace }}/apps/docs/.next/cache
+            ${{ github.workspace }}/apps/static-site/.next/cache
+          key: ${{ runner.os }}-iiif-cache-${{ hashFiles('**/pnpm-lock.yaml') }}--${{ hashFiles('app/static-site/src/**/*.ts', 'app/static-site/src/**/*.tsx') }}
           restore-keys: |
-            ${{ runner.os }}-iiif-cache-${{ hashFiles('**/bun.lock') }}
+            ${{ runner.os }}-iiif-cache-${{ hashFiles('**/pnpm-lock.yaml') }}
 
       - name: IIIF Netlify deploy (production)
         id: netlify_iiif
         working-directory: apps/iiif
         run: |
-          deploy_json=$(npx netlify-cli@17.34.3 deploy \
+          deploy_json=$(npx netlify-cli@23.9.5 deploy \
             --build \
             --prod \
             --json \
@@ -64,7 +73,7 @@ jobs:
       - name: Static site Netlify deploy (production)
         id: netlify_static_site
         run: |
-          deploy_json=$(npx netlify-cli@17.34.3 deploy \
+          deploy_json=$(npx netlify-cli@23.9.5 deploy \
             --build \
             --json \
             --prod \

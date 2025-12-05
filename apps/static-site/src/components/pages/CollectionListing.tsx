@@ -1,10 +1,11 @@
 import { renderCollectionLabel } from "@/helpers/collection-label";
-import { loadCollection } from "@/iiif";
+import { IIIF_URL, loadCollection } from "@/iiif";
+import { getTranslations } from "next-intl/server";
 import { Box } from "../blocks/Box";
 import { AutoLanguage } from "./AutoLanguage";
-import siteCollections from "@repo/iiif/build/collections/site/collection.json";
-import allCollections from "@repo/iiif/build/collections/collection.json";
-import { getTranslations } from "next-intl/server";
+
+const siteCollections = await fetch(`${IIIF_URL}collections/site/collection.json`).then((r) => r.json());
+const allCollections = await fetch(`${IIIF_URL}collections/collection.json`).then((r) => r.json());
 
 export async function CollectionListing() {
   const t = await getTranslations();
@@ -15,7 +16,7 @@ export async function CollectionListing() {
       <h2 className="my-5 text-2xl font-medium">{t("Curated collections")}</h2>
 
       <div className="mb-8 grid-cols-1 gap-0.5 md:grid md:grid-cols-4">
-        {siteCollections.items.map((collection) => {
+        {siteCollections.items.map((collection: any) => {
           const id = (collection.id.split("/iiif/").pop() || "").replace("/manifest.json", "");
           const thumbnail = (collection.thumbnail || [])[0];
 
@@ -41,7 +42,7 @@ export async function CollectionListing() {
       <h2 className="my-5 text-2xl font-medium">{t("All Collections")}</h2>
 
       <div className="mb-8 grid-cols-1 gap-0.5 md:grid md:grid-cols-4">
-        {allCollections.items.map((collection) => {
+        {allCollections.items.map((collection: any) => {
           const id = (collection.id.split("/iiif/").pop() || "").replace("/manifest.json", "");
           const slug = (collection as any)["hss:slug"];
           if (!slug.startsWith("collections/")) return null;

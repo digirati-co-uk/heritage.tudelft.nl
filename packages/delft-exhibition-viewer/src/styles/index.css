@@ -12,23 +12,5 @@ html {
 
 html,
 body {
-  @apply bg-gray-200;
-}
-
-.delft-exhibition-viewer,
-.delft-presentation-viewer {
-  --delft-title-card: rgb(250 204 21 / var(--tw-bg-opacity, 1));
-  --delft-title-card-text: #000;
-}
-
-.delft-exhibition-viewer.blue {
-  /* Example configuration */
-  --delft-title-card: #1a237e;
-  --delft-title-card-text: #fff;
-}
-
-.exhibition-html img {
-  width: 100%;
-  max-height: 300px;
-  object-fit: contain;
+  @apply bg-BackgroundPrimary text-TextSecondary;
 }

@@ -7,6 +7,7 @@ import "./styles/index.css";
 import "./styles/lib.css";
 import { LocaleString } from "react-iiif-vault";
 import { DelftPresentation } from "./DelftPresentation";
+import { DelftSlideshow } from "./DelftSlideshow";
 
 const search = new URLSearchParams(window.location.search);
 
@@ -15,6 +16,7 @@ function App() {
   const [collection, setCollection] = useState<any | null>(null);
 
   const isPresentation = search.get("type") === "presentation";
+  const isSlideshow = search.get("type") === "slideshow";
   const isEmbed = search.get("embed") === "true";
   const manifestId = search.get("manifest");
   const cutCorners = search.get("cut-corners");
@@ -69,7 +71,11 @@ function App() {
   return (
     <div className="flex w-full flex-col items-center">
       <div className="min-h-[90vh] w-full max-w-screen-xl px-5 py-10 lg:px-10">
-        {isPresentation ? (
+        {isSlideshow ? (
+          <div className="h-[600px] w-[780px]">
+            <DelftSlideshow manifest={manifest} options={options} language="en" viewObjectLinks={[]} />
+          </div>
+        ) : isPresentation ? (
           <div className="h-[800px]">
             {isEmbed ? (
               <iframe src={`/embed.html?manifest=${manifestId}`} className="h-full w-full" title="Presentation" />

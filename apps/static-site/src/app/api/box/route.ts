@@ -1,11 +1,18 @@
-import { NextRequest, NextResponse } from "next/server";
-import { allPublications } from "contentlayer/generated";
+import { IIIF_URL } from "@/iiif";
 import { getValue } from "@iiif/helpers";
+import { allPublications } from "contentlayer/generated";
+import { type NextRequest, NextResponse } from "next/server";
 
-import siteCollections from "@repo/iiif/build/collections/site/collection.json";
-import allCollections from "@repo/iiif/build/collections/collection.json";
-import exhibitions from "@repo/iiif/build/collections/exhibitions/collection.json";
-import manifests from "@repo/iiif/build/manifests/collection.json";
+const getSiteCollections = () =>
+  fetch(`${IIIF_URL}collections/site/collection.json`).then((r) => r.json());
+const getAllCollections = () =>
+  fetch(`${IIIF_URL}collections/collection.json`).then((r) => r.json());
+const getExhibitions = () =>
+  fetch(`${IIIF_URL}collections/exhibitions/collection.json`).then((r) =>
+    r.json(),
+  );
+const getManifests = () =>
+  fetch(`${IIIF_URL}manifests/collection.json`).then((r) => r.json());
 
 function getThumb(item: any) {
   if (!item.thumbnail || item.thumbnail.length === 0) return;
@@ -42,16 +49,22 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
   }
 
   if (type === "collection") {
+    const siteCollections = await getSiteCollections();
+    const allCollections = await getAllCollections();
+
     const results = [];
     const collectionItems = [...siteCollections.items, ...allCollections.items];
 
     for (const item of collectionItems) {
       let label = getValue(item.label, { fallbackLanguages: ["nl", "en"] });
       if (!label) {
-        label = ((item.label && item.label.nl) || ["Untitled Collection"])[0] as string;
+        label = ((item.label && item.label.nl) || [
+          "Untitled Collection",
+        ])[0] as string;
       }
       const fullSlug = item["hss:slug"].replace("iiif/", "/");
-      if (search && !label.toLowerCase().includes(search.toLowerCase())) continue;
+      if (search && !label.toLowerCase().includes(search.toLowerCase()))
+        continue;
 
       i++;
       if (i > maxResults) break;
@@ -70,16 +83,21 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
   }
 
   if (type === "exhibition") {
+    const exhibitions = await getExhibitions();
+
     const results = [];
     const collection = exhibitions;
 
     for (const item of collection.items) {
       let label = getValue(item.label, { fallbackLanguages: ["nl", "en"] });
       if (!label) {
-        label = ((item.label && item.label.nl) || ["Untitled Exhibition"])[0] as string;
+        label = ((item.label && item.label.nl) || [
+          "Untitled Exhibition",
+        ])[0] as string;
       }
       const fullSlug = item["hss:slug"].replace("iiif/", "/");
-      if (search && !label.toLowerCase().includes(search.toLowerCase())) continue;
+      if (search && !label.toLowerCase().includes(search.toLowerCase()))
+        continue;
 
       i++;
       if (i > maxResults) break;
@@ -100,7 +118,7 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
 
   if (type === "manifest") {
     const results = [];
-
+    const manifests = await getManifests();
     const collection = manifests;
     let total = 0;
 
@@ -109,10 +127,13 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
 
       let label = getValue(item.label, { fallbackLanguages: ["nl", "en"] });
       if (!label) {
-        label = ((item.label && item.label.nl) || ["Untitled Manifest"])[0] as string;
+        label = ((item.label && item.label.nl) || [
+          "Untitled Manifest",
+        ])[0] as string;
       }
       const fullSlug = item["hss:slug"].replace("iiif/", "/");
-      if (search && !label.toLowerCase().includes(search.toLowerCase())) continue;
+      if (search && !label.toLowerCase().includes(search.toLowerCase()))
+        continue;
       total++;
       if (total > maxResults) break;
       results.push({

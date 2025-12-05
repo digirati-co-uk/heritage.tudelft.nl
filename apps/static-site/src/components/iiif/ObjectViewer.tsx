@@ -1,10 +1,12 @@
 "use client";
 
-import { Link, getObjectSlug } from "@/navigation";
+import { Link, getObjectSlug } from "@/i18n/navigation";
 import { Dialog } from "@headlessui/react";
 import { useState } from "react";
+import { usePress } from "react-aria";
+import { Button } from "react-aria-components";
 import { CanvasPanel, useManifest } from "react-iiif-vault";
-import { CloseIcon } from "../atoms/CloseIcon";
+import { CloseIcon } from "../icons/CloseIcon";
 import { AutoLanguage } from "../pages/AutoLanguage";
 
 export function ObjectViewer({
@@ -20,17 +22,21 @@ export function ObjectViewer({
 }) {
   const manifest = useManifest();
   const [isOpen, setIsOpen] = useState(false);
+  const open = usePress({
+    onPress: () => setIsOpen(true),
+  });
+
   return (
     <>
       <Dialog className="relative z-50" open={isOpen} onClose={() => setIsOpen(false)}>
         <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
         <div className="mobile-height fixed inset-0 flex w-screen flex-row items-center p-4">
-          <button
+          <Button
             className="absolute right-8 top-8 z-20 flex h-12 w-12 items-center justify-center rounded bg-slate-900 hover:bg-slate-800"
-            onClick={() => setIsOpen(false)}
+            onPress={() => setIsOpen(false)}
           >
             <CloseIcon fill="#fff" />
-          </button>
+          </Button>
           <Dialog.Panel className="relative flex h-full w-full flex-col justify-center overflow-y-auto overflow-x-hidden rounded bg-white">
             <div className="min-h-0 flex-1">
               <CanvasPanel.Viewer>
@@ -49,7 +55,7 @@ export function ObjectViewer({
               </div>
               {objectLink ? (
                 <Link
-                  href={`/${getObjectSlug(objectLink)}${objectCanvasId ? `?canvasId=${btoa(objectCanvasId)}` : ""}`}
+                  href={`/${getObjectSlug(objectLink)}${objectCanvasId ? `?c=${objectCanvasId}` : ""}`}
                   className="underline underline-offset-4"
                 >
                   View object
@@ -59,7 +65,7 @@ export function ObjectViewer({
           </Dialog.Panel>
         </div>
       </Dialog>
-      <div className={className} onClick={() => setIsOpen(true)}>
+      <div className={className} {...open.pressProps}>
         {children}
       </div>
     </>

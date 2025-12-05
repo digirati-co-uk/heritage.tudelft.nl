@@ -1,14 +1,30 @@
+import { facetConfig } from "@/facets";
+import { useMemo } from "react";
+import { LocaleString } from "react-iiif-vault";
 import { RefinementList, useRefinementList } from "react-instantsearch";
 
 export function FacetList({ facet }: { facet: string }) {
   const { canRefine } = useRefinementList({ attribute: facet });
-  const label = facet.replace("topic_", "");
+  const { isDefault, label } = useMemo(() => {
+    const facetName = facet.replace("topic_", "");
+    const defaultLabel = { none: [facetName] };
+    const config = facetConfig.metadata[facetName as keyof typeof facetConfig.metadata];
+    if (config?.label) {
+      return { isDefault: false, label: config.label };
+    }
+    return { isDefault: true, label: defaultLabel };
+  }, [facet]);
   if (!canRefine) {
     return null;
   }
   return (
     <div className="mb-8">
-      <h3 className="mb-3 text-xl font-medium capitalize leading-tight text-gray-900">{label}</h3>
+      <LocaleString
+        as="h3"
+        className={`mb-3 text-xl font-medium leading-tight text-gray-900 ${isDefault && "capitalize"}`}
+      >
+        {label}
+      </LocaleString>
       <RefinementList
         searchable
         autoCapitalize="on"

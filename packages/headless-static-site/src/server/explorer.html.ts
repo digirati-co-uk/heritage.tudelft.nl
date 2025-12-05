@@ -62,7 +62,7 @@ export function explorerHtml() {
               {
                 type: "open-new-window",
                 label: "Edit manifest",
-                urlPattern: "https://deploy-preview-239--manifest-editor-testing.netlify.app/#manifest={MANIFEST}",
+                urlPattern: "https://manifest-editor.digirati.services/#manifest={MANIFEST}",
               },
             ],
           });

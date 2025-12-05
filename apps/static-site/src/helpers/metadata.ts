@@ -1,37 +1,59 @@
-import { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import type { Metadata } from "next";
 import { allPages } from ".contentlayer/generated";
-import { T } from "@iiif/helpers/dist/vault-actions-FZxiP2q-";
-import { U } from "react-iiif-vault/dist/useRenderingStrategy-2EaRC2Nc";
+import { cache } from "react";
 
-export const baseURL = process.env["URL"] ?? "http://localhost:3000";
+export const baseURL = process.env.URL ?? "http://localhost:3000";
 
 // Removes any parts that have no value (i.e. collection title if label is "")
 export function makeTitle(parts: (string | undefined | null)[]) {
-  let partsArray: string[] = [];
-  for (const part of parts) {
-    if (part) {
-      partsArray.push(part);
-    }
-  }
-  return partsArray.join(" | ");
+  return parts.filter(str => str).join(" | ");
 }
 
 type GetBasicMetadataProps = {
   locale: string;
-  siteName: string;
-  title: string | undefined;
-  description: string | undefined;
-  image: {
-    url: string | null | undefined;
-    width: number | undefined;
-    height: number | undefined;
+  title?: string;
+  description?: string;
+  image?: {
+    url: string;
+    width: number;
+    height: number;
   };
   path: string;
+
+
+  // Additional props.
+  titleParts: (string | null | undefined)[];
 };
+
+export function metaFromMdx({ locale, pageName, path }: {
+  pageName: string,
+  path: string,
+  locale: string
+}) {
+  const defaultMeta = getDefaultMetaMdx({ params: { locale } });
+  const page = getMdx({ params: { pageName, path, locale } });
+
+  return getBasicMetadata({
+    locale: locale,
+    titleParts: [page.title, defaultMeta.title],
+    description: page.description || defaultMeta.description,
+    image: mapImage(page) || mapImage(defaultMeta),
+    path: path,
+  });
+}
+
+function mapImage(image: { image?: string, imageHeight?: number, imageWidth?: number }) {
+  if (!image.image) return undefined;
+  return {
+    url: image.image,
+    width: image.imageWidth as number,
+    height: image.imageHeight as number,
+  };
+}
 
 export function getBasicMetadata(params: GetBasicMetadataProps): Metadata {
   const defaultPage = getDefaultMetaMdx({ params: { locale: params.locale } });
+
   return {
     metadataBase: new URL(baseURL),
     title: params.title,
@@ -39,15 +61,11 @@ export function getBasicMetadata(params: GetBasicMetadataProps): Metadata {
     openGraph: {
       title: params.title,
       description: params.description,
-      images: [
-        {
-          url: params.image.url ?? defaultPage.image ?? "",
-          width: defaultPage.imageWidth ?? undefined,
-          height: defaultPage.imageHeight ?? undefined,
-        },
+      images: params.image ? [params.image] : [
+        { url: defaultPage.image as string, width: defaultPage.imageWidth, height: defaultPage.imageHeight }
       ],
       locale: params.locale,
-      siteName: params.siteName,
+      siteName: defaultPage.title,
       type: "website",
       url: `${params.locale}${params.path}`,
     },
