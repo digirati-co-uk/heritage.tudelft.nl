@@ -7,6 +7,7 @@ import { allPublications } from "contentlayer/generated";
 import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { getTranslations } from "next-intl/server";
+import { notFound } from "next/navigation";
 
 export async function generateMetadata(data: {
   params: Promise<{ publication: string; locale: string }>;
@@ -68,7 +69,7 @@ export default async function Publication({
   const publicationInLanguage = allPublications.find((post) => post.id === publicationId && post.lang === locale);
   const publication = publicationInLanguage || allPublications.find((post) => post.id === publicationId);
 
-  if (!publication) throw new Error("Publication not found");
+  if (!publication) notFound();
 
   return (
     <Page>

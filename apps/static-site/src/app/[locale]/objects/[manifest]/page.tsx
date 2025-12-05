@@ -7,17 +7,21 @@ import { getImageServiceLinks, getRelatedObjects, loadManifest, loadManifestMeta
 import { getValue } from "@iiif/helpers";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { notFound } from "next/navigation";
 
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ manifest: string; locale: string }>;
-}): Promise<Metadata> {
+}): Promise<Metadata | null> {
   const { manifest: manifestId, locale } = await params;
   const t = await getTranslations();
   const defaultMeta = getDefaultMetaMdx({ params: { locale } });
   const manifestSlug = `manifests/${manifestId}`;
-  const meta = await loadManifestMeta(manifestSlug);
+  const meta = (await loadManifestMeta(manifestSlug)) || {};
+
+  if (!meta) return null;
+
   const objTitle = getValue(meta.intlLabel, {
     language: locale,
     fallbackLanguages: ["nl", "en"],
@@ -41,7 +45,7 @@ export async function generateMetadata({
       url: url,
       images: [
         {
-          url: meta.thumbnail.id ?? defaultMeta.image ?? "",
+          url: meta.thumbnail?.id ?? defaultMeta.image ?? "",
           width: meta.thumbnail ? meta.thumbnail.width : defaultMeta.imageWidth,
           height: meta.thumbnail ? meta.thumbnail.height : defaultMeta.imageHeight,
         },
@@ -68,6 +72,7 @@ export default async function ManifestP({
 
   const manifestSlug = `manifests/${manifestId}`;
   const { manifest, meta } = await loadManifest(manifestSlug);
+  if (!manifest) notFound();
   const exhibitionsUnfiltered: any[] = imageServiceLinks[manifestSlug as keyof typeof imageServiceLinks] || [];
   const exhibitions = [];
   const seenIds: string[] = [];

@@ -6,6 +6,7 @@ import { getValue } from "@iiif/helpers";
 import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { getTranslations } from "next-intl/server";
+import { notFound } from "next/navigation";
 
 export async function generateMetadata({
   params,
@@ -17,12 +18,12 @@ export async function generateMetadata({
   const slug = `collections/${collectionId}`;
   const { collection } = await loadCollection(slug);
   const defaultMeta = getDefaultMetaMdx({ params: { locale } });
-  const collTitle = getValue(collection.label, {
+  const collTitle = getValue(collection?.label, {
     language: locale,
     fallbackLanguages: ["nl", "en"],
   });
   const description =
-    getValue(collection.summary, {
+    getValue(collection?.summary, {
       language: locale,
       fallbackLanguages: ["nl", "en"],
     }) ?? defaultMeta.description;
@@ -59,6 +60,8 @@ export default async function Collection({
   setRequestLocale(locale);
   const slug = `collections/${collection}`;
   const { collection: collectionData, meta } = await loadCollection(slug);
+
+  if (!collectionData) notFound();
 
   return (
     <Page>

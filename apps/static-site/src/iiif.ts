@@ -22,25 +22,29 @@ export function relativeIIIFUrl(remoteOrLocal: string) {
 }
 
 export async function loadCollection(slug: string) {
-  const collectionReq = fetch(
-    `${IIIF_URL}${slug}/collection.json`,
-    fetchOptions,
-  );
-  // const metaReq = fetch(`${IIIF_URL}${slug}/meta.json`);
-  const ret: { collection: Collection; meta: any } = { meta: {} } as any;
+  try {
+    const collectionReq = fetch(
+      `${IIIF_URL}${slug}/collection.json`,
+      fetchOptions,
+    );
+    // const metaReq = fetch(`${IIIF_URL}${slug}/meta.json`);
+    const ret: { collection: Collection; meta: any } = { meta: {} } as any;
 
-  const [collection, meta] = await Promise.all([
-    collectionReq,
-    Promise.resolve({ ok: false }),
-  ]);
+    const [collection, meta] = await Promise.all([
+      collectionReq,
+      Promise.resolve({ ok: false }),
+    ]);
 
-  if (meta.ok) {
-    // ret.meta = await meta.json();
+    if (meta.ok) {
+      // ret.meta = await meta.json();
+    }
+
+    ret.collection = await collection.json();
+
+    return ret;
+  } catch (error) {
+    return { collection: null, meta: null };
   }
-
-  ret.collection = await collection.json();
-
-  return ret;
 }
 
 export async function loadCollectionMeta(slug: string) {
@@ -57,15 +61,21 @@ export async function loadMeta(name: string) {
 }
 
 export async function loadManifest(slug: string) {
-  const manifestReq = fetch(`${IIIF_URL}${slug}/manifest.json`, fetchOptions);
-  const metaReq = fetch(`${IIIF_URL}${slug}/meta.json`, fetchOptions);
+  try {
+    const manifestReq = fetch(`${IIIF_URL}${slug}/manifest.json`, fetchOptions);
+    const metaReq = fetch(`${IIIF_URL}${slug}/meta.json`, fetchOptions);
 
-  return Promise.all([manifestReq, metaReq]).then(async ([manifest, meta]) => {
-    return {
-      manifest: await manifest.json(),
-      meta: await meta.json(),
-    };
-  });
+    return await Promise.all([manifestReq, metaReq]).then(
+      async ([manifest, meta]) => {
+        return {
+          manifest: await manifest.json(),
+          meta: await meta.json(),
+        };
+      },
+    );
+  } catch (error) {
+    return { manifest: null, meta: null };
+  }
 }
 
 export async function loadManifestMeta(slug: string) {

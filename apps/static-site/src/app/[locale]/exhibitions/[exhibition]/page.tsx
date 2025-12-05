@@ -9,6 +9,7 @@ import { getValue } from "@iiif/helpers";
 import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { getTranslations } from "next-intl/server";
+import { notFound } from "next/navigation";
 import ExhibitionPage from "../../../../components/pages/ExhibitionPage";
 
 export async function generateMetadata({
@@ -65,6 +66,8 @@ export default async function Exhibition({
   const manifestSlug = `manifests/${exhibition}`;
   const { manifest, meta } = await loadManifest(manifestSlug);
   const viewObjectLinks = await getViewObjectLinks(manifestSlug);
+
+  if (!manifest) notFound();
 
   return (
     <Page>
