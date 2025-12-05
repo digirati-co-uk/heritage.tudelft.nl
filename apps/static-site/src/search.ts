@@ -82,7 +82,7 @@ export async function createTypesense() {
   const client = new TypesenseInstantSearchAdapter(searchConfiguration);
 
   return {
-    facets: finalFacets.concat("collections"),
+    facets: finalFacets,
     facetConfig,
     client,
     index: TYPESENSE_COLLECTION_NAME,
