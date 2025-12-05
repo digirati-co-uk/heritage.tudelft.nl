@@ -1,5 +1,6 @@
 import { facetConfig } from "@/facets";
 import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter";
+import type { TypesenseInstantsearchAdapterOptions } from "typesense-instantsearch-adapter";
 import { IIIF_URL } from "./iiif.client";
 
 const TYPESENSE_API_KEY =
@@ -25,6 +26,11 @@ export const typesenseServerConfig = {
       protocol: TYPESENSE_PROTOCOL,
     },
   ],
+};
+
+const searchConfiguration: TypesenseInstantsearchAdapterOptions = {
+  server: typesenseServerConfig,
+  additionalSearchParameters: {},
 };
 
 export async function createTypesense() {
@@ -65,15 +71,16 @@ export async function createTypesense() {
 
   const finalFacets = [...orderedFacets, ...unorderedFacets];
 
-  const client = new TypesenseInstantSearchAdapter({
-    server: typesenseServerConfig,
-    additionalSearchParameters: {
-      query_by: `label,summary,type,plaintext,${finalFacets.join(",")}`,
-      highlight_fields: "label,summary",
-      highlight_start_tag: "<mark>",
-      highlight_end_tag: "</mark>",
-    },
-  });
+  searchConfiguration.additionalSearchParameters = {
+    query_by: `label,summary,type,plaintext,collections,${finalFacets.join(",")}`,
+    highlight_fields: "label,summary",
+    highlight_start_tag: "<mark>",
+    highlight_end_tag: "</mark>",
+    sort_by: "_rand():asc",
+    per_page: 20,
+  };
+
+  const client = new TypesenseInstantSearchAdapter(searchConfiguration);
 
   return {
     facets: finalFacets,
@@ -81,4 +88,17 @@ export async function createTypesense() {
     client,
     index: TYPESENSE_COLLECTION_NAME,
   };
+}
+
+// Helper function to toggle random sorting at runtime:
+export function updateSearchAdapter(
+  query: string,
+  adapter: TypesenseInstantSearchAdapter,
+) {
+  const params = searchConfiguration.additionalSearchParameters;
+  const enable = query.trim().length === 0;
+  if (params) {
+    params.sort_by = enable ? "_rand():asc" : "";
+  }
+  adapter.updateConfiguration(searchConfiguration);
 }
