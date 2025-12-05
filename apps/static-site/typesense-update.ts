@@ -131,12 +131,13 @@ if (existsSync(join(IIIF_DIRECTORY, "meta/search/manifests.schema.json"))) {
         slug: `publications/${publication.id}`,
         plaintext: publication.body.raw,
       });
-
-      await client
-        .collections(INDEX_NAME)
-        .documents()
-        .import(jsonDocuments, { action: "upsert" });
     }
+
+    await client
+      .collections(INDEX_NAME)
+      .documents()
+      .import(jsonDocuments, { action: "upsert" });
+
     console.log(
       `Imported ${jsonDocuments.length} publications into the '${INDEX_NAME}' collection`,
     );
