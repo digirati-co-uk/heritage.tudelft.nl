@@ -102,7 +102,7 @@ export function DelftExhibitionInner(props: DelftExhibitionProps) {
   return (
     <div className="exhibition-viewer delft-exhibition-viewer">
       {disablePresentation ? null : (
-        <Dialog className="relative z-50" open={enabled} onClose={() => setEnabled(false)}>
+        <Dialog className="exhibition-viewer exhibition-viewer-dialog" open={enabled} onClose={() => setEnabled(false)}>
           <div className="fixed modal-top left-0 right-0 bg-black/30" aria-hidden="true" />
           <div className="mobile-height fixed modal-top left-0 bottom-0 right-0 flex w-screen items-center lg:p-4">
             <button

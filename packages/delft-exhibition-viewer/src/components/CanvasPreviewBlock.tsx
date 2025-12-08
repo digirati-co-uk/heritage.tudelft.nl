@@ -247,7 +247,7 @@ function CanvasPreviewBlockInner({
         )}
       </div>
       <Dialog
-        className="relative z-50"
+        className="exhibition-viewer exhibition-viewer-dialog"
         open={isOpen}
         onClose={withViewTransition(
           container.current,

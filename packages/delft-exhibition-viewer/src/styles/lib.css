@@ -34,6 +34,28 @@
   --delft-title-transform: uppercase;
 }
 
+.exhibition-viewer.exhibition-viewer-dialog {
+  @apply relative z-50;
+}
+
+.exhibition-viewer.exhibition-viewer-toc {
+  @apply z-40 flex max-h-[90vh] flex-row content-center justify-center bg-ControlBar px-4 transition-all duration-300 ease-in-out transform origin-bottom;
+}
+
+.exhibition-viewer.exhibition-viewer-toc--fixed {
+  @apply fixed bottom-[3.5rem] left-0 right-0;
+}
+
+.exhibition-viewer.exhibition-viewer-toc--absolute {
+  @apply absolute bottom-0;
+}
+.exhibition-viewer.exhibition-viewer-toc--open {
+  @apply opacity-100 scale-100;
+}
+.exhibition-viewer.exhibition-viewer-toc--closed {
+  @apply opacity-0 scale-95;
+}
+
 .exhibition-info-block h2 {
   margin-top: 1rem;
   margin-bottom: 1rem;

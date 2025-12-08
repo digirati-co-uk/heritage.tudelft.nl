@@ -3,16 +3,11 @@ import { createRangeHelper, getValue } from "@iiif/helpers";
 import type { InternationalString } from "@iiif/presentation-3";
 import { useMemo, useState } from "react";
 import { usePress } from "react-aria";
-import {
-  LocaleString,
-  useManifest,
-  useVault,
-  useVaultSelector,
-} from "react-iiif-vault";
+import { LocaleString, useManifest, useVault, useVaultSelector } from "react-iiif-vault";
 import { twMerge } from "tailwind-merge";
 import { useHashValue } from "../../helpers/use-hash-value";
-import { TableOfContents } from "./TableOfContents";
 import { ContentsIcon } from "../icons/ContentsIcon";
+import { TableOfContents } from "./TableOfContents";
 
 export function TableOfContentsBar({
   initialOpen = false,
@@ -38,16 +33,9 @@ export function TableOfContentsBar({
   const manifest = useManifest();
   const vault = useVault();
   const rangeHelper = useMemo(() => createRangeHelper(vault), [vault]);
-  const range = useVaultSelector((s, vault) =>
-    vault.get((manifest?.structures || [])[0]),
-  );
-  const canvases = useVaultSelector((s, vault) =>
-    vault.get(manifest?.items || []),
-  );
-  const tree = useMemo(
-    () => rangeHelper.rangeToTableOfContentsTree(range),
-    [range, rangeHelper],
-  );
+  const range = useVaultSelector((s, vault) => vault.get((manifest?.structures || [])[0]));
+  const canvases = useVaultSelector((s, vault) => vault.get(manifest?.items || []));
+  const tree = useMemo(() => rangeHelper.rangeToTableOfContentsTree(range), [range, rangeHelper]);
 
   const items = tree?.items || canvases || [];
 
@@ -77,9 +65,7 @@ export function TableOfContentsBar({
 
           fixed && "fixed bottom-0 left-0 right-0 px-4 lg:px-9",
 
-          currentItem || !hideInitial
-            ? "pointer-events-auto opacity-1"
-            : "pointer-events-none opacity-0",
+          currentItem || !hideInitial ? "pointer-events-auto opacity-1" : "pointer-events-none opacity-0",
         )}
       >
         <div className="relative z-30 w-full max-w-screen-xl px-5 lg:px-10">
@@ -118,12 +104,10 @@ export function TableOfContentsBar({
       {fixed ? (
         <Dialog
           className={twMerge(
-            "z-40 flex max-h-[90vh] flex-row content-center justify-center bg-ControlBar px-4",
-            fixed
-              ? "fixed bottom-[3.5rem] left-0 right-0 "
-              : "absolute bottom-0",
+            "exhibition-viewer exhibition-viewer-toc",
+            fixed ? "exhibition-viewer-toc--fixed" : "exhibition-viewer-toc--absolute",
             "transition-all duration-300 ease-in-out transform origin-bottom",
-            isTocOpen ? "opacity-1 scale-100" : "opacity-0 scale-95",
+            isTocOpen ? "exhibition-viewer-toc--open" : "exhibition-viewer-toc--closed",
           )}
           open={isTocOpen}
           onClose={() => setTocOpen(false)}
