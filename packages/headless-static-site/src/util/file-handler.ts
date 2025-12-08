@@ -71,10 +71,6 @@ export class FileHandler {
 
   async loadJson(path: string, fresh = false) {
     const filePath = this.resolve(path);
-    // Returns empty object if not exists.
-    if (!this.exists(filePath)) {
-      return {};
-    }
     return this.openJson(filePath, true, fresh);
   }
 

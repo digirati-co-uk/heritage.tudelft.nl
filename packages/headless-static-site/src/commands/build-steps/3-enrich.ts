@@ -23,9 +23,10 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
     requestCacheDir,
     files,
     search,
+    trace,
   } = buildConfig;
 
-  const start = Date.now();
+  const start = performance.now();
   const queue = new PQueue();
 
   if (!options.enrich) {
@@ -85,12 +86,12 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
   for (const enrichment of allEnrichments) {
     if (enrichment.configure) {
       const enrichmentConfig = config.config?.[enrichment.id];
-      const start = Date.now();
+      const start = performance.now();
       enrichmentConfigs[enrichment.id] = await enrichment.configure(
         { config, build: buildConfig, fileHandler: files },
         enrichmentConfig
       );
-      stats.configiure[enrichment.id] = Date.now() - start;
+      stats.configiure[enrichment.id] = performance.now() - start;
     } else {
       enrichmentConfigs[enrichment.id] = config.config?.[enrichment.id];
     }
@@ -106,8 +107,11 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
   const requestCache = createStoreRequestCache("_enrich", requestCacheDir);
 
   const processManifest = async (manifest: ActiveResourceJson) => {
+    trace?.startEnrich(manifest);
+
     if (!manifest.vault) {
       progress.increment(1 + (manifest.subResources || 0));
+      trace?.endEnrich(manifest);
       return;
     }
     const skipSteps = config.stores[manifest.storeId]?.skip || [];
@@ -155,7 +159,7 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
     }
 
     const runEnrichment = async (enrichment: Enrichment) => {
-      const startTime = Date.now();
+      const startTime = performance.now();
       const filesDir = join(cacheDir, manifest.slug, "files");
       const resourceFiles = createResourceHandler(filesDir, files);
       const storeConfig = enrichmentConfigs[enrichment.id] || {};
@@ -180,6 +184,7 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
           enrichmentConfig
         ));
       if (!valid) {
+        trace?.enrichCacheHit(manifest, enrichment);
         // console.log('Skipping "' + enrichment.name + '" for "' + manifest.slug + '" because it is not modified');
         return;
       }
@@ -201,10 +206,10 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
         },
         enrichmentConfig
       );
-
+      trace?.enrich(manifest, enrichment, result, startTime, performance.now());
       cachedResource.handleResponse(result, enrichment);
 
-      stats.run[enrichment.id] = (stats.run[enrichment.id] || 0) + (Date.now() - startTime);
+      stats.run[enrichment.id] = (stats.run[enrichment.id] || 0) + (performance.now() - startTime);
     };
 
     const processedEnrichments = [];
@@ -230,7 +235,6 @@ ${errors.map((e, n) => `  ${n + 1})  ${(e as any)?.reason?.message}`).join(", ")
     addToSearchIndex(await cachedResource.searchRecord.value, indices);
     recordIndices(indices);
     await cachedResource.save();
-
     progress.increment();
 
     let canvasEnrichmentSteps = canvasEnrichment;
@@ -262,7 +266,7 @@ ${errors.map((e, n) => `  ${n + 1})  ${(e as any)?.reason?.message}`).join(", ")
         });
 
         const runEnrichment = async (enrichment: Enrichment) => {
-          const startTime = Date.now();
+          const startTime = performance.now();
           const storeConfig = enrichmentConfigs[enrichment.id] || {};
           const enrichmentConfig = Object.assign(
             {},
@@ -320,7 +324,7 @@ ${errors.map((e, n) => `  ${n + 1})  ${(e as any)?.reason?.message}`).join(", ")
 
           cachedCanvasResource.handleResponse(result, enrichment);
           cachedResource.didChange(result.didChange);
-          stats.run[enrichment.id] = (stats.run[enrichment.id] || 0) + (Date.now() - startTime);
+          stats.run[enrichment.id] = (stats.run[enrichment.id] || 0) + (performance.now() - startTime);
         };
         manifestQueue.add(async () => {
           const processedEnrichments = [];
@@ -356,7 +360,7 @@ ${errors.map((e, n) => `  ${n + 1}) ${(e as any)?.reason?.message}`).join(", ")}
     } else {
       progress.increment(manifest.subResources || 0);
     }
-
+    trace?.endEnrich(manifest);
     await cachedResource.saveVault();
   };
 
@@ -368,7 +372,7 @@ ${errors.map((e, n) => `  ${n + 1}) ${(e as any)?.reason?.message}`).join(", ")}
 
   for (const enrichment of allEnrichments) {
     queue.add(async () => {
-      const startTime = Date.now();
+      const startTime = performance.now();
       if (enrichment.close) {
         const enrichmentConfig = enrichmentConfigs[enrichment.id] || {};
         await enrichment.close(enrichmentConfig);
@@ -380,7 +384,7 @@ ${errors.map((e, n) => `  ${n + 1}) ${(e as any)?.reason?.message}`).join(", ")}
           { config, build: buildConfig, fileHandler: files },
           enrichmentConfig
         );
-        stats.run[enrichment.id] = (stats.run[enrichment.id] || 0) + (Date.now() - startTime);
+        stats.run[enrichment.id] = (stats.run[enrichment.id] || 0) + (performance.now() - startTime);
       }
     });
   }
@@ -393,7 +397,7 @@ ${errors.map((e, n) => `  ${n + 1}) ${(e as any)?.reason?.message}`).join(", ")}
   await Promise.all(savingFiles);
   savingFiles = [];
 
-  stats.total = Date.now() - start;
+  stats.total = performance.now() - start;
 
   return {
     stats,

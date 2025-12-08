@@ -16,6 +16,7 @@ import { explorerHtml } from "./server/explorer.html";
 import { indexHtml } from "./server/index.html";
 import { FileHandler } from "./util/file-handler";
 import { getConfig } from "./util/get-config";
+import { Tracer } from "./util/tracer";
 
 const require = createRequire(import.meta.url);
 
@@ -60,6 +61,7 @@ const pathCache = { allPaths: {} as Record<string, string> };
 
 let isWatching = false;
 const fileHandler = new FileHandler(fs, cwd());
+const tracer = new Tracer();
 const storeRequestCaches = {};
 
 const state = {
@@ -71,6 +73,7 @@ const cachedBuild = async (options: BuildOptions) => {
     storeRequestCaches,
     fileHandler,
     pathCache,
+    tracer,
   });
 };
 
@@ -93,6 +96,10 @@ app.get("/config", async (ctx) => {
     pendingFiles: Array.from(fileHandler.openJsonChanged.keys()).filter(Boolean),
     ...config,
   });
+});
+
+app.get("trace.json", async (ctx) => {
+  return ctx.json(tracer.toJSON());
 });
 
 app.get("/client.js", async (ctx) => {
@@ -138,6 +145,7 @@ app.get("/watch", async (ctx) => {
             exact: realPath,
             emit: true,
             cache: true,
+            dev: true,
           });
           emitter.emit("file-refresh", { path: realPath });
         }
@@ -198,6 +206,7 @@ app.get(
       debug: ctx.req.query("debug") === "true",
       enrich: ctx.req.query("enrich") !== "false",
       extract: ctx.req.query("extract") !== "false",
+      dev: true,
     });
 
     const { files, log, fileTypeCache, ...config } = buildConfig;
@@ -243,7 +252,10 @@ app.post(
       state.shouldRebuild = false;
     }
 
-    const { buildConfig, emitted, enrichments, extractions, parsed, stores } = await cachedBuild(body);
+    const { buildConfig, emitted, enrichments, extractions, parsed, stores } = await cachedBuild({
+      ...body,
+      dev: true,
+    });
 
     const report = {
       emitted: {

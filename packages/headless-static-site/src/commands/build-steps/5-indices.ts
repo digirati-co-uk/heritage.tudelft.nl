@@ -34,7 +34,7 @@ export async function indices(
     searchIndexes?: SearchIndexes;
     allIndices?: Record<string, string[]>;
   },
-  { options, server, buildDir, config, cacheDir, topicsDir, collectionRewrites, files }: BuildConfig
+  { options, server, buildDir, config, cacheDir, topicsDir, collectionRewrites, files, trace }: BuildConfig
 ) {
   if (options.exact || options.stores) {
     return;
@@ -239,6 +239,10 @@ export async function indices(
   await files.mkdir(join(buildDir, "meta"));
 
   await writeJson(join(buildDir, "meta", "indices.json"), indexMap);
+
+  if (trace && options.debug) {
+    await writeJson(join(buildDir, "meta", "trace.json"), trace.toJSON());
+  }
 
   if (indexCollection) {
     const indexCollectionJson = createCollection({

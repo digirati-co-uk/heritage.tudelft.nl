@@ -28,6 +28,7 @@ import type { Extraction } from "../util/extract.ts";
 import { FileHandler } from "../util/file-handler.ts";
 import { type BuildBuiltIns, getBuildConfig } from "../util/get-build-config.ts";
 import type { Rewrite } from "../util/rewrite.ts";
+import type { Tracer } from "../util/tracer.ts";
 import { parseStores } from "./build-steps/0-parse-stores.ts";
 import { loadStores } from "./build-steps/1-load-stores.ts";
 import { extract } from "./build-steps/2-extract.ts";
@@ -164,10 +165,12 @@ export async function build(
     fileHandler = new FileHandler(fs, cwd(), true),
     pathCache = { allPaths: {} },
     storeRequestCaches,
+    tracer,
   }: {
     fileHandler?: FileHandler;
     pathCache?: { allPaths: Record<string, string> };
     storeRequestCaches?: Record<string, any>;
+    tracer?: Tracer;
   } = {}
 ) {
   const buildConfig = await getBuildConfig(
@@ -182,6 +185,7 @@ export async function build(
     {
       ...builtIns,
       fileHandler,
+      tracer,
     }
   );
 

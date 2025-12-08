@@ -1,11 +1,11 @@
 import { join } from "node:path";
 import PQueue from "p-queue";
 import { createCacheResource } from "../../util/cached-resource.ts";
+import { createResourceHandler } from "../../util/create-resource-handler.ts";
 import { makeProgressBar } from "../../util/make-progress-bar.ts";
 import { createStoreRequestCache } from "../../util/store-request-cache.ts";
 import type { ActiveResourceJson } from "../../util/store.ts";
 import type { BuildConfig } from "../build.ts";
-import { createResourceHandler } from "../../util/create-resource-handler.ts";
 
 export async function extract(
   {
@@ -33,7 +33,7 @@ export async function extract(
     return {};
   }
 
-  const startTime = Date.now();
+  const startTime = performance.now();
   const requestCache = createStoreRequestCache("_extract", requestCacheDir);
   const extractionConfigs: Record<string, any> = {};
   const stats: Record<string, number> = {};
@@ -70,6 +70,8 @@ export async function extract(
     queue.add(async () => {
       const skipSteps = config.stores[manifest.storeId]?.skip || [];
       const runSteps = config.stores[manifest.storeId]?.run;
+
+      buildConfig.trace?.startExtractions(manifest);
 
       const cachedResource = createCacheResource({
         resource: manifest,
@@ -126,7 +128,7 @@ export async function extract(
           ));
         if (valid) {
           log(`Running extract: ${extraction.name} for ${manifest.slug}`);
-          const startExtract = Date.now();
+          const startExtract = performance.now();
           const result = await extraction.handler(
             manifest,
             {
@@ -143,9 +145,12 @@ export async function extract(
             },
             extractConfig
           );
-          stats[extraction.id] = (stats[extraction.id] || 0) + Date.now() - startExtract;
+          buildConfig.trace?.extraction(manifest, extraction, result, startExtract, performance.now());
+          stats[extraction.id] = (stats[extraction.id] || 0) + performance.now() - startExtract;
 
           cachedResource.handleResponse(result, extraction);
+        } else {
+          buildConfig.trace?.extractionCacheHit(manifest, extraction);
         }
 
         savingFiles.push(cachedResource.save());
@@ -207,7 +212,7 @@ export async function extract(
             if (!valid) {
               continue;
             }
-            const startExtract = Date.now();
+            const startExtract = performance.now();
             const result = await canvasExtraction.handler(
               canvasResource,
               {
@@ -224,7 +229,7 @@ export async function extract(
               },
               extractConfig
             );
-            stats[canvasExtraction.id] = (stats[canvasExtraction.id] || 0) + Date.now() - startExtract;
+            stats[canvasExtraction.id] = (stats[canvasExtraction.id] || 0) + performance.now() - startExtract;
 
             canvasCache.handleResponse(result, canvasExtraction);
           }
@@ -242,19 +247,21 @@ export async function extract(
             temp[canvasExtraction.id][manifest.slug]
           ) {
             const extractionConfig = extractionConfigs[canvasExtraction.id] || {};
-            const startExtract = Date.now();
+            const startExtract = performance.now();
             await canvasExtraction.collectManifest(
               manifest,
               temp[canvasExtraction.id][manifest.slug],
               { config, build: buildConfig, fileHandler: files },
               extractionConfig
             );
-            stats[canvasExtraction.id] = (stats[canvasExtraction.id] || 0) + Date.now() - startExtract;
+            stats[canvasExtraction.id] = (stats[canvasExtraction.id] || 0) + performance.now() - startExtract;
           }
         }
       } else {
         progress.increment(manifest.subResources || 0);
       }
+
+      buildConfig.trace?.endExtractions(manifest);
     });
   }
 
@@ -290,14 +297,14 @@ export async function extract(
               collections,
               fileHandler: files,
             });
-            const startExtract = Date.now();
+            const startExtract = performance.now();
             const manifestInjected = await inject(
               foundManifest,
               resp.temp[manifestSlug],
               { config, build: buildConfig, fileHandler: files },
               extractionConfig
             );
-            stats[extraction.id] = (stats[extraction.id] || 0) + Date.now() - startExtract;
+            stats[extraction.id] = (stats[extraction.id] || 0) + performance.now() - startExtract;
             manifestCache.handleResponse(manifestInjected, extraction);
             await manifestCache.save();
           });
@@ -308,7 +315,7 @@ export async function extract(
 
   progress.stop();
 
-  stats._total = Date.now() - startTime;
+  stats._total = performance.now() - startTime;
 
   return { collections, stats };
 }
