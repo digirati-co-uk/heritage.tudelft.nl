@@ -1,4 +1,88 @@
-.cut-corners {
+:root {
+  /* Base colors */
+  --delft-bg-primary: rgb(229 231 235); /* gray-200 */
+  --delft-bg-secondary: #fff;
+  --delft-bg-overlay: rgba(0, 0, 0, 0.3);
+
+  /* Text colors */
+  --delft-text-primary: #fff;
+  --delft-text-secondary: #000;
+  --delft-image-caption: #fff;
+  --delft-annotation-selected: rgb(250, 204, 21);
+
+  /* UI elements */
+  --delft-control-bar: #6d6e70;
+  --delft-control-bar-border: #5a5b5d;
+  --delft-control-hover: rgba(0, 0, 0, 0.1);
+
+  --delft-progress-bar: #fff;
+
+  --delft-close-background: #000;
+  --delft-close-background-hover: #373737;
+  --delft-close-text: #fff;
+
+  /* Title elements */
+  --delft-title-card: rgb(250 204 21 / var(--tw-bg-opacity, 1)); /* yellow-400 */
+  --delft-title-card-text: #000;
+
+  /* Info blocks */
+  --delft-info-block: #000;
+  --delft-info-block-text: #fff;
+
+  /* Viewer elements */
+  --delft-viewer-background: #373737;
+  --delft-title-transform: uppercase;
+}
+
+.exhibition-viewer.exhibition-viewer-dialog {
+  @apply relative z-50;
+}
+
+.exhibition-viewer.exhibition-viewer-toc {
+  @apply z-40 flex max-h-[90vh] flex-row content-center justify-center bg-ControlBar px-4 transition-all duration-300 ease-in-out transform origin-bottom;
+}
+
+.exhibition-viewer.exhibition-viewer-toc--fixed {
+  @apply fixed bottom-[3.5rem] left-0 right-0;
+}
+
+.exhibition-viewer.exhibition-viewer-toc--absolute {
+  @apply absolute bottom-0;
+}
+.exhibition-viewer.exhibition-viewer-toc--open {
+  @apply opacity-100 scale-100;
+}
+.exhibition-viewer.exhibition-viewer-toc--closed {
+  @apply opacity-0 scale-95;
+}
+
+.exhibition-info-block h2 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-family: var(--font-mono);
+  text-transform: var(--delft-title-transform);
+}
+.exhibition-info-block p {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.exhibition-info-block a {
+  text-decoration-line: underline;
+  text-underline-offset: 4px;
+}
+
+.delft-title {
+  text-transform: var(--delft-title-transform);
+}
+
+.exhibition-html img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+}
+
+*[data-cut-corners-enabled="true"] .cut-corners {
   -webkit-clip-path: polygon(
     1rem 0,
     calc(100% - 1rem) 0,
@@ -34,22 +118,16 @@
 
 /* Exhibition editorial */
 
-.exhibition-info-block h2 {
-  @apply my-4 text-center font-mono uppercase;
-}
-.exhibition-info-block p {
-  @apply my-4;
-}
-.exhibition-info-block a {
-  @apply underline underline-offset-4;
+.modal-top {
+  top: var(--ev-modal-top, 0);
 }
 
 /* Atlas styling */
-.atlas-container {
+.exhibition-canvas-panel {
   min-width: 0;
   min-height: 0;
   --atlas-container-flex: 1 1 0px;
-  --atlas-background: #373737;
+  --atlas-background: var(--delft-viewer-background);
   --atlas-container-height: 100%;
 }
 
@@ -112,4 +190,47 @@ div[data-textual-content="true"] p {
   /* For Firefox and offshoots */
   scrollbar-color: #f4f4f5 transparent;
   scrollbar-width: thin;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.5s;
+}
+
+.delft-presentation-viewer {
+  grid-template-areas: "slide";
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  display: grid;
+}
+
+.delft-presentation-viewer .delft-slide {
+  grid-area: slide;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.delft-presentation-viewer {
+  grid-template-areas: "slide";
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  display: grid;
+}
+
+.delft-presentation-viewer .delft-slide {
+  grid-area: slide;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.mdx-editor-toolbar {
+  position: sticky;
+  top: 0;
+}
+
+.exhibition-slideshow-slide {
+  flex: 0 0 100%;
+  display: flex;
 }

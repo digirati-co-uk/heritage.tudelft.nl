@@ -26,7 +26,7 @@ export interface ExhibitionStep {
   nextCanvasId: null | string;
 }
 
-interface ExhibitionStore {
+export interface ExhibitionStore {
   currentStep: number;
   steps: ExhibitionStep[];
 
@@ -43,7 +43,7 @@ interface ExhibitionStore {
   isPlaying: boolean;
 }
 
-type ExhibitionStoreOptions = {
+export type ExhibitionStoreOptions = {
   vault: Vault;
   manifest?: Manifest;
   canvases?: Canvas[];
@@ -64,6 +64,10 @@ export function ExhibitionProvider({
   children: React.ReactNode;
 }) {
   return <ExhibitionContext.Provider value={store}>{children}</ExhibitionContext.Provider>;
+}
+
+export function useExhibitionStepCanvas() {
+  return useExhibitionStep()?.canvasId;
 }
 
 export function useExhibition() {
@@ -145,7 +149,25 @@ function getCanvasTourSteps({
       region = expandTarget(target.target as any);
     }
 
-    const objectLink = imageService ? objectLinks.find((link) => link.service === imageService) || null : null;
+    const objectLink = imageService
+      ? objectLinks.find((link) => {
+          if (link.service === imageService) {
+            return true;
+          }
+          // DLCS "canonical" hack.
+          if (imageService.replace("/iiif-img/v3/", "/iiif-img/") === link.service) {
+            return true;
+          }
+          if (imageService.replace("/iiif-img/v2/", "/iiif-img/") === link.service) {
+            return true;
+          }
+          if (imageService.replace("/thumbs/", "/iiif-img/") === link.service) {
+            return true;
+          }
+
+          return false;
+        }) || null
+      : null;
 
     steps.push({
       label: target.label || null,
@@ -214,7 +236,10 @@ export function createExhibitionStore(options: ExhibitionStoreOptions) {
     allSteps.push(...steps);
   }
 
-  const startIndex = allSteps.findIndex((step) => step.canvasIndex === startCanvasIndex);
+  let startIndex = allSteps.findIndex((step) => step.canvasIndex === startCanvasIndex);
+  if (startIndex === -1) {
+    startIndex = 0;
+  }
 
   return createStore<ExhibitionStore>((set, get) => {
     let nextFrameTimer: Timer | null = null;
@@ -278,7 +303,7 @@ export function createExhibitionStore(options: ExhibitionStoreOptions) {
 
       previousStep() {
         const currentStep = get().currentStep;
-        if (currentStep > -1) {
+        if (currentStep > 0) {
           if (get().isPlaying) {
             pause();
           }
@@ -287,7 +312,7 @@ export function createExhibitionStore(options: ExhibitionStoreOptions) {
       },
 
       goToStep(step: number) {
-        if (step >= -1 && step < get().steps.length) {
+        if (step >= 0 && step < get().steps.length) {
           set({ currentStep: step });
         }
       },

@@ -1,9 +1,12 @@
 "use client";
 
 import { create } from "iiif-hss/client";
-import slugs from "@repo/iiif/build/config/slugs.json";
+import { cache } from "react";
 
-let IIIF_URL = process.env["IIIF_URL"] || process.env["NEXT_PUBLIC_IIIF_URL"] || "http://localhost:7111/";
+export let IIIF_URL =
+  process.env["IIIF_URL"] ||
+  process.env["NEXT_PUBLIC_IIIF_URL"] ||
+  "http://localhost:7111/";
 
 if (!IIIF_URL.endsWith("/")) {
   IIIF_URL += "/";
@@ -20,6 +23,11 @@ if (process.env["DEPLOY_PRIME_URL"]) {
   }
 }
 
+// const slugs = await fetch(`${IIIF_URL}config/slugs.json`).then((r) =>
+//   r.json(),
+// );
+const slugs = {};
+
 export const client = create(IIIF_URL);
 
 export function getManifestUrl(manifestSlug: string) {
@@ -29,3 +37,16 @@ export function getManifestUrl(manifestSlug: string) {
   }
   return resp.match;
 }
+
+export const getImageServiceLinks = cache(
+  (): Promise<{
+    [slug: string]: [
+      {
+        slug: string;
+        service: string;
+        canvasId: string;
+        targetCanvasId: string;
+      },
+    ];
+  }> => fetch(`${IIIF_URL}meta/image-service-links.json`).then((r) => r.json()),
+);

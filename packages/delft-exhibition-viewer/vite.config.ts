@@ -9,6 +9,7 @@ export default defineConfig({
       input: {
         index: "index.html",
         embed: "embed.html",
+        mini: "mini.html",
       },
     },
   },

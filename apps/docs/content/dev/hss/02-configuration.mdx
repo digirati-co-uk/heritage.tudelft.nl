@@ -1,0 +1,448 @@
+---
+title: Configuration reference
+---
+
+# Configuration
+
+The headless static site is configured using a `.iiifrc.yml` file in your project root. This file defines how your IIIF resources are discovered, processed, and built into a static site.
+
+## Configuration File Structure
+
+The configuration file supports the following top-level sections:
+
+```yaml filename="heritage.tudelft.nl/packages/headless-static-site/.iiifrc.yml#L1-10"
+server:
+  url: http://localhost:7111
+
+# Run these everywhere.
+run:
+  - flat-manifests
+  - extract-remote-source
+  - extract-slug-source
+  - extract-label-string
+  - extract-thumbnail
+```
+
+## Server Configuration
+
+### `server`
+
+Defines the base URL for your IIIF resources.
+
+```yaml filename="heritage.tudelft.nl/packages/headless-static-site/.iiifrc.yml#L1-2"
+server:
+  url: http://localhost:7111
+```
+
+**Properties:**
+
+- `url` (string): The base URL where your IIIF resources will be served from
+
+## Processing Pipeline
+
+### `run`
+
+Specifies which processing steps to run globally across all stores. Steps are executed in the order listed.
+
+```yaml filename="heritage.tudelft.nl/packages/headless-static-site/.iiifrc.yml#L4-13"
+run:
+  - flat-manifests
+  - extract-remote-source
+  - extract-slug-source
+  - extract-label-string
+  - extract-thumbnail
+  - manifest-sqlite
+  - metadata-analysis
+  - folder-collections
+  - extract-files-list
+```
+
+**Available Steps:**
+
+**Extraction Steps:**
+
+- `flat-manifests`: Flattens nested manifest structures
+- `extract-remote-source`: Extracts information from remote IIIF resources
+- `extract-slug-source`: Generates URL-friendly slugs for resources
+- `extract-label-string`: Extracts human-readable labels
+- `extract-thumbnail`: Generates thumbnail images
+- `extract-part-of-collection`: Links resources to their parent collections
+- `manifest-sqlite`: Stores manifest data in SQLite database
+- `metadata-analysis`: Analyzes metadata patterns
+- `folder-collections`: Creates collections based on folder structure
+- `extract-files-list`: Catalogs associated files
+- `extract-topics`: Extracts topic/subject classifications
+- `extract-canvas-dims`: Extracts canvas dimensions
+- `extract-plaintext`: Extracts text content for search
+- `extract-search-record`: Builds search index records
+
+**Enrichment Steps:**
+
+- `enrich-files-rewrite`: Rewrites file paths for web serving
+- `canvas-thumbnail`: Generates canvas-level thumbnails
+- `translate-metadata`: Translates metadata between languages
+- `homepage-property`: Adds homepage references
+- `typesense-index`: Builds Typesense search indexes
+- `typesense-plaintext`: Indexes plain text for Typesense
+
+## Data Sources
+
+### `stores`
+
+Defines data sources for IIIF resources. Each store has a unique identifier and configuration.
+
+```yaml filename="heritage.tudelft.nl/packages/headless-static-site/.iiifrc.yml#L57-71"
+stores:
+  manifests:
+    type: iiif-json
+    path: ./content
+    subFiles: true
+    ignore:
+      - content/objects/**/*
+      - content/manifests/*
+      - content/topics/**/*
+    pattern: "**/*.json"
+    destination: manifests
+    base: ./content
+```
+
+### Store Types
+
+#### `iiif-json` - Local JSON Files
+
+Loads IIIF resources from local JSON files.
+
+**Configuration:**
+
+- `path` (string, required): Directory containing JSON files
+- `pattern` (string): Glob pattern for matching files (default: `"**/*.json"`)
+- `ignore` (string[]): Patterns to exclude from processing
+- `subFiles` (boolean): Include associated files in subdirectories
+- `base` (string): Base path for relative file references
+- `destination` (string): Output directory for processed files
+
+**Example:**
+
+```yaml filename="heritage.tudelft.nl/packages/headless-static-site/.iiifrc.yml#L57-71"
+manifests:
+  type: iiif-json
+  path: ./content
+  subFiles: true
+  ignore:
+    - content/objects/**/*
+    - content/manifests/*
+    - content/topics/**/*
+  pattern: "**/*.json"
+  destination: manifests
+  base: ./content
+```
+
+#### `iiif-remote` - Remote IIIF Resources
+
+Fetches IIIF resources from remote URLs.
+
+**Configuration:**
+
+- `url` (string): URL of the IIIF Collection or Manifest to fetch
+- `urls` (string[]): Multiple URLs to fetch (alternative to `url`)
+- `overrides` (string): Local directory path for override files
+- `saveManifests` (boolean): Save fetched manifests to disk
+
+**Example:**
+
+```yaml filename="heritage.tudelft.nl/packages/headless-static-site/.iiifrc.yml#L95-105"
+bridges:
+  type: iiif-remote
+  url: https://view.nls.uk/collections/7446/74466699.json
+  overrides: ./content
+  saveManifests: true
+  slugTemplates:
+    - nls-manifests
+    - nls-collections
+```
+
+### Store-Specific Configuration
+
+Each store can override global processing steps and provide custom configuration:
+
+```yaml filename="heritage.tudelft.nl/packages/headless-static-site/.iiifrc.yml#L73-94"
+delft:
+  type: iiif-json
+  path: ./delft
+  pattern: "**/*.{json,yml}"
+  run:
+    - delft-labels
+    - extract-thumbnail
+    - manifest-sqlite
+    - extract-topics
+  config:
+    extract-topics:
+      commaSeparated: ["material"]
+      topicTypes:
+        material: ["Materiaal", "Material"]
+        date: ["Date", "Datering"]
+        Maker: ["Maker"]
+        Publisher: ["Publisher"]
+```
+
+**Store Properties:**
+
+- `skip` (string[]): Processing steps to skip for this store
+- `run` (string[]): Additional processing steps to run for this store
+- `config` (object): Step-specific configuration overrides
+- `slugTemplates` (string[]): Slug generation templates to use
+
+## Step Configuration
+
+### `config`
+
+Provides configuration for individual processing steps.
+
+```yaml filename="heritage.tudelft.nl/packages/headless-static-site/.iiifrc.yml#L130-140"
+config:
+  extract-label-string:
+    language: en
+
+  manifest-sqlite:
+    enableTopics: true
+
+  extract-files-list:
+    fileTemplates:
+      plaintext.txt:
+        type: "Text"
+        format: "text/plain"
+```
+
+### Common Step Configurations
+
+#### `extract-label-string`
+
+```yaml filename="heritage.tudelft.nl/packages/headless-static-site/.iiifrc.yml#L37-38"
+extract-label-string:
+  language: en
+```
+
+- `language` (string): Primary language for label extraction
+
+#### `extract-topics`
+
+```yaml filename="heritage.tudelft.nl/packages/headless-static-site/.iiifrc.yml#L81-87"
+extract-topics:
+  commaSeparated: ["material"]
+  topicTypes:
+    material: ["Materiaal", "Material"]
+    date: ["Date", "Datering"]
+    Maker: ["Maker"]
+    Publisher: ["Publisher"]
+```
+
+- `commaSeparated` (string[]): Fields to split on commas
+- `topicTypes` (object): Mapping of topic types to metadata field names
+- `dateRange` (string[]): Fields containing date ranges
+
+#### `extract-files-list`
+
+```yaml filename="heritage.tudelft.nl/packages/headless-static-site/.iiifrc.yml#L135-140"
+extract-files-list:
+  fileTemplates:
+    plaintext.txt:
+      type: "Text"
+      format: "text/plain"
+      label: "View raw text"
+      property: rendering
+```
+
+- `fileTemplates` (object): Templates for generating file metadata
+
+#### `extract-thumbnail-local`
+
+```yaml filename="heritage.tudelft.nl/heritage.tudelft.nl/apps/iiif/.iiifrc-base.yml#L28-30"
+extract-thumbnail-local:
+  width: 1080
+  height: 1080
+```
+
+- `width` (number): Thumbnail width in pixels
+- `height` (number): Thumbnail height in pixels
+
+## Collections
+
+### `collections`
+
+Defines virtual collections for organizing resources.
+
+```yaml filename="heritage.tudelft.nl/packages/headless-static-site/.iiifrc.yml#L15-20"
+collections:
+  index:
+    label: { "en": "My great top level collection" }
+    summary: { "en": "This is a summary of the collection" }
+  manifests:
+    label: { "en": "Manifests" }
+    summary: { "en": "A list of all manifests in the collection" }
+```
+
+**Properties:**
+
+- `index`: Root collection configuration
+- `manifests`: Manifests collection configuration
+- `collections`: Named sub-collections
+- `topics`: Topic-based collections
+
+Each collection can have:
+
+- `label` (object): Multi-language labels
+- `summary` (object): Multi-language summaries
+- `metadata` (array): Additional metadata fields
+
+## URL Generation
+
+### `slugs`
+
+Configures URL slug generation from IIIF resource identifiers.
+
+```yaml filename="heritage.tudelft.nl/packages/headless-static-site/.iiifrc.yml#L150-170"
+slugs:
+  wellcome-manifest:
+    type: Manifest
+    domain: iiif.wellcomecollection.org
+    prefix: /presentation/
+    addedPrefix: wellcome-
+    examples:
+      - https://iiif.wellcomecollection.org/presentation/b30496974
+
+  nls-manifests:
+    type: Manifest
+    domain: view.nls.uk
+    prefix: /manifest/
+    suffix: /manifest.json
+    addedPrefix: nls-
+    pathSeparator: "-"
+```
+
+**Slug Configuration Properties:**
+
+- `type` (string): Resource type (`Manifest` or `Collection`)
+- `domain` (string): Domain to match in URLs
+- `prefix` (string): URL prefix to remove
+- `suffix` (string): URL suffix to remove
+- `addedPrefix` (string): Prefix to add to generated slugs
+- `pathSeparator` (string): Character to use when flattening paths
+- `examples` (string[]): Example URLs for testing
+
+## Search Configuration
+
+### `search`
+
+Configures search indexing and functionality.
+
+```yaml filename="heritage.tudelft.nl/heritage.tudelft.nl/apps/iiif/.iiifrc-base.yml#L13-16"
+search:
+  indexNames: ["manifests"]
+  defaultIndex: manifests
+  emitRecord: true
+```
+
+**Properties:**
+
+- `indexNames` (string[]): Names of search indexes to create
+- `defaultIndex` (string): Default index for searches
+- `emitRecord` (boolean): Export search records to JSON files
+
+## Content Generation
+
+### `generators`
+
+Defines dynamic content generators (typically for external APIs).
+
+```yaml filename="heritage.tudelft.nl/packages/headless-static-site/.iiifrc.yml#L22-32"
+generators:
+  sts-shuttles:
+    type: nasa-generator
+    config:
+      label: STS Shuttles
+      query: "sts orbit"
+      maxResults: 50
+  curiosity:
+    type: nasa-generator
+    config:
+      label: Curiosity
+      query: "curiosity rover"
+      maxResults: 10
+```
+
+**Properties:**
+
+- `type` (string): Generator plugin type
+- `output` (string): Output directory (optional)
+- `config` (object): Generator-specific configuration
+
+## Complete Example
+
+Here's a comprehensive example configuration:
+
+```yaml filename="heritage.tudelft.nl/packages/headless-static-site/.iiifrc.yml#L1-50"
+server:
+  url: http://localhost:7111
+
+run:
+  - flat-manifests
+  - extract-remote-source
+  - extract-slug-source
+  - extract-label-string
+  - extract-thumbnail
+  - manifest-sqlite
+  - metadata-analysis
+  - folder-collections
+  - extract-files-list
+  - enrich-files-rewrite
+
+collections:
+  index:
+    label: { "en": "My great top level collection" }
+    summary: { "en": "This is a summary of the collection" }
+  manifests:
+    label: { "en": "Manifests" }
+    summary: { "en": "A list of all manifests in the collection" }
+
+generators:
+  sts-shuttles:
+    type: nasa-generator
+    config:
+      label: STS Shuttles
+      query: "sts orbit"
+      maxResults: 50
+
+stores:
+  manifests:
+    type: iiif-json
+    path: ./content
+    subFiles: true
+    ignore:
+      - content/objects/**/*
+    pattern: "**/*.json"
+    destination: manifests
+    base: ./content
+
+  remote-collection:
+    type: iiif-remote
+    url: https://example.com/collection.json
+    saveManifests: true
+    slugTemplates:
+      - example-slugs
+
+config:
+  extract-label-string:
+    language: en
+  extract-topics:
+    topicTypes:
+      subject: ["Subject", "Topic"]
+      creator: ["Creator", "Author"]
+```
+
+This configuration will:
+
+1. Load local IIIF JSON files from `./content`
+2. Fetch a remote IIIF collection
+3. Extract labels, topics, and thumbnails
+4. Generate a searchable static site
+5. Organize content into collections

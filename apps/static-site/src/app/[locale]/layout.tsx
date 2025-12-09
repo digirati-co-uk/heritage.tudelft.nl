@@ -1,30 +1,36 @@
+import "exhibition-viewer/lib";
 import "../globals.css";
 import { SlotContext } from "@/blocks/slot-context";
 import { GlobalFooter } from "@/components/GlobalFooter";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { getBasicMetadata, getMdx } from "@/helpers/metadata";
+import { routing } from "@/i18n/routing";
 import type { Metadata } from "next";
+import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { getTranslations } from "next-intl/server";
 import localFont from "next/font/local";
+import { notFound } from "next/navigation";
 import { type ReactNode, lazy } from "react";
 import BlockEditor from "../../blocks/block-editor";
 import { Provider } from "../provider";
-import 'delft-exhibition-viewer/dist/index.css';
 
 const IIIFDevRefresh = lazy(() => import("../../components/IIIFDevRefresh"));
 
 export async function generateMetadata({
   params,
-}: { params: { locale: string } }): Promise<Metadata> {
-  const t = await getTranslations();
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale });
   const path = "/";
   const page = getMdx({
-    params: { pageName: "Home", path: path, locale: params.locale },
+    params: { pageName: "Home", path: path, locale: locale },
   });
   const description = page.description;
   return getBasicMetadata({
-    locale: params.locale,
+    locale: locale,
     siteName: page.title,
     title: page.title,
     description: description,
@@ -44,11 +50,11 @@ if (process.env.NODE_ENV !== "production") {
   import("@page-blocks/react/dist/index.css");
   // @ts-expect-error typescript can't resolve CSS
   import("@page-blocks/web-components/dist/index.css");
-  // @ts-expect-error typescript can't resolve CSS
-  import('delft-exhibition-viewer/dist/index.css');
+  // // @ts-expect-error typescript can't resolve CSS
+  // import("exhibition-viewer/dist/index.css");
 }
 
-const foundersGrotesk = localFont({
+export const foundersGrotesk = localFont({
   variable: "--f-font",
   preload: true,
   src: [
@@ -75,7 +81,7 @@ const foundersGrotesk = localFont({
   ],
 });
 
-const foundersGroteskMono = localFont({
+export const foundersGroteskMono = localFont({
   variable: "--f-mono-font",
   preload: true,
   src: [
@@ -96,33 +102,39 @@ export async function generateStaticParams() {
   return [{ locale: "nl" }, { locale: "en" }];
 }
 
-export default function RootLayout({
+const devClass = process.env.NODE_ENV === "development" ? "dev" : "";
+
+export default async function RootLayout({
   children,
   params,
 }: {
   children: ReactNode;
-  params: { locale: string };
-}): JSX.Element {
-  setRequestLocale(params.locale);
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) {
+    notFound();
+  }
+
+  setRequestLocale(locale);
+
   return (
-    <html lang={params.locale}>
-      <body
-        className={`bg-gray-200 ${foundersGrotesk.variable} ${foundersGroteskMono.variable} font-sans`}
-      >
+    <html lang={locale}>
+      <body className={`bg-gray-200 ${foundersGrotesk.variable} ${foundersGroteskMono.variable} font-sans ${devClass}`}>
         <Provider>
-          <SlotContext name="locale" value={params.locale}>
-            <GlobalHeader />
-            <main className="flex w-full flex-col items-center">
-              {children}
-            </main>
-            {process.env.NODE_ENV !== "production" ? (
-              <>
-                <BlockEditor showToggle rsc />
-                <IIIFDevRefresh />
-              </>
-            ) : null}
-            <GlobalFooter />
-          </SlotContext>
+          <NextIntlClientProvider locale={locale}>
+            <SlotContext name="locale" value={locale}>
+              <GlobalHeader />
+              <main className="flex w-full flex-col items-center">{children}</main>
+              {process.env.NODE_ENV !== "production" ? (
+                <>
+                  <BlockEditor showToggle rsc />
+                  <IIIFDevRefresh />
+                </>
+              ) : null}
+              <GlobalFooter />
+            </SlotContext>
+          </NextIntlClientProvider>
         </Provider>
       </body>
     </html>

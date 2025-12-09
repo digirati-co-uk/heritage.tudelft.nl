@@ -1,15 +1,21 @@
 import { Slot } from "@/blocks/slot";
 import { Page } from "@/components/Page";
-import { CollectionListing } from "@/components/pages/CollectionListing";
+import { getBasicMetadata, getDefaultMetaMdx, getMdx, makeTitle } from "@/helpers/metadata";
+import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { getBasicMetadata, makeTitle, getMdx, getDefaultMetaMdx } from "@/helpers/metadata";
-import { Metadata } from "next";
 
-export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+export async function generateMetadata({
+  params: paramsPromise,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const params = await paramsPromise;
   const t = await getTranslations();
   const path = "/collections";
   const defaultMeta = getDefaultMetaMdx({ params: { locale: params.locale } });
-  const page = getMdx({ params: { pageName: "Collections", path: path, locale: params.locale } });
+  const page = getMdx({
+    params: { pageName: "Collections", path: path, locale: params.locale },
+  });
   const title = makeTitle([page.title, defaultMeta.title]);
   const description = page.description ?? defaultMeta.description;
   return getBasicMetadata({
@@ -26,15 +32,15 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   });
 }
 
-export default async function Collections(props: { params: { locale: string } }) {
-  setRequestLocale(props.params.locale);
-  const t = await getTranslations();
-  // List of collections.
+export default async function Collections(props: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await props.params;
+  setRequestLocale(locale);
+
   return (
     <Page>
-      <Slot name="main-collections" context={{ locale: props.params.locale }} />
-
-      {/* <CollectionListing /> */}
+      <Slot name="main-collections" context={{ locale }} />
     </Page>
   );
 }
