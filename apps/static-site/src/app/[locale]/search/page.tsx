@@ -5,7 +5,8 @@ import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { getTranslations } from "next-intl/server";
 
-export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+export async function generateMetadata(data: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const params = await data.params;
   const t = await getTranslations();
   const path = "/search";
   const defaultMeta = getDefaultMetaMdx({ params: { locale: params.locale } });
