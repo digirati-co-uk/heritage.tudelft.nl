@@ -39,7 +39,8 @@ jobs:
 
       - name: Build HSS
         working-directory: packages/headless-static-site
-        run: pnpm run build
+        # Second build can be removed after a build issue has been resolved!
+        run: pnpm run build && pnpm run build
 
       - name: Link HSS CLI
         run: pnpm install --frozen-lockfile
