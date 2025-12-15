@@ -300,7 +300,7 @@ export async function emit(
       // Canvases.
       canvasQueue.add(async () => {
         const canvasesDir = join(cacheDir, manifest.slug, "canvases");
-        if (existsSync(canvasesDir)) {
+        if (files.dirExists(canvasesDir)) {
           siteMap[manifest.slug].hasCanvasData = true;
           const canvasList = readdirSync(canvasesDir);
           for (const canvasIndex of canvasList) {
@@ -308,11 +308,11 @@ export async function emit(
             const metaFile = join(canvasDir, "meta.json");
             const canvasBuildDirectory = join(manifestBuildDirectory, "canvases", canvasIndex);
             await files.mkdir(canvasBuildDirectory);
-            if (existsSync(metaFile)) {
+            if (files.exists(metaFile)) {
               files.copy(join(canvasDir, "meta.json"), join(canvasBuildDirectory, "meta.json"), { overwrite: true });
             }
             const filesDir = join(canvasesDir, canvasIndex, "files");
-            if (existsSync(filesDir) && !isEmpty(filesDir)) {
+            if (files.exists(filesDir) && !isEmpty(filesDir)) {
               files.copy(filesDir, canvasBuildDirectory, { overwrite: true });
             }
 
