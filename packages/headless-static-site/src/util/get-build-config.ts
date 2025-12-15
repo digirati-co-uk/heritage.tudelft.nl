@@ -11,7 +11,7 @@ import type { Enrichment } from "./enrich";
 import type { Extraction } from "./extract";
 import { FileHandler } from "./file-handler";
 import { createFiletypeCache } from "./file-type-cache";
-import { getConfig } from "./get-config";
+import { type IIIFRC, getConfig } from "./get-config";
 import { getNodeGlobals } from "./get-node-globals";
 import { loadScripts } from "./load-scripts";
 import type { Rewrite } from "./rewrite";
@@ -68,6 +68,7 @@ export interface BuildBuiltIns {
 
   fileHandler?: FileHandler;
   tracer?: Tracer;
+  customConfig?: IIIFRC;
 }
 
 const storeTypes = {
@@ -76,7 +77,7 @@ const storeTypes = {
 };
 
 export async function getBuildConfig(options: BuildOptions, builtIns: BuildBuiltIns) {
-  const config = await getConfig();
+  const config = builtIns.customConfig || (await getConfig());
   const env = builtIns.env || {};
   const cwd = options.cwd || nodeCwd();
   const { devBuild, defaultBuildDir, defaultCacheDir, devCache, topicFolder } = builtIns;
