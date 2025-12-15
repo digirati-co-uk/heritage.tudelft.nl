@@ -274,7 +274,7 @@ export async function emit(
           { overwrite: true }
         );
 
-        if (search.emitRecord && existsSync(join(cacheDir, manifest.slug, "search-record.json"))) {
+        if (search.emitRecord && files.exists(join(cacheDir, manifest.slug, "search-record.json"))) {
           // Temporary? Or config?
           files.copy(
             // 3. Save the meta file to disk
