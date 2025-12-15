@@ -179,17 +179,18 @@ export class FileHandler {
       queue.add(async () => await this.writeFile(filePath, data).catch((err) => failedToWrite.push({ filePath, err })));
     }
 
+    queue.on("completed", () => progress.increment());
+
+    await queue.onIdle();
+
     // Copy fields.
     const copyKeys = Array.from(this.copyTargets.keys());
     for (const key of copyKeys) {
       // biome-ignore lint/style/noNonNullAssertion: This is from the copyTargets map.
       const { from, options } = this.copyTargets.get(key)!;
-      queue.add(async () => await copy(from, key, options).catch((err) => failedToWrite.push({ filePath: key, err })));
+      await copy(from, key, options).catch((err) => failedToWrite.push({ filePath: key, err }));
     }
 
-    queue.on("completed", () => progress.increment());
-
-    await queue.onIdle();
     progress.stop();
 
     // Clear all copy targets.
