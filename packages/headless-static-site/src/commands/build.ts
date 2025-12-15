@@ -27,6 +27,7 @@ import type { Enrichment } from "../util/enrich.ts";
 import type { Extraction } from "../util/extract.ts";
 import { FileHandler } from "../util/file-handler.ts";
 import { type BuildBuiltIns, getBuildConfig } from "../util/get-build-config.ts";
+import type { IIIFRC } from "../util/get-config.ts";
 import type { Rewrite } from "../util/rewrite.ts";
 import type { Tracer } from "../util/tracer.ts";
 import { parseStores } from "./build-steps/0-parse-stores.ts";
@@ -166,11 +167,13 @@ export async function build(
     pathCache = { allPaths: {} },
     storeRequestCaches,
     tracer,
+    customConfig,
   }: {
     fileHandler?: FileHandler;
     pathCache?: { allPaths: Record<string, string> };
     storeRequestCaches?: Record<string, any>;
     tracer?: Tracer;
+    customConfig?: IIIFRC;
   } = {}
 ) {
   const buildConfig = await getBuildConfig(
@@ -186,6 +189,7 @@ export async function build(
       ...builtIns,
       fileHandler,
       tracer,
+      customConfig,
     }
   );
 

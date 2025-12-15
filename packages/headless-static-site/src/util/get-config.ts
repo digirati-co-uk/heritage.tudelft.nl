@@ -3,6 +3,8 @@ import { join } from "node:path";
 import { cwd } from "node:process";
 import type { Collection } from "@iiif/presentation-3";
 import { parse } from "yaml";
+import type { IIIFJSONStore } from "../stores/iiif-json.ts";
+import type { IIIFRemoteStore } from "../stores/iiif-remote.ts";
 import type { SlugConfig } from "./slug-engine.ts";
 
 export interface IIIFRC {
@@ -11,7 +13,7 @@ export interface IIIFRC {
   };
   run?: string[];
   generators?: Record<string, GeneratorConfig>;
-  stores: Record<string, GenericStore>;
+  stores: Record<string, IIIFRemoteStore | IIIFJSONStore>;
   slugs?: Record<string, SlugConfig>;
   config?: Record<string, any>;
   collections?: {
@@ -30,7 +32,7 @@ export interface IIIFRC {
 
 export interface GenericStore {
   path: string;
-  type: string;
+  type: "iiif-json" | "iiif-remote";
   pattern?: string;
   options?: Record<string, any>;
   metadata?: {
@@ -42,6 +44,9 @@ export interface GenericStore {
   skip?: string[];
   run?: string[];
   config?: Record<string, any>;
+  subFiles?: boolean;
+  destination?: string;
+  ignore?: string[];
 }
 
 interface GeneratorConfig {
@@ -64,7 +69,17 @@ let config: IIIFRC | null = null;
 
 export const supportedConfigFiles = [".iiifrc.yml", ".iiifrc.yaml", "iiif.config.js", "iiif.config.ts"];
 
-export async function getConfig() {
+export async function getConfig(configFile?: string) {
+  if (configFile) {
+    const configFilePath = join(cwd(), configFile);
+    if (configFilePath.endsWith(".yaml") || configFilePath.endsWith(".yml")) {
+      const configFileContent = await fs.promises.readFile(configFilePath, "utf8");
+      config = parse(configFileContent);
+    } else {
+      config = await import(configFilePath);
+    }
+  }
+
   if (!config) {
     for (const configFileName of supportedConfigFiles) {
       if (fs.existsSync(join(cwd(), configFileName))) {

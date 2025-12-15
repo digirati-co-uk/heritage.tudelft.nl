@@ -1,6 +1,6 @@
 {
   "name": "iiif-hss",
-  "version": "1.0.5",
+  "version": "1.0.6-next.0",
   "description": "IIIF Headless Static Site",
   "type": "module",
   "keywords": [],
@@ -15,12 +15,14 @@
   "license": "MIT",
   "typings": "lib/scripts.d.ts",
   "scripts": {
+    "vite": "vite",
     "dev-server": "bun run ./src/entrypoint.ts",
     "dev-cli": "bun run ./src/index.ts",
-    "build": "pnpm run build:cli && pnpm run build:server && pnpm run build:client && pnpm run build:node-client && pnpm run build:library",
+    "build": "pnpm run build:cli && pnpm run build:server && pnpm run build:client && pnpm run build:node-client && pnpm run build:library && pnpm build:vite-plugin",
     "build:cli": "tsup-node src/index.ts --no-splitting --outDir build --format esm --env.NODE_ENV production",
     "build:server": "tsup-node src/entrypoint.ts --no-splitting --outDir build/server --format esm --env.NODE_ENV production",
     "build:library": "tsup src/library.ts --outDir build",
+    "build:vite-plugin": "tsup src/vite-plugin.ts --outDir build",
     "build:client": "tsup src/dev/client.ts --outDir build",
     "build:node-client": "tsup src/dev/node-client.ts --outDir build",
     "lint": "publint",
@@ -52,6 +54,12 @@
         "types": "./build/node-client.d.ts",
         "default": "./build/node-client.js"
       }
+    },
+    "./vite-plugin": {
+      "import": {
+        "types": "./build/vite-plugin.d.ts",
+        "default": "./build/vite-plugin.js"
+      }
     }
   },
   "typesVersions": {
@@ -68,8 +76,8 @@
     "@hono/node-ws": "^1.0.5",
     "@hono/zod-validator": "^0.4.1",
     "@iiif/builder": "^2.0.1",
-    "@iiif/parser": "^2.2.5",
     "@iiif/helpers": "^1.5.4",
+    "@iiif/parser": "^2.2.5",
     "chalk": "^5.3.0",
     "cli-progress": "^3.12.0",
     "commander": "^13.0.0",
@@ -110,6 +118,7 @@
     "tslib": "^2.6.2",
     "tsup": "^8.3.5",
     "typescript": "^5.2.2",
+    "vite": "^6.0.7",
     "vitest": "^2.1.8"
   }
 }
