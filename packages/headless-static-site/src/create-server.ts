@@ -1,5 +1,6 @@
 import fs from "node:fs";
-import { watch } from "node:fs/promises";
+import { existsSync } from "node:fs";
+import { watch, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { cwd } from "node:process";
 import { zValidator } from "@hono/zod-validator";
@@ -13,8 +14,13 @@ import { FileHandler } from "./util/file-handler";
 import type { IIIFRC } from "./util/get-config";
 import { Tracer } from "./util/tracer";
 
-export async function createServer(config: IIIFRC) {
+interface IIIFServerOptions {
+  customManifestEditor?: string;
+}
+
+export async function createServer(config: IIIFRC, serverOptions: IIIFServerOptions = {}) {
   const app = new Hono();
+  const meUrl = serverOptions.customManifestEditor || "https://manifest-editor.digirati.services";
 
   app.use(async (c, next) => {
     if (c.req.method === "OPTIONS") {
@@ -83,6 +89,7 @@ export async function createServer(config: IIIFRC) {
       isWatching: isWatching,
       pendingFiles: Array.from(fileHandler.openJsonChanged.keys()).filter(Boolean),
       ...config,
+      run: config.run || defaultBuiltIns.defaultRun,
     });
   });
 
@@ -239,6 +246,85 @@ export async function createServer(config: IIIFRC) {
     }
   );
 
+  app.get("/create", async (ctx) => {
+    return ctx.html(`
+      <form method="post">
+        <label for="slug">Slug:</label>
+        <input type="text" id="slug" name="slug" required>
+        <label for="store">Store:</label>
+        <select id="store" name="store">
+          ${Object.entries(config.stores)
+            .map(([key, value]) => `<option value="${key}">${key}</option>`)
+            .join("")}
+        </select>
+        <button type="submit">Create</button>
+      </form>
+    `);
+  });
+
+  app.post(
+    "/create",
+    zValidator(
+      "form",
+      z.object({
+        slug: z.string().min(1),
+        store: z.string().optional(),
+      })
+    ),
+    async (ctx, next) => {
+      const defaultStore =
+        Object.entries(config.stores).find(([key, value]) => value.type === "iiif-json")?.[0] || "default";
+      const { store = defaultStore, slug: name } = ctx.req.valid("form");
+      const isJson = await ctx.req.query("json");
+
+      if (!name) {
+        return ctx.text("Slug is required", 400);
+      }
+
+      const chosenStore = config.stores[store];
+      if (!chosenStore) {
+        return ctx.text(`Store ${store} not found`, 400);
+      }
+      if (chosenStore.type !== "iiif-json") {
+        return ctx.text(`Store ${store} is not of type iiif-json`, 400);
+      }
+
+      // Check for existing?
+      const existing = join(cwd(), chosenStore.path, `${name}.json`);
+      if (existsSync(existing)) {
+        return ctx.text(`Manifest ${name} already exists`, 400);
+      }
+
+      const manifest = {
+        "@context": "http://iiif.io/api/presentation/3/context.json",
+        id: `${join(chosenStore.destination || chosenStore.path, name)}`,
+        type: "Manifest",
+        label: {
+          en: ["Blank Manifest"],
+        },
+        items: [],
+      };
+
+      await writeFile(existing, JSON.stringify(manifest, null, 2));
+
+      const exactPath = join(chosenStore.destination || chosenStore.path, name);
+
+      await cachedBuild({
+        emit: true,
+        cache: false,
+      });
+
+      const manifestId = `${exactPath}/manifest.json`;
+      const manifestUrl = join(config.server?.url || "http://localhost:7111/", manifestId);
+
+      if (isJson) {
+        return ctx.json({ manifestUrl, editUrl: `${meUrl}/editor/external?manifest=${manifestUrl}` });
+      }
+
+      return ctx.redirect(`${meUrl}/editor/external?manifest=${manifestUrl}`);
+    }
+  );
+
   app.get("/*", async (ctx, next) => {
     if (ctx.req.path.startsWith("/ws")) {
       await next();
@@ -255,9 +341,24 @@ export async function createServer(config: IIIFRC) {
 
     const isManifest = ctx.req.path.endsWith("manifest.json");
     if (isManifest) {
-      const baseUrl = new URL(ctx.req.url);
-      baseUrl.search = "";
-      headers["X-IIIF-Post-Url"] = baseUrl.toString();
+      const manifestUrl = `${config.server?.url || "http://localhost:7111/"}${ctx.req.path}`;
+      headers["X-IIIF-Post-Url"] = manifestUrl;
+    }
+
+    const isEdit = ctx.req.path.endsWith("/edit");
+    if (isEdit) {
+      const slug = ctx.req.path.replace("/edit", "").slice(1);
+      const editable = join(cwd(), ".iiif/build/meta/editable.json");
+      const allEditable = await fileHandler.loadJson(editable, true);
+      const realPath = allEditable[slug];
+      if (!realPath) {
+        return ctx.notFound();
+      }
+
+      const manifestId = ctx.req.path.replace("/edit", "/manifest.json");
+      const manifestUrl = `${config.server?.url || "http://localhost:7111/"}${manifestId}`;
+
+      return ctx.redirect(`${meUrl}/editor/external?manifest=${manifestUrl}`);
     }
 
     if (fileHandler.openJsonMap.has(fileHandler.resolve(realPath))) {

@@ -1,6 +1,6 @@
 import type { Plugin } from "vite";
 import { createServer } from "./create-server";
-import { type IIIFRC, getConfig } from "./util/get-config";
+import { DEFAULT_CONFIG, type IIIFRC, getConfig } from "./util/get-config";
 
 interface IIIFHSSSPluginOptions {
   /**
@@ -16,16 +16,26 @@ interface IIIFHSSSPluginOptions {
   /**
    * Inline config overrides.
    */
-  config?: IIIFRC;
+  config?: Omit<IIIFRC, "stores"> & { stores?: IIIFRC["stores"] };
 
   enabled?: boolean;
+
+  /**
+   * Override port (e.g. Astro)
+   */
+  port?: number;
+
+  /**
+   * Override host
+   */
+  host?: string;
 }
 
 /**
  * Vite plugin for integrating Hono server
  */
 export function iiifPlugin(options: IIIFHSSSPluginOptions = {}): Plugin {
-  const { basePath = "/iiif", enabled = true, config: customConfig, configFile } = options;
+  const { basePath = "/iiif", port, host, enabled = true, config: customConfig, configFile } = options;
 
   let server: Awaited<ReturnType<typeof createServer>>;
 
@@ -34,13 +44,40 @@ export function iiifPlugin(options: IIIFHSSSPluginOptions = {}): Plugin {
     async configureServer(viteDevServer) {
       if (!enabled) return;
 
-      const config = customConfig || (await getConfig(configFile));
+      const config = (customConfig as IIIFRC) || (await getConfig(configFile));
 
-      const devHost = viteDevServer.config.server?.host || "localhost";
-      const devPort = viteDevServer.config.server?.port || 5173;
+      // Try to get the actual host/port from the resolved server config
+      // Fall back to the httpServer address if available, or defaults
+      let devHost = viteDevServer.config.server?.host || "localhost";
+      let devPort = viteDevServer.config.server?.port || 5173;
+
+      // If the server is already listening, get the actual address
+      if (viteDevServer.httpServer?.listening) {
+        const address = viteDevServer.httpServer.address();
+        if (address && typeof address === "object") {
+          devHost = address.address === "::" ? "localhost" : address.address || devHost;
+          devPort = address.port || devPort;
+        }
+      }
+
+      if (port) {
+        devPort = port;
+      }
+      if (host) {
+        devHost = host;
+      }
+
+      // Convert 0.0.0.0 to localhost for URL construction
+      if (devHost === "0.0.0.0") {
+        devHost = "localhost";
+      }
+
       const devUrl = `http://${devHost}:${devPort}${basePath}`;
       config.server = config.server || { url: devUrl };
       config.server.url = devUrl;
+      if (!config.stores) {
+        config.stores = DEFAULT_CONFIG.stores;
+      }
       server = await createServer(config);
 
       console.log(`🔥 IIIF server started at ${basePath}`);
@@ -59,22 +96,40 @@ export function iiifPlugin(options: IIIFHSSSPluginOptions = {}): Plugin {
           const host = req.headers.host || "localhost";
           const url = new URL(req.url!, `${protocol}://${host}`);
 
-          // Handle request body for POST/PUT requests
-          let body: ArrayBuffer | undefined;
+          // Handle request body for POST/PUT/PATCH requests (including form data)
+          let body: BodyInit | null | undefined = undefined;
+
           if (req.method && ["POST", "PUT", "PATCH"].includes(req.method)) {
             const chunks: Buffer[] = [];
             for await (const chunk of req) {
-              chunks.push(chunk);
+              chunks.push(chunk as Buffer);
             }
+
             if (chunks.length > 0) {
-              body = Buffer.concat(chunks).buffer;
+              const buffer = Buffer.concat(chunks);
+              const contentType = req.headers["content-type"] || req.headers["Content-Type"];
+
+              // For multipart/form-data and application/x-www-form-urlencoded
+              // we pass through the raw Buffer so the Fetch API / Hono can
+              // parse it correctly based on the Content-Type header.
+              if (
+                typeof contentType === "string" &&
+                (contentType.includes("multipart/form-data") ||
+                  contentType.includes("application/x-www-form-urlencoded"))
+              ) {
+                body = buffer;
+              } else {
+                // For JSON, text, etc. it's also fine to pass the Buffer; the
+                // Fetch API will treat it as a Uint8Array/ReadableStream source.
+                body = buffer;
+              }
             }
           }
 
           const request = new Request(url.toString(), {
             method: req.method || "GET",
             headers: req.headers as any,
-            body: body,
+            body,
           });
 
           // Get response from Hono

@@ -55,12 +55,13 @@ interface GeneratorConfig {
   config?: Record<string, any>;
 }
 
-const DEFAULT_CONFIG: IIIFRC = {
+export const DEFAULT_CONFIG: IIIFRC = {
   stores: {
     default: {
       path: "content",
       type: "iiif-json",
       pattern: "**/*.json",
+      subFiles: true,
     },
   },
 };
@@ -97,6 +98,10 @@ export async function getConfig(configFile?: string) {
 
   if (!config || !config.stores) {
     config = DEFAULT_CONFIG;
+  }
+
+  if (!config.stores) {
+    config.stores = DEFAULT_CONFIG.stores;
   }
 
   return config as IIIFRC;

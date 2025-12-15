@@ -18,27 +18,7 @@ enrich(
 export default defineConfig({
   plugins: [
     iiifPlugin({
-      config: {
-        run: [
-          "my-custom-enrich",
-          "flat-manifests",
-          "extract-remote-source",
-          "extract-slug-source",
-          "extract-label-string",
-          "extract-thumbnail",
-          "metadata-analysis",
-          "folder-collections",
-          "extract-files-list",
-          "enrich-files-rewrite",
-        ],
-        stores: {
-          test: {
-            path: "./content",
-            type: "iiif-json",
-            subFiles: true,
-          },
-        },
-      },
+      config: {},
     }),
   ],
 });

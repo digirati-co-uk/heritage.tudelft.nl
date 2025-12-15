@@ -1,10 +1,14 @@
 {
   "name": "iiif-hss",
-  "version": "1.0.6-next.0",
+  "version": "1.0.6-next.1",
   "description": "IIIF Headless Static Site",
   "type": "module",
   "keywords": [],
-  "files": ["src", "build", "lib"],
+  "files": [
+    "src",
+    "build",
+    "lib"
+  ],
   "main": "lib/scripts.js",
   "module": "lib/scripts.js",
   "bin": {
@@ -64,8 +68,12 @@
   },
   "typesVersions": {
     "*": {
-      "*": ["lib/scripts.d.ts"],
-      "client": ["build/client.d.ts"]
+      "*": [
+        "lib/scripts.d.ts"
+      ],
+      "client": [
+        "build/client.d.ts"
+      ]
     }
   },
   "optionalDependencies": {
