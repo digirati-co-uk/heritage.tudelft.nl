@@ -4,7 +4,7 @@ import { block } from "@page-blocks/react";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { z } from "zod";
-import { CloseIcon } from "../atoms/CloseIcon";
+import { CloseIcon } from "../icons/CloseIcon";
 
 const boxProps = z.object({
   title: z.string().optional(),
@@ -49,19 +49,31 @@ export default block(
     if (!props.frameUrl) return null;
 
     return (
-      <div className={twMerge(`cut-corners group relative flex`, height, props.className)}>
+      <div
+        className={twMerge(
+          `cut-corners group relative flex`,
+          height,
+          props.className,
+        )}
+      >
         <div
           className={`relative z-20 cursor-pointer p-5 ${
             props.dark ? "text-black" : "text-white"
           } flex h-full w-full flex-col justify-between gap-3 no-underline`}
           onClick={() => setIsOpen(true)}
         >
-          <div className="text-md text-center font-mono uppercase">{props.type || " "}</div>
-          <div className={`mx-auto text-center ${titleSize} font-medium`}>{props.title || " "}</div>
+          <div className="text-md text-center font-mono uppercase">
+            {props.type || " "}
+          </div>
+          <div className={`mx-auto text-center ${titleSize} font-medium`}>
+            {props.title || " "}
+          </div>
           <div className="text-center">{props.subtitle || " "}</div>
         </div>
 
-        <div className={`safe-inset absolute inset-0 z-10 overflow-hidden ${fallbackBackground}`}>
+        <div
+          className={`safe-inset absolute inset-0 z-10 overflow-hidden ${fallbackBackground}`}
+        >
           {props.backgroundImage ? (
             <img
               alt=""
@@ -76,8 +88,15 @@ export default block(
           ) : null}
         </div>
 
-        <Dialog className="relative z-50" open={isOpen} onClose={() => setIsOpen(false)}>
-          <div className="safe-inset fixed inset-0 bg-black/30" aria-hidden="true" />
+        <Dialog
+          className="relative z-50"
+          open={isOpen}
+          onClose={() => setIsOpen(false)}
+        >
+          <div
+            className="safe-inset fixed inset-0 bg-black/30"
+            aria-hidden="true"
+          />
           <div className="safe-inset mobile-height fixed inset-0 flex w-screen items-center">
             <button
               className="absolute right-6 top-6 z-20 flex h-16 w-16 items-center justify-center rounded bg-black hover:bg-slate-900"
@@ -101,7 +120,12 @@ export default block(
                   <div>{props.frameLabel}</div>
                   <div>{props.frameDescription}</div>
                 </div>
-                <a className="underline underline-offset-4" href={props.frameUrl} target="_blank" rel="noreferrer">
+                <a
+                  className="underline underline-offset-4"
+                  href={props.frameUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   Open in new window
                 </a>
               </footer>
@@ -110,5 +134,5 @@ export default block(
         </Dialog>
       </div>
     );
-  }
+  },
 );

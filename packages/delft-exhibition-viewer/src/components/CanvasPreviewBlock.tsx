@@ -1,7 +1,7 @@
+import { CloseIcon } from "@/components/icons/CloseIcon";
 import type { DefaultPresetOptions, Preset } from "@atlas-viewer/atlas";
 import { Dialog } from "@headlessui/react";
-import { expandTarget } from "@iiif/helpers";
-import { type ReactNode, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { type ReactNode, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useHover } from "react-aria";
 import { CanvasContext, CanvasPanel, useCanvas, useVault } from "react-iiif-vault";
 import { LocaleString } from "react-iiif-vault";
@@ -11,18 +11,21 @@ import invariant from "tiny-invariant";
 import { useStore } from "zustand";
 import { createExhibitionStore } from "../helpers/exhibition-store";
 import { useCanvasHighlights } from "../helpers/use-canvas-highlights";
-import { CloseIcon } from "./CloseIcon";
+import { withViewTransition } from "../helpers/with-view-transition";
+import { Hookable } from "./EditorHooks";
+import { RenderSeeAlso } from "./RenderSeeAlso";
+import { ViewerZoomControls } from "./ViewerZoomControls";
 import { VisibleAnnotationsListingItem } from "./VisibleAnnotationListItem";
+import { InfoIcon } from "./icons/InfoIcon";
 
-function CanvasPreviewBlockInner({
-  cover,
-  autoPlay = false,
-  objectLinks,
-  alternativeMode,
-}: {
+export interface CanvasPreviewBlockProps {
+  canvasId?: string;
   cover?: boolean;
   autoPlay?: boolean;
   alternativeMode?: boolean;
+  transitionScale?: boolean;
+  imageInfoIcon?: boolean;
+  index: number;
   objectLinks: Array<{
     service: string;
     slug: string;
@@ -30,11 +33,23 @@ function CanvasPreviewBlockInner({
     targetCanvasId: string;
     component: ReactNode;
   }>;
-}) {
+  viewTransition?: boolean;
+}
+
+function CanvasPreviewBlockInner({
+  cover,
+  index,
+  autoPlay = false,
+  objectLinks,
+  alternativeMode,
+  transitionScale = false,
+  imageInfoIcon = false,
+  viewTransition = false,
+}: CanvasPreviewBlockProps) {
+  const container = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const vault = useVault();
   const canvas = useCanvas();
-  const highlights = useCanvasHighlights();
   const store = useMemo(
     () =>
       createExhibitionStore({
@@ -43,7 +58,7 @@ function CanvasPreviewBlockInner({
         objectLinks,
         firstStep: false,
       }),
-    [vault, canvas]
+    [vault, canvas],
   );
   const paintingPage = canvas?.items[0] ? vault.get(canvas.items[0]) : null;
   const hasMultipleAnnotations = (paintingPage?.items.length || 0) > 1;
@@ -109,11 +124,23 @@ function CanvasPreviewBlockInner({
       [
         "default-preset",
         {
-          runtimeOptions: { visibilityRatio: 0.5, maxOverZoom: 3 },
-          interactive: isOpen,
+          runtimeOptions: { visibilityRatio: 0.5 },
+          interactive: false,
         } as DefaultPresetOptions,
       ] as any,
-    [isOpen]
+    [],
+  );
+
+  const openConfig = useMemo(
+    () =>
+      [
+        "default-preset",
+        {
+          runtimeOptions: { visibilityRatio: 0.5 },
+          interactive: true,
+        } as DefaultPresetOptions,
+      ] as any,
+    [],
   );
 
   const tour = currentStep !== -1;
@@ -145,75 +172,126 @@ function CanvasPreviewBlockInner({
     return null;
   }, [objectLinks, stepIndex, tour]);
 
+  const containerStyle = useMemo(
+    () => ({
+      height: "100%",
+      pointerEvents: isOpen ? undefined : "none",
+      // viewTransitionName: isOpen ? "" : `canvas-preview-block-${index}`,
+    }),
+    [isOpen],
+  );
+
+  const onCreated = useCallback((preset: Preset) => {
+    const clear = preset.runtime.registerHook("useAfterFrame", () => {
+      const renderers = (preset.renderer as any).renderers;
+      const canvasRenderer = renderers[0]?.canvas ? renderers[0] : null;
+      if (!canvasRenderer) {
+        setIsReady(true);
+        clear();
+      }
+      if ((canvasRenderer as any).isReady()) {
+        preset.runtime.updateNextFrame();
+        setTimeout(() => {
+          setIsReady(true);
+        }, 300);
+        clear();
+      }
+    });
+    setTimeout(() => preset.runtime.updateNextFrame(), 1000);
+  }, []);
+
   return (
     <>
-      <div className="exhibition-canvas-panel z-10 h-full bg-[#373737]" onClick={() => setIsOpen(true)}>
-        <CanvasPanel.Viewer
-          containerStyle={{
-            height: "100%",
-            pointerEvents: isOpen ? undefined : "none",
-          }}
-          renderPreset={config}
-          homeOnResize
-          homeCover={cover || !hasMultipleAnnotations}
-          onCreated={(preset) => {
-            const clear = preset.runtime.registerHook("useAfterFrame", () => {
-              const renderers = (preset.renderer as any).renderers;
-              const canvasRenderer = renderers[0]?.canvas ? renderers[0] : null;
-              if (!canvasRenderer) {
-                setIsReady(true);
-                clear();
-              }
-              if ((canvasRenderer as any).isReady()) {
-                preset.runtime.updateNextFrame();
-                setTimeout(() => {
-                  setIsReady(true);
-                }, 300);
-                clear();
-              }
-            });
-            setTimeout(() => preset.runtime.updateNextFrame(), 1000);
-          }}
-        >
-          <CanvasPanel.RenderCanvas strategies={["images"]} enableSizes={false}>
-            {highlights.length > 1
-              ? null
-              : highlights.map((highlight, index) => {
-                  const target = highlight?.selector?.spatial as any;
-                  if (!target) return null;
-                  return <box key={index} target={target} relativeStyle html style={{ border: "2px dashed red" }} />;
-                })}
-          </CanvasPanel.RenderCanvas>
-        </CanvasPanel.Viewer>
-      </div>
-      <div className="absolute bottom-4 left-0 right-0 z-20 text-center font-mono text-sm text-white">
-        <LocaleString>{canvas.label}</LocaleString>
-      </div>
-      <Dialog className="relative z-50" open={isOpen} onClose={() => setIsOpen(false)}>
-        <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
-        <div className="safe-inset fill-height fixed inset-0 z-20 flex w-screen items-center md:p-4">
-          <button
-            className="absolute right-4 top-4 z-20 flex  h-16 w-16 items-center justify-center bg-black hover:bg-gray-900"
-            onClick={() => setIsOpen(false)}
+      <div
+        ref={container}
+        className={twMerge(
+          "exhibition-canvas-panel z-10 h-full bg-ViewerBackground canvas-preview-transition",
+          transitionScale && "hover:scale-105 transition-transform duration-1000",
+        )}
+        onClick={withViewTransition(
+          container.current,
+          () => setIsOpen(true),
+          `canvas-preview-block-${index}`,
+          false,
+          viewTransition,
+        )}
+      >
+        <Hookable type="canvasPreviewEditor" resource={canvas}>
+          <CanvasPanel.Viewer
+            containerStyle={containerStyle}
+            renderPreset={config}
+            homeOnResize
+            homeCover={cover || !hasMultipleAnnotations}
+            onCreated={onCreated}
           >
-            <CloseIcon fill="#fff" />
+            <CanvasPanel.RenderCanvas strategies={["images"]} enableSizes={false}>
+              <Highlights />
+            </CanvasPanel.RenderCanvas>
+          </CanvasPanel.Viewer>
+        </Hookable>
+      </div>
+      {imageInfoIcon && (
+        <div className="absolute top-4 right-4 z-20 text-ImageCaption text-2xl pointer-events-none">
+          <InfoIcon />
+        </div>
+      )}
+      <div className="absolute bottom-4 left-0 right-0 z-20 text-center font-mono text-sm text-ImageCaption">
+        {canvas.requiredStatement ? (
+          <div className="">
+            <LocaleString className="image-caption-inline">{canvas.requiredStatement.value}</LocaleString>
+          </div>
+        ) : (
+          <Hookable type="localeStringEditor" property="label" resource={canvas}>
+            <LocaleString className="image-caption-inline">{canvas.label}</LocaleString>
+          </Hookable>
+        )}
+      </div>
+      <Dialog
+        className="exhibition-viewer exhibition-viewer-dialog"
+        open={isOpen}
+        onClose={withViewTransition(
+          container.current,
+          () => setIsOpen(false),
+          `canvas-preview-block-${index}`,
+          true,
+          viewTransition,
+        )}
+      >
+        <div className="fixed modal-top left-0 right-0 bottom-0 bg-black/30" aria-hidden="true" />
+        <div className="safe-inset fill-height fixed modal-top left-0 right-0 bottom-0 z-20 flex w-screen items-center md:p-4">
+          <button
+            type="button"
+            onClick={withViewTransition(
+              container.current,
+              () => setIsOpen(false),
+              `canvas-preview-block-${index}`,
+              true,
+              viewTransition,
+            )}
+            className="absolute right-4 top-4 z-20 flex  h-16 w-16 items-center justify-center bg-CloseBackground text-CloseText hover:bg-CloseBackgroundHover"
+          >
+            <CloseIcon fill="currentColor" />
           </button>
-          <Dialog.Panel className="relative z-10 flex h-full w-full flex-col justify-center overflow-y-auto overflow-x-hidden bg-black md:rounded lg:flex-row">
-            <div className="flex-shink-0 sticky top-0 z-20 min-h-0 flex-1 bg-[#373737] lg:relative lg:order-2 lg:min-w-0">
+          <Dialog.Panel className="relative z-10 flex h-full w-full flex-col justify-center bg-InfoBlock text-InfoBlockText overflow-y-auto overflow-x-hidden md:rounded lg:flex-row">
+            <div
+              className="exhibition-canvas-panel flex-shink-0 sticky top-0 z-20 min-h-0 flex-1 bg-ViewerBackground lg:relative lg:order-2 lg:min-w-0"
+              style={{
+                viewTransitionName: isOpen ? `canvas-preview-block-${index}` : "",
+              }}
+            >
               {isOpen ? (
                 <CanvasPanel.Viewer
                   onCreated={(ctx) => void (atlas.current = ctx)}
                   containerStyle={{ height: "100%", minHeight: 0 }}
-                  renderPreset={config}
+                  runtimeOptions={openConfig[1].runtimeOptions}
+                  renderPreset={openConfig}
                 >
-                  <CanvasPanel.RenderCanvas strategies={["images"]} enableSizes={false}>
-                    {highlights.map((highlight, index) => {
-                      const target = highlight?.selector?.spatial as any;
-                      if (!target) return null;
-                      return (
-                        <box key={index} target={target} relativeStyle html style={{ border: "2px dashed red" }} />
-                      );
-                    })}
+                  <CanvasPanel.RenderCanvas
+                    strategies={["images"]}
+                    enableSizes={false}
+                    renderViewerControls={() => <ViewerZoomControls />}
+                  >
+                    <Highlights />
 
                     {steps.map((step, index) => {
                       if (step.region && step.region.selector?.spatial) {
@@ -265,22 +343,33 @@ function CanvasPreviewBlockInner({
               ) : null}
             </div>
             {alternativeMode ? (
-              <div className="z-10 max-h-[40vh] w-full overflow-y-auto text-white lg:order-1 lg:max-h-[100vh] lg:max-w-md">
-                {canvas.label || canvas.summary ? (
-                  <div className="mb-4 bg-black px-8">
+              <div className="z-10 max-h-[40vh] w-full overflow-y-auto text-InfoBlockText lg:order-1 lg:max-h-[100vh] lg:max-w-md">
+                {canvas.label || canvas.summary || canvas.seeAlso?.length ? (
+                  <div className="mb-4 bg-InfoBlock text-InfoBlockText px-8">
                     <div>
-                      <LocaleString as="h2" className="sticky top-0 bg-black pb-4 pt-6 font-mono uppercase">
-                        {canvas.label}
-                      </LocaleString>
-                      <LocaleString className="whitespace-pre-wrap" enableDangerouslySetInnerHTML>
-                        {canvas.summary}
-                      </LocaleString>
+                      <Hookable type="localeStringEditor" property="label" resource={canvas}>
+                        <LocaleString as="h2" className="sticky top-0 bg-InfoBlock pb-4 pt-6 font-mono delft-title">
+                          {canvas.label}
+                        </LocaleString>
+                      </Hookable>
+                      <Hookable type="localeStringEditor" property="summary" resource={canvas}>
+                        <LocaleString className="whitespace-pre-wrap" enableDangerouslySetInnerHTML>
+                          {canvas.summary}
+                        </LocaleString>
+                      </Hookable>
                     </div>
+                    {canvas.requiredStatement && (
+                      <div className="mt-8 text-sm opacity-60">
+                        <LocaleString>{canvas.requiredStatement.value}</LocaleString>
+                      </div>
+                    )}
+                    {canvas.seeAlso?.length ? <RenderSeeAlso resource={canvas.seeAlso[0]} /> : null}
                   </div>
                 ) : null}
+                {steps.length === 0 ? <div>{objectLink?.component || null}</div> : null}
                 {steps.length > 1 ? (
-                  <div className="flex flex-col gap-2 bg-black px-8 pb-8">
-                    <h3 className="sticky top-0 bg-black pb-4 pt-6 font-mono uppercase">Annotations</h3>
+                  <div className="flex flex-col gap-2 bg-InfoBlock text-InfoBlockText px-8 pb-8">
+                    <h3 className="sticky top-0 bg-InfoBlock pb-4 pt-6 font-mono delft-title">Annotations</h3>
                     {steps.map((step, index) => {
                       return (
                         <VisibleAnnotationsListingItem
@@ -309,10 +398,14 @@ function CanvasPreviewBlockInner({
                     </div>
                   ) : (
                     <div>
-                      <LocaleString>{canvas.label}</LocaleString>
-                      <LocaleString enableDangerouslySetInnerHTML className="whitespace-pre-wrap">
-                        {canvas.summary}
-                      </LocaleString>
+                      <Hookable type="localeStringEditor" property="label" resource={canvas}>
+                        <LocaleString>{canvas.label}</LocaleString>
+                      </Hookable>
+                      <Hookable type="localeStringEditor" property="summary" resource={canvas}>
+                        <LocaleString enableDangerouslySetInnerHTML className="whitespace-pre-wrap">
+                          {canvas.summary}
+                        </LocaleString>
+                      </Hookable>
                     </div>
                   )}
                 </div>
@@ -391,47 +484,41 @@ function CanvasPreviewBlockInner({
   );
 }
 
-export function CanvasPreviewBlock({
-  canvasId,
-  cover,
-  index,
-  autoPlay,
-  objectLinks,
-  alternativeMode,
-}: {
-  canvasId: string;
-  cover?: boolean;
-  index: number;
-  autoPlay?: boolean;
-  alternativeMode?: boolean;
-  objectLinks: Array<{
-    service: string;
-    slug: string;
-    canvasId: string;
-    targetCanvasId: string;
-    component: ReactNode;
-  }>;
-}) {
-  const inner = (
-    <CanvasContext canvas={canvasId} key={canvasId}>
-      <CanvasPreviewBlockInner
-        cover={cover}
-        objectLinks={objectLinks}
-        autoPlay={autoPlay}
-        alternativeMode={alternativeMode}
-      />
+export function CanvasPreviewBlock(props: CanvasPreviewBlockProps) {
+  const inner = props.canvasId ? (
+    <CanvasContext canvas={props.canvasId}>
+      <CanvasPreviewBlockInner {...props} />
     </CanvasContext>
+  ) : (
+    <CanvasPreviewBlockInner {...props} />
   );
 
-  if (index < 3) {
-    return <div className="relative h-full w-full bg-[#373737]">{inner}</div>;
-  }
+  // if (props.index < 3) {
+  return <div className="relative h-full w-full bg-ViewerBackground">{inner}</div>;
+  // }
 
+  // @todo come back to this, breaking some things.
   return (
-    <div className="relative h-full w-full bg-[#373737]">
+    <div className="relative h-full w-full bg-ViewerBackground">
       <LazyLoadComponent placeholder={<div />} visibleByDefault={false} threshold={300}>
         {inner}
       </LazyLoadComponent>
     </div>
+  );
+}
+
+function Highlights() {
+  const highlights = useCanvasHighlights();
+  if (!highlights || highlights.length === 0) return null;
+  if (highlights.length > 1) return null;
+
+  return (
+    <>
+      {highlights.map((highlight, index) => {
+        const target = highlight?.selector?.spatial as any;
+        if (!target) return null;
+        return <box key={index} target={target} relativeStyle html style={{ border: "2px dashed red" }} />;
+      })}
+    </>
   );
 }

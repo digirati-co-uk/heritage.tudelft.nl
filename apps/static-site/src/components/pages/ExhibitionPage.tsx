@@ -1,14 +1,16 @@
 "use client";
+import { Link } from "@/i18n/navigation";
 import type { Manifest } from "@iiif/presentation-3";
-import { DelftExhibition } from "delft-exhibition-viewer";
+import { DelftExhibition } from "exhibition-viewer";
+import { useMemo } from "react";
 import { EditInManifestEditor } from "../atoms/EditInManifestEditor";
 
 export interface ExhibitionPageProps {
   locale: string;
   manifest: Manifest;
-  meta: {};
+  meta: any;
   slug: string;
-  viewObjectLinks: Array<{
+  viewObjectLinks?: Array<{
     service: string;
     slug: string;
     canvasId: string;
@@ -22,7 +24,25 @@ export interface ExhibitionPageProps {
 
 const useOldHeader = ["corona-chronicles"];
 
-export default async function ExhibitionPage(props: ExhibitionPageProps) {
+export default function ExhibitionPage(props: ExhibitionPageProps) {
+  const viewObjectLinks = useMemo(() => {
+    return (props.viewObjectLinks || []).map((link) => {
+      return {
+        ...link,
+        component: (
+          <div>
+            <Link
+              href={`/${link.slug.replace("manifests/", "objects/")}?c=${link.targetCanvasId}`}
+              className="text-white underline py-3"
+            >
+              View object
+            </Link>
+          </div>
+        ),
+      };
+    });
+  }, [props.viewObjectLinks]);
+
   return (
     <>
       <EditInManifestEditor preset="exhibition" id={props.manifest.id} />
@@ -30,7 +50,7 @@ export default async function ExhibitionPage(props: ExhibitionPageProps) {
       <DelftExhibition
         language={props.locale}
         manifest={props.manifest}
-        viewObjectLinks={props.viewObjectLinks as any}
+        viewObjectLinks={viewObjectLinks}
         options={{
           alternativeImageMode: true,
           cutCorners: true,

@@ -1,4 +1,4 @@
-import { Link } from "@/navigation";
+import { Link } from "@/i18n/navigation";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { getTranslations } from "next-intl/server";
 import { MobileMenu } from "./atoms/MobileMenu";
@@ -9,29 +9,46 @@ export async function GlobalHeader() {
   const menu = (
     <>
       <li>
-        <Link className="uppercase underline-offset-4 hover:underline" href="/exhibitions">
+        <Link
+          className="uppercase underline-offset-4 hover:underline"
+          href="/exhibitions"
+        >
           {t("Exhibitions")}
         </Link>
       </li>
       <li>
-        <Link className="uppercase underline-offset-4 hover:underline" href="/collections">
+        <Link
+          className="uppercase underline-offset-4 hover:underline"
+          href="/collections"
+        >
           {t("Collections")}
         </Link>
       </li>
       <li>
-        <Link className="uppercase underline-offset-4 hover:underline" href="/publications">
+        <Link
+          className="uppercase underline-offset-4 hover:underline"
+          href="/publications"
+        >
           {t("Publications")}
         </Link>
       </li>
       <li>
-        <Link className="uppercase underline-offset-4 hover:underline" href="/about">
+        <Link
+          className="uppercase underline-offset-4 hover:underline"
+          href="/about"
+        >
           {t("About")}
         </Link>
       </li>
       <li>
         <Link className="uppercase" href="/search">
           <div className="transition-background duration-400 flex h-10 w-10 items-center justify-center rounded-full border border-transparent text-white hover:border-white hover:bg-white hover:bg-opacity-20">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={24} height={24}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width={24}
+              height={24}
+            >
               <path d="M0 0h24v24H0V0z" fill="none" />
               <path
                 d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
@@ -71,11 +88,18 @@ export async function GlobalHeader() {
         <div className="font-mono uppercase max-sm:ml-auto max-sm:mr-auto md:text-base">
           <Link href="/">{t("Academic Heritage")}</Link>
         </div>
-        <ul className="ml-auto lg:flex hidden items-center text-xs md:gap-2 md:text-base lg:gap-5">{menu}</ul>
+        <ul className="ml-auto lg:flex hidden items-center text-xs md:gap-2 md:text-base lg:gap-5">
+          {menu}
+        </ul>
         <div className="justify-self-end sm:ml-auto lg:hidden">
           <Link className="uppercase" href="/search">
             <div className="transition-background duration-400 flex h-10 w-10 items-center justify-center rounded-full text-white hover:bg-white hover:bg-opacity-20">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={24} height={24}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width={24}
+                height={24}
+              >
                 <path d="M0 0h24v24H0V0z" fill="none" />
                 <path
                   d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"

@@ -1,6 +1,6 @@
 // src/dev/node-client.ts
-import { readFile } from "node:fs/promises";
-import { join } from "node:path";
+import { readFile } from "fs/promises";
+import { join } from "path";
 
 // src/util/make-slug-helper.ts
 function getDefaultSlug(slug) {

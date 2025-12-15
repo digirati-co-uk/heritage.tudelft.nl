@@ -13,7 +13,8 @@ run:
   - manifest-sqlite
   - metadata-analysis
   - folder-collections
-  - typesense-manifests
+  - extract-files-list
+  - enrich-files-rewrite
 
 collections:
   index:
@@ -54,6 +55,7 @@ stores:
     type: iiif-json
     path: ./delft
     pattern: "**/*.{json,yml}"
+    subFiles: true
     run:
       - delft-labels
       - extract-thumbnail
@@ -117,12 +119,27 @@ stores:
       - wellcome-collection
       - wellcome-manifest
 
+
 config:
   extract-label-string:
     language: en
 
   manifest-sqlite:
     enableTopics: true
+
+  extract-files-list:
+    fileTemplates:
+      plaintext.txt:
+        type: "Text"
+        format: "text/plain"
+        label: "View raw text"
+        property: rendering
+      dataset.json:
+        type: "Dataset"
+        format: "application/json"
+        profile: "https://api.wellcomecollection.org/catalogue/v2/context.json"
+        label: "Wellcome Collection Catalogue API"
+        property: seeAlso
 
 slugs:
   wellcome-manifest:

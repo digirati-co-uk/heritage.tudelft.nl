@@ -2,18 +2,21 @@ import fs from "node:fs";
 import { cwd, env } from "node:process";
 import type { Command } from "commander";
 import { canvasThumbnail } from "../enrich/canvas-thumbnail.ts";
+import { filesRewrite } from "../enrich/files-rewrite.ts";
 import { homepageProperty } from "../enrich/homepage-property";
-import { manifestSqlite } from "../enrich/manifest-sqlite.ts";
+// import { manifestSqlite } from "../enrich/manifest-sqlite.ts";
 import { translateMetadata } from "../enrich/translate-metadata.ts";
 import { enrichTypesense } from "../enrich/typesense-index.ts";
 import { typesensePlaintext } from "../enrich/typesense-plaintext.ts";
 import { extractCanvasDims } from "../extract/extract-canvas-dims.ts";
+import { extractFilesList } from "../extract/extract-files-list.ts";
 import { extractFolderCollections } from "../extract/extract-folder-collections.ts";
 import { extractLabelString } from "../extract/extract-label-string";
 import { extractMetadataAnalysis } from "../extract/extract-metadata-analysis.ts";
 import { extractPartOfCollection } from "../extract/extract-part-of-collection.ts";
 import { extractPlaintext } from "../extract/extract-plaintext.ts";
 import { extractRemoteSource } from "../extract/extract-remote-source.ts";
+import { extractSearchRecord } from "../extract/extract-search-record.ts";
 import { extractSlugSource } from "../extract/extract-slug-source";
 import { extractThumbnail } from "../extract/extract-thumbnail.ts";
 import { extractTopics } from "../extract/extract-topics.ts";
@@ -25,12 +28,13 @@ import type { Extraction } from "../util/extract.ts";
 import { FileHandler } from "../util/file-handler.ts";
 import { type BuildBuiltIns, getBuildConfig } from "../util/get-build-config.ts";
 import type { Rewrite } from "../util/rewrite.ts";
-import { parseStores } from "./build/0-parse-stores.ts";
-import { loadStores } from "./build/1-load-stores.ts";
-import { extract } from "./build/2-extract.ts";
-import { enrich } from "./build/3-enrich.ts";
-import { emit } from "./build/4-emit.ts";
-import { indices } from "./build/5-indices.ts";
+import type { Tracer } from "../util/tracer.ts";
+import { parseStores } from "./build-steps/0-parse-stores.ts";
+import { loadStores } from "./build-steps/1-load-stores.ts";
+import { extract } from "./build-steps/2-extract.ts";
+import { enrich } from "./build-steps/3-enrich.ts";
+import { emit } from "./build-steps/4-emit.ts";
+import { indices } from "./build-steps/5-indices.ts";
 import { generateCommand } from "./generate.ts";
 
 export type BuildOptions = {
@@ -67,11 +71,14 @@ const topicFolder = "content/topics";
 
 const defaultRun = [
   extractRemoteSource.id,
+  extractSearchRecord.id,
   extractLabelString.id,
   extractSlugSource.id,
   homepageProperty.id,
   extractMetadataAnalysis.id,
   extractFolderCollections.id,
+  extractFilesList.id,
+  filesRewrite.id,
 ];
 
 const buildInRewrites: Rewrite[] = [
@@ -89,16 +96,19 @@ const builtInExtractions: Extraction[] = [
   extractRemoteSource,
   extractFolderCollections,
   extractPlaintext,
+  extractFilesList,
   // This is really slow, so we don't run it by default.
   extractPartOfCollection,
+  extractSearchRecord,
 ];
 const buildInEnrichments: Enrichment[] = [
   homepageProperty,
   canvasThumbnail,
   translateMetadata,
-  manifestSqlite,
+  // manifestSqlite,
   enrichTypesense,
   typesensePlaintext,
+  filesRewrite,
   // pdiiif
 ];
 
@@ -106,6 +116,7 @@ const builtInEnrichmentsMap = {
   [homepageProperty.id]: homepageProperty,
   [canvasThumbnail.id]: canvasThumbnail,
   [translateMetadata.id]: translateMetadata,
+  [filesRewrite.id]: filesRewrite,
   // [pdiiif.id]: pdiiif,
 };
 
@@ -154,10 +165,12 @@ export async function build(
     fileHandler = new FileHandler(fs, cwd(), true),
     pathCache = { allPaths: {} },
     storeRequestCaches,
+    tracer,
   }: {
     fileHandler?: FileHandler;
     pathCache?: { allPaths: Record<string, string> };
     storeRequestCaches?: Record<string, any>;
+    tracer?: Tracer;
   } = {}
 ) {
   const buildConfig = await getBuildConfig(
@@ -172,6 +185,7 @@ export async function build(
     {
       ...builtIns,
       fileHandler,
+      tracer,
     }
   );
 
@@ -214,6 +228,8 @@ export async function build(
         manifestCollection: emitted.manifestCollection,
         storeCollections: emitted.storeCollections,
         indexCollection: emitted.indexCollection,
+        searchIndexes: enrichments.searchIndexes,
+        allIndices: enrichments.allIndices,
         siteMap: emitted.siteMap,
       },
       buildConfig
@@ -223,7 +239,13 @@ export async function build(
   await buildConfig.fileTypeCache.save();
 
   if (options.emit) {
-    await fileHandler.saveAll();
+    const { failedToWrite } = await fileHandler.saveAll();
+    if (failedToWrite.length) {
+      buildConfig.log(`Failed to write ${failedToWrite.length} files`);
+      if (buildConfig.options.debug) {
+        buildConfig.log(failedToWrite);
+      }
+    }
   }
 
   return {

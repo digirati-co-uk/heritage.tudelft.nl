@@ -17,23 +17,25 @@ jobs:
         with:
           bun-version: latest
 
-      - name: Cache buns dependencies
-        uses: actions/cache@v4
+      - uses: pnpm/action-setup@v3
         with:
-          path: ~/.bun/install/cache
-          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-bun-
+          version: 9
+          run_install: |
+            - recursive: true
+              args: [--frozen-lockfile, --strict-peer-dependencies]
 
-      - name: Run bun install
-        run: bun install --frozen-lockfile
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: "pnpm"
 
       - name: Build HSS
         working-directory: packages/headless-static-site
-        run: bun run build
+        run: pnpm run build
 
       - name: Link HSS CLI
-        run: bun install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       - name: Cache .iiif/cache
         uses: actions/cache@v4
@@ -47,9 +49,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: apps/static-site/.next/cache
-          key: ${{ runner.os }}-iiif-cache-${{ hashFiles('**/bun.lock') }}--${{ hashFiles('app/static-site/src/**/*.ts', 'app/static-site/src/**/*.tsx') }}
+          key: ${{ runner.os }}-iiif-cache-${{ hashFiles('**/pnpm-lock.yaml') }}--${{ hashFiles('app/static-site/src/**/*.ts', 'app/static-site/src/**/*.tsx') }}
           restore-keys: |
-            ${{ runner.os }}-iiif-cache-${{ hashFiles('**/bun.lock') }}
+            ${{ runner.os }}-iiif-cache-${{ hashFiles('**/pnpm-lock.yaml') }}
 
       - name: "Cleanup Netlify folder"
         run: |
@@ -62,7 +64,7 @@ jobs:
         if: (contains(github.event.pull_request.labels.*.name, 'debug-build'))
         working-directory: apps/iiif
         run: |
-          npx netlify-cli@17.34.3 deploy \
+          npx netlify-cli@23.9.5 deploy \
             --build \
             --alias=deploy-debug-${{ github.event.number }} \
             --message="Deploy preview from GitHub Actions (debug)"
@@ -81,7 +83,7 @@ jobs:
         id: netlify_static_site_debug
         if: (contains(github.event.pull_request.labels.*.name, 'debug-build'))
         run: |
-          npx netlify-cli@17.34.3 deploy \
+          npx netlify-cli@23.9.5 deploy \
             --build \
             --filter=static-site \
             --alias=deploy-debug-${{ github.event.number }} \
@@ -103,7 +105,7 @@ jobs:
         if: (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy-preview'))
         working-directory: apps/iiif
         run: |
-          deploy_json=$(npx netlify-cli@17.34.3 deploy \
+          deploy_json=$(npx netlify-cli@23.9.5 deploy \
             --build \
             --alias=deploy-preview-${{ github.event.number }} \
             --json \
@@ -125,7 +127,7 @@ jobs:
         id: netlify_static_site
         if: (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy-preview'))
         run: |
-          deploy_json=$(npx netlify-cli@17.34.3 deploy \
+          deploy_json=$(npx netlify-cli@23.9.5 deploy \
             --build \
             --filter=static-site \
             --alias=deploy-preview-${{ github.event.number }} \

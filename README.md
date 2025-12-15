@@ -12,12 +12,12 @@ This website provides access to the different facets of the academic heritage te
 
 1.  **Dependancies**
 
-    [Bun](https://bun.sh/)
+    [pnpm](https://pnpm.io/installation)
 
-    Bun is a fast javascript runtime similar (and mostly compatible) with NodeJS. It's well suited for the data processing used in the static site generator.
+    pnpm is a fast javascript package manager similar (and compatible) with npm.
 
     ```sh
-    curl -fsSL https://bun.sh/install | bash
+    curl -fsSL https://get.pnpm.io/install.sh | sh -
     ```
 
 2.  **Start developing.**
@@ -25,19 +25,19 @@ This website provides access to the different facets of the academic heritage te
     From the route of the project install the latest project dependancies and start the development server.
 
     ```sh
-    bun install
+    pnpm install
     ```
 
     then run a first build, to create the IIIF:
 
     ```sh
-    bun run build
+    pnpm run build
     ```
 
     to start the development server run
 
     ```sh
-    bun dev
+    pnpm dev
     ```
 
 3.  **Open the source code and start editing!**
@@ -53,13 +53,13 @@ The project is a [Monorepo](https://turbo.build/repo/docs) with multiple project
     Run auto linting on your code to conform to the project standards
 
     ```sh
-    bun run lint
+    pnpm run lint
     ```
 
     Building the project. It is recommended you confirm the build is running and passing before any pushes to the project repository.
 
     ```sh
-    bun run build
+    pnpm run build
     ```
 
 Once you have a running build push to the project repo and open a pull request. Netlify will automatically build a preview of your branch and the details are availible on the pull request if you add a label "Deploy preview" to the pull request.
@@ -70,9 +70,9 @@ Main branch is automatically deployed to the live site.
 
 [UX Wireframe](https://www.figma.com/file/emiQTuM5feCweZT4soUY4MJg/Wires?node-id=0:1)
 
-[Demo site](https://delft-static-site-generator.netlify.com/)
+[Live site](https://heritage.tudelft.nl/)
 
-[Changelog](https://github.com/digirati-co-uk/delft-static-site-generator/issues)
+[Changelog](https://github.com/digirati-co-uk/heritage.tudelft.nl/issues)
 
 ## Updating Headless Static Site
 

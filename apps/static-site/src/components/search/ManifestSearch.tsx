@@ -1,11 +1,11 @@
 "use client";
 
-import { Configure, InfiniteHits, SearchBox, useCurrentRefinements, useHits, useSearchBox } from "react-instantsearch";
-import { SearchWrapper, getFacets } from "./SearchWrapper";
-import { createPortal } from "react-dom";
 import { useEffect, useState } from "react";
-import { FacetList } from "./FacetList";
+import { createPortal } from "react-dom";
+import { Configure, InfiniteHits, SearchBox, useCurrentRefinements, useHits, useSearchBox } from "react-instantsearch";
 import { CollectionItemHit } from "./CollectionItemHit";
+import { FacetList } from "./FacetList";
+import { SearchWrapper, getFacets } from "./SearchWrapper";
 
 type ManifestSearchContent = {
   searchBoxPlaceholder: string;
@@ -21,6 +21,8 @@ export function ManifestSearch({
   collectionSlug: string;
   content: ManifestSearchContent;
 }) {
+  const facets = getFacets();
+
   const [dom, setDom] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -32,7 +34,7 @@ export function ManifestSearch({
       <SearchWrapper>
         <Configure facetsRefinements={{ collections: [collectionSlug] }} />
 
-        {getFacets().map((facet) => {
+        {facets.map((facet) => {
           return <FacetList key={facet} facet={facet} />;
         })}
 

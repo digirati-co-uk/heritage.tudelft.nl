@@ -1,15 +1,20 @@
 import { Slot } from "@/blocks/slot";
 import { Page } from "@/components/Page";
+import { getBasicMetadata, getDefaultMetaMdx, getMdx, makeTitle } from "@/helpers/metadata";
+import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
-import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
-import { getBasicMetadata, makeTitle, getMdx, getDefaultMetaMdx } from "@/helpers/metadata";
 
-export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+export async function generateMetadata(data: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const params = await data.params;
   const t = await getTranslations();
   const path = "/exhibitions";
   const defaultMeta = getDefaultMetaMdx({ params: { locale: params.locale } });
-  const page = getMdx({ params: { pageName: "Exhibitions", path: path, locale: params.locale } });
+  const page = getMdx({
+    params: { pageName: "Exhibitions", path: path, locale: params.locale },
+  });
   const title = makeTitle([page.title, defaultMeta.title]);
   const description = page.description ?? defaultMeta.description;
   return getBasicMetadata({
@@ -26,11 +31,18 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   });
 }
 
-export default function ExhibitionsPage({ params }: { params: { locale: string } }) {
-  setRequestLocale(params.locale);
+export default async function ExhibitionsPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+
+  setRequestLocale(locale);
+
   return (
     <Page>
-      <Slot name="main-exhibitions" context={{ locale: params.locale }} />
+      <Slot name="main-exhibitions" context={{ locale: locale }} />
       {/* Turn off default listing here. */}
       {/* <ExhibitionListing content={{ exhibition: t("Exhibition") }} exhibitions={exhibitions.items as any} /> */}
     </Page>

@@ -2,10 +2,11 @@ import { join } from "node:path";
 import { IIIFBuilder } from "@iiif/builder";
 import { Vault } from "@iiif/helpers";
 import type { EnrichmentResult } from "./enrich";
-import type { ExtractionReturn } from "./extract";
+import type { ExtractionReturn, SearchRecordReturn } from "./extract";
 import type { FileHandler } from "./file-handler";
 import { lazyValue } from "./lazy-value";
 import { mergeIndices } from "./merge-indices";
+import { mergeSearchResult } from "./merge-search-result";
 import type { ActiveResourceJson } from "./store";
 
 interface CreateCacheResourceOptions<Temp = any> {
@@ -36,19 +37,23 @@ export function createCacheResource({
     "caches.json": join(resourcePath, "caches.json"),
     "meta.json": join(resourcePath, "meta.json"),
     "indices.json": join(resourcePath, "indices.json"),
+    "search-record.json": join(resourcePath, "search-record.json"),
   };
   const filesDir = join(resourcePath, "files");
   const vaultData = parentManifest ? null : fs.openJson(files["vault.json"]);
   const caches = lazyValue(() => fs.loadJson(files["caches.json"]));
   const meta = lazyValue(() => fs.loadJson(files["meta.json"]));
   const indices = lazyValue(() => fs.loadJson(files["indices.json"]));
+  const searchRecord = lazyValue<Partial<SearchRecordReturn>>(() => fs.loadJson(files["search-record.json"]));
   const newMeta = {};
   const newCaches = {};
   const newIndices = {};
+  const newSearchRecord = {};
 
   return {
     vaultData,
     caches,
+    searchRecord,
     meta,
     indices,
     filesDir,
@@ -125,6 +130,10 @@ export function createCacheResource({
       if (result.indices) {
         mergeIndices(newIndices, result.indices);
       }
+      if (result.search) {
+        mergeSearchResult(newSearchRecord, result.search);
+      }
+
       if (result.collections) {
         for (const collectionSlug of result.collections) {
           collections[collectionSlug] = collections[collectionSlug] || [];
@@ -138,8 +147,9 @@ export function createCacheResource({
       const hasNewMeta = Object.keys(newMeta).length > 0;
       const hasNewIndices = Object.keys(newIndices).length > 0;
       const hasNewCaches = Object.keys(newCaches).length > 0;
+      const hasNewSearchRecord = Object.keys(newSearchRecord).length > 0;
 
-      if (!hasNewMeta && !hasNewIndices && !hasNewCaches) {
+      if (!hasNewMeta && !hasNewIndices && !hasNewCaches && !hasNewSearchRecord) {
         return;
       }
 
@@ -153,6 +163,9 @@ export function createCacheResource({
       }
       if (Object.keys(newCaches).length > 0) {
         await fs.saveJson(files["caches.json"], Object.assign(await caches.value, newCaches));
+      }
+      if (Object.keys(newSearchRecord).length > 0) {
+        await fs.saveJson(files["search-record.json"], mergeSearchResult(await searchRecord.value, newSearchRecord));
       }
     },
   };

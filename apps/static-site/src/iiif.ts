@@ -1,6 +1,10 @@
 import type { Collection } from "@iiif/presentation-3";
+import { cache } from "react";
 
-let IIIF_URL = process.env["IIIF_URL"] || process.env["NEXT_PUBLIC_IIIF_URL"] || "http://localhost:7111/";
+export let IIIF_URL =
+  process.env["IIIF_URL"] ||
+  process.env["NEXT_PUBLIC_IIIF_URL"] ||
+  "http://localhost:7111/";
 
 if (!IIIF_URL.endsWith("/")) {
   IIIF_URL += "/";
@@ -10,20 +14,37 @@ const fetchOptions: RequestInit = {
   cache: process.env.NODE_ENV === "production" ? "default" : "no-store",
 };
 
-export async function loadCollection(slug: string) {
-  const collectionReq = fetch(`${IIIF_URL}${slug}/collection.json`, fetchOptions);
-  // const metaReq = fetch(`${IIIF_URL}${slug}/meta.json`);
-  const ret: { collection: Collection; meta: any } = { meta: {} } as any;
-
-  const [collection, meta] = await Promise.all([collectionReq, Promise.resolve({ ok: false })]);
-
-  if (meta.ok) {
-    // ret.meta = await meta.json();
+export function relativeIIIFUrl(remoteOrLocal: string) {
+  if (remoteOrLocal.startsWith(IIIF_URL)) {
+    return remoteOrLocal.slice(IIIF_URL.length - 1);
   }
+  return remoteOrLocal;
+}
 
-  ret.collection = await collection.json();
+export async function loadCollection(slug: string) {
+  try {
+    const collectionReq = fetch(
+      `${IIIF_URL}${slug}/collection.json`,
+      fetchOptions,
+    );
+    // const metaReq = fetch(`${IIIF_URL}${slug}/meta.json`);
+    const ret: { collection: Collection; meta: any } = { meta: {} } as any;
 
-  return ret;
+    const [collection, meta] = await Promise.all([
+      collectionReq,
+      Promise.resolve({ ok: false }),
+    ]);
+
+    if (meta.ok) {
+      // ret.meta = await meta.json();
+    }
+
+    ret.collection = await collection.json();
+
+    return ret;
+  } catch (error) {
+    return { collection: null, meta: null };
+  }
 }
 
 export async function loadCollectionMeta(slug: string) {
@@ -35,16 +56,26 @@ export async function loadCollectionMeta(slug: string) {
   }
 }
 
-export async function loadManifest(slug: string) {
-  const manifestReq = fetch(`${IIIF_URL}${slug}/manifest.json`, fetchOptions);
-  const metaReq = fetch(`${IIIF_URL}${slug}/meta.json`, fetchOptions);
+export async function loadMeta(name: string) {
+  return fetch(`${IIIF_URL}/meta/${name}`, fetchOptions).then((r) => r.json());
+}
 
-  return Promise.all([manifestReq, metaReq]).then(async ([manifest, meta]) => {
-    return {
-      manifest: await manifest.json(),
-      meta: await meta.json(),
-    };
-  });
+export async function loadManifest(slug: string) {
+  try {
+    const manifestReq = fetch(`${IIIF_URL}${slug}/manifest.json`, fetchOptions);
+    const metaReq = fetch(`${IIIF_URL}${slug}/meta.json`, fetchOptions);
+
+    return await Promise.all([manifestReq, metaReq]).then(
+      async ([manifest, meta]) => {
+        return {
+          manifest: await manifest.json(),
+          meta: await meta.json(),
+        };
+      },
+    );
+  } catch (error) {
+    return { manifest: null, meta: null };
+  }
 }
 
 export async function loadManifestMeta(slug: string) {
@@ -55,3 +86,22 @@ export async function loadManifestMeta(slug: string) {
 
   return null;
 }
+
+export const getRelatedObjects = cache(() =>
+  fetch(`${IIIF_URL}meta/related-objects.json`, fetchOptions).then((r) =>
+    r.json(),
+  ),
+);
+
+export const getImageServiceLinks = cache(
+  (): Promise<{
+    [slug: string]: [
+      {
+        slug: string;
+        service: string;
+        canvasId: string;
+        targetCanvasId: string;
+      },
+    ];
+  }> => fetch(`${IIIF_URL}meta/image-service-links.json`).then((r) => r.json()),
+);
