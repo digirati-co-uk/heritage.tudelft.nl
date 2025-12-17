@@ -2,6 +2,7 @@ import { Slot } from "@/blocks/slot";
 import { Page } from "@/components/Page";
 import { Box } from "@/components/blocks/Box";
 import { setRequestLocale } from "next-intl/server";
+import { HomepageSearch } from "@/components/pages/HomepageSearch";
 
 export default async function Homepage({
   params,
@@ -13,6 +14,7 @@ export default async function Homepage({
   return (
     <Page>
       <Slot context={{ locale }} name="homepage" />
+      {/* <HomepageSearch /> */}
     </Page>
   );
 }
