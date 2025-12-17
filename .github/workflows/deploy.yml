@@ -5,6 +5,12 @@ on:
     branches:
       - main
   workflow_dispatch:
+    inputs:
+      rebuild-index:
+        description: 'Rebuild search index'
+        required: true
+        default: false
+        type: boolean
 
 jobs:
   build:
@@ -96,7 +102,7 @@ jobs:
       - name: Build IIIF Search
         working-directory: apps/static-site
         run: |
-          bun run ./typesense-update.ts
+          bun run ./typesense-update.ts ${{ github.event.inputs.rebuild-index && '--recreate-index' || '' }}
         env:
           TYPESENSE_API_KEY: ${{ secrets.TYPESENSE_ADMIN_API_KEY }}
           TYPESENSE_HOST: 63flhve71t2un5xgp.a1.typesense.net
