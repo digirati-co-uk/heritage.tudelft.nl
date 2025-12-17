@@ -1,0 +1,190 @@
+{
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/7d421893-9b8f-4366-8fef-2d8e1e000d23.json",
+    "type": "Manifest",
+    "label": {
+        "nl": [
+            "Filmrol"
+        ]
+    },
+    "metadata": [
+        {
+            "label": {
+                "en": [
+                    "Title"
+                ],
+                "nl": [
+                    "Titel"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "Filmrol"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Object name"
+                ],
+                "nl": [
+                    "Objectnaam"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "film"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Inventory number"
+                ],
+                "nl": [
+                    "Inventarisnummer"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "2017.0059.3ME"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Dimensions"
+                ],
+                "nl": [
+                    "Afmetingen"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "3,0 cm (h) x 18,0 cm (b) x 18,0 cm (d)"
+                ]
+            }
+        },
+        {
+            "label": {
+                "en": [
+                    "Material"
+                ],
+                "nl": [
+                    "Materiaal"
+                ]
+            },
+            "value": {
+                "nl": [
+                    "metaal"
+                ]
+            }
+        }
+    ],
+    "thumbnail": [
+        {
+            "id": "https://dlc.services/thumbs/v3/7/18/0dca9f95-87f4-45ac-a5ea-ef1346b35d56/full/max/0/default.jpg",
+            "type": "Image",
+            "format": "image/jpeg",
+            "service": [
+                {
+                    "@context": "http://iiif.io/api/image/3/context.json",
+                    "id": "https://dlc.services/thumbs/v3/7/18/0dca9f95-87f4-45ac-a5ea-ef1346b35d56",
+                    "type": "ImageService3",
+                    "profile": "level0",
+                    "sizes": [
+                        {
+                            "width": 1024,
+                            "height": 903
+                        },
+                        {
+                            "width": 400,
+                            "height": 353
+                        },
+                        {
+                            "width": 200,
+                            "height": 176
+                        },
+                        {
+                            "width": 100,
+                            "height": 88
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "items": [
+        {
+            "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/7d421893-9b8f-4366-8fef-2d8e1e000d23/canvas/0",
+            "type": "Canvas",
+            "height": 2748,
+            "width": 3115,
+            "thumbnail": [
+                {
+                    "id": "https://dlc.services/thumbs/v3/7/18/0dca9f95-87f4-45ac-a5ea-ef1346b35d56/full/max/0/default.jpg",
+                    "type": "Image",
+                    "format": "image/jpeg",
+                    "service": [
+                        {
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/18/0dca9f95-87f4-45ac-a5ea-ef1346b35d56",
+                            "type": "ImageService3",
+                            "profile": "level0",
+                            "sizes": [
+                                {
+                                    "width": 1024,
+                                    "height": 903
+                                },
+                                {
+                                    "width": 400,
+                                    "height": 353
+                                },
+                                {
+                                    "width": 200,
+                                    "height": 176
+                                },
+                                {
+                                    "width": 100,
+                                    "height": 88
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "items": [
+                {
+                    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/7d421893-9b8f-4366-8fef-2d8e1e000d23/canvas/0/annotation-page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://dlc.services/iiif-img/v3/7/18/0dca9f95-87f4-45ac-a5ea-ef1346b35d56",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/7d421893-9b8f-4366-8fef-2d8e1e000d23/canvas/0",
+                            "body": {
+                                "id": "https://dlc.services/iiif-img/v3/7/18/0dca9f95-87f4-45ac-a5ea-ef1346b35d56/full/max/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "height": 2748,
+                                "width": 3115,
+                                "service": [
+                                    {
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/18/0dca9f95-87f4-45ac-a5ea-ef1346b35d56",
+                                        "type": "ImageService3",
+                                        "profile": "level2"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

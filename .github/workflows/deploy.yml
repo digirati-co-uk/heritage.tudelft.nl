@@ -40,7 +40,6 @@ jobs:
       - name: Build HSS
         working-directory: packages/headless-static-site
         run: pnpm run build
-
       - name: Link HSS CLI
         run: pnpm install --frozen-lockfile
 
@@ -58,6 +57,8 @@ jobs:
         id: netlify_iiif
         working-directory: apps/iiif
         run: |
+          # First build can be removed after a build issue has been resolved!
+          pnpm run build
           deploy_json=$(npx netlify-cli@23.9.5 deploy \
             --build \
             --prod \
