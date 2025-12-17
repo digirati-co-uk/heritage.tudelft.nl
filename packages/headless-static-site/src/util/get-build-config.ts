@@ -18,6 +18,7 @@ import type { Rewrite } from "./rewrite";
 import { compileSlugConfig } from "./slug-engine";
 import type { Store } from "./store";
 import { createStoreRequestCache } from "./store-request-cache";
+import { Tracer } from "./tracer";
 
 export type BuildOptions = {
   cwd?: string;
@@ -66,6 +67,7 @@ export interface BuildBuiltIns {
   };
 
   fileHandler?: FileHandler;
+  tracer?: Tracer;
 }
 
 const storeTypes = {
@@ -212,7 +214,10 @@ export async function getBuildConfig(options: BuildOptions, builtIns: BuildBuilt
     emitRecord: config.search?.emitRecord || false,
   };
 
+  const trace = builtIns.tracer || (options.dev ? new Tracer() : null);
+
   return {
+    trace,
     files,
     options,
     server,

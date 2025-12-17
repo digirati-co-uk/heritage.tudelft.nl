@@ -22,7 +22,7 @@ export function ReadMoreBlock() {
 
   return (
     <>
-      <Dialog className="relative z-50" open={isOpen} onClose={() => setIsOpen(false)}>
+      <Dialog className="exhibition-viewer exhibition-viewer-dialog" open={isOpen} onClose={() => setIsOpen(false)}>
         <div className="fixed modal-top left-0 right-0 bottom-0 bg-black/30" aria-hidden="true" />
         <div className="mobile-height fixed modal-top left-0 right-0 bottom-0 flex w-screen items-center p-4">
           <button

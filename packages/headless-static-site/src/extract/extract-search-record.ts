@@ -34,6 +34,7 @@ export const extractSearchRecord: Extraction = {
   },
 
   async handler(resource, api, config) {
+    const startTime = performance.now();
     const id = resource.slug.replace("manifests/", "");
     const meta = await api.meta.value;
     const collections = meta.partOfCollections || [];
@@ -42,6 +43,9 @@ export const extractSearchRecord: Extraction = {
 
     // This is what we want to be able to support.
     return {
+      meta: {
+        searchTime: performance.now() - startTime,
+      },
       search: {
         indexes: ["manifests"],
         record: {

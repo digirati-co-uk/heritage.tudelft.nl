@@ -1,7 +1,7 @@
 {
   "name": "exhibition-viewer",
   "type": "module",
-  "version": "1.0.10",
+  "version": "1.0.14",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "bugs": "https://github.com/digirati-co-uk/heritage.tudelft.nl/issues",
@@ -10,6 +10,7 @@
     "url": "git+https://github.com/digirati-co-uk/heritage.tudelft.nl.git",
     "directory": "packages/delft-exhibition-viewer"
   },
+  "files": ["dist"],
   "exports": {
     ".": {
       "import": "./dist/index.js",
@@ -37,7 +38,7 @@
     "build": "vite build && tsdown",
     "bundle": "tsdown",
     "lint": "publint",
-    "prepack": "tsdown"
+    "prepack": "tsdown --clean"
   },
   "sideEffects": false,
   "dependencies": {
