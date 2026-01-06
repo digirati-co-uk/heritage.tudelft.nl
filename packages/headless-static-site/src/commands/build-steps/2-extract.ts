@@ -71,6 +71,10 @@ export async function extract(
       const skipSteps = config.stores[manifest.storeId]?.skip || [];
       const runSteps = config.stores[manifest.storeId]?.run;
 
+      const filesDir = join(cacheDir, manifest.slug, "files");
+      const manifestResourceFiles = createResourceHandler(filesDir, files);
+      const resourceFiles = createResourceHandler(filesDir, files);
+
       buildConfig.trace?.startExtractions(manifest);
 
       const cachedResource = createCacheResource({
@@ -110,8 +114,6 @@ export async function extract(
           storeConfig,
           config.stores[manifest.storeId].config?.[extraction.id] || {}
         );
-        const filesDir = join(cacheDir, manifest.slug, "files");
-        const resourceFiles = createResourceHandler(filesDir, files);
         const valid =
           !options.cache ||
           (await extraction.invalidate(
@@ -202,6 +204,9 @@ export async function extract(
                 {
                   caches: canvasCache.caches,
                   resource: canvas,
+                  parentResource: manifest,
+                  parentResourceFiles: manifestResourceFiles,
+                  parent: resource,
                   build: buildConfig,
                   fileHandler: files,
                   resourceFiles,
@@ -217,6 +222,9 @@ export async function extract(
               canvasResource,
               {
                 resource: canvas,
+                parentResource: manifest,
+                parentResourceFiles: manifestResourceFiles,
+                parent: resource,
                 meta: canvasCache.meta,
                 indices: canvasCache.indices,
                 caches: canvasCache.caches,

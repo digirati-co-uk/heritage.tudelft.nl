@@ -1,5 +1,5 @@
 import { existsSync } from "node:fs";
-import { mkdir, stat, writeFile } from "node:fs/promises";
+import { mkdir, readdir, stat, writeFile } from "node:fs/promises";
 import { dirname, join, relative } from "node:path";
 import { cwd } from "node:process";
 import { Vault } from "@iiif/helpers";
@@ -27,6 +27,7 @@ export interface IIIFJSONStore {
   subFiles?: boolean;
   base?: string;
   destination?: string;
+  config?: any;
 }
 
 export const IIIFJSONStore: Store<IIIFJSONStore> = {
@@ -46,7 +47,10 @@ export const IIIFJSONStore: Store<IIIFJSONStore> = {
       //
       // All files that are in a folder with the same name as the file, are considered sub-files if this
       // option is enabled. This allows for relative links to resources such as Annotation Lists to work.
-      const allFilesWithoutExtension = allFiles.map(fileNameToPath);
+      const allFilteredFiles = allFiles.filter((t) => {
+        return !t.endsWith("_collection.yml") && !t.endsWith("_collection.yaml");
+      });
+      const allFilesWithoutExtension = allFilteredFiles.map(fileNameToPath);
       for (let i = 0; i < allFilesWithoutExtension.length; i++) {
         const file = allFilesWithoutExtension[i];
         let dupe = false;
@@ -57,12 +61,12 @@ export const IIIFJSONStore: Store<IIIFJSONStore> = {
             if (!subFileMap[toCompare]) {
               subFileMap[toCompare] = [];
             }
-            subFileMap[toCompare].push(allFiles[i]);
+            subFileMap[toCompare].push(allFilteredFiles[i]);
             break;
           }
         }
         if (!dupe) {
-          newAllFiles.push([allFiles[i], allFilesWithoutExtension[i]]);
+          newAllFiles.push([allFilteredFiles[i], allFilesWithoutExtension[i]]);
         }
       }
     } else {
@@ -182,7 +186,35 @@ export const IIIFJSONStore: Store<IIIFJSONStore> = {
       if (subFilesFolder) {
         if (subFilesFolder && (await pathExists(subFilesFolderPath)) && !isEmpty(subFilesFolderPath)) {
           const destination = join(cwd(), directory, "files");
-          await copy(subFilesFolderPath, destination, { overwrite: true });
+          await copy(subFilesFolderPath, destination, {
+            overwrite: true,
+            filter: (file) => {
+              return file !== "canvases";
+            },
+          });
+          const canvasesOriginDir = join(subFilesFolderPath, "canvases");
+          if (await pathExists(canvasesOriginDir)) {
+            const canvasesDir = join(cwd(), directory, "canvases");
+            await copy(canvasesOriginDir, canvasesDir, { overwrite: true });
+            // /canvases/0/some-file.json -> /canvases/0/files/some-file.json
+            const canvasIndexes = await readdir(canvasesDir);
+            for (const canvasIndex of canvasIndexes) {
+              const canvasPath = join(canvasesDir, canvasIndex);
+              // Move files individually.
+              const filesDir = join(canvasPath, "files");
+              const files = await readdir(canvasPath);
+              await mkdir(filesDir, { recursive: true });
+              for (const file of files) {
+                const filePath = join(canvasPath, file);
+                // Check if directory or files
+                const isFile = (await stat(filePath)).isFile();
+                if (isFile) {
+                  const destination = join(filesDir, file);
+                  await copy(filePath, destination, { overwrite: true });
+                }
+              }
+            }
+          }
         }
       }
     }

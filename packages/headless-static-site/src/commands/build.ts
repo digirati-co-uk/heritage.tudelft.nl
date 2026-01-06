@@ -59,6 +59,7 @@ export type BuildOptions = {
   topics?: boolean;
   out?: string;
   ui?: boolean;
+  remoteRecords?: boolean;
 
   // Programmatic only
   onBuild?: () => void | Promise<void>;
@@ -183,6 +184,7 @@ export async function build(
       enrich: true,
       dev: false,
       emit: true,
+      remoteRecords: false,
       ...options,
     },
     {
@@ -219,7 +221,10 @@ export async function build(
 
   const enrichments = await time("Enriching resources", enrich(stores, buildConfig));
 
-  const emitted = await time("Emitting files", emit(stores, buildConfig));
+  const emitted = await time(
+    "Emitting files",
+    emit(stores, buildConfig, { canvasSearchIndex: enrichments.canvasSearchIndex })
+  );
 
   await time(
     "Building indices",

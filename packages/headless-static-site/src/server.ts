@@ -138,16 +138,20 @@ app.get("/watch", async (ctx) => {
 
       for await (const event of watcher) {
         if (event.filename) {
-          const name = join(store.path, event.filename);
-          const realPath = pathCache.allPaths[name];
-          emitter.emit("file-change", { path: realPath });
-          await cachedBuild({
-            exact: realPath,
-            emit: true,
-            cache: true,
-            dev: true,
-          });
-          emitter.emit("file-refresh", { path: realPath });
+          try {
+            const name = join(store.path, event.filename);
+            const realPath = pathCache.allPaths[name];
+            emitter.emit("file-change", { path: realPath });
+            await cachedBuild({
+              exact: realPath,
+              emit: true,
+              cache: true,
+              dev: true,
+            });
+            emitter.emit("file-refresh", { path: realPath });
+          } catch (e) {
+            console.log("Watch error", e);
+          }
         }
       }
     })().catch((err) => {
