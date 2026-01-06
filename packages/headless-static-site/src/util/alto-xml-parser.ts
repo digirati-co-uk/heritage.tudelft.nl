@@ -1,7 +1,7 @@
 import { type XmlElement, parseXml } from "@rgrove/parse-xml";
 
 export async function parseSingleCanvasAltoXML(
-  altoFile: string | Buffer<ArrayBuffer>,
+  altoFile: string | Buffer,
   recordId: string,
   canvas?: null | { id?: string; w: number; h: number }
 ) {

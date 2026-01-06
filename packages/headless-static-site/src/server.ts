@@ -150,7 +150,7 @@ app.get("/watch", async (ctx) => {
             });
             emitter.emit("file-refresh", { path: realPath });
           } catch (e) {
-            console.log("Watch error", e);
+            console.error("Watch error:", (e as Error)?.message || e);
           }
         }
       }

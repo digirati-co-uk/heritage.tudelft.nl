@@ -1,10 +1,14 @@
 {
   "name": "iiif-hss",
-  "version": "1.0.6-next.1",
+  "version": "1.0.6-next.2",
   "description": "IIIF Headless Static Site",
   "type": "module",
   "keywords": [],
-  "files": ["src", "build", "lib"],
+  "files": [
+    "src",
+    "build",
+    "lib"
+  ],
   "main": "lib/scripts.js",
   "module": "lib/scripts.js",
   "bin": {
@@ -18,7 +22,7 @@
     "vite": "vite",
     "dev-server": "bun run ./src/entrypoint.ts",
     "dev-cli": "bun run ./src/index.ts",
-    "build": "pnpm run build:cli && pnpm run build:server && pnpm run build:client && pnpm run build:node-client && pnpm run build:library && pnpm build:vite-plugin",
+    "build": "pnpm run build:cli && pnpm run build:server && pnpm run build:client && pnpm run build:node-client && pnpm run build:library && pnpm run build:vite-plugin",
     "build:cli": "tsup-node src/index.ts --no-splitting --outDir build --format esm --env.NODE_ENV production",
     "build:server": "tsup-node src/entrypoint.ts --no-splitting --outDir build/server --format esm --env.NODE_ENV production",
     "build:library": "tsup src/library.ts --outDir build",
@@ -64,8 +68,12 @@
   },
   "typesVersions": {
     "*": {
-      "*": ["lib/scripts.d.ts"],
-      "client": ["build/client.d.ts"]
+      "*": [
+        "lib/scripts.d.ts"
+      ],
+      "client": [
+        "build/client.d.ts"
+      ]
     }
   },
   "optionalDependencies": {

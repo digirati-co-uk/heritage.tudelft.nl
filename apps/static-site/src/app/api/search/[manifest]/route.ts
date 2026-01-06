@@ -41,6 +41,8 @@ export const GET = async (
   const { manifest } = await ctx.params;
   const q = _req.nextUrl.searchParams.get("q");
 
+  const manifestSanitised = manifest.replace(/[^a-zA-Z0-9]/g, "");
+
   const client = getClient();
 
   const response = await client
@@ -50,7 +52,7 @@ export const GET = async (
     .search({
       q: q || "",
       facet_by: "manifest_id",
-      filter_by: `manifest_id:=[\`${btoa(manifest)}\`]`,
+      filter_by: `manifest_id:=[\`${btoa(manifestSanitised)}\`]`,
       //
       query_by: "textFragments.text",
       per_page: 20,

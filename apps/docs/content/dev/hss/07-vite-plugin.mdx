@@ -1,0 +1,56 @@
+This is still a work in progress, but to try it out you can install the "next" tag:
+
+```bash
+pnpm create vite
+```
+
+and go through the steps. Go into the directory and install the pre-release:
+
+```bash
+pnpm add -D iiif-hss@next
+```
+
+Create a `./content` folder and put IIIF Manifests in, and add the vite plugin:
+
+```diff
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
++import iiif from "iiif-hss/vite-plugin";
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [
+   react(),
++  iiif()
+],
+});
+```
+
+That's it, no config required. If you spin up vite `pnpm dev` you will have all of the HSS server on `http://localhost:5173/iiif` such as:
+
+- http://localhost:5173/iiif/collection.json - for the top level collection
+- http://localhost:5173/iiif/create - form for creating new manifests
+- http://localhost:5173/iiif/content/some-manifest/manifest.json - manifest URLs (+ meta, indicies, search-record etc.)
+- http://localhost:5173/iiif/content/some-manifest/edit - redirect to edit in Manifest Editor.
+
+Known issues:
+
+- the `subFiles` configuration option is causing issues with creating new Manifests
+- CORS issue with Manifest Editor when saving, have had it work sometimes and not others
+- You need to create the `content` directory
+
+Still remaining for an MVP:
+
+- Build hook so the IIIF is exported in the dist directory on `vite build`
+- Configuring the `server.url` via environment variables in HSS (for building).
+
+Some ideas:
+
+- API + Simple forms for:
+  - Creating new IIIF
+  - Importing IIIF from a Manifest or Collection URL
+  - IIIF Browser embedded for importing
+- Visualiser for the tracing (https://hss-trace.netlify.app/)
+- Alternative method for pipeline extract/enrich scripts, in one place. (you can just define them in your vite config)
+- Simple Astro or React template with Manifest navigation
+- NextJS/Webpack dev server plugin adapted from this

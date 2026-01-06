@@ -85,7 +85,7 @@ async function searchIndexReconciliation(options: SearchIndexCommandOptions) {
   }
 
   const toUpdate = lockFile.manifests.filter((manifest) => manifest.lockFileNeedsUpdated);
-  const toDelete = lockFile.manifests.filter((manifest) => !manifest.lockFileNeedsDeleted);
+  const toDelete = lockFile.manifests.filter((manifest) => manifest.lockFileNeedsDeleted);
   const toCreate = lockFile.manifests.filter((manifest) => manifest.lockFileNeedsCreated);
 
   return {
@@ -222,7 +222,7 @@ async function getSearchIndexTypesenseIndexChanges(remoteLockFile: SearchLockFil
   for (const manifest of remoteLockFile.manifests) {
     const localManifest = lockFile.findManifest(manifest.manifestSlug);
     if (!localManifest) {
-      state.toAdd.push(manifest);
+      state.toDelete.push(manifest);
     }
   }
 
