@@ -1,7 +1,7 @@
 import type { IIIFBuilder } from "@iiif/builder";
 import type { BuildConfig } from "../commands/build.ts";
 import type { ResourceFilesApi } from "./create-resource-handler.ts";
-import type { SearchExtractionConfig, SearchRecordReturn } from "./extract.ts";
+import type { RemoteRecordLink, SearchExtractionConfig, SearchRecordReturn } from "./extract.ts";
 import type { FileHandler } from "./file-handler.ts";
 import type { IIIFRC } from "./get-config";
 import type { LazyValue } from "./lazy-value";
@@ -58,3 +58,41 @@ export interface Enrichment<Config = any, Temp = any> {
   invalidate: (resource: ActiveResourceJson, api: EnrichmentInvalidateApi, config: Config) => Promise<boolean>;
   handler(resource: ActiveResourceJson, api: EnrichmentHandlerApi, config: Config): Promise<EnrichmentResult<Temp>>;
 }
+
+export type CanvasSearchIndex = Record<
+  string,
+  Record<
+    string,
+    {
+      records: any[];
+      remoteRecords: RemoteRecordLink[];
+    }
+  >
+>;
+
+type SupportedCanvasSearchIndexFileFormats = "record" | "record-jsonl" | "alto-xml";
+export type AllCanvasSearchIndexFileFormats =
+  | SupportedCanvasSearchIndexFileFormats
+  | Omit<string, SupportedCanvasSearchIndexFileFormats>;
+
+export type SearchIndexEntryFile = {
+  index: string;
+  type: "file";
+  canvasIndex?: number;
+  recordId?: string;
+  canvas?: { w: number; h: number };
+  format: AllCanvasSearchIndexFileFormats;
+  path: string;
+};
+
+export type SearchIndexEntryRemote = {
+  index: string;
+  type: "remote";
+  canvasIndex?: number;
+  recordId?: string;
+  canvas?: { w: number; h: number };
+  format: AllCanvasSearchIndexFileFormats;
+  url: string;
+};
+
+export type CanvasSearchIndexFile = Record<string, Array<SearchIndexEntryFile | SearchIndexEntryRemote>>;

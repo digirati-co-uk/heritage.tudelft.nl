@@ -24,19 +24,19 @@ collections:
     label: { "en": "Manifests" }
     summary: { "en": "A list of all manifests in the collection" }
 
-generators:
-  sts-shuttles:
-    type: nasa-generator
-    config:
-      label: STS Shuttles
-      query: "sts orbit"
-      maxResults: 50
-  curiosity:
-    type: nasa-generator
-    config:
-      label: Curiosity
-      query: "curiosity rover"
-      maxResults: 10
+# generators:
+#   sts-shuttles:
+#     type: nasa-generator
+#     config:
+#       label: STS Shuttles
+#       query: "sts orbit"
+#       maxResults: 50
+#   curiosity:
+#     type: nasa-generator
+#     config:
+#       label: Curiosity
+#       query: "curiosity rover"
+#       maxResults: 10
 
 stores:
   manifests:
@@ -70,54 +70,54 @@ stores:
           Maker: ["Maker"]
           Publisher: ["Publisher"]
 
-  bridges:
-    type: iiif-remote
-    url: https://view.nls.uk/collections/7446/74466699.json
-    overrides: ./content
-    saveManifests: true
-    slugTemplates:
-      - nls-manifests
-      - nls-collections
+  # bridges:
+  #   type: iiif-remote
+  #   url: https://view.nls.uk/collections/7446/74466699.json
+  #   overrides: ./content
+  #   saveManifests: true
+  #   slugTemplates:
+  #     - nls-manifests
+  #     - nls-collections
 
-    # Skip these for this store.
-    skip:
-      - extract-canvas-dims
+  #   # Skip these for this store.
+  #   skip:
+  #     - extract-canvas-dims
 
-    # But additionally run these.
-    run:
-      - canvas-thumbnail
-      - extract-thumbnail
-      - manifest-sqlite
+  #   # But additionally run these.
+  #   run:
+  #     - canvas-thumbnail
+  #     - extract-thumbnail
+  #     - manifest-sqlite
 
-  hutton:
-    type: iiif-remote
-    url: https://view.nls.uk/collections/7446/74466682.json
-    overrides: ./content
-    slugTemplates:
-      - nls-manifests
-      - nls-collections
+  # hutton:
+  #   type: iiif-remote
+  #   url: https://view.nls.uk/collections/7446/74466682.json
+  #   overrides: ./content
+  #   slugTemplates:
+  #     - nls-manifests
+  #     - nls-collections
 
-  wellcomePaintings:
-    type: iiif-remote
-    url: https://iiif.wellcomecollection.org/presentation/collections/digitalcollections/digpaintings
-    slugTemplates:
-      - wellcome-manifest
-      - wellcome-collection
-    run:
-      - extract-topics
-    config:
-      extract-topics:
-        topicTypes:
-          technique: ["Type/technique"]
-          subjects: ["Subjects"]
+  # wellcomePaintings:
+  #   type: iiif-remote
+  #   url: https://iiif.wellcomecollection.org/presentation/collections/digitalcollections/digpaintings
+  #   slugTemplates:
+  #     - wellcome-manifest
+  #     - wellcome-collection
+  #   run:
+  #     - extract-topics
+  #   config:
+  #     extract-topics:
+  #       topicTypes:
+  #         technique: ["Type/technique"]
+  #         subjects: ["Subjects"]
 
-  wellcomeBookVolume:
-    type: iiif-remote
-    url: https://iiif.wellcomecollection.org/presentation/b18031511_0001
-    # url: https://iiif.wellcomecollection.org/presentation/b18031511
-    slugTemplates:
-      - wellcome-collection
-      - wellcome-manifest
+  # wellcomeBookVolume:
+  #   type: iiif-remote
+  #   url: https://iiif.wellcomecollection.org/presentation/b18031511_0001
+  #   # url: https://iiif.wellcomecollection.org/presentation/b18031511
+  #   slugTemplates:
+  #     - wellcome-collection
+  #     - wellcome-manifest
 
 
 config:

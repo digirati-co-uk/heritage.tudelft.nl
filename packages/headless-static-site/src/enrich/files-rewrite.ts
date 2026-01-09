@@ -23,7 +23,7 @@ export const filesRewrite: Enrichment = {
       if (!meta.files?.length) return {};
 
       const found = api.builder.vault.get(resource.id);
-      if (!found) {
+      if (!found?.id) {
         return {};
       }
 
@@ -59,7 +59,7 @@ export const filesRewrite: Enrichment = {
       const filesInManifest: string[] = [];
 
       for (const currentItem of toSearch) {
-        for (const property of ["thumbnail", "seeAlso", "service", "services", "rendering", "annotations"]) {
+        for (const property of ["thumbnail", "seeAlso", "rendering", "annotations"]) {
           if (currentItem[property]?.length) {
             for (const item of currentItem[property]) {
               const validFile = validFiles[toRef(item)!.id];
@@ -85,8 +85,15 @@ export const filesRewrite: Enrichment = {
       }
 
       // Here we can handle the fileDetails.
+      const filesForResource = meta.files.filter((file: string) => {
+        if (resource.type === "Canvas") {
+          return true;
+        }
+
+        return !file.startsWith("canvases/");
+      });
       const details = meta.filesDetail || ({} as Record<string, Record<string, any>>);
-      for (const file of meta.files) {
+      for (const file of filesForResource) {
         const detail = details[file];
         if (!detail) continue;
 

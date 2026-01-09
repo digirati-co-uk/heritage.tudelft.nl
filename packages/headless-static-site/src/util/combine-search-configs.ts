@@ -8,6 +8,7 @@ export function combineSearchConfigs(
     allIndices: false,
     indexName: name,
     indices: [],
+    emitCombined: true,
     schema: {
       fields: [],
     },
@@ -18,6 +19,9 @@ export function combineSearchConfigs(
     if (!config) continue;
     if (config.allIndices) {
       combinedConfig.allIndices = true;
+    }
+    if (typeof config.emitCombined !== "undefined") {
+      combinedConfig.emitCombined = config.emitCombined;
     }
     if (config.indices) {
       for (const index of config.indices) {
