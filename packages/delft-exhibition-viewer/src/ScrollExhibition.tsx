@@ -82,7 +82,7 @@ export function ScrollExhibition(props: ScrollExhibitionProps) {
                         <div
                           className={[
                             "p-6 max-w-[40vw]",
-                            isBackdropLight
+                            isOverlayLight
                               ? "bg-white text-black"
                               : "bg-black text-white",
                             "bg-opacity-85",
