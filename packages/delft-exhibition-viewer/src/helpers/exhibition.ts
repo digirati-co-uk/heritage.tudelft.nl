@@ -106,3 +106,7 @@ export function getFloatingFromBehaviours({
     floatingLeft,
   };
 }
+
+export function hasPageScroll(behavior?: string[]) {
+  return Array.isArray(behavior) && behavior.includes("page-scroll");
+}
