@@ -33,6 +33,8 @@ export function ScrollExhibition(props: ScrollExhibitionProps) {
                 }
 
                 const isWidth50 = behaviors.includes("width-50");
+                const isOverlayDark = behaviors.includes("backdrop-dark");
+                const isOverlayLight = behaviors.includes("backdrop-light");
                 
                 const { floatingTop, floatingLeft } = getFloatingFromBehaviours({
                   behavior: behaviors,
@@ -47,7 +49,12 @@ export function ScrollExhibition(props: ScrollExhibitionProps) {
                   : "left-0";
 
                 return (
-                  <section className="relative w-full min-h-screen overflow-visible">
+                  <section
+                    className={[
+                      "relative w-full min-h-screen overflow-visible",
+                      isOverlayLight ? "bg-white" : "bg-black",
+                    ].join(" ")}
+                  >
                     <div
                       className={[
                         "absolute top-0 bottom-0",
@@ -72,7 +79,15 @@ export function ScrollExhibition(props: ScrollExhibitionProps) {
                           floatingLeft ? "justify-start pl-12" : "justify-end pr-12",
                         ].join(" ")}
                       >
-                        <div className="bg-black text-white p-6 opacity-85 max-w-[40vw]">
+                        <div
+                          className={[
+                            "p-6 max-w-[40vw]",
+                            isBackdropLight
+                              ? "bg-white text-black"
+                              : "bg-black text-white",
+                            "bg-opacity-85",
+                          ].join(" ")}
+                        >
                           <h2 className="text-xl font-semibold">
                             <LocaleString>{canvas.label}</LocaleString>
                           </h2>
