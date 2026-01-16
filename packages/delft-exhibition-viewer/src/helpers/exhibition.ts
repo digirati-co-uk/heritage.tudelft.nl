@@ -40,17 +40,11 @@ const startMap = {
   "start-9": "col-start-9",
 };
 
-export function getClassName(
-  b?: string[],
-  firstInfo = false,
-  options: { fullWidthGrid?: boolean } = {},
-) {
-  if (!b || b.length === 0) {
-    b = ["h-6", "w-12", "image"];
-  }
-  let h = b.find((a) => a.includes("h-")) as keyof typeof heightMap;
-  let w = b.find((a) => a.includes("w-")) as keyof typeof widthMap;
-  let start = b.find((a) => a.includes("start-")) as keyof typeof startMap;
+export function getClassName(behavior?: string[], firstInfo = false, options: { fullWidthGrid?: boolean } = {}) {
+  const resolvedBehavior = behavior?.length ? behavior : ["h-6", "w-12", "image"];
+  let h = resolvedBehavior.find((a) => a.includes("h-")) as keyof typeof heightMap;
+  let w = resolvedBehavior.find((a) => a.includes("w-")) as keyof typeof widthMap;
+  let start = resolvedBehavior.find((a) => a.includes("start-")) as keyof typeof startMap;
   const classNames = [];
 
   if (firstInfo && h === "h-4") {
@@ -94,10 +88,8 @@ export function getFloatingFromBehaviours({
     }
   }
 
-  const floatingTop =
-    floatingPosition === "top-left" || floatingPosition === "top-right";
-  const floatingLeft =
-    floatingPosition === "top-left" || floatingPosition === "bottom-left";
+  const floatingTop = floatingPosition === "top-left" || floatingPosition === "top-right";
+  const floatingLeft = floatingPosition === "top-left" || floatingPosition === "bottom-left";
 
   return {
     isFloating,

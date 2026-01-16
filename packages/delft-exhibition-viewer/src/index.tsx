@@ -5,10 +5,10 @@ import { DelftExhibition } from "./DelftExhibition";
 
 import "./styles/index.css";
 import "./styles/lib.css";
+import { ScrollExhibition } from "@/ScrollExhibition.tsx";
 import { LocaleString } from "react-iiif-vault";
 import { DelftPresentation } from "./DelftPresentation";
 import { DelftSlideshow } from "./DelftSlideshow";
-import { ScrollExhibition} from "@/ScrollExhibition.tsx";
 
 const search = new URLSearchParams(window.location.search);
 
@@ -76,28 +76,31 @@ function App() {
 
   return (
     <div className="flex w-full flex-col items-center">
-        {isScroll ? (
-          <div className="min-h-[90vh] w-full">
-          <ScrollExhibition manifest={manifest} language="en" viewObjectLinks={[]} />
-          </div>
-        ) : isSlideshow ? (
-          <div className="min-h-[90vh] w-full max-w-screen-xl px-5 py-10 lg:px-10">
+      {isScroll ? (
+        <div className="min-h-[90vh] w-full">
+          <ScrollExhibition manifest={manifest} language="en" />
+        </div>
+      ) : isSlideshow ? (
+        <div className="min-h-[90vh] w-full max-w-screen-xl px-5 py-10 lg:px-10">
           <div className="h-[600px] w-[780px]">
             <DelftSlideshow manifest={manifest} options={options} language="en" viewObjectLinks={[]} />
           </div>
-          </div>
-        ) : isPresentation ? (
-          <div className="min-h-[90vh] w-full max-w-screen-xl px-5 py-10 lg:px-10">
+        </div>
+      ) : isPresentation ? (
+        <div className="min-h-[90vh] w-full max-w-screen-xl px-5 py-10 lg:px-10">
           <div className="h-[800px]">
             <DelftPresentation manifest={manifest} options={options} language="en" viewObjectLinks={[]} />
           </div>
-          </div>
-        ) : (
-          <DelftExhibition manifest={manifest} options={options} language="en" viewObjectLinks={[]} />
-        )}
+        </div>
+      ) : (
+        <DelftExhibition manifest={manifest} options={options} language="en" viewObjectLinks={[]} />
+      )}
     </div>
   );
 }
 
-const root = createRoot(document.getElementById("root")!);
-root.render(<App />);
+const rootElement = document.getElementById("root");
+if (rootElement) {
+  const root = createRoot(rootElement);
+  root.render(<App />);
+}

@@ -1,6 +1,13 @@
 import type { Vault } from "@iiif/helpers";
 import type { Manifest } from "@iiif/presentation-3";
-import { LanguageProvider, ManifestContext, VaultProvider, useExistingVault, useManifest } from "react-iiif-vault";
+import {
+  AtlasStoreProvider,
+  LanguageProvider,
+  ManifestContext,
+  VaultProvider,
+  useExistingVault,
+  useManifest,
+} from "react-iiif-vault";
 
 export type ProviderProps = {
   manifest: Manifest | string;
@@ -26,13 +33,15 @@ export function Provider(props: ProviderProps) {
   }
 
   return (
-    <VaultProvider vault={vault}>
-      <ManifestContext manifest={manifestId}>
-        <LanguageProvider language={props.language || "en"}>
-          <WaitForManifest loading={props.loading}>{props.children as any}</WaitForManifest>
-        </LanguageProvider>
-      </ManifestContext>
-    </VaultProvider>
+    <AtlasStoreProvider>
+      <VaultProvider vault={vault}>
+        <ManifestContext manifest={manifestId}>
+          <LanguageProvider language={props.language || "en"}>
+            <WaitForManifest loading={props.loading}>{props.children as any}</WaitForManifest>
+          </LanguageProvider>
+        </ManifestContext>
+      </VaultProvider>
+    </AtlasStoreProvider>
   );
 }
 

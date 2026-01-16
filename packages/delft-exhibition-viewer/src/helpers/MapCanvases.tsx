@@ -1,17 +1,12 @@
+import { AtlasContext } from "@atlas-viewer/atlas";
+import { toRef } from "@iiif/parser";
 import type { Canvas, Reference, SpecificResource } from "@iiif/presentation-3";
 import type { CanvasNormalized } from "@iiif/presentation-3-normalized";
 import { Fragment, memo, useMemo } from "react";
-import { CanvasContext, useVault } from "react-iiif-vault";
-import { toRef } from "@iiif/parser";
+import { AtlasStoreProvider, CanvasContext, useVault } from "react-iiif-vault";
 
 export interface MapCanvasesProps {
-  items: Array<
-    | CanvasNormalized
-    | Canvas
-    | SpecificResource<"Canvas">
-    | string
-    | Reference<"Canvas">
-  >;
+  items: Array<CanvasNormalized | Canvas | SpecificResource<"Canvas"> | string | Reference<"Canvas">>;
   onlyCanvasId?: string;
   fallback?: React.ReactNode;
   children?: (data: {
@@ -20,10 +15,7 @@ export interface MapCanvasesProps {
   }) => React.ReactNode;
 }
 
-function doCanvasPropsMatch(
-  prevProps: MapCanvasesProps,
-  nextProps: MapCanvasesProps,
-) {
+function doCanvasPropsMatch(prevProps: MapCanvasesProps, nextProps: MapCanvasesProps) {
   if (prevProps.items === nextProps.items) {
     return true;
   }
@@ -67,9 +59,7 @@ export const MapCanvases = memo(function MapCanvases(props: MapCanvasesProps) {
 
     let renderedChildren = null;
     try {
-      renderedChildren = props.children
-        ? props.children({ canvas, index })
-        : null;
+      renderedChildren = props.children ? props.children({ canvas, index }) : null;
     } catch (error: any) {
       if (process.env.NODE_ENV === "development" && !props.fallback) {
         return <div key={id}>{error?.message}</div>;
@@ -79,7 +69,7 @@ export const MapCanvases = memo(function MapCanvases(props: MapCanvasesProps) {
 
     return (
       <CanvasContext canvas={id} key={id}>
-        {renderedChildren}
+        <AtlasStoreProvider name={id}>{renderedChildren}</AtlasStoreProvider>
       </CanvasContext>
     );
   });

@@ -1,18 +1,10 @@
-import {
-  useCanvas,
-  useStaticRenderingStrategy,
-  type RenderingStrategy,
-} from "react-iiif-vault";
-import { MapCanvases, type MapCanvasesProps } from "./MapCanvases";
 import type { CanvasNormalized } from "@iiif/presentation-3-normalized";
 import { memo } from "react";
-type RenderingStrategyMappedByType = {
-  [K in RenderingStrategy as K["type"]]: K;
-};
+import { type RenderingStrategy, useCanvas, useStaticRenderingStrategy } from "react-iiif-vault";
+import { MapCanvases, type MapCanvasesProps } from "./MapCanvases";
 
-export interface MapCanvasStrategyProps<
-  Enabled extends RenderingStrategy["type"] = RenderingStrategy["type"],
-> extends Omit<MapCanvasesProps, "children"> {
+export interface MapCanvasStrategyProps<Enabled extends RenderingStrategy["type"] = RenderingStrategy["type"]>
+  extends Omit<MapCanvasesProps, "children"> {
   children: {
     [K in Enabled]: ({
       index,
@@ -21,7 +13,7 @@ export interface MapCanvasStrategyProps<
     }: {
       index: number;
       canvas: CanvasNormalized;
-      strategy: RenderingStrategyMappedByType[K];
+      strategy: RenderingStrategyByType[K];
     }) => React.ReactNode;
   } & {
     [K in Exclude<RenderingStrategy["type"], Enabled>]?: ({
@@ -31,18 +23,23 @@ export interface MapCanvasStrategyProps<
     }: {
       index: number;
       canvas: CanvasNormalized;
-      strategy: RenderingStrategyMappedByType[K];
+      strategy: RenderingStrategyByType[K];
     }) => React.ReactNode;
   };
 }
 
-export function MapCanvasStrategy<
-  Enabled extends RenderingStrategy["type"] = RenderingStrategy["type"],
->({ children, ...props }: MapCanvasStrategyProps<Enabled>) {
+type RenderingStrategyByType = {
+  [K in RenderingStrategy as K["type"]]: K;
+};
+
+export function MapCanvasStrategy<Enabled extends RenderingStrategy["type"] = RenderingStrategy["type"]>({
+  children,
+  ...props
+}: MapCanvasStrategyProps<Enabled>) {
   return (
     <MapCanvases {...props}>
       {({ index }) => (
-        <MapStrategyInner index={index}>{children as any}</MapStrategyInner>
+        <MapStrategyInner index={index}>{children as MapCanvasStrategyProps["children"]}</MapStrategyInner>
       )}
     </MapCanvases>
   );

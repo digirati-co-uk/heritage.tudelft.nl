@@ -46,10 +46,17 @@ export * from "./components/shared/TableOfContents";
 export * from "./components/shared/TableOfContentsBar";
 export * from "./components/shared/TableOfContentsHeader";
 
+// Scroll components
+export * from "./components/scroll/ScrollImageBlock";
+export * from "./components/scroll/ScrollInfoBlock";
+export * from "./components/scroll/ScrollMediaBlock";
+export * from "./components/scroll/ScrollTitleBlock";
+
 // Main components
 export * from "./DelftExhibition";
 export * from "./DelftPresentation";
 export * from "./DelftSlideshow";
+export * from "./ScrollExhibition";
 
 // Helpers
 export * from "./helpers/exhibition-store";
@@ -63,6 +70,7 @@ export * from "./helpers/use-hash-value";
 export * from "./helpers/use-intersection-ref";
 export * from "./helpers/use-step-details";
 export * from "./helpers/with-view-transition";
+export * from "./helpers/scroll-layout";
 
 // Hooks
 export * from "./hooks/use-exhibition-store";
