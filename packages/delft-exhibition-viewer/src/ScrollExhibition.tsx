@@ -8,6 +8,7 @@ import { ScrollTitleBlock } from "./components/scroll/ScrollTitleBlock";
 import { ScrollTourBlock } from "./components/scroll/ScrollTourBlock";
 import { MapCanvasStrategy } from "./helpers/MapCanvasStrategy";
 import type { ObjectLink } from "./helpers/object-links";
+import { type ScrollThemeOptions, ScrollThemeProvider } from "./theme/scroll-theme";
 
 export type ScrollExhibitionProps = {
   manifest: Manifest | string;
@@ -16,16 +17,20 @@ export type ScrollExhibitionProps = {
   skipLoadManifest?: boolean;
   viewObjectLinks?: Array<ObjectLink>;
   showTableOfContents?: boolean;
+  options?: ScrollThemeOptions;
 };
 
 export function ScrollExhibition(props: ScrollExhibitionProps) {
   return (
     <Provider language={props.language} manifest={props.manifest} skipLoadManifest={props.skipLoadManifest}>
-      <ScrollExhibitionContents
-        canvasId={props.canvasId}
-        viewObjectLinks={props.viewObjectLinks}
-        showTableOfContents={props.showTableOfContents}
-      />
+      <ScrollThemeProvider>
+        <ScrollExhibitionContents
+          canvasId={props.canvasId}
+          viewObjectLinks={props.viewObjectLinks}
+          showTableOfContents={props.showTableOfContents}
+          options={props.options}
+        />
+      </ScrollThemeProvider>
     </Provider>
   );
 }
@@ -34,22 +39,28 @@ function ScrollExhibitionContents({
   canvasId,
   viewObjectLinks,
   showTableOfContents,
+  options,
 }: {
   canvasId?: string;
   viewObjectLinks?: Array<ObjectLink>;
   showTableOfContents?: boolean;
+  options?: ScrollThemeOptions;
 }) {
   const manifest = useManifest();
 
   if (!manifest) return null;
 
   return (
-    <div className="w-full min-h-screen bg-black">
-      <ScrollTitleBlock manifest={manifest} index={0} showTableOfContents={showTableOfContents} />
-      <MapCanvasStrategy onlyCanvasId={canvasId} items={manifest.items || []}>
+    <div className="exv-scroll w-full min-h-screen">
+      <ScrollTitleBlock manifest={manifest} index={0} showTableOfContents={showTableOfContents} options={options} />
+      <MapCanvasStrategy
+        onlyCanvasId={canvasId}
+        items={manifest.items || []}
+        themeProvider={ScrollThemeProvider}
+        themeOptions={options}
+      >
         {{
           images: ({ index, canvas, strategy }) => {
-            console.log(canvas.annotations);
             const foundLinks = (viewObjectLinks || []).filter((link) => link.canvasId === canvas.id);
 
             if (canvas.annotations.length) {
@@ -62,7 +73,7 @@ function ScrollExhibitionContents({
                 canvas={canvas}
                 index={index + 1}
                 scrollEnabled
-                objectLinks={foundLinks}
+                // objectLinks={foundLinks}
               />
             );
           },

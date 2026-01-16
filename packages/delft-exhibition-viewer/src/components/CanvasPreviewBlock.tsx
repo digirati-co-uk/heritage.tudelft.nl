@@ -16,6 +16,7 @@ import { RenderSeeAlso } from "./RenderSeeAlso";
 import { ViewerZoomControls } from "./ViewerZoomControls";
 import { VisibleAnnotationsListingItem } from "./VisibleAnnotationListItem";
 import { InfoIcon } from "./icons/InfoIcon";
+import { BlurCanvasImage } from "./shared/BlurCanvasImage";
 
 export interface CanvasPreviewBlockProps {
   canvasId?: string;
@@ -42,6 +43,8 @@ export interface CanvasPreviewBlockProps {
   };
   setRuntime?: (runtime: Runtime) => void;
   interactive?: boolean;
+  viewerBackground?: string;
+  useBlurBackground?: boolean;
 }
 
 function CanvasPreviewBlockInner({
@@ -57,6 +60,8 @@ function CanvasPreviewBlockInner({
   padding,
   setRuntime,
   interactive = false,
+  useBlurBackground = false,
+  viewerBackground,
 }: CanvasPreviewBlockProps) {
   const container = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -217,7 +222,7 @@ function CanvasPreviewBlockInner({
       <div
         ref={container}
         className={twMerge(
-          "exhibition-canvas-panel z-10 h-full bg-ViewerBackground canvas-preview-transition",
+          "exhibition-canvas-panel z-10 h-full relative bg-ViewerBackground canvas-preview-transition",
           transitionScale && "hover:scale-105 transition-transform duration-1000",
         )}
         onClick={withViewTransition(
@@ -228,15 +233,25 @@ function CanvasPreviewBlockInner({
           viewTransition,
         )}
         onKeyDown={() => undefined}
+        style={
+          viewerBackground
+            ? ({
+                "--delft-viewer-background": viewerBackground,
+                "--atlas-background": viewerBackground,
+              } as any)
+            : {}
+        }
       >
+        {useBlurBackground ? <BlurCanvasImage /> : null}
         <Hookable type="canvasPreviewEditor" resource={canvas}>
           <CanvasPanel.Viewer
             containerStyle={containerStyle}
             renderPreset={config}
             homeOnResize
-            homeCover={cover || !hasMultipleAnnotations}
+            homeCover={typeof cover === "boolean" ? cover : !hasMultipleAnnotations}
             padding={padding}
             onCreated={onCreated}
+            background={viewerBackground}
           >
             <CanvasPanel.RenderCanvas strategies={["images"]} enableSizes={false}>
               <Highlights />

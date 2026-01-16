@@ -1,46 +1,47 @@
 import { BaseGridSection } from "@/components/shared/BaseGridSection";
 import { TableOfContents } from "@/components/shared/TableOfContents";
+import { type ScrollThemeOptions, useScrollTheme } from "@/theme/scroll-theme";
 import type { Manifest } from "@iiif/presentation-3";
 import type { ManifestNormalized } from "@iiif/presentation-3-normalized";
-import { LocaleString } from "react-iiif-vault";
+import { LocaleString, useVault } from "react-iiif-vault";
 
 export interface ScrollTitleBlockProps {
   manifest: Manifest | ManifestNormalized;
   index?: number;
   showTableOfContents?: boolean;
+  options?: ScrollThemeOptions;
 }
 
 export function ScrollTitleBlock({ manifest, index = 0, showTableOfContents }: ScrollTitleBlockProps) {
-  const items = (manifest.items || []).map((item) => ({ label: item.label }));
+  const { titleBlock } = useScrollTheme();
+  const vault = useVault();
+  const items = (manifest.items || []).map((item) => ({ label: vault.get(item)?.label }));
 
   return (
-    <BaseGridSection
-      enabled
-      updatesTitle={false}
-      id={`${index}`}
-      className="bg-black text-white border-b border-white/10 py-16 sm:py-20"
-    >
+    <BaseGridSection enabled updatesTitle={false} id={`${index}`} className={titleBlock.className}>
       <div className="mx-auto flex w-full max-w-5xl flex-col gap-10 px-6 sm:px-10">
         <div className="flex flex-col gap-6">
-          <p className="text-xs uppercase tracking-[0.4em] text-white/60">Exhibition</p>
-          <h1 className="text-3xl font-semibold text-white sm:text-4xl">
+          <p className="text-xs uppercase tracking-[0.4em] opacity-60">Exhibition</p>
+          <h1 className="text-3xl font-semibold sm:text-4xl">
             <LocaleString>{manifest.label}</LocaleString>
           </h1>
           {manifest.summary ? (
-            <div className="text-lg leading-relaxed text-white/75">
+            <div className="text-lg leading-relaxed opacity-75">
               <LocaleString>{manifest.summary}</LocaleString>
             </div>
           ) : null}
           {manifest.requiredStatement ? (
-            <div className="text-sm text-white/60">
-              <span className="font-semibold text-white">
+            <div className="text-sm opacity-75">
+              <div className="font-semibold">
                 <LocaleString>{manifest.requiredStatement.label}</LocaleString>
-              </span>{" "}
+              </div>
               <LocaleString>{manifest.requiredStatement.value}</LocaleString>
             </div>
           ) : null}
         </div>
 
+        {/* This doesn't work great with the scrolling. Might need a different variation,
+          maybe fixed position on desktop on the left or right */}
         {showTableOfContents ? (
           <div className="rounded-2xl border border-white/10 bg-white/5 p-6 sm:p-8">
             <TableOfContents items={items} treeLabel={manifest.summary || manifest.label} />

@@ -1,4 +1,5 @@
 import { createExhibitionStore } from "@/helpers/exhibition-store";
+import { useScrollTheme } from "@/theme/scroll-theme";
 import type { Runtime } from "@atlas-viewer/atlas";
 import type { CanvasNormalized } from "@iiif/presentation-3-normalized";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
@@ -6,6 +7,7 @@ import { LocaleString, useAtlasStore, useCanvas, useVault, useViewportTour } fro
 import { useStore } from "zustand";
 import { CanvasPreviewBlock, type CanvasPreviewBlockProps } from "../CanvasPreviewBlock";
 import { ScrollImageBlock } from "./ScrollImageBlock";
+import { ScrollTourAnnotation } from "./ScrollTourAnnotation";
 
 export interface ScrollTourBlockProps {
   canvas: CanvasNormalized;
@@ -18,6 +20,9 @@ export interface ScrollTourBlockProps {
 export function ScrollTourBlock(props: ScrollTourBlockProps) {
   const vault = useVault();
   const canvas = useCanvas();
+  const {
+    tourBlock: { viewerBackground, useBlurBackground = false, viewerMargin = false },
+  } = useScrollTheme();
   const store = useMemo(
     () =>
       createExhibitionStore({
@@ -71,14 +76,15 @@ export function ScrollTourBlock(props: ScrollTourBlockProps) {
     // getProgress: typeof progressSource === "function" ? (progressSource as () => number) : undefined,
     // progress: typeof progressSource === "number" ? (progressSource as number) : undefined,
     // enabled,
-    // easing,
+    // easing: "ease-in-out",
     reportEveryFrame: true,
+    pollInterval: 32,
     // loop,
     // onEnter,
     // onExit,
-    onProgress: () => {
-      //
-    },
+    // onProgress: (index, t) => {
+    //   console.log("on progress", index, t);
+    // },
     // jumpTo: jumpToProp,
   });
 
@@ -94,10 +100,10 @@ export function ScrollTourBlock(props: ScrollTourBlockProps) {
     runtime.world.gotoRegion({
       ...tour.rect,
       padding,
-      // paddingPx:
-      //   tour.currentIndex === 0
-      //     ? undefined
-      //     : { left: annotationWindowWidth, top: padding, bottom: padding, right: padding },
+      paddingPx:
+        tour.currentIndex === 0 || viewerMargin === false
+          ? undefined
+          : { left: annotationWindowWidth, top: padding, bottom: padding, right: padding },
     });
   }, [runtime, tour.rect]);
 
@@ -105,7 +111,7 @@ export function ScrollTourBlock(props: ScrollTourBlockProps) {
 
   return (
     <div ref={container} className="bg-slate-500 text-black min-h-screen relative">
-      <div className="image z-10 h-screen bg-[red] sticky top-0 pointer-events-none">
+      <div className="image z-10 h-screen sticky top-0 pointer-events-none">
         <CanvasPreviewBlock
           interactive
           setRuntime={setRuntime}
@@ -115,6 +121,9 @@ export function ScrollTourBlock(props: ScrollTourBlockProps) {
           // padding={layout.imagePadding}
           alternativeMode
           disablePopup
+          cover={false}
+          viewerBackground={viewerBackground}
+          useBlurBackground={useBlurBackground}
         />
       </div>
       <div className="placeholder">
@@ -124,16 +133,7 @@ export function ScrollTourBlock(props: ScrollTourBlockProps) {
       </div>
       <div className="steps absolute bottom-0 z-20" data-annotation-list="true">
         {steps.map((step) => {
-          return (
-            <div key={step.annotationId} className="h-screen w-full flex items-center">
-              <div className="p-8 bg-black/50 w-1/2 m-8 overflow-hidden text-white">
-                <LocaleString>{step.label}</LocaleString>
-                <LocaleString enableDangerouslySetInnerHTML className="whitespace-pre-wrap">
-                  {step.summary}
-                </LocaleString>
-              </div>
-            </div>
-          );
+          return <ScrollTourAnnotation key={step.annotationId} step={step} />;
         })}
       </div>
     </div>

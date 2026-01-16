@@ -1,0 +1,68 @@
+/* CSS + Variables specific for the scroll theme */
+/* For this variation I want to try and make the theming more consistent.
+   as this is the "Scroll Exhibition" variation, the prefix for the class names will be:
+
+      .exv-scroll-{name}
+
+   and in the future the other could be:
+
+      .exv-shared-{name}       - for shared classes
+      .exv-exhibition-{name}   - for the exhibition preset
+      .exv-slideshow-{name}    - for the slideshow preset
+*/
+.exv-scroll {
+  /** All of the variables are defined here. */
+  --exv-scroll-title-background: #fff;
+  --exv-scroll-title-color: #444;
+
+  /** Annotation options */
+  --exv-scroll-annotation-background: #fff;
+  --exv-scroll-annotation-color: #333;
+  --exv-scroll-annotation-radius: 0px;
+  --exv-scroll-annotation-max-width: 30em;
+
+  /** Info block */
+  --exv-scroll-info-block-background: #fff;
+  --exv-scroll-info-block-color: #444;
+}
+
+/** Header section */
+.exv-scroll-grid-title {
+  /** The background of the title section. */
+  background: var(--exv-scroll-title-background);
+  color: var(--exv-scroll-title-color);
+}
+
+/** ScrollImageBlock */
+
+/** ScrollInfoBlock */
+.exv-scroll-info-block {
+  background: var(--exv-scroll-info-block-background);
+  color: var(--exv-scroll-info-block-color);
+}
+
+.exhibition-viewer .exv-scroll-info-block h1,
+.exhibition-viewer .exv-scroll-info-block h2,
+.exhibition-viewer .exv-scroll-info-block h3,
+.exhibition-viewer .exv-scroll-info-block h4,
+.exhibition-viewer .exv-scroll-info-block h5,
+.exhibition-viewer .exv-scroll-info-block h6,
+.exhibition-viewer .exv-scroll-info-block p,
+.exhibition-viewer .exv-scroll-info-block li,
+.exhibition-viewer .exv-scroll-info-block ul,
+.exhibition-viewer .exv-scroll-info-block ol,
+.exhibition-viewer .exv-scroll-info-block blockquote {
+  color: var(--exv-scroll-info-block-color);
+}
+
+/** ScrollTitleBlock */
+
+/** ScrollTourBlock */
+
+/** ScrollTourAnnotation */
+.exv-scroll-annotation-container {
+  background: var(--exv-scroll-annotation-background);
+  color: var(--exv-scroll-annotation-color);
+  border-radius: var(--exv-scroll-annotation-radius);
+  max-width: var(--exv-scroll-annotation-max-width);
+}
