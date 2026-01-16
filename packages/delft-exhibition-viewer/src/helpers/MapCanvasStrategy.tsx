@@ -1,18 +1,12 @@
-import {
-  useCanvas,
-  useStaticRenderingStrategy,
-  type RenderingStrategy,
-} from "react-iiif-vault";
-import { MapCanvases, type MapCanvasesProps } from "./MapCanvases";
 import type { CanvasNormalized } from "@iiif/presentation-3-normalized";
 import { memo } from "react";
-type RenderingStrategyMappedByType = {
-  [K in RenderingStrategy as K["type"]]: K;
-};
+import { type RenderingStrategy, useCanvas, useStaticRenderingStrategy } from "react-iiif-vault";
+import { MapCanvases, type MapCanvasesProps } from "./MapCanvases";
 
-export interface MapCanvasStrategyProps<
-  Enabled extends RenderingStrategy["type"] = RenderingStrategy["type"],
-> extends Omit<MapCanvasesProps, "children"> {
+export interface MapCanvasStrategyProps<Enabled extends RenderingStrategy["type"] = RenderingStrategy["type"]>
+  extends Omit<MapCanvasesProps, "children"> {
+  themeProvider?: any;
+  themeOptions?: any;
   children: {
     [K in Enabled]: ({
       index,
@@ -21,7 +15,7 @@ export interface MapCanvasStrategyProps<
     }: {
       index: number;
       canvas: CanvasNormalized;
-      strategy: RenderingStrategyMappedByType[K];
+      strategy: RenderingStrategyByType[K];
     }) => React.ReactNode;
   } & {
     [K in Exclude<RenderingStrategy["type"], Enabled>]?: ({
@@ -31,18 +25,27 @@ export interface MapCanvasStrategyProps<
     }: {
       index: number;
       canvas: CanvasNormalized;
-      strategy: RenderingStrategyMappedByType[K];
+      strategy: RenderingStrategyByType[K];
     }) => React.ReactNode;
   };
 }
 
-export function MapCanvasStrategy<
-  Enabled extends RenderingStrategy["type"] = RenderingStrategy["type"],
->({ children, ...props }: MapCanvasStrategyProps<Enabled>) {
+type RenderingStrategyByType = {
+  [K in RenderingStrategy as K["type"]]: K;
+};
+
+export function MapCanvasStrategy<Enabled extends RenderingStrategy["type"] = RenderingStrategy["type"]>({
+  children,
+  themeProvider,
+  themeOptions,
+  ...props
+}: MapCanvasStrategyProps<Enabled>) {
   return (
     <MapCanvases {...props}>
       {({ index }) => (
-        <MapStrategyInner index={index}>{children as any}</MapStrategyInner>
+        <MapStrategyInner themeProvider={themeProvider} themeOptions={themeOptions} index={index}>
+          {children as MapCanvasStrategyProps["children"]}
+        </MapStrategyInner>
       )}
     </MapCanvases>
   );
@@ -50,17 +53,27 @@ export function MapCanvasStrategy<
 
 export const MapStrategyInner = memo(function MapStrategyInner({
   index,
+  themeProvider: ThemeProvider,
+  themeOptions,
   children,
 }: {
   index: number;
   children: MapCanvasStrategyProps["children"];
+  themeOptions?: any;
+  themeProvider?: any;
 }) {
   const canvas = useCanvas();
   const strategy = useStaticRenderingStrategy();
 
   if (!canvas) return null;
   if (children[strategy.type]) {
-    return (children[strategy.type] as any)({ index, canvas, strategy });
+    const toReturn = (children[strategy.type] as any)({ index, canvas, strategy });
+
+    if (ThemeProvider) {
+      return <ThemeProvider options={themeOptions}>{toReturn}</ThemeProvider>;
+    }
+
+    return toReturn;
   }
   return null;
 });

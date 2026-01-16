@@ -19,15 +19,14 @@ export function VisibleAnnotationsListingItem({
   stepIndex: number;
   index: number;
   hoverProps: any;
-  goToStep: (step: number) => void;
+  goToStep?: (step: number) => void;
 }) {
-  const { label, summary, isActive, showBody, showSummary, toShow } =
-    useStepDetails(canvas, step);
+  const { label, summary, isActive, showBody, showSummary, toShow } = useStepDetails(canvas, step);
 
   const itemRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (index === stepIndex && itemRef.current) {
+    if (goToStep && index === stepIndex && itemRef.current) {
       itemRef.current.scrollIntoView({
         behavior: "smooth",
         block: "center",
@@ -41,22 +40,15 @@ export function VisibleAnnotationsListingItem({
       ref={itemRef}
       {...hoverProps}
       className="mb-2 cursor-pointer"
-      onClick={() => goToStep(index)}
+      onClick={() => goToStep?.(index)}
     >
       <LocaleString
         as="h3"
-        className={twMerge(
-          "text-semibold hover:hover:underline",
-          index === stepIndex ? "text-AnnotationSelected" : "",
-        )}
+        className={twMerge("text-semibold hover:hover:underline", index === stepIndex ? "text-AnnotationSelected" : "")}
       >
         {label}
       </LocaleString>
-      <LocaleString
-        as="div"
-        className="whitespace-pre-wrap text-sm opacity-50"
-        enableDangerouslySetInnerHTML
-      >
+      <LocaleString as="div" className="whitespace-pre-wrap text-sm opacity-50" enableDangerouslySetInnerHTML>
         {summary}
       </LocaleString>
       {showBody && toShow
@@ -67,24 +59,18 @@ export function VisibleAnnotationsListingItem({
                   className={twMerge(
                     "prose-sm exhibition-html",
                     "text-semibold hover:hover:underline",
-                    index === stepIndex
-                      ? "prose-headings:text-AnnotationSelected"
-                      : "",
+                    index === stepIndex ? "prose-headings:text-AnnotationSelected" : "",
                   )}
                   key={n}
                 >
-                  <LocaleString enableDangerouslySetInnerHTML>
-                    {body.value}
-                  </LocaleString>
+                  <LocaleString enableDangerouslySetInnerHTML>{body.value}</LocaleString>
                 </div>
               );
             }
             return null;
           })
         : null}
-      {step.objectLink
-        ? (step.objectLink as any).component
-        : null}
+      {step.objectLink ? (step.objectLink as any).component : null}
     </div>
   );
 }

@@ -1,11 +1,10 @@
 import { CloseIcon } from "@/components/icons/CloseIcon";
-import type { DefaultPresetOptions, Preset } from "@atlas-viewer/atlas";
+import type { DefaultPresetOptions, Preset, Runtime } from "@atlas-viewer/atlas";
 import { Dialog } from "@headlessui/react";
 import { type ReactNode, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useHover } from "react-aria";
 import { CanvasContext, CanvasPanel, useCanvas, useVault } from "react-iiif-vault";
 import { LocaleString } from "react-iiif-vault";
-import { LazyLoadComponent } from "react-lazy-load-image-component";
 import { twMerge } from "tailwind-merge";
 import invariant from "tiny-invariant";
 import { useStore } from "zustand";
@@ -17,6 +16,7 @@ import { RenderSeeAlso } from "./RenderSeeAlso";
 import { ViewerZoomControls } from "./ViewerZoomControls";
 import { VisibleAnnotationsListingItem } from "./VisibleAnnotationListItem";
 import { InfoIcon } from "./icons/InfoIcon";
+import { BlurCanvasImage } from "./shared/BlurCanvasImage";
 
 export interface CanvasPreviewBlockProps {
   canvasId?: string;
@@ -26,6 +26,7 @@ export interface CanvasPreviewBlockProps {
   transitionScale?: boolean;
   imageInfoIcon?: boolean;
   index: number;
+  disablePopup?: boolean;
   objectLinks: Array<{
     service: string;
     slug: string;
@@ -34,6 +35,16 @@ export interface CanvasPreviewBlockProps {
     component: ReactNode;
   }>;
   viewTransition?: boolean;
+  padding?: {
+    top?: number;
+    left?: number;
+    right?: number;
+    bottom?: number;
+  };
+  setRuntime?: (runtime: Runtime) => void;
+  interactive?: boolean;
+  viewerBackground?: string;
+  useBlurBackground?: boolean;
 }
 
 function CanvasPreviewBlockInner({
@@ -45,6 +56,12 @@ function CanvasPreviewBlockInner({
   transitionScale = false,
   imageInfoIcon = false,
   viewTransition = false,
+  disablePopup = false,
+  padding,
+  setRuntime,
+  interactive = false,
+  useBlurBackground = false,
+  viewerBackground,
 }: CanvasPreviewBlockProps) {
   const container = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -58,13 +75,14 @@ function CanvasPreviewBlockInner({
         objectLinks,
         firstStep: false,
       }),
-    [vault, canvas],
+    [vault, canvas, objectLinks],
   );
   const paintingPage = canvas?.items[0] ? vault.get(canvas.items[0]) : null;
   const hasMultipleAnnotations = (paintingPage?.items.length || 0) > 1;
 
-  const { currentStep, goToStep, isPlaying, nextStep, pause, play, playPause, previousStep, steps } = useStore(store);
+  const { currentStep, goToStep, nextStep, pause, play, previousStep, steps } = useStore(store);
 
+  const stepIndex = currentStep;
   const step = currentStep === -1 ? null : steps[currentStep];
 
   useEffect(() => {
@@ -75,11 +93,7 @@ function CanvasPreviewBlockInner({
       goToStep(-1);
       pause();
     }
-  }, [isOpen, autoPlay]);
-
-  useEffect(() => {
-    setHovered(null);
-  }, [step]);
+  }, [isOpen, autoPlay, goToStep, pause, play]);
 
   const [hovered, setHovered] = useState<number | null>(null);
 
@@ -119,16 +133,17 @@ function CanvasPreviewBlockInner({
 
   const atlas = useRef<Preset | null>(null);
   const [isReady, setIsReady] = useState(false);
+
   const config = useMemo(
     () =>
       [
         "default-preset",
         {
           runtimeOptions: { visibilityRatio: 0.5 },
-          interactive: false,
+          interactive,
         } as DefaultPresetOptions,
       ] as any,
-    [],
+    [interactive],
   );
 
   const openConfig = useMemo(
@@ -144,7 +159,6 @@ function CanvasPreviewBlockInner({
   );
 
   const tour = currentStep !== -1;
-  const stepIndex = currentStep;
 
   invariant(canvas);
 
@@ -170,7 +184,7 @@ function CanvasPreviewBlockInner({
     }
 
     return null;
-  }, [objectLinks, stepIndex, tour]);
+  }, [objectLinks]);
 
   const containerStyle = useMemo(
     () => ({
@@ -198,6 +212,9 @@ function CanvasPreviewBlockInner({
       }
     });
     setTimeout(() => preset.runtime.updateNextFrame(), 1000);
+    if (setRuntime) {
+      setRuntime(preset.runtime);
+    }
   }, []);
 
   return (
@@ -205,7 +222,7 @@ function CanvasPreviewBlockInner({
       <div
         ref={container}
         className={twMerge(
-          "exhibition-canvas-panel z-10 h-full bg-ViewerBackground canvas-preview-transition",
+          "exhibition-canvas-panel z-10 h-full relative bg-ViewerBackground canvas-preview-transition",
           transitionScale && "hover:scale-105 transition-transform duration-1000",
         )}
         onClick={withViewTransition(
@@ -215,14 +232,26 @@ function CanvasPreviewBlockInner({
           false,
           viewTransition,
         )}
+        onKeyDown={() => undefined}
+        style={
+          viewerBackground
+            ? ({
+                "--delft-viewer-background": viewerBackground,
+                "--atlas-background": viewerBackground,
+              } as any)
+            : {}
+        }
       >
+        {useBlurBackground ? <BlurCanvasImage /> : null}
         <Hookable type="canvasPreviewEditor" resource={canvas}>
           <CanvasPanel.Viewer
             containerStyle={containerStyle}
             renderPreset={config}
             homeOnResize
-            homeCover={cover || !hasMultipleAnnotations}
+            homeCover={typeof cover === "boolean" ? cover : !hasMultipleAnnotations}
+            padding={padding}
             onCreated={onCreated}
+            background={viewerBackground}
           >
             <CanvasPanel.RenderCanvas strategies={["images"]} enableSizes={false}>
               <Highlights />
@@ -246,240 +275,295 @@ function CanvasPreviewBlockInner({
           </Hookable>
         )}
       </div>
-      <Dialog
-        className="exhibition-viewer exhibition-viewer-dialog"
-        open={isOpen}
-        onClose={withViewTransition(
-          container.current,
-          () => setIsOpen(false),
-          `canvas-preview-block-${index}`,
-          true,
-          viewTransition,
-        )}
-      >
-        <div className="fixed modal-top left-0 right-0 bottom-0 bg-black/30" aria-hidden="true" />
-        <div className="safe-inset fill-height fixed modal-top left-0 right-0 bottom-0 z-20 flex w-screen items-center md:p-4">
-          <button
-            type="button"
-            onClick={withViewTransition(
-              container.current,
-              () => setIsOpen(false),
-              `canvas-preview-block-${index}`,
-              true,
-              viewTransition,
-            )}
-            className="absolute right-4 top-4 z-20 flex  h-16 w-16 items-center justify-center bg-CloseBackground text-CloseText hover:bg-CloseBackgroundHover"
-          >
-            <CloseIcon fill="currentColor" />
-          </button>
-          <Dialog.Panel className="relative z-10 flex h-full w-full flex-col justify-center bg-InfoBlock text-InfoBlockText overflow-y-auto overflow-x-hidden md:rounded lg:flex-row">
-            <div
-              className="exhibition-canvas-panel flex-shink-0 sticky top-0 z-20 min-h-0 flex-1 bg-ViewerBackground lg:relative lg:order-2 lg:min-w-0"
-              style={{
-                viewTransitionName: isOpen ? `canvas-preview-block-${index}` : "",
-              }}
+      {!disablePopup ? (
+        <Dialog
+          className="exhibition-viewer exhibition-viewer-dialog"
+          open={isOpen}
+          onClose={withViewTransition(
+            container.current,
+            () => setIsOpen(false),
+            `canvas-preview-block-${index}`,
+            true,
+            viewTransition,
+          )}
+        >
+          <div className="fixed modal-top left-0 right-0 bottom-0 bg-black/30" aria-hidden="true" />
+          <div className="safe-inset fill-height fixed modal-top left-0 right-0 bottom-0 z-20 flex w-screen items-center md:p-4">
+            <button
+              type="button"
+              onClick={withViewTransition(
+                container.current,
+                () => setIsOpen(false),
+                `canvas-preview-block-${index}`,
+                true,
+                viewTransition,
+              )}
+              className="absolute right-4 top-4 z-20 flex  h-16 w-16 items-center justify-center bg-CloseBackground text-CloseText hover:bg-CloseBackgroundHover"
             >
-              {isOpen ? (
-                <CanvasPanel.Viewer
-                  onCreated={(ctx) => void (atlas.current = ctx)}
-                  containerStyle={{ height: "100%", minHeight: 0 }}
-                  runtimeOptions={openConfig[1].runtimeOptions}
-                  renderPreset={openConfig}
-                >
-                  <CanvasPanel.RenderCanvas
-                    strategies={["images"]}
-                    enableSizes={false}
-                    renderViewerControls={() => <ViewerZoomControls />}
-                  >
-                    <Highlights />
-
-                    {steps.map((step, index) => {
-                      if (step.region && step.region.selector?.spatial) {
-                        const region = step.region.selector?.spatial as any;
-                        if (
-                          region.x === 0 &&
-                          region.y === 0 &&
-                          region.width === canvas?.width &&
-                          region.height === canvas?.height
-                        ) {
-                          return null;
-                        }
-
-                        const isHovered = hovered === index;
-                        return (
-                          <box
-                            key={`hover-overlays-${index}`}
-                            target={step.region.selector.spatial as any}
-                            relativeStyle
-                            onClick={(e) => {
-                              e.preventDefault();
-                              e.stopPropagation();
-                              goToStep(index);
-                            }}
-                            html
-                            style={
-                              isHovered
-                                ? {
-                                    background: "rgba(255, 255, 255, .5)",
-                                    outline: "2px solid rgb(250, 204, 21)",
-                                    outlineOffset: "4px",
-                                  }
-                                : {
-                                    background: "rgba(255, 255, 255, 0)",
-                                    outline: "2px solid transparent",
-                                    outlineOffset: "4px",
-                                    ":hover": {
-                                      outline: "2px solid rgb(250, 204, 21)",
-                                    },
-                                  }
-                            }
-                          />
-                        );
+              <CloseIcon fill="currentColor" />
+            </button>
+            <Dialog.Panel className="relative z-10 flex h-full w-full flex-col justify-center bg-InfoBlock text-InfoBlockText overflow-y-auto overflow-x-hidden md:rounded lg:flex-row">
+              <div
+                className="exhibition-canvas-panel flex-shink-0 sticky top-0 z-20 min-h-0 flex-1 bg-ViewerBackground lg:relative lg:order-2 lg:min-w-0"
+                style={{
+                  viewTransitionName: isOpen ? `canvas-preview-block-${index}` : "",
+                }}
+              >
+                {isOpen ? (
+                  <CanvasPanel.Viewer
+                    onCreated={(ctx) => {
+                      atlas.current = ctx;
+                      if (setRuntime) {
+                        setRuntime(ctx.runtime);
                       }
-                      return null;
-                    })}
-                  </CanvasPanel.RenderCanvas>
-                </CanvasPanel.Viewer>
-              ) : null}
-            </div>
-            {alternativeMode ? (
-              <div className="z-10 max-h-[40vh] w-full overflow-y-auto text-InfoBlockText lg:order-1 lg:max-h-[100vh] lg:max-w-md">
-                {canvas.label || canvas.summary || canvas.seeAlso?.length ? (
-                  <div className="mb-4 bg-InfoBlock text-InfoBlockText px-8">
-                    <div>
-                      <Hookable type="localeStringEditor" property="label" resource={canvas}>
-                        <LocaleString as="h2" className="sticky top-0 bg-InfoBlock pb-4 pt-6 font-mono delft-title">
-                          {canvas.label}
-                        </LocaleString>
-                      </Hookable>
-                      <Hookable type="localeStringEditor" property="summary" resource={canvas}>
-                        <LocaleString className="whitespace-pre-wrap" enableDangerouslySetInnerHTML>
-                          {canvas.summary}
-                        </LocaleString>
-                      </Hookable>
-                    </div>
-                    {canvas.requiredStatement && (
-                      <div className="mt-8 text-sm opacity-60">
-                        <LocaleString>{canvas.requiredStatement.value}</LocaleString>
-                      </div>
-                    )}
-                    {canvas.seeAlso?.length ? <RenderSeeAlso resource={canvas.seeAlso[0]} /> : null}
-                  </div>
-                ) : null}
-                {steps.length === 0 ? <div>{objectLink?.component || null}</div> : null}
-                {steps.length > 1 ? (
-                  <div className="flex flex-col gap-2 bg-InfoBlock text-InfoBlockText px-8 pb-8">
-                    <h3 className="sticky top-0 bg-InfoBlock pb-4 pt-6 font-mono delft-title">Annotations</h3>
-                    {steps.map((step, index) => {
-                      return (
-                        <VisibleAnnotationsListingItem
-                          key={`step-${index}`}
-                          canvas={canvas}
-                          goToStep={goToStep}
-                          hoverProps={hoverProps}
-                          index={index}
-                          step={step}
-                          stepIndex={stepIndex}
-                        />
-                      );
-                    })}
-                  </div>
+                    }}
+                    containerStyle={{ height: "100%", minHeight: 0 }}
+                    runtimeOptions={openConfig[1].runtimeOptions}
+                    renderPreset={openConfig}
+                  >
+                    <CanvasPanel.RenderCanvas
+                      strategies={["images"]}
+                      enableSizes={false}
+                      renderViewerControls={() => <ViewerZoomControls />}
+                    >
+                      <Highlights />
+
+                      {steps.map((step, index) => {
+                        if (step.region?.selector?.spatial) {
+                          const region = step.region.selector.spatial as any;
+                          if (
+                            region.x === 0 &&
+                            region.y === 0 &&
+                            region.width === canvas?.width &&
+                            region.height === canvas?.height
+                          ) {
+                            return null;
+                          }
+
+                          const isHovered = hovered === index;
+                          return (
+                            <box
+                              key={`hover-overlays-${index}`}
+                              target={step.region.selector.spatial as any}
+                              relativeStyle
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                goToStep(index);
+                              }}
+                              onKeyDown={(event) => {
+                                if (event.key === "Enter" || event.key === " ") {
+                                  event.preventDefault();
+                                  goToStep(index);
+                                }
+                              }}
+                              onKeyUp={() => undefined}
+                              onKeyPress={() => undefined}
+                              html
+                              style={
+                                isHovered
+                                  ? {
+                                      background: "rgba(255, 255, 255, .5)",
+                                      outline: "2px solid rgb(250, 204, 21)",
+                                      outlineOffset: "4px",
+                                    }
+                                  : {
+                                      background: "rgba(255, 255, 255, 0)",
+                                      outline: "2px solid transparent",
+                                      outlineOffset: "4px",
+                                      ":hover": {
+                                        outline: "2px solid rgb(250, 204, 21)",
+                                      },
+                                    }
+                              }
+                            />
+                          );
+                        }
+                        return null;
+                      })}
+                    </CanvasPanel.RenderCanvas>
+                  </CanvasPanel.Viewer>
                 ) : null}
               </div>
-            ) : (
-              <footer className="background-black flex flex-col items-center gap-8 p-8 text-white md:min-h-32 md:flex-row">
-                <div className="flex-1">
-                  {tour && step ? (
-                    <div>
-                      <LocaleString>{step.label}</LocaleString>
-                      <LocaleString enableDangerouslySetInnerHTML className="whitespace-pre-wrap">
-                        {step.summary}
-                      </LocaleString>
-                    </div>
-                  ) : (
-                    <div>
-                      <Hookable type="localeStringEditor" property="label" resource={canvas}>
-                        <LocaleString>{canvas.label}</LocaleString>
-                      </Hookable>
-                      <Hookable type="localeStringEditor" property="summary" resource={canvas}>
-                        <LocaleString enableDangerouslySetInnerHTML className="whitespace-pre-wrap">
-                          {canvas.summary}
-                        </LocaleString>
-                      </Hookable>
-                    </div>
-                  )}
-                </div>
-
-                {!tour && objectLink ? objectLink.component : null}
-                {tour && step && step.objectLink ? (step.objectLink as any).component : null}
-
-                <div className="px-4">
-                  {tour && step ? (
-                    <div>
-                      <div className="mb-2 font-mono">
-                        {stepIndex + 1} / {steps.length}
+              {alternativeMode ? (
+                <div className="z-10 max-h-[40vh] w-full overflow-y-auto text-InfoBlockText lg:order-1 lg:max-h-[100vh] lg:max-w-md">
+                  {canvas.label || canvas.summary || canvas.seeAlso?.length ? (
+                    <div className="mb-4 bg-InfoBlock text-InfoBlockText px-8">
+                      <div>
+                        <Hookable type="localeStringEditor" property="label" resource={canvas}>
+                          <LocaleString as="h2" className="sticky top-0 bg-InfoBlock pb-4 pt-6 font-mono delft-title">
+                            {canvas.label}
+                          </LocaleString>
+                        </Hookable>
+                        <Hookable type="localeStringEditor" property="summary" resource={canvas}>
+                          <LocaleString className="whitespace-pre-wrap" enableDangerouslySetInnerHTML>
+                            {canvas.summary}
+                          </LocaleString>
+                        </Hookable>
                       </div>
-                      <div className="relative h-2 w-16">
-                        <div className="absolute inset-0 bg-gray-800" />
-                        <div
-                          className="absolute inset-0 bg-slate-100"
-                          style={{
-                            width: `${((stepIndex + 1) / steps.length) * 100}%`,
-                          }}
-                        />
-                      </div>
+                      {canvas.requiredStatement && (
+                        <div className="mt-8 text-sm opacity-60">
+                          <LocaleString>{canvas.requiredStatement.value}</LocaleString>
+                        </div>
+                      )}
+                      {canvas.seeAlso?.length ? <RenderSeeAlso resource={canvas.seeAlso[0]} /> : null}
+                    </div>
+                  ) : null}
+                  {steps.length === 0 ? <div>{objectLink?.component || null}</div> : null}
+                  {steps.length > 1 ? (
+                    <div className="flex flex-col gap-2 bg-InfoBlock text-InfoBlockText px-8 pb-8">
+                      <h3 className="sticky top-0 bg-InfoBlock pb-4 pt-6 font-mono delft-title">Annotations</h3>
+                      {steps.map((step, index) => {
+                        return (
+                          <VisibleAnnotationsListingItem
+                            key={`step-${index}`}
+                            canvas={canvas}
+                            goToStep={goToStep}
+                            hoverProps={hoverProps}
+                            index={index}
+                            step={step}
+                            stepIndex={stepIndex}
+                          />
+                        );
+                      })}
                     </div>
                   ) : null}
                 </div>
-                <div>
-                  {currentStep !== -1 ? (
-                    <div className="flex gap-3">
-                      <button
-                        {...previousHoverProps}
-                        className="flex items-center gap-2 font-mono underline underline-offset-4"
-                        onClick={() => previousStep()}
-                      >
-                        <svg className="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="#fff" />
-                        </svg>
-                        {stepIndex > 0 ? "Previous" : "End tour"}
-                      </button>
-                      <button
-                        {...nextHoverProps}
-                        className="flex items-center gap-2 font-mono underline underline-offset-4"
-                        onClick={() => {
-                          if (stepIndex + 1 < steps.length) {
-                            nextStep();
-                          } else {
-                            goToStep(-1);
-                          }
-                        }}
-                      >
-                        {stepIndex + 1 < steps.length ? "Next" : "End tour"}
-                        <svg
-                          className="rotate-180"
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
+              ) : (
+                <footer className="background-black flex flex-col items-center gap-8 p-8 text-white md:min-h-32 md:flex-row">
+                  <div className="flex-1">
+                    {tour && step ? (
+                      <div>
+                        <LocaleString>{step.label}</LocaleString>
+                        <LocaleString enableDangerouslySetInnerHTML className="whitespace-pre-wrap">
+                          {step.summary}
+                        </LocaleString>
+                      </div>
+                    ) : (
+                      <div>
+                        <Hookable type="localeStringEditor" property="label" resource={canvas}>
+                          <LocaleString>{canvas.label}</LocaleString>
+                        </Hookable>
+                        <Hookable type="localeStringEditor" property="summary" resource={canvas}>
+                          <LocaleString enableDangerouslySetInnerHTML className="whitespace-pre-wrap">
+                            {canvas.summary}
+                          </LocaleString>
+                        </Hookable>
+                      </div>
+                    )}
+                  </div>
+
+                  {!tour && objectLink ? objectLink.component : null}
+                  {tour && step && step.objectLink ? (step.objectLink as any).component : null}
+
+                  <div className="px-4">
+                    {tour && step ? (
+                      <div>
+                        <div className="mb-2 font-mono">
+                          {stepIndex + 1} / {steps.length}
+                        </div>
+                        <div className="relative h-2 w-16">
+                          <div className="absolute inset-0 bg-gray-800" />
+                          <div
+                            className="absolute inset-0 bg-slate-100"
+                            style={{
+                              width: `${((stepIndex + 1) / steps.length) * 100}%`,
+                            }}
+                          />
+                        </div>
+                      </div>
+                    ) : null}
+                  </div>
+                  <div>
+                    {currentStep !== -1 ? (
+                      <div className="flex gap-3">
+                        <button
+                          type="button"
+                          {...previousHoverProps}
+                          className="flex items-center gap-2 font-mono underline underline-offset-4"
+                          onClick={() => previousStep()}
+                          onKeyDown={(event) => {
+                            if (event.key === "Enter" || event.key === " ") {
+                              event.preventDefault();
+                              previousStep();
+                            }
+                          }}
                         >
-                          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="#fff" />
-                        </svg>
-                      </button>
-                    </div>
-                  ) : (
-                    steps.length > 0 && (
-                      <button className="font-mono underline underline-offset-4" onClick={() => nextStep()}>
-                        Start tour
-                      </button>
-                    )
-                  )}
-                </div>
-              </footer>
-            )}
-          </Dialog.Panel>
-        </div>
-      </Dialog>
+                          <span className="sr-only">Previous</span>
+                          <svg
+                            className=""
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                          >
+                            <title>Previous</title>
+                            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="#fff" />
+                          </svg>
+                          {stepIndex > 0 ? "Previous" : "End tour"}
+                        </button>
+                        <button
+                          type="button"
+                          {...nextHoverProps}
+                          className="flex items-center gap-2 font-mono underline underline-offset-4"
+                          onClick={() => {
+                            if (stepIndex + 1 < steps.length) {
+                              nextStep();
+                            } else {
+                              goToStep(-1);
+                            }
+                          }}
+                          onKeyDown={(event) => {
+                            if (event.key === "Enter" || event.key === " ") {
+                              event.preventDefault();
+                              if (stepIndex + 1 < steps.length) {
+                                nextStep();
+                              } else {
+                                goToStep(-1);
+                              }
+                            }
+                          }}
+                        >
+                          {stepIndex + 1 < steps.length ? "Next" : "End tour"}
+                          <span className="sr-only">Next</span>
+                          <svg
+                            className="rotate-180"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                          >
+                            <title>Next</title>
+                            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="#fff" />
+                          </svg>
+                        </button>
+                      </div>
+                    ) : (
+                      steps.length > 0 && (
+                        <button
+                          type="button"
+                          className="font-mono underline underline-offset-4"
+                          onClick={() => nextStep()}
+                          onKeyDown={(event) => {
+                            if (event.key === "Enter" || event.key === " ") {
+                              event.preventDefault();
+                              nextStep();
+                            }
+                          }}
+                        >
+                          Start tour
+                        </button>
+                      )
+                    )}
+                  </div>
+                </footer>
+              )}
+            </Dialog.Panel>
+          </div>
+        </Dialog>
+      ) : null}
     </>
   );
 }
@@ -493,18 +577,7 @@ export function CanvasPreviewBlock(props: CanvasPreviewBlockProps) {
     <CanvasPreviewBlockInner {...props} />
   );
 
-  // if (props.index < 3) {
   return <div className="relative h-full w-full bg-ViewerBackground">{inner}</div>;
-  // }
-
-  // @todo come back to this, breaking some things.
-  return (
-    <div className="relative h-full w-full bg-ViewerBackground">
-      <LazyLoadComponent placeholder={<div />} visibleByDefault={false} threshold={300}>
-        {inner}
-      </LazyLoadComponent>
-    </div>
-  );
 }
 
 function Highlights() {
