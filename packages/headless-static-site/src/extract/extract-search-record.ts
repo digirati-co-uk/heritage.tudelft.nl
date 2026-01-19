@@ -39,7 +39,8 @@ export const extractSearchRecord: Extraction = {
     const meta = await api.meta.value;
     const collections = meta.partOfCollections || [];
 
-    const plaintext = (await api.resourceFiles.readFile("keywords.txt"))?.toString("utf-8") || "";
+    // const plaintext = (await api.resourceFiles.readFile("keywords.txt"))?.toString("utf-8") || "";
+    const plaintext = api.resource.metadata.map((i: any) => getValue(i.value)).join(" ");
 
     // This is what we want to be able to support.
     return {

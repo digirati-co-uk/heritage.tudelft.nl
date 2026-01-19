@@ -8,6 +8,7 @@ import "./styles/lib.css";
 import { LocaleString } from "react-iiif-vault";
 import { DelftPresentation } from "./DelftPresentation";
 import { DelftSlideshow } from "./DelftSlideshow";
+import { ScrollExhibition} from "@/ScrollExhibition.tsx";
 
 const search = new URLSearchParams(window.location.search);
 
@@ -18,6 +19,7 @@ function App() {
   const isPresentation = search.get("type") === "presentation";
   const isSlideshow = search.get("type") === "slideshow";
   const isEmbed = search.get("embed") === "true";
+  const isScroll = search.get("type") === "scroll";
   const manifestId = search.get("manifest");
   const cutCorners = search.get("cut-corners");
   const fullTitleBar = search.get("full-title-bar");
@@ -43,6 +45,7 @@ function App() {
     }
   }, [manifestId]);
 
+  const hardcodedM = 'https://manifest-editor.digirati.services/api/iiif/p3/38066dcfd3984a759e35b16ebb72fc36/1768817190553';
   if (!collection) {
     return null;
   }
@@ -50,7 +53,15 @@ function App() {
   if (!manifest) {
     return (
       <div>
-        <ul className="my-8 w-full text-center">
+        <ul>
+          <li className="pb-4 text-2xl">
+            <a href={`?manifest=${hardcodedM}`} className="hover:underline">
+              <LocaleString>Hardcoded Manifest</LocaleString>
+            </a>{" "}
+            <a href={`?manifest=${hardcodedM}&type=scroll`} className="hover:underline">
+              Scroll
+            </a>
+          </li>
           {collection.items.map((item: any) => (
             <li key={item.id} className="pb-4 text-2xl">
               <a href={`?manifest=${item.id}`} className="hover:underline">
@@ -59,6 +70,10 @@ function App() {
               (
               <a href={`?manifest=${item.id}&type=presentation`} className="hover:underline">
                 Presentation
+              </a>
+              {" | "}
+              <a href={`?manifest=${item.id}&type=scroll`} className="hover:underline">
+                Scroll
               </a>
               )
             </li>
@@ -70,23 +85,25 @@ function App() {
 
   return (
     <div className="flex w-full flex-col items-center">
-      <div className="min-h-[90vh] w-full max-w-screen-xl px-5 py-10 lg:px-10">
-        {isSlideshow ? (
+        {isScroll ? (
+          <div className="min-h-[90vh] w-full">
+          <ScrollExhibition manifest={manifest} language="en" viewObjectLinks={[]} />
+          </div>
+        ) : isSlideshow ? (
+          <div className="min-h-[90vh] w-full max-w-screen-xl px-5 py-10 lg:px-10">
           <div className="h-[600px] w-[780px]">
             <DelftSlideshow manifest={manifest} options={options} language="en" viewObjectLinks={[]} />
           </div>
+          </div>
         ) : isPresentation ? (
+          <div className="min-h-[90vh] w-full max-w-screen-xl px-5 py-10 lg:px-10">
           <div className="h-[800px]">
-            {isEmbed ? (
-              <iframe src={`/embed.html?manifest=${manifestId}`} className="h-full w-full" title="Presentation" />
-            ) : (
-              <DelftPresentation manifest={manifest} options={options} language="en" viewObjectLinks={[]} />
-            )}
+            <DelftPresentation manifest={manifest} options={options} language="en" viewObjectLinks={[]} />
+          </div>
           </div>
         ) : (
           <DelftExhibition manifest={manifest} options={options} language="en" viewObjectLinks={[]} />
         )}
-      </div>
     </div>
   );
 }

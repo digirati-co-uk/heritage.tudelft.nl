@@ -3,25 +3,29 @@
 import { Dialog } from "@headlessui/react";
 import type { InternationalString, MetadataItem } from "@iiif/presentation-3";
 import { useState } from "react";
-import { Metadata } from "react-iiif-vault";
+import { Metadata, LanguageProvider } from "react-iiif-vault";
 import { CloseIcon } from "../icons/CloseIcon";
 import { AutoLanguage } from "../pages/AutoLanguage";
+import { useLocale } from "next-intl";
 
 export function CollectionMetadata({
   metadata,
 }: {
   metadata?: MetadataItem[];
 }) {
+  const locale = useLocale();
   return (
-    <Metadata
-      allowHtml
-      metadata={metadata}
-      classes={{
-        row: "block",
-        label: "block uppercase font-mono",
-        value: "block text-xl mb-5 with-link",
-      }}
-    />
+    <LanguageProvider language={locale || "en"}>
+      <Metadata
+        allowHtml
+        metadata={metadata}
+        classes={{
+          row: "block",
+          label: "block uppercase font-mono",
+          value: "block text-xl mb-5 with-link",
+        }}
+      />
+    </LanguageProvider>
   );
 }
 
