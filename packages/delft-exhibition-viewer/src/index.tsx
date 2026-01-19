@@ -45,6 +45,7 @@ function App() {
     }
   }, [manifestId]);
 
+  const hardcodedM = 'https://manifest-editor.digirati.services/api/iiif/p3/38066dcfd3984a759e35b16ebb72fc36/1768817190553';
   if (!collection) {
     return null;
   }
@@ -52,7 +53,15 @@ function App() {
   if (!manifest) {
     return (
       <div>
-        <ul className="my-8 w-full text-center">
+        <ul>
+          <li className="pb-4 text-2xl">
+            <a href={`?manifest=${hardcodedM}`} className="hover:underline">
+              <LocaleString>Hardcoded Manifest</LocaleString>
+            </a>{" "}
+            <a href={`?manifest=${hardcodedM}&type=scroll`} className="hover:underline">
+              Scroll
+            </a>
+          </li>
           {collection.items.map((item: any) => (
             <li key={item.id} className="pb-4 text-2xl">
               <a href={`?manifest=${item.id}`} className="hover:underline">
