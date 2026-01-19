@@ -3,6 +3,7 @@ import { LocaleString, VaultProvider, useExistingVault } from "react-iiif-vault"
 import { MapCanvasStrategy } from "@/helpers/MapCanvasStrategy.tsx";
 import { CanvasPreviewBlock } from "@/components/CanvasPreviewBlock.tsx";
 import { getFloatingFromBehaviours, hasPageScroll } from "@/helpers/exhibition";
+import { SeeAlsoCarousel } from "@/components/SeeAlsoCarouselBlock.tsx";
 
 interface ScrollExhibitionProps {
   manifest: Manifest;
@@ -106,6 +107,7 @@ export function ScrollExhibition(props: ScrollExhibitionProps) {
             },
           }}
         </MapCanvasStrategy>
+        <SeeAlsoCarousel items={props.manifest.seeAlso} />
       </div>
     </VaultProvider>
   );
