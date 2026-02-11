@@ -1,0 +1,677 @@
+---
+title: Custom search indexing
+---
+
+The Headless static site offers a mechanism to populate search indexes, with special support for TypeSense.
+
+There is a built-in extraction step that you can use to quickly create a search index for Manifests using their
+labels and extracting enough information to show results.
+
+When the pipeline runs, the following files are created:
+
+- `meta/search/manifests.schema.json` - JSON file containing the TypeSense compatible search schema
+- `meta/search/manifests.jsonl` - a JSON Lines file containing the search index data
+
+If you have configured multiple indexes, then there may be multiple output.
+
+## Built-in search index
+
+To explain the concepts of how the search works, here is the code for the built-in search index.
+
+<details>
+  <summary>View full code</summary>
+
+```ts filename="extract-search-record.ts"
+export const extractSearchRecord: Extraction = {
+  id: "extract-search-record",
+  name: "Extract Search record for Manifests and Collections",
+  types: ["Manifest", "Collection"],
+
+  search: {
+    // The name of the index is `manifests`, this extraction hooks in and extends the index.
+    manifests: {
+      allIndices: true,
+      schema: {
+        enable_nested_fields: true,
+        fields: [
+          { name: "id", type: "string" },
+          { name: "type", type: "string", facet: true }, // Special case in the UI.
+          { name: "label", type: "string" },
+          { name: "full_label", type: "object", optional: true },
+          { name: "summary", type: "string", optional: true },
+          {
+            name: "collections",
+            type: "string[]",
+            facet: true,
+            optional: true,
+          },
+          { name: "plaintext", type: "string", optional: true },
+          { name: "slug", type: "string" },
+          { name: "url", type: "string", optional: true },
+          { name: "totalItems", type: "int32", optional: true },
+          { name: "thumbnail", type: "string", index: false, optional: true },
+        ],
+      },
+    },
+  },
+
+  async invalidate(manifest, api) {
+    return true;
+  },
+
+  async handler(resource, api, config) {
+    const id = resource.slug.replace("manifests/", "");
+    const meta = await api.meta.value;
+    const collections = meta.partOfCollections || [];
+
+    const plaintext =
+      (await api.resourceFiles.readFile("keywords.txt"))?.toString("utf-8") ||
+      "";
+
+    // This is what we want to be able to support.
+    return {
+      search: {
+        indexes: ["manifests"],
+        record: {
+          id: btoa(id),
+          type: resource.type,
+          slug: resource.slug,
+          label: getValue(api.resource.label),
+          full_label: api.resource.label,
+          summary: getValue(api.resource.summary),
+          thumbnail: meta.thumbnail?.id,
+          url: meta.url,
+          plaintext,
+          totalItems: meta.totalItems,
+          collections: collections.map((c: any) => c.slug),
+        },
+      },
+    };
+  },
+};
+```
+
+</details>
+
+The `search` key can be added to any extraction script. You can use it to add fields to existing schemas or create
+new schemas. On line 3 you can see `manifests` key being used, this is the name of the index.
+
+```ts {3, 7-24} filename="extract-search-record.ts" showLineNumbers
+search: {
+    // The name of the index is `manifests`, this extraction hooks in and extends the index.
+    manifests: {
+      allIndices: true,
+      schema: {
+        enable_nested_fields: true,
+        fields: [
+          { name: "id", type: "string" },
+          { name: "type", type: "string", facet: true }, // Special case in the UI.
+          { name: "label", type: "string" },
+          { name: "full_label", type: "object", optional: true },
+          { name: "summary", type: "string", optional: true },
+          {
+            name: "collections",
+            type: "string[]",
+            facet: true,
+            optional: true,
+          },
+          { name: "plaintext", type: "string", optional: true },
+          { name: "slug", type: "string" },
+          { name: "url", type: "string", optional: true },
+          { name: "totalItems", type: "int32", optional: true },
+          { name: "thumbnail", type: "string", index: false, optional: true },
+        ],
+      },
+    },
+  },
+```
+
+So if you wanted to add a new field to some index `books`, you could simply specify the new fields:
+
+```ts {2}
+search: {
+  books: {
+    schema: {
+      fields: [{ name: "isbn", type: "string", optional: true }];
+    }
+  }
+}
+```
+
+And then your extraction script will be adding that field to the search record. Let's take a look at what
+that handler for the above might look like.
+
+```ts {5,9,15, 18-20}
+{
+  async handler(resource, api, config) {
+
+    if (!isThisABook()) {
+      return {}; // skip non books.
+    }
+
+    // Logic for grabbing isbn
+    const extractedIsbn = getISBNFromManifest(api.resource);
+
+
+    return {
+      search: {
+        // We specify that this record is for the "books" schema.
+        indexes: ["books"],
+
+        // And then we return a search "record" for this IIIF Manifest.
+        record: {
+          isbn: extractedIsbn
+        },
+      },
+    };
+  },
+}
+```
+
+So let's look at the built-in handler, with comments.
+
+```ts filename="extract-search-record.ts" showLineNumbers
+{
+  async handler(resource, api, config) {
+
+    // We remove the manifests/ prefix, for a shorter ID - as all manifests have this.
+    const id = resource.slug.replace("manifests/", "");
+
+    // We load the meta.json file for the manifest, to extract "partOfCollections"
+    const meta = await api.meta.value;
+    const collections = meta.partOfCollections || [];
+
+    // We check if there is a "keywords.txt" associated with the manifest - as a hook for
+    // adding extra search information. This can help curate the search for featured items.
+    const plaintext =
+      (await api.resourceFiles.readFile("keywords.txt"))?.toString("utf-8") ||
+      "";
+
+    // This is what we want to be able to support.
+    return {
+      search: {
+        // We specify the index this applies to.
+        indexes: ["manifests"],
+        record: {
+          // The ID is converted to base-64
+          id: btoa(id),
+
+          // We add in basic fields from the resources, such as type/slug
+          type: resource.type,
+          slug: resource.slug,
+
+          // We save both a string value for the label, and the internationalised one.
+          label: getValue(api.resource.label),
+          full_label: api.resource.label,
+          summary: getValue(api.resource.summary),
+
+          // The thumbnail, which might have been extracted into the meta.json
+          thumbnail: meta.thumbnail?.id,
+          url: meta.url,
+          plaintext,
+
+          // We also extract the totalItems, which can be useful for search result pages.
+          totalItems: meta.totalItems,
+
+          // Also a list of collections - which is set up as a facet.
+          collections: collections.map((c: any) => c.slug),
+        },
+      },
+    };
+  },
+}
+```
+
+This will create 2 files, the schema and the json lines.
+
+```json filename="manifests.schema.json"
+{
+  "name": "manifests",
+  "fields": [
+    {
+      "name": "id",
+      "type": "string"
+    },
+    {
+      "name": "type",
+      "type": "string",
+      "facet": true
+    },
+    {
+      "name": "label",
+      "type": "string"
+    },
+    {
+      "name": "full_label",
+      "type": "object",
+      "optional": true
+    },
+    {
+      "name": "summary",
+      "type": "string",
+      "optional": true
+    },
+    {
+      "name": "collections",
+      "type": "string[]",
+      "facet": true,
+      "optional": true
+    },
+    {
+      "name": "plaintext",
+      "type": "string",
+      "optional": true
+    },
+    {
+      "name": "slug",
+      "type": "string"
+    },
+    {
+      "name": "url",
+      "type": "string",
+      "optional": true
+    },
+    {
+      "name": "totalItems",
+      "type": "int32",
+      "optional": true
+    },
+    {
+      "name": "thumbnail",
+      "type": "string",
+      "index": false,
+      "optional": true
+    }
+  ],
+  "enable_nested_fields": true
+}
+```
+
+And the data, here is a sample row (line breaks added for readability):
+
+```jsonl filename="manifests.jsonl"
+{
+  "id":"Y29sbGVjdGlvbnMvZXhoaWJpdGlvbnM=",
+  "type":"Collection",
+  "slug":"collections/exhibitions",
+  "label":"Exhibitions",
+  "full_label":{"en":["Exhibitions"],"nl":["Tentoonstellingen"]},
+  "summary":"",
+  "plaintext":"",
+  "collections":[]
+}
+{
+  "id":"MDMyNjgxNTMtYzlhMC00ZTgxLTk3NzEtMDU2NmNmYTRmM2Qx",
+  "type":"Manifest",
+  "slug":"manifests/03268153-c9a0-4e81-9771-0566cfa4f3d1",
+  "label":"Gravimeter door Van Rest",
+  "full_label":{"nl":["Gravimeter door Van Rest"]},
+  "summary":"",
+  "plaintext":"",
+  "collections":["collections/d51c775b-4472-4e6a-a952-f0f3da8aee9d"],
+  "thumbnail":"https://dlc.services/thumbs/v3/7/18/eed1240e-e59f-407d-871a-c55712b00ed1/full/683,/0/default.jpg",
+  "totalItems":11,
+  "topic_material":["koper","glas","ijzer"],
+  "topic_contributor":["Van Rest  (maker)"]
+}
+```
+
+### Search indexes
+
+If you have a search index that is indexing every single IIIF Canvas, it can be too large to generate every time in the output. So instead you can opt-out of generating the full dataset. There are then a handful of strategies for managing
+large amounts of Canvas data.
+
+For this example, we will create a new script that generates plaintext, with a unique row for every canvas.
+
+First defining the new index. We will pass in `emitCombined: false` to skip the data generation.
+
+```ts {10,16-19} filename="scripts/extract-plaintext-search.ts"
+extract(
+  {
+    id: "custom-extract-plaintext-search",
+    name: "Custom Plaintext Search",
+    types: ["Canvas"],
+    invalidate: async () => true,
+    search: {
+      // Here we define our new search index.
+      canvas_plaintext: {
+        emitCombined: false, // we will skip the generation of `canvas_plaintext.jsonl` document.
+        schema: {
+          enable_nested_fields: true,
+          fields: [
+            {
+              // This will be the canvas id, along with our data.
+              id: { type: "string" },
+              manifestId: { type: "string" },
+              plaintext: { type: "string" },
+            },
+          ],
+        },
+      },
+    },
+  },
+  async (resource, api, config) => {
+    // we will come back to this part..
+  },
+);
+```
+
+At this point, we have a few options:
+
+- **Return a search record** for each Canvas (saved as a combined data file for each manifest)
+- **Map files** on disk to each of our Canvases
+- **Map URLs** to external resources to each of our Canvases
+
+### Returning a search record
+
+```ts
+async function handler(resource, api, config) {
+  // ...Do some work to get the plaintext.
+  const extractedPlaintext = await getPlaintext(api.resource);
+
+  return {
+    search: {
+      indexes: ['canvas_plaintext'],
+      record: {
+        id: resource.id,
+        manifestId: api.parentResource.id,
+        plaintext: extractedPlaintext,
+      }
+    }
+  }
+},
+```
+
+What this will do is create a `canvas_plaintext.search.jsonl` along side each manifest.
+
+```jsonl filename="canvas_plaintext.jsonl"
+{"id": "https://m.org/book1/page/1", "manifestId": "https://m.org/book1", "plaintext": "..."}
+{"id": "https://m.org/book1/page/2", "manifestId": "https://m.org/book1", "plaintext": "..."}
+{"id": "https://m.org/book1/page/3", "manifestId": "https://m.org/book1", "plaintext": "..."}
+{"id": "https://m.org/book1/page/4", "manifestId": "https://m.org/book1", "plaintext": "..."}
+{"id": "https://m.org/book1/page/5", "manifestId": "https://m.org/book1", "plaintext": "..."}
+```
+
+But it will also add an entry into a new file in the output to let you know where all of these indexes are. This
+file `meta/canvas-search-index.json` will list each manifest with their search index.
+
+```json filename="meta/canvas-search-index.json"
+{
+  "manifests/book1": [
+    {
+      "index": "canvas_plaintext",
+      "type": "file",
+      "format": "record-jsonl",
+      "path": "manifests/book1/canvases_plaintext.search.jsonl"
+    }
+  ]
+}
+```
+
+With this method you can update individual manifests using the [Search CLI](./06-search-cli) and avoid
+sending large amounts of data to TypeSense or a CDN. This file will also be in the build folder, so you
+could do a full-client side search with this method.
+
+You can also use the [extraction caching](./03-custom-extract#caching-and-performance) to avoid duplicating extra work.
+
+This strategy may not scale to very large collections of manifests.
+
+### Mapping files
+
+Another option is to pre-generate all of the record files for a manifest (e.g. from an external script) and point the `canvas-search-index.json` to it.
+
+> [!NOTE]
+>
+> This feature is not yet available inside of custom extraction scripts.
+
+### Mapping URLs
+
+A final option, which can scale better is mapping individual canvases to externally hosted records (or AltoXML) for extraction.
+
+This offloads the work done by this tool, and still allows for granular updating of search indexes.
+
+```ts {11-20} filename="scipts/custom-search-plaintext-extract.ts"
+async function handler(resource, api, config) {
+  // ...Figure out where the resource is.
+  const identifier = '...';
+
+  // Or use the position of the canvas.
+  const foundIndex = api.parent.items.findIndex((item) => item.id === api.resource.id);
+
+  return {
+    search: {
+      indexes: ['canvas_plaintext'],
+      remoteRecords: {
+        // We have to specify a single index for a remote record.
+        canvas_plaintext: [
+          {
+            format: "record-json",
+            recordId: resource.id,
+            url: `https://example.org/${identifier}/record-${foundIndex}.json`,
+          },
+        ],
+      },
+      record: {
+        // You can still return a minimal search record
+        id: resource.id,
+        manifestId: api.parentResource.id,
+      }
+    }
+  }
+},
+```
+
+The expected format of the linked file is a partial record (the id can be omitted if you specify `recordId` above).
+
+```json filename="https://example.org/book1/record-0.json"
+{
+  "plaintext": "..."
+}
+```
+
+This will be added to the same `canvas-search-index.json` file, which can also be read by the search CLI to populate a TypeSense index, or detect changes.
+
+```json filename="meta/canvas-search-index.json"
+{
+  "manifests/book1": [
+    {
+      "index": "canvases",
+      "type": "remote",
+      "format": "record.json",
+      "url": "https://example.org/book1/record-0.json",
+      "recordId": "https://example.org/book1/page1"
+    },
+    {
+      "index": "canvases",
+      "type": "remote",
+      "format": "record.json",
+      "url": "https://example.org/book1/record-1.json",
+      "recordId": "https://example.org/book1/page2"
+    },
+    {
+      "index": "canvases",
+      "type": "remote",
+      "format": "record.json",
+      "url": "https://example.org/book1/record-2.json",
+      "recordId": "https://example.org/book1/page3"
+    }
+  ]
+}
+```
+
+However this is creating a new row for every single canvas and may not be suitable. You can also do this at the Manifest level and point to a json-lines file isntead.
+
+```ts {5,30-34} filename="scipts/custom-search-plaintext-extract.ts"
+extract(
+  {
+    id: "custom-extract-plaintext-search",
+    name: "Custom Plaintext Search",
+    types: ["Manifest"],
+    invalidate: async () => true,
+    search: {
+      // Here we define our new search index.
+      canvas_plaintext: {
+        emitCombined: false, // we will skip the generation of `canvas_plaintext.jsonl` document.
+        schema: {
+          enable_nested_fields: true,
+          fields: [
+            {
+              // This will be the canvas id, along with our data.
+              id: { type: "string" },
+              manifestId: { type: "string" },
+              plaintext: { type: "string" },
+            },
+          ],
+        },
+      },
+    },
+  },
+  async (resource, api, config) => {
+    return {
+      search: {
+        indexes: ["canvas_plaintext"],
+        remoteRecords: {
+          canvas_plaintext: {
+            // This contains _all_ of the canvases plaintext.
+            url: "https://example.org/book1/all-records.jsonl",
+            format: "record-jsonl",
+          },
+        },
+      },
+    };
+  },
+);
+```
+
+> [!WARNING]
+>
+> This feature has not been tested extensively, there may be issues. The `canvas-search-index.json` may not be
+> populated from Manifest extractions. A work around may be to do this for canvases - and return this response from The
+> first canvas (and skip all others).
+
+In theory this could point to another repository that is using the Headless static site to generate JSONL files for the Manifest. It could be using a "remote" store instead of a file store, and just be handling the generation of part of the search index.
+
+### Alto XML
+
+Another format that has been built in is AltoXML. Unfortunately it only works for individual Canvases - so the scaling issues above remain - but the same benefits of granular indexing of the search still apply.
+
+The AltoXML converter that is built into the Search CLI will generate a very specific format (at the moment) for plaintext from a canvas.
+
+```json filename="output.json"
+{
+  "textFragments": [
+    {
+      "group": "group-18",
+      "regions": [
+        "1573,1003,170,69",
+        "1744,1003,172,69",
+        "1974,1007,114,69",
+        "2089,1007,114,69",
+        "2203,1007,114,69"
+      ],
+      "text": "September 1904 31 Augustus 1905"
+    },
+    {
+      "group": "group-19",
+      "regions": [
+        "656,1108,181,52",
+        "838,1108,181,52",
+        "1020,1108,181,52",
+        "1202,1108,185,52"
+      ],
+      "text": "Burgerlijke en schoone Bouwkunde."
+    }
+  ]
+}
+```
+
+This format is a compact way to preserve the structure of the text, but also still allowing you to highlight individual words or the surrounding words. This is still experimental. There is an experimental IIIF Search wrapper that can make IIIF Search responses based on this format.
+
+You will need to add `textFragments` to your schema to use it.
+
+```ts {13-18,38-44} filename="alto-extract.ts"
+enrich(
+  {
+    search: {
+      canvases: {
+        emitCombined: false,
+        allIndices: false,
+        schema: {
+          // Nested fields needs to be enabled.
+          enable_nested_fields: true,
+          fields: [
+            { name: "id", type: "string" },
+            // ... other fields here...
+            {
+              name: "textFragments.text",
+              type: "string[]",
+              index: true,
+              optional: true,
+            },
+          ],
+        },
+      },
+    },
+  },
+  async (resource, api, config) => {
+    const canvasId = resource.id;
+    // You will need the canvas index.
+    const items = api.parent.items || [];
+    const foundIndex = items.findIndex((item) => item.id === api.resource.id);
+
+    // And also the canvas height/width for the AltoXML conversion.
+    const width = api.resource.width;
+    const height = api.resource.height;
+
+    return {
+      search: {
+        indexes: ["canvas_plaintext"],
+        remoteRecords: {
+          canvas_plaintext: {
+            url: `https://example.org/book1/page/${foundIndex}/alto.xml`,
+            format: "alto-xml",
+            recordId: btoa(canvasId),
+            canvas: { w: width, h: height },
+            canvasIndex: foundIndex,
+          },
+        },
+        record: {
+          // You can still add extra fields to the record here at the same time, they will
+          // be combined.
+          id: btoa(canvasId),
+        },
+      },
+    };
+  },
+);
+```
+
+In the end this will create something similar to the following inside of `canvas-search-index.json`:
+
+```json
+{
+  "manifests/tresorleeszaal-839007461": [
+    {
+      "index": "canvases",
+      "type": "remote",
+      "canvasIndex": 0,
+      "canvas": { "w": 2557, "h": 3533 },
+      "format": "alto-xml",
+      "url": "https://stephenwf.github.io/delft/test-ocr/839007461-alto/Het%20Huis%20Bouwkunde_0001_alto.xml",
+      "recordId": "dHJlc29ybGVlc3phYWwtODM5MDA3NDYxL2NhbnZhc2VzLzA="
+    },
+    {
+      "index": "canvases",
+      "type": "remote",
+      "canvasIndex": 1,
+      "canvas": { "w": 2407, "h": 3521 },
+      "format": "alto-xml",
+      "url": "https://stephenwf.github.io/delft/test-ocr/839007461-alto/Het%20Huis%20Bouwkunde_0002_alto.xml",
+      "recordId": "dHJlc29ybGVlc3phYWwtODM5MDA3NDYxL2NhbnZhc2VzLzE="
+    },
+    ....
+  }
+}
+```
+
+If the search index CLI detects a change, it can download the XML, convert it to a record (merging with the other records) and then update the search index.

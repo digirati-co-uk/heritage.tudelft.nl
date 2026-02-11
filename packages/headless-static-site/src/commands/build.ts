@@ -27,6 +27,7 @@ import type { Enrichment } from "../util/enrich.ts";
 import type { Extraction } from "../util/extract.ts";
 import { FileHandler } from "../util/file-handler.ts";
 import { type BuildBuiltIns, getBuildConfig } from "../util/get-build-config.ts";
+import type { IIIFRC } from "../util/get-config.ts";
 import type { Rewrite } from "../util/rewrite.ts";
 import type { Tracer } from "../util/tracer.ts";
 import { parseStores } from "./build-steps/0-parse-stores.ts";
@@ -58,6 +59,7 @@ export type BuildOptions = {
   topics?: boolean;
   out?: string;
   ui?: boolean;
+  remoteRecords?: boolean;
 
   // Programmatic only
   onBuild?: () => void | Promise<void>;
@@ -166,11 +168,13 @@ export async function build(
     pathCache = { allPaths: {} },
     storeRequestCaches,
     tracer,
+    customConfig,
   }: {
     fileHandler?: FileHandler;
     pathCache?: { allPaths: Record<string, string> };
     storeRequestCaches?: Record<string, any>;
     tracer?: Tracer;
+    customConfig?: IIIFRC;
   } = {}
 ) {
   const buildConfig = await getBuildConfig(
@@ -180,12 +184,14 @@ export async function build(
       enrich: true,
       dev: false,
       emit: true,
+      remoteRecords: false,
       ...options,
     },
     {
       ...builtIns,
       fileHandler,
       tracer,
+      customConfig,
     }
   );
 
@@ -215,7 +221,10 @@ export async function build(
 
   const enrichments = await time("Enriching resources", enrich(stores, buildConfig));
 
-  const emitted = await time("Emitting files", emit(stores, buildConfig));
+  const emitted = await time(
+    "Emitting files",
+    emit(stores, buildConfig, { canvasSearchIndex: enrichments.canvasSearchIndex })
+  );
 
   await time(
     "Building indices",

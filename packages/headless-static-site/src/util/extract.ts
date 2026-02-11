@@ -12,6 +12,9 @@ export interface ExtractionInvalidateApi {
   build: BuildConfig;
   fileHandler: FileHandler;
   filesDir: string;
+  parentResource?: ActiveResourceJson;
+  parentResourceFiles?: ResourceFilesApi;
+  parent?: any;
   resourceFiles: ResourceFilesApi;
 }
 
@@ -23,12 +26,22 @@ interface ExtractionSetupApi {
 
 export interface SearchRecordReturn {
   indexes?: string[];
+  remoteRecords?: Record<string, RemoteRecordLink[]>;
   record: Record<string, any>;
 }
+
+export type RemoteRecordLink = {
+  format: "record" | "record-jsonl" | "alto-xml" | Omit<string, "record" | "record-jsonl" | "alto-xml">;
+  url: string;
+  recordId?: string;
+  canvasIndex?: number;
+  canvas?: { w: number; h: number };
+};
 
 export type SearchIndexes = {
   [k: string]: SearchExtractionConfig & {
     records: Array<Record<string, any>>;
+    remoteRecords: Record<string, RemoteRecordLink[]>;
     keys: string[];
     indexName: string;
     facets?: string[];
@@ -75,12 +88,14 @@ type SearchFieldType =
 
 export interface SearchExtractionConfig {
   allIndices?: boolean;
+  emitCombined?: boolean;
   indices?: string[]; // @todo or list of valid ones.
   schema: {
     enable_nested_fields?: boolean;
     fields: Array<{
       name: string;
       type: SearchFieldType;
+      reference?: string;
       facet?: boolean;
       optional?: boolean;
       index?: boolean;
@@ -134,6 +149,9 @@ export interface Extraction<Config = any, Temp = any, TempInject = any> {
       config: IIIFRC;
       build: BuildConfig;
       resourceFiles: ResourceFilesApi;
+      parentResource?: ActiveResourceJson;
+      parentResourceFiles?: ResourceFilesApi;
+      parent?: any;
       filesDir: string;
       requestCache: ReturnType<typeof createStoreRequestCache>;
     },
