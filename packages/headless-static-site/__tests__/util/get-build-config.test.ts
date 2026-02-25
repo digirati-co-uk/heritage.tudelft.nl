@@ -137,4 +137,28 @@ describe("getBuildConfig search indexNames", () => {
     expect(result.concurrency.emitCanvas).toBe(5);
     expect(result.concurrency.write).toBe(7);
   });
+
+  test("includes collection thumbnail extraction in default run", async () => {
+    const config = {
+      stores: {
+        local: {
+          type: "iiif-json" as const,
+          path: "./content",
+        },
+      },
+    };
+
+    const result = await getBuildConfig(
+      {
+        cwd: testDir,
+        scripts: "./no-scripts-here",
+      },
+      {
+        ...defaultBuiltIns,
+        customConfig: config as any,
+      }
+    );
+
+    expect(result.extractions.some((step) => step.id === "extract-collection-thumbnail")).toBe(true);
+  });
 });

@@ -87,6 +87,22 @@ export async function emit(
   const manifestCollection: any[] = [];
   const snippets: Record<string, any> = {};
 
+  const normalizeThumbnail = (thumbnail: any) => {
+    if (!thumbnail) {
+      return null;
+    }
+    if (Array.isArray(thumbnail)) {
+      return thumbnail.length ? thumbnail : null;
+    }
+    if (typeof thumbnail === "string") {
+      return [{ id: thumbnail, type: "Image" }];
+    }
+    if (thumbnail.id || thumbnail["@id"]) {
+      return [thumbnail];
+    }
+    return null;
+  };
+
   for (let iteration = 0; iteration < 2; iteration++) {
     for (const manifest of allResources) {
       // Iteration 0: Skip collections.
@@ -123,14 +139,21 @@ export async function emit(
         vault.getStore().setState(vaultJson);
 
         // @todo thumbnail extraction step and use this.
+        const getMetaThumbnail = async () => {
+          try {
+            const metaJson = await files.loadJson(cache["meta.json"]);
+            return metaJson.thumbnail || metaJson.default?.thumbnail || null;
+          } catch (err) {
+            return null;
+          }
+        };
+
         const getThumbnail = async () => {
           try {
             if (resource.thumbnail) {
               return resource.thumbnail;
             }
-
-            const metaJson = await files.loadJson(cache["meta.json"]);
-            return metaJson.thumbnail || metaJson.default.thumbnail || null;
+            return getMetaThumbnail();
           } catch (err) {
             return null;
           }
@@ -154,7 +177,14 @@ export async function emit(
 
           const maybeThumbnail = await getThumbnail();
           if (maybeThumbnail) {
-            thumbnail = { best: maybeThumbnail };
+            const best = Array.isArray(maybeThumbnail)
+              ? maybeThumbnail[0]
+              : typeof maybeThumbnail === "string"
+                ? { id: maybeThumbnail }
+                : maybeThumbnail;
+            if (best) {
+              thumbnail = { best };
+            }
           }
 
           if (!thumbnail) {
@@ -181,7 +211,14 @@ export async function emit(
           }
         }
 
-        const snippet = {
+        if (manifest.type === "Collection" && !resource.thumbnail) {
+          const metaThumbnail = normalizeThumbnail(await getMetaThumbnail());
+          if (metaThumbnail) {
+            resource.thumbnail = metaThumbnail as any;
+          }
+        }
+
+        let snippet = {
           id: url,
           type: resource.type,
           label: resource.label,
@@ -263,6 +300,18 @@ export async function emit(
 
                 return item;
               });
+            }
+
+            if (!resource.thumbnail && resource.items?.length) {
+              const firstItemWithThumbnail = resource.items.find((item: any) => item?.thumbnail);
+              const derivedItemThumbnail = normalizeThumbnail(firstItemWithThumbnail?.thumbnail);
+              if (derivedItemThumbnail) {
+                resource.thumbnail = derivedItemThumbnail as any;
+                snippet = {
+                  ...snippet,
+                  thumbnail: derivedItemThumbnail,
+                };
+              }
             }
           }
 

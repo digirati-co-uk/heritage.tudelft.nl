@@ -11,6 +11,7 @@ import { translateMetadata } from "../enrich/translate-metadata.ts";
 import { enrichTypesense } from "../enrich/typesense-index.ts";
 import { typesensePlaintext } from "../enrich/typesense-plaintext.ts";
 import { extractCanvasDims } from "../extract/extract-canvas-dims.ts";
+import { extractCollectionThumbnail } from "../extract/extract-collection-thumbnail.ts";
 import { extractFilesList } from "../extract/extract-files-list.ts";
 import { extractFolderCollections } from "../extract/extract-folder-collections.ts";
 import { extractLabelString } from "../extract/extract-label-string";
@@ -87,6 +88,7 @@ const defaultRun = [
   extractMetadataAnalysis.id,
   extractFolderCollections.id,
   extractFilesList.id,
+  extractCollectionThumbnail.id,
   filesRewrite.id,
 ];
 
@@ -100,6 +102,7 @@ const builtInExtractions: Extraction[] = [
   extractSlugSource,
   extractCanvasDims,
   extractThumbnail,
+  extractCollectionThumbnail,
   extractTopics,
   extractMetadataAnalysis,
   extractRemoteSource,
