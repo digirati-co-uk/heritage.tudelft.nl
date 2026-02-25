@@ -51,43 +51,43 @@ stores:
     destination: manifests
     base: ./content
 
-  delft:
-    type: iiif-json
-    path: ./delft
-    pattern: "**/*.{json,yml}"
-    subFiles: true
-    run:
-      - delft-labels
-      - extract-thumbnail
-      - manifest-sqlite
-      - extract-topics
-    config:
-      extract-topics:
-        commaSeparated: ["material"]
-        topicTypes:
-          material: ["Materiaal", "Material"]
-          date: ["Date", "Datering"]
-          Maker: ["Maker"]
-          Publisher: ["Publisher"]
-
-  # bridges:
-  #   type: iiif-remote
-  #   url: https://view.nls.uk/collections/7446/74466699.json
-  #   overrides: ./content
-  #   saveManifests: true
-  #   slugTemplates:
-  #     - nls-manifests
-  #     - nls-collections
-
-  #   # Skip these for this store.
-  #   skip:
-  #     - extract-canvas-dims
-
-  #   # But additionally run these.
+  # delft:
+  #   type: iiif-json
+  #   path: ./delft
+  #   pattern: "**/*.{json,yml}"
+  #   subFiles: true
   #   run:
-  #     - canvas-thumbnail
+  #     - delft-labels
   #     - extract-thumbnail
   #     - manifest-sqlite
+  #     - extract-topics
+  #   config:
+  #     extract-topics:
+  #       commaSeparated: ["material"]
+  #       topicTypes:
+  #         material: ["Materiaal", "Material"]
+  #         date: ["Date", "Datering"]
+  #         Maker: ["Maker"]
+  #         Publisher: ["Publisher"]
+
+  bridges:
+    type: iiif-remote
+    url: https://view.nls.uk/collections/7446/74466699.json
+    overrides: ./content
+    saveManifests: true
+    slugTemplates:
+      - nls-manifests
+      - nls-collections
+
+    # Skip these for this store.
+    skip:
+      - extract-canvas-dims
+
+    # But additionally run these.
+    run:
+      - canvas-thumbnail
+      - extract-thumbnail
+      - manifest-sqlite
 
   # hutton:
   #   type: iiif-remote

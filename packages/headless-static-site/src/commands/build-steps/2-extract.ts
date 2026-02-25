@@ -27,6 +27,7 @@ export async function extract(
     canvasExtractions,
     allExtractions,
     requestCacheDir,
+    concurrency,
   } = buildConfig;
   if (!options.extract) {
     // This is to remind us that we _cant_ export a site map without extracting.
@@ -64,7 +65,7 @@ export async function extract(
 
   const progress = makeProgressBar("Extraction", totalResources, options.ui);
 
-  const queue = new PQueue();
+  const queue = new PQueue({ concurrency: concurrency.extract });
 
   for (const manifest of allResources) {
     queue.add(async () => {

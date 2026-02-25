@@ -1,4 +1,4 @@
-import { join, relative } from "node:path";
+import { dirname, join, relative } from "node:path";
 import { copy } from "fs-extra/esm";
 import PQueue from "p-queue";
 import type { IFS } from "unionfs";
@@ -146,13 +146,13 @@ export class FileHandler {
 
   async writeFile(path: string, data: any) {
     const filePath = this.resolve(path);
-    const dirName = path.split("/").slice(0, -1).join("/");
+    const dirName = dirname(filePath);
     await this.fs.promises.mkdir(dirName, { recursive: true });
     await this.fs.promises.writeFile(filePath, data);
   }
 
-  async saveAll(force = false) {
-    const queue = new PQueue();
+  async saveAll(force = false, concurrency = 16) {
+    const queue = new PQueue({ concurrency });
 
     // Open JSON
     const files = Array.from(this.openJsonMap.keys())

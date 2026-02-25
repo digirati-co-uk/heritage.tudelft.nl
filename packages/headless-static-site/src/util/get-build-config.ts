@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import os from "node:os";
 import { join } from "node:path";
 import { cwd as nodeCwd } from "node:process";
 // @ts-ignore
@@ -11,7 +12,13 @@ import type { Enrichment } from "./enrich";
 import type { Extraction } from "./extract";
 import { FileHandler } from "./file-handler";
 import { createFiletypeCache } from "./file-type-cache";
-import { type IIIFRC, type ResolvedConfigSource, getCustomConfigSource, resolveConfigSource } from "./get-config";
+import {
+  type BuildConcurrencyConfig,
+  type IIIFRC,
+  type ResolvedConfigSource,
+  getCustomConfigSource,
+  resolveConfigSource,
+} from "./get-config";
 import { getNodeGlobals } from "./get-node-globals";
 import type { Linker } from "./linker";
 import { loadScripts } from "./load-scripts";
@@ -44,10 +51,28 @@ export type BuildOptions = {
   out?: string;
   ui?: boolean;
   remoteRecords?: boolean;
+  concurrency?: BuildConcurrencyConfig;
 
   // Programmatic only
   onBuild?: () => void | Promise<void>;
 };
+
+interface QueueConcurrencySettings {
+  link: number;
+  extract: number;
+  enrich: number;
+  enrichCanvas: number;
+  emit: number;
+  emitCanvas: number;
+  write: number;
+}
+
+function normalizeConcurrency(value: unknown, fallback: number) {
+  if (typeof value !== "number" || !Number.isFinite(value)) {
+    return fallback;
+  }
+  return Math.max(1, Math.floor(value));
+}
 
 export interface BuildBuiltIns {
   defaultRun: string[];
@@ -92,6 +117,25 @@ export async function getBuildConfig(options: BuildOptions, builtIns: BuildBuilt
   const env = builtIns.env || {};
   const cwd = options.cwd || nodeCwd();
   const { devBuild, defaultBuildDir, defaultCacheDir, devCache, topicFolder } = builtIns;
+  const runtimeParallelism =
+    typeof os.availableParallelism === "function" ? os.availableParallelism() : Math.max(1, os.cpus().length || 1);
+  const defaultCpuConcurrency = Math.max(1, Math.min(8, runtimeParallelism));
+  const defaultIoConcurrency = Math.max(4, Math.min(24, runtimeParallelism * 2));
+  const concurrencyConfig: BuildConcurrencyConfig = {
+    ...(config.concurrency || {}),
+    ...(options.concurrency || {}),
+  };
+  const cpuConcurrency = normalizeConcurrency(concurrencyConfig.cpu, defaultCpuConcurrency);
+  const ioConcurrency = normalizeConcurrency(concurrencyConfig.io, defaultIoConcurrency);
+  const concurrency: QueueConcurrencySettings = {
+    link: normalizeConcurrency(concurrencyConfig.link, cpuConcurrency),
+    extract: normalizeConcurrency(concurrencyConfig.extract, cpuConcurrency),
+    enrich: normalizeConcurrency(concurrencyConfig.enrich, cpuConcurrency),
+    enrichCanvas: normalizeConcurrency(concurrencyConfig.enrichCanvas, ioConcurrency),
+    emit: normalizeConcurrency(concurrencyConfig.emit, ioConcurrency),
+    emitCanvas: normalizeConcurrency(concurrencyConfig.emitCanvas, ioConcurrency),
+    write: normalizeConcurrency(concurrencyConfig.write, ioConcurrency),
+  };
 
   const files = builtIns.fileHandler || new FileHandler(fs, cwd);
 
@@ -270,6 +314,7 @@ export async function getBuildConfig(options: BuildOptions, builtIns: BuildBuilt
     buildDir,
     filesDir,
     stores,
+    concurrency,
 
     // Helpers based on config.
     time,

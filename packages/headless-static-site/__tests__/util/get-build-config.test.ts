@@ -71,4 +71,70 @@ describe("getBuildConfig search indexNames", () => {
 
     expect(result.search.indexNames).toEqual(["canvas"]);
   });
+
+  test("derives bounded queue concurrency defaults", async () => {
+    const config = {
+      stores: {
+        local: {
+          type: "iiif-json" as const,
+          path: "./content",
+        },
+      },
+    };
+
+    const result = await getBuildConfig(
+      {
+        cwd: testDir,
+        scripts: "./no-scripts-here",
+      },
+      {
+        ...defaultBuiltIns,
+        customConfig: config as any,
+      }
+    );
+
+    expect(result.concurrency.link).toBeGreaterThanOrEqual(1);
+    expect(result.concurrency.extract).toBeGreaterThanOrEqual(1);
+    expect(result.concurrency.enrich).toBeGreaterThanOrEqual(1);
+    expect(result.concurrency.emit).toBeGreaterThanOrEqual(1);
+    expect(result.concurrency.emitCanvas).toBeGreaterThanOrEqual(1);
+    expect(result.concurrency.write).toBeGreaterThanOrEqual(1);
+  });
+
+  test("applies explicit queue concurrency overrides", async () => {
+    const config = {
+      stores: {
+        local: {
+          type: "iiif-json" as const,
+          path: "./content",
+        },
+      },
+      concurrency: {
+        cpu: 2,
+        io: 5,
+        extract: 3,
+        enrichCanvas: 4,
+        write: 7,
+      },
+    };
+
+    const result = await getBuildConfig(
+      {
+        cwd: testDir,
+        scripts: "./no-scripts-here",
+      },
+      {
+        ...defaultBuiltIns,
+        customConfig: config as any,
+      }
+    );
+
+    expect(result.concurrency.link).toBe(2);
+    expect(result.concurrency.extract).toBe(3);
+    expect(result.concurrency.enrich).toBe(2);
+    expect(result.concurrency.enrichCanvas).toBe(4);
+    expect(result.concurrency.emit).toBe(5);
+    expect(result.concurrency.emitCanvas).toBe(5);
+    expect(result.concurrency.write).toBe(7);
+  });
 });

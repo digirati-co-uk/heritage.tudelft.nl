@@ -108,7 +108,7 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
     });
   });
 
-  app.get("trace.json", async (ctx) => {
+  app.get("/trace.json", async (ctx) => {
     return ctx.json(tracer.toJSON());
   });
 
@@ -363,7 +363,7 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
       });
 
       const manifestId = `${exactPath}/manifest.json`;
-      const manifestUrl = join(config.server?.url || "http://localhost:7111/", manifestId);
+      const manifestUrl = new URL(manifestId, config.server?.url || "http://localhost:7111/").toString();
 
       if (isJson) {
         return ctx.json({ manifestUrl, editUrl: `${meUrl}/editor/external?manifest=${manifestUrl}` });

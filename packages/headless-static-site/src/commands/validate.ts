@@ -8,13 +8,15 @@ import { loadJson } from "../util/load-json.ts";
 import { resolveFromSlug } from "../util/resolve-from-slug.ts";
 import { compileReverseSlugConfig, compileSlugConfig } from "../util/slug-engine.ts";
 
-type ValidateOptions = unknown;
+type ValidateOptions = {
+  config?: string;
+};
 
 export async function validateCommand(options: ValidateOptions, command?: Command) {
   let didError = false;
   let resolvedConfig;
   try {
-    resolvedConfig = await resolveConfigSource();
+    resolvedConfig = await resolveConfigSource(options?.config);
   } catch (error) {
     console.log(chalk.red`  - ${String((error as Error).message || error)}`);
     process.exit(1);

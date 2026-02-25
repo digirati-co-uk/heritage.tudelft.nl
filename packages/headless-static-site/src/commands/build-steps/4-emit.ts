@@ -22,7 +22,7 @@ export async function emit(
     allPaths?: Record<string, string>;
     idsToSlugs?: Record<string, { slug: string; type: string }>;
   },
-  { options, server, cacheDir, buildDir, log, imageServiceLoader, files, search }: BuildConfig,
+  { options, server, cacheDir, buildDir, log, imageServiceLoader, files, search, concurrency }: BuildConfig,
   { canvasSearchIndex }: { canvasSearchIndex?: CanvasSearchIndex }
 ) {
   if (!options.emit) {
@@ -36,8 +36,8 @@ export async function emit(
     canvases: 0,
     total: 0,
   };
-  const queue = new PQueue();
-  const canvasQueue = new PQueue({ autoStart: false });
+  const queue = new PQueue({ concurrency: concurrency.emit });
+  const canvasQueue = new PQueue({ autoStart: false, concurrency: concurrency.emitCanvas });
   const canvasSearchIndexFile: CanvasSearchIndexFile = {};
   const siteMap: Record<
     string,

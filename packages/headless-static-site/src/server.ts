@@ -112,7 +112,7 @@ app.get("/config", async (ctx) => {
   });
 });
 
-app.get("trace.json", async (ctx) => {
+app.get("/trace.json", async (ctx) => {
   return ctx.json(tracer.toJSON());
 });
 

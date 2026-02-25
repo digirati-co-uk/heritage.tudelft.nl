@@ -8,6 +8,18 @@ import type { IIIFJSONStore } from "../stores/iiif-json.ts";
 import type { IIIFRemoteStore } from "../stores/iiif-remote.ts";
 import type { SlugConfig } from "./slug-engine.ts";
 
+export interface BuildConcurrencyConfig {
+  cpu?: number;
+  io?: number;
+  link?: number;
+  extract?: number;
+  enrich?: number;
+  enrichCanvas?: number;
+  emit?: number;
+  emitCanvas?: number;
+  write?: number;
+}
+
 export interface IIIFRC {
   server?: {
     url: string;
@@ -28,6 +40,7 @@ export interface IIIFRC {
     defaultIndex?: string;
     emitRecord?: boolean;
   };
+  concurrency?: BuildConcurrencyConfig;
   fileTemplates?: Record<string, any>;
 }
 

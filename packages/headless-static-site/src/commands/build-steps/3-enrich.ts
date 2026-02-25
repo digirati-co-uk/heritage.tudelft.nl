@@ -24,10 +24,11 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
     files,
     search,
     trace,
+    concurrency,
   } = buildConfig;
 
   const start = performance.now();
-  const queue = new PQueue();
+  const queue = new PQueue({ concurrency: concurrency.enrich });
 
   if (!options.enrich) {
     return {};
@@ -266,7 +267,7 @@ ${errors.map((e, n) => `  ${n + 1})  ${(e as any)?.reason?.message}`).join(", ")
 
     // Canvases.
     if (manifest.type === "Manifest" && canvasEnrichmentSteps.length) {
-      const manifestQueue = new PQueue();
+      const manifestQueue = new PQueue({ concurrency: concurrency.enrichCanvas });
       const canvases = resource.items || [];
       for (let canvasIndex = 0; canvasIndex < canvases.length; canvasIndex++) {
         const canvas = canvases[canvasIndex];

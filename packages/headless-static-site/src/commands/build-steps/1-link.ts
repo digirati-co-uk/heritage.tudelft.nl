@@ -48,7 +48,7 @@ export async function link(
   },
   buildConfig: BuildConfig
 ) {
-  const { config, options, cacheDir, files, linkers, allLinkers } = buildConfig;
+  const { config, options, cacheDir, files, linkers, allLinkers, concurrency } = buildConfig;
   if (!linkers.length && !allLinkers.length) {
     return {
       stats: {
@@ -208,7 +208,7 @@ export async function link(
 
   let linked = 0;
   let cacheHit = 0;
-  const queue = new PQueue();
+  const queue = new PQueue({ concurrency: concurrency.link });
   for (const activeResource of allResources) {
     queue.add(async () => {
       const storeConfig = config.stores[activeResource.storeId] as any;
