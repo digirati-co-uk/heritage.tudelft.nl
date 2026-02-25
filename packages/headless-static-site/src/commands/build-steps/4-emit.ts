@@ -86,6 +86,24 @@ export async function emit(
   const storeCollections: Record<string, Array<any>> = {};
   const manifestCollection: any[] = [];
   const snippets: Record<string, any> = {};
+  const metaThumbnailBySlug: Record<string, any> = {};
+  const idToSlugMap: Record<
+    string,
+    {
+      slug: string;
+      type: string;
+    }
+  > = {};
+
+  if (idsToSlugs) {
+    for (const [id, value] of Object.entries(idsToSlugs)) {
+      idToSlugMap[id] = value;
+      if (configUrl) {
+        const fileName = value.type === "Manifest" ? "manifest.json" : "collection.json";
+        idToSlugMap[`${configUrl}/${value.slug}/${fileName}`] = value;
+      }
+    }
+  }
 
   const normalizeThumbnail = (thumbnail: any) => {
     if (!thumbnail) {
@@ -101,6 +119,23 @@ export async function emit(
       return [thumbnail];
     }
     return null;
+  };
+
+  const getMetaThumbnailForSlug = async (slug: string) => {
+    if (Object.prototype.hasOwnProperty.call(metaThumbnailBySlug, slug)) {
+      return metaThumbnailBySlug[slug];
+    }
+
+    const metaPath = join(cacheDir, slug, "meta.json");
+    if (!files.exists(metaPath)) {
+      metaThumbnailBySlug[slug] = null;
+      return null;
+    }
+
+    const metaJson = await files.loadJson(metaPath);
+    const thumbnail = normalizeThumbnail((metaJson as any).thumbnail || (metaJson as any).default?.thumbnail);
+    metaThumbnailBySlug[slug] = thumbnail;
+    return thumbnail;
   };
 
   for (let iteration = 0; iteration < 2; iteration++) {
@@ -218,7 +253,7 @@ export async function emit(
           }
         }
 
-        let snippet = {
+        const snippet = {
           id: url,
           type: resource.type,
           label: resource.label,
@@ -275,7 +310,9 @@ export async function emit(
             }
 
             if (resource.items) {
-              resource.items = resource.items.map((item: any) => {
+              const rewrittenItems: any[] = [];
+              for (const rawItem of resource.items as any[]) {
+                const item = rawItem as any;
                 if (allPaths[item.path]) {
                   if (item.type === "Manifest") {
                     item.id = `${configUrl}/${allPaths[item.path]}/manifest.json`;
@@ -289,17 +326,33 @@ export async function emit(
                   item.id = newId;
                 }
 
-                if (item.type === "Manifest") {
-                  const hasSnippet = snippets[item.id];
-                  if (hasSnippet) {
-                    item.label = item.label || hasSnippet.label;
-                    item.thumbnail = item.thumbnail || hasSnippet.thumbnail;
-                    item["hss:slug"] = hasSnippet["hss:slug"];
+                let hasSnippet = snippets[item.id];
+                if (!hasSnippet) {
+                  const lookup = item.id ? idToSlugMap[item.id] : null;
+                  if (lookup) {
+                    const fileName = lookup.type === "Manifest" ? "manifest.json" : "collection.json";
+                    const resolvedId = configUrl ? `${configUrl}/${lookup.slug}/${fileName}` : item.id;
+                    hasSnippet = snippets[resolvedId] || indexCollection[lookup.slug];
+                    if (!hasSnippet) {
+                      const fallbackThumbnail = await getMetaThumbnailForSlug(lookup.slug);
+                      hasSnippet = {
+                        label: item.label,
+                        "hss:slug": lookup.slug,
+                        thumbnail: fallbackThumbnail || undefined,
+                      };
+                    }
                   }
                 }
 
-                return item;
-              });
+                if (hasSnippet) {
+                  item.label = item.label || hasSnippet.label;
+                  item.thumbnail = item.thumbnail || hasSnippet.thumbnail;
+                  item["hss:slug"] = item["hss:slug"] || hasSnippet["hss:slug"];
+                }
+
+                rewrittenItems.push(item);
+              }
+              resource.items = rewrittenItems as any;
             }
 
             if (!resource.thumbnail && resource.items?.length) {
@@ -307,10 +360,7 @@ export async function emit(
               const derivedItemThumbnail = normalizeThumbnail(firstItemWithThumbnail?.thumbnail);
               if (derivedItemThumbnail) {
                 resource.thumbnail = derivedItemThumbnail as any;
-                snippet = {
-                  ...snippet,
-                  thumbnail: derivedItemThumbnail,
-                };
+                snippet.thumbnail = derivedItemThumbnail;
               }
             }
           }
