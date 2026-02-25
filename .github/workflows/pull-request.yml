@@ -34,6 +34,10 @@ jobs:
         working-directory: packages/headless-static-site
         run: pnpm run build
 
+      - name: Preview HSS
+        working-directory: packages/headless-static-site
+        run: pnpm dlx pkg-pr-new publish
+
       - name: Link HSS CLI
         run: pnpm install --frozen-lockfile
 
