@@ -132,8 +132,9 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
       trace?.endEnrich(manifest);
       return;
     }
-    const skipSteps = config.stores[manifest.storeId]?.skip || [];
-    const runSteps = config.stores[manifest.storeId]?.run;
+    const resourceStoreConfig = config.stores[manifest.storeId] || {};
+    const skipSteps = resourceStoreConfig.skip || [];
+    const runSteps = resourceStoreConfig.run;
 
     const cachedResource = createCacheResource({
       resource: manifest,
@@ -181,11 +182,7 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
       const filesDir = join(cacheDir, manifest.slug, "files");
       const resourceFiles = createResourceHandler(filesDir, files);
       const storeConfig = enrichmentConfigs[enrichment.id] || {};
-      const enrichmentConfig = Object.assign(
-        {},
-        storeConfig,
-        config.stores[manifest.storeId].config?.[enrichment.id] || {}
-      );
+      const enrichmentConfig = Object.assign({}, storeConfig, resourceStoreConfig.config?.[enrichment.id] || {});
 
       const valid =
         !options.cache ||
@@ -286,11 +283,7 @@ ${errors.map((e, n) => `  ${n + 1})  ${(e as any)?.reason?.message}`).join(", ")
         const runEnrichment = async (enrichment: Enrichment) => {
           const startTime = performance.now();
           const storeConfig = enrichmentConfigs[enrichment.id] || {};
-          const enrichmentConfig = Object.assign(
-            {},
-            storeConfig,
-            config.stores[manifest.storeId].config?.[enrichment.id] || {}
-          );
+          const enrichmentConfig = Object.assign({}, storeConfig, resourceStoreConfig.config?.[enrichment.id] || {});
           const resourceFiles = createResourceHandler(cachedCanvasResource.filesDir, files);
 
           const valid =

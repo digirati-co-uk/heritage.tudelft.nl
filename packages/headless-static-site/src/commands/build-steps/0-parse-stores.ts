@@ -31,8 +31,11 @@ export async function parseStores(buildConfig: BuildConfig, cache: ParseStoresSt
   const storeResources: Record<string, ParsedResource[]> = {};
   const storeRequestCaches: Record<string, ReturnType<typeof createStoreRequestCache>> = {};
   const filesToWatch: string[] = [];
+  const effectiveStoreConfigs: Record<string, any> = { ...config.stores };
+  const effectiveStores = Array.from(new Set(stores));
 
-  // If there are generated stores, add them.
+  // If there are generated stores, add them to local derived config/stores.
+  // Do not mutate buildConfig.config/buildConfig.stores to avoid repeated-build side effects.
   if (config.generators) {
     const keys = Object.keys(config.generators);
     for (const key of keys) {
@@ -40,15 +43,19 @@ export async function parseStores(buildConfig: BuildConfig, cache: ParseStoresSt
       // Skip if there is a configured output. This is for the user to deal with.
       if (generator.output) continue;
 
-      stores.push(key);
-      config.stores[key] = {
-        type: "iiif-json",
-        path: `./${join(defaultCacheDir, key, "build")}`,
-      };
+      if (!effectiveStoreConfigs[key]) {
+        effectiveStoreConfigs[key] = {
+          type: "iiif-json",
+          path: `./${join(defaultCacheDir, key, "build")}`,
+        };
+      }
+      if (!effectiveStores.includes(key)) {
+        effectiveStores.push(key);
+      }
     }
   }
 
-  for (const storeId of stores) {
+  for (const storeId of effectiveStores) {
     const requestCache =
       options.cache && cache.storeRequestCaches[storeId]
         ? cache.storeRequestCaches[storeId]
@@ -56,7 +63,10 @@ export async function parseStores(buildConfig: BuildConfig, cache: ParseStoresSt
     storeRequestCaches[storeId] = requestCache;
     storeResources[storeId] = [];
 
-    const storeConfig = config.stores[storeId];
+    const storeConfig = effectiveStoreConfigs[storeId];
+    if (!storeConfig) {
+      throw new Error(`Missing store config for "${storeId}"`);
+    }
     const storeType: Store<any> = (storeTypes as any)[storeConfig.type];
     if (!storeType) {
       throw new Error(`Unknown store type: ${storeConfig.type}`);
@@ -108,5 +118,7 @@ export async function parseStores(buildConfig: BuildConfig, cache: ParseStoresSt
     storeResources,
     storeRequestCaches,
     filesToWatch,
+    storeIds: effectiveStores,
+    storeConfigs: effectiveStoreConfigs,
   };
 }
