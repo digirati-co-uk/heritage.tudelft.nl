@@ -122,7 +122,7 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
   }
 
   const progress = makeProgressBar("Enrichment", totalResources, options.ui);
-  const requestCache = createStoreRequestCache("_enrich", requestCacheDir);
+  const requestCache = createStoreRequestCache("_enrich", requestCacheDir, !options.cache);
 
   const processManifest = async (manifest: ActiveResourceJson) => {
     trace?.startEnrich(manifest);

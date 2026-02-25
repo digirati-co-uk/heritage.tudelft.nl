@@ -186,7 +186,7 @@ export async function getBuildConfig(options: BuildOptions, builtIns: BuildBuilt
     return resp;
   };
 
-  const requestCache = createStoreRequestCache("_thumbs", requestCacheDir);
+  const requestCache = createStoreRequestCache("_thumbs", requestCacheDir, !options.cache);
   const imageServiceLoader = new (class extends ImageServiceLoader {
     fetchService(serviceId: string): Promise<any & { real: boolean }> {
       return requestCache.fetch(serviceId);
@@ -224,8 +224,15 @@ export async function getBuildConfig(options: BuildOptions, builtIns: BuildBuilt
     }
   }
 
+  const indexNames =
+    config.search?.indexNames && config.search.indexNames.length > 0
+      ? config.search.indexNames
+      : defaultIndex
+        ? [defaultIndex]
+        : [];
+
   const search = {
-    indexNames: config.search?.indexNames || defaultIndex ? [defaultIndex as string] : [],
+    indexNames,
     defaultIndex: config.search?.defaultIndex || defaultIndex,
     indexes: searchIndexes,
     emitRecord: config.search?.emitRecord || false,

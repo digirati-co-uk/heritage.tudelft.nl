@@ -19,6 +19,7 @@ export async function parseStores(buildConfig: BuildConfig, cache: ParseStoresSt
     //
     config,
     stores,
+    options,
     requestCacheDir,
     storeTypes,
     slugs,
@@ -49,7 +50,9 @@ export async function parseStores(buildConfig: BuildConfig, cache: ParseStoresSt
 
   for (const storeId of stores) {
     const requestCache =
-      cache.storeRequestCaches[storeId] || createStoreRequestCache(storeId, requestCacheDir, false, customFs);
+      options.cache && cache.storeRequestCaches[storeId]
+        ? cache.storeRequestCaches[storeId]
+        : createStoreRequestCache(storeId, requestCacheDir, !options.cache, customFs);
     storeRequestCaches[storeId] = requestCache;
     storeResources[storeId] = [];
 

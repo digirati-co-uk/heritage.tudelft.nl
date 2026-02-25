@@ -38,7 +38,7 @@ export async function loadStores(
   let invalidCount = 0;
 
   for (const store of stores) {
-    const requestCache = createStoreRequestCache(store, requestCacheDir);
+    const requestCache = createStoreRequestCache(store, requestCacheDir, !options.cache);
     const storeConfig = config.stores[store];
     const resources = storeResources[store];
 

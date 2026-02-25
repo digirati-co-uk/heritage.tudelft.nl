@@ -68,13 +68,25 @@ const state = {
   shouldRebuild: false,
 };
 
+function selectInitialPath(devPath: string, defaultPath: string) {
+  return existsSync(join(cwd(), devPath)) ? devPath : defaultPath;
+}
+
+const activePaths = {
+  buildDir: selectInitialPath(defaultBuiltIns.devBuild, defaultBuiltIns.defaultBuildDir),
+  cacheDir: selectInitialPath(defaultBuiltIns.devCache, defaultBuiltIns.defaultCacheDir),
+};
+
 const cachedBuild = async (options: BuildOptions) => {
-  return build(options, defaultBuiltIns, {
+  const result = await build(options, defaultBuiltIns, {
     storeRequestCaches,
     fileHandler,
     pathCache,
     tracer,
   });
+  activePaths.buildDir = result.buildConfig.buildDir;
+  activePaths.cacheDir = result.buildConfig.cacheDir;
+  return result;
 };
 
 app.get("/", async (ctx) => {
@@ -322,9 +334,9 @@ app.get("/*", async (ctx, next) => {
     await next();
     return;
   }
-  let realPath = join(cwd(), ".iiif/build", ctx.req.path);
+  let realPath = join(cwd(), activePaths.buildDir, ctx.req.path);
   if (realPath.endsWith("meta.json")) {
-    realPath = join(cwd(), ".iiif/cache", ctx.req.path);
+    realPath = join(cwd(), activePaths.cacheDir, ctx.req.path);
   }
 
   const headers: Record<string, string> = {
@@ -359,7 +371,7 @@ app.post("/*", async (ctx) => {
 
   // WIthout `/manifest.json`
   const slug = ctx.req.path.replace("/manifest.json", "").slice(1);
-  const editable = join(cwd(), ".iiif/build/meta/editable.json");
+  const editable = join(cwd(), activePaths.buildDir, "meta/editable.json");
   const allEditable = await fileHandler.loadJson(editable, true);
   const realPath = allEditable[slug];
   if (!realPath) {

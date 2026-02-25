@@ -1,3 +1,4 @@
+import { existsSync } from "node:fs";
 import type { Plugin } from "vite";
 import { createServer } from "./create-server";
 import { DEFAULT_CONFIG, type IIIFRC, getCustomConfigSource, resolveConfigSource } from "./util/get-config";
@@ -35,19 +36,69 @@ interface IIIFHSSSPluginOptions {
  * Vite plugin for integrating Hono server
  */
 export function iiifPlugin(options: IIIFHSSSPluginOptions = {}): Plugin {
-  const { basePath = "/iiif", port, host, enabled = true, config: customConfig, configFile } = options;
+  const { basePath = "/iiif", port, host, enabled, config: customConfig, configFile } = options;
+  const isVitest = typeof process !== "undefined" && Boolean(process.env.VITEST);
+  const pluginEnabled = enabled ?? !isVitest;
 
-  let server: Awaited<ReturnType<typeof createServer>>;
+  let server: Awaited<ReturnType<typeof createServer>> | null = null;
+  let resolvedViteCommand: "serve" | "build" | null = null;
+  let resolvedViteMode: string | null = null;
+  let resolvedConfig: Awaited<ReturnType<typeof resolveConfigSource>> | null = null;
+
+  async function resolveIiifConfig() {
+    if (resolvedConfig) {
+      return resolvedConfig;
+    }
+    resolvedConfig = customConfig
+      ? getCustomConfigSource(customConfig as IIIFRC)
+      : await resolveConfigSource(configFile);
+    if (!resolvedConfig.config.stores) {
+      resolvedConfig.config.stores = DEFAULT_CONFIG.stores;
+    }
+    return resolvedConfig;
+  }
+
+  async function ensureServer() {
+    if (server) {
+      return server;
+    }
+    const configSource = await resolveIiifConfig();
+    const { config: _skipConfig, ...restConfigSource } = configSource;
+    server = await createServer(configSource.config, { configSource: restConfigSource });
+    return server;
+  }
+
+  function hasBuildableStores(config: IIIFRC) {
+    const stores = Object.values(config.stores || {});
+    if (!stores.length) {
+      return false;
+    }
+
+    for (const store of stores) {
+      if (store.type === "iiif-remote") {
+        if (store.url || (store.urls && store.urls.length > 0)) {
+          return true;
+        }
+      }
+      if (store.type === "iiif-json" && store.path && existsSync(store.path)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
 
   return {
     name: "iiif-hss",
+    configResolved(resolvedConfig) {
+      resolvedViteCommand = resolvedConfig.command;
+      resolvedViteMode = resolvedConfig.mode;
+    },
     async configureServer(viteDevServer) {
-      if (!enabled) return;
+      if (!pluginEnabled) return;
 
-      const resolvedConfigSource = customConfig
-        ? getCustomConfigSource(customConfig as IIIFRC)
-        : await resolveConfigSource(configFile);
-      const config = resolvedConfigSource.config;
+      const configSource = await resolveIiifConfig();
+      const config = configSource.config;
 
       // Try to get the actual host/port from the resolved server config
       // Fall back to the httpServer address if available, or defaults
@@ -78,17 +129,14 @@ export function iiifPlugin(options: IIIFHSSSPluginOptions = {}): Plugin {
       const devUrl = `http://${devHost}:${devPort}${basePath}`;
       config.server = config.server || { url: devUrl };
       config.server.url = devUrl;
-      if (!config.stores) {
-        config.stores = DEFAULT_CONFIG.stores;
-      }
-      const { config: _skipConfig, ...configSource } = resolvedConfigSource;
-      server = await createServer(config, { configSource });
+
+      const serverInstance = await ensureServer();
 
       console.log(`🔥 IIIF server started at ${basePath}`);
 
       // Add middleware to handle API requests
       viteDevServer.middlewares.use(basePath, async (req, res, next) => {
-        const honoApp = server._extra.app;
+        const honoApp = serverInstance._extra.app;
 
         if (!honoApp) {
           return next();
@@ -162,13 +210,18 @@ export function iiifPlugin(options: IIIFHSSSPluginOptions = {}): Plugin {
     },
 
     async buildStart() {
-      // This function can be used during the build process
-      // Left empty for now as requested
-      if (enabled) {
-        console.log("🔥 Hono server plugin: Building iiif");
-        await server._extra.cachedBuild({ cache: false, emit: true });
-        await server.request("/watch");
+      if (!pluginEnabled) return;
+      if (resolvedViteMode === "test" || resolvedViteCommand !== "build") return;
+
+      const configSource = await resolveIiifConfig();
+      if (!hasBuildableStores(configSource.config)) {
+        console.warn("🔥 Hono server plugin: Skipping iiif build (no buildable stores found)");
+        return;
       }
+
+      console.log("🔥 Hono server plugin: Building iiif");
+      const serverInstance = await ensureServer();
+      await serverInstance._extra.cachedBuild({ cache: false, emit: true });
     },
 
     buildEnd() {
