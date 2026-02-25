@@ -24,6 +24,16 @@ export function enrich(config, handler) {
   });
 }
 
+export function linker(config, handler) {
+  if (!config || !handler) return;
+  global.__hss = global.__hss ? global.__hss : {};
+  global.__hss.linkers = global.__hss.linkers ? global.__hss.linkers : [];
+  global.__hss.linkers.push({
+    ...config,
+    handler: handler,
+  });
+}
+
 export function rewrite(config) {
   if (!config) return;
   global.__hss = global.__hss ? global.__hss : {};

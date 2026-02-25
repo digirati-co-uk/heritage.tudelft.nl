@@ -1,12 +1,14 @@
-import type { Extraction } from "./extract";
 import type { Enrichment } from "./enrich";
-import type { Rewrite } from "./rewrite.ts";
+import type { Extraction } from "./extract";
 import type { IIIFGenerator } from "./iiif-generator.ts";
+import type { Linker } from "./linker.ts";
+import type { Rewrite } from "./rewrite.ts";
 
 declare interface Global {
   __hss?: {
     extractions?: Extraction[];
     enrichments?: Enrichment[];
+    linkers?: Linker[];
     rewrites?: Rewrite[];
     generators?: IIIFGenerator[];
   };
@@ -15,6 +17,7 @@ declare interface Global {
 export function getNodeGlobals() {
   const extractions: Extraction[] = [];
   const enrichments: Enrichment[] = [];
+  const linkers: Linker[] = [];
   const rewrites: Rewrite[] = [];
   const generators: IIIFGenerator[] = [];
 
@@ -27,6 +30,9 @@ export function getNodeGlobals() {
     if (g.__hss.enrichments) {
       enrichments.push(...g.__hss.enrichments);
     }
+    if (g.__hss.linkers) {
+      linkers.push(...g.__hss.linkers);
+    }
     if (g.__hss.rewrites) {
       rewrites.push(...g.__hss.rewrites);
     }
@@ -34,5 +40,5 @@ export function getNodeGlobals() {
       generators.push(...g.__hss.generators);
     }
   }
-  return { extractions, enrichments, rewrites, generators };
+  return { extractions, enrichments, linkers, rewrites, generators };
 }

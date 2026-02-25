@@ -11,8 +11,9 @@ import type { Enrichment } from "./enrich";
 import type { Extraction } from "./extract";
 import { FileHandler } from "./file-handler";
 import { createFiletypeCache } from "./file-type-cache";
-import { type IIIFRC, getConfig } from "./get-config";
+import { type IIIFRC, type ResolvedConfigSource, getCustomConfigSource, resolveConfigSource } from "./get-config";
 import { getNodeGlobals } from "./get-node-globals";
+import type { Linker } from "./linker";
 import { loadScripts } from "./load-scripts";
 import type { Rewrite } from "./rewrite";
 import { compileSlugConfig } from "./slug-engine";
@@ -53,6 +54,7 @@ export interface BuildBuiltIns {
   rewrites: Rewrite[];
   extractions: Extraction[];
   enrichments: Enrichment[];
+  linkers: Linker[];
 
   defaultCacheDir: string;
   defaultBuildDir: string;
@@ -70,6 +72,7 @@ export interface BuildBuiltIns {
   fileHandler?: FileHandler;
   tracer?: Tracer;
   customConfig?: IIIFRC;
+  customConfigSource?: Omit<ResolvedConfigSource, "config">;
 }
 
 const storeTypes = {
@@ -78,7 +81,14 @@ const storeTypes = {
 };
 
 export async function getBuildConfig(options: BuildOptions, builtIns: BuildBuiltIns) {
-  const config = builtIns.customConfig || (await getConfig());
+  const resolvedConfigSource = builtIns.customConfig
+    ? ({
+        ...getCustomConfigSource(builtIns.customConfig),
+        ...(builtIns.customConfigSource || {}),
+        config: builtIns.customConfig,
+      } as ResolvedConfigSource)
+    : await resolveConfigSource(options.config);
+  const config = resolvedConfigSource.config;
   const env = builtIns.env || {};
   const cwd = options.cwd || nodeCwd();
   const { devBuild, defaultBuildDir, defaultCacheDir, devCache, topicFolder } = builtIns;
@@ -88,6 +98,7 @@ export async function getBuildConfig(options: BuildOptions, builtIns: BuildBuilt
   const allRewrites = [...builtIns.rewrites];
   const allExtractions = [...builtIns.extractions];
   const allEnrichments = [...builtIns.enrichments];
+  const allLinkers = [...builtIns.linkers];
 
   const cacheDir = options.dev ? devCache : defaultCacheDir;
   const buildDir = options.dev ? devBuild : options.out || defaultBuildDir;
@@ -127,15 +138,18 @@ export async function getBuildConfig(options: BuildOptions, builtIns: BuildBuilt
 
   const fileTypeCache = createFiletypeCache(join(cacheDir, "file-types.json"));
 
-  await loadScripts(options, log);
+  const scriptsPath = options.scripts || resolvedConfigSource.defaultScriptsPath;
+  await loadScripts({ ...options, scripts: scriptsPath, cwd }, log);
   const globals = getNodeGlobals();
 
   allExtractions.push(...globals.extractions);
   allEnrichments.push(...globals.enrichments);
+  allLinkers.push(...globals.linkers);
   allRewrites.push(...globals.rewrites);
 
   log("Available extractions:", allExtractions.map((e) => e.id).join(", "));
   log("Available enrichments:", allEnrichments.map((e) => e.id).join(", "));
+  log("Available linkers:", allLinkers.map((e) => e.id).join(", "));
   log("Available rewrites:", allRewrites.map((e) => e.id).join(", "));
 
   // We manually skip some.
@@ -143,6 +157,7 @@ export async function getBuildConfig(options: BuildOptions, builtIns: BuildBuilt
   const rewrites = allRewrites.filter((e) => toRun.includes(e.id));
   const extractions = allExtractions.filter((e) => toRun.includes(e.id));
   const enrichments = allEnrichments.filter((e) => toRun.includes(e.id));
+  const linkers = allLinkers.filter((e) => toRun.includes(e.id));
 
   const manifestRewrites = rewrites.filter((e) => e.types.includes("Manifest"));
   const collectionRewrites = rewrites.filter((e) => e.types.includes("Collection"));
@@ -227,9 +242,11 @@ export async function getBuildConfig(options: BuildOptions, builtIns: BuildBuilt
     search,
     config,
     extractions,
+    linkers,
     allRewrites,
     allExtractions,
     allEnrichments,
+    allLinkers,
     canvasExtractions,
     manifestExtractions,
     collectionExtractions,
@@ -256,6 +273,11 @@ export async function getBuildConfig(options: BuildOptions, builtIns: BuildBuilt
     slugs,
     imageServiceLoader,
     fileTypeCache,
+    configSource: resolvedConfigSource,
+    configMode: resolvedConfigSource.mode,
+    configPath: resolvedConfigSource.configPath,
+    configWatchPaths: resolvedConfigSource.watchPaths,
+    resolvedScriptsPath: scriptsPath,
     // Currently hard-coded.
     storeTypes,
   };

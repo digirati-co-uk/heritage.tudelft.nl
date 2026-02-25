@@ -27,10 +27,12 @@ import type { Enrichment } from "../util/enrich.ts";
 import type { Extraction } from "../util/extract.ts";
 import { FileHandler } from "../util/file-handler.ts";
 import { type BuildBuiltIns, getBuildConfig } from "../util/get-build-config.ts";
-import type { IIIFRC } from "../util/get-config.ts";
+import type { IIIFRC, ResolvedConfigSource } from "../util/get-config.ts";
+import type { Linker } from "../util/linker.ts";
 import type { Rewrite } from "../util/rewrite.ts";
 import type { Tracer } from "../util/tracer.ts";
 import { parseStores } from "./build-steps/0-parse-stores.ts";
+import { link } from "./build-steps/1-link.ts";
 import { loadStores } from "./build-steps/1-load-stores.ts";
 import { extract } from "./build-steps/2-extract.ts";
 import { enrich } from "./build-steps/3-enrich.ts";
@@ -113,6 +115,7 @@ const buildInEnrichments: Enrichment[] = [
   filesRewrite,
   // pdiiif
 ];
+const builtInLinkers: Linker[] = [];
 
 const builtInEnrichmentsMap = {
   [homepageProperty.id]: homepageProperty,
@@ -138,6 +141,7 @@ export const defaultBuiltIns: BuildBuiltIns = {
   rewrites: buildInRewrites,
   extractions: builtInExtractions,
   enrichments: buildInEnrichments,
+  linkers: builtInLinkers,
   defaultCacheDir,
   defaultBuildDir,
   devCache,
@@ -169,17 +173,18 @@ export async function build(
     storeRequestCaches,
     tracer,
     customConfig,
+    customConfigSource,
   }: {
     fileHandler?: FileHandler;
     pathCache?: { allPaths: Record<string, string> };
     storeRequestCaches?: Record<string, any>;
     tracer?: Tracer;
     customConfig?: IIIFRC;
+    customConfigSource?: Omit<ResolvedConfigSource, "config">;
   } = {}
 ) {
   const buildConfig = await getBuildConfig(
     {
-      scripts: "./scripts",
       extract: true,
       enrich: true,
       dev: false,
@@ -192,6 +197,7 @@ export async function build(
       fileHandler,
       tracer,
       customConfig,
+      customConfigSource,
     }
   );
 
@@ -215,6 +221,8 @@ export async function build(
   const stores = await time("Loaded stores", loadStores(parsed, buildConfig));
 
   pathCache.allPaths = { ...stores.allPaths };
+
+  const linked = await time("Linking resources", link(stores, buildConfig));
 
   // Extract.
   const extractions = await time("Extracting resources", extract(stores, buildConfig));
@@ -260,6 +268,7 @@ export async function build(
   return {
     emitted,
     enrichments,
+    linked,
     extractions,
     stores,
     parsed,

@@ -11,16 +11,18 @@ import mitt from "mitt";
 import { z } from "zod";
 import { type BuildOptions, build, defaultBuiltIns } from "./commands/build";
 import { FileHandler } from "./util/file-handler";
-import type { IIIFRC } from "./util/get-config";
+import type { IIIFRC, ResolvedConfigSource } from "./util/get-config";
 import { Tracer } from "./util/tracer";
 
 interface IIIFServerOptions {
   customManifestEditor?: string;
+  configSource?: Omit<ResolvedConfigSource, "config">;
 }
 
 export async function createServer(config: IIIFRC, serverOptions: IIIFServerOptions = {}) {
   const app = new Hono();
   const meUrl = serverOptions.customManifestEditor || "https://manifest-editor.digirati.services";
+  const configSource = serverOptions.configSource;
 
   app.use(async (c, next) => {
     if (c.req.method === "OPTIONS") {
@@ -75,6 +77,7 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
       pathCache,
       tracer,
       customConfig: config,
+      customConfigSource: configSource,
     });
   };
 
@@ -103,13 +106,19 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
     const stores = Object.values(config.stores).filter((store) => {
       return store.type === "iiif-json";
     });
+    const extraWatchPaths = configSource?.watchPaths || [];
+    let watchCount = 0;
 
     for (const store of stores) {
+      if (!existsSync(store.path)) {
+        continue;
+      }
       (async () => {
         const watcher = watch(store.path, {
           signal: ac.signal,
           recursive: true,
         });
+        watchCount++;
 
         for await (const event of watcher) {
           if (event.filename) {
@@ -117,7 +126,7 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
             const realPath = pathCache.allPaths[name];
             emitter.emit("file-change", { path: realPath });
             await cachedBuild({
-              exact: realPath,
+              exact: realPath || undefined,
               emit: true,
               cache: true,
               dev: true,
@@ -130,7 +139,34 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
       });
     }
 
-    console.log(`Watching ${stores.length} stores`);
+    for (const watchPath of extraWatchPaths) {
+      if (!existsSync(watchPath.path)) {
+        continue;
+      }
+      (async () => {
+        const watcher = watch(watchPath.path, {
+          signal: ac.signal,
+          recursive: watchPath.recursive,
+        });
+        watchCount++;
+        for await (const event of watcher) {
+          await cachedBuild({
+            emit: true,
+            cache: true,
+            dev: true,
+          });
+          emitter.emit("full-rebuild", {
+            source: "config-watch",
+            path: watchPath.path,
+            filename: event.filename || null,
+          });
+        }
+      })().catch((err) => {
+        // ignore.
+      });
+    }
+
+    console.log(`Watching ${watchCount} paths`);
 
     isWatching = true;
 

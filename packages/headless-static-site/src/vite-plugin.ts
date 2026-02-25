@@ -1,6 +1,6 @@
 import type { Plugin } from "vite";
 import { createServer } from "./create-server";
-import { DEFAULT_CONFIG, type IIIFRC, getConfig } from "./util/get-config";
+import { DEFAULT_CONFIG, type IIIFRC, getCustomConfigSource, resolveConfigSource } from "./util/get-config";
 
 interface IIIFHSSSPluginOptions {
   /**
@@ -44,7 +44,10 @@ export function iiifPlugin(options: IIIFHSSSPluginOptions = {}): Plugin {
     async configureServer(viteDevServer) {
       if (!enabled) return;
 
-      const config = (customConfig as IIIFRC) || (await getConfig(configFile));
+      const resolvedConfigSource = customConfig
+        ? getCustomConfigSource(customConfig as IIIFRC)
+        : await resolveConfigSource(configFile);
+      const config = resolvedConfigSource.config;
 
       // Try to get the actual host/port from the resolved server config
       // Fall back to the httpServer address if available, or defaults
@@ -78,7 +81,8 @@ export function iiifPlugin(options: IIIFHSSSPluginOptions = {}): Plugin {
       if (!config.stores) {
         config.stores = DEFAULT_CONFIG.stores;
       }
-      server = await createServer(config);
+      const { config: _skipConfig, ...configSource } = resolvedConfigSource;
+      server = await createServer(config, { configSource });
 
       console.log(`🔥 IIIF server started at ${basePath}`);
 

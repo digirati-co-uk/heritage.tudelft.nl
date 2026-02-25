@@ -15,7 +15,7 @@ import { editorHtml } from "./server/editor.html";
 import { explorerHtml } from "./server/explorer.html";
 import { indexHtml } from "./server/index.html";
 import { FileHandler } from "./util/file-handler";
-import { getConfig } from "./util/get-config";
+import { resolveConfigSource } from "./util/get-config";
 import { Tracer } from "./util/tracer";
 
 const require = createRequire(import.meta.url);
@@ -90,10 +90,12 @@ app.get("/editor/*", async (ctx) => {
 });
 
 app.get("/config", async (ctx) => {
-  const config = await getConfig();
+  const resolvedConfigSource = await resolveConfigSource();
+  const config = resolvedConfigSource.config;
   return ctx.json({
     isWatching: isWatching,
     pendingFiles: Array.from(fileHandler.openJsonChanged.keys()).filter(Boolean),
+    configMode: resolvedConfigSource.mode,
     ...config,
   });
 });
@@ -123,18 +125,25 @@ app.get("/client.js", async (ctx) => {
 app.get("/watch", async (ctx) => {
   if (isWatching) return ctx.json({ watching: true });
 
-  const config = await getConfig();
+  const resolvedConfigSource = await resolveConfigSource();
+  const config = resolvedConfigSource.config;
+  const extraWatchPaths = resolvedConfigSource.watchPaths;
 
   const stores = Object.values(config.stores).filter((store) => {
     return store.type === "iiif-json";
   });
+  let watchCount = 0;
 
   for (const store of stores) {
+    if (!existsSync(store.path)) {
+      continue;
+    }
     (async () => {
       const watcher = watch(store.path, {
         signal: ac.signal,
         recursive: true,
       });
+      watchCount++;
 
       for await (const event of watcher) {
         if (event.filename) {
@@ -143,7 +152,7 @@ app.get("/watch", async (ctx) => {
             const realPath = pathCache.allPaths[name];
             emitter.emit("file-change", { path: realPath });
             await cachedBuild({
-              exact: realPath,
+              exact: realPath || undefined,
               emit: true,
               cache: true,
               dev: true,
@@ -159,7 +168,36 @@ app.get("/watch", async (ctx) => {
     });
   }
 
-  console.log(`Watching ${stores.length} stores`);
+  for (const watchPath of extraWatchPaths) {
+    if (!existsSync(watchPath.path)) {
+      continue;
+    }
+
+    (async () => {
+      const watcher = watch(watchPath.path, {
+        signal: ac.signal,
+        recursive: watchPath.recursive,
+      });
+      watchCount++;
+
+      for await (const event of watcher) {
+        await cachedBuild({
+          emit: true,
+          cache: true,
+          dev: true,
+        });
+        emitter.emit("full-rebuild", {
+          source: "config-watch",
+          path: watchPath.path,
+          filename: event.filename || null,
+        });
+      }
+    })().catch((err) => {
+      // ignore.
+    });
+  }
+
+  console.log(`Watching ${watchCount} paths`);
 
   isWatching = true;
 
