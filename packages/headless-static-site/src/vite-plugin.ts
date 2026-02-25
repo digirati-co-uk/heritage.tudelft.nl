@@ -1,7 +1,10 @@
 import { existsSync } from "node:fs";
 import { cp, mkdir } from "node:fs/promises";
-import { isAbsolute, join, resolve } from "node:path";
+import { isAbsolute, join, relative, resolve } from "node:path";
+import { cwd } from "node:process";
+import chalk from "chalk";
 import type { Plugin } from "vite";
+import { version } from "../package.json";
 import { createServer } from "./create-server";
 import { DEFAULT_CONFIG, type IIIFRC, getCustomConfigSource, resolveConfigSource } from "./util/get-config";
 
@@ -74,6 +77,7 @@ export function iiifPlugin(options: IIIFHSSSPluginOptions = {}): Plugin {
   let resolvedOutDir: string | null = null;
   let lastIiifBuildDir: string | null = null;
   let resolvedConfig: Awaited<ReturnType<typeof resolveConfigSource>> | null = null;
+  let didPatchPrintUrls = false;
 
   async function resolveIiifConfig() {
     if (resolvedConfig) {
@@ -144,6 +148,8 @@ export function iiifPlugin(options: IIIFHSSSPluginOptions = {}): Plugin {
         const protocol = (req.socket as any)?.encrypted ? "https" : "http";
         const host = req.headers.host || "localhost";
         const url = new URL(req.url!, `${protocol}://${host}`);
+        const headers = new Headers(req.headers as any);
+        headers.set("x-hss-base-path", basePath);
 
         // Handle request body for POST/PUT/PATCH requests (including form data)
         let body: BodyInit | null | undefined = undefined;
@@ -176,7 +182,7 @@ export function iiifPlugin(options: IIIFHSSSPluginOptions = {}): Plugin {
 
         const request = new Request(url.toString(), {
           method: req.method || "GET",
-          headers: req.headers as any,
+          headers,
           body,
         });
 
@@ -205,8 +211,8 @@ export function iiifPlugin(options: IIIFHSSSPluginOptions = {}): Plugin {
     });
   }
 
-  function resolveServerUrl(hostname: string, currentPort: number, fallbackPort: number) {
-    let configuredHost = hostname || "localhost";
+  function resolveServerUrl(hostname: string | boolean | undefined, currentPort: number, fallbackPort: number) {
+    let configuredHost = typeof hostname === "string" && hostname.length > 0 ? hostname : "localhost";
     let configuredPort = currentPort || fallbackPort;
 
     if (port) {
@@ -223,6 +229,35 @@ export function iiifPlugin(options: IIIFHSSSPluginOptions = {}): Plugin {
     return `http://${configuredHost}:${configuredPort}${basePath}`;
   }
 
+  function normalizePath(value: string) {
+    return value.replace(/^\/+/, "").replace(/\/+$/, "");
+  }
+
+  function getIiifDebugUrl(baseUrl: string) {
+    const base = normalizePath(basePath);
+    const debugPath = base.length > 0 ? `${base}/_debug` : "_debug";
+    return new URL(debugPath, baseUrl).toString();
+  }
+
+  function patchPrintUrls(server: {
+    printUrls?: () => void;
+    resolvedUrls?: { local?: string[]; network?: string[] } | null;
+  }) {
+    if (didPatchPrintUrls || typeof server.printUrls !== "function") {
+      return;
+    }
+
+    const originalPrintUrls = server.printUrls.bind(server);
+    server.printUrls = () => {
+      originalPrintUrls();
+      const localUrl = server.resolvedUrls?.local?.[0] || server.resolvedUrls?.network?.[0];
+      if (localUrl) {
+        console.log(`  ${chalk.green`➜`}  ${chalk.white.bold`IIIF`}:    ${chalk.cyan(getIiifDebugUrl(localUrl))}`);
+      }
+    };
+    didPatchPrintUrls = true;
+  }
+
   return {
     name: "iiif-hss",
     configResolved(resolvedConfig) {
@@ -236,10 +271,11 @@ export function iiifPlugin(options: IIIFHSSSPluginOptions = {}): Plugin {
 
       const configSource = await resolveIiifConfig();
       const config = configSource.config;
+      patchPrintUrls(viteDevServer as any);
 
       // Try to get the actual host/port from the resolved server config
       // Fall back to the httpServer address if available, or defaults
-      let devHost = viteDevServer.config.server?.host || "localhost";
+      let devHost: string | boolean | undefined = viteDevServer.config.server?.host || "localhost";
       let devPort = viteDevServer.config.server?.port || 5173;
 
       // If the server is already listening, get the actual address
@@ -256,8 +292,6 @@ export function iiifPlugin(options: IIIFHSSSPluginOptions = {}): Plugin {
       config.server.url = devUrl;
 
       const serverInstance = await ensureServer();
-
-      console.log(`🔥 IIIF server started at ${basePath}`);
       await mountHonoMiddleware(viteDevServer.middlewares as any, serverInstance);
     },
 
@@ -268,7 +302,7 @@ export function iiifPlugin(options: IIIFHSSSPluginOptions = {}): Plugin {
       const configSource = await resolveIiifConfig();
       const config = configSource.config;
 
-      const previewHost = (previewServer.config.preview?.host as string) || "localhost";
+      const previewHost = previewServer.config.preview?.host;
       const previewPort = previewServer.config.preview?.port || 4173;
 
       const previewUrl = resolveServerUrl(previewHost, previewPort, 4173);
@@ -278,7 +312,7 @@ export function iiifPlugin(options: IIIFHSSSPluginOptions = {}): Plugin {
       const serverInstance = await ensureServer();
       await mountHonoMiddleware(previewServer.middlewares as any, serverInstance);
 
-      console.log(`🔥 IIIF preview middleware mounted at ${basePath}`);
+      console.log(`${chalk.green`✓`} IIIF preview middleware mounted at ${basePath}`);
     },
 
     async buildStart() {
@@ -287,11 +321,11 @@ export function iiifPlugin(options: IIIFHSSSPluginOptions = {}): Plugin {
 
       const configSource = await resolveIiifConfig();
       if (!hasBuildableStores(configSource.config)) {
-        console.warn("🔥 Hono server plugin: Skipping iiif build (no buildable stores found)");
+        console.warn(`${chalk.green`✓`}  Skipping iiif build (no buildable stores found)`);
         return;
       }
 
-      console.log("🔥 Hono server plugin: Building iiif");
+      console.log(`${chalk.cyan(`iiif-hss v${version}`)} ${chalk.green("building IIIF...")}`);
       const serverInstance = await ensureServer();
       const output = await serverInstance._extra.cachedBuild({ cache: false, emit: true });
       if (output?.buildConfig?.buildDir) {
@@ -306,12 +340,12 @@ export function iiifPlugin(options: IIIFHSSSPluginOptions = {}): Plugin {
 
       const sourceDir = iiifBuildDir ? toAbsolutePath(iiifBuildDir) : lastIiifBuildDir || toAbsolutePath(".iiif/build");
       if (!existsSync(sourceDir)) {
-        console.warn(`🔥 Hono server plugin: Skipping IIIF artifact copy, source missing: ${sourceDir}`);
+        console.warn(`${chalk.bold.white`IIIF`}: Skipping IIIF artifact copy, source missing: ${sourceDir}`);
         return;
       }
 
       if (!resolvedOutDir) {
-        console.warn("🔥 Hono server plugin: Skipping IIIF artifact copy, Vite outDir unavailable");
+        console.warn(`${chalk.bold.white`IIIF`}: Skipping IIIF artifact copy, Vite outDir unavailable`);
         return;
       }
 
@@ -322,7 +356,8 @@ export function iiifPlugin(options: IIIFHSSSPluginOptions = {}): Plugin {
 
       await mkdir(outDir, { recursive: true });
       await cp(sourceDir, outDir, { recursive: true, force: true });
-      console.log(`🔥 IIIF artifacts copied to ${outDir}`);
+      // List all the IIIF.
+      console.log(`${chalk.green`✓`} IIIF built to ${chalk.gray(`/${relative(cwd(), outDir)}`)}`);
     },
 
     buildEnd() {

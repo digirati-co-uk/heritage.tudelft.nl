@@ -2,7 +2,21 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import type { IIIFRC } from "../util/get-config.ts";
 import { makeGetSlugHelper } from "../util/make-slug-helper.ts";
-import { compileReverseSlugConfig, compileSlugConfig } from "../util/slug-engine.ts";
+import { resolveFromSlug } from "../util/resolve-from-slug.ts";
+import { compileSlugConfig } from "../util/slug-engine.ts";
+
+function normalizeSlug(value: string) {
+  return value.replace(/^\/+/, "").replace(/\/+$/, "").replace(/\/(manifest|collection)\.json$/i, "");
+}
+
+async function safeReadJson(filePath: string) {
+  try {
+    const res = await readFile(filePath);
+    return JSON.parse(res.toString());
+  } catch (error) {
+    return {};
+  }
+}
 
 export function create(folderPath: string) {
   const endpoints = {
@@ -23,10 +37,15 @@ export function create(folderPath: string) {
     if (cache[filePath]) {
       return cache[filePath];
     }
-    const res = await readFile(filePath);
-    const json = JSON.parse(res.toString());
+    const json = await safeReadJson(filePath);
     cache[filePath] = json;
     return json;
+  };
+
+  const clearCache = () => {
+    for (const key of Object.keys(cache)) {
+      delete cache[key];
+    }
   };
 
   const getSlugs = () => cachedGet<IIIFRC["slugs"]>(endpoints.slugs);
@@ -34,7 +53,6 @@ export function create(folderPath: string) {
   const getManifests = () => cachedGet<any>(endpoints.manifests);
   const getTop = () => cachedGet<any>(endpoints.top);
   const getEditable = () => cachedGet<Record<string, string>>(endpoints.editable);
-
   const getOverrides = () => cachedGet<Record<string, string>>(endpoints.overrides);
   const getSitemap = () =>
     cachedGet<
@@ -47,25 +65,9 @@ export function create(folderPath: string) {
       >
     >(endpoints.sitemap);
 
-  async function resolveFromSlug(slug: string, type?: string) {
+  async function resolveFromSlugMatch(slug: string, type: "Manifest" | "Collection") {
     const slugs = await getSlugs();
-    const slugFns = Object.fromEntries(
-      Object.entries(slugs || {})
-        .map(([key, value]) => {
-          if (type && value.type !== type) {
-            return null as any;
-          }
-          return [key, { info: value, matches: compileReverseSlugConfig(value) }];
-        })
-        .filter((t) => t !== null)
-    );
-
-    for (const slugFn of Object.values(slugFns || {})) {
-      const [matches] = slugFn.matches(slug);
-      if (matches) {
-        return matches;
-      }
-    }
+    return resolveFromSlug(slug, type, (slugs || {}) as any);
   }
 
   const slugHelperCache = { slugHelper: null } as {
@@ -95,6 +97,66 @@ export function create(folderPath: string) {
     return helper({ id: url, type: type || "Manifest" });
   }
 
+  async function resolveResource(slugOrPath: string) {
+    const sitemap = await getSitemap();
+    const editable = await getEditable();
+    const normalized = normalizeSlug(slugOrPath);
+    const siteEntry = sitemap?.[normalized] || null;
+    const manifestPath = join(folderPath, normalized, "manifest.json");
+    const collectionPath = join(folderPath, normalized, "collection.json");
+    const metaPath = join(folderPath, normalized, "meta.json");
+    const indicesPath = join(folderPath, normalized, "indices.json");
+
+    const manifest = await safeReadJson(manifestPath);
+    const collection = await safeReadJson(collectionPath);
+    const meta = await safeReadJson(metaPath);
+    const indices = await safeReadJson(indicesPath);
+
+    const hasManifest = Boolean(manifest?.type === "Manifest" || manifest?.["@type"] === "sc:Manifest");
+    const hasCollection = Boolean(collection?.type === "Collection" || collection?.["@type"] === "sc:Collection");
+    const type = siteEntry?.type || (hasManifest ? "Manifest" : hasCollection ? "Collection" : null);
+
+    const reverseManifest = await resolveFromSlugMatch(normalized, "Manifest");
+    const reverseCollection = await resolveFromSlugMatch(normalized, "Collection");
+
+    const localJsonPath =
+      type === "Manifest"
+        ? manifestPath
+        : type === "Collection"
+          ? collectionPath
+          : hasManifest
+            ? manifestPath
+            : hasCollection
+              ? collectionPath
+              : null;
+
+    const remoteJsonPath =
+      siteEntry?.source?.type === "remote"
+        ? siteEntry.source.url
+        : type === "Manifest"
+          ? reverseManifest?.match || null
+          : type === "Collection"
+            ? reverseCollection?.match || null
+            : null;
+
+    return {
+      slug: normalized,
+      type,
+      source: siteEntry?.source || null,
+      isEditable: Boolean(editable?.[normalized]),
+      editablePath: editable?.[normalized] || null,
+      localJsonPath,
+      remoteJsonPath,
+      meta,
+      indices,
+      reverse: {
+        manifest: reverseManifest,
+        collection: reverseCollection,
+      },
+      resource: hasManifest ? manifest : hasCollection ? collection : null,
+    };
+  }
+
   async function loadTopicType(name: string) {
     const pathToTopic = join(folderPath, "topics", name);
 
@@ -112,74 +174,52 @@ export function create(folderPath: string) {
     };
   }
 
-  async function loadManifest(url_: string) {
-    let url = url_;
-    const overrides = await getOverrides();
-    const urlWithoutSlash = url.startsWith("/") ? url.slice(1) : url;
-    if (overrides?.[urlWithoutSlash]) {
-      url = `/${overrides[urlWithoutSlash].replace("manifest.json", "")}`;
+  async function loadManifest(slugOrUrl: string) {
+    if (/^https?:\/\//i.test(slugOrUrl)) {
+      return { id: slugOrUrl, meta: null, manifest: null };
     }
-
-    const remote = await resolveFromSlug(url, "Manifest");
-    if (remote) {
+    const resolved = await resolveResource(slugOrUrl);
+    if (resolved.type === "Manifest") {
       return {
-        id: remote,
-        meta: join(folderPath, url, "meta.json"),
+        id: resolved.remoteJsonPath || resolved.localJsonPath,
+        meta: join(folderPath, resolved.slug, "meta.json"),
+        manifest: resolved.localJsonPath,
+        debug: resolved,
       };
     }
-
-    if (!url.startsWith("/")) {
-      url = `/${url}`;
-    }
-
-    return {
-      id: `${url}/manifest.json`,
-      meta: join(folderPath, url, "meta.json"),
-      manifest: join(folderPath, url, "manifest.json"),
-    };
+    return null;
   }
-  async function loadCollection(_url: string) {
-    let url = _url;
-    const overrides = await getOverrides();
-    const urlWithoutSlash = url.startsWith("/") ? url.slice(1) : url;
-    if (overrides?.[urlWithoutSlash]) {
-      url = `/${overrides[urlWithoutSlash].replace("collection.json", "")}`;
+  async function loadCollection(slugOrUrl: string) {
+    if (/^https?:\/\//i.test(slugOrUrl)) {
+      return { id: slugOrUrl, meta: null, collection: null };
     }
-
-    const remote = await resolveFromSlug(url, "Collection");
-    if (remote) {
+    const resolved = await resolveResource(slugOrUrl);
+    if (resolved.type === "Collection") {
       return {
-        id: remote,
-        meta: join(folderPath, url, "meta.json"),
+        id: resolved.remoteJsonPath || resolved.localJsonPath,
+        meta: join(folderPath, resolved.slug, "meta.json"),
+        collection: resolved.localJsonPath,
+        debug: resolved,
       };
     }
-
-    if (!url.startsWith("/")) {
-      url = `/${url}`;
-    }
-
-    return {
-      id: `${url}/collection.json`,
-      meta: join(folderPath, url, "meta.json"),
-      collection: join(folderPath, url, "collection.json"),
-    };
+    return null;
   }
 
   return {
     endpoints,
+    clearCache,
     getSlugs,
     getStores,
     getManifests,
-    loadCollection,
     getTop,
     getEditable,
     getOverrides,
     getSitemap,
+    loadCollection,
     loadManifest,
     loadTopicType,
     loadTopic,
-    // Helpers.
+    resolveResource,
     urlToSlug,
-    resolveFromSlug,
   };
 }

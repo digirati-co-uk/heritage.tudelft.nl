@@ -158,6 +158,59 @@ describe("vite plugin lifecycle", () => {
     expect(typeof use.mock.calls[0][1]).toBe("function");
   });
 
+  test("prints IIIF debug URL after Vite local URL", async () => {
+    const { iiifPlugin } = await import("../src/vite-plugin");
+    const plugin = iiifPlugin({
+      enabled: true,
+      basePath: "/iiif",
+      config: {
+        stores: {
+          local: {
+            type: "iiif-remote",
+            url: "https://example.org/iiif/collection.json",
+          },
+        },
+      },
+    });
+
+    const logSpy = vi.spyOn(console, "log").mockImplementation(() => void 0);
+    const printUrls = vi.fn(() => {
+      console.log("  ➜  Local:   http://localhost:5173/");
+    });
+    const use = vi.fn();
+    const devServer = {
+      config: {
+        server: {
+          host: "localhost",
+          port: 5173,
+        },
+      },
+      httpServer: {
+        listening: false,
+      },
+      resolvedUrls: {
+        local: ["http://localhost:5173/"],
+        network: [],
+      },
+      printUrls,
+      middlewares: {
+        use,
+      },
+    } as any;
+
+    try {
+      await plugin.configureServer?.(devServer);
+      devServer.printUrls();
+      expect(logSpy).toHaveBeenCalledWith("  ➜  Local:   http://localhost:5173/");
+      expect(
+        logSpy.mock.calls.find(([line]) => String(line).includes("IIIF:") && String(line).includes("/iiif/_debug"))
+      ).toBeTruthy();
+      expect(logSpy.mock.calls.find(([line]) => String(line).includes("IIIF server started at /iiif"))).toBeUndefined();
+    } finally {
+      logSpy.mockRestore();
+    }
+  });
+
   test("copies iiif artifacts into vite outDir on closeBundle", async () => {
     testDir = await mkdtemp(join(tmpdir(), "iiif-hss-vite-plugin-"));
     const source = join(testDir, ".iiif", "build");

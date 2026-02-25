@@ -57,7 +57,7 @@ export type BuildOptions = {
   onBuild?: () => void | Promise<void>;
 };
 
-interface QueueConcurrencySettings {
+export interface QueueConcurrencySettings {
   link: number;
   extract: number;
   enrich: number;

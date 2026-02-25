@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import { existsSync } from "node:fs";
 import { watch, writeFile } from "node:fs/promises";
+import { createRequire } from "node:module";
 import { join } from "node:path";
 import { cwd } from "node:process";
 import { zValidator } from "@hono/zod-validator";
@@ -10,9 +11,12 @@ import { timeout } from "hono/timeout";
 import mitt from "mitt";
 import { z } from "zod";
 import { type BuildOptions, build, defaultBuiltIns } from "./commands/build";
+import { findDebugUiDir, registerDebugUiRoutes } from "./server/debug-ui-routes.ts";
 import { FileHandler } from "./util/file-handler";
 import type { IIIFRC, ResolvedConfigSource } from "./util/get-config";
 import { Tracer } from "./util/tracer";
+
+const require = createRequire(import.meta.url);
 
 interface IIIFServerOptions {
   customManifestEditor?: string;
@@ -94,9 +98,7 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
   };
 
   app.get("/", async (ctx) => {
-    return ctx.json({
-      working: true,
-    });
+    return ctx.redirect("/_debug/");
   });
 
   app.get("/config", async (ctx) => {
@@ -110,6 +112,16 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
 
   app.get("/trace.json", async (ctx) => {
     return ctx.json(tracer.toJSON());
+  });
+
+  registerDebugUiRoutes({
+    app,
+    fileHandler,
+    getActivePaths: () => ({ ...activePaths }),
+    getConfig: () => config,
+    getTraceJson: () => tracer.toJSON(),
+    getDebugUiDir: () => findDebugUiDir(cwd(), require.resolve.bind(require)),
+    manifestEditorUrl: meUrl,
   });
 
   app.get("/watch", async (ctx) => {

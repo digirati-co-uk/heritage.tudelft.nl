@@ -88,6 +88,10 @@ export async function extract(
       });
 
       const resource = await cachedResource.attachVault();
+      buildConfig.trace?.setResourceInfo(manifest, {
+        label: resource?.label,
+        thumbnail: resource?.thumbnail,
+      });
 
       let extractions = manifest.type === "Manifest" ? manifestExtractions : collectionExtractions;
 

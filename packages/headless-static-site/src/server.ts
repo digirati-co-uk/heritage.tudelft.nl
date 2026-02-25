@@ -10,10 +10,9 @@ import { timeout } from "hono/timeout";
 import mitt from "mitt";
 import { z } from "zod";
 import { type BuildOptions, build, defaultBuiltIns } from "./commands/build";
-import { cloverHtml } from "./server/clover.html";
+import { findDebugUiDir, registerDebugUiRoutes } from "./server/debug-ui-routes.ts";
 import { editorHtml } from "./server/editor.html";
 import { explorerHtml } from "./server/explorer.html";
-import { indexHtml } from "./server/index.html";
 import { FileHandler } from "./util/file-handler";
 import { resolveConfigSource } from "./util/get-config";
 import { Tracer } from "./util/tracer";
@@ -90,7 +89,7 @@ const cachedBuild = async (options: BuildOptions) => {
 };
 
 app.get("/", async (ctx) => {
-  return ctx.html(indexHtml());
+  return ctx.redirect("/_debug/");
 });
 
 app.get("/explorer/*", async (ctx) => {
@@ -114,6 +113,15 @@ app.get("/config", async (ctx) => {
 
 app.get("/trace.json", async (ctx) => {
   return ctx.json(tracer.toJSON());
+});
+
+registerDebugUiRoutes({
+  app,
+  fileHandler,
+  getActivePaths: () => ({ ...activePaths }),
+  getConfig: async () => (await resolveConfigSource()).config,
+  getTraceJson: () => tracer.toJSON(),
+  getDebugUiDir: () => findDebugUiDir(cwd(), require.resolve.bind(require)),
 });
 
 app.get("/client.js", async (ctx) => {
@@ -229,10 +237,6 @@ app.get("/build/save", async (ctx) => {
     await fileHandler.saveAll();
   }
   return ctx.json({ saved: true, total });
-});
-
-app.get("/clover/*", async (ctx) => {
-  return ctx.html(cloverHtml());
 });
 
 app.get(
