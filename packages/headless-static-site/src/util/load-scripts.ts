@@ -1,9 +1,19 @@
+import { createHash } from "node:crypto";
 import { existsSync } from "node:fs";
+import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { cwd } from "node:process";
+import { pathToFileURL } from "node:url";
 import chalk from "chalk";
 import { pythonExtract } from "./python-api.ts";
 import { readAllFiles } from "./read-all-files.ts";
+
+export async function getScriptImportSpecifier(file: string) {
+  const source = await readFile(file);
+  const version = createHash("sha1").update(source).digest("hex");
+  const fileUrl = pathToFileURL(file).href;
+  return `${fileUrl}?v=${version}`;
+}
 
 export async function loadScripts(
   options: { scripts?: string; python?: boolean; debug?: boolean; cwd?: string },
@@ -30,7 +40,8 @@ export async function loadScripts(
         }
 
         try {
-          await import(file);
+          const importSpecifier = await getScriptImportSpecifier(file);
+          await import(importSpecifier);
           loaded++;
         } catch (e) {
           console.log(chalk.red(e));
