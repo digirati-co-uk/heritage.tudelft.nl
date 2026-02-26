@@ -20,7 +20,6 @@ interface CreateCacheResourceOptions<Temp = any> {
 }
 
 type Result<Temp> = EnrichmentResult<Temp> | ExtractionReturn<Temp>;
-let didChange = false;
 
 export function createCacheResource({
   resourcePath,
@@ -49,6 +48,7 @@ export function createCacheResource({
   const newCaches = {};
   const newIndices = {};
   const newSearchRecord = {};
+  let didChange = false;
 
   return {
     vaultData,

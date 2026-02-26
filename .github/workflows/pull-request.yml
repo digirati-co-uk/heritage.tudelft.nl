@@ -34,6 +34,19 @@ jobs:
         working-directory: packages/headless-static-site
         run: pnpm run build
 
+      - name: Check for HSS changes
+        id: hss_changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            hss:
+              - 'packages/headless-static-site/**'
+
+      - name: Preview HSS
+        if: steps.hss_changes.outputs.hss == 'true'
+        working-directory: packages/headless-static-site
+        run: pnpm dlx pkg-pr-new publish
+
       - name: Link HSS CLI
         run: pnpm install --frozen-lockfile
 

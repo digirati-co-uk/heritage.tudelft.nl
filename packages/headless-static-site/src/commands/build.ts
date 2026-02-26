@@ -1,4 +1,6 @@
 import fs from "node:fs";
+import { watch as watchFs } from "node:fs/promises";
+import { isAbsolute, resolve } from "node:path";
 import { cwd, env } from "node:process";
 import type { Command } from "commander";
 import { canvasThumbnail } from "../enrich/canvas-thumbnail.ts";
@@ -9,6 +11,7 @@ import { translateMetadata } from "../enrich/translate-metadata.ts";
 import { enrichTypesense } from "../enrich/typesense-index.ts";
 import { typesensePlaintext } from "../enrich/typesense-plaintext.ts";
 import { extractCanvasDims } from "../extract/extract-canvas-dims.ts";
+import { extractCollectionThumbnail } from "../extract/extract-collection-thumbnail.ts";
 import { extractFilesList } from "../extract/extract-files-list.ts";
 import { extractFolderCollections } from "../extract/extract-folder-collections.ts";
 import { extractLabelString } from "../extract/extract-label-string";
@@ -27,17 +30,22 @@ import type { Enrichment } from "../util/enrich.ts";
 import type { Extraction } from "../util/extract.ts";
 import { FileHandler } from "../util/file-handler.ts";
 import { type BuildBuiltIns, getBuildConfig } from "../util/get-build-config.ts";
+import type { BuildConcurrencyConfig, IIIFRC, ResolvedConfigSource } from "../util/get-config.ts";
+import type { Linker } from "../util/linker.ts";
 import type { Rewrite } from "../util/rewrite.ts";
 import type { Tracer } from "../util/tracer.ts";
 import { parseStores } from "./build-steps/0-parse-stores.ts";
+import { link } from "./build-steps/1-link.ts";
 import { loadStores } from "./build-steps/1-load-stores.ts";
 import { extract } from "./build-steps/2-extract.ts";
 import { enrich } from "./build-steps/3-enrich.ts";
 import { emit } from "./build-steps/4-emit.ts";
 import { indices } from "./build-steps/5-indices.ts";
 import { generateCommand } from "./generate.ts";
+import { validateCommand } from "./validate.ts";
 
 export type BuildOptions = {
+  cwd?: string;
   config?: string;
   cache?: boolean;
   exact?: string;
@@ -58,6 +66,8 @@ export type BuildOptions = {
   topics?: boolean;
   out?: string;
   ui?: boolean;
+  remoteRecords?: boolean;
+  concurrency?: BuildConcurrencyConfig;
 
   // Programmatic only
   onBuild?: () => void | Promise<void>;
@@ -78,6 +88,7 @@ const defaultRun = [
   extractMetadataAnalysis.id,
   extractFolderCollections.id,
   extractFilesList.id,
+  extractCollectionThumbnail.id,
   filesRewrite.id,
 ];
 
@@ -91,6 +102,7 @@ const builtInExtractions: Extraction[] = [
   extractSlugSource,
   extractCanvasDims,
   extractThumbnail,
+  extractCollectionThumbnail,
   extractTopics,
   extractMetadataAnalysis,
   extractRemoteSource,
@@ -111,6 +123,7 @@ const buildInEnrichments: Enrichment[] = [
   filesRewrite,
   // pdiiif
 ];
+const builtInLinkers: Linker[] = [];
 
 const builtInEnrichmentsMap = {
   [homepageProperty.id]: homepageProperty,
@@ -136,6 +149,7 @@ export const defaultBuiltIns: BuildBuiltIns = {
   rewrites: buildInRewrites,
   extractions: builtInExtractions,
   enrichments: buildInEnrichments,
+  linkers: builtInLinkers,
   defaultCacheDir,
   defaultBuildDir,
   devCache,
@@ -149,13 +163,133 @@ export const defaultBuiltIns: BuildBuiltIns = {
 };
 
 export async function buildCommand(options: BuildOptions, command?: Command) {
+  if (options.validate) {
+    await validateCommand({ config: options.config });
+  }
+
   const startTime = Date.now();
-  await build({
+  const initial = await build({
     ui: true,
     ...options,
+    watch: false,
   });
   console.log("");
   console.log(`Done in ${Date.now() - startTime}ms`);
+
+  if (!options.watch) {
+    return;
+  }
+
+  const workingDirectory = options.cwd || cwd();
+  const watchTargets = new Map<string, { path: string; recursive: boolean }>();
+  const addWatchTarget = (path: string, recursive: boolean) => {
+    const absolutePath = isAbsolute(path) ? path : resolve(workingDirectory, path);
+    const key = `${absolutePath}:${recursive ? "recursive" : "file"}`;
+    watchTargets.set(key, { path: absolutePath, recursive });
+  };
+
+  for (const store of Object.values(initial.buildConfig.config.stores || {})) {
+    if (store.type === "iiif-json" && store.path) {
+      addWatchTarget(store.path, true);
+    }
+  }
+  for (const watchPath of initial.buildConfig.configWatchPaths || []) {
+    addWatchTarget(watchPath.path, watchPath.recursive);
+  }
+  for (const watchedResourcePath of initial.parsed.filesToWatch || []) {
+    addWatchTarget(watchedResourcePath, false);
+  }
+
+  const ac = new AbortController();
+  let watchCount = 0;
+  let isBuilding = false;
+  let hasPendingBuild = false;
+  let isStopping = false;
+
+  const runBuild = async (source: string) => {
+    if (isStopping) {
+      return;
+    }
+    if (isBuilding) {
+      hasPendingBuild = true;
+      return;
+    }
+
+    isBuilding = true;
+    let reason = source;
+
+    while (true) {
+      const rebuildStart = Date.now();
+      console.log(`\nRebuilding (${reason})...`);
+      try {
+        await build({
+          ui: true,
+          ...options,
+          watch: false,
+        });
+        console.log(`Done in ${Date.now() - rebuildStart}ms`);
+      } catch (error) {
+        console.error(error);
+      }
+
+      if (!hasPendingBuild || isStopping) {
+        hasPendingBuild = false;
+        break;
+      }
+      hasPendingBuild = false;
+      reason = "queued changes";
+    }
+
+    isBuilding = false;
+  };
+
+  for (const target of watchTargets.values()) {
+    if (!fs.existsSync(target.path)) {
+      continue;
+    }
+
+    const watcher = watchFs(target.path, {
+      signal: ac.signal,
+      recursive: target.recursive,
+    });
+    watchCount++;
+
+    (async () => {
+      try {
+        for await (const event of watcher) {
+          const changed = event.filename ? `${target.path}/${event.filename}` : target.path;
+          await runBuild(changed);
+        }
+      } catch (error) {
+        if ((error as Error).name !== "AbortError") {
+          console.error(`Watch error for ${target.path}:`, error);
+        }
+      }
+    })();
+  }
+
+  if (watchCount === 0) {
+    console.log("No watchable paths were found.");
+    return;
+  }
+
+  console.log(`Watching ${watchCount} paths (Ctrl+C to stop).`);
+
+  await new Promise<void>((resolveStop) => {
+    const stopWatching = () => {
+      if (isStopping) {
+        return;
+      }
+      isStopping = true;
+      ac.abort();
+      process.off("SIGINT", stopWatching);
+      process.off("SIGTERM", stopWatching);
+      resolveStop();
+    };
+
+    process.on("SIGINT", stopWatching);
+    process.on("SIGTERM", stopWatching);
+  });
 }
 
 export async function build(
@@ -166,26 +300,32 @@ export async function build(
     pathCache = { allPaths: {} },
     storeRequestCaches,
     tracer,
+    customConfig,
+    customConfigSource,
   }: {
     fileHandler?: FileHandler;
     pathCache?: { allPaths: Record<string, string> };
     storeRequestCaches?: Record<string, any>;
     tracer?: Tracer;
+    customConfig?: IIIFRC;
+    customConfigSource?: Omit<ResolvedConfigSource, "config">;
   } = {}
 ) {
   const buildConfig = await getBuildConfig(
     {
-      scripts: "./scripts",
       extract: true,
       enrich: true,
       dev: false,
       emit: true,
+      remoteRecords: false,
       ...options,
     },
     {
       ...builtIns,
       fileHandler,
       tracer,
+      customConfig,
+      customConfigSource,
     }
   );
 
@@ -210,12 +350,17 @@ export async function build(
 
   pathCache.allPaths = { ...stores.allPaths };
 
+  const linked = await time("Linking resources", link(stores, buildConfig));
+
   // Extract.
   const extractions = await time("Extracting resources", extract(stores, buildConfig));
 
   const enrichments = await time("Enriching resources", enrich(stores, buildConfig));
 
-  const emitted = await time("Emitting files", emit(stores, buildConfig));
+  const emitted = await time(
+    "Emitting files",
+    emit(stores, buildConfig, { canvasSearchIndex: enrichments.canvasSearchIndex })
+  );
 
   await time(
     "Building indices",
@@ -239,7 +384,7 @@ export async function build(
   await buildConfig.fileTypeCache.save();
 
   if (options.emit) {
-    const { failedToWrite } = await fileHandler.saveAll();
+    const { failedToWrite } = await fileHandler.saveAll(false, buildConfig.concurrency.write);
     if (failedToWrite.length) {
       buildConfig.log(`Failed to write ${failedToWrite.length} files`);
       if (buildConfig.options.debug) {
@@ -251,6 +396,7 @@ export async function build(
   return {
     emitted,
     enrichments,
+    linked,
     extractions,
     stores,
     parsed,

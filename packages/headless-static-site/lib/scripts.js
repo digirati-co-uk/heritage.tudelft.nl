@@ -1,10 +1,28 @@
+function ensureRegistry(key) {
+  global.__hss = global.__hss ? global.__hss : {};
+  global.__hss[key] = global.__hss[key] ? global.__hss[key] : [];
+  return global.__hss[key];
+}
+
+function upsertById(items, item) {
+  if (!item || !item.id) {
+    items.push(item);
+    return;
+  }
+  const existingIndex = items.findIndex(
+    (entry) => entry && entry.id === item.id,
+  );
+  if (existingIndex === -1) {
+    items.push(item);
+    return;
+  }
+  items[existingIndex] = item;
+}
+
 export function extract(config, handler) {
   if (!config) return;
-  global.__hss = global.__hss ? global.__hss : {};
-  global.__hss.extractions = global.__hss.extractions
-    ? global.__hss.extractions
-    : [];
-  global.__hss.extractions.push({
+  const extractions = ensureRegistry("extractions");
+  upsertById(extractions, {
     invalidate: async () => true,
     ...config,
     handler: handler,
@@ -13,12 +31,18 @@ export function extract(config, handler) {
 
 export function enrich(config, handler) {
   if (!config || !handler) return;
-  global.__hss = global.__hss ? global.__hss : {};
-  global.__hss.enrichments = global.__hss.enrichments
-    ? global.__hss.enrichments
-    : [];
-  global.__hss.enrichments.push({
+  const enrichments = ensureRegistry("enrichments");
+  upsertById(enrichments, {
     invalidate: async () => true,
+    ...config,
+    handler: handler,
+  });
+}
+
+export function linker(config, handler) {
+  if (!config || !handler) return;
+  const linkers = ensureRegistry("linkers");
+  upsertById(linkers, {
     ...config,
     handler: handler,
   });
@@ -26,16 +50,12 @@ export function enrich(config, handler) {
 
 export function rewrite(config) {
   if (!config) return;
-  global.__hss = global.__hss ? global.__hss : {};
-  global.__hss.rewrites = global.__hss.rewrites ? global.__hss.rewrites : [];
-  global.__hss.rewrites.push(config);
+  const rewrites = ensureRegistry("rewrites");
+  upsertById(rewrites, config);
 }
 
 export function generator(config) {
   if (!config) return;
-  global.__hss = global.__hss ? global.__hss : {};
-  global.__hss.generators = global.__hss.generators
-    ? global.__hss.generators
-    : [];
-  global.__hss.generators.push(config);
+  const generators = ensureRegistry("generators");
+  upsertById(generators, config);
 }

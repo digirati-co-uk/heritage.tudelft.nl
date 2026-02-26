@@ -6,7 +6,12 @@
     "dev": "next dev -H 0.0.0.0 --webpack",
     "build:content": "contentlayer build",
     "build": "contentlayer build && next build",
-    "start": "next start"
+    "start": "next start",
+    "search": "tsx search-cli.ts",
+    "search:manifests": "tsx search-cli.ts index-manifests",
+    "search:status": "tsx search-cli.ts status",
+    "search:clean": "tsx search-cli.ts clean",
+    "search:import": "tsx search-cli.ts import"
   },
   "dependencies": {
     "@headlessui/react": "1.7.18",

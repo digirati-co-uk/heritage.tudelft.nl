@@ -27,6 +27,7 @@ export async function extract(
     canvasExtractions,
     allExtractions,
     requestCacheDir,
+    concurrency,
   } = buildConfig;
   if (!options.extract) {
     // This is to remind us that we _cant_ export a site map without extracting.
@@ -34,7 +35,7 @@ export async function extract(
   }
 
   const startTime = performance.now();
-  const requestCache = createStoreRequestCache("_extract", requestCacheDir);
+  const requestCache = createStoreRequestCache("_extract", requestCacheDir, !options.cache);
   const extractionConfigs: Record<string, any> = {};
   const stats: Record<string, number> = {};
   for (const extraction of allExtractions) {
@@ -64,12 +65,17 @@ export async function extract(
 
   const progress = makeProgressBar("Extraction", totalResources, options.ui);
 
-  const queue = new PQueue();
+  const queue = new PQueue({ concurrency: concurrency.extract });
 
   for (const manifest of allResources) {
     queue.add(async () => {
-      const skipSteps = config.stores[manifest.storeId]?.skip || [];
-      const runSteps = config.stores[manifest.storeId]?.run;
+      const resourceStoreConfig = config.stores[manifest.storeId] || {};
+      const skipSteps = resourceStoreConfig.skip || [];
+      const runSteps = resourceStoreConfig.run;
+
+      const filesDir = join(cacheDir, manifest.slug, "files");
+      const manifestResourceFiles = createResourceHandler(filesDir, files);
+      const resourceFiles = createResourceHandler(filesDir, files);
 
       buildConfig.trace?.startExtractions(manifest);
 
@@ -82,6 +88,10 @@ export async function extract(
       });
 
       const resource = await cachedResource.attachVault();
+      buildConfig.trace?.setResourceInfo(manifest, {
+        label: resource?.label,
+        thumbnail: resource?.thumbnail,
+      });
 
       let extractions = manifest.type === "Manifest" ? manifestExtractions : collectionExtractions;
 
@@ -108,10 +118,8 @@ export async function extract(
           {},
           extractionConfig,
           storeConfig,
-          config.stores[manifest.storeId].config?.[extraction.id] || {}
+          resourceStoreConfig.config?.[extraction.id] || {}
         );
-        const filesDir = join(cacheDir, manifest.slug, "files");
-        const resourceFiles = createResourceHandler(filesDir, files);
         const valid =
           !options.cache ||
           (await extraction.invalidate(
@@ -192,7 +200,7 @@ export async function extract(
             const extractConfig = Object.assign(
               {},
               storeConfig,
-              config.stores[manifest.storeId].config?.[canvasExtraction.id] || {}
+              resourceStoreConfig.config?.[canvasExtraction.id] || {}
             );
             const resourceFiles = createResourceHandler(canvasCache.filesDir, files);
             const valid =
@@ -202,6 +210,9 @@ export async function extract(
                 {
                   caches: canvasCache.caches,
                   resource: canvas,
+                  parentResource: manifest,
+                  parentResourceFiles: manifestResourceFiles,
+                  parent: resource,
                   build: buildConfig,
                   fileHandler: files,
                   resourceFiles,
@@ -217,6 +228,9 @@ export async function extract(
               canvasResource,
               {
                 resource: canvas,
+                parentResource: manifest,
+                parentResourceFiles: manifestResourceFiles,
+                parent: resource,
                 meta: canvasCache.meta,
                 indices: canvasCache.indices,
                 caches: canvasCache.caches,

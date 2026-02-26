@@ -8,6 +8,11 @@ import { supportedConfigFiles } from "../util/get-config.ts";
 type InitOptions = unknown;
 
 export async function initCommand(options: InitOptions, command: Command) {
+  if (existsSync(join(cwd(), "iiif-config"))) {
+    console.log("Found config folder: iiif-config");
+    return;
+  }
+
   // Check if any of the supported configs exist.
   for (const config of supportedConfigFiles) {
     if (existsSync(join(cwd(), config))) {

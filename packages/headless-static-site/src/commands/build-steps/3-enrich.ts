@@ -2,8 +2,8 @@ import { join } from "node:path";
 import PQueue from "p-queue";
 import { createCacheResource } from "../../util/cached-resource.ts";
 import { createResourceHandler } from "../../util/create-resource-handler.ts";
-import type { Enrichment } from "../../util/enrich.ts";
-import type { SearchIndexes, SearchRecordReturn } from "../../util/extract.ts";
+import type { CanvasSearchIndex, Enrichment } from "../../util/enrich.ts";
+import type { RemoteRecordLink, SearchIndexes, SearchRecordReturn } from "../../util/extract.ts";
 import { makeProgressBar } from "../../util/make-progress-bar.ts";
 import { mergeIndices } from "../../util/merge-indices.ts";
 import { createStoreRequestCache } from "../../util/store-request-cache.ts";
@@ -24,10 +24,11 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
     files,
     search,
     trace,
+    concurrency,
   } = buildConfig;
 
   const start = performance.now();
-  const queue = new PQueue();
+  const queue = new PQueue({ concurrency: concurrency.enrich });
 
   if (!options.enrich) {
     return {};
@@ -46,11 +47,22 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
       {
         ...index,
         records: [] as Array<Record<string, any>>,
-        keys: (index.schema.fields || []).map((field) => field.name),
+        remoteRecords: {} as Record<string, RemoteRecordLink[]>,
+        keys: (index.schema.fields || []).map((field) => {
+          if (field.name.includes(".")) {
+            const parts = field.name.split(".");
+            return parts[0]; // object keys.
+          }
+          return field.name;
+        }),
       },
     ])
   );
+
+  const canvasSearchIndex: CanvasSearchIndex = {};
+
   function addToSearchIndex(search: Partial<SearchRecordReturn>, indices: Record<string, string[]>) {
+    const result: Array<{ index: string; record?: any; remoteRecords?: RemoteRecordLink[] }> = [];
     if (search.indexes && search.record) {
       for (const index of search.indexes) {
         if (searchIndexes[index]) {
@@ -69,10 +81,17 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
               }
             }
           }
-          searchIndexes[index].records.push(record);
+          if (search.remoteRecords?.[index]) {
+            result.push({ index, remoteRecords: search.remoteRecords?.[index] });
+          }
+          if (Object.keys(record).length) {
+            searchIndexes[index].records.push(record);
+            result.push({ index, record });
+          }
         }
       }
     }
+    return result;
   }
 
   // All indcies found.
@@ -104,7 +123,7 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
   }
 
   const progress = makeProgressBar("Enrichment", totalResources, options.ui);
-  const requestCache = createStoreRequestCache("_enrich", requestCacheDir);
+  const requestCache = createStoreRequestCache("_enrich", requestCacheDir, !options.cache);
 
   const processManifest = async (manifest: ActiveResourceJson) => {
     trace?.startEnrich(manifest);
@@ -114,8 +133,9 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
       trace?.endEnrich(manifest);
       return;
     }
-    const skipSteps = config.stores[manifest.storeId]?.skip || [];
-    const runSteps = config.stores[manifest.storeId]?.run;
+    const resourceStoreConfig = config.stores[manifest.storeId] || {};
+    const skipSteps = resourceStoreConfig.skip || [];
+    const runSteps = resourceStoreConfig.run;
 
     const cachedResource = createCacheResource({
       resource: manifest,
@@ -163,11 +183,7 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
       const filesDir = join(cacheDir, manifest.slug, "files");
       const resourceFiles = createResourceHandler(filesDir, files);
       const storeConfig = enrichmentConfigs[enrichment.id] || {};
-      const enrichmentConfig = Object.assign(
-        {},
-        storeConfig,
-        config.stores[manifest.storeId].config?.[enrichment.id] || {}
-      );
+      const enrichmentConfig = Object.assign({}, storeConfig, resourceStoreConfig.config?.[enrichment.id] || {});
 
       const valid =
         !options.cache ||
@@ -251,7 +267,7 @@ ${errors.map((e, n) => `  ${n + 1})  ${(e as any)?.reason?.message}`).join(", ")
 
     // Canvases.
     if (manifest.type === "Manifest" && canvasEnrichmentSteps.length) {
-      const manifestQueue = new PQueue();
+      const manifestQueue = new PQueue({ concurrency: concurrency.enrichCanvas });
       const canvases = resource.items || [];
       for (let canvasIndex = 0; canvasIndex < canvases.length; canvasIndex++) {
         const canvas = canvases[canvasIndex];
@@ -268,11 +284,7 @@ ${errors.map((e, n) => `  ${n + 1})  ${(e as any)?.reason?.message}`).join(", ")
         const runEnrichment = async (enrichment: Enrichment) => {
           const startTime = performance.now();
           const storeConfig = enrichmentConfigs[enrichment.id] || {};
-          const enrichmentConfig = Object.assign(
-            {},
-            storeConfig,
-            config.stores[manifest.storeId].config?.[enrichment.id] || {}
-          );
+          const enrichmentConfig = Object.assign({}, storeConfig, resourceStoreConfig.config?.[enrichment.id] || {});
           const resourceFiles = createResourceHandler(cachedCanvasResource.filesDir, files);
 
           const valid =
@@ -304,27 +316,31 @@ ${errors.map((e, n) => `  ${n + 1})  ${(e as any)?.reason?.message}`).join(", ")
             // console.log('Skipping "' + enrichment.name + '" for "' + manifest.slug + '" because it is not modified');
             return;
           }
-          const result = await enrichment.handler(
-            canvasResource,
-            {
-              meta: cachedCanvasResource.meta,
-              indices: cachedCanvasResource.indices,
-              caches: cachedCanvasResource.caches,
-              searchRecord: cachedCanvasResource.searchRecord,
-              config: config,
-              builder,
-              resource: canvas,
-              files: cachedCanvasResource.filesDir,
-              requestCache,
-              fileHandler: files,
-              resourceFiles,
-            },
-            enrichmentConfig
-          );
+          try {
+            const result = await enrichment.handler(
+              canvasResource,
+              {
+                meta: cachedCanvasResource.meta,
+                indices: cachedCanvasResource.indices,
+                caches: cachedCanvasResource.caches,
+                searchRecord: cachedCanvasResource.searchRecord,
+                config: config,
+                builder,
+                resource: canvas,
+                files: cachedCanvasResource.filesDir,
+                requestCache,
+                fileHandler: files,
+                resourceFiles,
+              },
+              enrichmentConfig
+            );
 
-          cachedCanvasResource.handleResponse(result, enrichment);
-          cachedResource.didChange(result.didChange);
-          stats.run[enrichment.id] = (stats.run[enrichment.id] || 0) + (performance.now() - startTime);
+            cachedCanvasResource.handleResponse(result, enrichment);
+            cachedResource.didChange(result.didChange);
+            stats.run[enrichment.id] = (stats.run[enrichment.id] || 0) + (performance.now() - startTime);
+          } catch (error) {
+            console.log("[skipped]", enrichment.id, "\nmanifest:", manifest?.id);
+          }
         };
         manifestQueue.add(async () => {
           const processedEnrichments = [];
@@ -347,7 +363,28 @@ ${errors.map((e, n) => `  ${n + 1}) ${(e as any)?.reason?.message}`).join(", ")}
           }
 
           const indices = await cachedResource.indices.value;
-          addToSearchIndex(await cachedCanvasResource.searchRecord.value, indices);
+          const record = await cachedCanvasResource.searchRecord.value;
+          const searchIndexResult = addToSearchIndex(record, indices);
+          for (const result of searchIndexResult) {
+            if (result.index) {
+              canvasSearchIndex[manifest.slug] = canvasSearchIndex[manifest.slug] || {};
+              canvasSearchIndex[manifest.slug][result.index] = canvasSearchIndex[manifest.slug][result.index] || {
+                records: [],
+                remoteRecords: [],
+              };
+              if (result.remoteRecords) {
+                for (const remote of result.remoteRecords) {
+                  if (!canvasSearchIndex[manifest.slug][result.index].remoteRecords.find((r) => r.url === remote.url)) {
+                    canvasSearchIndex[manifest.slug][result.index].remoteRecords.push(remote);
+                  }
+                }
+              }
+              if (result.record) {
+                // Add to manifest
+                canvasSearchIndex[manifest.slug][result.index].records.push(result.record);
+              }
+            }
+          }
           recordIndices(indices);
           savingFiles.push(cachedCanvasResource.save());
 
@@ -402,6 +439,7 @@ ${errors.map((e, n) => `  ${n + 1}) ${(e as any)?.reason?.message}`).join(", ")}
   return {
     stats,
     searchIndexes,
+    canvasSearchIndex,
     allIndices,
   };
 }

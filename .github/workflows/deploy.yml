@@ -46,6 +46,7 @@ jobs:
       - name: Build HSS
         working-directory: packages/headless-static-site
         run: pnpm run build
+
       - name: Link HSS CLI
         run: pnpm install --frozen-lockfile
 
