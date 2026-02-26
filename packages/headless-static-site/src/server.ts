@@ -148,6 +148,7 @@ registerDebugUiRoutes({
   fileHandler,
   getActivePaths: () => ({ ...activePaths }),
   getConfig: async () => (await resolveConfigSource()).config,
+  getConfigMode: async () => (await resolveConfigSource()).mode,
   getTraceJson: () => tracer.toJSON(),
   getDebugUiDir: () => findDebugUiDir(cwd(), require.resolve.bind(require)),
   getBuildStatus: () => ({ ...buildStatus }),

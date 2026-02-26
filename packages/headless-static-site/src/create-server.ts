@@ -163,6 +163,7 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
     fileHandler,
     getActivePaths: () => ({ ...activePaths }),
     getConfig: () => config,
+    getConfigMode: () => (configSource?.mode as any) || "custom",
     getTraceJson: () => tracer.toJSON(),
     getDebugUiDir: () => findDebugUiDir(cwd(), require.resolve.bind(require)),
     manifestEditorUrl: meUrl,

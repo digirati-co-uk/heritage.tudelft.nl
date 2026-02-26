@@ -1,13 +1,24 @@
 import { existsSync } from "node:fs";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { dirname, extname, join, resolve } from "node:path";
 import { cwd } from "node:process";
 import { upgrade } from "@iiif/parser/upgrader";
 import type { Hono } from "hono";
+import micromatch from "micromatch";
+import slug from "slug";
+import { parse as parseYaml, stringify } from "yaml";
+import type { FolderCollectionsConfig } from "../extract/extract-folder-collections.ts";
 import type { FileHandler } from "../util/file-handler.ts";
-import type { IIIFRC } from "../util/get-config.ts";
+import type { ConfigMode, IIIFRC } from "../util/get-config.ts";
+import type { GenericStore } from "../util/get-config.ts";
+import { makeGetSlugHelper } from "../util/make-slug-helper.ts";
+import { readAllFiles } from "../util/read-all-files.ts";
+import { readFilteredFiles } from "../util/read-filtered-files.ts";
 import { resolveFromSlug } from "../util/resolve-from-slug.ts";
+import { rewritePath } from "../util/rewrite-path.ts";
 import type { SlugConfig } from "../util/slug-engine.ts";
+import { compileReverseSlugConfig, compileSlugConfig } from "../util/slug-engine.ts";
+import { assertStoreId, maybeRunRebuild, resolveIiifConfigWorkspace, writeJsonObject } from "./config-workspace.ts";
 
 const MIME_TYPES: Record<string, string> = {
   ".css": "text/css; charset=utf-8",
@@ -202,6 +213,7 @@ interface RegisterDebugUiRoutesOptions {
   fileHandler: FileHandler;
   getActivePaths: () => { buildDir: string; cacheDir: string };
   getConfig: () => Promise<IIIFRC> | IIIFRC;
+  getConfigMode?: () => Promise<ConfigMode | "unknown"> | ConfigMode | "unknown";
   getTraceJson?: () => unknown;
   getDebugUiDir: () => string | null;
   manifestEditorUrl?: string;
@@ -305,11 +317,87 @@ function getExtractTopicsWarnings(config: IIIFRC, metadataAnalysisExists: boolea
   return warnings;
 }
 
+function normalizeLabelValue(input: string) {
+  return input
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+/, "")
+    .replace(/-+$/, "");
+}
+
+async function getCurrentConfigMode(getConfigMode?: () => Promise<ConfigMode | "unknown"> | ConfigMode | "unknown") {
+  if (!getConfigMode) {
+    return "unknown";
+  }
+  return await getConfigMode();
+}
+
+function normalizeFolderCollectionsConfig(input: unknown): FolderCollectionsConfig {
+  const value = (input || {}) as FolderCollectionsConfig;
+  const minDepth = typeof value.minDepth === "number" ? Math.max(0, Math.floor(value.minDepth)) : 1;
+  const labelStrategy = value.labelStrategy || "folderName";
+  const ignorePaths = Array.isArray(value.ignorePaths)
+    ? value.ignorePaths.map((entry) => String(entry || "").trim()).filter(Boolean)
+    : [];
+  const customMap = isPlainObject(value.customMap) ? value.customMap : {};
+
+  return {
+    enabled: value.enabled !== false,
+    minDepth,
+    ignorePaths,
+    labelStrategy,
+    customMap,
+  };
+}
+
+function normalizeCollectionSurfaceValue(input: unknown) {
+  if (!isPlainObject(input)) {
+    return {};
+  }
+  return input as Record<string, any>;
+}
+
+function normalizeTopicThumbnailConfig(input: unknown) {
+  const value = isPlainObject(input) ? input : {};
+  const strategy = ["first", "mostRecent", "highestRes", "random"].includes(String(value.selectionStrategy))
+    ? String(value.selectionStrategy)
+    : "first";
+  const fallback = typeof value.fallback === "string" && value.fallback.trim() ? value.fallback.trim() : null;
+  return {
+    selectionStrategy: strategy,
+    fallback,
+  };
+}
+
+async function getCachedResources(cacheDir: string, handler: FileHandler) {
+  const cacheRoot = join(cwd(), cacheDir);
+  if (!existsSync(cacheRoot)) {
+    return [];
+  }
+  const resourceFiles = Array.from(readAllFiles(cacheRoot)).filter((file) => file.endsWith("/resource.json"));
+  const resources = [];
+  for (const file of resourceFiles) {
+    const loaded = await handler.loadJson(file, true);
+    if (loaded?.slug && loaded?.type) {
+      resources.push(loaded);
+    }
+  }
+  return resources as Array<any>;
+}
+
+function toSlugCompileMap(slugs: Record<string, SlugConfig>) {
+  return Object.fromEntries(
+    Object.entries(slugs || {}).map(([key, value]) => [key, { info: value, compile: compileSlugConfig(value) }])
+  );
+}
+
 export function registerDebugUiRoutes({
   app,
   fileHandler,
   getActivePaths,
   getConfig,
+  getConfigMode,
   getTraceJson,
   getDebugUiDir,
   manifestEditorUrl = "https://manifest-editor.digirati.services",
@@ -655,6 +743,682 @@ export function registerDebugUiRoutes({
       extractTopicsConfig: finalConfig,
       rebuild: rebuildStatus,
       warnings: getExtractTopicsWarnings(config, metadataAnalysisExists, defaultRun),
+    });
+  });
+
+  app.get("/_debug/api/config/stores", async (ctx) => {
+    const config = await getConfig();
+    const mode = await getCurrentConfigMode(getConfigMode);
+    const workspace = resolveIiifConfigWorkspace(mode);
+    return ctx.json({
+      mode,
+      writable: workspace.writable,
+      reason: workspace.reason || null,
+      stores: config.stores || {},
+      outputDir: workspace.storesDir,
+    });
+  });
+
+  app.post("/_debug/api/config/stores/preview", async (ctx) => {
+    let payload: any;
+    try {
+      payload = await ctx.req.json();
+    } catch (error) {
+      return ctx.json({ error: "Invalid JSON body" }, 400);
+    }
+    const store = payload?.store;
+    if (!isPlainObject(store)) {
+      return ctx.json({ error: '"store" must be an object' }, 400);
+    }
+    if (store.type !== "iiif-json" && store.type !== "iiif-remote") {
+      return ctx.json({ error: '"store.type" must be "iiif-json" or "iiif-remote"' }, 400);
+    }
+
+    if (store.type === "iiif-json") {
+      if (!store.path || typeof store.path !== "string") {
+        return ctx.json({ error: '"store.path" is required for iiif-json stores' }, 400);
+      }
+      const pathExists = existsSync(store.path);
+      const files = pathExists ? readFilteredFiles(store as GenericStore) : [];
+      const rewrite = rewritePath(store);
+      return ctx.json({
+        type: "iiif-json",
+        pathExists,
+        matchedCount: files.length,
+        sampleFiles: files.slice(0, 20),
+        sampleSlugs: files.slice(0, 20).map((file) => rewrite(file)),
+      });
+    }
+
+    const urls = [
+      ...(store.url ? [store.url] : []),
+      ...(Array.isArray(store.urls) ? store.urls : []).filter((value) => typeof value === "string"),
+    ].map((value) => String(value).trim());
+    if (!urls.length) {
+      return ctx.json({ error: "iiif-remote store needs `url` or `urls`." }, 400);
+    }
+
+    const checks = [];
+    for (const url of urls.slice(0, 5)) {
+      try {
+        const response = await fetch(url);
+        const json = response.ok ? await response.json() : null;
+        checks.push({
+          url,
+          ok: response.ok,
+          status: response.status,
+          type: json?.type || json?.["@type"] || null,
+          id: json?.id || json?.["@id"] || null,
+          items: Array.isArray(json?.items) ? json.items.length : null,
+        });
+      } catch (error) {
+        checks.push({
+          url,
+          ok: false,
+          status: null,
+          error: (error as Error)?.message || String(error),
+        });
+      }
+    }
+
+    return ctx.json({
+      type: "iiif-remote",
+      urls,
+      checks,
+      overrides: store.overrides || null,
+      overridesExists: typeof store.overrides === "string" ? existsSync(store.overrides) : null,
+      saveManifests: Boolean(store.saveManifests),
+    });
+  });
+
+  app.put("/_debug/api/config/stores/:storeId", async (ctx) => {
+    const mode = await getCurrentConfigMode(getConfigMode);
+    const workspace = resolveIiifConfigWorkspace(mode);
+    if (!workspace.writable) {
+      return ctx.json({ error: workspace.reason || "Config workspace is read-only." }, 409);
+    }
+
+    const storeId = ctx.req.param("storeId");
+    try {
+      assertStoreId(storeId);
+    } catch (error) {
+      return ctx.json({ error: (error as Error).message }, 400);
+    }
+
+    let payload: any;
+    try {
+      payload = await ctx.req.json();
+    } catch (error) {
+      return ctx.json({ error: "Invalid JSON body" }, 400);
+    }
+    const store = payload?.store;
+    if (!isPlainObject(store)) {
+      return ctx.json({ error: '"store" must be an object' }, 400);
+    }
+    if (store.type !== "iiif-json" && store.type !== "iiif-remote") {
+      return ctx.json({ error: '"store.type" must be "iiif-json" or "iiif-remote"' }, 400);
+    }
+    if (store.type === "iiif-json" && (!store.path || typeof store.path !== "string")) {
+      return ctx.json({ error: '"store.path" is required for iiif-json stores' }, 400);
+    }
+    if (
+      store.type === "iiif-remote" &&
+      !store.url &&
+      !(Array.isArray(store.urls) && store.urls.some((value: unknown) => typeof value === "string"))
+    ) {
+      return ctx.json({ error: "iiif-remote store requires url or urls" }, 400);
+    }
+
+    const outputPath = join(workspace.storesDir, `${storeId}.json`);
+    await writeJsonObject(outputPath, store);
+
+    const config = await getConfig();
+    config.stores = config.stores || {};
+    config.stores[storeId] = store as any;
+    const rebuildStatus = await maybeRunRebuild(rebuild);
+
+    return ctx.json({
+      saved: true,
+      path: outputPath,
+      storeId,
+      store,
+      rebuild: rebuildStatus,
+    });
+  });
+
+  app.delete("/_debug/api/config/stores/:storeId", async (ctx) => {
+    const mode = await getCurrentConfigMode(getConfigMode);
+    const workspace = resolveIiifConfigWorkspace(mode);
+    if (!workspace.writable) {
+      return ctx.json({ error: workspace.reason || "Config workspace is read-only." }, 409);
+    }
+
+    const storeId = ctx.req.param("storeId");
+    try {
+      assertStoreId(storeId);
+    } catch (error) {
+      return ctx.json({ error: (error as Error).message }, 400);
+    }
+
+    const outputPath = join(workspace.storesDir, `${storeId}.json`);
+    await rm(outputPath, { force: true });
+
+    const config = await getConfig();
+    if (config.stores?.[storeId]) {
+      delete config.stores[storeId];
+    }
+    const rebuildStatus = await maybeRunRebuild(rebuild);
+
+    return ctx.json({
+      saved: true,
+      deleted: true,
+      path: outputPath,
+      storeId,
+      rebuild: rebuildStatus,
+    });
+  });
+
+  app.get("/_debug/api/config/slugs", async (ctx) => {
+    const config = await getConfig();
+    const mode = await getCurrentConfigMode(getConfigMode);
+    const workspace = resolveIiifConfigWorkspace(mode);
+    return ctx.json({
+      mode,
+      writable: workspace.writable,
+      reason: workspace.reason || null,
+      slugs: config.slugs || {},
+      outputPath: join(workspace.configRoot, "slugs.json"),
+    });
+  });
+
+  app.post("/_debug/api/config/slugs/compile-preview", async (ctx) => {
+    const config = await getConfig();
+    let payload: any;
+    try {
+      payload = await ctx.req.json();
+    } catch (error) {
+      payload = {};
+    }
+    const slugsConfig = isPlainObject(payload?.slugs) ? payload.slugs : config.slugs || {};
+    const sharedSamples = Array.isArray(payload?.samples)
+      ? payload.samples.filter((value: unknown) => typeof value === "string")
+      : [];
+
+    const preview: Record<string, any> = {};
+    for (const [key, value] of Object.entries(slugsConfig)) {
+      try {
+        const compiled = compileSlugConfig(value as SlugConfig);
+        const reverse = compileReverseSlugConfig(value as SlugConfig);
+        const examples = [...((value as SlugConfig).examples || []), ...sharedSamples].filter(Boolean);
+        const tests = examples.map((example) => {
+          const [matchedSlug] = compiled(example);
+          if (!matchedSlug) {
+            return {
+              input: example,
+              matched: false,
+            };
+          }
+          const prefixed = `${(value as SlugConfig).type === "Manifest" ? "manifests" : "collections"}/${matchedSlug}`;
+          const [roundTrip] = reverse(prefixed);
+          return {
+            input: example,
+            matched: true,
+            slug: matchedSlug,
+            reverseTarget: prefixed,
+            reverseMatch: roundTrip || null,
+          };
+        });
+        preview[key] = {
+          ok: true,
+          tests,
+        };
+      } catch (error) {
+        preview[key] = {
+          ok: false,
+          error: (error as Error)?.message || String(error),
+        };
+      }
+    }
+
+    return ctx.json({ preview });
+  });
+
+  app.post("/_debug/api/config/slugs/collision-preview", async (ctx) => {
+    const config = await getConfig();
+    const { cacheDir } = getActivePaths();
+    let payload: any;
+    try {
+      payload = await ctx.req.json();
+    } catch (error) {
+      payload = {};
+    }
+    const slugsConfig = isPlainObject(payload?.slugs) ? payload.slugs : config.slugs || {};
+    const storesConfig = isPlainObject(payload?.stores) ? payload.stores : config.stores || {};
+    let compiledSlugs: Record<string, any> = {};
+    try {
+      compiledSlugs = toSlugCompileMap(slugsConfig as Record<string, SlugConfig>);
+    } catch (error) {
+      return ctx.json({ error: (error as Error)?.message || String(error) }, 400);
+    }
+    const resources = await getCachedResources(cacheDir, fileHandler);
+    const bySlug: Record<string, any[]> = {};
+
+    for (const resource of resources) {
+      if (!resource?.id || !resource?.type || !resource?.storeId) {
+        continue;
+      }
+      const storeConfig = storesConfig[resource.storeId];
+      if (!storeConfig) {
+        continue;
+      }
+      const helper = makeGetSlugHelper(storeConfig as GenericStore, compiledSlugs as any);
+      const [computedSlug, slugSource] = helper({ id: resource.id, type: resource.type });
+      if (!computedSlug) {
+        continue;
+      }
+      bySlug[computedSlug] = bySlug[computedSlug] || [];
+      bySlug[computedSlug].push({
+        id: resource.id,
+        type: resource.type,
+        storeId: resource.storeId,
+        currentSlug: resource.slug,
+        candidateSlug: computedSlug,
+        slugSource,
+      });
+    }
+
+    const collisions = Object.entries(bySlug)
+      .filter(([, entries]) => entries.length > 1)
+      .map(([candidateSlug, entries]) => ({
+        candidateSlug,
+        entries,
+      }));
+
+    return ctx.json({
+      resourceCount: resources.length,
+      collisions,
+      warnings: resources.length === 0 ? ["No cached resources found. Run a build before collision analysis."] : [],
+    });
+  });
+
+  app.post("/_debug/api/config/slugs/save", async (ctx) => {
+    const mode = await getCurrentConfigMode(getConfigMode);
+    const workspace = resolveIiifConfigWorkspace(mode);
+    if (!workspace.writable) {
+      return ctx.json({ error: workspace.reason || "Config workspace is read-only." }, 409);
+    }
+
+    let payload: any;
+    try {
+      payload = await ctx.req.json();
+    } catch (error) {
+      return ctx.json({ error: "Invalid JSON body" }, 400);
+    }
+
+    if (!isPlainObject(payload?.slugs)) {
+      return ctx.json({ error: '"slugs" must be an object' }, 400);
+    }
+
+    const outputPath = join(workspace.configRoot, "slugs.json");
+    await writeJsonObject(outputPath, payload.slugs);
+
+    const config = await getConfig();
+    config.slugs = payload.slugs;
+    const rebuildStatus = await maybeRunRebuild(rebuild);
+
+    return ctx.json({
+      saved: true,
+      path: outputPath,
+      slugs: payload.slugs,
+      rebuild: rebuildStatus,
+    });
+  });
+
+  app.get("/_debug/api/config/collections", async (ctx) => {
+    const config = await getConfig();
+    const mode = await getCurrentConfigMode(getConfigMode);
+    const workspace = resolveIiifConfigWorkspace(mode);
+    return ctx.json({
+      mode,
+      writable: workspace.writable,
+      reason: workspace.reason || null,
+      collections: config.collections || {},
+      outputPath: join(workspace.configRoot, "collections.json"),
+    });
+  });
+
+  app.post("/_debug/api/config/collections/save", async (ctx) => {
+    const mode = await getCurrentConfigMode(getConfigMode);
+    const workspace = resolveIiifConfigWorkspace(mode);
+    if (!workspace.writable) {
+      return ctx.json({ error: workspace.reason || "Config workspace is read-only." }, 409);
+    }
+
+    let payload: any;
+    try {
+      payload = await ctx.req.json();
+    } catch (error) {
+      return ctx.json({ error: "Invalid JSON body" }, 400);
+    }
+    if (!isPlainObject(payload?.collections)) {
+      return ctx.json({ error: '"collections" must be an object' }, 400);
+    }
+
+    const normalizedCollections = {
+      index: normalizeCollectionSurfaceValue(payload.collections.index),
+      manifests: normalizeCollectionSurfaceValue(payload.collections.manifests),
+      collections: normalizeCollectionSurfaceValue(payload.collections.collections),
+      topics: normalizeCollectionSurfaceValue(payload.collections.topics),
+    };
+    const outputPath = join(workspace.configRoot, "collections.json");
+    await writeJsonObject(outputPath, normalizedCollections);
+
+    const config = await getConfig();
+    config.collections = normalizedCollections as any;
+    const rebuildStatus = await maybeRunRebuild(rebuild);
+
+    return ctx.json({
+      saved: true,
+      path: outputPath,
+      collections: normalizedCollections,
+      rebuild: rebuildStatus,
+    });
+  });
+
+  app.get("/_debug/api/config/folder-collections", async (ctx) => {
+    const config = await getConfig();
+    const mode = await getCurrentConfigMode(getConfigMode);
+    const workspace = resolveIiifConfigWorkspace(mode);
+    const normalized = normalizeFolderCollectionsConfig(config.config?.["folder-collections"]);
+    return ctx.json({
+      mode,
+      writable: workspace.writable,
+      reason: workspace.reason || null,
+      config: normalized,
+      outputPath: join(workspace.configDir, "folder-collections.json"),
+    });
+  });
+
+  app.post("/_debug/api/config/folder-collections/preview", async (ctx) => {
+    const config = await getConfig();
+    const { cacheDir } = getActivePaths();
+    let payload: any;
+    try {
+      payload = await ctx.req.json();
+    } catch (error) {
+      payload = {};
+    }
+
+    const previewConfig = normalizeFolderCollectionsConfig(payload?.config || config.config?.["folder-collections"]);
+    const resources = await getCachedResources(cacheDir, fileHandler);
+    const included: Record<string, { count: number; label: string }> = {};
+    const excluded: Array<{ slug: string; excludeReason: string }> = [];
+
+    for (const resource of resources) {
+      const relativePath = resource?.source?.relativePath ? String(resource.source.relativePath).trim() : "";
+      if (!relativePath) {
+        continue;
+      }
+      const depth = relativePath.split("/").filter(Boolean).length;
+      if (!previewConfig.enabled) {
+        excluded.push({ slug: relativePath, excludeReason: "disabled" });
+        continue;
+      }
+      if (depth < (previewConfig.minDepth || 0)) {
+        excluded.push({ slug: relativePath, excludeReason: "minDepth" });
+        continue;
+      }
+      if (previewConfig.ignorePaths?.length && micromatch.isMatch(relativePath, previewConfig.ignorePaths)) {
+        excluded.push({ slug: relativePath, excludeReason: "ignorePaths" });
+        continue;
+      }
+
+      let label = relativePath.split("/").filter(Boolean).pop() || relativePath;
+      if (previewConfig.labelStrategy === "customMap") {
+        const custom = previewConfig.customMap?.[relativePath];
+        if (typeof custom === "string" && custom.trim()) {
+          label = custom;
+        }
+      }
+      if (previewConfig.labelStrategy === "folderName" || !previewConfig.labelStrategy) {
+        label = label
+          .split(/[-_\s]+/g)
+          .filter(Boolean)
+          .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+          .join(" ");
+      }
+      if (previewConfig.labelStrategy === "metadata" && resource.source.type === "disk") {
+        const ymlPath = join(resource.source.path, relativePath, "_collection.yml");
+        const yamlPath = join(resource.source.path, relativePath, "_collection.yaml");
+        const pathToUse = existsSync(ymlPath) ? ymlPath : existsSync(yamlPath) ? yamlPath : null;
+        if (pathToUse) {
+          const loaded = parseYaml(await readFile(pathToUse, "utf-8"));
+          if (loaded?.label) {
+            label = typeof loaded.label === "string" ? loaded.label : label;
+          }
+        }
+      }
+
+      included[relativePath] = included[relativePath] || { count: 0, label };
+      included[relativePath].count += 1;
+    }
+
+    return ctx.json({
+      config: previewConfig,
+      included: Object.entries(included)
+        .map(([slug, value]) => ({ slug, count: value.count, label: value.label, excluded: false }))
+        .sort((a, b) => b.count - a.count),
+      excluded,
+    });
+  });
+
+  app.post("/_debug/api/config/folder-collections/save", async (ctx) => {
+    const mode = await getCurrentConfigMode(getConfigMode);
+    const workspace = resolveIiifConfigWorkspace(mode);
+    if (!workspace.writable) {
+      return ctx.json({ error: workspace.reason || "Config workspace is read-only." }, 409);
+    }
+    let payload: any;
+    try {
+      payload = await ctx.req.json();
+    } catch (error) {
+      return ctx.json({ error: "Invalid JSON body" }, 400);
+    }
+    const normalized = normalizeFolderCollectionsConfig(payload?.config);
+    const outputPath = join(workspace.configDir, "folder-collections.json");
+    await writeJsonObject(outputPath, normalized as any);
+
+    const config = await getConfig();
+    config.config = config.config || {};
+    config.config["folder-collections"] = normalized as any;
+    const rebuildStatus = await maybeRunRebuild(rebuild);
+    return ctx.json({
+      saved: true,
+      path: outputPath,
+      config: normalized,
+      rebuild: rebuildStatus,
+    });
+  });
+
+  app.get("/_debug/api/topics/thumbnails", async (ctx) => {
+    const config = await getConfig();
+    const { buildDir, cacheDir } = getActivePaths();
+    const topicsRoot = join(cwd(), "content", "topics");
+    const metaIndicesPath = join(cwd(), buildDir, "meta", "indices.json");
+    const topicIndex = (await fileHandler.loadJson(metaIndicesPath, true)) as Record<string, Record<string, string[]>>;
+    const scriptConfig = normalizeTopicThumbnailConfig(config.config?.["enrich-topic-thumbnails"]);
+    const entries: Array<{
+      key: string;
+      topicType: string;
+      topic: string;
+      topicSlug: string;
+      count: number;
+      currentThumbnail: string | null;
+      candidates: string[];
+    }> = [];
+
+    for (const [topicType, values] of Object.entries(topicIndex || {})) {
+      for (const [topic, slugs] of Object.entries(values || {})) {
+        const topicSlug = slug(topic);
+        const topicMetaPath = join(topicsRoot, topicType, `${topicSlug}.yaml`);
+        const existingMeta = existsSync(topicMetaPath) ? parseYaml(await readFile(topicMetaPath, "utf-8")) : {};
+        const currentThumbnail =
+          typeof existingMeta?.thumbnail === "string" && existingMeta.thumbnail.trim() ? existingMeta.thumbnail : null;
+        const candidates = new Set<string>();
+        for (const itemSlug of slugs || []) {
+          const metaPath = join(cwd(), cacheDir, itemSlug, "meta.json");
+          if (!existsSync(metaPath)) {
+            continue;
+          }
+          const meta = await fileHandler.loadJson(metaPath, true);
+          const thumbnail =
+            (typeof meta?.thumbnail?.id === "string" && meta.thumbnail.id) ||
+            (typeof meta?.thumbnail === "string" && meta.thumbnail) ||
+            null;
+          if (thumbnail) {
+            candidates.add(thumbnail);
+          }
+        }
+        entries.push({
+          key: `${topicType}:${topic}`,
+          topicType,
+          topic,
+          topicSlug,
+          count: slugs.length,
+          currentThumbnail,
+          candidates: [...candidates].slice(0, 20),
+        });
+      }
+    }
+
+    return ctx.json({
+      config: scriptConfig,
+      entries: entries.sort((a, b) => b.count - a.count),
+      outputPath: join(cwd(), "iiif-config", "config", "enrich-topic-thumbnails.json"),
+    });
+  });
+
+  app.post("/_debug/api/topics/thumbnails/preview-selection", async (ctx) => {
+    const config = await getConfig();
+    const { buildDir, cacheDir } = getActivePaths();
+    let payload: any;
+    try {
+      payload = await ctx.req.json();
+    } catch (error) {
+      payload = {};
+    }
+    const scriptConfig = normalizeTopicThumbnailConfig(payload?.config || config.config?.["enrich-topic-thumbnails"]);
+    const metaIndicesPath = join(cwd(), buildDir, "meta", "indices.json");
+    const topicIndex = (await fileHandler.loadJson(metaIndicesPath, true)) as Record<string, Record<string, string[]>>;
+    const preview: Array<{ topicType: string; topic: string; selectedThumbnail: string | null; candidates: string[] }> =
+      [];
+
+    for (const [topicType, values] of Object.entries(topicIndex || {})) {
+      for (const [topic, slugs] of Object.entries(values || {})) {
+        const candidates: string[] = [];
+        for (const itemSlug of slugs || []) {
+          const metaPath = join(cwd(), cacheDir, itemSlug, "meta.json");
+          if (!existsSync(metaPath)) {
+            continue;
+          }
+          const meta = await fileHandler.loadJson(metaPath, true);
+          const thumbnail =
+            (typeof meta?.thumbnail?.id === "string" && meta.thumbnail.id) ||
+            (typeof meta?.thumbnail === "string" && meta.thumbnail) ||
+            null;
+          if (thumbnail && !candidates.includes(thumbnail)) {
+            candidates.push(thumbnail);
+          }
+        }
+        let selected: string | null = null;
+        if (scriptConfig.selectionStrategy === "random" && candidates.length) {
+          selected = candidates[Math.floor(Math.random() * candidates.length)];
+        } else {
+          selected = candidates[0] || null;
+        }
+        if (!selected) {
+          selected = scriptConfig.fallback || null;
+        }
+        preview.push({
+          topicType,
+          topic,
+          selectedThumbnail: selected,
+          candidates: candidates.slice(0, 20),
+        });
+      }
+    }
+
+    return ctx.json({
+      config: scriptConfig,
+      preview,
+    });
+  });
+
+  app.post("/_debug/api/topics/thumbnails/save-config", async (ctx) => {
+    const mode = await getCurrentConfigMode(getConfigMode);
+    const workspace = resolveIiifConfigWorkspace(mode);
+    if (!workspace.writable) {
+      return ctx.json({ error: workspace.reason || "Config workspace is read-only." }, 409);
+    }
+    let payload: any;
+    try {
+      payload = await ctx.req.json();
+    } catch (error) {
+      return ctx.json({ error: "Invalid JSON body" }, 400);
+    }
+    const normalized = normalizeTopicThumbnailConfig(payload?.config);
+    const outputPath = join(workspace.configDir, "enrich-topic-thumbnails.json");
+    await writeJsonObject(outputPath, normalized as any);
+
+    const config = await getConfig();
+    config.config = config.config || {};
+    config.config["enrich-topic-thumbnails"] = normalized;
+    const rebuildStatus = await maybeRunRebuild(rebuild);
+
+    return ctx.json({
+      saved: true,
+      path: outputPath,
+      config: normalized,
+      rebuild: rebuildStatus,
+    });
+  });
+
+  app.post("/_debug/api/topics/thumbnails/save-override", async (ctx) => {
+    let payload: any;
+    try {
+      payload = await ctx.req.json();
+    } catch (error) {
+      return ctx.json({ error: "Invalid JSON body" }, 400);
+    }
+    const topicType = String(payload?.topicType || "").trim();
+    const topic = String(payload?.topic || "").trim();
+    const thumbnail = String(payload?.thumbnail || "").trim();
+    if (!topicType || !topic) {
+      return ctx.json({ error: '"topicType" and "topic" are required' }, 400);
+    }
+    if (!thumbnail) {
+      return ctx.json({ error: '"thumbnail" is required' }, 400);
+    }
+    const topicSlug = slug(topic) || normalizeLabelValue(topic);
+    const topicPath = join(cwd(), "content", "topics", topicType, `${topicSlug}.yaml`);
+    const existing = existsSync(topicPath) ? parseYaml(await readFile(topicPath, "utf-8")) : {};
+    const next = {
+      id: topicSlug,
+      label: topic,
+      slug: `topics/${topicType}/${topicSlug}`,
+      ...existing,
+      thumbnail,
+    };
+    await mkdir(dirname(topicPath), { recursive: true });
+    await writeFile(topicPath, stringify(next), "utf-8");
+    const rebuildStatus = await maybeRunRebuild(rebuild);
+    return ctx.json({
+      saved: true,
+      path: topicPath,
+      topicType,
+      topic,
+      thumbnail,
+      rebuild: rebuildStatus,
     });
   });
 

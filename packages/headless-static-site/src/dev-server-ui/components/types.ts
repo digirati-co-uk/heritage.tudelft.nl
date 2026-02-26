@@ -114,3 +114,104 @@ export type CreateMetadataCollectionResponse = {
   };
   warnings: string[];
 };
+
+export type ConfigWorkspaceState = {
+  mode: string;
+  writable: boolean;
+  reason: string | null;
+};
+
+export type StoresConfigResponse = ConfigWorkspaceState & {
+  stores: Record<string, any>;
+  outputDir: string;
+};
+
+export type SlugsConfigResponse = ConfigWorkspaceState & {
+  slugs: Record<string, any>;
+  outputPath: string;
+};
+
+export type SlugCompilePreviewResponse = {
+  preview: Record<
+    string,
+    {
+      ok: boolean;
+      error?: string;
+      tests?: Array<{
+        input: string;
+        matched: boolean;
+        slug?: string;
+        reverseTarget?: string;
+        reverseMatch?: string | null;
+      }>;
+    }
+  >;
+};
+
+export type SlugCollisionPreviewResponse = {
+  resourceCount: number;
+  warnings: string[];
+  collisions: Array<{
+    candidateSlug: string;
+    entries: Array<{
+      id: string;
+      type: string;
+      storeId: string;
+      currentSlug: string;
+      candidateSlug: string;
+      slugSource: string;
+    }>;
+  }>;
+};
+
+export type CollectionsConfigResponse = ConfigWorkspaceState & {
+  collections: {
+    index?: Record<string, any>;
+    manifests?: Record<string, any>;
+    collections?: Record<string, any>;
+    topics?: Record<string, any>;
+  };
+  outputPath: string;
+};
+
+export type FolderCollectionsResponse = ConfigWorkspaceState & {
+  config: {
+    enabled?: boolean;
+    minDepth?: number;
+    ignorePaths?: string[];
+    labelStrategy?: "folderName" | "metadata" | "customMap";
+    customMap?: Record<string, string>;
+  };
+  outputPath: string;
+};
+
+export type FolderCollectionsPreviewResponse = {
+  config: FolderCollectionsResponse["config"];
+  included: Array<{
+    slug: string;
+    count: number;
+    label: string;
+    excluded: boolean;
+  }>;
+  excluded: Array<{
+    slug: string;
+    excludeReason: string;
+  }>;
+};
+
+export type TopicThumbnailResponse = {
+  config: {
+    selectionStrategy: "first" | "mostRecent" | "highestRes" | "random";
+    fallback: string | null;
+  };
+  outputPath: string;
+  entries: Array<{
+    key: string;
+    topicType: string;
+    topic: string;
+    topicSlug: string;
+    count: number;
+    currentThumbnail: string | null;
+    candidates: string[];
+  }>;
+};

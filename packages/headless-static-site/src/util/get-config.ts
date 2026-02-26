@@ -32,8 +32,8 @@ export interface IIIFRC {
   collections?: {
     index?: Partial<Collection>;
     manifests?: Partial<Collection>;
-    collections?: Record<string, Partial<Collection>>;
-    topics?: Record<string, Partial<Collection>>;
+    collections?: Partial<Collection>;
+    topics?: Partial<Collection>;
   };
   search?: {
     indexNames?: string[];
@@ -222,6 +222,8 @@ async function loadIiifConfigFolder(projectRoot: string): Promise<ResolvedConfig
 
   const configYml = join(iiifConfigRoot, "config.yml");
   const configYaml = join(iiifConfigRoot, "config.yaml");
+  const slugsJson = join(iiifConfigRoot, "slugs.json");
+  const collectionsJson = join(iiifConfigRoot, "collections.json");
   const storesDir = join(iiifConfigRoot, "stores");
   const configDir = join(iiifConfigRoot, "config");
   const scriptsDir = join(iiifConfigRoot, "scripts");
@@ -289,6 +291,18 @@ async function loadIiifConfigFolder(projectRoot: string): Promise<ResolvedConfig
   }
 
   const mergedConfig = normalizeConfig(rootConfig);
+  if (fs.existsSync(slugsJson)) {
+    mergedConfig.slugs = {
+      ...(mergedConfig.slugs || {}),
+      ...(await loadJsonFile(slugsJson)),
+    };
+  }
+  if (fs.existsSync(collectionsJson)) {
+    mergedConfig.collections = {
+      ...(mergedConfig.collections || {}),
+      ...(await loadJsonFile(collectionsJson)),
+    };
+  }
   mergedConfig.stores = {
     ...(rootConfig.stores || {}),
     ...discoveredStores,
@@ -313,6 +327,12 @@ async function loadIiifConfigFolder(projectRoot: string): Promise<ResolvedConfig
   const watchPaths: ConfigWatchPath[] = [];
   if (globalConfigPath && fs.existsSync(globalConfigPath)) {
     watchPaths.push({ path: globalConfigPath, recursive: false });
+  }
+  if (fs.existsSync(slugsJson)) {
+    watchPaths.push({ path: slugsJson, recursive: false });
+  }
+  if (fs.existsSync(collectionsJson)) {
+    watchPaths.push({ path: collectionsJson, recursive: false });
   }
   if (fs.existsSync(configDir)) {
     watchPaths.push({ path: configDir, recursive: true });

@@ -202,6 +202,10 @@ export async function getBuildConfig(options: BuildOptions, builtIns: BuildBuilt
   if (config.config?.["extract-topics"] && !toRun.includes("extract-topics")) {
     toRun.push("extract-topics");
   }
+  // If topic thumbnail enrichment is configured, ensure the step runs.
+  if (config.config?.["enrich-topic-thumbnails"] && !toRun.includes("enrich-topic-thumbnails")) {
+    toRun.push("enrich-topic-thumbnails");
+  }
   const rewrites = allRewrites.filter((e) => toRun.includes(e.id));
   const extractions = allExtractions.filter((e) => toRun.includes(e.id));
   const enrichments = allEnrichments.filter((e) => toRun.includes(e.id));

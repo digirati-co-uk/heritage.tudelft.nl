@@ -7,6 +7,7 @@ import { canvasThumbnail } from "../enrich/canvas-thumbnail.ts";
 import { filesRewrite } from "../enrich/files-rewrite.ts";
 import { homepageProperty } from "../enrich/homepage-property";
 // import { manifestSqlite } from "../enrich/manifest-sqlite.ts";
+import { enrichTopicThumbnails } from "../enrich/topic-thumbnails.ts";
 import { translateMetadata } from "../enrich/translate-metadata.ts";
 import { enrichTypesense } from "../enrich/typesense-index.ts";
 import { typesensePlaintext } from "../enrich/typesense-plaintext.ts";
@@ -121,6 +122,7 @@ const buildInEnrichments: Enrichment[] = [
   enrichTypesense,
   typesensePlaintext,
   filesRewrite,
+  enrichTopicThumbnails,
   // pdiiif
 ];
 const builtInLinkers: Linker[] = [];
@@ -130,6 +132,7 @@ const builtInEnrichmentsMap = {
   [canvasThumbnail.id]: canvasThumbnail,
   [translateMetadata.id]: translateMetadata,
   [filesRewrite.id]: filesRewrite,
+  [enrichTopicThumbnails.id]: enrichTopicThumbnails,
   // [pdiiif.id]: pdiiif,
 };
 

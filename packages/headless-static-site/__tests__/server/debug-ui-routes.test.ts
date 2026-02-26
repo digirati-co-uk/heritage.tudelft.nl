@@ -384,6 +384,81 @@ describe("debug UI routes", () => {
     });
   });
 
+  test("rejects config writes when not in folder mode", async () => {
+    const server = await createServer({
+      server: { url: "http://localhost:7111" },
+      stores: {
+        default: {
+          type: "iiif-json",
+          path: "./content",
+        },
+      },
+    });
+
+    const response = await server.request("/_debug/api/config/slugs/save", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        slugs: {},
+      }),
+    });
+    expect(response.status).toBe(409);
+    const json = await response.json();
+    expect(String(json.error || "")).toContain("folder mode");
+  });
+
+  test("saves stores in folder mode debug config endpoints", async () => {
+    await mkdir(join(cwd(), "iiif-config", "stores"), { recursive: true });
+    await mkdir(join(cwd(), "iiif-config", "config"), { recursive: true });
+
+    const server = await createServer(
+      {
+        server: { url: "http://localhost:7111" },
+        stores: {
+          default: {
+            type: "iiif-json",
+            path: "./content",
+          },
+        },
+      },
+      {
+        configSource: {
+          mode: "folder",
+          defaultScriptsPath: "./iiif-config/scripts",
+          watchPaths: [],
+        },
+      }
+    );
+
+    const response = await server.request("/_debug/api/config/stores/newStore", {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        store: {
+          type: "iiif-json",
+          path: "./content",
+        },
+      }),
+    });
+    expect(response.status).toBe(200);
+
+    const json = await response.json();
+    expect(json.saved).toBe(true);
+    const persisted = JSON.parse(await readFile(join(cwd(), "iiif-config", "stores", "newStore.json"), "utf-8"));
+    expect(persisted.type).toBe("iiif-json");
+
+    const deleteResponse = await server.request("/_debug/api/config/stores/newStore", {
+      method: "DELETE",
+    });
+    expect(deleteResponse.status).toBe(200);
+    const deletedJson = await deleteResponse.json();
+    expect(deletedJson.deleted).toBe(true);
+  });
+
   test("finds packaged debug UI dir from exported module entrypoints", async () => {
     const currentWorkingDirectory = join(testDir, "project");
     await mkdir(currentWorkingDirectory, { recursive: true });

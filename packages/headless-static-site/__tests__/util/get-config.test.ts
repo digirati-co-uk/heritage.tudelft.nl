@@ -86,6 +86,44 @@ stores:
     expect(result.config.config?.["my-linker"]).toEqual({ source: "./raw", enabled: true });
   });
 
+  test("loads iiif-config slugs.json and collections.json", async () => {
+    await write(join(testDir, "iiif-config/config.yml"), "");
+    await write(join(testDir, "iiif-config/stores/local.json"), `{"type":"iiif-json","path":"./content"}`);
+    await write(
+      join(testDir, "iiif-config/slugs.json"),
+      JSON.stringify(
+        {
+          manifest: {
+            type: "Manifest",
+            domain: "example.org",
+            prefix: "/iiif/",
+          },
+        },
+        null,
+        2
+      )
+    );
+    await write(
+      join(testDir, "iiif-config/collections.json"),
+      JSON.stringify(
+        {
+          index: {
+            label: {
+              en: ["Custom Index"],
+            },
+          },
+        },
+        null,
+        2
+      )
+    );
+
+    const result = await resolveConfigSource();
+    expect(result.mode).toBe("folder");
+    expect(result.config.slugs?.manifest).toBeDefined();
+    expect((result.config.collections?.index as any)?.label?.en?.[0]).toBe("Custom Index");
+  });
+
   test("falls back to default mode and default store when no config exists", async () => {
     const result = await resolveConfigSource();
     expect(result.mode).toBe("default");
