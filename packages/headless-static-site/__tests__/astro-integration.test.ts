@@ -172,6 +172,60 @@ describe("astro integration lifecycle", () => {
     });
   });
 
+  test("rebuilds IIIF output when Astro reports a different bound port", async () => {
+    const { iiifAstro } = await import("../src/astro-integration");
+    const integration = iiifAstro({
+      enabled: true,
+      config: {
+        stores: {
+          local: {
+            type: "iiif-remote",
+            url: "https://example.org/iiif/collection.json",
+          },
+        },
+      },
+    });
+    const hooks = integration.hooks as Record<string, (options: any) => Promise<void>>;
+
+    await hooks["astro:config:setup"]({
+      command: "dev",
+      config: { root: pathToFileURL(`${process.cwd()}/`) },
+      isRestart: false,
+      updateConfig: vi.fn(),
+      addWatchFile: vi.fn(),
+      logger: { info: vi.fn(), warn: vi.fn() },
+    });
+    await hooks["astro:server:setup"]({
+      server: {
+        config: {
+          root: process.cwd(),
+          server: {
+            host: "localhost",
+            port: 4321,
+          },
+        },
+        middlewares: { use: vi.fn() },
+        ws: { send: vi.fn() },
+      },
+    });
+
+    await vi.waitFor(() => {
+      expect(cachedBuildMock).toHaveBeenCalledTimes(1);
+    });
+
+    await hooks["astro:server:start"]({
+      address: {
+        address: "::1",
+        port: 4329,
+      },
+      logger: { info: vi.fn(), warn: vi.fn() },
+    });
+
+    await vi.waitFor(() => {
+      expect(cachedBuildMock).toHaveBeenCalledTimes(2);
+    });
+  });
+
   test("runs build hook once for astro build", async () => {
     const { iiifAstro } = await import("../src/astro-integration");
     const integration = iiifAstro({
@@ -426,6 +480,7 @@ describe("astro integration lifecycle", () => {
       ]);
       expect(configured.stores.content.saveManifests).toBe(true);
       expect(configured.stores.content.overrides).toBe("./content-overrides");
+      expect(configured.stores.default).toBeUndefined();
     });
   });
 

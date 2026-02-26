@@ -87,6 +87,83 @@ describe("vite plugin lifecycle", () => {
     expect(requestMock).not.toHaveBeenCalledWith("/watch");
   });
 
+  test("uses explicit serverUrl option for build-time emitted IDs", async () => {
+    const { iiifPlugin } = await import("../src/vite-plugin");
+    const plugin = iiifPlugin({
+      enabled: true,
+      serverUrl: "https://iiif.example.org",
+      config: {
+        stores: {
+          local: {
+            type: "iiif-remote",
+            url: "https://example.org/iiif/collection.json",
+          },
+        },
+      },
+    });
+
+    await plugin.configResolved?.({
+      command: "build",
+      mode: "production",
+      root: process.cwd(),
+      build: {
+        outDir: "dist",
+      },
+    } as any);
+
+    await plugin.buildStart?.call({} as any);
+
+    const configured = createServerMock.mock.calls.at(-1)?.[0] as any;
+    expect(configured.server?.url).toBe("https://iiif.example.org");
+  });
+
+  test("uses deployment env URL defaults in build mode", async () => {
+    const originalServerUrl = process.env.SERVER_URL;
+    const originalVercelUrl = process.env.VERCEL_URL;
+    try {
+      delete process.env.SERVER_URL;
+      process.env.VERCEL_URL = "my-site.vercel.app";
+
+      const { iiifPlugin } = await import("../src/vite-plugin");
+      const plugin = iiifPlugin({
+        enabled: true,
+        config: {
+          stores: {
+            local: {
+              type: "iiif-remote",
+              url: "https://example.org/iiif/collection.json",
+            },
+          },
+        },
+      });
+
+      await plugin.configResolved?.({
+        command: "build",
+        mode: "production",
+        root: process.cwd(),
+        build: {
+          outDir: "dist",
+        },
+      } as any);
+
+      await plugin.buildStart?.call({} as any);
+
+      const configured = createServerMock.mock.calls.at(-1)?.[0] as any;
+      expect(configured.server?.url).toBe("https://my-site.vercel.app");
+    } finally {
+      if (typeof originalServerUrl === "string") {
+        process.env.SERVER_URL = originalServerUrl;
+      } else {
+        delete process.env.SERVER_URL;
+      }
+      if (typeof originalVercelUrl === "string") {
+        process.env.VERCEL_URL = originalVercelUrl;
+      } else {
+        delete process.env.VERCEL_URL;
+      }
+    }
+  });
+
   test("skips build work when vite command is serve", async () => {
     const { iiifPlugin } = await import("../src/vite-plugin");
     const plugin = iiifPlugin({
@@ -281,6 +358,72 @@ describe("vite plugin lifecycle", () => {
     });
   });
 
+  test("rebuilds IIIF output when actual Vite listen port differs", async () => {
+    const { iiifPlugin } = await import("../src/vite-plugin");
+    const plugin = iiifPlugin({
+      enabled: true,
+      config: {
+        stores: {
+          local: {
+            type: "iiif-remote",
+            url: "https://example.org/iiif/collection.json",
+          },
+        },
+      },
+    });
+
+    await plugin.configResolved?.({
+      command: "serve",
+      mode: "development",
+      root: process.cwd(),
+      build: {
+        outDir: "dist",
+      },
+    } as any);
+
+    let listeningCallback: (() => void) | null = null;
+    const httpServer = {
+      listening: false,
+      address: vi.fn(() => ({
+        address: "::",
+        port: 5199,
+      })),
+      once: vi.fn((event: string, callback: () => void) => {
+        if (event === "listening") {
+          listeningCallback = callback;
+        }
+      }),
+    };
+
+    await plugin.configureServer?.({
+      config: {
+        server: {
+          host: "localhost",
+          port: 5173,
+        },
+      },
+      middlewares: {
+        use: vi.fn(),
+      },
+      httpServer,
+      ws: {
+        send: vi.fn(),
+      },
+    } as any);
+
+    await vi.waitFor(() => {
+      expect(cachedBuildMock).toHaveBeenCalledTimes(1);
+    });
+    expect(listeningCallback).toBeTruthy();
+
+    httpServer.listening = true;
+    listeningCallback?.();
+
+    await vi.waitFor(() => {
+      expect(cachedBuildMock).toHaveBeenCalledTimes(2);
+    });
+  });
+
   test("copies iiif artifacts into vite outDir on closeBundle", async () => {
     testDir = await mkdtemp(join(tmpdir(), "iiif-hss-vite-plugin-"));
     const source = join(testDir, ".iiif", "build");
@@ -402,6 +545,7 @@ describe("vite plugin lifecycle", () => {
     expect(configured.stores.content.url).toBe("https://example.org/iiif/collection.json");
     expect(configured.stores.content.saveManifests).toBe(true);
     expect(configured.stores.content.overrides).toBe("./overrides");
+    expect(configured.stores.default).toBeUndefined();
   });
 
   test("rejects shorthand-only options without manifest or collection URLs", async () => {

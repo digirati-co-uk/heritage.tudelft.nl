@@ -741,7 +741,7 @@ export function iiifAstro(options: IiifAstroOptions = {}): AstroIntegrationLike 
 
         const resolvedHost = normalizeLoopbackHost(address?.address || "localhost");
         const devUrl = runtime.resolveServerUrl(resolvedHost, address?.port || 4321, 4321);
-        await runtime.setConfigServerUrl(devUrl);
+        await runtime.setConfigServerUrl(devUrl, { rebuildIfDevBuildStarted: true });
         logger.info(`IIIF: ${runtime.getIiifDebugUrl(devUrl)}`);
       },
 

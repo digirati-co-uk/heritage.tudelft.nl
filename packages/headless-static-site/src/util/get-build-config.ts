@@ -217,8 +217,8 @@ export async function getBuildConfig(options: BuildOptions, builtIns: BuildBuilt
   const virtualCacheDir = join(cacheDir, "_virtual");
 
   const server = options.dev
-    ? { url: env.DEV_SERVER || config.server?.url || "http://localhost:7111" }
-    : env.SERVER_URL || config.server;
+    ? { url: config.server?.url || env.DEV_SERVER || "http://localhost:7111" }
+    : config.server || env.SERVER_URL;
 
   const time = async <T>(label: string, promise: Promise<T>): Promise<T> => {
     const startTime = Date.now();

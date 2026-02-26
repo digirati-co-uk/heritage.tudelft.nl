@@ -48,18 +48,22 @@ export function iiifPlugin(options: IIIFHSSSPluginOptions = {}): Plugin {
 
       patchPrintUrls(viteDevServer as any);
 
-      let devHost: string | boolean | undefined = viteDevServer.config.server?.host || "localhost";
-      let devPort = viteDevServer.config.server?.port || 5173;
-      if (viteDevServer.httpServer?.listening) {
-        const address = viteDevServer.httpServer.address();
-        if (address && typeof address === "object") {
-          devHost = address.address === "::" ? "localhost" : address.address || devHost;
-          devPort = address.port || devPort;
+      const applyResolvedDevUrl = async (rebuildIfDevBuildStarted: boolean) => {
+        let devHost: string | boolean | undefined = viteDevServer.config.server?.host || "localhost";
+        let devPort = viteDevServer.config.server?.port || 5173;
+        if (viteDevServer.httpServer?.listening) {
+          const address = viteDevServer.httpServer.address();
+          if (address && typeof address === "object") {
+            devHost = address.address === "::" ? "localhost" : address.address || devHost;
+            devPort = address.port || devPort;
+          }
         }
-      }
 
-      const devUrl = runtime.resolveServerUrl(devHost, devPort, 5173);
-      await runtime.setConfigServerUrl(devUrl);
+        const devUrl = runtime.resolveServerUrl(devHost, devPort, 5173);
+        await runtime.setConfigServerUrl(devUrl, { rebuildIfDevBuildStarted });
+      };
+
+      await applyResolvedDevUrl(false);
       await runtime.mountHonoMiddleware(viteDevServer.middlewares as any);
       await runtime.attachDevHotReloadBridge(() => {
         if (!viteDevServer.ws || typeof viteDevServer.ws.send !== "function") {
@@ -67,6 +71,19 @@ export function iiifPlugin(options: IIIFHSSSPluginOptions = {}): Plugin {
         }
         viteDevServer.ws.send({ type: "full-reload", path: "*" });
       });
+
+      if (
+        viteDevServer.httpServer &&
+        !viteDevServer.httpServer.listening &&
+        typeof viteDevServer.httpServer.once === "function"
+      ) {
+        viteDevServer.httpServer.once("listening", () => {
+          applyResolvedDevUrl(true).catch((error) => {
+            console.warn(error);
+          });
+        });
+      }
+
       runtime
         .startDevSession({
           warn: (message) => console.warn(message),

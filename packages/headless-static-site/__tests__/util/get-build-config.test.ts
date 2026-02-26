@@ -194,7 +194,7 @@ describe("getBuildConfig search indexNames", () => {
     expect(result.configUrl).toBe("http://localhost:4321/iiif");
   });
 
-  test("prefers DEV_SERVER env for dev configUrl when provided", async () => {
+  test("prefers configured server URL over DEV_SERVER env for dev configUrl", async () => {
     const config = {
       server: {
         url: "http://localhost:4321/iiif",
@@ -223,6 +223,6 @@ describe("getBuildConfig search indexNames", () => {
       }
     );
 
-    expect(result.configUrl).toBe("http://localhost:9876/iiif");
+    expect(result.configUrl).toBe("http://localhost:4321/iiif");
   });
 });

@@ -87,6 +87,11 @@ export interface IIIFHSSSPluginOptions {
   outSubDir?: string;
 
   /**
+   * Canonical public server URL used for emitted IIIF IDs during build.
+   */
+  serverUrl?: string;
+
+  /**
    * Source
    */
   source?: "vite" | "astro";
@@ -171,6 +176,11 @@ function normalizeShorthandConfig(
 
   let shorthand: ShorthandResolution | null = null;
   if (usesShorthand) {
+    // In default mode, drop the implicit local "default" json store to avoid duplicate content stores.
+    if (configSource.mode === "default") {
+      nextConfig.stores = {};
+    }
+
     const overrides = options.folder || "./content";
     const saveManifests = options.save ?? false;
     shorthand = {
@@ -219,6 +229,52 @@ function sanitizeConfigForHash(config: IIIFRC) {
   return clone;
 }
 
+function normalizeAbsoluteHttpUrl(input: string | null | undefined) {
+  if (!input || typeof input !== "string") {
+    return null;
+  }
+  const trimmed = input.trim();
+  if (!trimmed) {
+    return null;
+  }
+  if (!/^https?:\/\//i.test(trimmed)) {
+    return null;
+  }
+  return trimmed.replace(/\/+$/, "");
+}
+
+function resolveBuildUrlFromEnv() {
+  const serverUrl = normalizeAbsoluteHttpUrl(process.env.SERVER_URL);
+  if (serverUrl) {
+    return serverUrl;
+  }
+
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`.replace(/\/+$/, "");
+  }
+
+  if (process.env.RENDER_INTERNAL_HOSTNAME) {
+    const maybePort = process.env.PORT ? `:${process.env.PORT}` : "";
+    return `http://${process.env.RENDER_INTERNAL_HOSTNAME}${maybePort}`.replace(/\/+$/, "");
+  }
+
+  const url = normalizeAbsoluteHttpUrl(process.env.URL);
+  if (url?.includes("localhost")) {
+    return url;
+  }
+
+  const deployPrimeUrl = normalizeAbsoluteHttpUrl(process.env.DEPLOY_PRIME_URL);
+  if (deployPrimeUrl) {
+    return deployPrimeUrl;
+  }
+
+  if (url) {
+    return url;
+  }
+
+  return `http://localhost:${process.env.PORT ?? 3000}`;
+}
+
 export function createIiifRuntime(options: IIIFHSSSPluginOptions = {}) {
   const {
     basePath = "/iiif",
@@ -228,6 +284,7 @@ export function createIiifRuntime(options: IIIFHSSSPluginOptions = {}) {
     copyBuildToOutDir = true,
     iiifBuildDir,
     outSubDir,
+    serverUrl,
     config: customConfig,
     configFile,
     collection,
@@ -260,6 +317,7 @@ export function createIiifRuntime(options: IIIFHSSSPluginOptions = {}) {
   let didStartDevBuild = false;
   let didStartWatch = false;
   let didAttachHmrBridge = false;
+  let devBuildQueue: Promise<void> = Promise.resolve();
 
   async function ensureCacheDirectoryInvalidation(devMode: boolean, logger?: RuntimeLogger) {
     const configSource = await resolveIiifConfig();
@@ -437,6 +495,30 @@ export function createIiifRuntime(options: IIIFHSSSPluginOptions = {}) {
     });
   }
 
+  async function maybeRebuildDevOutputOnServerUrlChange(changed: boolean) {
+    if (!changed || !didStartDevBuild) {
+      return;
+    }
+    await runQueuedDevBuild();
+  }
+
+  async function runQueuedDevBuild() {
+    const nextBuild = devBuildQueue.then(async () => {
+      const serverInstance = await ensureServer();
+      const output = await serverInstance._extra.cachedBuild({ cache: true, emit: true, dev: true });
+      if (output?.buildConfig?.buildDir) {
+        lastIiifBuildDir = toAbsolutePath(output.buildConfig.buildDir);
+      }
+    });
+
+    devBuildQueue = nextBuild.then(
+      () => undefined,
+      () => undefined
+    );
+
+    return nextBuild;
+  }
+
   function resolveServerUrl(hostname: string | boolean | undefined, currentPort: number, fallbackPort: number) {
     let configuredHost = typeof hostname === "string" && hostname.length > 0 ? hostname : "localhost";
     let configuredPort = currentPort || fallbackPort;
@@ -461,10 +543,34 @@ export function createIiifRuntime(options: IIIFHSSSPluginOptions = {}) {
     return `http://${formattedHost}:${configuredPort}${basePath}`;
   }
 
-  async function setConfigServerUrl(url: string) {
+  async function setConfigServerUrl(url: string, options: { rebuildIfDevBuildStarted?: boolean } = {}) {
+    const normalizedUrl = normalizeAbsoluteHttpUrl(url);
+    if (!normalizedUrl) {
+      return false;
+    }
     const configSource = await resolveIiifConfig();
-    configSource.config.server = configSource.config.server || { url };
-    configSource.config.server.url = url;
+    const previousUrl = normalizeAbsoluteHttpUrl(
+      typeof configSource.config.server === "string" ? configSource.config.server : configSource.config.server?.url
+    );
+    if (!configSource.config.server || typeof configSource.config.server !== "object") {
+      configSource.config.server = { url: normalizedUrl };
+    } else {
+      configSource.config.server.url = normalizedUrl;
+    }
+
+    const changed = previousUrl !== normalizedUrl;
+    if (options.rebuildIfDevBuildStarted) {
+      await maybeRebuildDevOutputOnServerUrlChange(changed);
+    }
+    return changed;
+  }
+
+  function resolveBuildServerUrl(configuredUrl: string | undefined) {
+    return (
+      normalizeAbsoluteHttpUrl(serverUrl) ||
+      normalizeAbsoluteHttpUrl(configuredUrl) ||
+      normalizeAbsoluteHttpUrl(resolveBuildUrlFromEnv())
+    );
   }
 
   function normalizePath(value: string) {
@@ -479,6 +585,12 @@ export function createIiifRuntime(options: IIIFHSSSPluginOptions = {}) {
 
   async function runBuild(logger?: RuntimeLogger) {
     const configSource = await resolveIiifConfig();
+    const configuredServerUrl =
+      typeof configSource.config.server === "string" ? configSource.config.server : configSource.config.server?.url;
+    const buildServerUrl = resolveBuildServerUrl(configuredServerUrl);
+    if (buildServerUrl) {
+      await setConfigServerUrl(buildServerUrl);
+    }
     if (!hasBuildableStores(configSource.config)) {
       logger?.warn?.(`${chalk.green`✓`}  Skipping iiif build (no buildable stores found)`);
       return null;
@@ -525,17 +637,14 @@ export function createIiifRuntime(options: IIIFHSSSPluginOptions = {}) {
     }
 
     await ensureCacheDirectoryInvalidation(true, logger);
-    const serverInstance = await ensureServer();
     if (!didStartDevBuild) {
       didStartDevBuild = true;
-      const output = await serverInstance._extra.cachedBuild({ cache: true, emit: true, dev: true });
-      if (output?.buildConfig?.buildDir) {
-        lastIiifBuildDir = toAbsolutePath(output.buildConfig.buildDir);
-      }
+      await runQueuedDevBuild();
     }
 
     if (!didStartWatch) {
       didStartWatch = true;
+      const serverInstance = await ensureServer();
       await serverInstance.request("/watch");
     }
   }

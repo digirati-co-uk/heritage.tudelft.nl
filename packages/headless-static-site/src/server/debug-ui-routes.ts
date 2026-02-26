@@ -2,6 +2,7 @@ import { existsSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { dirname, extname, join, resolve } from "node:path";
 import { cwd } from "node:process";
+import { upgrade } from "@iiif/parser/upgrader";
 import type { Hono } from "hono";
 import type { FileHandler } from "../util/file-handler.ts";
 import type { IIIFRC } from "../util/get-config.ts";
@@ -380,6 +381,9 @@ export function registerDebugUiRoutes({
         // Keep resource as null; UI can still use links for remote JSON.
       }
     }
+
+    resource = resource ? upgrade(resource) : null;
+
     if (!type && resource?.type && (resource.type === "Manifest" || resource.type === "Collection")) {
       type = resource.type;
     }
