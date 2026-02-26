@@ -133,4 +133,47 @@ describe("astro server/client API", () => {
     expect(loaded.meta?.totalItems).toBe(2);
     expect(loaded.links.localJson).toBe("https://example.org/content/local/manifest.json");
   });
+
+  test("client API auto-resolves /iiif base path when baseUrl is omitted", async () => {
+    const fetchFn = vi.fn(async (target: string) => {
+      const url = String(target);
+      if (url.endsWith("/iiif/meta/sitemap.json")) {
+        return new Response(
+          JSON.stringify({
+            "api/cookbook/recipe/0001-mvm-image": {
+              type: "Manifest",
+              source: {
+                type: "remote",
+                url: "https://theseusviewer.org/api/cookbook/recipe/0001-mvm-image/manifest.json",
+              },
+            },
+          }),
+          { status: 200 }
+        );
+      }
+      if (url === "https://theseusviewer.org/api/cookbook/recipe/0001-mvm-image/manifest.json") {
+        return new Response(
+          JSON.stringify({
+            id: "https://theseusviewer.org/api/cookbook/recipe/0001-mvm-image/manifest.json",
+            type: "Manifest",
+            label: { en: ["Cookbook"] },
+          }),
+          { status: 200 }
+        );
+      }
+      return new Response("Not found", { status: 404 });
+    });
+
+    const api = createIiifAstroClient({ fetchFn: fetchFn as any, cache: false });
+    const loaded = await api.loadManifest("api/cookbook/recipe/0001-mvm-image");
+
+    expect(loaded.type).toBe("Manifest");
+    expect(loaded.resource?.label?.en?.[0]).toBe("Cookbook");
+    expect(loaded.links.localJson).toBe(null);
+    expect(loaded.links.remoteJson).toBe("https://theseusviewer.org/api/cookbook/recipe/0001-mvm-image/manifest.json");
+    expect(fetchFn.mock.calls.some(([target]) => String(target).includes("/iiif/meta/sitemap.json"))).toBe(true);
+    expect(
+      fetchFn.mock.calls.some(([target]) => String(target).includes("/iiif/api/cookbook/recipe/0001-mvm-image"))
+    ).toBe(false);
+  });
 });

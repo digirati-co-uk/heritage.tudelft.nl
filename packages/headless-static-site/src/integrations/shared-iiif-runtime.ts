@@ -504,7 +504,9 @@ export function createIiifRuntime(options: IIIFHSSSPluginOptions = {}) {
       return { copied: false, reason: "missing-source" as const, sourceDir };
     }
 
-    const targetOutDir = outSubDir ? join(outDir, outSubDir) : outDir;
+    const normalizedBaseSubDir = normalizePath(basePath);
+    const resolvedOutSubDir = typeof outSubDir === "string" ? normalizePath(outSubDir) : normalizedBaseSubDir;
+    const targetOutDir = resolvedOutSubDir ? join(outDir, resolvedOutSubDir) : outDir;
     if (resolve(sourceDir) === resolve(targetOutDir)) {
       return { copied: false, reason: "same-path" as const, sourceDir, outDir: targetOutDir };
     }

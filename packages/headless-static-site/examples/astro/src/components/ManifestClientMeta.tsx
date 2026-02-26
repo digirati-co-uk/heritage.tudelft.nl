@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import { createIiifAstroClient } from "iiif-hss/astro/client";
+import { useEffect, useState } from "react";
 
 type Props = {
   slug: string;
@@ -19,7 +19,8 @@ export function ManifestClientMeta({ slug }: Props) {
         if (!active) {
           return;
         }
-        const resourceLabel = data.resource?.label?.en?.[0] || data.meta?.label || slug;
+        const resourceLabel =
+          data.resource?.label?.en?.[0] || data.meta?.label || slug;
         setLabel(resourceLabel);
         setStatus("ready");
       })

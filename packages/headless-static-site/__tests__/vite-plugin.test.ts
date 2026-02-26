@@ -254,6 +254,45 @@ describe("vite plugin lifecycle", () => {
     expect(loaded.type).toBe("Collection");
   });
 
+  test("copies iiif artifacts into vite outDir/iiif by default", async () => {
+    testDir = await mkdtemp(join(tmpdir(), "iiif-hss-vite-plugin-default-subdir-"));
+    const source = join(testDir, ".iiif", "build");
+    const outDir = join(testDir, "dist");
+    await mkdir(source, { recursive: true });
+    await mkdir(outDir, { recursive: true });
+    await writeFile(join(source, "collection.json"), JSON.stringify({ type: "Collection" }));
+
+    const { iiifPlugin } = await import("../src/vite-plugin");
+    const plugin = iiifPlugin({
+      enabled: true,
+      iiifBuildDir: source,
+      config: {
+        stores: {
+          local: {
+            type: "iiif-remote",
+            url: "https://example.org/iiif/collection.json",
+          },
+        },
+      },
+    });
+
+    await plugin.configResolved?.({
+      command: "build",
+      mode: "production",
+      root: testDir,
+      build: {
+        outDir,
+      },
+    } as any);
+
+    await plugin.closeBundle?.call({} as any);
+
+    const copiedCollection = join(outDir, "iiif", "collection.json");
+    expect(existsSync(copiedCollection)).toBe(true);
+    const loaded = JSON.parse(await readFile(copiedCollection, "utf-8"));
+    expect(loaded.type).toBe("Collection");
+  });
+
   test("builds remote content store from shorthand options", async () => {
     const { iiifPlugin } = await import("../src/vite-plugin");
     const plugin = iiifPlugin({

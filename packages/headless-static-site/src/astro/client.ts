@@ -61,10 +61,23 @@ function toUrl(baseUrl: string, path: string) {
 }
 
 export function createIiifAstroClient(options: AstroIiifClientOptions = {}) {
-  const baseUrl = normalizeBaseUrl(options.baseUrl);
+  const configuredBaseUrl = normalizeBaseUrl(options.baseUrl || "/iiif");
   const fetchFn = options.fetchFn || fetch;
   const useCache = options.cache ?? true;
   const cache = new Map<string, any>();
+  let resolvedBaseUrl: string | null = configuredBaseUrl || null;
+
+  function orderedBaseUrls() {
+    const unique = new Set<string>();
+    const ordered = [resolvedBaseUrl || "", configuredBaseUrl || "", "/iiif", ""];
+    return ordered.filter((entry) => {
+      if (unique.has(entry)) {
+        return false;
+      }
+      unique.add(entry);
+      return true;
+    });
+  }
 
   async function getJson(url: string) {
     if (useCache && cache.has(url)) {
@@ -90,23 +103,56 @@ export function createIiifAstroClient(options: AstroIiifClientOptions = {}) {
     }
   }
 
+  async function getJsonWithBaseFallback(path: string) {
+    let lastError: unknown = null;
+    for (const candidateBase of orderedBaseUrls()) {
+      const targetUrl = toUrl(candidateBase, path);
+      try {
+        const json = await getJson(targetUrl);
+        if (!configuredBaseUrl) {
+          resolvedBaseUrl = candidateBase;
+        }
+        return {
+          baseUrl: candidateBase,
+          json,
+          url: targetUrl,
+        };
+      } catch (error) {
+        lastError = error;
+      }
+    }
+    throw lastError || new Error(`Unable to load ${path}`);
+  }
+
+  async function tryGetJsonWithBaseFallback(path: string) {
+    try {
+      return await getJsonWithBaseFallback(path);
+    } catch (error) {
+      return null;
+    }
+  }
+
   async function getSitemap() {
-    return (asObject(await tryGetJson(toUrl(baseUrl, "/meta/sitemap.json"))) || {}) as Record<string, IIIFSitemapEntry>;
+    const loaded = await tryGetJsonWithBaseFallback("/meta/sitemap.json");
+    return (asObject(loaded?.json) || {}) as Record<string, IIIFSitemapEntry>;
   }
 
   async function loadTopCollection() {
-    return asObject(await getJson(toUrl(baseUrl, "/collection.json")));
+    return asObject((await getJsonWithBaseFallback("/collection.json")).json);
   }
 
   async function loadManifestsCollection() {
-    return asObject(await getJson(toUrl(baseUrl, "/manifests/collection.json")));
+    return asObject((await getJsonWithBaseFallback("/manifests/collection.json")).json);
   }
 
   async function loadCollectionsCollection() {
-    return asObject(await getJson(toUrl(baseUrl, "/collections/collection.json")));
+    return asObject((await getJsonWithBaseFallback("/collections/collection.json")).json);
   }
 
-  async function resolveResource(slugOrUrl: string, forcedType?: IIIFResourceType | null): Promise<AstroIiifClientResolvedResource> {
+  async function resolveResource(
+    slugOrUrl: string,
+    forcedType?: IIIFResourceType | null
+  ): Promise<AstroIiifClientResolvedResource> {
     if (isHttpUrl(slugOrUrl)) {
       const resource = asObject(await getJson(slugOrUrl));
       const type = (resource?.type as IIIFResourceType) || forcedType || null;
@@ -129,42 +175,52 @@ export function createIiifAstroClient(options: AstroIiifClientOptions = {}) {
     const sitemap = await getSitemap();
     const source = sitemap[slug]?.source || null;
     const sitemapType = sitemap[slug]?.type || null;
+    const remoteFromSource = source?.type === "remote" ? source.url || null : null;
 
     let type: IIIFResourceType | null = forcedType || (sitemapType as IIIFResourceType | null);
     let localJsonUrl: string | null = null;
     let resource: JsonObject | null = null;
+    const remoteJsonUrl: string | null = remoteFromSource;
 
-    if (type === "Manifest" || (!type && sitemapType === "Manifest")) {
-      localJsonUrl = toUrl(baseUrl, `${slug}/manifest.json`);
-      resource = asObject(await tryGetJson(localJsonUrl));
+    if (remoteJsonUrl) {
+      resource = asObject(await tryGetJson(remoteJsonUrl));
+      if (!type && resource?.type && (resource.type === "Manifest" || resource.type === "Collection")) {
+        type = resource.type as IIIFResourceType;
+      }
+    }
+
+    if (!resource && (type === "Manifest" || (!type && sitemapType === "Manifest"))) {
+      const localManifestResult = await tryGetJsonWithBaseFallback(`${slug}/manifest.json`);
+      localJsonUrl = localManifestResult?.url || null;
+      resource = asObject(localManifestResult?.json);
       type = "Manifest";
     }
 
     if (!resource && (type === "Collection" || (!type && sitemapType === "Collection"))) {
-      localJsonUrl = toUrl(baseUrl, `${slug}/collection.json`);
-      resource = asObject(await tryGetJson(localJsonUrl));
+      const localCollectionResult = await tryGetJsonWithBaseFallback(`${slug}/collection.json`);
+      localJsonUrl = localCollectionResult?.url || null;
+      resource = asObject(localCollectionResult?.json);
       type = "Collection";
     }
 
     if (!resource && !type) {
-      const tryManifestUrl = toUrl(baseUrl, `${slug}/manifest.json`);
-      resource = asObject(await tryGetJson(tryManifestUrl));
+      const tryManifestResult = await tryGetJsonWithBaseFallback(`${slug}/manifest.json`);
+      resource = asObject(tryManifestResult?.json);
       if (resource) {
-        localJsonUrl = tryManifestUrl;
+        localJsonUrl = tryManifestResult?.url || null;
         type = "Manifest";
       }
     }
 
     if (!resource && !type) {
-      const tryCollectionUrl = toUrl(baseUrl, `${slug}/collection.json`);
-      resource = asObject(await tryGetJson(tryCollectionUrl));
+      const tryCollectionResult = await tryGetJsonWithBaseFallback(`${slug}/collection.json`);
+      resource = asObject(tryCollectionResult?.json);
       if (resource) {
-        localJsonUrl = tryCollectionUrl;
+        localJsonUrl = tryCollectionResult?.url || null;
         type = "Collection";
       }
     }
 
-    const remoteJsonUrl = source?.type === "remote" ? source.url || null : null;
     if (!resource && remoteJsonUrl) {
       resource = asObject(await tryGetJson(remoteJsonUrl));
       if (!type && resource?.type && (resource.type === "Manifest" || resource.type === "Collection")) {
@@ -172,8 +228,13 @@ export function createIiifAstroClient(options: AstroIiifClientOptions = {}) {
       }
     }
 
-    const meta = asObject(await tryGetJson(toUrl(baseUrl, `${slug}/meta.json`)));
-    const indices = asObject(await tryGetJson(toUrl(baseUrl, `${slug}/indices.json`)));
+    const shouldLoadLocalMetadata = !remoteJsonUrl || Boolean(localJsonUrl);
+    const meta = shouldLoadLocalMetadata
+      ? asObject((await tryGetJsonWithBaseFallback(`${slug}/meta.json`))?.json)
+      : null;
+    const indices = shouldLoadLocalMetadata
+      ? asObject((await tryGetJsonWithBaseFallback(`${slug}/indices.json`))?.json)
+      : null;
 
     return {
       slug,
