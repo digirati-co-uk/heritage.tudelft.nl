@@ -17,6 +17,13 @@ type AstroIntegrationLike = {
   hooks: Record<string, (options: any) => void | Promise<void>>;
 };
 
+function normalizeLoopbackHost(host: string) {
+  if (host === "::1" || host === "[::1]" || host === "127.0.0.1") {
+    return "localhost";
+  }
+  return host;
+}
+
 function rootToPath(root: unknown) {
   if (root instanceof URL) {
     return fileURLToPath(root);
@@ -57,7 +64,14 @@ export function iiifAstro(options: IIIFHSSSPluginOptions = {}): AstroIntegration
   return {
     name: "iiif-hss-astro",
     hooks: {
-      "astro:config:setup": async ({ command: astroCommand, config, isRestart, updateConfig, addWatchFile, logger }) => {
+      "astro:config:setup": async ({
+        command: astroCommand,
+        config,
+        isRestart,
+        updateConfig,
+        addWatchFile,
+        logger,
+      }) => {
         command = astroCommand as AstroCommand;
         runtime.setRoot(rootToPath(config.root));
 
@@ -87,7 +101,7 @@ export function iiifAstro(options: IIIFHSSSPluginOptions = {}): AstroIntegration
         mode = (config as any)?.mode || null;
       },
 
-      "astro:server:setup": async ({ server }) => {
+      "astro:server:setup": async ({ server, logger }) => {
         if (!runtime.isEnabled()) return;
         if (command !== "dev") return;
 
@@ -97,13 +111,17 @@ export function iiifAstro(options: IIIFHSSSPluginOptions = {}): AstroIntegration
         const devUrl = runtime.resolveServerUrl(devHost, devPort, 4321);
         await runtime.setConfigServerUrl(devUrl);
         await runtime.mountHonoMiddleware(server.middlewares as any);
+        await runtime.startDevSession({
+          warn: (message) => logger.warn(message),
+        });
       },
 
       "astro:server:start": async ({ address, logger }) => {
         if (!runtime.isEnabled()) return;
         if (command !== "dev") return;
 
-        const devUrl = runtime.resolveServerUrl(address?.address || "localhost", address?.port || 4321, 4321);
+        const resolvedHost = normalizeLoopbackHost(address?.address || "localhost");
+        const devUrl = runtime.resolveServerUrl(resolvedHost, address?.port || 4321, 4321);
         await runtime.setConfigServerUrl(devUrl);
         logger.info(`IIIF: ${runtime.getIiifDebugUrl(devUrl)}`);
       },

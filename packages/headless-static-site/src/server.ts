@@ -67,6 +67,11 @@ const state = {
   shouldRebuild: false,
 };
 
+function redirectToDebugPath(basePathHeader?: string) {
+  const normalizedBase = (basePathHeader || "").replace(/^\/+/, "").replace(/\/+$/, "");
+  return normalizedBase.length > 0 ? `/${normalizedBase}/_debug/` : "/_debug/";
+}
+
 function selectInitialPath(devPath: string, defaultPath: string) {
   return existsSync(join(cwd(), devPath)) ? devPath : defaultPath;
 }
@@ -89,7 +94,7 @@ const cachedBuild = async (options: BuildOptions) => {
 };
 
 app.get("/", async (ctx) => {
-  return ctx.redirect("/_debug/");
+  return ctx.redirect(redirectToDebugPath(ctx.req.header("x-hss-base-path")));
 });
 
 app.get("/explorer/*", async (ctx) => {

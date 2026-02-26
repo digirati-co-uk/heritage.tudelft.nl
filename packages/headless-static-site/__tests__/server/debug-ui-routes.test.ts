@@ -1,9 +1,10 @@
-import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, rm, unlink, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { chdir, cwd } from "node:process";
 import { afterEach, beforeEach, describe, expect, test } from "vitest";
 import { createServer } from "../../src/create-server.ts";
+import { findDebugUiDir } from "../../src/server/debug-ui-routes.ts";
 
 describe("debug UI routes", () => {
   const originalCwd = cwd();
@@ -146,5 +147,101 @@ describe("debug UI routes", () => {
     expect(htmlRes.status).toBe(200);
     const html = await htmlRes.text();
     expect(html).toContain("/iiif/_debug/assets/app.js");
+
+    const rootRedirectRes = await server.request("/", {
+      headers: {
+        "x-hss-base-path": "/iiif",
+      },
+      redirect: "manual",
+    });
+    expect(rootRedirectRes.status).toBe(302);
+    expect(rootRedirectRes.headers.get("location")).toBe("/iiif/_debug/");
+  });
+
+  test("finds packaged debug UI dir from exported module entrypoints", async () => {
+    const currentWorkingDirectory = join(testDir, "project");
+    await mkdir(currentWorkingDirectory, { recursive: true });
+
+    const fakePackageRoot = join(testDir, "node_modules", "iiif-hss");
+    const fakeBuildDir = join(fakePackageRoot, "build", "dev-ui");
+    await mkdir(fakeBuildDir, { recursive: true });
+
+    const resolved = findDebugUiDir(currentWorkingDirectory, (specifier) => {
+      if (specifier === "iiif-hss/package.json") {
+        throw new Error("not exported");
+      }
+      if (specifier === "iiif-hss/astro") {
+        return join(fakePackageRoot, "build", "astro-integration.js");
+      }
+      throw new Error(`unexpected specifier: ${specifier}`);
+    });
+
+    expect(resolved).toBe(fakeBuildDir);
+  });
+
+  test("finds packaged debug UI dir from node_modules without resolver", async () => {
+    const projectDir = join(testDir, "apps", "sample");
+    const fakeBuildDir = join(testDir, "node_modules", "iiif-hss", "build", "dev-ui");
+    await mkdir(projectDir, { recursive: true });
+    await mkdir(fakeBuildDir, { recursive: true });
+
+    const resolved = findDebugUiDir(projectDir);
+    expect(resolved).toBe(fakeBuildDir);
+  });
+
+  test("loads remote resource JSON in debug API when manifest is not saved locally", async () => {
+    const server = await createServer({
+      server: { url: "http://localhost:7111" },
+      stores: {
+        default: {
+          type: "iiif-json",
+          path: "./content",
+        },
+      },
+    });
+
+    await unlink(join(cwd(), ".iiif", "build", "manifests", "demo", "manifest.json"));
+    await writeFile(
+      join(cwd(), ".iiif", "build", "meta", "sitemap.json"),
+      JSON.stringify(
+        {
+          "manifests/demo": {
+            type: "Manifest",
+            source: {
+              type: "remote",
+              url: "https://example.org/iiif/remote-demo/manifest.json",
+            },
+          },
+        },
+        null,
+        2
+      )
+    );
+
+    const originalFetch = globalThis.fetch;
+    globalThis.fetch = (async (input: any) => {
+      if (String(input) !== "https://example.org/iiif/remote-demo/manifest.json") {
+        return new Response("not found", { status: 404 });
+      }
+      return new Response(
+        JSON.stringify({
+          id: "https://example.org/iiif/remote-demo/manifest.json",
+          type: "Manifest",
+          label: { en: ["Remote demo"] },
+          items: [],
+        }),
+        { status: 200, headers: { "Content-Type": "application/json" } }
+      );
+    }) as any;
+
+    try {
+      const resourceRes = await server.request("/_debug/api/resource/manifests/demo");
+      expect(resourceRes.status).toBe(200);
+      const resourceJson = await resourceRes.json();
+      expect(resourceJson.resource?.id).toBe("https://example.org/iiif/remote-demo/manifest.json");
+      expect(resourceJson.links.json).toBe("https://example.org/iiif/remote-demo/manifest.json");
+    } finally {
+      globalThis.fetch = originalFetch;
+    }
   });
 });

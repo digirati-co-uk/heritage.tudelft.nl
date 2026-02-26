@@ -14,6 +14,23 @@ export function ManifestResourcePage({
   data: ResourceResponse;
   thumb: string | null;
 }) {
+  if (!data.resource) {
+    return (
+      <main>
+        <ResourceSummaryCard data={data} thumb={thumb} />
+        <section className="mb-3 rounded-xl border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">
+          Unable to load manifest JSON for this slug. The resource may be
+          remote-only.
+        </section>
+        <section>
+          <JsonPanel title="IIIF Resource" value={data.resource} />
+          <JsonPanel title="meta.json" value={data.meta} />
+          <JsonPanel title="indices.json" value={data.indices} />
+        </section>
+      </main>
+    );
+  }
+
   return (
     <main className="overflow-hidden">
       <style>{`div.atlas-container {

@@ -161,4 +161,68 @@ describe("getBuildConfig search indexNames", () => {
 
     expect(result.extractions.some((step) => step.id === "extract-collection-thumbnail")).toBe(true);
   });
+
+  test("uses configured server URL for dev configUrl when DEV_SERVER env is absent", async () => {
+    const config = {
+      server: {
+        url: "http://localhost:4321/iiif",
+      },
+      stores: {
+        local: {
+          type: "iiif-json" as const,
+          path: "./content",
+        },
+      },
+    };
+
+    const result = await getBuildConfig(
+      {
+        cwd: testDir,
+        scripts: "./no-scripts-here",
+        dev: true,
+      },
+      {
+        ...defaultBuiltIns,
+        env: {
+          DEV_SERVER: undefined,
+          SERVER_URL: undefined,
+        },
+        customConfig: config as any,
+      }
+    );
+
+    expect(result.configUrl).toBe("http://localhost:4321/iiif");
+  });
+
+  test("prefers DEV_SERVER env for dev configUrl when provided", async () => {
+    const config = {
+      server: {
+        url: "http://localhost:4321/iiif",
+      },
+      stores: {
+        local: {
+          type: "iiif-json" as const,
+          path: "./content",
+        },
+      },
+    };
+
+    const result = await getBuildConfig(
+      {
+        cwd: testDir,
+        scripts: "./no-scripts-here",
+        dev: true,
+      },
+      {
+        ...defaultBuiltIns,
+        env: {
+          DEV_SERVER: "http://localhost:9876/iiif",
+          SERVER_URL: undefined,
+        },
+        customConfig: config as any,
+      }
+    );
+
+    expect(result.configUrl).toBe("http://localhost:9876/iiif");
+  });
 });

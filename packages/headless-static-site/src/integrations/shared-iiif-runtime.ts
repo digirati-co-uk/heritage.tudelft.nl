@@ -79,6 +79,8 @@ export function createIiifRuntime(options: IIIFHSSSPluginOptions = {}) {
   let resolvedRoot: string | null = null;
   let lastIiifBuildDir: string | null = null;
   let resolvedConfig: Awaited<ReturnType<typeof resolveConfigSource>> | null = null;
+  let didStartDevBuild = false;
+  let didStartWatch = false;
 
   async function resolveIiifConfig() {
     if (resolvedConfig) {
@@ -265,6 +267,28 @@ export function createIiifRuntime(options: IIIFHSSSPluginOptions = {}) {
     return { copied: true, sourceDir, outDir: targetOutDir };
   }
 
+  async function startDevSession(logger?: RuntimeLogger) {
+    const configSource = await resolveIiifConfig();
+    if (!hasBuildableStores(configSource.config)) {
+      logger?.warn?.(`${chalk.green`✓`}  Skipping iiif dev build (no buildable stores found)`);
+      return;
+    }
+
+    const serverInstance = await ensureServer();
+    if (!didStartDevBuild) {
+      didStartDevBuild = true;
+      const output = await serverInstance._extra.cachedBuild({ cache: true, emit: true, dev: true });
+      if (output?.buildConfig?.buildDir) {
+        lastIiifBuildDir = toAbsolutePath(output.buildConfig.buildDir);
+      }
+    }
+
+    if (!didStartWatch) {
+      didStartWatch = true;
+      await serverInstance.request("/watch");
+    }
+  }
+
   return {
     basePath,
     isEnabled: () => runtimeEnabled,
@@ -278,5 +302,6 @@ export function createIiifRuntime(options: IIIFHSSSPluginOptions = {}) {
     getIiifDebugUrl,
     runBuild,
     copyBuildArtifacts,
+    startDevSession,
   };
 }

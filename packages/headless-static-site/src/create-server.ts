@@ -23,6 +23,11 @@ interface IIIFServerOptions {
   configSource?: Omit<ResolvedConfigSource, "config">;
 }
 
+function redirectToDebugPath(basePathHeader?: string) {
+  const normalizedBase = (basePathHeader || "").replace(/^\/+/, "").replace(/\/+$/, "");
+  return normalizedBase.length > 0 ? `/${normalizedBase}/_debug/` : "/_debug/";
+}
+
 export async function createServer(config: IIIFRC, serverOptions: IIIFServerOptions = {}) {
   const app = new Hono();
   const meUrl = serverOptions.customManifestEditor || "https://manifest-editor.digirati.services";
@@ -98,7 +103,7 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
   };
 
   app.get("/", async (ctx) => {
-    return ctx.redirect("/_debug/");
+    return ctx.redirect(redirectToDebugPath(ctx.req.header("x-hss-base-path")));
   });
 
   app.get("/config", async (ctx) => {

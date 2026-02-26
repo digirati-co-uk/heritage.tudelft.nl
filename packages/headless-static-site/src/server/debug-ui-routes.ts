@@ -96,6 +96,21 @@ function toAbsoluteUrl(base: string, path: string) {
   return new URL(trimSlashes(path), ensureTrailingSlash(base)).toString();
 }
 
+function findUpwardNodeModulesDebugUiDir(startDir: string) {
+  let currentDir = resolve(startDir);
+  while (true) {
+    const candidate = join(currentDir, "node_modules", "iiif-hss", "build", "dev-ui");
+    if (existsSync(candidate)) {
+      return candidate;
+    }
+    const parentDir = dirname(currentDir);
+    if (parentDir === currentDir) {
+      return null;
+    }
+    currentDir = parentDir;
+  }
+}
+
 function resolveSafePath(root: string, requestedPath: string) {
   const absoluteRoot = resolve(root);
   const absoluteTarget = resolve(absoluteRoot, requestedPath);
@@ -149,9 +164,28 @@ export function findDebugUiDir(currentWorkingDirectory: string, resolveModule?: 
     return localTraceBuild;
   }
 
+  const packageNodeModulesBuild = findUpwardNodeModulesDebugUiDir(currentWorkingDirectory);
+  if (packageNodeModulesBuild) {
+    return packageNodeModulesBuild;
+  }
+
   if (resolveModule) {
-    const packageRoot = withNull(() => dirname(resolveModule("iiif-hss/package.json")));
-    if (packageRoot) {
+    const resolvableEntrypoints = [
+      "iiif-hss/package.json",
+      "iiif-hss/astro",
+      "iiif-hss/vite-plugin",
+      "iiif-hss/library",
+      "iiif-hss",
+    ];
+    for (const specifier of resolvableEntrypoints) {
+      const modulePath = withNull(() => resolveModule(specifier));
+      if (!modulePath) {
+        continue;
+      }
+      const packageRoot = withNull(() => dirname(dirname(modulePath)));
+      if (!packageRoot) {
+        continue;
+      }
       const packagedBuild = join(packageRoot, "build", "dev-ui");
       if (existsSync(packagedBuild)) {
         return packagedBuild;
@@ -275,7 +309,20 @@ export function registerDebugUiRoutes({
             ? collectionPath
             : null
           : null;
-    const resource = filePath ? await fileHandler.loadJson(filePath, true) : null;
+    let resource = filePath ? await fileHandler.loadJson(filePath, true) : null;
+    if (!resource && source?.type === "remote" && source.url) {
+      try {
+        const remoteResponse = await fetch(source.url);
+        if (remoteResponse.ok) {
+          resource = await remoteResponse.json();
+        }
+      } catch (error) {
+        // Keep resource as null; UI can still use links for remote JSON.
+      }
+    }
+    if (!type && resource?.type && (resource.type === "Manifest" || resource.type === "Collection")) {
+      type = resource.type;
+    }
     const baseUrl = config.server?.url || new URL(ctx.req.url).origin;
 
     const localJsonPath = filePath ? `/${slug}/${type === "Manifest" ? "manifest.json" : "collection.json"}` : null;

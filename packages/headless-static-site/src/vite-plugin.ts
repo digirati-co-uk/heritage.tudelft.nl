@@ -27,7 +27,9 @@ export function iiifPlugin(options: IIIFHSSSPluginOptions = {}): Plugin {
       originalPrintUrls();
       const localUrl = server.resolvedUrls?.local?.[0] || server.resolvedUrls?.network?.[0];
       if (localUrl) {
-        console.log(`  ${chalk.green`➜`}  ${chalk.white.bold`IIIF`}:    ${chalk.cyan(runtime.getIiifDebugUrl(localUrl))}`);
+        console.log(
+          `  ${chalk.green`➜`}  ${chalk.white.bold`IIIF`}:    ${chalk.cyan(runtime.getIiifDebugUrl(localUrl))}`
+        );
       }
     };
     didPatchPrintUrls = true;
@@ -59,6 +61,9 @@ export function iiifPlugin(options: IIIFHSSSPluginOptions = {}): Plugin {
       const devUrl = runtime.resolveServerUrl(devHost, devPort, 5173);
       await runtime.setConfigServerUrl(devUrl);
       await runtime.mountHonoMiddleware(viteDevServer.middlewares as any);
+      await runtime.startDevSession({
+        warn: (message) => console.warn(message),
+      });
     },
 
     async configurePreviewServer(previewServer) {
