@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { HomePage } from "./components/HomePage";
+import { MetadataPage } from "./components/MetadataPage";
 import { Navigation } from "./components/Navigation";
 import { ResourcePage } from "./components/ResourcePage";
 import { detectDebugBase, getSlugPath } from "./components/utils";
@@ -22,6 +23,7 @@ function App() {
   );
   const isHome = !slugPath;
   const isTrace = slugPath === "trace";
+  const isMetadata = slugPath === "metadata";
 
   useEffect(() => {
     if (!isTrace) return;
@@ -50,7 +52,8 @@ function App() {
           <p>Loading trace…</p>
         )
       ) : null}
-      {!isHome && !isTrace ? (
+      {isMetadata ? <MetadataPage debugBase={debugBase} /> : null}
+      {!isHome && !isTrace && !isMetadata ? (
         <ResourcePage debugBase={debugBase} slug={slugPath} />
       ) : null}
     </div>

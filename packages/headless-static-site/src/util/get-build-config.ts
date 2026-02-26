@@ -197,7 +197,11 @@ export async function getBuildConfig(options: BuildOptions, builtIns: BuildBuilt
   log("Available rewrites:", allRewrites.map((e) => e.id).join(", "));
 
   // We manually skip some.
-  const toRun = config.run || builtIns.defaultRun;
+  const toRun = [...(config.run || builtIns.defaultRun)];
+  // If topic extraction is configured, ensure the step runs even when omitted from `run`.
+  if (config.config?.["extract-topics"] && !toRun.includes("extract-topics")) {
+    toRun.push("extract-topics");
+  }
   const rewrites = allRewrites.filter((e) => toRun.includes(e.id));
   const extractions = allExtractions.filter((e) => toRun.includes(e.id));
   const enrichments = allEnrichments.filter((e) => toRun.includes(e.id));

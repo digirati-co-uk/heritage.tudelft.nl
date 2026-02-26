@@ -97,6 +97,60 @@ export interface ResolvedConfigSource {
 
 export const supportedConfigFiles = [".iiifrc.yml", ".iiifrc.yaml", "iiif.config.js", "iiif.config.ts"];
 
+function isPlainObject(value: unknown): value is Record<string, any> {
+  return Object.prototype.toString.call(value) === "[object Object]";
+}
+
+function cloneConfigValue<T>(value: T): T {
+  if (Array.isArray(value)) {
+    return value.map((item) => cloneConfigValue(item)) as T;
+  }
+  if (isPlainObject(value)) {
+    const cloned: Record<string, any> = {};
+    for (const key of Object.keys(value)) {
+      cloned[key] = cloneConfigValue(value[key]);
+    }
+    return cloned as T;
+  }
+  return value;
+}
+
+function mergeConfigValue(baseValue: unknown, overrideValue: unknown): unknown {
+  if (typeof overrideValue === "undefined") {
+    return cloneConfigValue(baseValue);
+  }
+
+  if (Array.isArray(overrideValue)) {
+    // Arrays are replaced so users can intentionally set order/content.
+    return cloneConfigValue(overrideValue);
+  }
+
+  if (isPlainObject(baseValue) && isPlainObject(overrideValue)) {
+    const merged: Record<string, any> = cloneConfigValue(baseValue);
+    for (const key of Object.keys(overrideValue)) {
+      const nextOverride = overrideValue[key];
+      if (typeof nextOverride === "undefined") {
+        continue;
+      }
+      merged[key] = mergeConfigValue(baseValue[key], nextOverride);
+    }
+    return merged;
+  }
+
+  if (isPlainObject(overrideValue)) {
+    return cloneConfigValue(overrideValue);
+  }
+
+  return overrideValue;
+}
+
+export function mergeIiifConfig(baseConfig: IIIFRC, overrideConfig?: Partial<IIIFRC> | null): IIIFRC {
+  if (!overrideConfig) {
+    return cloneConfigValue(baseConfig || ({} as IIIFRC));
+  }
+  return mergeConfigValue(baseConfig || ({} as IIIFRC), overrideConfig) as IIIFRC;
+}
+
 function normalizeConfigExport(value: unknown) {
   if (!value) {
     return {} as IIIFRC;

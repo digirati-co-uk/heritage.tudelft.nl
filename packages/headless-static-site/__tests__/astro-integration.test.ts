@@ -2,6 +2,7 @@ import { existsSync } from "node:fs";
 import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { chdir, cwd } from "node:process";
 import { pathToFileURL } from "node:url";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 
@@ -63,9 +64,11 @@ function jsonResponse(value: unknown, status = 200) {
 }
 
 describe("astro integration lifecycle", () => {
+  const originalCwd = cwd();
   let testDir = "";
 
   beforeEach(() => {
+    chdir(originalCwd);
     process.env.VITEST = "";
     cachedBuildMock.mockClear();
     createServerMock.mockClear();
@@ -75,6 +78,7 @@ describe("astro integration lifecycle", () => {
   });
 
   afterEach(async () => {
+    chdir(originalCwd);
     if (testDir) {
       await rm(testDir, { recursive: true, force: true });
       testDir = "";
@@ -481,6 +485,75 @@ describe("astro integration lifecycle", () => {
       expect(configured.stores.content.saveManifests).toBe(true);
       expect(configured.stores.content.overrides).toBe("./content-overrides");
       expect(configured.stores.default).toBeUndefined();
+    });
+  });
+
+  test("merges inline config with iiif-config folder config", async () => {
+    testDir = await mkdtemp(join(tmpdir(), "iiif-hss-astro-merge-"));
+    chdir(testDir);
+    await mkdir(join(testDir, "iiif-config", "stores"), { recursive: true });
+    await mkdir(join(testDir, "iiif-config", "config"), { recursive: true });
+    await writeFile(join(testDir, "iiif-config", "config.yml"), "");
+    await writeFile(
+      join(testDir, "iiif-config", "stores", "local.json"),
+      JSON.stringify({ type: "iiif-json", path: "./content" })
+    );
+    await writeFile(
+      join(testDir, "iiif-config", "config", "extract-topics.json"),
+      JSON.stringify({
+        topicTypes: {
+          date: ["Year"],
+        },
+      })
+    );
+
+    const { iiifAstro } = await import("../src/astro-integration");
+    const integration = iiifAstro({
+      enabled: true,
+      config: {
+        config: {
+          "extract-topics": {
+            topicTypes: {
+              contributor: ["Contributor"],
+            },
+          },
+        },
+      },
+    });
+    const hooks = integration.hooks as Record<string, (options: any) => Promise<void>>;
+
+    await hooks["astro:config:setup"]({
+      command: "dev",
+      config: { root: pathToFileURL(`${testDir}/`) },
+      isRestart: false,
+      updateConfig: vi.fn(),
+      addWatchFile: vi.fn(),
+      logger: { info: vi.fn(), warn: vi.fn() },
+    });
+    await hooks["astro:server:setup"]({
+      server: {
+        config: {
+          root: testDir,
+          server: {
+            host: "localhost",
+            port: 4321,
+          },
+        },
+        middlewares: { use: vi.fn() },
+      },
+      logger: { warn: vi.fn() },
+    });
+
+    await vi.waitFor(() => {
+      const configured = createServerMock.mock.calls.at(-1)?.[0] as any;
+      expect(configured.stores.local).toEqual({
+        type: "iiif-json",
+        path: "./content",
+      });
+      expect(configured.config["extract-topics"].topicTypes).toEqual({
+        date: ["Year"],
+        contributor: ["Contributor"],
+      });
     });
   });
 

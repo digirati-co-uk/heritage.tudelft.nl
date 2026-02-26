@@ -168,6 +168,14 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
     manifestEditorUrl: meUrl,
     getBuildStatus: () => ({ ...buildStatus }),
     onboarding: serverOptions.onboarding,
+    defaultRun: defaultBuiltIns.defaultRun,
+    rebuild: async () => {
+      await cachedBuild({
+        cache: true,
+        emit: true,
+        dev: true,
+      });
+    },
   });
 
   app.get("/watch", async (ctx) => {

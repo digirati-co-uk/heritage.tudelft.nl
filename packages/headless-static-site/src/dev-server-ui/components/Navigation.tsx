@@ -20,6 +20,12 @@ export function Navigation({ debugBase }: { debugBase: string }) {
         >
           Trace
         </a>
+        <a
+          className="border border-gray-200 rounded-lg bg-white px-3 py-2 text-sm hover:bg-slate-50"
+          href={`${debugBase}/metadata`}
+        >
+          Metadata
+        </a>
       </nav>
     </header>
   );

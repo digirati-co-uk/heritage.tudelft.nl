@@ -1,5 +1,5 @@
 import { existsSync } from "node:fs";
-import { readFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, extname, join, resolve } from "node:path";
 import { cwd } from "node:process";
 import { upgrade } from "@iiif/parser/upgrader";
@@ -228,6 +228,81 @@ interface RegisterDebugUiRoutesOptions {
       vite?: string;
     };
   };
+  defaultRun?: string[];
+  rebuild?: () => Promise<void>;
+}
+
+function isPlainObject(value: unknown): value is Record<string, any> {
+  return Object.prototype.toString.call(value) === "[object Object]";
+}
+
+function uniqueTrimmedStrings(values: unknown, fieldName: string) {
+  if (!Array.isArray(values)) {
+    throw new Error(`"${fieldName}" must be an array of strings`);
+  }
+  const out = new Set<string>();
+  for (const value of values) {
+    if (typeof value !== "string") {
+      throw new Error(`"${fieldName}" must be an array of strings`);
+    }
+    const trimmed = value.trim();
+    if (!trimmed) {
+      continue;
+    }
+    out.add(trimmed);
+  }
+  return [...out];
+}
+
+function normalizeTopicTypes(value: unknown, fieldName: string) {
+  if (!isPlainObject(value)) {
+    throw new Error(`"${fieldName}" must be an object mapping topic types to labels`);
+  }
+
+  const topicTypes: Record<string, string[]> = {};
+  for (const [key, labels] of Object.entries(value)) {
+    const topicType = key.trim();
+    if (!topicType) {
+      continue;
+    }
+    const labelList =
+      typeof labels === "string"
+        ? uniqueTrimmedStrings([labels], `${fieldName}.${topicType}`)
+        : uniqueTrimmedStrings(labels, `${fieldName}.${topicType}`);
+    if (labelList.length) {
+      topicTypes[topicType] = labelList;
+    }
+  }
+  return topicTypes;
+}
+
+async function loadExistingExtractTopicsConfig(configPath: string) {
+  if (!existsSync(configPath)) {
+    return null;
+  }
+  const raw = await readFile(configPath, "utf-8");
+  try {
+    const parsed = JSON.parse(raw);
+    if (isPlainObject(parsed)) {
+      return parsed;
+    }
+    throw new Error("extract-topics.json must contain a JSON object");
+  } catch (error) {
+    throw new Error(`Invalid JSON in ${configPath}: ${(error as Error).message}`);
+  }
+}
+
+function getExtractTopicsWarnings(config: IIIFRC, metadataAnalysisExists: boolean, defaultRun: string[] = []) {
+  const warnings: string[] = [];
+  const effectiveRun = Array.isArray(config.run) ? config.run : defaultRun;
+  const hasConfiguredExtractTopics = Boolean(config.config?.["extract-topics"]);
+  if (!effectiveRun.includes("extract-topics") && !hasConfiguredExtractTopics) {
+    warnings.push("`extract-topics` is not enabled in `run`; generated topic collections will not be emitted yet.");
+  }
+  if (!metadataAnalysisExists) {
+    warnings.push("metadata-analysis.json was not found in the current build output.");
+  }
+  return warnings;
 }
 
 export function registerDebugUiRoutes({
@@ -240,6 +315,8 @@ export function registerDebugUiRoutes({
   manifestEditorUrl = "https://manifest-editor.digirati.services",
   getBuildStatus,
   onboarding,
+  defaultRun = [],
+  rebuild,
 }: RegisterDebugUiRoutesOptions) {
   app.get("/_debug/api/status", async (ctx) => {
     return ctx.json({
@@ -267,11 +344,14 @@ export function registerDebugUiRoutes({
     const siteMapPath = join(cwd(), buildDir, "meta", "sitemap.json");
     const topCollectionPath = join(cwd(), buildDir, "collection.json");
     const manifestsCollectionPath = join(cwd(), buildDir, "manifests", "collection.json");
+    const topicsCollectionPath = join(cwd(), buildDir, "topics", "collection.json");
 
     const siteMap = (await fileHandler.loadJson(siteMapPath, true)) as Record<string, any>;
     const topCollection = (await fileHandler.loadJson(topCollectionPath, true)) as Record<string, any>;
     const manifestsCollection = (await fileHandler.loadJson(manifestsCollectionPath, true)) as Record<string, any>;
+    const topicsCollection = (await fileHandler.loadJson(topicsCollectionPath, true)) as Record<string, any>;
     const baseUrl = config.server?.url || new URL(ctx.req.url).origin;
+    const topicItems = Array.isArray(topicsCollection?.items) ? topicsCollection.items : [];
 
     const featuredItems = (topCollection.items?.length ? topCollection.items : manifestsCollection.items || []).map(
       (item: any) => {
@@ -309,6 +389,12 @@ export function registerDebugUiRoutes({
       hasDebugUiAssets: Boolean(getDebugUiDir()),
       topCollection,
       manifestsCollection,
+      topics: {
+        available: topicItems.length > 0,
+        totalItems: topicItems.length,
+        slug: topicItems.length > 0 ? "topics" : null,
+        label: asLabel(topicsCollection?.label) || "Topics",
+      },
       featuredItems,
       resources: Object.entries(siteMap || {}).map(([slug, value]) => ({
         slug,
@@ -438,6 +524,138 @@ export function registerDebugUiRoutes({
 
   app.get("/_debug/api/trace", async (ctx) => {
     return ctx.json(getTraceJson ? getTraceJson() : {});
+  });
+
+  app.get("/_debug/api/metadata-analysis", async (ctx) => {
+    const { buildDir } = getActivePaths();
+    const config = await getConfig();
+    const metadataAnalysisPath = join(cwd(), buildDir, "meta", "metadata-analysis.json");
+    const metadataAnalysisExists = existsSync(metadataAnalysisPath);
+    const analysis = metadataAnalysisExists ? await fileHandler.loadJson(metadataAnalysisPath, true) : null;
+    const outputPath = join(cwd(), "iiif-config", "config", "extract-topics.json");
+
+    return ctx.json({
+      analysis,
+      extractTopicsConfig: config.config?.["extract-topics"] || null,
+      outputPath,
+      canWrite: true,
+      warnings: getExtractTopicsWarnings(config, metadataAnalysisExists, defaultRun),
+    });
+  });
+
+  app.post("/_debug/api/metadata-analysis/create-collection", async (ctx) => {
+    const config = await getConfig();
+    const { buildDir } = getActivePaths();
+    const metadataAnalysisPath = join(cwd(), buildDir, "meta", "metadata-analysis.json");
+    const metadataAnalysisExists = existsSync(metadataAnalysisPath);
+    let payload: any = null;
+    try {
+      payload = await ctx.req.json();
+    } catch (error) {
+      return ctx.json({ error: "Invalid JSON body" }, 400);
+    }
+
+    let topicTypes: Record<string, string[]>;
+    try {
+      topicTypes = normalizeTopicTypes(payload?.topicTypes, "topicTypes");
+    } catch (error) {
+      return ctx.json({ error: (error as Error).message }, 400);
+    }
+    if (Object.keys(topicTypes).length === 0) {
+      return ctx.json({ error: '"topicTypes" must include at least one topic type with labels' }, 400);
+    }
+
+    const mode: "merge" | "replace" = payload?.mode === "replace" ? "replace" : "merge";
+    const nextExtractTopicsConfig: Record<string, any> = {
+      topicTypes,
+    };
+
+    if (typeof payload?.translate !== "undefined") {
+      if (typeof payload.translate !== "boolean") {
+        return ctx.json({ error: '"translate" must be a boolean' }, 400);
+      }
+      nextExtractTopicsConfig.translate = payload.translate;
+    }
+    if (typeof payload?.language !== "undefined") {
+      if (typeof payload.language !== "string" || !payload.language.trim()) {
+        return ctx.json({ error: '"language" must be a non-empty string' }, 400);
+      }
+      nextExtractTopicsConfig.language = payload.language.trim();
+    }
+    if (typeof payload?.commaSeparated !== "undefined") {
+      try {
+        nextExtractTopicsConfig.commaSeparated = uniqueTrimmedStrings(payload.commaSeparated, "commaSeparated");
+      } catch (error) {
+        return ctx.json({ error: (error as Error).message }, 400);
+      }
+    }
+
+    const outputPath = join(cwd(), "iiif-config", "config", "extract-topics.json");
+    let existingConfig = null;
+    try {
+      existingConfig = await loadExistingExtractTopicsConfig(outputPath);
+    } catch (error) {
+      return ctx.json({ error: (error as Error).message }, 400);
+    }
+    const inMemoryConfig = isPlainObject(config.config?.["extract-topics"]) ? config.config?.["extract-topics"] : {};
+    const baseConfig = isPlainObject(existingConfig) ? existingConfig : inMemoryConfig;
+
+    let mergedTopicTypes = topicTypes;
+    if (mode === "merge") {
+      try {
+        mergedTopicTypes = {
+          ...normalizeTopicTypes(baseConfig.topicTypes || {}, "topicTypes"),
+          ...topicTypes,
+        };
+      } catch (error) {
+        return ctx.json({ error: `Invalid existing topicTypes: ${(error as Error).message}` }, 400);
+      }
+    }
+
+    const finalConfig = {
+      ...baseConfig,
+      ...nextExtractTopicsConfig,
+      topicTypes: mergedTopicTypes,
+    };
+
+    await mkdir(dirname(outputPath), { recursive: true });
+    await writeFile(outputPath, `${JSON.stringify(finalConfig, null, 2)}\n`, "utf-8");
+
+    config.config = config.config || {};
+    config.config["extract-topics"] = finalConfig;
+
+    let rebuildStatus: {
+      triggered: boolean;
+      mode: "full";
+      ok: boolean;
+      error: string | null;
+    } = {
+      triggered: Boolean(rebuild),
+      mode: "full",
+      ok: true,
+      error: null,
+    };
+
+    if (rebuild) {
+      try {
+        await rebuild();
+      } catch (error) {
+        // Writing the config is still successful even if rebuild fails.
+        rebuildStatus = {
+          ...rebuildStatus,
+          ok: false,
+          error: (error as Error)?.message || String(error),
+        };
+      }
+    }
+
+    return ctx.json({
+      saved: true,
+      path: outputPath,
+      extractTopicsConfig: finalConfig,
+      rebuild: rebuildStatus,
+      warnings: getExtractTopicsWarnings(config, metadataAnalysisExists, defaultRun),
+    });
   });
 
   app.get("/_debug", async (ctx) => {

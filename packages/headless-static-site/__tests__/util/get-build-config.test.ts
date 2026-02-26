@@ -162,6 +162,38 @@ describe("getBuildConfig search indexNames", () => {
     expect(result.extractions.some((step) => step.id === "extract-collection-thumbnail")).toBe(true);
   });
 
+  test("auto-enables extract-topics when config exists", async () => {
+    const config = {
+      stores: {
+        local: {
+          type: "iiif-json" as const,
+          path: "./content",
+        },
+      },
+      config: {
+        "extract-topics": {
+          topicTypes: {
+            date: ["Year"],
+          },
+        },
+      },
+      run: ["metadata-analysis"],
+    };
+
+    const result = await getBuildConfig(
+      {
+        cwd: testDir,
+        scripts: "./no-scripts-here",
+      },
+      {
+        ...defaultBuiltIns,
+        customConfig: config as any,
+      }
+    );
+
+    expect(result.extractions.some((step) => step.id === "extract-topics")).toBe(true);
+  });
+
   test("uses configured server URL for dev configUrl when DEV_SERVER env is absent", async () => {
     const config = {
       server: {
