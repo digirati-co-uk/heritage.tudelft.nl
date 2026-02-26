@@ -51,6 +51,22 @@ function hasThumbnail(value: any) {
   return Boolean(value.id || value["@id"]);
 }
 
+function getMetaThumbnail(
+  thumbnail:
+    | undefined
+    | {
+        id: string;
+        type: "fixed";
+        width: number;
+        height: number;
+      }
+) {
+  if (thumbnail?.type === "fixed") {
+    return { id: thumbnail.id, type: "Image", width: thumbnail.width, height: thumbnail.height };
+  }
+  return undefined;
+}
+
 export const extractCollectionThumbnail: Extraction<any, TempExtraction, TempInject> = {
   id: "extract-collection-thumbnail",
   name: "Extract Collection Thumbnail",
@@ -63,7 +79,7 @@ export const extractCollectionThumbnail: Extraction<any, TempExtraction, TempInj
 
     if (resource.type === "Manifest") {
       const meta = await api.meta.value;
-      const thumbnail = getThumbnail(api.resource.thumbnail) || getThumbnail(meta.thumbnail);
+      const thumbnail = getThumbnail(api.resource.thumbnail) || getMetaThumbnail(meta.thumbnail);
       return {
         temp: {
           type: "Manifest",
