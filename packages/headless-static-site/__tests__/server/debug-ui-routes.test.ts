@@ -158,6 +158,42 @@ describe("debug UI routes", () => {
     expect(rootRedirectRes.headers.get("location")).toBe("/iiif/_debug/");
   });
 
+  test("exposes build status and onboarding metadata", async () => {
+    const server = await createServer(
+      {
+        server: { url: "http://localhost:7111" },
+        stores: {
+          default: {
+            type: "iiif-json",
+            path: "./content",
+          },
+        },
+      },
+      {
+        onboarding: {
+          enabled: true,
+          configMode: "default",
+          contentFolder: "./content",
+          hints: {
+            addContent: "Add IIIF JSON files into ./content",
+          },
+        },
+      }
+    );
+
+    const statusRes = await server.request("/_debug/api/status");
+    expect(statusRes.status).toBe(200);
+    const statusJson = await statusRes.json();
+    expect(statusJson.build.status).toBe("idle");
+    expect(statusJson.onboarding.enabled).toBe(true);
+    expect(statusJson.onboarding.contentFolder).toBe("./content");
+
+    const siteRes = await server.request("/_debug/api/site");
+    const siteJson = await siteRes.json();
+    expect(siteJson.build.status).toBe("idle");
+    expect(siteJson.onboarding.enabled).toBe(true);
+  });
+
   test("finds packaged debug UI dir from exported module entrypoints", async () => {
     const currentWorkingDirectory = join(testDir, "project");
     await mkdir(currentWorkingDirectory, { recursive: true });

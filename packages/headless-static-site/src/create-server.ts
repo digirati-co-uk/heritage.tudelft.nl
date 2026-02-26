@@ -21,6 +21,22 @@ const require = createRequire(import.meta.url);
 interface IIIFServerOptions {
   customManifestEditor?: string;
   configSource?: Omit<ResolvedConfigSource, "config">;
+  onboarding?: {
+    enabled?: boolean;
+    configMode?: string;
+    contentFolder?: string | null;
+    shorthand?: {
+      enabled: boolean;
+      urls: string[];
+      saveManifests: boolean;
+      overrides: string;
+    } | null;
+    hints?: {
+      addContent?: string;
+      astro?: string;
+      vite?: string;
+    };
+  };
 }
 
 function redirectToDebugPath(basePathHeader?: string) {
@@ -74,6 +90,13 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
   const fileHandler = new FileHandler(fs, cwd());
   const tracer = new Tracer();
   const storeRequestCaches = {};
+  const buildStatus = {
+    status: "idle" as "idle" | "building" | "ready" | "error",
+    startedAt: null as string | null,
+    completedAt: null as string | null,
+    lastError: null as string | null,
+    buildCount: 0,
+  };
 
   const state = {
     shouldRebuild: false,
@@ -89,17 +112,31 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
   };
 
   const cachedBuild = async (options: BuildOptions) => {
-    const result = await build(options, defaultBuiltIns, {
-      storeRequestCaches,
-      fileHandler,
-      pathCache,
-      tracer,
-      customConfig: config,
-      customConfigSource: configSource,
-    });
-    activePaths.buildDir = result.buildConfig.buildDir;
-    activePaths.cacheDir = result.buildConfig.cacheDir;
-    return result;
+    buildStatus.status = "building";
+    buildStatus.startedAt = new Date().toISOString();
+    buildStatus.lastError = null;
+    buildStatus.buildCount += 1;
+
+    try {
+      const result = await build(options, defaultBuiltIns, {
+        storeRequestCaches,
+        fileHandler,
+        pathCache,
+        tracer,
+        customConfig: config,
+        customConfigSource: configSource,
+      });
+      activePaths.buildDir = result.buildConfig.buildDir;
+      activePaths.cacheDir = result.buildConfig.cacheDir;
+      buildStatus.status = "ready";
+      buildStatus.completedAt = new Date().toISOString();
+      return result;
+    } catch (error) {
+      buildStatus.status = "error";
+      buildStatus.completedAt = new Date().toISOString();
+      buildStatus.lastError = (error as Error)?.message || String(error);
+      throw error;
+    }
   };
 
   app.get("/", async (ctx) => {
@@ -127,6 +164,8 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
     getTraceJson: () => tracer.toJSON(),
     getDebugUiDir: () => findDebugUiDir(cwd(), require.resolve.bind(require)),
     manifestEditorUrl: meUrl,
+    getBuildStatus: () => ({ ...buildStatus }),
+    onboarding: serverOptions.onboarding,
   });
 
   app.get("/watch", async (ctx) => {
@@ -479,6 +518,7 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
       emitter,
       app,
       cachedBuild,
+      getBuildStatus: () => ({ ...buildStatus }),
     },
   };
 }

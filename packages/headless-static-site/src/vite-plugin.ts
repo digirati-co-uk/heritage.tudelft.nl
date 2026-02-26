@@ -61,9 +61,13 @@ export function iiifPlugin(options: IIIFHSSSPluginOptions = {}): Plugin {
       const devUrl = runtime.resolveServerUrl(devHost, devPort, 5173);
       await runtime.setConfigServerUrl(devUrl);
       await runtime.mountHonoMiddleware(viteDevServer.middlewares as any);
-      await runtime.startDevSession({
-        warn: (message) => console.warn(message),
-      });
+      runtime
+        .startDevSession({
+          warn: (message) => console.warn(message),
+        })
+        .catch((error) => {
+          console.warn(error);
+        });
     },
 
     async configurePreviewServer(previewServer) {

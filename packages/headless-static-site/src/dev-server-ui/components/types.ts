@@ -10,6 +10,29 @@ export type SiteFeaturedItem = {
 
 export type SiteResponse = {
   baseUrl: string;
+  build: {
+    status: "idle" | "building" | "ready" | "error";
+    startedAt: string | null;
+    completedAt: string | null;
+    lastError: string | null;
+    buildCount: number;
+  };
+  onboarding: {
+    enabled: boolean;
+    configMode: string;
+    contentFolder: string | null;
+    shorthand?: {
+      enabled: boolean;
+      urls: string[];
+      saveManifests: boolean;
+      overrides: string;
+    } | null;
+    hints?: {
+      addContent?: string;
+      astro?: string;
+      vite?: string;
+    };
+  };
   featuredItems: SiteFeaturedItem[];
 };
 

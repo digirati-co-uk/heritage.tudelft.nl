@@ -253,4 +253,135 @@ describe("vite plugin lifecycle", () => {
     const loaded = JSON.parse(await readFile(copiedCollection, "utf-8"));
     expect(loaded.type).toBe("Collection");
   });
+
+  test("builds remote content store from shorthand options", async () => {
+    const { iiifPlugin } = await import("../src/vite-plugin");
+    const plugin = iiifPlugin({
+      enabled: true,
+      collection: "https://example.org/iiif/collection.json",
+      save: true,
+      folder: "./overrides",
+    });
+
+    await plugin.configResolved?.({
+      command: "serve",
+      mode: "development",
+      root: process.cwd(),
+      build: {
+        outDir: "dist",
+      },
+    } as any);
+
+    const use = vi.fn();
+    await plugin.configureServer?.({
+      config: {
+        server: {
+          host: "localhost",
+          port: 5173,
+        },
+      },
+      middlewares: {
+        use,
+      },
+      httpServer: {
+        listening: false,
+      },
+    } as any);
+
+    const configured = createServerMock.mock.calls.at(-1)?.[0] as any;
+    expect(configured.stores.content.type).toBe("iiif-remote");
+    expect(configured.stores.content.url).toBe("https://example.org/iiif/collection.json");
+    expect(configured.stores.content.saveManifests).toBe(true);
+    expect(configured.stores.content.overrides).toBe("./overrides");
+  });
+
+  test("rejects shorthand-only options without manifest or collection URLs", async () => {
+    const { iiifPlugin } = await import("../src/vite-plugin");
+    const plugin = iiifPlugin({
+      enabled: true,
+      save: true,
+    });
+
+    await plugin.configResolved?.({
+      command: "serve",
+      mode: "development",
+      root: process.cwd(),
+      build: {
+        outDir: "dist",
+      },
+    } as any);
+
+    await expect(
+      plugin.configureServer?.({
+        config: {
+          server: {
+            host: "localhost",
+            port: 5173,
+          },
+        },
+        middlewares: {
+          use: vi.fn(),
+        },
+      } as any)
+    ).rejects.toThrow("`save` can only be used");
+  });
+
+  test("resets dev cache on config hash change and preserves request cache", async () => {
+    testDir = await mkdtemp(join(tmpdir(), "iiif-hss-vite-config-hash-"));
+    const cacheDir = join(testDir, ".iiif", "dev", "cache");
+    const requestsDir = join(cacheDir, "_requests");
+    const staleDir = join(cacheDir, "stale");
+    const requestFile = join(requestsDir, "request.json");
+    const staleFile = join(staleDir, "old.json");
+
+    await mkdir(requestsDir, { recursive: true });
+    await mkdir(staleDir, { recursive: true });
+    await writeFile(requestFile, JSON.stringify({ ok: true }));
+    await writeFile(staleFile, JSON.stringify({ stale: true }));
+
+    const configure = async (collection: string) => {
+      const { iiifPlugin } = await import("../src/vite-plugin");
+      const plugin = iiifPlugin({
+        enabled: true,
+        collection,
+      });
+
+      await plugin.configResolved?.({
+        command: "serve",
+        mode: "development",
+        root: testDir,
+        build: {
+          outDir: "dist",
+        },
+      } as any);
+
+      await plugin.configureServer?.({
+        config: {
+          server: {
+            host: "localhost",
+            port: 5173,
+          },
+        },
+        middlewares: {
+          use: vi.fn(),
+        },
+        httpServer: {
+          listening: false,
+        },
+      } as any);
+    };
+
+    await configure("https://example.org/iiif/a/collection.json");
+    await vi.waitFor(() => {
+      expect(existsSync(join(testDir, ".iiif", "dev", ".config-hash"))).toBe(true);
+    });
+
+    await writeFile(staleFile, JSON.stringify({ stale: "again" }));
+
+    await configure("https://example.org/iiif/b/collection.json");
+    await vi.waitFor(() => {
+      expect(existsSync(staleFile)).toBe(false);
+    });
+    expect(existsSync(requestFile)).toBe(true);
+  });
 });

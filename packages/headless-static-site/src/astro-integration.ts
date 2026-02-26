@@ -111,9 +111,23 @@ export function iiifAstro(options: IIIFHSSSPluginOptions = {}): AstroIntegration
         const devUrl = runtime.resolveServerUrl(devHost, devPort, 4321);
         await runtime.setConfigServerUrl(devUrl);
         await runtime.mountHonoMiddleware(server.middlewares as any);
-        await runtime.startDevSession({
-          warn: (message) => logger.warn(message),
-        });
+        runtime
+          .startDevSession({
+            warn: (message) => {
+              if (logger?.warn) {
+                logger.warn(message);
+                return;
+              }
+              console.warn(message);
+            },
+          })
+          .catch((error) => {
+            if (logger?.warn) {
+              logger.warn(String(error));
+              return;
+            }
+            console.warn(error);
+          });
       },
 
       "astro:server:start": async ({ address, logger }) => {

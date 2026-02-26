@@ -62,6 +62,13 @@ let isWatching = false;
 const fileHandler = new FileHandler(fs, cwd());
 const tracer = new Tracer();
 const storeRequestCaches = {};
+const buildStatus = {
+  status: "idle" as "idle" | "building" | "ready" | "error",
+  startedAt: null as string | null,
+  completedAt: null as string | null,
+  lastError: null as string | null,
+  buildCount: 0,
+};
 
 const state = {
   shouldRebuild: false,
@@ -82,15 +89,29 @@ const activePaths = {
 };
 
 const cachedBuild = async (options: BuildOptions) => {
-  const result = await build(options, defaultBuiltIns, {
-    storeRequestCaches,
-    fileHandler,
-    pathCache,
-    tracer,
-  });
-  activePaths.buildDir = result.buildConfig.buildDir;
-  activePaths.cacheDir = result.buildConfig.cacheDir;
-  return result;
+  buildStatus.status = "building";
+  buildStatus.startedAt = new Date().toISOString();
+  buildStatus.lastError = null;
+  buildStatus.buildCount += 1;
+
+  try {
+    const result = await build(options, defaultBuiltIns, {
+      storeRequestCaches,
+      fileHandler,
+      pathCache,
+      tracer,
+    });
+    activePaths.buildDir = result.buildConfig.buildDir;
+    activePaths.cacheDir = result.buildConfig.cacheDir;
+    buildStatus.status = "ready";
+    buildStatus.completedAt = new Date().toISOString();
+    return result;
+  } catch (error) {
+    buildStatus.status = "error";
+    buildStatus.completedAt = new Date().toISOString();
+    buildStatus.lastError = (error as Error)?.message || String(error);
+    throw error;
+  }
 };
 
 app.get("/", async (ctx) => {
@@ -127,6 +148,7 @@ registerDebugUiRoutes({
   getConfig: async () => (await resolveConfigSource()).config,
   getTraceJson: () => tracer.toJSON(),
   getDebugUiDir: () => findDebugUiDir(cwd(), require.resolve.bind(require)),
+  getBuildStatus: () => ({ ...buildStatus }),
 });
 
 app.get("/client.js", async (ctx) => {

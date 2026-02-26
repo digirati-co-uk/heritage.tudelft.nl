@@ -204,6 +204,29 @@ interface RegisterDebugUiRoutesOptions {
   getTraceJson?: () => unknown;
   getDebugUiDir: () => string | null;
   manifestEditorUrl?: string;
+  getBuildStatus?: () => {
+    status: "idle" | "building" | "ready" | "error";
+    startedAt: string | null;
+    completedAt: string | null;
+    lastError: string | null;
+    buildCount: number;
+  };
+  onboarding?: {
+    enabled?: boolean;
+    configMode?: string;
+    contentFolder?: string | null;
+    shorthand?: {
+      enabled: boolean;
+      urls: string[];
+      saveManifests: boolean;
+      overrides: string;
+    } | null;
+    hints?: {
+      addContent?: string;
+      astro?: string;
+      vite?: string;
+    };
+  };
 }
 
 export function registerDebugUiRoutes({
@@ -214,7 +237,29 @@ export function registerDebugUiRoutes({
   getTraceJson,
   getDebugUiDir,
   manifestEditorUrl = "https://manifest-editor.digirati.services",
+  getBuildStatus,
+  onboarding,
 }: RegisterDebugUiRoutesOptions) {
+  app.get("/_debug/api/status", async (ctx) => {
+    return ctx.json({
+      build: getBuildStatus
+        ? getBuildStatus()
+        : {
+            status: "idle",
+            startedAt: null,
+            completedAt: null,
+            lastError: null,
+            buildCount: 0,
+          },
+      onboarding: onboarding || {
+        enabled: false,
+        configMode: "unknown",
+        contentFolder: null,
+        shorthand: null,
+      },
+    });
+  });
+
   app.get("/_debug/api/site", async (ctx) => {
     const { buildDir } = getActivePaths();
     const config = await getConfig();
@@ -245,6 +290,21 @@ export function registerDebugUiRoutes({
     return ctx.json({
       buildDir,
       baseUrl,
+      build: getBuildStatus
+        ? getBuildStatus()
+        : {
+            status: "idle",
+            startedAt: null,
+            completedAt: null,
+            lastError: null,
+            buildCount: 0,
+          },
+      onboarding: onboarding || {
+        enabled: false,
+        configMode: "unknown",
+        contentFolder: null,
+        shorthand: null,
+      },
       hasDebugUiAssets: Boolean(getDebugUiDir()),
       topCollection,
       manifestsCollection,
