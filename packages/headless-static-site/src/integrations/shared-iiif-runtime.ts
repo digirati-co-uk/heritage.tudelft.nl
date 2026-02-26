@@ -203,7 +203,13 @@ export function createIiifRuntime(options: IIIFHSSSPluginOptions = {}) {
       configuredHost = "localhost";
     }
 
-    return `http://${configuredHost}:${configuredPort}${basePath}`;
+    // URL hostnames with IPv6 literals must be wrapped in brackets.
+    const formattedHost =
+      configuredHost.includes(":") && !configuredHost.startsWith("[") && !configuredHost.endsWith("]")
+        ? `[${configuredHost}]`
+        : configuredHost;
+
+    return `http://${formattedHost}:${configuredPort}${basePath}`;
   }
 
   async function setConfigServerUrl(url: string) {
