@@ -5,16 +5,23 @@ import { join } from "path";
 // src/util/make-slug-helper.ts
 function getDefaultSlug(slug) {
   const url = new URL(slug);
-  let path = url.pathname;
-  let extension = "";
-  const parts = path.split(".");
-  const lastPart = parts[parts.length - 1];
-  if (lastPart.indexOf(".") !== -1) {
-    const pathParts = path.split(".");
-    extension = pathParts.pop() || "";
-    path = pathParts.join(".");
+  let path = url.pathname.replace(/\/+$/, "");
+  let suffix = "";
+  if (/\/manifest\.json$/i.test(path)) {
+    path = path.replace(/\/manifest\.json$/i, "");
+    suffix = "manifest.json";
+  } else if (/\/collection\.json$/i.test(path)) {
+    path = path.replace(/\/collection\.json$/i, "");
+    suffix = "collection.json";
+  } else if (/\.json$/i.test(path)) {
+    path = path.replace(/\.json$/i, "");
+    suffix = "json";
   }
-  return [path, `default:${url.hostname}/${extension}`];
+  path = path.replace(/^\/+/, "").replace(/\/+$/, "");
+  if (!path) {
+    path = url.hostname;
+  }
+  return [path, `default:${url.hostname}/${suffix}`];
 }
 function makeGetSlugHelper(store, slugs) {
   if (store.slugTemplates) {

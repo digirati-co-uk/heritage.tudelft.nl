@@ -85,6 +85,11 @@ export interface IIIFHSSSPluginOptions {
    * Optional sub-directory inside outDir.
    */
   outSubDir?: string;
+
+  /**
+   * Source
+   */
+  source?: "vite" | "astro";
 }
 
 type MiddlewareContainer = {
@@ -248,8 +253,8 @@ export function createIiifRuntime(options: IIIFHSSSPluginOptions = {}) {
     shorthand: null,
     hints: {
       addContent: "Add IIIF JSON files into ./content",
-      astro: "iiif({ collection: 'https://example.org/iiif/collection.json' })",
-      vite: "iiifPlugin({ collection: 'https://example.org/iiif/collection.json' })",
+      astro: options.source === "astro" ? "iiif({ collection: 'https://example.org/iiif/collection.json' })" : "",
+      vite: options.source === "vite" ? "iiifPlugin({ collection: 'https://example.org/iiif/collection.json' })" : "",
     },
   };
   let didStartDevBuild = false;
@@ -325,8 +330,8 @@ export function createIiifRuntime(options: IIIFHSSSPluginOptions = {}) {
       shorthand: resolvedShorthand,
       hints: {
         addContent: `Add IIIF JSON files into ${contentFolder || "./content"}`,
-        astro: "iiif({ collection: 'https://example.org/iiif/collection.json' })",
-        vite: "iiifPlugin({ collection: 'https://example.org/iiif/collection.json' })",
+        astro: options.source === "astro" ? "iiif({ collection: 'https://example.org/iiif/collection.json' })" : "",
+        vite: options.source === "vite" ? "iiifPlugin({ collection: 'https://example.org/iiif/collection.json' })" : "",
       },
     };
 

@@ -38,7 +38,7 @@ function rootToPath(root: unknown) {
  * Astro integration for iiif-hss.
  */
 export function iiifAstro(options: IIIFHSSSPluginOptions = {}): AstroIntegrationLike {
-  const runtime = createIiifRuntime(options);
+  const runtime = createIiifRuntime({ ...options, source: "astro" });
   let command: AstroCommand | null = null;
   let mode: string | null = null;
   let didRunBuild = false;

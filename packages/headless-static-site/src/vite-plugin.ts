@@ -8,7 +8,7 @@ import { type IIIFHSSSPluginOptions, createIiifRuntime } from "./integrations/sh
  * Vite plugin for integrating Hono server.
  */
 export function iiifPlugin(options: IIIFHSSSPluginOptions = {}): Plugin {
-  const runtime = createIiifRuntime(options);
+  const runtime = createIiifRuntime({ ...options, source: "vite" });
   let resolvedViteCommand: "serve" | "build" | null = null;
   let resolvedViteMode: string | null = null;
   let resolvedOutDir: string | null = null;
