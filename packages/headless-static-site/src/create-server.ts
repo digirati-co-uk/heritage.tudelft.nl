@@ -6,6 +6,7 @@ import { join } from "node:path";
 import { cwd } from "node:process";
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
+import type { Context } from "hono";
 import { cors } from "hono/cors";
 import { timeout } from "hono/timeout";
 import mitt from "mitt";
@@ -14,6 +15,7 @@ import { type BuildOptions, build, defaultBuiltIns } from "./commands/build";
 import { findDebugUiDir, registerDebugUiRoutes } from "./server/debug-ui-routes.ts";
 import { FileHandler } from "./util/file-handler";
 import type { IIIFRC, ResolvedConfigSource } from "./util/get-config";
+import { resolveEditablePathForSlug } from "./util/resolve-editable-path";
 import { Tracer } from "./util/tracer";
 
 const require = createRequire(import.meta.url);
@@ -65,7 +67,7 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
   app.use(
     cors({
       origin: "*",
-      allowMethods: ["GET", "POST"],
+      allowMethods: ["GET", "POST", "PUT", "PATCH", "OPTIONS"],
       exposeHeaders: ["Content-Type", "X-IIIF-Post-Url", "Access-Control-Allow-Private-Network"],
       allowHeaders: ["Content-Type", "Access-Control-Request-Private-Network"],
     })
@@ -452,9 +454,7 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
     const isEdit = ctx.req.path.endsWith("/edit");
     if (isEdit) {
       const slug = ctx.req.path.replace("/edit", "").slice(1);
-      const editable = join(cwd(), activePaths.buildDir, "meta/editable.json");
-      const allEditable = await fileHandler.loadJson(editable, true);
-      const realPath = allEditable[slug];
+      const realPath = await resolveEditablePathForSlug(fileHandler, activePaths.buildDir, slug);
       if (!realPath) {
         return ctx.notFound();
       }
@@ -478,7 +478,7 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
     return ctx.notFound();
   });
 
-  app.post("/*", async (ctx) => {
+  const saveManifest = async (ctx: Context) => {
     const isManifest = ctx.req.path.endsWith("manifest.json");
     if (!isManifest) {
       return ctx.notFound();
@@ -486,20 +486,13 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
 
     // WIthout `/manifest.json`
     const slug = ctx.req.path.replace("/manifest.json", "").slice(1);
-    const editable = join(cwd(), activePaths.buildDir, "meta/editable.json");
-    const allEditable = await fileHandler.loadJson(editable, true);
-    const realPath = allEditable[slug];
+    const realPath = await resolveEditablePathForSlug(fileHandler, activePaths.buildDir, slug);
     if (!realPath) {
       return ctx.notFound();
     }
 
-    const fullRealPath = join(cwd(), realPath);
-    if (!fileHandler.exists(fullRealPath)) {
-      return ctx.notFound();
-    }
-
     const file = await ctx.req.json();
-    await fileHandler.saveJson(fullRealPath, file, true);
+    await fileHandler.saveJson(realPath, file, true);
     await cachedBuild({
       exact: slug,
       emit: true,
@@ -508,7 +501,11 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
     emitter.emit("file-refresh", { path: realPath });
 
     return ctx.json({ saved: true });
-  });
+  };
+
+  app.post("/*", saveManifest);
+  app.put("/*", saveManifest);
+  app.patch("/*", saveManifest);
 
   return {
     request: app.request,

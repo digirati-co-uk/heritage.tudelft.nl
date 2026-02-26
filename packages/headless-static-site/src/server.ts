@@ -5,6 +5,7 @@ import { join } from "node:path";
 import { cwd } from "node:process";
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
+import type { Context } from "hono";
 import { cors } from "hono/cors";
 import { timeout } from "hono/timeout";
 import mitt from "mitt";
@@ -15,6 +16,7 @@ import { editorHtml } from "./server/editor.html";
 import { explorerHtml } from "./server/explorer.html";
 import { FileHandler } from "./util/file-handler";
 import { resolveConfigSource } from "./util/get-config";
+import { resolveEditablePathForSlug } from "./util/resolve-editable-path";
 import { Tracer } from "./util/tracer";
 
 const require = createRequire(import.meta.url);
@@ -37,7 +39,7 @@ app.use(async (c, next) => {
 app.use(
   cors({
     origin: "*",
-    allowMethods: ["GET", "POST"],
+    allowMethods: ["GET", "POST", "PUT", "PATCH", "OPTIONS"],
     exposeHeaders: ["Content-Type", "X-IIIF-Post-Url", "Access-Control-Allow-Private-Network"],
     allowHeaders: ["Content-Type", "Access-Control-Request-Private-Network"],
   })
@@ -394,7 +396,7 @@ app.get("/*", async (ctx, next) => {
   return ctx.notFound();
 });
 
-app.post("/*", async (ctx) => {
+const saveManifest = async (ctx: Context) => {
   const isManifest = ctx.req.path.endsWith("manifest.json");
   if (!isManifest) {
     return ctx.notFound();
@@ -402,20 +404,13 @@ app.post("/*", async (ctx) => {
 
   // WIthout `/manifest.json`
   const slug = ctx.req.path.replace("/manifest.json", "").slice(1);
-  const editable = join(cwd(), activePaths.buildDir, "meta/editable.json");
-  const allEditable = await fileHandler.loadJson(editable, true);
-  const realPath = allEditable[slug];
+  const realPath = await resolveEditablePathForSlug(fileHandler, activePaths.buildDir, slug);
   if (!realPath) {
     return ctx.notFound();
   }
 
-  const fullRealPath = join(cwd(), realPath);
-  if (!fileHandler.exists(fullRealPath)) {
-    return ctx.notFound();
-  }
-
   const file = await ctx.req.json();
-  await fileHandler.saveJson(fullRealPath, file, true);
+  await fileHandler.saveJson(realPath, file, true);
   await cachedBuild({
     exact: slug,
     emit: true,
@@ -424,7 +419,11 @@ app.post("/*", async (ctx) => {
   emitter.emit("file-refresh", { path: realPath });
 
   return ctx.json({ saved: true });
-});
+};
+
+app.post("/*", saveManifest);
+app.put("/*", saveManifest);
+app.patch("/*", saveManifest);
 
 // @ts-ignore
 // if (import.meta.main) {

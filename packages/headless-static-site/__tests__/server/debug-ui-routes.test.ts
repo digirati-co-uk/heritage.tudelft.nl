@@ -1,4 +1,4 @@
-import { mkdir, mkdtemp, rm, unlink, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, rm, unlink, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { chdir, cwd } from "node:process";
@@ -19,6 +19,7 @@ describe("debug UI routes", () => {
     await mkdir(join(baseDir, ".iiif", "build", "manifests", "demo"), { recursive: true });
     await mkdir(join(baseDir, ".iiif", "cache", "manifests", "demo"), { recursive: true });
     await mkdir(join(baseDir, "build", "dev-ui", "assets"), { recursive: true });
+    await mkdir(join(baseDir, "content"), { recursive: true });
 
     await writeFile(
       join(baseDir, ".iiif", "build", "meta", "sitemap.json"),
@@ -279,5 +280,64 @@ describe("debug UI routes", () => {
     } finally {
       globalThis.fetch = originalFetch;
     }
+  });
+
+  test("redirects /edit and saves remote override manifests when editable metadata is empty", async () => {
+    const server = await createServer({
+      server: { url: "http://localhost:7111" },
+      stores: {
+        default: {
+          type: "iiif-json",
+          path: "./content",
+        },
+      },
+    });
+
+    await writeFile(join(cwd(), ".iiif", "build", "meta", "editable.json"), JSON.stringify({}, null, 2));
+    await writeFile(
+      join(cwd(), ".iiif", "build", "meta", "sitemap.json"),
+      JSON.stringify(
+        {
+          "manifests/demo": {
+            type: "Manifest",
+            source: {
+              type: "remote",
+              url: "https://example.org/iiif/remote-demo/manifest.json",
+              overrides: "./content",
+            },
+          },
+        },
+        null,
+        2
+      )
+    );
+
+    const editRes = await server.request("/manifests/demo/edit", {
+      redirect: "manual",
+    });
+    expect(editRes.status).toBe(302);
+    expect(editRes.headers.get("location")).toBe(
+      "https://manifest-editor.digirati.services/editor/external?manifest=http://localhost:7111/manifests/demo/manifest.json"
+    );
+
+    const updatedManifest = {
+      id: "https://example.org/iiif/remote-demo/manifest.json",
+      type: "Manifest",
+      label: { en: ["Saved override"] },
+      items: [],
+    };
+
+    const saveRes = await server.request("/manifests/demo/manifest.json", {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(updatedManifest),
+    });
+    expect(saveRes.status).toBe(200);
+    expect(await saveRes.json()).toEqual({ saved: true });
+
+    const savedOverride = await readFile(join(cwd(), "content", "demo.json"), "utf-8");
+    expect(JSON.parse(savedOverride)).toEqual(updatedManifest);
   });
 });
