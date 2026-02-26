@@ -18,12 +18,14 @@
     "vite": "vite",
     "dev-server": "bun run ./src/entrypoint.ts",
     "dev-cli": "bun run ./src/index.ts",
-    "build": "pnpm run build:cli && pnpm run build:server && pnpm run build:client && pnpm run build:node-client && pnpm run build:library && pnpm run build:vite-plugin && pnpm run build:astro-integration && pnpm run build:dev-ui",
+    "build": "pnpm run build:cli && pnpm run build:server && pnpm run build:client && pnpm run build:node-client && pnpm run build:library && pnpm run build:vite-plugin && pnpm run build:astro-integration && pnpm run build:astro-server-lib && pnpm run build:astro-client-lib && pnpm run build:dev-ui",
     "build:cli": "tsup-node src/index.ts --no-splitting --outDir build --format esm --env.NODE_ENV production",
     "build:server": "tsup-node src/entrypoint.ts --no-splitting --outDir build/server --format esm --env.NODE_ENV production",
     "build:library": "tsup src/library.ts --outDir build",
     "build:vite-plugin": "tsup src/vite-plugin.ts --outDir build",
     "build:astro-integration": "tsup src/astro-integration.ts --outDir build",
+    "build:astro-server-lib": "tsup src/astro/server.ts --outDir build/astro",
+    "build:astro-client-lib": "tsup src/astro/client.ts --outDir build/astro",
     "build:dev-ui": "pnpm vite build --config src/dev-server-ui/vite.config.ts || echo 'Skipping dev UI build (install react/react-dom to enable)'",
     "build:client": "tsup src/dev/client.ts --outDir build",
     "build:node-client": "tsup src/dev/node-client.ts --outDir build",
@@ -68,13 +70,27 @@
         "types": "./build/astro-integration.d.ts",
         "default": "./build/astro-integration.js"
       }
+    },
+    "./astro/server": {
+      "import": {
+        "types": "./build/astro/server.d.ts",
+        "default": "./build/astro/server.js"
+      }
+    },
+    "./astro/client": {
+      "import": {
+        "types": "./build/astro/client.d.ts",
+        "default": "./build/astro/client.js"
+      }
     }
   },
   "typesVersions": {
     "*": {
       "*": ["lib/scripts.d.ts"],
       "client": ["build/client.d.ts"],
-      "astro": ["build/astro-integration.d.ts"]
+      "astro": ["build/astro-integration.d.ts"],
+      "astro/server": ["build/astro/server.d.ts"],
+      "astro/client": ["build/astro/client.d.ts"]
     }
   },
   "optionalDependencies": {

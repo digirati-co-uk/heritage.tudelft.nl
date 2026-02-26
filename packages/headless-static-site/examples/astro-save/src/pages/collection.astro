@@ -1,0 +1,34 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { iiif } from "../lib/iiif-server";
+
+const collection = (await iiif.loadManifestsCollection()) || (await iiif.loadTopCollection());
+const items = collection?.items || [];
+const collectionDetails = await iiif.loadCollection("manifests");
+---
+
+<BaseLayout title="Collection">
+  <section class="stack">
+    <h1>{collection?.label?.en?.[0] ?? "Collection"}</h1>
+    <p><a href="/">Back home</a></p>
+
+    <div class="panel stack">
+      <h2>Collection meta.json</h2>
+      <pre>{JSON.stringify(collectionDetails.meta || {}, null, 2)}</pre>
+    </div>
+
+    <ul class="items">
+      {
+        items.map((item: any) => {
+          const slug = item?.["hss:slug"];
+          return (
+            <li class="item">
+              <strong>{item?.label?.en?.[0] || slug || item?.id}</strong>
+              <p class="small">{slug ? <a href={`/manifests/${slug}`}>Open manifest page</a> : "No slug available"}</p>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </section>
+</BaseLayout>
