@@ -1,60 +1,176 @@
 ---
-title: Vite plugin
+title: Vite + IIIF
 ---
 
-This is still a work in progress, but to try it out you can install the "next" tag:
+# Vite + IIIF Guide
+
+Use `iiif-hss/vite-plugin` to run the IIIF HSS runtime inside Vite dev/preview and copy generated IIIF output during `vite build`.
+
+## 1) Create a Vite project
 
 ```bash
-pnpm create vite
+pnpm create vite@latest
 ```
 
-and go through the steps. Go into the directory and install the pre-release:
+Follow the wizard, then:
 
 ```bash
-pnpm add -D iiif-hss@next
+cd <your-project>
+pnpm install
 ```
 
-Create a `./content` folder and put IIIF Manifests in, and add the vite plugin:
+## 2) Install `iiif-hss`
 
-```diff
+```bash
+pnpm add -D iiif-hss
+```
+
+## 3) Add the Vite plugin
+
+```ts
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-+import iiif from "iiif-hss/vite-plugin";
+import iiif from "iiif-hss/vite-plugin";
 
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-   react(),
-+  iiif()
-],
+  plugins: [iiif()],
 });
 ```
 
-That's it, no config required. If you spin up vite `pnpm dev` you will have all of the HSS server on `http://localhost:5173/iiif` such as:
+That is enough to start.
 
-- http://localhost:5173/iiif/collection.json - for the top level collection
-- http://localhost:5173/iiif/create - form for creating new manifests
-- http://localhost:5173/iiif/content/some-manifest/manifest.json - manifest URLs (+ meta, indicies, search-record etc.)
-- http://localhost:5173/iiif/content/some-manifest/edit - redirect to edit in Manifest Editor.
+## 4) Choose IIIF input mode
 
-Known issues:
+## Option A: Local static files (`content/`)
 
-- the `subFiles` configuration option is causing issues with creating new Manifests
-- CORS issue with Manifest Editor when saving, have had it work sometimes and not others
-- You need to create the `content` directory
+With `iiif()` and no shorthand remote options, HSS uses local JSON files by default.
 
-Still remaining for an MVP:
+Create `content/` and add IIIF JSON files, for example:
 
-- Build hook so the IIIF is exported in the dist directory on `vite build`
-- Configuring the `server.url` via environment variables in HSS (for building).
+- `content/my-manifest.json`
+- `content/some-folder/another-manifest.json`
+- `content/my-collection.json`
 
-Some ideas:
+Then run:
 
-- API + Simple forms for:
-  - Creating new IIIF
-  - Importing IIIF from a Manifest or Collection URL
-  - IIIF Browser embedded for importing
-- Visualiser for the tracing (https://hss-trace.netlify.app/)
-- Alternative method for pipeline extract/enrich scripts, in one place. (you can just define them in your vite config)
-- Simple Astro or React template with Manifest navigation
-- NextJS/Webpack dev server plugin adapted from this
+```bash
+pnpm dev
+```
+
+## Option B: Remote IIIF shorthand (no local setup required)
+
+You can point directly at remote resources from Vite config:
+
+```ts
+import { defineConfig } from "vite";
+import iiif from "iiif-hss/vite-plugin";
+
+export default defineConfig({
+  plugins: [
+    iiif({
+      collection: "https://theseusviewer.org/cookbook-collection.json",
+    }),
+  ],
+});
+```
+
+You can also pass multiple URLs:
+
+```ts
+iiif({
+  collections: ["https://example.org/a/collection.json"],
+  manifests: [
+    "https://example.org/b/manifest.json",
+    "https://example.org/c/manifest.json",
+  ],
+});
+```
+
+### Save remote manifests locally
+
+```ts
+iiif({
+  collection: "https://theseusviewer.org/cookbook-collection.json",
+  save: true,
+  folder: "./content-overrides", // optional, default is ./content
+});
+```
+
+Notes:
+
+- `save` and `folder` are shorthand-only options.
+- They can only be used with `collection`, `collections`, `manifest`, or `manifests`.
+
+## 5) Dev URLs
+
+With default `basePath: "/iiif"` and default Vite port:
+
+- `http://localhost:5173/iiif/collection.json` (top-level collection)
+- `http://localhost:5173/iiif/manifests/collection.json`
+- `http://localhost:5173/iiif/<slug>/manifest.json`
+- `http://localhost:5173/iiif/<slug>/meta.json`
+- `http://localhost:5173/iiif/create` (quick create form for `iiif-json` stores)
+- `http://localhost:5173/iiif/<slug>/edit` (redirect to Manifest Editor)
+- `http://localhost:5173/iiif/_debug` (debug UI)
+- `http://localhost:5173/iiif/_debug/api/site`
+- `http://localhost:5173/iiif/_debug/api/resource/<slug>`
+
+## 6) Build behavior (`vite build`)
+
+The plugin now runs the IIIF build and copies output into Vite `outDir` by default.
+
+Default behavior:
+
+- generates IIIF output (typically from `.iiif/build`)
+- copies into Vite output directory (for example `dist/`)
+
+So after `pnpm build`, your `dist/` contains generated IIIF assets.
+
+## 7) Useful plugin options
+
+```ts
+iiif({
+  // Routing
+  basePath: "/iiif",
+
+  // Config source
+  configFile: ".iiifrc.yml",
+  config: {
+    stores: {
+      default: {
+        type: "iiif-json",
+        path: "content",
+      },
+    },
+  },
+
+  // Runtime toggles
+  enabled: true,
+  host: "localhost",
+  port: 5173,
+
+  // Build artifact copy
+  copyBuildToOutDir: true,
+  iiifBuildDir: ".iiif/build",
+  outSubDir: "iiif",
+
+  // Remote shorthand
+  collection: "https://example.org/collection.json",
+  save: true,
+  folder: "./content-overrides",
+});
+```
+
+## 8) Production preview
+
+```bash
+pnpm build
+pnpm preview
+```
+
+Preview also mounts the IIIF middleware under the same `basePath`.
+
+## 9) Notes
+
+- This plugin is framework-agnostic and works with any Vite app setup.
+- Existing APIs remain available (`iiif-hss/client`, `iiif-hss/node-client`).
+- Astro users should use the dedicated integration: `iiif-hss/astro`.

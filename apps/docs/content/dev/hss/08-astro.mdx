@@ -1,0 +1,265 @@
+---
+title: Astro + IIIF
+---
+# Astro + IIIF Guide
+
+This guide walks you through setting up a new Astro project with the `iiif-hss` integration. You'll learn how to connect your site to IIIF content — either by pointing to a remote collection URL or by working with local static JSON files in your `content/` folder. Along the way, you'll also see how to use the built-in debug UI, build out pages using the server-side helpers in `iiif-hss/astro/server`, and load IIIF data in the browser with `iiif-hss/astro/client`.
+
+## 1) Prerequisites
+
+- Node.js `v18.20.8+`, `v20.3.0+`, or `v22+`
+- pnpm
+
+## 2) Create a new Astro app
+
+```bash
+pnpm create astro@latest
+```
+
+Then:
+
+```bash
+cd <your-project>
+pnpm install
+```
+
+## 3) Install `iiif-hss`
+
+```bash
+pnpm add iiif-hss
+```
+
+## 4) Add the Astro integration
+
+Create or update `astro.config.mjs`:
+
+```js
+// @ts-check
+import { defineConfig } from "astro/config";
+import iiif from "iiif-hss/astro";
+
+export default defineConfig({
+  integrations: [
+    iiif({
+      collection: "https://theseusviewer.org/cookbook-collection.json",
+    }),
+  ],
+});
+```
+
+## 5) Choose your IIIF input mode
+
+### Option A: Remote collection
+
+Use the `collection` (or `collections`) option in `iiif(...)`:
+
+```js
+iiif({
+  collection: "https://theseusviewer.org/cookbook-collection.json",
+});
+```
+
+If you want to save remote manifests locally while building:
+
+```js
+iiif({
+  collection: "https://theseusviewer.org/cookbook-collection.json",
+  save: true,
+});
+```
+
+### Option B: Local static files in `content/`
+
+Use the integration with no remote shorthand:
+
+```js
+iiif();
+```
+
+By default, `iiif-hss` reads `content/**/*.json` as an `iiif-json` store.
+
+Create files such as:
+
+- `content/my-manifest.json`
+- `content/subfolder/another-manifest.json`
+- `content/my-collection.json`
+
+Each JSON should include valid IIIF fields such as `id` and `type`.
+
+Minimal manifest example:
+
+```json
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "https://iiif.io/api/cookbook/recipe/0001-mvm-image/manifest.json",
+  "type": "Manifest",
+  "label": {
+    "en": [
+      "Single Image Example"
+    ]
+  },
+  "items": [
+    {
+      "id": "https://iiif.io/api/cookbook/recipe/0001-mvm-image/canvas/p1",
+      "type": "Canvas",
+      "height": 1800,
+      "width": 1200,
+      "items": [
+        {
+          "id": "https://iiif.io/api/cookbook/recipe/0001-mvm-image/page/p1/1",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://iiif.io/api/cookbook/recipe/0001-mvm-image/annotation/p0001-image",
+              "type": "Annotation",
+              "motivation": "painting",
+              "body": {
+                "id": "http://iiif.io/api/presentation/2.1/example/fixtures/resources/page1-full.png",
+                "type": "Image",
+                "format": "image/png",
+                "height": 1800,
+                "width": 1200
+              },
+              "target": "https://iiif.io/api/cookbook/recipe/0001-mvm-image/canvas/p1"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+_source: [IIIF Cookbook](https://iiif.io/api/cookbook/recipe/0001-mvm-image/)_
+
+## 6) Run Astro and open debug UI
+
+```bash
+pnpm dev
+```
+
+Default URLs (with default `basePath: "/iiif"`):
+
+- IIIF middleware base: `/iiif`
+- Debug UI: `/iiif/_debug`
+- Debug site API: `/iiif/_debug/api/site`
+- Debug resource API: `/iiif/_debug/api/resource/<slug>`
+
+Generated IIIF output includes paths such as:
+
+- `/collection.json`
+- `/manifests/collection.json`
+- `/collections/collection.json`
+- `/<slug>/manifest.json` or `/<slug>/collection.json`
+- `/<slug>/meta.json`
+- `/meta/sitemap.json`
+
+## 7) Server-side API for Astro pages
+
+Create `src/lib/iiif-server.ts`:
+
+```ts
+import { createIiifAstroServer } from "iiif-hss/astro/server";
+
+export const iiif = createIiifAstroServer();
+```
+
+Useful methods:
+
+- `loadTopCollection()`
+- `loadManifestsCollection()`
+- `loadCollectionsCollection()`
+- `loadManifest(slugOrUrl)` / `loadCollection(slugOrUrl)` / `loadResource(slugOrUrl)`
+- `loadManifestFromParams(Astro.params)`
+- `getManifestStaticPaths()` / `getCollectionStaticPaths()`
+- `getStaticPathsFromCollection(collection)`
+
+### Example: home page
+
+```astro filename="src/pages/index.astro"
+---
+import { iiif } from "../lib/iiif-server";
+
+const top = await iiif.loadTopCollection();
+const manifests = await iiif.loadManifestsCollection();
+const manifestPaths = await iiif.getManifestStaticPaths();
+---
+
+<h1>IIIF + Astro</h1>
+<p>Top items: {top?.items?.length ?? 0}</p>
+<p>Manifest routes: {manifestPaths.length}</p>
+<p>Manifest collection: {manifests?.label?.en?.[0] ?? "Unknown"}</p>
+```
+
+### Example: collection page
+
+```astro filename="src/pages/collection.astro"
+---
+import { iiif } from "../lib/iiif-server";
+
+const collection = await iiif.loadCollection("manifests");
+---
+
+<h1>{collection.resource.label.en?.[0] ?? "Untitled collection"}</h1>
+<pre>{JSON.stringify(collectionDetails.meta || {}, null, 2)}</pre>
+```
+
+### Example: manifest dynamic route
+
+```astro filename="src/pages/manifest/[...slug].astro"
+---
+import { iiif } from "../../lib/iiif-server";
+
+export async function getStaticPaths() {
+  const collection = await iiif.loadTopCollection();
+  if (!collection) {
+    return [];
+  }
+  return iiif.getStaticPathsFromCollection(collection);
+}
+
+const loaded = await iiif.loadManifestFromParams(Astro.params);
+---
+
+<h1>{loaded.resource?.label?.en?.[0] || loaded.meta?.label || loaded.slug}</h1>
+<pre>{JSON.stringify(loaded.meta || {}, null, 2)}</pre>
+```
+
+## 8) Browser-side API
+
+You can use this in any browser-side script or client component.
+
+```ts filename="src/pages/manifest/my-manifest.astro"
+import { createIiifAstroClient } from "iiif-hss/astro/client";
+
+const iiif = createIiifAstroClient();
+const manifest = await iiif.loadManifest("content/my-manifest");
+```
+
+Framework-agnostic `.astro` example:
+
+```astro
+---
+const slug = "content/my-manifest"; // Astro.params.slug;
+---
+
+<p data-iiif-slug={slug}>Loading...</p>
+
+<script type="module">
+  import { createIiifAstroClient } from "iiif-hss/astro/client";
+
+  const iiif = createIiifAstroClient();
+  const nodes = document.querySelectorAll("[data-iiif-slug]");
+
+  for (const node of nodes) {
+    const slug = node.getAttribute("data-iiif-slug");
+    if (!slug) continue;
+
+    try {
+      const loaded = await iiif.loadManifest(slug);
+      node.textContent = loaded.resource?.label?.en?.[0] || loaded.meta?.label || slug;
+    } catch {
+      node.textContent = "Failed to load manifest";
+    }
+  }
+</script>
+```
