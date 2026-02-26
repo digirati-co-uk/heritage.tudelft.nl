@@ -259,6 +259,7 @@ export function createIiifRuntime(options: IIIFHSSSPluginOptions = {}) {
   };
   let didStartDevBuild = false;
   let didStartWatch = false;
+  let didAttachHmrBridge = false;
 
   async function ensureCacheDirectoryInvalidation(devMode: boolean, logger?: RuntimeLogger) {
     const configSource = await resolveIiifConfig();
@@ -539,6 +540,35 @@ export function createIiifRuntime(options: IIIFHSSSPluginOptions = {}) {
     }
   }
 
+  async function attachDevHotReloadBridge(triggerReload: () => void) {
+    if (didAttachHmrBridge) {
+      return;
+    }
+
+    const serverInstance = await ensureServer();
+    const emitter = (serverInstance as any)?._extra?.emitter;
+    if (!emitter || typeof emitter.on !== "function") {
+      return;
+    }
+
+    didAttachHmrBridge = true;
+
+    let pending = false;
+    const scheduleReload = () => {
+      if (pending) {
+        return;
+      }
+      pending = true;
+      setTimeout(() => {
+        pending = false;
+        triggerReload();
+      }, 75);
+    };
+
+    emitter.on("file-refresh", scheduleReload);
+    emitter.on("full-rebuild", scheduleReload);
+  }
+
   return {
     basePath,
     isEnabled: () => runtimeEnabled,
@@ -553,6 +583,7 @@ export function createIiifRuntime(options: IIIFHSSSPluginOptions = {}) {
     runBuild,
     copyBuildArtifacts,
     startDevSession,
+    attachDevHotReloadBridge,
     getOnboardingInfo: () => onboardingInfo,
   };
 }

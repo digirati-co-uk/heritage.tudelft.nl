@@ -61,6 +61,12 @@ export function iiifPlugin(options: IIIFHSSSPluginOptions = {}): Plugin {
       const devUrl = runtime.resolveServerUrl(devHost, devPort, 5173);
       await runtime.setConfigServerUrl(devUrl);
       await runtime.mountHonoMiddleware(viteDevServer.middlewares as any);
+      await runtime.attachDevHotReloadBridge(() => {
+        if (!viteDevServer.ws || typeof viteDevServer.ws.send !== "function") {
+          return;
+        }
+        viteDevServer.ws.send({ type: "full-reload", path: "*" });
+      });
       runtime
         .startDevSession({
           warn: (message) => console.warn(message),

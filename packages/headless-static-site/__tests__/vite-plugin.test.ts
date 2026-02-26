@@ -10,10 +10,29 @@ const cachedBuildMock = vi.fn(async () => ({
   },
 }));
 const requestMock = vi.fn(async () => new Response(null));
+const emitterListeners = new Map<string, Set<(payload: any) => void>>();
+const emitterMock = {
+  emit(event: string, payload?: any) {
+    const listeners = emitterListeners.get(event);
+    if (!listeners) {
+      return;
+    }
+    for (const listener of listeners) {
+      listener(payload);
+    }
+  },
+  on: vi.fn((event: string, listener: (payload: any) => void) => {
+    if (!emitterListeners.has(event)) {
+      emitterListeners.set(event, new Set());
+    }
+    emitterListeners.get(event)?.add(listener);
+  }),
+};
 const createServerMock = vi.fn(async () => ({
   _extra: {
     cachedBuild: cachedBuildMock,
     app: { fetch: vi.fn() },
+    emitter: emitterMock,
   },
   request: requestMock,
 }));
@@ -30,6 +49,8 @@ describe("vite plugin lifecycle", () => {
     cachedBuildMock.mockClear();
     requestMock.mockClear();
     createServerMock.mockClear();
+    emitterMock.on.mockClear();
+    emitterListeners.clear();
   });
 
   afterEach(async () => {
@@ -209,6 +230,55 @@ describe("vite plugin lifecycle", () => {
     } finally {
       logSpy.mockRestore();
     }
+  });
+
+  test("triggers Vite full-reload when IIIF resources refresh", async () => {
+    const { iiifPlugin } = await import("../src/vite-plugin");
+    const plugin = iiifPlugin({
+      enabled: true,
+      config: {
+        stores: {
+          local: {
+            type: "iiif-remote",
+            url: "https://example.org/iiif/collection.json",
+          },
+        },
+      },
+    });
+
+    await plugin.configResolved?.({
+      command: "serve",
+      mode: "development",
+      root: process.cwd(),
+      build: {
+        outDir: "dist",
+      },
+    } as any);
+
+    const wsSend = vi.fn();
+    await plugin.configureServer?.({
+      config: {
+        server: {
+          host: "localhost",
+          port: 5173,
+        },
+      },
+      middlewares: {
+        use: vi.fn(),
+      },
+      httpServer: {
+        listening: false,
+      },
+      ws: {
+        send: wsSend,
+      },
+    } as any);
+
+    emitterMock.emit("file-refresh", { path: "content/demo.json" });
+
+    await vi.waitFor(() => {
+      expect(wsSend).toHaveBeenCalledWith({ type: "full-reload", path: "*" });
+    });
   });
 
   test("copies iiif artifacts into vite outDir on closeBundle", async () => {

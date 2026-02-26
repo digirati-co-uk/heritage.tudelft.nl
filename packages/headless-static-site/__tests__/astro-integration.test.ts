@@ -11,10 +11,29 @@ const cachedBuildMock = vi.fn(async () => ({
   },
 }));
 const requestMock = vi.fn(async () => new Response(null));
+const emitterListeners = new Map<string, Set<(payload: any) => void>>();
+const emitterMock = {
+  emit(event: string, payload?: any) {
+    const listeners = emitterListeners.get(event);
+    if (!listeners) {
+      return;
+    }
+    for (const listener of listeners) {
+      listener(payload);
+    }
+  },
+  on: vi.fn((event: string, listener: (payload: any) => void) => {
+    if (!emitterListeners.has(event)) {
+      emitterListeners.set(event, new Set());
+    }
+    emitterListeners.get(event)?.add(listener);
+  }),
+};
 const createServerMock = vi.fn(async () => ({
   _extra: {
     cachedBuild: cachedBuildMock,
     app: { fetch: vi.fn(async () => new Response(null)) },
+    emitter: emitterMock,
   },
   request: requestMock,
 }));
@@ -51,6 +70,8 @@ describe("astro integration lifecycle", () => {
     cachedBuildMock.mockClear();
     createServerMock.mockClear();
     requestMock.mockClear();
+    emitterMock.on.mockClear();
+    emitterListeners.clear();
   });
 
   afterEach(async () => {
@@ -103,6 +124,51 @@ describe("astro integration lifecycle", () => {
       expect(use.mock.calls[0][0]).toBe("/iiif");
       expect(cachedBuildMock).toHaveBeenCalledWith({ cache: true, emit: true, dev: true });
       expect(requestMock).toHaveBeenCalledWith("/watch");
+    });
+  });
+
+  test("triggers Astro full-reload when IIIF resources refresh", async () => {
+    const { iiifAstro } = await import("../src/astro-integration");
+    const integration = iiifAstro({
+      enabled: true,
+      config: {
+        stores: {
+          local: {
+            type: "iiif-remote",
+            url: "https://example.org/iiif/collection.json",
+          },
+        },
+      },
+    });
+    const hooks = integration.hooks as Record<string, (options: any) => Promise<void>>;
+    const wsSend = vi.fn();
+
+    await hooks["astro:config:setup"]({
+      command: "dev",
+      config: { root: pathToFileURL(`${process.cwd()}/`) },
+      isRestart: false,
+      updateConfig: vi.fn(),
+      addWatchFile: vi.fn(),
+      logger: { info: vi.fn(), warn: vi.fn() },
+    });
+    await hooks["astro:server:setup"]({
+      server: {
+        config: {
+          root: process.cwd(),
+          server: {
+            host: "localhost",
+            port: 4321,
+          },
+        },
+        middlewares: { use: vi.fn() },
+        ws: { send: wsSend },
+      },
+    });
+
+    emitterMock.emit("file-refresh", { path: "content/demo.json" });
+
+    await vi.waitFor(() => {
+      expect(wsSend).toHaveBeenCalledWith({ type: "full-reload", path: "*" });
     });
   });
 

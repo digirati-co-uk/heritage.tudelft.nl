@@ -173,13 +173,16 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
   app.get("/watch", async (ctx) => {
     if (isWatching) return ctx.json({ watching: true });
 
-    const stores = Object.values(config.stores).filter((store) => {
+    const jsonStores = Object.values(config.stores).filter((store) => {
       return store.type === "iiif-json";
+    });
+    const remoteOverrideStores = Object.values(config.stores).filter((store) => {
+      return store.type === "iiif-remote" && typeof store.overrides === "string" && Boolean(store.overrides.trim());
     });
     const extraWatchPaths = configSource?.watchPaths || [];
     let watchCount = 0;
 
-    for (const store of stores) {
+    for (const store of jsonStores) {
       if (!existsSync(store.path)) {
         continue;
       }
@@ -202,6 +205,45 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
               dev: true,
             });
             emitter.emit("file-refresh", { path: realPath });
+          }
+        }
+      })().catch((err) => {
+        // ignore.
+      });
+    }
+
+    for (const store of remoteOverrideStores) {
+      const overridesPath = store.overrides.trim();
+      if (!existsSync(overridesPath)) {
+        continue;
+      }
+      (async () => {
+        const watcher = watch(overridesPath, {
+          signal: ac.signal,
+          recursive: true,
+        });
+        watchCount++;
+
+        for await (const event of watcher) {
+          const changedPath = event.filename ? join(overridesPath, event.filename) : null;
+          const realPath = changedPath ? pathCache.allPaths[changedPath] : undefined;
+          if (realPath) {
+            emitter.emit("file-change", { path: realPath });
+          }
+          await cachedBuild({
+            exact: realPath || undefined,
+            emit: true,
+            cache: true,
+            dev: true,
+          });
+          if (realPath) {
+            emitter.emit("file-refresh", { path: realPath });
+          } else {
+            emitter.emit("full-rebuild", {
+              source: "overrides-watch",
+              path: overridesPath,
+              filename: event.filename || null,
+            });
           }
         }
       })().catch((err) => {
