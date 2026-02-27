@@ -2,65 +2,6 @@
 import { readFile } from "fs/promises";
 import { join } from "path";
 
-// src/util/make-slug-helper.ts
-function getDefaultSlug(slug) {
-  const url = new URL(slug);
-  let path = url.pathname.replace(/\/+$/, "");
-  let suffix = "";
-  if (/\/manifest\.json$/i.test(path)) {
-    path = path.replace(/\/manifest\.json$/i, "");
-    suffix = "manifest.json";
-  } else if (/\/collection\.json$/i.test(path)) {
-    path = path.replace(/\/collection\.json$/i, "");
-    suffix = "collection.json";
-  } else if (/\.json$/i.test(path)) {
-    path = path.replace(/\.json$/i, "");
-    suffix = "json";
-  }
-  path = path.replace(/^\/+/, "").replace(/\/+$/, "");
-  if (!path) {
-    path = url.hostname;
-  }
-  return [path, `default:${url.hostname}/${suffix}`];
-}
-function makeGetSlugHelper(store, slugs) {
-  if (store.slugTemplates) {
-    return (resource) => {
-      const isManifest = resource.type === "Manifest";
-      const isCollection = resource.type === "Collection";
-      for (const slugTemplate of store.slugTemplates || []) {
-        const compiled = slugs[slugTemplate];
-        if (compiled && compiled.info.type === resource.type) {
-          let [slug] = compiled.compile(resource.id);
-          if (slug) {
-            if (isManifest && slug.startsWith("manifests/")) {
-              console.log(
-                'Warning: Manifest slug should not start with "manifests/". Consider adding it to the prefix in the slug config'
-              );
-            }
-            if (isCollection && slug.startsWith("collections/")) {
-              console.log(
-                'Warning: Collection slug should not start with "collections/". Consider adding it to the prefix in the slug config'
-              );
-            }
-            if (isManifest && !slug.startsWith("manifests/")) {
-              slug = `manifests/${slug}`;
-            }
-            if (isCollection && !slug.startsWith("collections/")) {
-              slug = `collections/${slug}`;
-            }
-            return [slug, slugTemplate];
-          }
-        }
-      }
-      return getDefaultSlug(resource.id);
-    };
-  }
-  return (resource) => {
-    return getDefaultSlug(resource.id);
-  };
-}
-
 // src/util/slug-engine.ts
 var NO_MATCH = [null, null];
 function compileSlugConfig(config) {
@@ -134,6 +75,92 @@ function compileReverseSlugConfig(config) {
       parts.push(suffix);
     }
     return [parts.join(""), { path }];
+  };
+}
+
+// src/util/make-slug-helper.ts
+function getDefaultSlug(slug) {
+  const url = new URL(slug);
+  let path = url.pathname.replace(/\/+$/, "");
+  let suffix = "";
+  if (/\/manifest\.json$/i.test(path)) {
+    path = path.replace(/\/manifest\.json$/i, "");
+    suffix = "manifest.json";
+  } else if (/\/collection\.json$/i.test(path)) {
+    path = path.replace(/\/collection\.json$/i, "");
+    suffix = "collection.json";
+  } else if (/\.json$/i.test(path)) {
+    path = path.replace(/\.json$/i, "");
+    suffix = "json";
+  }
+  path = path.replace(/^\/+/, "").replace(/\/+$/, "");
+  if (!path) {
+    path = url.hostname;
+  }
+  return [path, `default:${url.hostname}/${suffix}`];
+}
+function ensureTypePrefix(slug, type) {
+  if (type === "Manifest") {
+    if (slug.startsWith("manifests/")) {
+      console.log(
+        'Warning: Manifest slug should not start with "manifests/". Consider adding it to the prefix in the slug config'
+      );
+      return slug;
+    }
+    return `manifests/${slug}`;
+  }
+  if (type === "Collection") {
+    if (slug.startsWith("collections/")) {
+      console.log(
+        'Warning: Collection slug should not start with "collections/". Consider adding it to the prefix in the slug config'
+      );
+      return slug;
+    }
+    return `collections/${slug}`;
+  }
+  return slug;
+}
+function getInlineTemplates(store) {
+  const inlineTemplate = store.slugTemplate;
+  if (!inlineTemplate) {
+    return [];
+  }
+  return Array.isArray(inlineTemplate) ? inlineTemplate : [inlineTemplate];
+}
+function makeGetSlugHelper(store, slugs) {
+  const referencedTemplates = (store.slugTemplates || []).flatMap((slugTemplate) => {
+    const compiled = slugs[slugTemplate];
+    if (!compiled) {
+      return [];
+    }
+    return [{ name: slugTemplate, compiled }];
+  });
+  const inlineTemplates = getInlineTemplates(store).map((inlineTemplate, index) => {
+    return {
+      name: `inline-slug-template-${index + 1}`,
+      compiled: {
+        info: inlineTemplate,
+        compile: compileSlugConfig(inlineTemplate)
+      }
+    };
+  });
+  const templates = [...referencedTemplates, ...inlineTemplates];
+  if (templates.length > 0) {
+    return (resource) => {
+      for (const template of templates) {
+        if (template.compiled.info.type !== resource.type) {
+          continue;
+        }
+        const [slug] = template.compiled.compile(resource.id);
+        if (slug) {
+          return [ensureTypePrefix(slug, resource.type), template.name];
+        }
+      }
+      return getDefaultSlug(resource.id);
+    };
+  }
+  return (resource) => {
+    return getDefaultSlug(resource.id);
   };
 }
 

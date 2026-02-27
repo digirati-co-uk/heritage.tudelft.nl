@@ -1,0 +1,30 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { collectionRouteBase } from "../lib/iiif-routes";
+import { iiif } from "../lib/iiif-server";
+
+const collection = await iiif.getAllCollections();
+const items = collection?.items || [];
+---
+
+<BaseLayout title="Collection Browser">
+  <section class="stack">
+    <h1>{collection?.label?.en?.[0] ?? "Collections"}</h1>
+    <p><a href="/">Back home</a></p>
+
+    <ul class="items">
+      {
+        items.map((item: any) => {
+          const slug = item?.["hss:slug"];
+          const routeSlug = typeof slug === "string" ? slug.replace(/^(collections|browser)\//, "") : "";
+          return (
+            <li class="item">
+              <strong>{item?.label?.en?.[0] || slug || item?.id}</strong>
+              <p class="small">{routeSlug ? <a href={`${collectionRouteBase}/${routeSlug}`}>Open collection page</a> : "No slug available"}</p>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </section>
+</BaseLayout>

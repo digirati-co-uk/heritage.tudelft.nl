@@ -53,6 +53,7 @@ export interface GenericStore {
     label: string;
     description?: string;
   };
+  slugTemplate?: SlugConfig | SlugConfig[];
   slugTemplates?: string[];
   // Step options
   skip?: string[];

@@ -5,6 +5,7 @@ import { Vault } from "@iiif/helpers";
 import type { Manifest } from "@iiif/presentation-3";
 import { copy, pathExists } from "fs-extra/esm";
 import { isEmpty } from "../util/is-empty";
+import type { SlugConfig } from "../util/slug-engine.ts";
 import { type ParsedResource, type ProtoResourceDirectory, type Store, createProtoDirectory } from "../util/store";
 
 export interface IIIFRemoteStore {
@@ -13,6 +14,8 @@ export interface IIIFRemoteStore {
   urls?: string[];
   overrides?: string;
   saveManifests?: boolean;
+  slugTemplate?: SlugConfig | SlugConfig[];
+  slugTemplates?: string[];
   config?: any;
 }
 

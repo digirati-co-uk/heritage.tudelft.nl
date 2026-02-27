@@ -30,7 +30,9 @@
     "build:client": "tsup src/dev/client.ts --outDir build",
     "build:node-client": "tsup src/dev/node-client.ts --outDir build",
     "lint": "publint",
-    "test": "vitest",
+    "test": "vitest --exclude __tests__/examples",
+    "test:examples": "vitest run __tests__/examples",
+    "test:examples:update": "vitest run __tests__/examples -u",
     "prepack": "pnpm run build"
   },
   "exports": {
