@@ -1,5 +1,6 @@
 import type { IIIFStore, Vault } from "@iiif/helpers";
 import type { BuildConfig } from "../commands/build.ts";
+import type { BuildProgressCallbacks } from "./build-progress.ts";
 import type { FileHandler } from "./file-handler.ts";
 
 export interface StoreApi {
@@ -11,6 +12,8 @@ export interface StoreApi {
     getKey(url: string): Promise<string | null>;
   };
   files: FileHandler;
+  progress?: BuildProgressCallbacks;
+  reportEstimatedResources?: (delta: number) => void;
   // Escape hatch, all config.
   build: BuildConfig;
 }

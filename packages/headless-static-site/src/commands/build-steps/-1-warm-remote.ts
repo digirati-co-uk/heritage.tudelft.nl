@@ -1,6 +1,7 @@
 import PQueue from "p-queue";
 import { discoverCollectionChildren, isCollectionLike } from "../../stores/iiif-remote-discovery.ts";
 import type { IIIFRemoteStore } from "../../stores/iiif-remote.ts";
+import type { BuildProgressCallbacks } from "../../util/build-progress.ts";
 import { resolveNetworkConfig } from "../../util/network.ts";
 import { createStoreRequestCache } from "../../util/store-request-cache.ts";
 import type { BuildConfig } from "../build.ts";
@@ -25,7 +26,11 @@ function normalizeStoreUrls(storeConfig: IIIFRemoteStore) {
   return [];
 }
 
-export async function warmRemoteStores(buildConfig: BuildConfig, state: WarmCacheState): Promise<WarmStats> {
+export async function warmRemoteStores(
+  buildConfig: BuildConfig,
+  state: WarmCacheState,
+  progress?: BuildProgressCallbacks
+): Promise<WarmStats> {
   const { stores, config, requestCacheDir, options } = buildConfig;
   const stats: WarmStats = {
     stores: 0,
@@ -45,7 +50,12 @@ export async function warmRemoteStores(buildConfig: BuildConfig, state: WarmCach
     const requestCache =
       options.cache && state.storeRequestCaches[storeId]
         ? state.storeRequestCaches[storeId]
-        : createStoreRequestCache(storeId, requestCacheDir, !options.cache, undefined, network);
+        : createStoreRequestCache(storeId, requestCacheDir, !options.cache, undefined, network, (event) => {
+            progress?.onFetch?.({
+              ...event,
+              phase: "warm-remote",
+            });
+          });
     state.storeRequestCaches[storeId] = requestCache;
 
     const queue = new PQueue({ concurrency: network.concurrency });
@@ -60,7 +70,7 @@ export async function warmRemoteStores(buildConfig: BuildConfig, state: WarmCach
 
       queue.add(async () => {
         try {
-          const resource = await requestCache.fetch<any>(url);
+          const resource = await requestCache.fetch(url);
           const id = resource?.["@id"] || resource?.id;
           if (!id || !isCollectionLike(resource)) {
             return;

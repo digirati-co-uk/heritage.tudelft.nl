@@ -16,6 +16,30 @@ export type SiteResponse = {
     completedAt: string | null;
     lastError: string | null;
     buildCount: number;
+    progress?: {
+      phase: string;
+      message: string;
+      step: {
+        id: string;
+        index: number;
+        total: number;
+      };
+      resources: {
+        total: number;
+        processed: number;
+        currentSlug: string | null;
+      };
+      fetch: {
+        queued: number;
+        started: number;
+        completed: number;
+        failed: number;
+        cacheHits: number;
+        inFlight: number;
+        currentUrl: string | null;
+      };
+      updatedAt: string;
+    };
   };
   onboarding: {
     enabled: boolean;

@@ -12,7 +12,9 @@ import { timeout } from "hono/timeout";
 import mitt from "mitt";
 import { z } from "zod";
 import { type BuildOptions, build, defaultBuiltIns } from "./commands/build";
+import { createBuildStatusTracker } from "./server/build-status.ts";
 import { findDebugUiDir, registerDebugUiRoutes } from "./server/debug-ui-routes.ts";
+import type { BuildStatus } from "./util/build-progress.ts";
 import { FileHandler } from "./util/file-handler";
 import type { IIIFRC, ResolvedConfigSource } from "./util/get-config";
 import { resolveEditablePathForSlug } from "./util/resolve-editable-path";
@@ -77,6 +79,7 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
     "file-change": { path: string };
     "file-refresh": { path: string };
     "full-rebuild": unknown;
+    "build-progress": BuildStatus;
   }>();
 
   // New Hono server.
@@ -92,13 +95,9 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
   const fileHandler = new FileHandler(fs, cwd());
   const tracer = new Tracer();
   const storeRequestCaches = {};
-  const buildStatus = {
-    status: "idle" as "idle" | "building" | "ready" | "error",
-    startedAt: null as string | null,
-    completedAt: null as string | null,
-    lastError: null as string | null,
-    buildCount: 0,
-  };
+  const buildStatusTracker = createBuildStatusTracker((status) => {
+    emitter.emit("build-progress", status);
+  });
 
   const state = {
     shouldRebuild: false,
@@ -114,10 +113,7 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
   };
 
   const cachedBuild = async (options: BuildOptions) => {
-    buildStatus.status = "building";
-    buildStatus.startedAt = new Date().toISOString();
-    buildStatus.lastError = null;
-    buildStatus.buildCount += 1;
+    buildStatusTracker.startBuild();
 
     try {
       const result = await build(options, defaultBuiltIns, {
@@ -127,16 +123,14 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
         tracer,
         customConfig: config,
         customConfigSource: configSource,
+        progress: buildStatusTracker.callbacks,
       });
       activePaths.buildDir = result.buildConfig.buildDir;
       activePaths.cacheDir = result.buildConfig.cacheDir;
-      buildStatus.status = "ready";
-      buildStatus.completedAt = new Date().toISOString();
+      buildStatusTracker.completeBuild();
       return result;
     } catch (error) {
-      buildStatus.status = "error";
-      buildStatus.completedAt = new Date().toISOString();
-      buildStatus.lastError = (error as Error)?.message || String(error);
+      buildStatusTracker.failBuild(error);
       throw error;
     }
   };
@@ -166,7 +160,11 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
     getTraceJson: () => tracer.toJSON(),
     getDebugUiDir: () => findDebugUiDir(cwd(), require.resolve.bind(require)),
     manifestEditorUrl: meUrl,
-    getBuildStatus: () => ({ ...buildStatus }),
+    getBuildStatus: () => buildStatusTracker.getBuildStatus(),
+    subscribeBuildProgress: (listener) => {
+      emitter.on("build-progress", listener);
+      return () => emitter.off("build-progress", listener);
+    },
     onboarding: serverOptions.onboarding,
   });
 
@@ -557,7 +555,7 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
       emitter,
       app,
       cachedBuild,
-      getBuildStatus: () => ({ ...buildStatus }),
+      getBuildStatus: () => buildStatusTracker.getBuildStatus(),
     },
   };
 }

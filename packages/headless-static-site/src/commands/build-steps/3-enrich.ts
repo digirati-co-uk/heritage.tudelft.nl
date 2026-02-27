@@ -1,5 +1,6 @@
 import { join } from "node:path";
 import PQueue from "p-queue";
+import type { BuildProgressCallbacks } from "../../util/build-progress.ts";
 import { createCacheResource } from "../../util/cached-resource.ts";
 import { createResourceHandler } from "../../util/create-resource-handler.ts";
 import type { CanvasSearchIndex, Enrichment } from "../../util/enrich.ts";
@@ -10,7 +11,11 @@ import { createStoreRequestCache } from "../../util/store-request-cache.ts";
 import type { ActiveResourceJson } from "../../util/store.ts";
 import type { BuildConfig } from "../build.ts";
 
-export async function enrich({ allResources }: { allResources: Array<ActiveResourceJson> }, buildConfig: BuildConfig) {
+export async function enrich(
+  { allResources }: { allResources: Array<ActiveResourceJson> },
+  buildConfig: BuildConfig,
+  progressEvents?: BuildProgressCallbacks
+) {
   const {
     options,
     config,
@@ -128,7 +133,13 @@ export async function enrich({ allResources }: { allResources: Array<ActiveResou
     requestCacheDir,
     !options.cache,
     undefined,
-    buildConfig.network
+    buildConfig.network,
+    (event) => {
+      progressEvents?.onFetch?.({
+        ...event,
+        phase: "enrich-resources",
+      });
+    }
   );
 
   const processManifest = async (manifest: ActiveResourceJson) => {

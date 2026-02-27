@@ -4,6 +4,7 @@ import { dirname, extname, join, resolve } from "node:path";
 import { cwd } from "node:process";
 import { upgrade } from "@iiif/parser/upgrader";
 import type { Hono } from "hono";
+import { type BuildStatus, createEmptyBuildProgress } from "../util/build-progress.ts";
 import type { FileHandler } from "../util/file-handler.ts";
 import type { IIIFRC } from "../util/get-config.ts";
 import { resolveFromSlug } from "../util/resolve-from-slug.ts";
@@ -206,13 +207,8 @@ interface RegisterDebugUiRoutesOptions {
   getTraceJson?: () => unknown;
   getDebugUiDir: () => string | null;
   manifestEditorUrl?: string;
-  getBuildStatus?: () => {
-    status: "idle" | "building" | "ready" | "error";
-    startedAt: string | null;
-    completedAt: string | null;
-    lastError: string | null;
-    buildCount: number;
-  };
+  getBuildStatus?: () => BuildStatus;
+  subscribeBuildProgress?: (listener: (status: BuildStatus) => void) => (() => void) | void;
   onboarding?: {
     enabled?: boolean;
     configMode?: string;
@@ -231,6 +227,17 @@ interface RegisterDebugUiRoutesOptions {
   };
 }
 
+function defaultBuildStatus(): BuildStatus {
+  return {
+    status: "idle",
+    startedAt: null,
+    completedAt: null,
+    lastError: null,
+    buildCount: 0,
+    progress: createEmptyBuildProgress(),
+  };
+}
+
 export function registerDebugUiRoutes({
   app,
   fileHandler,
@@ -240,24 +247,61 @@ export function registerDebugUiRoutes({
   getDebugUiDir,
   manifestEditorUrl = "https://manifest-editor.digirati.services",
   getBuildStatus,
+  subscribeBuildProgress,
   onboarding,
 }: RegisterDebugUiRoutesOptions) {
   app.get("/_debug/api/status", async (ctx) => {
     return ctx.json({
-      build: getBuildStatus
-        ? getBuildStatus()
-        : {
-            status: "idle",
-            startedAt: null,
-            completedAt: null,
-            lastError: null,
-            buildCount: 0,
-          },
+      build: getBuildStatus ? getBuildStatus() : defaultBuildStatus(),
       onboarding: onboarding || {
         enabled: false,
         configMode: "unknown",
         contentFolder: null,
         shorthand: null,
+      },
+    });
+  });
+
+  app.get("/_debug/api/build-events", async (ctx) => {
+    if (!subscribeBuildProgress) {
+      return ctx.json({
+        error: "Build progress stream is not available",
+      });
+    }
+
+    const encoder = new TextEncoder();
+    const stream = new ReadableStream({
+      start(controller) {
+        const pushStatus = (status: BuildStatus) => {
+          controller.enqueue(encoder.encode(`event: build\ndata: ${JSON.stringify(status)}\n\n`));
+        };
+
+        pushStatus(getBuildStatus ? getBuildStatus() : defaultBuildStatus());
+
+        const unsubscribe = subscribeBuildProgress(pushStatus);
+        const keepAlive = setInterval(() => {
+          controller.enqueue(encoder.encode(": keepalive\n\n"));
+        }, 15_000);
+
+        const cleanup = () => {
+          clearInterval(keepAlive);
+          if (typeof unsubscribe === "function") {
+            unsubscribe();
+          }
+        };
+
+        ctx.req.raw.signal.addEventListener("abort", () => {
+          cleanup();
+          controller.close();
+        });
+      },
+    });
+
+    return new Response(stream, {
+      headers: {
+        "Content-Type": "text/event-stream; charset=utf-8",
+        "Cache-Control": "no-cache, no-transform",
+        Connection: "keep-alive",
       },
     });
   });
@@ -292,15 +336,7 @@ export function registerDebugUiRoutes({
     return ctx.json({
       buildDir,
       baseUrl,
-      build: getBuildStatus
-        ? getBuildStatus()
-        : {
-            status: "idle",
-            startedAt: null,
-            completedAt: null,
-            lastError: null,
-            buildCount: 0,
-          },
+      build: getBuildStatus ? getBuildStatus() : defaultBuildStatus(),
       onboarding: onboarding || {
         enabled: false,
         configMode: "unknown",

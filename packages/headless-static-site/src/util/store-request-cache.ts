@@ -6,6 +6,12 @@ import PQueue from "p-queue";
 import type { IFS } from "unionfs";
 import { type NetworkConfig, resolveNetworkConfig } from "./network";
 
+export type StoreRequestCacheProgressEvent = {
+  type: "queued" | "started" | "completed" | "failed" | "cache-hit";
+  url: string;
+  storeId: string;
+};
+
 function sleep(ms: number) {
   if (ms <= 0) {
     return Promise.resolve();
@@ -76,7 +82,8 @@ export function createStoreRequestCache(
   cacheDir: string,
   noCache = false,
   customFs?: IFS,
-  networkConfig?: NetworkConfig
+  networkConfig?: NetworkConfig,
+  onProgress?: (event: StoreRequestCacheProgressEvent) => void
 ) {
   const network = resolveNetworkConfig(networkConfig);
   const fs = customFs?.promises || nfs.promises;
@@ -240,6 +247,11 @@ export function createStoreRequestCache(
       if (!noCache) {
         const data = await readCached(url);
         if (data) {
+          onProgress?.({
+            type: "cache-hit",
+            url,
+            storeId: storeKey,
+          });
           return data;
         }
       }
@@ -248,13 +260,34 @@ export function createStoreRequestCache(
         return inFlight.get(url);
       }
 
+      onProgress?.({
+        type: "queued",
+        url,
+        storeId: storeKey,
+      });
+
       const requestPromise = (async () => {
+        onProgress?.({
+          type: "started",
+          url,
+          storeId: storeKey,
+        });
         try {
           const data = await requestJson(url, options);
           cache.set(url, data as any);
           await writeCached(url, data);
+          onProgress?.({
+            type: "completed",
+            url,
+            storeId: storeKey,
+          });
           return data;
         } catch (e) {
+          onProgress?.({
+            type: "failed",
+            url,
+            storeId: storeKey,
+          });
           console.log("Error fetching", url, (e as any).message);
           console.error(e);
           throw e;

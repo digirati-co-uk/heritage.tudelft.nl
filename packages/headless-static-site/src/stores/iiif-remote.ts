@@ -107,6 +107,7 @@ export const IIIFRemoteStore: Store<IIIFRemoteStore> = {
         api.build.log(`Warning: failed to load collection page ${url}`, error);
       }
     );
+    api.reportEstimatedResources?.(children.length);
     for (const child of children) {
       const parsed = await IIIFRemoteStore.parse({ ...store, url: child.id }, api);
       allResources.push(...parsed);

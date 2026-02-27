@@ -186,6 +186,7 @@ describe("debug UI routes", () => {
     expect(statusRes.status).toBe(200);
     const statusJson = await statusRes.json();
     expect(statusJson.build.status).toBe("idle");
+    expect(statusJson.build.progress.phase).toBe("idle");
     expect(statusJson.onboarding.enabled).toBe(true);
     expect(statusJson.onboarding.contentFolder).toBe("./content");
 
@@ -193,6 +194,32 @@ describe("debug UI routes", () => {
     const siteJson = await siteRes.json();
     expect(siteJson.build.status).toBe("idle");
     expect(siteJson.onboarding.enabled).toBe(true);
+  });
+
+  test("streams build status updates for debug UI", async () => {
+    const server = await createServer({
+      server: { url: "http://localhost:7111" },
+      stores: {
+        default: {
+          type: "iiif-json",
+          path: "./content",
+        },
+      },
+    });
+
+    const streamRes = await server.request("/_debug/api/build-events");
+    expect(streamRes.status).toBe(200);
+    expect(streamRes.headers.get("content-type")).toContain("text/event-stream");
+
+    const reader = streamRes.body?.getReader();
+    expect(reader).toBeDefined();
+
+    const chunk = await reader?.read();
+    const text = new TextDecoder().decode(chunk?.value);
+    expect(text).toContain("event: build");
+    expect(text).toContain('"status":"idle"');
+
+    await reader?.cancel();
   });
 
   test("finds packaged debug UI dir from exported module entrypoints", async () => {

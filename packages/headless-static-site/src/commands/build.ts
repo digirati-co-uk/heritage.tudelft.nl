@@ -26,6 +26,7 @@ import { extractTopics } from "../extract/extract-topics.ts";
 import { flatManifests } from "../rewrite/flat-manifests.ts";
 import { IIIFJSONStore } from "../stores/iiif-json";
 import { IIIFRemoteStore } from "../stores/iiif-remote";
+import { BUILD_STEP_ORDER, type BuildProgressCallbacks, type BuildStepId } from "../util/build-progress.ts";
 import type { Enrichment } from "../util/enrich.ts";
 import type { Extraction } from "../util/extract.ts";
 import { FileHandler } from "../util/file-handler.ts";
@@ -162,6 +163,18 @@ export const defaultBuiltIns: BuildBuiltIns = {
     DEV_SERVER: env.DEV_SERVER,
     SERVER_URL: env.SERVER_URL,
   },
+};
+
+const BUILD_PHASE_LABELS: Record<BuildStepId, string> = {
+  "warm-remote": "Warming remote cache",
+  "parse-stores": "Parsing stores",
+  "load-stores": "Loading resources",
+  "link-resources": "Linking resources",
+  "extract-resources": "Extracting resources",
+  "enrich-resources": "Enriching resources",
+  "emit-files": "Emitting files",
+  "build-indices": "Building indices",
+  "save-files": "Saving files",
 };
 
 export async function buildCommand(options: BuildOptions, command?: Command) {
@@ -304,6 +317,7 @@ export async function build(
     tracer,
     customConfig,
     customConfigSource,
+    progress,
   }: {
     fileHandler?: FileHandler;
     pathCache?: { allPaths: Record<string, string> };
@@ -311,6 +325,7 @@ export async function build(
     tracer?: Tracer;
     customConfig?: IIIFRC;
     customConfigSource?: Omit<ResolvedConfigSource, "config">;
+    progress?: BuildProgressCallbacks;
   } = {}
 ) {
   const buildConfig = await getBuildConfig(
@@ -344,30 +359,62 @@ export async function build(
 
   const parseState = { storeRequestCaches: storeRequestCaches || {} };
 
+  const enterPhase = (id: BuildStepId) => {
+    progress?.onPhase?.({
+      id,
+      label: BUILD_PHASE_LABELS[id],
+      index: BUILD_STEP_ORDER.indexOf(id) + 1,
+      total: BUILD_STEP_ORDER.length,
+    });
+  };
+
   if (buildConfig.network.prefetch && buildConfig.options.cache) {
-    await time("Warmed remote request cache", warmRemoteStores(buildConfig, parseState));
+    enterPhase("warm-remote");
+    await time("Warmed remote request cache", warmRemoteStores(buildConfig, parseState, progress));
+  } else {
+    progress?.onMessage?.("Skipping remote cache warmup");
   }
 
   // Parse stores.
-  const parsed = await time("Parsed stores", parseStores(buildConfig, parseState));
+  enterPhase("parse-stores");
+  const parsed = await time("Parsed stores", parseStores(buildConfig, parseState, undefined, progress));
+
+  const loadTargetTotal = Object.values(parsed.storeResources).reduce((total, resources) => {
+    if (!buildConfig.options.exact) {
+      return total + resources.length;
+    }
+    return (
+      total +
+      resources.filter(
+        (resource) => resource.slug === buildConfig.options.exact || resource.path === buildConfig.options.exact
+      ).length
+    );
+  }, 0);
+  progress?.onResourcesDiscovered?.({ total: loadTargetTotal });
 
   // Load stores.
-  const stores = await time("Loaded stores", loadStores(parsed, buildConfig));
+  enterPhase("load-stores");
+  const stores = await time("Loaded stores", loadStores(parsed, buildConfig, undefined, progress));
 
   pathCache.allPaths = { ...stores.allPaths };
 
+  enterPhase("link-resources");
   const linked = await time("Linking resources", link(stores, buildConfig));
 
   // Extract.
-  const extractions = await time("Extracting resources", extract(stores, buildConfig));
+  enterPhase("extract-resources");
+  const extractions = await time("Extracting resources", extract(stores, buildConfig, progress));
 
-  const enrichments = await time("Enriching resources", enrich(stores, buildConfig));
+  enterPhase("enrich-resources");
+  const enrichments = await time("Enriching resources", enrich(stores, buildConfig, progress));
 
+  enterPhase("emit-files");
   const emitted = await time(
     "Emitting files",
     emit(stores, buildConfig, { canvasSearchIndex: enrichments.canvasSearchIndex })
   );
 
+  enterPhase("build-indices");
   await time(
     "Building indices",
     indices(
@@ -390,6 +437,7 @@ export async function build(
   await buildConfig.fileTypeCache.save();
 
   if (options.emit) {
+    enterPhase("save-files");
     const { failedToWrite } = await fileHandler.saveAll(false, buildConfig.concurrency.write);
     if (failedToWrite.length) {
       buildConfig.log(`Failed to write ${failedToWrite.length} files`);

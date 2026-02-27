@@ -114,4 +114,38 @@ describe("parseStores generated store handling", () => {
     expect(loaded.allResources.map((resource) => resource.storeId).sort()).toEqual(["generated", "primary"]);
     expect(buildConfig.config.stores.generated).toBeUndefined();
   });
+
+  test("publishes early resource estimates for remote store roots", async () => {
+    const buildConfig: any = createBuildConfig();
+    buildConfig.config.generators = undefined;
+    buildConfig.config.stores = {
+      remote: {
+        type: "iiif-remote",
+        urls: ["https://example.org/collections/a.json", "https://example.org/collections/b.json"],
+      },
+    };
+    buildConfig.stores = ["remote"];
+    buildConfig.storeTypes["iiif-remote"] = {
+      async parse(_storeConfig: any, api: any) {
+        api.reportEstimatedResources?.(3);
+        return [];
+      },
+      async invalidate() {
+        return true;
+      },
+      async load() {
+        return null;
+      },
+    };
+
+    const estimates: number[] = [];
+    await parseStores(buildConfig, { storeRequestCaches: {} }, undefined, {
+      onResourcesDiscovered({ total }) {
+        estimates.push(total);
+      },
+    });
+
+    expect(estimates.some((total) => total >= 2)).toBe(true);
+    expect(estimates.some((total) => total >= 5)).toBe(true);
+  });
 });
