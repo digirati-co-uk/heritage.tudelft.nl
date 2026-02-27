@@ -25,6 +25,23 @@
         "description": { "type": "string" }
       }
     },
+    "networkConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "concurrency": { "type": "integer", "minimum": 1 },
+        "minDelayMs": { "type": "integer", "minimum": 0 },
+        "maxRetries": { "type": "integer", "minimum": 0 },
+        "baseDelayMs": { "type": "integer", "minimum": 0 },
+        "maxDelayMs": { "type": "integer", "minimum": 0 },
+        "jitterRatio": { "type": "number", "minimum": 0, "maximum": 1 },
+        "retryStatuses": {
+          "type": "array",
+          "items": { "type": "integer", "minimum": 100, "maximum": 599 }
+        },
+        "respectRetryAfter": { "type": "boolean" }
+      }
+    },
     "iiifJsonStore": {
       "type": "object",
       "additionalProperties": false,
@@ -88,7 +105,8 @@
         "skip": { "$ref": "#/$defs/stringArray" },
         "run": { "$ref": "#/$defs/stringArray" },
         "config": { "type": "object", "additionalProperties": true },
-        "destination": { "type": "string" }
+        "destination": { "type": "string" },
+        "network": { "$ref": "#/$defs/networkConfig" }
       }
     },
     "slugConfig": {

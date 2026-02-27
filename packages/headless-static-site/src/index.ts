@@ -8,6 +8,7 @@ import { initCommand } from "./commands/init.ts";
 import { searchIndexCommand } from "./commands/search-index.ts";
 import { serveCommand } from "./commands/serve.ts";
 import { validateCommand } from "./commands/validate.ts";
+import { warmCommand } from "./commands/warm.ts";
 import "dotenv/config";
 
 const program = new Command();
@@ -28,6 +29,7 @@ program
   .option("--no-enrich", "Disable enrichment")
   .option("--no-client", "Disable client.js building")
   .option("--no-generate", "Disable IIIF generator")
+  .option("--no-prefetch", "Skip remote request-cache warm-up")
   .option("--html", "Include HTML in build")
   .option("--python", "Allow python scripts")
   .option("--topics", "Flush topic data to /topics folder")
@@ -49,6 +51,17 @@ program
   .description("Run IIIF generators")
   .option("--no-cache", "Disable caching")
   .action(generateCommand);
+
+program
+  //
+  .command("warm")
+  .description("Warm request cache for remote stores")
+  .option("--no-cache", "Disable caching")
+  .option("-c, --config <path>", "Path to config file")
+  .option("--stores <name...>", "Names of stores to warm")
+  .option("-s, --scripts <path>", "Build scripts")
+  .option("--debug", "Debug")
+  .action(warmCommand);
 
 program
   //

@@ -35,6 +35,7 @@ Typical keys:
 - `config`
 - `collections`
 - `search`
+- `network`
 - `concurrency`
 - `fileTemplates`
 
@@ -67,6 +68,11 @@ Remote store example:
   "$schema": "https://schemas.example.org/iiif-hss/iiif-hss.store.schema.json",
   "type": "iiif-remote",
   "url": "https://example.org/iiif/collection.json",
+  "network": {
+    "concurrency": 1,
+    "minDelayMs": 300,
+    "maxRetries": 6
+  },
   "slugTemplate": {
     "type": "Manifest",
     "domain": "example.org",
@@ -75,6 +81,18 @@ Remote store example:
   }
 }
 ```
+
+`network` can also be set globally in root config. Useful options are:
+
+- `prefetch` (default `true`) - run warm-up automatically in `iiif-hss build`
+- `concurrency` - max concurrent remote fetches
+- `minDelayMs` - minimum delay between request starts
+- `maxRetries`, `baseDelayMs`, `maxDelayMs`, `retryStatuses`, `respectRetryAfter`
+
+CLI:
+
+- `iiif-hss warm` warms the remote request cache
+- `iiif-hss build --no-prefetch` skips warm-up for one run
 
 `slugTemplate` can be inline on the store (object or array). `slugTemplates` still works for referencing entries from top-level `slugs`.
 

@@ -1,6 +1,7 @@
 import { join } from "node:path";
 import type { IFS } from "unionfs";
 import { makeGetSlugHelper } from "../../util/make-slug-helper.ts";
+import { resolveNetworkConfig } from "../../util/network.ts";
 import { createStoreRequestCache } from "../../util/store-request-cache.ts";
 import type { ParsedResource, Store } from "../../util/store.ts";
 import type { BuildConfig } from "../build.ts";
@@ -56,17 +57,18 @@ export async function parseStores(buildConfig: BuildConfig, cache: ParseStoresSt
   }
 
   for (const storeId of effectiveStores) {
-    const requestCache =
-      options.cache && cache.storeRequestCaches[storeId]
-        ? cache.storeRequestCaches[storeId]
-        : createStoreRequestCache(storeId, requestCacheDir, !options.cache, customFs);
-    storeRequestCaches[storeId] = requestCache;
-    storeResources[storeId] = [];
-
     const storeConfig = effectiveStoreConfigs[storeId];
     if (!storeConfig) {
       throw new Error(`Missing store config for "${storeId}"`);
     }
+    const network = resolveNetworkConfig(buildConfig.network, storeConfig.network);
+    const requestCache =
+      options.cache && cache.storeRequestCaches[storeId]
+        ? cache.storeRequestCaches[storeId]
+        : createStoreRequestCache(storeId, requestCacheDir, !options.cache, customFs, network);
+    storeRequestCaches[storeId] = requestCache;
+    storeResources[storeId] = [];
+
     const storeType: Store<any> = (storeTypes as any)[storeConfig.type];
     if (!storeType) {
       throw new Error(`Unknown store type: ${storeConfig.type}`);

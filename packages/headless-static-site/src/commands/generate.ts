@@ -11,6 +11,7 @@ import { type LazyValue, lazyValue } from "../util/lazy-value.ts";
 import { loadJson } from "../util/load-json.ts";
 import { loadScripts } from "../util/load-scripts.ts";
 import { makeProgressBar } from "../util/make-progress-bar.ts";
+import { resolveNetworkConfig } from "../util/network.ts";
 import { createStoreRequestCache } from "../util/store-request-cache.ts";
 
 interface GenerateOptions {
@@ -30,6 +31,7 @@ export const defaultCacheDir = "./.iiif/_generator";
 export async function generateCommand(options: GenerateOptions, command?: Command) {
   const config = await getConfig();
   const { debug, ui } = options;
+  const network = resolveNetworkConfig(config.network);
 
   await loadScripts(options);
   const globals = getNodeGlobals();
@@ -66,7 +68,7 @@ export async function generateCommand(options: GenerateOptions, command?: Comman
         : join(generatorDirectory, generatorName, "build");
       const cacheDirectory = join(generatorDirectory, generatorName);
       const resourcesDirectory = join(cacheDirectory, "resources");
-      const requestCache = createStoreRequestCache("requests", cacheDirectory, !options.cache);
+      const requestCache = createStoreRequestCache("requests", cacheDirectory, !options.cache, undefined, network);
 
       await fs.promises.mkdir(cacheDirectory, { recursive: true });
       await fs.promises.mkdir(buildDirectory, { recursive: true });

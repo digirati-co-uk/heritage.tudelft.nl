@@ -5,13 +5,22 @@ import { dirname, join } from "node:path";
 import { afterEach, describe, expect, test, vi } from "vitest";
 import { createStoreRequestCache } from "../../src/util/store-request-cache";
 
-function mockJsonResponse(data: any, status = 200) {
+function mockJsonResponse(data: any, status = 200, headers: Record<string, string> = {}) {
+  const normalizedHeaders = Object.fromEntries(
+    Object.entries(headers).map(([key, value]) => [key.toLowerCase(), value])
+  );
   return {
     status,
-    async json() {
-      return data;
+    ok: status >= 200 && status < 300,
+    headers: {
+      get(name: string) {
+        return normalizedHeaders[name.toLowerCase()] || null;
+      },
     },
-  };
+    async text() {
+      return JSON.stringify(data);
+    },
+  } as any;
 }
 
 function getCachePath(cacheDir: string, storeKey: string, url: string) {
@@ -82,5 +91,44 @@ describe("store request cache", () => {
 
     const diskData = JSON.parse((await readFile(cachePath)).toString("utf-8"));
     expect(diskData).toEqual({ value: "stale" });
+  });
+
+  test("retries on rate limiting and succeeds on a later attempt", async () => {
+    cacheDir = await mkdtemp(join(tmpdir(), "iiif-hss-request-cache-"));
+    const url = "https://example.org/rate-limited.json";
+    const responses = [mockJsonResponse({}, 429, { "retry-after": "0" }), mockJsonResponse({ value: 2 })];
+    const fetchMock = vi.fn(async () => responses.shift() || mockJsonResponse({ value: 2 }));
+    vi.stubGlobal("fetch", fetchMock as any);
+
+    const cache = createStoreRequestCache("store", cacheDir, false, undefined, {
+      minDelayMs: 0,
+      maxRetries: 2,
+      baseDelayMs: 1,
+      maxDelayMs: 2,
+      jitterRatio: 0,
+      retryStatuses: [429],
+    });
+
+    expect(await cache.fetch(url)).toEqual({ value: 2 });
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+  });
+
+  test("coalesces in-flight requests for the same URL", async () => {
+    cacheDir = await mkdtemp(join(tmpdir(), "iiif-hss-request-cache-"));
+    const url = "https://example.org/in-flight.json";
+    const fetchMock = vi.fn(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 10));
+      return mockJsonResponse({ value: 5 });
+    });
+    vi.stubGlobal("fetch", fetchMock as any);
+
+    const cache = createStoreRequestCache("store", cacheDir, true, undefined, {
+      minDelayMs: 0,
+    });
+
+    const [first, second] = await Promise.all([cache.fetch(url), cache.fetch(url)]);
+    expect(first).toEqual({ value: 5 });
+    expect(second).toEqual({ value: 5 });
+    expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 });

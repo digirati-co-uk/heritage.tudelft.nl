@@ -34,6 +34,7 @@ import type { BuildConcurrencyConfig, IIIFRC, ResolvedConfigSource } from "../ut
 import type { Linker } from "../util/linker.ts";
 import type { Rewrite } from "../util/rewrite.ts";
 import type { Tracer } from "../util/tracer.ts";
+import { warmRemoteStores } from "./build-steps/-1-warm-remote.ts";
 import { parseStores } from "./build-steps/0-parse-stores.ts";
 import { link } from "./build-steps/1-link.ts";
 import { loadStores } from "./build-steps/1-load-stores.ts";
@@ -67,6 +68,7 @@ export type BuildOptions = {
   out?: string;
   ui?: boolean;
   remoteRecords?: boolean;
+  prefetch?: boolean;
   concurrency?: BuildConcurrencyConfig;
 
   // Programmatic only
@@ -318,6 +320,7 @@ export async function build(
       dev: false,
       emit: true,
       remoteRecords: false,
+      prefetch: true,
       ...options,
     },
     {
@@ -339,11 +342,14 @@ export async function build(
   await fs.promises.mkdir(buildConfig.buildDir, { recursive: true });
   await fs.promises.mkdir(buildConfig.requestCacheDir, { recursive: true });
 
+  const parseState = { storeRequestCaches: storeRequestCaches || {} };
+
+  if (buildConfig.network.prefetch && buildConfig.options.cache) {
+    await time("Warmed remote request cache", warmRemoteStores(buildConfig, parseState));
+  }
+
   // Parse stores.
-  const parsed = await time(
-    "Parsed stores",
-    parseStores(buildConfig, { storeRequestCaches: storeRequestCaches || {} })
-  );
+  const parsed = await time("Parsed stores", parseStores(buildConfig, parseState));
 
   // Load stores.
   const stores = await time("Loaded stores", loadStores(parsed, buildConfig));

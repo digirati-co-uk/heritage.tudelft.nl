@@ -35,7 +35,13 @@ export async function extract(
   }
 
   const startTime = performance.now();
-  const requestCache = createStoreRequestCache("_extract", requestCacheDir, !options.cache);
+  const requestCache = createStoreRequestCache(
+    "_extract",
+    requestCacheDir,
+    !options.cache,
+    undefined,
+    buildConfig.network
+  );
   const extractionConfigs: Record<string, any> = {};
   const stats: Record<string, number> = {};
   for (const extraction of allExtractions) {

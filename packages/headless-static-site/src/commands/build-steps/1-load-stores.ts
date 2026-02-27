@@ -2,6 +2,7 @@ import nfs from "node:fs";
 import { join } from "node:path";
 import type { IFS } from "unionfs";
 import { makeProgressBar } from "../../util/make-progress-bar.ts";
+import { resolveNetworkConfig } from "../../util/network.ts";
 import { createStoreRequestCache } from "../../util/store-request-cache.ts";
 import type { ActiveResourceJson, ParsedResource, Store } from "../../util/store.ts";
 import type { BuildConfig } from "../build.ts";
@@ -48,11 +49,12 @@ export async function loadStores(
   const stores = storeIds || configuredStores;
 
   for (const store of stores) {
-    const requestCache = createStoreRequestCache(store, requestCacheDir, !options.cache);
     const storeConfig = (storeConfigs && storeConfigs[store]) || config.stores[store];
     if (!storeConfig) {
       throw new Error(`Missing store config for "${store}"`);
     }
+    const network = resolveNetworkConfig(buildConfig.network, storeConfig.network);
+    const requestCache = createStoreRequestCache(store, requestCacheDir, !options.cache, undefined, network);
     const resources = storeResources[store] || [];
 
     const progress = makeProgressBar("Loading store", resources.length, options.ui);

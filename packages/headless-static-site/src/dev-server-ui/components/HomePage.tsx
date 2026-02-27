@@ -93,16 +93,6 @@ export function HomePage({ debugBase }: { debugBase: string }) {
         <p className="mt-2 text-xs text-slate-500">{featured.length} results</p>
       </section>
 
-      <section className="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-4">
-        {featured.map((item) => (
-          <FeaturedItemCard
-            key={`${item.slug}-${item.id}`}
-            debugBase={debugBase}
-            item={item}
-          />
-        ))}
-      </section>
-
       {site?.build &&
       (site.build.status === "building" ||
         (site.build.status === "idle" &&
@@ -115,6 +105,16 @@ export function HomePage({ debugBase }: { debugBase: string }) {
           </p>
         </section>
       ) : null}
+
+      <section className="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-4">
+        {featured.map((item) => (
+          <FeaturedItemCard
+            key={`${item.slug}-${item.id}`}
+            debugBase={debugBase}
+            item={item}
+          />
+        ))}
+      </section>
 
       {site?.build?.status === "error" && site.build.lastError ? (
         <section className="mt-4 border border-red-200 bg-red-50 rounded-xl p-4">

@@ -6,8 +6,8 @@ export interface StoreApi {
   storeId: string;
   getSlug: (resource: { id: string; type: string }) => readonly [string, string];
   requestCache: {
-    fetch<T = any>(url: string): Promise<T>;
-    didChange(url: string): Promise<boolean>;
+    fetch<T = any>(url: string, options?: RequestInit): Promise<T>;
+    didChange(url: string, options?: RequestInit): Promise<boolean>;
     getKey(url: string): Promise<string | null>;
   };
   files: FileHandler;

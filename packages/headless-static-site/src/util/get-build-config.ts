@@ -22,6 +22,7 @@ import {
 import { getNodeGlobals } from "./get-node-globals";
 import type { Linker } from "./linker";
 import { loadScripts } from "./load-scripts";
+import { resolveNetworkConfig } from "./network";
 import type { Rewrite } from "./rewrite";
 import { compileSlugConfig } from "./slug-engine";
 import type { Store } from "./store";
@@ -51,6 +52,7 @@ export type BuildOptions = {
   out?: string;
   ui?: boolean;
   remoteRecords?: boolean;
+  prefetch?: boolean;
   concurrency?: BuildConcurrencyConfig;
 
   // Programmatic only
@@ -136,6 +138,7 @@ export async function getBuildConfig(options: BuildOptions, builtIns: BuildBuilt
     emitCanvas: normalizeConcurrency(concurrencyConfig.emitCanvas, ioConcurrency),
     write: normalizeConcurrency(concurrencyConfig.write, ioConcurrency),
   };
+  const network = resolveNetworkConfig(config.network, { prefetch: options.prefetch });
 
   const files = builtIns.fileHandler || new FileHandler(fs, cwd);
 
@@ -232,7 +235,7 @@ export async function getBuildConfig(options: BuildOptions, builtIns: BuildBuilt
     return resp;
   };
 
-  const requestCache = createStoreRequestCache("_thumbs", requestCacheDir, !options.cache);
+  const requestCache = createStoreRequestCache("_thumbs", requestCacheDir, !options.cache, undefined, network);
   const imageServiceLoader = new (class extends ImageServiceLoader {
     fetchService(serviceId: string): Promise<any & { real: boolean }> {
       return requestCache.fetch(serviceId);
@@ -290,6 +293,7 @@ export async function getBuildConfig(options: BuildOptions, builtIns: BuildBuilt
     trace,
     files,
     options,
+    network,
     server,
     configUrl,
     search,

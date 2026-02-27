@@ -6,6 +6,7 @@ import type { Collection } from "@iiif/presentation-3";
 import { parse } from "yaml";
 import type { IIIFJSONStore } from "../stores/iiif-json.ts";
 import type { IIIFRemoteStore } from "../stores/iiif-remote.ts";
+import type { NetworkConfig } from "./network.ts";
 import type { SlugConfig } from "./slug-engine.ts";
 
 export interface BuildConcurrencyConfig {
@@ -40,6 +41,7 @@ export interface IIIFRC {
     defaultIndex?: string;
     emitRecord?: boolean;
   };
+  network?: NetworkConfig;
   concurrency?: BuildConcurrencyConfig;
   fileTemplates?: Record<string, any>;
 }
@@ -62,6 +64,7 @@ export interface GenericStore {
   subFiles?: boolean;
   destination?: string;
   ignore?: string[];
+  network?: NetworkConfig;
 }
 
 interface GeneratorConfig {

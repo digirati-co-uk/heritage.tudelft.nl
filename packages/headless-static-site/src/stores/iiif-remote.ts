@@ -5,8 +5,10 @@ import { Vault } from "@iiif/helpers";
 import type { Manifest } from "@iiif/presentation-3";
 import { copy, pathExists } from "fs-extra/esm";
 import { isEmpty } from "../util/is-empty";
+import type { NetworkConfig } from "../util/network.ts";
 import type { SlugConfig } from "../util/slug-engine.ts";
 import { type ParsedResource, type ProtoResourceDirectory, type Store, createProtoDirectory } from "../util/store";
+import { discoverCollectionChildren } from "./iiif-remote-discovery.ts";
 
 export interface IIIFRemoteStore {
   type: "iiif-remote";
@@ -17,6 +19,7 @@ export interface IIIFRemoteStore {
   slugTemplate?: SlugConfig | SlugConfig[];
   slugTemplates?: string[];
   config?: any;
+  network?: NetworkConfig;
 }
 
 export const IIIFRemoteStore: Store<IIIFRemoteStore> = {
@@ -96,20 +99,17 @@ export const IIIFRemoteStore: Store<IIIFRemoteStore> = {
         source: { type: "remote", url: store.url, overrides: store.overrides },
       },
     ];
-    // We need to loop through.
-    const vault = new Vault();
-    const collectionVault = await vault.loadCollection(identifier, collection);
-    if (!collectionVault) {
-      return [];
-    }
-    const loading = [];
-    for (const manifestItem of collectionVault.items) {
-      loading.push(IIIFRemoteStore.parse({ ...store, url: manifestItem.id }, api));
-    }
-
-    const results = await Promise.all(loading);
-    for (const result of results) {
-      allResources.push(...result);
+    const children = await discoverCollectionChildren(
+      store.url,
+      collection,
+      (url) => api.requestCache.fetch(url),
+      (url, error) => {
+        api.build.log(`Warning: failed to load collection page ${url}`, error);
+      }
+    );
+    for (const child of children) {
+      const parsed = await IIIFRemoteStore.parse({ ...store, url: child.id }, api);
+      allResources.push(...parsed);
     }
 
     return allResources;
