@@ -2,6 +2,32 @@ import { describe, expect, test } from "vitest";
 import { extractCollectionThumbnail } from "../../src/extract/extract-collection-thumbnail.ts";
 
 describe("extractCollectionThumbnail", () => {
+  test("uses manifest thumbnail directly without reading meta fallback", async () => {
+    const response = await extractCollectionThumbnail.handler(
+      {
+        type: "Manifest",
+        id: "https://example.org/manifests/a",
+      } as any,
+      {
+        resource: {
+          thumbnail: { id: "https://example.org/thumbs/direct.jpg", type: "Image" },
+        },
+        meta: {
+          get value() {
+            throw new Error("meta fallback should not be read when manifest already has thumbnail");
+          },
+        },
+      } as any,
+      {}
+    );
+
+    expect(response?.temp).toEqual({
+      type: "Manifest",
+      id: "https://example.org/manifests/a",
+      thumbnail: { id: "https://example.org/thumbs/direct.jpg", type: "Image" },
+    });
+  });
+
   test("derives collection thumbnail from manifest item thumbnail", async () => {
     const response = await extractCollectionThumbnail.collect?.(
       {

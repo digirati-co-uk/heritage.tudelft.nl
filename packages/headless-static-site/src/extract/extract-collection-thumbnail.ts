@@ -78,8 +78,19 @@ export const extractCollectionThumbnail: Extraction<any, TempExtraction, TempInj
     }
 
     if (resource.type === "Manifest") {
+      const directThumbnail = getThumbnail(api.resource.thumbnail);
+      if (hasThumbnail(directThumbnail)) {
+        return {
+          temp: {
+            type: "Manifest",
+            id: resource.id,
+            thumbnail: directThumbnail,
+          },
+        };
+      }
+
       const meta = await api.meta.value;
-      const thumbnail = getThumbnail(api.resource.thumbnail) || getMetaThumbnail(meta.thumbnail);
+      const thumbnail = getMetaThumbnail(meta.thumbnail);
       return {
         temp: {
           type: "Manifest",
@@ -146,29 +157,40 @@ export const extractCollectionThumbnail: Extraction<any, TempExtraction, TempInj
       registerCollection(collectionId, collection);
     }
 
+    // Memoize nested lookups so each collection tree is resolved once per collect pass.
+    const collectionThumbnailCache = new Map<string, any | null>();
     const getCollectionThumbnail = (collectionId: string, seen = new Set<string>()): any => {
       const collection = collectionsById[collectionId];
       if (!collection || seen.has(collection.slug)) {
         return null;
       }
 
+      if (collectionThumbnailCache.has(collection.slug)) {
+        return collectionThumbnailCache.get(collection.slug);
+      }
+
       if (hasThumbnail(collection.thumbnail)) {
+        collectionThumbnailCache.set(collection.slug, collection.thumbnail);
         return collection.thumbnail;
       }
 
       seen.add(collection.slug);
+      let resolvedThumbnail: any = null;
       for (const item of collection.items) {
         if (hasThumbnail(manifestThumbnails[item.id])) {
-          return manifestThumbnails[item.id];
+          resolvedThumbnail = manifestThumbnails[item.id];
+          break;
         }
         const nestedThumbnail = getCollectionThumbnail(item.id, seen);
         if (hasThumbnail(nestedThumbnail)) {
-          return nestedThumbnail;
+          resolvedThumbnail = nestedThumbnail;
+          break;
         }
       }
       seen.delete(collection.slug);
+      collectionThumbnailCache.set(collection.slug, resolvedThumbnail);
 
-      return null;
+      return resolvedThumbnail;
     };
 
     const thumbnailsBySlug: TempInject = {};
