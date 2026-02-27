@@ -175,6 +175,7 @@ export function findDebugUiDir(currentWorkingDirectory: string, resolveModule?: 
       "iiif-hss/package.json",
       "iiif-hss/astro",
       "iiif-hss/vite-plugin",
+      "iiif-hss/vite/client",
       "iiif-hss/library",
       "iiif-hss",
     ];

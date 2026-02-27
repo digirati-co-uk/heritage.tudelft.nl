@@ -1,0 +1,21 @@
+{
+  "name": "iiif-hss-example-vite-react",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.90.5",
+    "iiif-hss": "workspace:*",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "react-iiif-vault": "2.0.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.1.1",
+    "vite": "^6.0.7"
+  }
+}
