@@ -1,6 +1,6 @@
 import fs from "node:fs";
-import { join } from "node:path";
-import type { Collection } from "@iiif/presentation-3";
+import { dirname, join } from "node:path";
+import type { Collection, InternationalString } from "@iiif/presentation-3";
 import slug from "slug";
 import { stringify } from "yaml";
 import { createCollection } from "../../util/create-collection.ts";
@@ -53,6 +53,58 @@ export async function indices(
 
   const topLevelCollection: any[] = [];
   const configUrl = typeof server === "string" ? server : server?.url;
+  const folderCollectionsConfig = (config.config?.["folder-collections"] || {}) as {
+    labelStrategy?: "folderName" | "metadata" | "customMap";
+    customMap?: Record<string, string | InternationalString>;
+  };
+
+  function titleCaseFolder(value: string) {
+    return value
+      .split(/[-_\s]+/g)
+      .filter(Boolean)
+      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+      .join(" ");
+  }
+
+  async function getFolderCollectionLabel(originalCollectionSlug: string, manifestSlugs: string[]) {
+    const labelStrategy = folderCollectionsConfig.labelStrategy || "folderName";
+    const folderLeaf = originalCollectionSlug.split("/").filter(Boolean).pop() || originalCollectionSlug;
+
+    if (labelStrategy === "customMap") {
+      const customValue = folderCollectionsConfig.customMap?.[originalCollectionSlug];
+      if (customValue) {
+        return customValue;
+      }
+    }
+
+    if (labelStrategy === "metadata") {
+      for (const manifestSlug of manifestSlugs) {
+        const resource = allResources.find((candidate) => candidate.slug === manifestSlug);
+        if (!resource || resource.source.type !== "disk") {
+          continue;
+        }
+
+        const candidates = [
+          join(resource.source.path, originalCollectionSlug, "_collection.yml"),
+          join(resource.source.path, originalCollectionSlug, "_collection.yaml"),
+          join(dirname(resource.source.filePath), "_collection.yml"),
+          join(dirname(resource.source.filePath), "_collection.yaml"),
+        ];
+
+        for (const candidate of candidates) {
+          if (!fs.existsSync(candidate)) {
+            continue;
+          }
+          const loaded = await files.readYaml(candidate);
+          if (loaded?.label) {
+            return loaded.label;
+          }
+        }
+      }
+    }
+
+    return titleCaseFolder(folderLeaf);
+  }
 
   if (collections && indexCollection) {
     const collectionSlugs = Object.keys(collections);
@@ -76,10 +128,11 @@ export async function indices(
       }
 
       if (!indexCollection[collectionSlug]) {
+        const collectionLabel = await getFolderCollectionLabel(originalCollectionSlug, manifestSlugs);
         const collectionSnippet = createCollection({
           configUrl,
           slug: collectionSlug,
-          label: collectionSlug,
+          label: collectionLabel,
         });
         const collection = {
           ...collectionSnippet,
@@ -266,7 +319,7 @@ export async function indices(
   if (manifestCollection) {
     const manifestCollectionJson = createCollection({
       label: "Manifests",
-      ...(config.collections?.index || {}),
+      ...(config.collections?.manifests || {}),
       configUrl,
       slug: "manifests",
     }) as Collection;

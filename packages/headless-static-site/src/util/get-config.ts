@@ -32,8 +32,8 @@ export interface IIIFRC {
   collections?: {
     index?: Partial<Collection>;
     manifests?: Partial<Collection>;
-    collections?: Record<string, Partial<Collection>>;
-    topics?: Record<string, Partial<Collection>>;
+    collections?: Partial<Collection>;
+    topics?: Partial<Collection>;
   };
   search?: {
     indexNames?: string[];
@@ -96,6 +96,60 @@ export interface ResolvedConfigSource {
 }
 
 export const supportedConfigFiles = [".iiifrc.yml", ".iiifrc.yaml", "iiif.config.js", "iiif.config.ts"];
+
+function isPlainObject(value: unknown): value is Record<string, any> {
+  return Object.prototype.toString.call(value) === "[object Object]";
+}
+
+function cloneConfigValue<T>(value: T): T {
+  if (Array.isArray(value)) {
+    return value.map((item) => cloneConfigValue(item)) as T;
+  }
+  if (isPlainObject(value)) {
+    const cloned: Record<string, any> = {};
+    for (const key of Object.keys(value)) {
+      cloned[key] = cloneConfigValue(value[key]);
+    }
+    return cloned as T;
+  }
+  return value;
+}
+
+function mergeConfigValue(baseValue: unknown, overrideValue: unknown): unknown {
+  if (typeof overrideValue === "undefined") {
+    return cloneConfigValue(baseValue);
+  }
+
+  if (Array.isArray(overrideValue)) {
+    // Arrays are replaced so users can intentionally set order/content.
+    return cloneConfigValue(overrideValue);
+  }
+
+  if (isPlainObject(baseValue) && isPlainObject(overrideValue)) {
+    const merged: Record<string, any> = cloneConfigValue(baseValue);
+    for (const key of Object.keys(overrideValue)) {
+      const nextOverride = overrideValue[key];
+      if (typeof nextOverride === "undefined") {
+        continue;
+      }
+      merged[key] = mergeConfigValue(baseValue[key], nextOverride);
+    }
+    return merged;
+  }
+
+  if (isPlainObject(overrideValue)) {
+    return cloneConfigValue(overrideValue);
+  }
+
+  return overrideValue;
+}
+
+export function mergeIiifConfig(baseConfig: IIIFRC, overrideConfig?: Partial<IIIFRC> | null): IIIFRC {
+  if (!overrideConfig) {
+    return cloneConfigValue(baseConfig || ({} as IIIFRC));
+  }
+  return mergeConfigValue(baseConfig || ({} as IIIFRC), overrideConfig) as IIIFRC;
+}
 
 function normalizeConfigExport(value: unknown) {
   if (!value) {
@@ -168,6 +222,8 @@ async function loadIiifConfigFolder(projectRoot: string): Promise<ResolvedConfig
 
   const configYml = join(iiifConfigRoot, "config.yml");
   const configYaml = join(iiifConfigRoot, "config.yaml");
+  const slugsJson = join(iiifConfigRoot, "slugs.json");
+  const collectionsJson = join(iiifConfigRoot, "collections.json");
   const storesDir = join(iiifConfigRoot, "stores");
   const configDir = join(iiifConfigRoot, "config");
   const scriptsDir = join(iiifConfigRoot, "scripts");
@@ -235,6 +291,18 @@ async function loadIiifConfigFolder(projectRoot: string): Promise<ResolvedConfig
   }
 
   const mergedConfig = normalizeConfig(rootConfig);
+  if (fs.existsSync(slugsJson)) {
+    mergedConfig.slugs = {
+      ...(mergedConfig.slugs || {}),
+      ...(await loadJsonFile(slugsJson)),
+    };
+  }
+  if (fs.existsSync(collectionsJson)) {
+    mergedConfig.collections = {
+      ...(mergedConfig.collections || {}),
+      ...(await loadJsonFile(collectionsJson)),
+    };
+  }
   mergedConfig.stores = {
     ...(rootConfig.stores || {}),
     ...discoveredStores,
@@ -259,6 +327,12 @@ async function loadIiifConfigFolder(projectRoot: string): Promise<ResolvedConfig
   const watchPaths: ConfigWatchPath[] = [];
   if (globalConfigPath && fs.existsSync(globalConfigPath)) {
     watchPaths.push({ path: globalConfigPath, recursive: false });
+  }
+  if (fs.existsSync(slugsJson)) {
+    watchPaths.push({ path: slugsJson, recursive: false });
+  }
+  if (fs.existsSync(collectionsJson)) {
+    watchPaths.push({ path: collectionsJson, recursive: false });
   }
   if (fs.existsSync(configDir)) {
     watchPaths.push({ path: configDir, recursive: true });

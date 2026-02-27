@@ -1,7 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
+import { CollectionsConfigPage } from "./components/CollectionsConfigPage";
+import { FolderCollectionsPage } from "./components/FolderCollectionsPage";
 import { HomePage } from "./components/HomePage";
+import { MetadataPage } from "./components/MetadataPage";
 import { Navigation } from "./components/Navigation";
 import { ResourcePage } from "./components/ResourcePage";
+import { SlugWorkshopPage } from "./components/SlugWorkshopPage";
+import { StoresConfigPage } from "./components/StoresConfigPage";
+import { TopicThumbnailsPage } from "./components/TopicThumbnailsPage";
 import { detectDebugBase, getSlugPath } from "./components/utils";
 import { TracePage } from "./trace/TracePage";
 
@@ -22,6 +28,12 @@ function App() {
   );
   const isHome = !slugPath;
   const isTrace = slugPath === "trace";
+  const isMetadata = slugPath === "metadata";
+  const isStores = slugPath === "config/stores";
+  const isSlugs = slugPath === "config/slugs";
+  const isCollections = slugPath === "config/collections";
+  const isFolderCollections = slugPath === "config/folder-collections";
+  const isTopicThumbnails = slugPath === "topics/thumbnails";
 
   useEffect(() => {
     if (!isTrace) return;
@@ -50,7 +62,22 @@ function App() {
           <p>Loading trace…</p>
         )
       ) : null}
-      {!isHome && !isTrace ? (
+      {isMetadata ? <MetadataPage debugBase={debugBase} /> : null}
+      {isStores ? <StoresConfigPage debugBase={debugBase} /> : null}
+      {isSlugs ? <SlugWorkshopPage debugBase={debugBase} /> : null}
+      {isCollections ? <CollectionsConfigPage debugBase={debugBase} /> : null}
+      {isFolderCollections ? (
+        <FolderCollectionsPage debugBase={debugBase} />
+      ) : null}
+      {isTopicThumbnails ? <TopicThumbnailsPage debugBase={debugBase} /> : null}
+      {!isHome &&
+      !isTrace &&
+      !isMetadata &&
+      !isStores &&
+      !isSlugs &&
+      !isCollections &&
+      !isFolderCollections &&
+      !isTopicThumbnails ? (
         <ResourcePage debugBase={debugBase} slug={slugPath} />
       ) : null}
     </div>

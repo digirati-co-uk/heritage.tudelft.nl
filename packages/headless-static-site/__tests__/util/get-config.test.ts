@@ -3,7 +3,7 @@ import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { chdir, cwd } from "node:process";
 import { afterEach, beforeEach, describe, expect, test } from "vitest";
-import { resolveConfigSource } from "../../src/util/get-config";
+import { mergeIiifConfig, resolveConfigSource } from "../../src/util/get-config";
 
 async function write(path: string, content: string) {
   await mkdir(dirname(path), { recursive: true });
@@ -86,9 +86,120 @@ stores:
     expect(result.config.config?.["my-linker"]).toEqual({ source: "./raw", enabled: true });
   });
 
+  test("loads iiif-config slugs.json and collections.json", async () => {
+    await write(join(testDir, "iiif-config/config.yml"), "");
+    await write(join(testDir, "iiif-config/stores/local.json"), `{"type":"iiif-json","path":"./content"}`);
+    await write(
+      join(testDir, "iiif-config/slugs.json"),
+      JSON.stringify(
+        {
+          manifest: {
+            type: "Manifest",
+            domain: "example.org",
+            prefix: "/iiif/",
+          },
+        },
+        null,
+        2
+      )
+    );
+    await write(
+      join(testDir, "iiif-config/collections.json"),
+      JSON.stringify(
+        {
+          index: {
+            label: {
+              en: ["Custom Index"],
+            },
+          },
+        },
+        null,
+        2
+      )
+    );
+
+    const result = await resolveConfigSource();
+    expect(result.mode).toBe("folder");
+    expect(result.config.slugs?.manifest).toBeDefined();
+    expect((result.config.collections?.index as any)?.label?.en?.[0]).toBe("Custom Index");
+  });
+
   test("falls back to default mode and default store when no config exists", async () => {
     const result = await resolveConfigSource();
     expect(result.mode).toBe("default");
     expect(result.config.stores.default).toBeDefined();
+  });
+});
+
+describe("mergeIiifConfig", () => {
+  test("deep merges nested config maps and keeps base sections", () => {
+    const merged = mergeIiifConfig(
+      {
+        run: ["extract-topics"],
+        stores: {
+          fromFolder: {
+            type: "iiif-json",
+            path: "./content",
+          },
+        },
+        slugs: {
+          existing: {
+            type: "Manifest",
+            domain: "example.org",
+          } as any,
+        },
+        config: {
+          "extract-topics": {
+            topicTypes: {
+              date: ["Year"],
+            },
+          },
+        },
+      } as any,
+      {
+        config: {
+          "extract-topics": {
+            topicTypes: {
+              contributor: ["Contributor", "Contributors"],
+            },
+          },
+        },
+      } as any
+    );
+
+    expect(merged.stores.fromFolder).toBeDefined();
+    expect(merged.slugs?.existing).toBeDefined();
+    expect(merged.config?.["extract-topics"]).toEqual({
+      topicTypes: {
+        date: ["Year"],
+        contributor: ["Contributor", "Contributors"],
+      },
+    });
+  });
+
+  test("replaces arrays from inline overrides", () => {
+    const merged = mergeIiifConfig(
+      {
+        run: ["metadata-analysis"],
+        stores: {
+          local: {
+            type: "iiif-json",
+            path: "./content",
+            ignore: ["a", "b"],
+          },
+        },
+      } as any,
+      {
+        run: ["extract-topics"],
+        stores: {
+          local: {
+            ignore: ["c"],
+          },
+        },
+      } as any
+    );
+
+    expect(merged.run).toEqual(["extract-topics"]);
+    expect((merged.stores.local as any).ignore).toEqual(["c"]);
   });
 });

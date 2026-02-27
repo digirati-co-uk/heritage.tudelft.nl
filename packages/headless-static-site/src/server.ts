@@ -148,9 +148,18 @@ registerDebugUiRoutes({
   fileHandler,
   getActivePaths: () => ({ ...activePaths }),
   getConfig: async () => (await resolveConfigSource()).config,
+  getConfigMode: async () => (await resolveConfigSource()).mode,
   getTraceJson: () => tracer.toJSON(),
   getDebugUiDir: () => findDebugUiDir(cwd(), require.resolve.bind(require)),
   getBuildStatus: () => ({ ...buildStatus }),
+  defaultRun: defaultBuiltIns.defaultRun,
+  rebuild: async () => {
+    await cachedBuild({
+      cache: true,
+      emit: true,
+      dev: true,
+    });
+  },
 });
 
 app.get("/client.js", async (ctx) => {

@@ -78,6 +78,17 @@ export function HomePage({ debugBase }: { debugBase: string }) {
         <p className="text-slate-500">
           Top collection items with direct links to debug pages.
         </p>
+        {site?.topics?.available ? (
+          <p className="mt-2 text-sm text-slate-600">
+            Topics available:{" "}
+            <a
+              className="text-blue-700 hover:underline"
+              href={`${debugBase}/${site.topics.slug || "topics"}`}
+            >
+              Open {site.topics.label} collection ({site.topics.totalItems})
+            </a>
+          </p>
+        ) : null}
         <div className="mt-3 grid gap-3 md:grid-cols-[1fr_auto] md:items-center">
           <input
             value={searchTerm}
