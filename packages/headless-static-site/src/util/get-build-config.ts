@@ -216,7 +216,8 @@ export async function getBuildConfig(options: BuildOptions, builtIns: BuildBuilt
   const collectionEnrichment = enrichments.filter((e) => e.types.includes("Collection"));
   const canvasEnrichment = enrichments.filter((e) => e.types.includes("Canvas"));
 
-  const requestCacheDir = join(cacheDir, "_requests");
+  // Keep network request cache shared between dev and production builds.
+  const requestCacheDir = join(defaultCacheDir, "_requests");
   const virtualCacheDir = join(cacheDir, "_virtual");
 
   const server = options.dev
@@ -284,7 +285,7 @@ export async function getBuildConfig(options: BuildOptions, builtIns: BuildBuilt
     indexNames,
     defaultIndex: config.search?.defaultIndex || defaultIndex,
     indexes: searchIndexes,
-    emitRecord: config.search?.emitRecord || false,
+    emitRecord: config.search?.emitRecord ?? true,
   };
 
   const trace = builtIns.tracer || (options.dev ? new Tracer() : null);

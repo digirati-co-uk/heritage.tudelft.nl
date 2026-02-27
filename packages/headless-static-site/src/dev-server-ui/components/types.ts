@@ -70,12 +70,19 @@ export type ResourceResponse = {
   resource: any;
   meta: Record<string, any>;
   indices: Record<string, any>;
+  searchRecord: Record<string, any>;
   links: {
     json: string | null;
     localJson: string | null;
     remoteJson: string | null;
     manifestEditor: string | null;
     theseus: string | null;
+    files: {
+      resource: string | null;
+      meta: string | null;
+      indices: string | null;
+      searchRecord: string | null;
+    };
   };
 };
 

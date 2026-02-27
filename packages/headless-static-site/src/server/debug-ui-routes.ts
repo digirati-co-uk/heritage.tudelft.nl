@@ -438,8 +438,24 @@ export function registerDebugUiRoutes({
             : null;
     const primaryJsonUrl = localJsonUrl || remoteJsonUrl;
 
-    const meta = await fileHandler.loadJson(join(cwd(), cacheDir, slug, "meta.json"), true);
-    const indices = await fileHandler.loadJson(join(cwd(), cacheDir, slug, "indices.json"), true);
+    const cacheMetaPath = join(cwd(), cacheDir, slug, "meta.json");
+    const cacheIndicesPath = join(cwd(), cacheDir, slug, "indices.json");
+    const cacheSearchRecordPath = join(cwd(), cacheDir, slug, "search-record.json");
+    const buildIndicesPath = join(cwd(), buildDir, slug, "indices.json");
+    const buildSearchRecordPath = join(cwd(), buildDir, slug, "search-record.json");
+
+    const meta = await fileHandler.loadJson(cacheMetaPath, true);
+    const indices = await fileHandler.loadJson(cacheIndicesPath, true);
+    const searchRecord = await fileHandler.loadJson(cacheSearchRecordPath, true);
+
+    const fileLinks = {
+      resource: primaryJsonUrl,
+      meta: fileHandler.exists(cacheMetaPath) ? toAbsoluteUrl(baseUrl, `/${slug}/meta.json`) : null,
+      indices: fileHandler.exists(buildIndicesPath) ? toAbsoluteUrl(baseUrl, `/${slug}/indices.json`) : null,
+      searchRecord: fileHandler.exists(buildSearchRecordPath)
+        ? toAbsoluteUrl(baseUrl, `/${slug}/search-record.json`)
+        : null,
+    };
 
     const manifestEditorLink =
       type === "Manifest" && primaryJsonUrl
@@ -459,6 +475,7 @@ export function registerDebugUiRoutes({
       resource,
       meta,
       indices,
+      searchRecord,
       reverse: {
         manifest: reverseManifest,
         collection: reverseCollection,
@@ -469,6 +486,7 @@ export function registerDebugUiRoutes({
         remoteJson: remoteJsonUrl,
         manifestEditor: manifestEditorLink,
         theseus: theseusLink,
+        files: fileLinks,
       },
     });
   });

@@ -72,12 +72,24 @@ describe("debug UI routes", () => {
       )
     );
     await writeFile(
+      join(baseDir, ".iiif", "build", "manifests", "demo", "indices.json"),
+      JSON.stringify({ topics: ["alpha"] }, null, 2)
+    );
+    await writeFile(
+      join(baseDir, ".iiif", "build", "manifests", "demo", "search-record.json"),
+      JSON.stringify({ record: { id: "demo-record" } }, null, 2)
+    );
+    await writeFile(
       join(baseDir, ".iiif", "cache", "manifests", "demo", "meta.json"),
       JSON.stringify({ a: 1 }, null, 2)
     );
     await writeFile(
       join(baseDir, ".iiif", "cache", "manifests", "demo", "indices.json"),
       JSON.stringify({ topics: ["alpha"] }, null, 2)
+    );
+    await writeFile(
+      join(baseDir, ".iiif", "cache", "manifests", "demo", "search-record.json"),
+      JSON.stringify({ record: { id: "demo-record" } }, null, 2)
     );
     await writeFile(
       join(baseDir, "build", "dev-ui", "index.html"),
@@ -117,7 +129,10 @@ describe("debug UI routes", () => {
     expect(resourceJson.type).toBe("Manifest");
     expect(resourceJson.meta.a).toBe(1);
     expect(resourceJson.indices.topics).toEqual(["alpha"]);
+    expect(resourceJson.searchRecord.record.id).toBe("demo-record");
     expect(resourceJson.links.manifestEditor).toContain("manifest-editor");
+    expect(resourceJson.links.files.meta).toContain("/manifests/demo/meta.json");
+    expect(resourceJson.links.files.searchRecord).toContain("/manifests/demo/search-record.json");
   });
 
   test("uses forwarded base path for debug redirects and asset rewrites", async () => {

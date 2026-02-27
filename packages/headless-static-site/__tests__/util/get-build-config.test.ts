@@ -72,6 +72,95 @@ describe("getBuildConfig search indexNames", () => {
     expect(result.search.indexNames).toEqual(["canvas"]);
   });
 
+  test("emits search record by default", async () => {
+    const config = {
+      stores: {
+        local: {
+          type: "iiif-json" as const,
+          path: "./content",
+        },
+      },
+    };
+
+    const result = await getBuildConfig(
+      {
+        cwd: testDir,
+        scripts: "./no-scripts-here",
+      },
+      {
+        ...defaultBuiltIns,
+        customConfig: config as any,
+      }
+    );
+
+    expect(result.search.emitRecord).toBe(true);
+  });
+
+  test("respects explicit search emitRecord = false", async () => {
+    const config = {
+      stores: {
+        local: {
+          type: "iiif-json" as const,
+          path: "./content",
+        },
+      },
+      search: {
+        emitRecord: false,
+      },
+    };
+
+    const result = await getBuildConfig(
+      {
+        cwd: testDir,
+        scripts: "./no-scripts-here",
+      },
+      {
+        ...defaultBuiltIns,
+        customConfig: config as any,
+      }
+    );
+
+    expect(result.search.emitRecord).toBe(false);
+  });
+
+  test("shares request cache directory between build and dev", async () => {
+    const config = {
+      stores: {
+        local: {
+          type: "iiif-json" as const,
+          path: "./content",
+        },
+      },
+    };
+
+    const buildConfig = await getBuildConfig(
+      {
+        cwd: testDir,
+        scripts: "./no-scripts-here",
+      },
+      {
+        ...defaultBuiltIns,
+        customConfig: config as any,
+      }
+    );
+
+    const devConfig = await getBuildConfig(
+      {
+        cwd: testDir,
+        scripts: "./no-scripts-here",
+        dev: true,
+      },
+      {
+        ...defaultBuiltIns,
+        customConfig: config as any,
+      }
+    );
+
+    expect(buildConfig.requestCacheDir).toBe(".iiif/cache/_requests");
+    expect(devConfig.requestCacheDir).toBe(".iiif/cache/_requests");
+    expect(devConfig.cacheDir).toBe(".iiif/dev/cache");
+  });
+
   test("derives bounded queue concurrency defaults", async () => {
     const config = {
       stores: {
