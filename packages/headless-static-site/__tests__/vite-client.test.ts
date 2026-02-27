@@ -83,4 +83,54 @@ describe("vite client helpers", () => {
     expect(loaded.meta?.totalItems).toBe(7);
     expect(loaded.links.localJson).toBe("https://example.org/iiif/manifests/demo-item/manifest.json");
   });
+
+  test("loads local meta/indices for remote sitemap resources", async () => {
+    const fetchFn = vi.fn(async (target: string) => {
+      const url = String(target);
+      if (url.endsWith("/meta/sitemap.json")) {
+        return new Response(
+          JSON.stringify({
+            "api/cookbook/recipe/0001-mvm-image": {
+              type: "Manifest",
+              source: {
+                type: "remote",
+                url: "https://theseusviewer.org/api/cookbook/recipe/0001-mvm-image/manifest.json",
+              },
+            },
+          }),
+          { status: 200 }
+        );
+      }
+      if (url === "https://theseusviewer.org/api/cookbook/recipe/0001-mvm-image/manifest.json") {
+        return new Response(
+          JSON.stringify({
+            id: "https://theseusviewer.org/api/cookbook/recipe/0001-mvm-image/manifest.json",
+            type: "Manifest",
+            label: { en: ["Cookbook"] },
+          }),
+          { status: 200 }
+        );
+      }
+      if (url.endsWith("/api/cookbook/recipe/0001-mvm-image/meta.json")) {
+        return new Response(JSON.stringify({ totalItems: 4 }), { status: 200 });
+      }
+      if (url.endsWith("/api/cookbook/recipe/0001-mvm-image/indices.json")) {
+        return new Response(JSON.stringify({ pages: 1 }), { status: 200 });
+      }
+      return new Response("Not found", { status: 404 });
+    });
+
+    const iiif = createIiifViteClient({
+      baseUrl: "https://example.org/iiif",
+      fetchFn: fetchFn as any,
+      cache: false,
+    });
+
+    const loaded = await iiif.loadManifest("api/cookbook/recipe/0001-mvm-image");
+
+    expect(loaded.links.localJson).toBe(null);
+    expect(loaded.links.remoteJson).toBe("https://theseusviewer.org/api/cookbook/recipe/0001-mvm-image/manifest.json");
+    expect(loaded.meta?.totalItems).toBe(4);
+    expect(loaded.indices?.pages).toBe(1);
+  });
 });

@@ -295,8 +295,56 @@ describe("astro server/client API", () => {
     expect(loaded.links.remoteJson).toBe("https://theseusviewer.org/api/cookbook/recipe/0001-mvm-image/manifest.json");
     expect(fetchFn.mock.calls.some(([target]) => String(target).includes("/iiif/meta/sitemap.json"))).toBe(true);
     expect(
-      fetchFn.mock.calls.some(([target]) => String(target).includes("/iiif/api/cookbook/recipe/0001-mvm-image"))
+      fetchFn.mock.calls.some(([target]) =>
+        String(target).includes("/iiif/api/cookbook/recipe/0001-mvm-image/manifest.json")
+      )
     ).toBe(false);
+  });
+
+  test("client API loads local meta/indices for remote sitemap resources", async () => {
+    const fetchFn = vi.fn(async (target: string) => {
+      const url = String(target);
+      if (url.endsWith("/iiif/meta/sitemap.json")) {
+        return new Response(
+          JSON.stringify({
+            "api/cookbook/recipe/0001-mvm-image": {
+              type: "Manifest",
+              source: {
+                type: "remote",
+                url: "https://theseusviewer.org/api/cookbook/recipe/0001-mvm-image/manifest.json",
+              },
+            },
+          }),
+          { status: 200 }
+        );
+      }
+      if (url === "https://theseusviewer.org/api/cookbook/recipe/0001-mvm-image/manifest.json") {
+        return new Response(
+          JSON.stringify({
+            id: "https://theseusviewer.org/api/cookbook/recipe/0001-mvm-image/manifest.json",
+            type: "Manifest",
+            label: { en: ["Cookbook"] },
+          }),
+          { status: 200 }
+        );
+      }
+      if (url.endsWith("/iiif/api/cookbook/recipe/0001-mvm-image/meta.json")) {
+        return new Response(JSON.stringify({ totalItems: 4 }), { status: 200 });
+      }
+      if (url.endsWith("/iiif/api/cookbook/recipe/0001-mvm-image/indices.json")) {
+        return new Response(JSON.stringify({ pages: 1 }), { status: 200 });
+      }
+      return new Response("Not found", { status: 404 });
+    });
+
+    const api = createIiifAstroClient({ fetchFn: fetchFn as any, cache: false });
+    const loaded = await api.loadManifest("api/cookbook/recipe/0001-mvm-image");
+
+    expect(loaded.type).toBe("Manifest");
+    expect(loaded.links.localJson).toBe(null);
+    expect(loaded.links.remoteJson).toBe("https://theseusviewer.org/api/cookbook/recipe/0001-mvm-image/manifest.json");
+    expect(loaded.meta?.totalItems).toBe(4);
+    expect(loaded.indices?.pages).toBe(1);
   });
 
   test("client API supports all-collection helpers and typed static paths from collections", async () => {

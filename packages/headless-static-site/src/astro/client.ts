@@ -350,11 +350,8 @@ export function createIiifAstroClient(options: AstroIiifClientOptions = {}) {
     }
 
     const resolvedSlug = localJsonUrl ? localSlug : slug;
-    const shouldLoadLocalMetadata = !remoteJsonUrl || Boolean(localJsonUrl);
-    const meta = shouldLoadLocalMetadata
-      ? asObject((await tryGetJsonWithBaseFallback(`${resolvedSlug}/meta.json`))?.json)
-      : null;
-    const indices = shouldLoadLocalMetadata
+    const meta = resolvedSlug ? asObject((await tryGetJsonWithBaseFallback(`${resolvedSlug}/meta.json`))?.json) : null;
+    const indices = resolvedSlug
       ? asObject((await tryGetJsonWithBaseFallback(`${resolvedSlug}/indices.json`))?.json)
       : null;
 
