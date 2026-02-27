@@ -1,6 +1,7 @@
 {
   "$schema": "https://schemas.example.org/iiif-hss/iiif-hss.store.schema.json",
   "type": "iiif-remote",
+  "run": ["extract-topics"],
   "slugTemplate": {
     "type": "Manifest",
     "domain": "datasyllwr.llgc.org.uk",

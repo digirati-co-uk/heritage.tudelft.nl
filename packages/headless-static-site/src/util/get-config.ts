@@ -143,6 +143,25 @@ async function loadJsonFile(jsonPath: string) {
   }
 }
 
+async function loadStoreSidecarConfigs(storeDirectory: string) {
+  const sidecarConfig: Record<string, any> = {};
+  const sidecarPaths: string[] = [];
+  const storeFiles = await fs.promises.readdir(storeDirectory, { withFileTypes: true });
+
+  for (const storeFile of storeFiles) {
+    if (!storeFile.isFile() || !storeFile.name.endsWith(".json") || storeFile.name === "_store.json") {
+      continue;
+    }
+
+    const sidecarPath = join(storeDirectory, storeFile.name);
+    const sidecarName = basename(storeFile.name, ".json");
+    sidecarConfig[sidecarName] = await loadJsonFile(sidecarPath);
+    sidecarPaths.push(sidecarPath);
+  }
+
+  return { sidecarConfig, sidecarPaths };
+}
+
 function normalizeConfig(inputConfig: IIIFRC | null | undefined) {
   const config = (inputConfig || {}) as IIIFRC;
 
@@ -211,7 +230,8 @@ async function loadIiifConfigFolder(projectRoot: string): Promise<ResolvedConfig
 
       if (storeEntry.isDirectory()) {
         const storeName = storeEntry.name;
-        const storePath = join(storesDir, storeName, "_store.json");
+        const storeDirectory = join(storesDir, storeName);
+        const storePath = join(storeDirectory, "_store.json");
         if (!fs.existsSync(storePath)) {
           continue;
         }
@@ -222,11 +242,20 @@ async function loadIiifConfigFolder(projectRoot: string): Promise<ResolvedConfig
 
         const rawStore = await loadJsonFile(storePath);
         assertStoreValue(storeName, rawStore, storePath);
+        const { sidecarConfig, sidecarPaths } = await loadStoreSidecarConfigs(storeDirectory);
 
         if (rawStore.type === "iiif-json" && !rawStore.path) {
           const defaultPath = join(storesDir, storeName, "manifests");
           rawStore.path = defaultPath;
           rawStore.base = rawStore.base || defaultPath;
+        }
+
+        if (Object.keys(sidecarConfig).length > 0) {
+          rawStore.config = {
+            ...sidecarConfig,
+            ...(rawStore.config || {}),
+          };
+          storeDeclarationPaths.push(...sidecarPaths);
         }
 
         discoveredStores[storeName] = rawStore;
