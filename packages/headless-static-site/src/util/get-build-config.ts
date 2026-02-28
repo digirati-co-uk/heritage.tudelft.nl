@@ -33,6 +33,7 @@ export type BuildOptions = {
   cwd?: string;
   config?: string;
   cache?: boolean;
+  networkCache?: boolean;
   exact?: string;
   watch?: boolean;
   debug?: boolean;
@@ -138,6 +139,7 @@ export async function getBuildConfig(options: BuildOptions, builtIns: BuildBuilt
     emitCanvas: normalizeConcurrency(concurrencyConfig.emitCanvas, ioConcurrency),
     write: normalizeConcurrency(concurrencyConfig.write, ioConcurrency),
   };
+  const useNetworkCache = options.networkCache ?? true;
   const network = resolveNetworkConfig(config.network, { prefetch: options.prefetch });
 
   const files = builtIns.fileHandler || new FileHandler(fs, cwd);
@@ -242,7 +244,7 @@ export async function getBuildConfig(options: BuildOptions, builtIns: BuildBuilt
     return resp;
   };
 
-  const requestCache = createStoreRequestCache("_thumbs", requestCacheDir, !options.cache, undefined, network);
+  const requestCache = createStoreRequestCache("_thumbs", requestCacheDir, !useNetworkCache, undefined, network);
   const imageServiceLoader = new (class extends ImageServiceLoader {
     fetchService(serviceId: string): Promise<any & { real: boolean }> {
       return requestCache.fetch(serviceId);

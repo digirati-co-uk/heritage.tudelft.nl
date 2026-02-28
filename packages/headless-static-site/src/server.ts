@@ -320,6 +320,7 @@ app.get(
     "query",
     z.object({
       cache: z.string().optional(),
+      networkCache: z.string().optional(),
       generate: z.string().optional(),
       exact: z.string().optional(),
       save: z.string().optional(),
@@ -332,6 +333,7 @@ app.get(
   async (ctx) => {
     const { buildConfig, emitted, enrichments, extractions, parsed, stores } = await cachedBuild({
       cache: ctx.req.query("cache") !== "false",
+      networkCache: ctx.req.query("networkCache") !== "false",
       generate: ctx.req.query("generate") !== "false",
       exact: ctx.req.query("exact"),
       emit: ctx.req.query("emit") !== "false",
@@ -368,6 +370,7 @@ app.post(
     "json",
     z.object({
       cache: z.string().optional(),
+      networkCache: z.string().optional(),
       generate: z.string().optional(),
       exact: z.string().optional(),
       save: z.string().optional(),

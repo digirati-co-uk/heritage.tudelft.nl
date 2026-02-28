@@ -89,10 +89,11 @@ export async function parseStores(
       throw new Error(`Missing store config for "${storeId}"`);
     }
     const network = resolveNetworkConfig(buildConfig.network, storeConfig.network);
+    const useNetworkCache = options.networkCache ?? true;
     const requestCache =
-      options.cache && cache.storeRequestCaches[storeId]
+      useNetworkCache && cache.storeRequestCaches[storeId]
         ? cache.storeRequestCaches[storeId]
-        : createStoreRequestCache(storeId, requestCacheDir, !options.cache, customFs, network, (event) => {
+        : createStoreRequestCache(storeId, requestCacheDir, !useNetworkCache, customFs, network, (event) => {
             progress?.onFetch?.({
               ...event,
               phase: "parse-stores",

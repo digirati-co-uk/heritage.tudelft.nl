@@ -17,6 +17,7 @@ program
   .command("build")
   .description("Build headless static site")
   .option("--no-cache", "Disable caching")
+  .option("--no-network-cache", "Disable network request caching")
   .option("-w, --watch", "Watch for changes")
   .option("-s, --scripts <path>", "Build scripts")
   .option("--debug", "Debug")
@@ -50,6 +51,7 @@ program
   .command("generate")
   .description("Run IIIF generators")
   .option("--no-cache", "Disable caching")
+  .option("--no-network-cache", "Disable network request caching")
   .action(generateCommand);
 
 program
@@ -57,6 +59,7 @@ program
   .command("warm")
   .description("Warm request cache for remote stores")
   .option("--no-cache", "Disable caching")
+  .option("--no-network-cache", "Disable network request caching")
   .option("-c, --config <path>", "Path to config file")
   .option("--stores <name...>", "Names of stores to warm")
   .option("-s, --scripts <path>", "Build scripts")

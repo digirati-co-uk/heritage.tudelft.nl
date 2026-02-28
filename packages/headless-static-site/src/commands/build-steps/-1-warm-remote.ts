@@ -47,10 +47,11 @@ export async function warmRemoteStores(
     stats.stores += 1;
 
     const network = resolveNetworkConfig(buildConfig.network, storeConfig.network);
+    const useNetworkCache = options.networkCache ?? true;
     const requestCache =
-      options.cache && state.storeRequestCaches[storeId]
+      useNetworkCache && state.storeRequestCaches[storeId]
         ? state.storeRequestCaches[storeId]
-        : createStoreRequestCache(storeId, requestCacheDir, !options.cache, undefined, network, (event) => {
+        : createStoreRequestCache(storeId, requestCacheDir, !useNetworkCache, undefined, network, (event) => {
             progress?.onFetch?.({
               ...event,
               phase: "warm-remote",

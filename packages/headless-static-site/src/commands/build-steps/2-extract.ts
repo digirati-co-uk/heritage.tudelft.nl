@@ -37,10 +37,11 @@ export async function extract(
   }
 
   const startTime = performance.now();
+  const useNetworkCache = options.networkCache ?? true;
   const requestCache = createStoreRequestCache(
     "_extract",
     requestCacheDir,
-    !options.cache,
+    !useNetworkCache,
     undefined,
     buildConfig.network,
     (event) => {

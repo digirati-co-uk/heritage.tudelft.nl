@@ -56,10 +56,11 @@ export async function loadStores(
       throw new Error(`Missing store config for "${store}"`);
     }
     const network = resolveNetworkConfig(buildConfig.network, storeConfig.network);
+    const useNetworkCache = options.networkCache ?? true;
     const requestCache = createStoreRequestCache(
       store,
       requestCacheDir,
-      !options.cache,
+      !useNetworkCache,
       undefined,
       network,
       (event) => {

@@ -51,6 +51,7 @@ export type BuildOptions = {
   cwd?: string;
   config?: string;
   cache?: boolean;
+  networkCache?: boolean;
   exact?: string;
   watch?: boolean;
   debug?: boolean;
@@ -339,6 +340,7 @@ export async function build(
       emit: true,
       remoteRecords: false,
       prefetch: true,
+      networkCache: true,
       ...options,
     },
     {
@@ -371,7 +373,8 @@ export async function build(
     });
   };
 
-  if (buildConfig.network.prefetch && buildConfig.options.cache) {
+  const useNetworkCache = buildConfig.options.networkCache ?? true;
+  if (buildConfig.network.prefetch && useNetworkCache) {
     enterPhase("warm-remote");
     await time("Warmed remote request cache", warmRemoteStores(buildConfig, parseState, progress));
   } else {

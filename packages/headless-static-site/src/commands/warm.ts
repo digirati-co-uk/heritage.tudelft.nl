@@ -9,6 +9,7 @@ interface WarmOptions {
   cwd?: string;
   config?: string;
   cache?: boolean;
+  networkCache?: boolean;
   debug?: boolean;
   stores?: string[];
   scripts?: string;
@@ -24,6 +25,7 @@ export async function warmCommand(options: WarmOptions) {
       remoteRecords: false,
       prefetch: true,
       cache: true,
+      networkCache: true,
       ui: false,
       ...options,
     },

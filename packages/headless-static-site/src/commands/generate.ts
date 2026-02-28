@@ -18,6 +18,7 @@ interface GenerateOptions {
   scripts?: string;
   debug?: boolean;
   cache?: boolean;
+  networkCache?: boolean;
   ui?: boolean;
 }
 
@@ -68,7 +69,8 @@ export async function generateCommand(options: GenerateOptions, command?: Comman
         : join(generatorDirectory, generatorName, "build");
       const cacheDirectory = join(generatorDirectory, generatorName);
       const resourcesDirectory = join(cacheDirectory, "resources");
-      const requestCache = createStoreRequestCache("requests", cacheDirectory, !options.cache, undefined, network);
+      const useNetworkCache = options.networkCache ?? true;
+      const requestCache = createStoreRequestCache("requests", cacheDirectory, !useNetworkCache, undefined, network);
 
       await fs.promises.mkdir(cacheDirectory, { recursive: true });
       await fs.promises.mkdir(buildDirectory, { recursive: true });

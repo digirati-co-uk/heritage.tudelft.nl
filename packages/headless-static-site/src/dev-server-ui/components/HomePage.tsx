@@ -157,7 +157,7 @@ export function HomePage({ debugBase }: { debugBase: string }) {
       </section>
 
       {isBuilding ? (
-        <section className="mt-4 border border-blue-200 bg-blue-50 rounded-xl p-4">
+        <section className="mt-4 border border-blue-200 bg-blue-50 rounded-xl p-4 mb-4">
           <p className="font-medium text-blue-900">Building IIIF resources…</p>
           <p className="text-blue-700 text-sm mt-1">
             {build?.progress?.message || "The first build is running."}

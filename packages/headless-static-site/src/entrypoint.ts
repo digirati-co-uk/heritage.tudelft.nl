@@ -9,6 +9,7 @@ const program = new Command();
 program
   //
   .option("--no-cache", "Disable caching")
+  .option("--no-network-cache", "Disable network request caching")
   .option("--debug", "Debug building")
   .parse(process.argv);
 
@@ -40,7 +41,9 @@ injectWebSocket(runningServer);
 
 try {
   // @todo make this optional?
-  await server.request(`/build?cache=${options.cache ? "true" : "false"}&emit=true`);
+  await server.request(
+    `/build?cache=${options.cache ? "true" : "false"}&networkCache=${options.networkCache ? "true" : "false"}&emit=true`
+  );
   await server.request("/watch");
 } catch (error) {
   console.error(error);

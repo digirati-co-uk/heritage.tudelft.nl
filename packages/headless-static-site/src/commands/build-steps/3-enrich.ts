@@ -128,10 +128,11 @@ export async function enrich(
   }
 
   const progress = makeProgressBar("Enrichment", totalResources, options.ui);
+  const useNetworkCache = options.networkCache ?? true;
   const requestCache = createStoreRequestCache(
     "_enrich",
     requestCacheDir,
-    !options.cache,
+    !useNetworkCache,
     undefined,
     buildConfig.network,
     (event) => {

@@ -133,7 +133,7 @@ async function loadConfigFile(configFilePath: string): Promise<IIIFRC> {
 
   // Add a timestamp query to avoid stale module cache in long-running watch processes.
   const configUrl = pathToFileURL(configFilePath).href;
-  const loaded = await import(`${configUrl}?t=${Date.now()}`);
+  const loaded = await import(/* @vite-ignore */ `${configUrl}?t=${Date.now()}`);
   return normalizeConfigExport(loaded) as IIIFRC;
 }
 
