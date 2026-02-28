@@ -200,11 +200,17 @@ export async function getBuildConfig(options: BuildOptions, builtIns: BuildBuilt
   log("Available rewrites:", allRewrites.map((e) => e.id).join(", "));
 
   // We manually skip some.
-  const toRun = config.run || builtIns.defaultRun;
-  const rewrites = allRewrites.filter((e) => toRun.includes(e.id));
-  const extractions = allExtractions.filter((e) => toRun.includes(e.id));
-  const enrichments = allEnrichments.filter((e) => toRun.includes(e.id));
-  const linkers = allLinkers.filter((e) => toRun.includes(e.id));
+  const configuredRun = config.run || builtIns.defaultRun;
+  const toRun = new Set(configuredRun);
+  for (const extraction of allExtractions) {
+    if (extraction.alwaysRun) {
+      toRun.add(extraction.id);
+    }
+  }
+  const rewrites = allRewrites.filter((e) => toRun.has(e.id));
+  const extractions = allExtractions.filter((e) => toRun.has(e.id));
+  const enrichments = allEnrichments.filter((e) => toRun.has(e.id));
+  const linkers = allLinkers.filter((e) => toRun.has(e.id));
 
   const manifestRewrites = rewrites.filter((e) => e.types.includes("Manifest"));
   const collectionRewrites = rewrites.filter((e) => e.types.includes("Collection"));

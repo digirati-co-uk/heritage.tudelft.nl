@@ -17,6 +17,7 @@ import {
   normalizeSlug,
   normalizeSlugForStaticPath,
   resolveAstroIiifRoutes,
+  runtimeHintFromMeta,
   slugFromParams,
 } from "./shared.ts";
 
@@ -207,63 +208,113 @@ export function createIiifAstroServer(options: AstroIiifServerOptions = {}) {
     }
 
     const requestedSlug = normalizeSlug(slugOrUrl);
-    const siteMap = await getSitemap();
     const slugCandidates = getResourceSlugCandidates(requestedSlug, forcedType || null, routes);
+    const localCandidates = Array.from(new Set([requestedSlug, ...slugCandidates])).filter(Boolean);
 
-    let slug = requestedSlug;
-    let entry: IIIFSitemapEntry | null = null;
-    for (const candidate of slugCandidates) {
-      const next = siteMap[candidate];
-      if (next) {
+    let slug = localCandidates[0] || requestedSlug;
+    let type: IIIFResourceType | null = forcedType || null;
+    let source: IIIFSitemapEntry["source"] | null = null;
+    let resource: JsonObject | null = null;
+    let localJson: string | null = null;
+    let remoteJson: string | null = null;
+
+    const cachedMeta = new Map<
+      string,
+      {
+        meta: JsonObject | null;
+        runtime: ReturnType<typeof runtimeHintFromMeta>;
+      }
+    >();
+    const getMetaForCandidate = async (candidate: string) => {
+      if (cachedMeta.has(candidate)) {
+        return cachedMeta.get(candidate)!;
+      }
+      const candidatePaths = resourcePaths(candidate);
+      const meta = asObject(await safeReadJson(candidatePaths.meta));
+      const runtime = runtimeHintFromMeta(meta);
+      const value = { meta, runtime };
+      cachedMeta.set(candidate, value);
+      return value;
+    };
+
+    const runtimeByCandidate = new Map<string, ReturnType<typeof runtimeHintFromMeta>>();
+    let preferredRemoteCandidate: string | null = null;
+
+    for (const candidate of localCandidates) {
+      const { runtime } = await getMetaForCandidate(candidate);
+      runtimeByCandidate.set(candidate, runtime);
+      if (!runtime) {
+        continue;
+      }
+
+      if (!type && runtime.type) {
+        type = runtime.type;
+      }
+      if (!source && runtime.source) {
+        source = runtime.source;
+      }
+
+      const typeMatches = !forcedType || !runtime.type || runtime.type === forcedType;
+      if (!typeMatches) {
+        continue;
+      }
+
+      if (!remoteJson && runtime.source?.type === "remote" && runtime.source.url) {
+        remoteJson = runtime.source.url;
+      }
+
+      if (
+        !preferredRemoteCandidate &&
+        runtime.source?.type === "remote" &&
+        runtime.source.url &&
+        runtime.saveToDisk === false
+      ) {
+        preferredRemoteCandidate = candidate;
+        remoteJson = runtime.source.url;
         slug = candidate;
-        entry = next;
+      }
+    }
+
+    if (preferredRemoteCandidate && remoteJson) {
+      resource = asObject(await tryLoadRemoteJson(remoteJson));
+      if (!type && resource?.type && (resource.type === "Manifest" || resource.type === "Collection")) {
+        type = resource.type as IIIFResourceType;
+      }
+    }
+
+    const localResourceOrder =
+      type === "Manifest" ? ["manifest"] : type === "Collection" ? ["collection"] : ["manifest", "collection"];
+
+    for (const kind of localResourceOrder) {
+      if (resource) {
+        break;
+      }
+      for (const candidate of localCandidates) {
+        const runtime = runtimeByCandidate.get(candidate);
+        if (runtime?.source?.type === "remote" && runtime.saveToDisk === false) {
+          continue;
+        }
+        const candidatePaths = resourcePaths(candidate);
+        const localFile = kind === "manifest" ? candidatePaths.manifest : candidatePaths.collection;
+        if (!existsSync(localFile)) {
+          continue;
+        }
+        const localResource = asObject(await safeReadJson(localFile));
+        if (!localResource) {
+          continue;
+        }
+        resource = localResource;
+        slug = candidate;
+        type = kind === "manifest" ? "Manifest" : "Collection";
+        localJson = joinBaseAndPath(baseUrl, `${slug}/${kind}.json`);
         break;
       }
     }
 
-    if (!entry) {
-      for (const candidate of slugCandidates) {
-        const candidatePaths = resourcePaths(candidate);
-        if (existsSync(candidatePaths.manifest) || existsSync(candidatePaths.collection)) {
-          slug = candidate;
-          break;
-        }
-      }
+    if (!remoteJson) {
+      remoteJson = await resolveRemote(slug, type, source);
     }
 
-    const paths = resourcePaths(slug);
-    const hasManifest = existsSync(paths.manifest);
-    const hasCollection = existsSync(paths.collection);
-
-    let type: IIIFResourceType | null = forcedType || (entry?.type as IIIFResourceType) || null;
-    if (!type && hasManifest) {
-      type = "Manifest";
-    }
-    if (!type && hasCollection) {
-      type = "Collection";
-    }
-
-    const localFile =
-      type === "Manifest"
-        ? hasManifest
-          ? paths.manifest
-          : null
-        : type === "Collection"
-          ? hasCollection
-            ? paths.collection
-            : null
-          : hasManifest
-            ? paths.manifest
-            : hasCollection
-              ? paths.collection
-              : null;
-
-    let resource = asObject(localFile ? await safeReadJson(localFile) : null);
-    if (!type && resource?.type && (resource.type === "Manifest" || resource.type === "Collection")) {
-      type = resource.type as IIIFResourceType;
-    }
-
-    const remoteJson = await resolveRemote(slug, type, entry?.source || null);
     if (!resource) {
       resource = asObject(await tryLoadRemoteJson(remoteJson));
       if (!type && resource?.type && (resource.type === "Manifest" || resource.type === "Collection")) {
@@ -271,17 +322,15 @@ export function createIiifAstroServer(options: AstroIiifServerOptions = {}) {
       }
     }
 
-    const localJson =
-      type && localFile
-        ? joinBaseAndPath(baseUrl, `${slug}/${type === "Manifest" ? "manifest.json" : "collection.json"}`)
-        : null;
+    const { meta } = slug ? await getMetaForCandidate(slug) : { meta: null };
+    const paths = resourcePaths(slug);
 
     return {
       slug,
       type,
-      source: entry?.source || null,
+      source,
       resource,
-      meta: asObject(await safeReadJson(paths.meta)),
+      meta,
       indices: asObject(await safeReadJson(paths.indices)),
       links: {
         json: localJson || remoteJson,

@@ -19,6 +19,7 @@ import { extractMetadataAnalysis } from "../extract/extract-metadata-analysis.ts
 import { extractPartOfCollection } from "../extract/extract-part-of-collection.ts";
 import { extractPlaintext } from "../extract/extract-plaintext.ts";
 import { extractRemoteSource } from "../extract/extract-remote-source.ts";
+import { extractRuntimeHints } from "../extract/extract-runtime-hints.ts";
 import { extractSearchRecord } from "../extract/extract-search-record.ts";
 import { extractSlugSource } from "../extract/extract-slug-source";
 import { extractThumbnail } from "../extract/extract-thumbnail.ts";
@@ -83,6 +84,7 @@ const devBuild = ".iiif/dev/build";
 const topicFolder = "content/topics";
 
 const defaultRun = [
+  extractRuntimeHints.id,
   extractRemoteSource.id,
   extractSearchRecord.id,
   extractLabelString.id,
@@ -108,6 +110,7 @@ const builtInExtractions: Extraction[] = [
   extractCollectionThumbnail,
   extractTopics,
   extractMetadataAnalysis,
+  extractRuntimeHints,
   extractRemoteSource,
   extractFolderCollections,
   extractPlaintext,

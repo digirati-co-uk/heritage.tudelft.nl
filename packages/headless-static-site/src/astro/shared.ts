@@ -14,6 +14,12 @@ export type IIIFSitemapEntry = {
   [key: string]: any;
 };
 
+export type IIIFRuntimeHint = {
+  type: IIIFResourceType | null;
+  source: IIIFSitemapEntry["source"] | null;
+  saveToDisk: boolean | null;
+};
+
 export type StaticPathStripPrefix = boolean | string | string[];
 
 export type AstroIiifRoutes = {
@@ -79,6 +85,45 @@ function normalizeItemType(type: unknown): IIIFResourceType | null {
     return "Collection";
   }
   return null;
+}
+
+export function runtimeHintFromMeta(meta: Record<string, any> | null | undefined): IIIFRuntimeHint | null {
+  if (!meta || typeof meta !== "object") {
+    return null;
+  }
+
+  const raw = meta["hss:runtime"];
+  if (!raw || typeof raw !== "object") {
+    return null;
+  }
+
+  const rawType = (raw as any).type;
+  const type = normalizeItemType(rawType);
+
+  const rawSource = (raw as any).source;
+  let source: IIIFSitemapEntry["source"] | null = null;
+  if (rawSource && typeof rawSource === "object") {
+    const sourceType = (rawSource as any).type;
+    if (sourceType === "disk" || sourceType === "remote") {
+      source = { ...(rawSource as any), type: sourceType };
+    }
+  }
+
+  const rawSaveToDisk = (raw as any).saveToDisk;
+  const saveToDisk =
+    typeof rawSaveToDisk === "boolean"
+      ? rawSaveToDisk
+      : source?.type === "disk"
+        ? true
+        : source?.type === "remote"
+          ? false
+          : null;
+
+  if (!type && !source && saveToDisk === null) {
+    return null;
+  }
+
+  return { type, source, saveToDisk };
 }
 
 function prefixesToStrip(

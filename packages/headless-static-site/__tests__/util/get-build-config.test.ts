@@ -251,6 +251,31 @@ describe("getBuildConfig search indexNames", () => {
     expect(result.extractions.some((step) => step.id === "extract-collection-thumbnail")).toBe(true);
   });
 
+  test("always includes runtime hints extraction even when run list is restricted", async () => {
+    const config = {
+      stores: {
+        local: {
+          type: "iiif-json" as const,
+          path: "./content",
+        },
+      },
+      run: ["extract-label-string"],
+    };
+
+    const result = await getBuildConfig(
+      {
+        cwd: testDir,
+        scripts: "./no-scripts-here",
+      },
+      {
+        ...defaultBuiltIns,
+        customConfig: config as any,
+      }
+    );
+
+    expect(result.extractions.some((step) => step.id === "extract-runtime-hints")).toBe(true);
+  });
+
   test("uses configured server URL for dev configUrl when DEV_SERVER env is absent", async () => {
     const config = {
       server: {

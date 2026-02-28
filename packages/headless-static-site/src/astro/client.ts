@@ -11,6 +11,7 @@ import {
   normalizeSlug,
   normalizeSlugForStaticPath,
   resolveAstroIiifRoutes,
+  runtimeHintFromMeta,
   slugFromParams,
 } from "./shared.ts";
 
@@ -256,89 +257,103 @@ export function createIiifAstroClient(options: AstroIiifClientOptions = {}) {
     }
 
     const requestedSlug = normalizeSlug(slugOrUrl);
-    const sitemap = await getSitemap();
     const slugCandidates = getResourceSlugCandidates(requestedSlug, forcedType || null, routes);
+    const localCandidates = Array.from(new Set([requestedSlug, ...slugCandidates])).filter(Boolean);
 
-    let slug = requestedSlug;
+    let type: IIIFResourceType | null = forcedType || null;
     let source: IIIFSitemapEntry["source"] | null = null;
-    let sitemapType: IIIFResourceType | null = null;
+    let localJsonUrl: string | null = null;
+    let remoteJsonUrl: string | null = null;
+    let resource: JsonObject | null = null;
+    let resolvedSlug = localCandidates[0] || requestedSlug;
 
-    for (const candidate of slugCandidates) {
-      const entry = sitemap[candidate];
-      if (!entry) {
+    const cachedMeta = new Map<
+      string,
+      {
+        meta: JsonObject | null;
+        runtime: ReturnType<typeof runtimeHintFromMeta>;
+      }
+    >();
+
+    const getMetaForCandidate = async (candidate: string) => {
+      if (cachedMeta.has(candidate)) {
+        return cachedMeta.get(candidate)!;
+      }
+      const loaded = await tryGetJsonWithBaseFallback(`${candidate}/meta.json`);
+      const meta = asObject(loaded?.json);
+      const runtime = runtimeHintFromMeta(meta);
+      const value = { meta, runtime };
+      cachedMeta.set(candidate, value);
+      return value;
+    };
+
+    const runtimeByCandidate = new Map<string, ReturnType<typeof runtimeHintFromMeta>>();
+    let preferredRemoteCandidate: string | null = null;
+
+    for (const candidate of localCandidates) {
+      const { runtime } = await getMetaForCandidate(candidate);
+      runtimeByCandidate.set(candidate, runtime);
+      if (!runtime) {
         continue;
       }
-      slug = candidate;
-      source = entry.source || null;
-      sitemapType = (entry.type as IIIFResourceType) || null;
-      break;
+
+      if (!type && runtime.type) {
+        type = runtime.type;
+      }
+      if (!source && runtime.source) {
+        source = runtime.source;
+      }
+
+      const typeMatches = !forcedType || !runtime.type || runtime.type === forcedType;
+      if (!typeMatches) {
+        continue;
+      }
+
+      if (!remoteJsonUrl && runtime.source?.type === "remote" && runtime.source.url) {
+        remoteJsonUrl = runtime.source.url;
+      }
+
+      if (
+        !preferredRemoteCandidate &&
+        runtime.source?.type === "remote" &&
+        runtime.source.url &&
+        runtime.saveToDisk === false
+      ) {
+        preferredRemoteCandidate = candidate;
+        remoteJsonUrl = runtime.source.url;
+        resolvedSlug = candidate;
+      }
     }
 
-    const remoteFromSource = source?.type === "remote" ? source.url || null : null;
-    const localCandidates = Array.from(new Set([slug, ...slugCandidates]));
-
-    let type: IIIFResourceType | null = forcedType || (sitemapType as IIIFResourceType | null);
-    let localJsonUrl: string | null = null;
-    let localSlug = slug;
-    let resource: JsonObject | null = null;
-    const remoteJsonUrl: string | null = remoteFromSource;
-
-    if (remoteJsonUrl) {
+    if (preferredRemoteCandidate && remoteJsonUrl) {
       resource = asObject(await tryGetJson(remoteJsonUrl));
       if (!type && resource?.type && (resource.type === "Manifest" || resource.type === "Collection")) {
         type = resource.type as IIIFResourceType;
       }
     }
 
-    if (!resource && (type === "Manifest" || (!type && sitemapType === "Manifest"))) {
-      for (const candidate of localCandidates) {
-        const localManifestResult = await tryGetJsonWithBaseFallback(`${candidate}/manifest.json`);
-        localJsonUrl = localManifestResult?.url || null;
-        resource = asObject(localManifestResult?.json);
-        if (resource) {
-          localSlug = candidate;
-          type = "Manifest";
-          break;
-        }
-      }
-    }
+    const localResourceOrder =
+      type === "Manifest" ? ["manifest"] : type === "Collection" ? ["collection"] : ["manifest", "collection"];
 
-    if (!resource && (type === "Collection" || (!type && sitemapType === "Collection"))) {
-      for (const candidate of localCandidates) {
-        const localCollectionResult = await tryGetJsonWithBaseFallback(`${candidate}/collection.json`);
-        localJsonUrl = localCollectionResult?.url || null;
-        resource = asObject(localCollectionResult?.json);
-        if (resource) {
-          localSlug = candidate;
-          type = "Collection";
-          break;
-        }
+    for (const kind of localResourceOrder) {
+      if (resource) {
+        break;
       }
-    }
-
-    if (!resource && !type) {
       for (const candidate of localCandidates) {
-        const tryManifestResult = await tryGetJsonWithBaseFallback(`${candidate}/manifest.json`);
-        resource = asObject(tryManifestResult?.json);
-        if (resource) {
-          localSlug = candidate;
-          localJsonUrl = tryManifestResult?.url || null;
-          type = "Manifest";
-          break;
+        const runtime = runtimeByCandidate.get(candidate);
+        if (runtime?.source?.type === "remote" && runtime.saveToDisk === false) {
+          continue;
         }
-      }
-    }
-
-    if (!resource && !type) {
-      for (const candidate of localCandidates) {
-        const tryCollectionResult = await tryGetJsonWithBaseFallback(`${candidate}/collection.json`);
-        resource = asObject(tryCollectionResult?.json);
-        if (resource) {
-          localSlug = candidate;
-          localJsonUrl = tryCollectionResult?.url || null;
-          type = "Collection";
-          break;
+        const localResult = await tryGetJsonWithBaseFallback(`${candidate}/${kind}.json`);
+        const localResource = asObject(localResult?.json);
+        if (!localResource) {
+          continue;
         }
+        resource = localResource;
+        localJsonUrl = localResult?.url || null;
+        resolvedSlug = candidate;
+        type = kind === "manifest" ? "Manifest" : "Collection";
+        break;
       }
     }
 
@@ -349,8 +364,8 @@ export function createIiifAstroClient(options: AstroIiifClientOptions = {}) {
       }
     }
 
-    const resolvedSlug = localJsonUrl ? localSlug : slug;
-    const meta = resolvedSlug ? asObject((await tryGetJsonWithBaseFallback(`${resolvedSlug}/meta.json`))?.json) : null;
+    const cachedResolvedMeta = resolvedSlug ? await getMetaForCandidate(resolvedSlug) : null;
+    const meta = cachedResolvedMeta?.meta || null;
     const indices = resolvedSlug
       ? asObject((await tryGetJsonWithBaseFallback(`${resolvedSlug}/indices.json`))?.json)
       : null;

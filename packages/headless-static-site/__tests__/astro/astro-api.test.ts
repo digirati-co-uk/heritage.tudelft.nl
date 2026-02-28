@@ -60,15 +60,13 @@ describe("astro server/client API", () => {
     await mkdir(join(buildDir, "meta"), { recursive: true });
     await mkdir(join(buildDir, "content", "remote-item"), { recursive: true });
 
-    await writeJson(join(buildDir, "meta", "sitemap.json"), {
-      "content/remote-item": {
-        type: "Manifest",
-        source: { type: "remote", url: "https://example.org/iiif/remote-item/manifest.json" },
-      },
-    });
     await writeJson(join(buildDir, "content", "remote-item", "meta.json"), {
       label: "Remote Item",
       totalItems: 5,
+      "hss:runtime": {
+        type: "Manifest",
+        source: { type: "remote", url: "https://example.org/iiif/remote-item/manifest.json" },
+      },
     });
 
     const fetchFn = vi.fn(async () => {
@@ -217,17 +215,6 @@ describe("astro server/client API", () => {
   test("client API resolves local manifest and params-based loading", async () => {
     const fetchFn = vi.fn(async (target: string) => {
       const url = String(target);
-      if (url.endsWith("/meta/sitemap.json")) {
-        return new Response(
-          JSON.stringify({
-            "content/local": {
-              type: "Manifest",
-              source: { type: "disk", path: "./content" },
-            },
-          }),
-          { status: 200 }
-        );
-      }
       if (url.endsWith("/content/local/manifest.json")) {
         return new Response(
           JSON.stringify({
@@ -239,7 +226,17 @@ describe("astro server/client API", () => {
         );
       }
       if (url.endsWith("/content/local/meta.json")) {
-        return new Response(JSON.stringify({ label: "Local Item", totalItems: 2 }), { status: 200 });
+        return new Response(
+          JSON.stringify({
+            label: "Local Item",
+            totalItems: 2,
+            "hss:runtime": {
+              type: "Manifest",
+              source: { type: "disk", path: "./content", filePath: "content/local.json" },
+            },
+          }),
+          { status: 200 }
+        );
       }
       if (url.endsWith("/content/local/indices.json")) {
         return new Response(JSON.stringify({}), { status: 200 });
@@ -259,26 +256,26 @@ describe("astro server/client API", () => {
   test("client API auto-resolves /iiif base path when baseUrl is omitted", async () => {
     const fetchFn = vi.fn(async (target: string) => {
       const url = String(target);
-      if (url.endsWith("/iiif/meta/sitemap.json")) {
-        return new Response(
-          JSON.stringify({
-            "api/cookbook/recipe/0001-mvm-image": {
-              type: "Manifest",
-              source: {
-                type: "remote",
-                url: "https://theseusviewer.org/api/cookbook/recipe/0001-mvm-image/manifest.json",
-              },
-            },
-          }),
-          { status: 200 }
-        );
-      }
       if (url === "https://theseusviewer.org/api/cookbook/recipe/0001-mvm-image/manifest.json") {
         return new Response(
           JSON.stringify({
             id: "https://theseusviewer.org/api/cookbook/recipe/0001-mvm-image/manifest.json",
             type: "Manifest",
             label: { en: ["Cookbook"] },
+          }),
+          { status: 200 }
+        );
+      }
+      if (url.endsWith("/iiif/api/cookbook/recipe/0001-mvm-image/meta.json")) {
+        return new Response(
+          JSON.stringify({
+            "hss:runtime": {
+              type: "Manifest",
+              source: {
+                type: "remote",
+                url: "https://theseusviewer.org/api/cookbook/recipe/0001-mvm-image/manifest.json",
+              },
+            },
           }),
           { status: 200 }
         );
@@ -293,7 +290,7 @@ describe("astro server/client API", () => {
     expect(loaded.resource?.label?.en?.[0]).toBe("Cookbook");
     expect(loaded.links.localJson).toBe(null);
     expect(loaded.links.remoteJson).toBe("https://theseusviewer.org/api/cookbook/recipe/0001-mvm-image/manifest.json");
-    expect(fetchFn.mock.calls.some(([target]) => String(target).includes("/iiif/meta/sitemap.json"))).toBe(true);
+    expect(fetchFn.mock.calls.some(([target]) => String(target).includes("/iiif/meta/sitemap.json"))).toBe(false);
     expect(
       fetchFn.mock.calls.some(([target]) =>
         String(target).includes("/iiif/api/cookbook/recipe/0001-mvm-image/manifest.json")
@@ -301,23 +298,9 @@ describe("astro server/client API", () => {
     ).toBe(false);
   });
 
-  test("client API loads local meta/indices for remote sitemap resources", async () => {
+  test("client API loads local meta/indices for remote runtime hints", async () => {
     const fetchFn = vi.fn(async (target: string) => {
       const url = String(target);
-      if (url.endsWith("/iiif/meta/sitemap.json")) {
-        return new Response(
-          JSON.stringify({
-            "api/cookbook/recipe/0001-mvm-image": {
-              type: "Manifest",
-              source: {
-                type: "remote",
-                url: "https://theseusviewer.org/api/cookbook/recipe/0001-mvm-image/manifest.json",
-              },
-            },
-          }),
-          { status: 200 }
-        );
-      }
       if (url === "https://theseusviewer.org/api/cookbook/recipe/0001-mvm-image/manifest.json") {
         return new Response(
           JSON.stringify({
@@ -329,7 +312,19 @@ describe("astro server/client API", () => {
         );
       }
       if (url.endsWith("/iiif/api/cookbook/recipe/0001-mvm-image/meta.json")) {
-        return new Response(JSON.stringify({ totalItems: 4 }), { status: 200 });
+        return new Response(
+          JSON.stringify({
+            totalItems: 4,
+            "hss:runtime": {
+              type: "Manifest",
+              source: {
+                type: "remote",
+                url: "https://theseusviewer.org/api/cookbook/recipe/0001-mvm-image/manifest.json",
+              },
+            },
+          }),
+          { status: 200 }
+        );
       }
       if (url.endsWith("/iiif/api/cookbook/recipe/0001-mvm-image/indices.json")) {
         return new Response(JSON.stringify({ pages: 1 }), { status: 200 });
@@ -411,7 +406,7 @@ describe("astro server/client API", () => {
     expect(staticPaths).toEqual([{ params: { slug: "item-a" } }, { params: { slug: "item-b" } }]);
   });
 
-  test("client API resolves manifest from stripped route params when sitemap slug is prefixed", async () => {
+  test("client API resolves manifest from stripped route params when runtime hints are prefixed", async () => {
     const fetchFn = vi.fn(async (target: string) => {
       const url = String(target);
       if (url.endsWith("/iiif/meta/sitemap.json")) {
@@ -436,7 +431,16 @@ describe("astro server/client API", () => {
         );
       }
       if (url.endsWith("/iiif/manifests/item-a/meta.json")) {
-        return new Response(JSON.stringify({ totalItems: 3 }), { status: 200 });
+        return new Response(
+          JSON.stringify({
+            totalItems: 3,
+            "hss:runtime": {
+              type: "Manifest",
+              source: { type: "disk", path: "./content", filePath: "content/item-a.json" },
+            },
+          }),
+          { status: 200 }
+        );
       }
       if (url.endsWith("/iiif/manifests/item-a/indices.json")) {
         return new Response(JSON.stringify({}), { status: 200 });
@@ -478,7 +482,16 @@ describe("astro server/client API", () => {
         );
       }
       if (url.endsWith("/iiif/manifests/item-a/meta.json")) {
-        return new Response(JSON.stringify({ totalItems: 3 }), { status: 200 });
+        return new Response(
+          JSON.stringify({
+            totalItems: 3,
+            "hss:runtime": {
+              type: "Manifest",
+              source: { type: "disk", path: "./content", filePath: "content/item-a.json" },
+            },
+          }),
+          { status: 200 }
+        );
       }
       if (url.endsWith("/iiif/manifests/item-a/indices.json")) {
         return new Response(JSON.stringify({}), { status: 200 });
