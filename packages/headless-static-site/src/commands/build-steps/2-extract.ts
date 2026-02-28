@@ -1,5 +1,6 @@
 import { join } from "node:path";
 import PQueue from "p-queue";
+import type { BuildProgressCallbacks } from "../../util/build-progress.ts";
 import { createCacheResource } from "../../util/cached-resource.ts";
 import { createResourceHandler } from "../../util/create-resource-handler.ts";
 import { makeProgressBar } from "../../util/make-progress-bar.ts";
@@ -13,7 +14,8 @@ export async function extract(
   }: {
     allResources: Array<ActiveResourceJson>;
   },
-  buildConfig: BuildConfig
+  buildConfig: BuildConfig,
+  progressEvents?: BuildProgressCallbacks
 ) {
   const {
     options,
@@ -35,7 +37,20 @@ export async function extract(
   }
 
   const startTime = performance.now();
-  const requestCache = createStoreRequestCache("_extract", requestCacheDir, !options.cache);
+  const useNetworkCache = options.networkCache ?? true;
+  const requestCache = createStoreRequestCache(
+    "_extract",
+    requestCacheDir,
+    !useNetworkCache,
+    undefined,
+    buildConfig.network,
+    (event) => {
+      progressEvents?.onFetch?.({
+        ...event,
+        phase: "extract-resources",
+      });
+    }
+  );
   const extractionConfigs: Record<string, any> = {};
   const stats: Record<string, number> = {};
   for (const extraction of allExtractions) {

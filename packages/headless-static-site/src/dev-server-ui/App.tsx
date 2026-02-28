@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { BuildStatusLine } from "./components/BuildStatusLine";
 import { HomePage } from "./components/HomePage";
 import { Navigation } from "./components/Navigation";
 import { ResourcePage } from "./components/ResourcePage";
@@ -42,6 +43,7 @@ function App() {
   return (
     <div className="max-w-[1200px] mx-auto p-6">
       <Navigation debugBase={debugBase} />
+      <BuildStatusLine debugBase={debugBase} />
       {isHome ? <HomePage debugBase={debugBase} /> : null}
       {isTrace ? (
         trace ? (

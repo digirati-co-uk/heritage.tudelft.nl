@@ -1,6 +1,8 @@
 import { join } from "node:path";
 import type { IFS } from "unionfs";
+import type { BuildProgressCallbacks } from "../../util/build-progress.ts";
 import { makeGetSlugHelper } from "../../util/make-slug-helper.ts";
+import { resolveNetworkConfig } from "../../util/network.ts";
 import { createStoreRequestCache } from "../../util/store-request-cache.ts";
 import type { ParsedResource, Store } from "../../util/store.ts";
 import type { BuildConfig } from "../build.ts";
@@ -14,7 +16,25 @@ const EMPTY_CACHE: ParseStoresState = {
   storeRequestCaches: {},
 };
 
-export async function parseStores(buildConfig: BuildConfig, cache: ParseStoresState = EMPTY_CACHE, customFs?: IFS) {
+function getRemoteStoreRootUrls(storeConfig: any): string[] {
+  if (!storeConfig || storeConfig.type !== "iiif-remote") {
+    return [];
+  }
+  if (Array.isArray(storeConfig.urls) && storeConfig.urls.length) {
+    return storeConfig.urls.filter(Boolean);
+  }
+  if (typeof storeConfig.url === "string" && storeConfig.url) {
+    return [storeConfig.url];
+  }
+  return [];
+}
+
+export async function parseStores(
+  buildConfig: BuildConfig,
+  cache: ParseStoresState = EMPTY_CACHE,
+  customFs?: IFS,
+  progress?: BuildProgressCallbacks
+) {
   const {
     //
     config,
@@ -33,6 +53,14 @@ export async function parseStores(buildConfig: BuildConfig, cache: ParseStoresSt
   const filesToWatch: string[] = [];
   const effectiveStoreConfigs: Record<string, any> = { ...config.stores };
   const effectiveStores = Array.from(new Set(stores));
+  let estimatedResources = 0;
+
+  const publishEstimatedResources = () => {
+    const parsedResources = Object.values(storeResources).reduce((total, all) => total + all.length, 0);
+    progress?.onResourcesDiscovered?.({
+      total: Math.max(parsedResources, estimatedResources),
+    });
+  };
 
   // If there are generated stores, add them to local derived config/stores.
   // Do not mutate buildConfig.config/buildConfig.stores to avoid repeated-build side effects.
@@ -56,17 +84,30 @@ export async function parseStores(buildConfig: BuildConfig, cache: ParseStoresSt
   }
 
   for (const storeId of effectiveStores) {
-    const requestCache =
-      options.cache && cache.storeRequestCaches[storeId]
-        ? cache.storeRequestCaches[storeId]
-        : createStoreRequestCache(storeId, requestCacheDir, !options.cache, customFs);
-    storeRequestCaches[storeId] = requestCache;
-    storeResources[storeId] = [];
-
     const storeConfig = effectiveStoreConfigs[storeId];
     if (!storeConfig) {
       throw new Error(`Missing store config for "${storeId}"`);
     }
+    const network = resolveNetworkConfig(buildConfig.network, storeConfig.network);
+    const useNetworkCache = options.networkCache ?? true;
+    const requestCache =
+      useNetworkCache && cache.storeRequestCaches[storeId]
+        ? cache.storeRequestCaches[storeId]
+        : createStoreRequestCache(storeId, requestCacheDir, !useNetworkCache, customFs, network, (event) => {
+            progress?.onFetch?.({
+              ...event,
+              phase: "parse-stores",
+            });
+          });
+    storeRequestCaches[storeId] = requestCache;
+    storeResources[storeId] = [];
+
+    const rootUrls = getRemoteStoreRootUrls(storeConfig);
+    if (rootUrls.length) {
+      estimatedResources += rootUrls.length;
+      publishEstimatedResources();
+    }
+
     const storeType: Store<any> = (storeTypes as any)[storeConfig.type];
     if (!storeType) {
       throw new Error(`Unknown store type: ${storeConfig.type}`);
@@ -81,6 +122,14 @@ export async function parseStores(buildConfig: BuildConfig, cache: ParseStoresSt
       getSlug,
       build: buildConfig,
       files: files,
+      progress,
+      reportEstimatedResources: (delta: number) => {
+        if (delta <= 0) {
+          return;
+        }
+        estimatedResources += delta;
+        publishEstimatedResources();
+      },
     });
 
     // Loop through the resources.
@@ -112,6 +161,11 @@ export async function parseStores(buildConfig: BuildConfig, cache: ParseStoresSt
       }
       storeResources[storeId].push(resource);
     }
+    const totalDiscovered = Object.values(storeResources).reduce((total, all) => total + all.length, 0);
+    progress?.onResourcesDiscovered?.({
+      total: totalDiscovered,
+      storeId,
+    });
   }
 
   return {

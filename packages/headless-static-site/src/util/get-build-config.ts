@@ -22,6 +22,8 @@ import {
 import { getNodeGlobals } from "./get-node-globals";
 import type { Linker } from "./linker";
 import { loadScripts } from "./load-scripts";
+import { resolveNetworkConfig } from "./network";
+import { resolveHostUrl } from "./resolve-host-url";
 import type { Rewrite } from "./rewrite";
 import { compileSlugConfig } from "./slug-engine";
 import type { Store } from "./store";
@@ -32,6 +34,7 @@ export type BuildOptions = {
   cwd?: string;
   config?: string;
   cache?: boolean;
+  networkCache?: boolean;
   exact?: string;
   watch?: boolean;
   debug?: boolean;
@@ -51,6 +54,7 @@ export type BuildOptions = {
   out?: string;
   ui?: boolean;
   remoteRecords?: boolean;
+  prefetch?: boolean;
   concurrency?: BuildConcurrencyConfig;
 
   // Programmatic only
@@ -136,6 +140,8 @@ export async function getBuildConfig(options: BuildOptions, builtIns: BuildBuilt
     emitCanvas: normalizeConcurrency(concurrencyConfig.emitCanvas, ioConcurrency),
     write: normalizeConcurrency(concurrencyConfig.write, ioConcurrency),
   };
+  const useNetworkCache = options.networkCache ?? true;
+  const network = resolveNetworkConfig(config.network, { prefetch: options.prefetch });
 
   const files = builtIns.fileHandler || new FileHandler(fs, cwd);
 
@@ -197,11 +203,17 @@ export async function getBuildConfig(options: BuildOptions, builtIns: BuildBuilt
   log("Available rewrites:", allRewrites.map((e) => e.id).join(", "));
 
   // We manually skip some.
-  const toRun = config.run || builtIns.defaultRun;
-  const rewrites = allRewrites.filter((e) => toRun.includes(e.id));
-  const extractions = allExtractions.filter((e) => toRun.includes(e.id));
-  const enrichments = allEnrichments.filter((e) => toRun.includes(e.id));
-  const linkers = allLinkers.filter((e) => toRun.includes(e.id));
+  const configuredRun = config.run || builtIns.defaultRun;
+  const toRun = new Set(configuredRun);
+  for (const extraction of allExtractions) {
+    if (extraction.alwaysRun) {
+      toRun.add(extraction.id);
+    }
+  }
+  const rewrites = allRewrites.filter((e) => toRun.has(e.id));
+  const extractions = allExtractions.filter((e) => toRun.has(e.id));
+  const enrichments = allEnrichments.filter((e) => toRun.has(e.id));
+  const linkers = allLinkers.filter((e) => toRun.has(e.id));
 
   const manifestRewrites = rewrites.filter((e) => e.types.includes("Manifest"));
   const collectionRewrites = rewrites.filter((e) => e.types.includes("Collection"));
@@ -213,11 +225,12 @@ export async function getBuildConfig(options: BuildOptions, builtIns: BuildBuilt
   const collectionEnrichment = enrichments.filter((e) => e.types.includes("Collection"));
   const canvasEnrichment = enrichments.filter((e) => e.types.includes("Canvas"));
 
-  const requestCacheDir = join(cacheDir, "_requests");
+  // Keep network request cache shared between dev and production builds.
+  const requestCacheDir = join(defaultCacheDir, "_requests");
   const virtualCacheDir = join(cacheDir, "_virtual");
 
   const server = options.dev
-    ? { url: config.server?.url || env.DEV_SERVER || "http://localhost:7111" }
+    ? { url: resolveHostUrl(config.server?.url || env.DEV_SERVER || "http://localhost:7111") }
     : config.server || env.SERVER_URL;
 
   const time = async <T>(label: string, promise: Promise<T>): Promise<T> => {
@@ -232,7 +245,7 @@ export async function getBuildConfig(options: BuildOptions, builtIns: BuildBuilt
     return resp;
   };
 
-  const requestCache = createStoreRequestCache("_thumbs", requestCacheDir, !options.cache);
+  const requestCache = createStoreRequestCache("_thumbs", requestCacheDir, !useNetworkCache, undefined, network);
   const imageServiceLoader = new (class extends ImageServiceLoader {
     fetchService(serviceId: string): Promise<any & { real: boolean }> {
       return requestCache.fetch(serviceId);
@@ -240,7 +253,8 @@ export async function getBuildConfig(options: BuildOptions, builtIns: BuildBuilt
   })();
 
   const topicsDir = join(cwd, topicFolder);
-  const configUrl = typeof server === "string" ? server : server?.url;
+  const configUrl =
+    typeof server === "string" ? resolveHostUrl(server) : server?.url ? resolveHostUrl(server.url) : server?.url;
   const makeId = ({ type, slug }: { type: string; slug: string }) => {
     return `${configUrl}/${slug}/${type.toLowerCase()}.json`;
   };
@@ -281,7 +295,7 @@ export async function getBuildConfig(options: BuildOptions, builtIns: BuildBuilt
     indexNames,
     defaultIndex: config.search?.defaultIndex || defaultIndex,
     indexes: searchIndexes,
-    emitRecord: config.search?.emitRecord || false,
+    emitRecord: config.search?.emitRecord ?? true,
   };
 
   const trace = builtIns.tracer || (options.dev ? new Tracer() : null);
@@ -290,6 +304,7 @@ export async function getBuildConfig(options: BuildOptions, builtIns: BuildBuilt
     trace,
     files,
     options,
+    network,
     server,
     configUrl,
     search,

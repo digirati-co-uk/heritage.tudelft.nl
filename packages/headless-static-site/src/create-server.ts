@@ -12,10 +12,13 @@ import { timeout } from "hono/timeout";
 import mitt from "mitt";
 import { z } from "zod";
 import { type BuildOptions, build, defaultBuiltIns } from "./commands/build";
+import { createBuildStatusTracker } from "./server/build-status.ts";
 import { findDebugUiDir, registerDebugUiRoutes } from "./server/debug-ui-routes.ts";
+import type { BuildStatus } from "./util/build-progress.ts";
 import { FileHandler } from "./util/file-handler";
 import type { IIIFRC, ResolvedConfigSource } from "./util/get-config";
 import { resolveEditablePathForSlug } from "./util/resolve-editable-path";
+import { resolveHostUrl } from "./util/resolve-host-url";
 import { Tracer } from "./util/tracer";
 
 const require = createRequire(import.meta.url);
@@ -49,6 +52,7 @@ function redirectToDebugPath(basePathHeader?: string) {
 export async function createServer(config: IIIFRC, serverOptions: IIIFServerOptions = {}) {
   const app = new Hono();
   const meUrl = serverOptions.customManifestEditor || "https://manifest-editor.digirati.services";
+  const baseServerUrl = resolveHostUrl(config.server?.url || "http://localhost:7111").replace(/\/+$/, "");
   const configSource = serverOptions.configSource;
 
   app.use(async (c, next) => {
@@ -77,6 +81,7 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
     "file-change": { path: string };
     "file-refresh": { path: string };
     "full-rebuild": unknown;
+    "build-progress": BuildStatus;
   }>();
 
   // New Hono server.
@@ -92,13 +97,9 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
   const fileHandler = new FileHandler(fs, cwd());
   const tracer = new Tracer();
   const storeRequestCaches = {};
-  const buildStatus = {
-    status: "idle" as "idle" | "building" | "ready" | "error",
-    startedAt: null as string | null,
-    completedAt: null as string | null,
-    lastError: null as string | null,
-    buildCount: 0,
-  };
+  const buildStatusTracker = createBuildStatusTracker((status) => {
+    emitter.emit("build-progress", status);
+  });
 
   const state = {
     shouldRebuild: false,
@@ -114,10 +115,7 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
   };
 
   const cachedBuild = async (options: BuildOptions) => {
-    buildStatus.status = "building";
-    buildStatus.startedAt = new Date().toISOString();
-    buildStatus.lastError = null;
-    buildStatus.buildCount += 1;
+    buildStatusTracker.startBuild();
 
     try {
       const result = await build(options, defaultBuiltIns, {
@@ -127,16 +125,14 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
         tracer,
         customConfig: config,
         customConfigSource: configSource,
+        progress: buildStatusTracker.callbacks,
       });
       activePaths.buildDir = result.buildConfig.buildDir;
       activePaths.cacheDir = result.buildConfig.cacheDir;
-      buildStatus.status = "ready";
-      buildStatus.completedAt = new Date().toISOString();
+      buildStatusTracker.completeBuild();
       return result;
     } catch (error) {
-      buildStatus.status = "error";
-      buildStatus.completedAt = new Date().toISOString();
-      buildStatus.lastError = (error as Error)?.message || String(error);
+      buildStatusTracker.failBuild(error);
       throw error;
     }
   };
@@ -166,7 +162,11 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
     getTraceJson: () => tracer.toJSON(),
     getDebugUiDir: () => findDebugUiDir(cwd(), require.resolve.bind(require)),
     manifestEditorUrl: meUrl,
-    getBuildStatus: () => ({ ...buildStatus }),
+    getBuildStatus: () => buildStatusTracker.getBuildStatus(),
+    subscribeBuildProgress: (listener) => {
+      emitter.on("build-progress", listener);
+      return () => emitter.off("build-progress", listener);
+    },
     onboarding: serverOptions.onboarding,
   });
 
@@ -307,6 +307,7 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
       "query",
       z.object({
         cache: z.string().optional(),
+        networkCache: z.string().optional(),
         generate: z.string().optional(),
         exact: z.string().optional(),
         save: z.string().optional(),
@@ -319,6 +320,7 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
     async (ctx) => {
       const { buildConfig, emitted, enrichments, extractions, parsed, stores } = await cachedBuild({
         cache: ctx.req.query("cache") !== "false",
+        networkCache: ctx.req.query("networkCache") !== "false",
         generate: ctx.req.query("generate") !== "false",
         exact: ctx.req.query("exact"),
         emit: ctx.req.query("emit") !== "false",
@@ -355,6 +357,7 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
       "json",
       z.object({
         cache: z.string().optional(),
+        networkCache: z.string().optional(),
         generate: z.string().optional(),
         exact: z.string().optional(),
         save: z.string().optional(),
@@ -463,7 +466,7 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
       });
 
       const manifestId = `${exactPath}/manifest.json`;
-      const manifestUrl = new URL(manifestId, config.server?.url || "http://localhost:7111/").toString();
+      const manifestUrl = `${baseServerUrl}/${manifestId.replace(/^\/+/, "")}`;
 
       if (isJson) {
         return ctx.json({ manifestUrl, editUrl: `${meUrl}/editor/external?manifest=${manifestUrl}` });
@@ -489,7 +492,7 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
 
     const isManifest = ctx.req.path.endsWith("manifest.json");
     if (isManifest) {
-      const manifestUrl = `${config.server?.url || "http://localhost:7111/"}${ctx.req.path}`;
+      const manifestUrl = `${baseServerUrl}${ctx.req.path}`;
       headers["X-IIIF-Post-Url"] = manifestUrl;
     }
 
@@ -502,7 +505,7 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
       }
 
       const manifestId = ctx.req.path.replace("/edit", "/manifest.json");
-      const manifestUrl = `${config.server?.url || "http://localhost:7111/"}${manifestId}`;
+      const manifestUrl = `${baseServerUrl}${manifestId}`;
 
       return ctx.redirect(`${meUrl}/editor/external?manifest=${manifestUrl}`);
     }
@@ -557,7 +560,7 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
       emitter,
       app,
       cachedBuild,
-      getBuildStatus: () => ({ ...buildStatus }),
+      getBuildStatus: () => buildStatusTracker.getBuildStatus(),
     },
   };
 }

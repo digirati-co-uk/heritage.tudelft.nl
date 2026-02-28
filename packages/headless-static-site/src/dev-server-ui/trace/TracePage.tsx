@@ -49,10 +49,16 @@ type ResourceDebugResponse = {
   resource: any;
   meta: Record<string, any> | null;
   indices: Record<string, any> | null;
+  searchRecord: Record<string, any> | null;
   links?: {
     json?: string | null;
     manifestEditor?: string | null;
     theseus?: string | null;
+    files?: {
+      meta?: string | null;
+      indices?: string | null;
+      searchRecord?: string | null;
+    };
   };
 };
 
@@ -373,6 +379,17 @@ function ManifestDebug({
         <details className="rounded-md border border-gray-200 bg-gray-50 p-2">
           <summary className="cursor-pointer font-medium text-gray-800">
             meta.json
+            {data.links?.files?.meta ? (
+              <a
+                className="ml-2 text-xs font-normal text-blue-700 underline"
+                href={data.links.files.meta}
+                target="_blank"
+                rel="noreferrer"
+                onClick={(event) => event.stopPropagation()}
+              >
+                Open file
+              </a>
+            ) : null}
           </summary>
           <pre className="mt-2 max-h-64 overflow-auto text-xs text-gray-700">
             {JSON.stringify(data.meta || {}, null, 2)}
@@ -381,9 +398,39 @@ function ManifestDebug({
         <details className="rounded-md border border-gray-200 bg-gray-50 p-2">
           <summary className="cursor-pointer font-medium text-gray-800">
             indices.json
+            {data.links?.files?.indices ? (
+              <a
+                className="ml-2 text-xs font-normal text-blue-700 underline"
+                href={data.links.files.indices}
+                target="_blank"
+                rel="noreferrer"
+                onClick={(event) => event.stopPropagation()}
+              >
+                Open file
+              </a>
+            ) : null}
           </summary>
           <pre className="mt-2 max-h-64 overflow-auto text-xs text-gray-700">
             {JSON.stringify(data.indices || {}, null, 2)}
+          </pre>
+        </details>
+        <details className="rounded-md border border-gray-200 bg-gray-50 p-2">
+          <summary className="cursor-pointer font-medium text-gray-800">
+            search-record.json
+            {data.links?.files?.searchRecord ? (
+              <a
+                className="ml-2 text-xs font-normal text-blue-700 underline"
+                href={data.links.files.searchRecord}
+                target="_blank"
+                rel="noreferrer"
+                onClick={(event) => event.stopPropagation()}
+              >
+                Open file
+              </a>
+            ) : null}
+          </summary>
+          <pre className="mt-2 max-h-64 overflow-auto text-xs text-gray-700">
+            {JSON.stringify(data.searchRecord || {}, null, 2)}
           </pre>
         </details>
       </div>

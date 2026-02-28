@@ -3,7 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { iiif } from "../lib/iiif-server";
 
 const top = await iiif.loadTopCollection();
-const manifests = await iiif.loadManifestsCollection();
+const manifests = await iiif.getAllManifests();
 const manifestPaths = await iiif.getManifestStaticPaths();
 ---
 

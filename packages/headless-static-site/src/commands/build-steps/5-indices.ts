@@ -228,12 +228,16 @@ export async function indices(
       }
 
       await files.mkdir(join(buildDir, "topics", topicTypeKey));
-      await writeJson(join(buildDir, "topics", "collection.json"), baseTopicTypeCollection);
       (topicTypeCollection as any)["hss:totalItems"] = topicTypeCollection.items.length;
       (topicTypeCollectionSnippet as any)["hss:totalItems"] = topicTypeCollection.items.length;
       await writeJson(join(buildDir, "topics", topicTypeKey, "collection.json"), topicTypeCollection);
       await writeJson(join(buildDir, "topics", topicTypeKey, "meta.json"), topicTypeMeta);
     }
+
+    await files.mkdir(join(buildDir, "topics"));
+    (baseTopicTypeCollection as any)["hss:totalItems"] = baseTopicTypeCollection.items.length;
+    (baseTopicTypeCollectionSnippet as any)["hss:totalItems"] = baseTopicTypeCollection.items.length;
+    await writeJson(join(buildDir, "topics", "collection.json"), baseTopicTypeCollection);
   }
 
   await files.mkdir(join(buildDir, "meta"));
@@ -278,6 +282,7 @@ export async function indices(
 
   if (storeCollections) {
     await files.mkdir(join(buildDir, "stores"));
+    const storeCollectionSnippets: Collection[] = [];
     const storeCollectionsJson = Object.entries(storeCollections).map(async ([storeId, items]) => {
       const storeCollectionSnippet = createCollection({
         configUrl,
@@ -285,6 +290,7 @@ export async function indices(
         label: storeId,
       }) as Collection;
 
+      storeCollectionSnippets.push(storeCollectionSnippet);
       topLevelCollection.push(storeCollectionSnippet);
 
       await files.mkdir(join(buildDir, "stores", storeId));
@@ -301,9 +307,21 @@ export async function indices(
       slug: "collections",
       configUrl,
     }) as Collection;
+
+    const storeCollectionsCollectionJson = createCollection({
+      label: "Stores",
+      ...(config.collections?.collections?.stores || {}),
+      slug: "collections/stores",
+      configUrl,
+    }) as Collection;
+    storeCollectionsCollectionJson.items = storeCollectionSnippets;
+    topLevelCollection.push(storeCollectionsCollectionJson);
+
     topLevelCollectionJson.items = topLevelCollection;
     await files.mkdir(join(buildDir, "collections"));
     await writeJson(join(buildDir, "collections/collection.json"), topLevelCollectionJson);
+    await files.mkdir(join(buildDir, "collections", "stores"));
+    await writeJson(join(buildDir, "collections", "stores", "collection.json"), storeCollectionsCollectionJson);
 
     await Promise.all(storeCollectionsJson);
   }

@@ -4,6 +4,7 @@ import { dirname, extname, join, resolve } from "node:path";
 import { cwd } from "node:process";
 import { upgrade } from "@iiif/parser/upgrader";
 import type { Hono } from "hono";
+import { type BuildStatus, createEmptyBuildProgress } from "../util/build-progress.ts";
 import type { FileHandler } from "../util/file-handler.ts";
 import type { IIIFRC } from "../util/get-config.ts";
 import { resolveFromSlug } from "../util/resolve-from-slug.ts";
@@ -175,6 +176,7 @@ export function findDebugUiDir(currentWorkingDirectory: string, resolveModule?: 
       "iiif-hss/package.json",
       "iiif-hss/astro",
       "iiif-hss/vite-plugin",
+      "iiif-hss/vite/client",
       "iiif-hss/library",
       "iiif-hss",
     ];
@@ -205,13 +207,8 @@ interface RegisterDebugUiRoutesOptions {
   getTraceJson?: () => unknown;
   getDebugUiDir: () => string | null;
   manifestEditorUrl?: string;
-  getBuildStatus?: () => {
-    status: "idle" | "building" | "ready" | "error";
-    startedAt: string | null;
-    completedAt: string | null;
-    lastError: string | null;
-    buildCount: number;
-  };
+  getBuildStatus?: () => BuildStatus;
+  subscribeBuildProgress?: (listener: (status: BuildStatus) => void) => (() => void) | void;
   onboarding?: {
     enabled?: boolean;
     configMode?: string;
@@ -230,6 +227,17 @@ interface RegisterDebugUiRoutesOptions {
   };
 }
 
+function defaultBuildStatus(): BuildStatus {
+  return {
+    status: "idle",
+    startedAt: null,
+    completedAt: null,
+    lastError: null,
+    buildCount: 0,
+    progress: createEmptyBuildProgress(),
+  };
+}
+
 export function registerDebugUiRoutes({
   app,
   fileHandler,
@@ -239,24 +247,61 @@ export function registerDebugUiRoutes({
   getDebugUiDir,
   manifestEditorUrl = "https://manifest-editor.digirati.services",
   getBuildStatus,
+  subscribeBuildProgress,
   onboarding,
 }: RegisterDebugUiRoutesOptions) {
   app.get("/_debug/api/status", async (ctx) => {
     return ctx.json({
-      build: getBuildStatus
-        ? getBuildStatus()
-        : {
-            status: "idle",
-            startedAt: null,
-            completedAt: null,
-            lastError: null,
-            buildCount: 0,
-          },
+      build: getBuildStatus ? getBuildStatus() : defaultBuildStatus(),
       onboarding: onboarding || {
         enabled: false,
         configMode: "unknown",
         contentFolder: null,
         shorthand: null,
+      },
+    });
+  });
+
+  app.get("/_debug/api/build-events", async (ctx) => {
+    if (!subscribeBuildProgress) {
+      return ctx.json({
+        error: "Build progress stream is not available",
+      });
+    }
+
+    const encoder = new TextEncoder();
+    const stream = new ReadableStream({
+      start(controller) {
+        const pushStatus = (status: BuildStatus) => {
+          controller.enqueue(encoder.encode(`event: build\ndata: ${JSON.stringify(status)}\n\n`));
+        };
+
+        pushStatus(getBuildStatus ? getBuildStatus() : defaultBuildStatus());
+
+        const unsubscribe = subscribeBuildProgress(pushStatus);
+        const keepAlive = setInterval(() => {
+          controller.enqueue(encoder.encode(": keepalive\n\n"));
+        }, 15_000);
+
+        const cleanup = () => {
+          clearInterval(keepAlive);
+          if (typeof unsubscribe === "function") {
+            unsubscribe();
+          }
+        };
+
+        ctx.req.raw.signal.addEventListener("abort", () => {
+          cleanup();
+          controller.close();
+        });
+      },
+    });
+
+    return new Response(stream, {
+      headers: {
+        "Content-Type": "text/event-stream; charset=utf-8",
+        "Cache-Control": "no-cache, no-transform",
+        Connection: "keep-alive",
       },
     });
   });
@@ -291,15 +336,7 @@ export function registerDebugUiRoutes({
     return ctx.json({
       buildDir,
       baseUrl,
-      build: getBuildStatus
-        ? getBuildStatus()
-        : {
-            status: "idle",
-            startedAt: null,
-            completedAt: null,
-            lastError: null,
-            buildCount: 0,
-          },
+      build: getBuildStatus ? getBuildStatus() : defaultBuildStatus(),
       onboarding: onboarding || {
         enabled: false,
         configMode: "unknown",
@@ -401,8 +438,24 @@ export function registerDebugUiRoutes({
             : null;
     const primaryJsonUrl = localJsonUrl || remoteJsonUrl;
 
-    const meta = await fileHandler.loadJson(join(cwd(), cacheDir, slug, "meta.json"), true);
-    const indices = await fileHandler.loadJson(join(cwd(), cacheDir, slug, "indices.json"), true);
+    const cacheMetaPath = join(cwd(), cacheDir, slug, "meta.json");
+    const cacheIndicesPath = join(cwd(), cacheDir, slug, "indices.json");
+    const cacheSearchRecordPath = join(cwd(), cacheDir, slug, "search-record.json");
+    const buildIndicesPath = join(cwd(), buildDir, slug, "indices.json");
+    const buildSearchRecordPath = join(cwd(), buildDir, slug, "search-record.json");
+
+    const meta = await fileHandler.loadJson(cacheMetaPath, true);
+    const indices = await fileHandler.loadJson(cacheIndicesPath, true);
+    const searchRecord = await fileHandler.loadJson(cacheSearchRecordPath, true);
+
+    const fileLinks = {
+      resource: primaryJsonUrl,
+      meta: fileHandler.exists(cacheMetaPath) ? toAbsoluteUrl(baseUrl, `/${slug}/meta.json`) : null,
+      indices: fileHandler.exists(buildIndicesPath) ? toAbsoluteUrl(baseUrl, `/${slug}/indices.json`) : null,
+      searchRecord: fileHandler.exists(buildSearchRecordPath)
+        ? toAbsoluteUrl(baseUrl, `/${slug}/search-record.json`)
+        : null,
+    };
 
     const manifestEditorLink =
       type === "Manifest" && primaryJsonUrl
@@ -422,6 +475,7 @@ export function registerDebugUiRoutes({
       resource,
       meta,
       indices,
+      searchRecord,
       reverse: {
         manifest: reverseManifest,
         collection: reverseCollection,
@@ -432,6 +486,7 @@ export function registerDebugUiRoutes({
         remoteJson: remoteJsonUrl,
         manifestEditor: manifestEditorLink,
         theseus: theseusLink,
+        files: fileLinks,
       },
     });
   });

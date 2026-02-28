@@ -86,6 +86,49 @@ stores:
     expect(result.config.config?.["my-linker"]).toEqual({ source: "./raw", enabled: true });
   });
 
+  test("maps iiif-config/stores/<name>/*.json into store.config for nested stores", async () => {
+    await write(join(testDir, "iiif-config/config.yml"), "");
+    await write(
+      join(testDir, "iiif-config/stores/remote/_store.json"),
+      `{"type":"iiif-remote","url":"https://example.org/manifest.json"}`
+    );
+    await write(
+      join(testDir, "iiif-config/stores/remote/extract-topics.json"),
+      `{"topicTypes":{"location":["Location"]},"translate":true}`
+    );
+
+    const result = await resolveConfigSource();
+    expect(result.mode).toBe("folder");
+    expect((result.config.stores.remote as any).config?.["extract-topics"]).toEqual({
+      topicTypes: { location: ["Location"] },
+      translate: true,
+    });
+    expect(
+      result.watchPaths.some((watchPath) => watchPath.path.endsWith("iiif-config/stores/remote/extract-topics.json"))
+    ).toBe(true);
+  });
+
+  test("prefers inline nested store config over sidecar config with the same key", async () => {
+    await write(join(testDir, "iiif-config/config.yml"), "");
+    await write(
+      join(testDir, "iiif-config/stores/remote/_store.json"),
+      `{
+        "type":"iiif-remote",
+        "url":"https://example.org/manifest.json",
+        "config":{"extract-topics":{"language":"cy"}}
+      }`
+    );
+    await write(
+      join(testDir, "iiif-config/stores/remote/extract-topics.json"),
+      `{"topicTypes":{"location":["Location"]},"language":"en"}`
+    );
+
+    const result = await resolveConfigSource();
+    expect((result.config.stores.remote as any).config?.["extract-topics"]).toEqual({
+      language: "cy",
+    });
+  });
+
   test("falls back to default mode and default store when no config exists", async () => {
     const result = await resolveConfigSource();
     expect(result.mode).toBe("default");

@@ -4,6 +4,20 @@ import { ResourceFilterTabs } from "./ResourceFilterTabs";
 import type { ResourceFilter, SiteResponse } from "./types";
 import { toResourceFilter } from "./utils";
 
+function clampPercent(value: number) {
+  if (!Number.isFinite(value)) {
+    return 0;
+  }
+  return Math.max(0, Math.min(100, Math.round(value)));
+}
+
+function shorten(value: string, max = 88) {
+  if (value.length <= max) {
+    return value;
+  }
+  return `${value.slice(0, max - 1)}…`;
+}
+
 export function HomePage({ debugBase }: { debugBase: string }) {
   const [site, setSite] = useState<SiteResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -49,6 +63,37 @@ export function HomePage({ debugBase }: { debugBase: string }) {
     };
   }, [debugBase]);
 
+  useEffect(() => {
+    if (typeof EventSource === "undefined") {
+      return;
+    }
+
+    const events = new EventSource(`${debugBase}/api/build-events`);
+    const handleBuildEvent = (event: Event) => {
+      const message = event as MessageEvent<string>;
+      try {
+        const build = JSON.parse(message.data) as SiteResponse["build"];
+        setSite((current) => {
+          if (!current) {
+            return current;
+          }
+          return {
+            ...current,
+            build,
+          };
+        });
+      } catch {
+        // Ignore malformed debug stream messages.
+      }
+    };
+
+    events.addEventListener("build", handleBuildEvent);
+    return () => {
+      events.removeEventListener("build", handleBuildEvent);
+      events.close();
+    };
+  }, [debugBase]);
+
   const items = site?.featuredItems || null;
   const featured = useMemo(() => {
     if (!items) return [];
@@ -67,6 +112,24 @@ export function HomePage({ debugBase }: { debugBase: string }) {
         );
       });
   }, [items, resourceFilter, searchTerm]);
+
+  const build = site?.build;
+  const isBuilding =
+    build &&
+    (build.status === "building" ||
+      (build.status === "idle" && (build.buildCount || 0) === 0));
+  const resourcesTotal = build?.progress?.resources.total || 0;
+  const resourcesProcessed = build?.progress?.resources.processed || 0;
+  const resourcePercent =
+    resourcesTotal > 0 ? (resourcesProcessed / resourcesTotal) * 100 : 0;
+  const fetchQueued = build?.progress?.fetch.queued || 0;
+  const fetchDone =
+    (build?.progress?.fetch.completed || 0) +
+    (build?.progress?.fetch.failed || 0);
+  const fetchPercent = fetchQueued > 0 ? (fetchDone / fetchQueued) * 100 : 0;
+  const progressPercent = clampPercent(
+    resourcesTotal > 0 ? resourcePercent : fetchPercent,
+  );
 
   if (error) return <p className="text-red-700">{error}</p>;
   if (!items) return <p>Loading site…</p>;
@@ -93,6 +156,51 @@ export function HomePage({ debugBase }: { debugBase: string }) {
         <p className="mt-2 text-xs text-slate-500">{featured.length} results</p>
       </section>
 
+      {isBuilding ? (
+        <section className="mt-4 border border-blue-200 bg-blue-50 rounded-xl p-4 mb-4">
+          <p className="font-medium text-blue-900">Building IIIF resources…</p>
+          <p className="text-blue-700 text-sm mt-1">
+            {build?.progress?.message || "The first build is running."}
+          </p>
+          <div className="mt-3 h-2 w-full overflow-hidden rounded bg-blue-100">
+            <div
+              className="h-full bg-blue-600 transition-all duration-300"
+              style={{ width: `${progressPercent}%` }}
+            />
+          </div>
+          <div className="mt-2 text-xs text-blue-800">
+            {resourcesTotal > 0 ? (
+              <p>
+                Resources: {resourcesProcessed}/{resourcesTotal}
+              </p>
+            ) : null}
+            {build?.progress?.fetch &&
+            (fetchQueued > 0 ||
+              build.progress.fetch.inFlight > 0 ||
+              build.progress.fetch.cacheHits > 0) ? (
+              <p>
+                Remote fetches: {fetchDone}/{fetchQueued} complete
+                {build.progress.fetch.inFlight
+                  ? ` (${build.progress.fetch.inFlight} in flight)`
+                  : ""}
+                {build.progress.fetch.cacheHits
+                  ? `, ${build.progress.fetch.cacheHits} cache hits`
+                  : ""}
+              </p>
+            ) : null}
+            {build?.progress?.resources.currentSlug ? (
+              <p>
+                Current resource:{" "}
+                {shorten(build.progress.resources.currentSlug, 64)}
+              </p>
+            ) : null}
+            {build?.progress?.fetch.currentUrl ? (
+              <p>Current fetch: {shorten(build.progress.fetch.currentUrl)}</p>
+            ) : null}
+          </div>
+        </section>
+      ) : null}
+
       <section className="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-4">
         {featured.map((item) => (
           <FeaturedItemCard
@@ -102,19 +210,6 @@ export function HomePage({ debugBase }: { debugBase: string }) {
           />
         ))}
       </section>
-
-      {site?.build &&
-      (site.build.status === "building" ||
-        (site.build.status === "idle" &&
-          (site.build.buildCount || 0) === 0)) ? (
-        <section className="mt-4 border border-blue-200 bg-blue-50 rounded-xl p-4">
-          <p className="font-medium text-blue-900">Building IIIF resources…</p>
-          <p className="text-blue-700 text-sm mt-1">
-            The debug UI will refresh automatically when the initial build is
-            ready.
-          </p>
-        </section>
-      ) : null}
 
       {site?.build?.status === "error" && site.build.lastError ? (
         <section className="mt-4 border border-red-200 bg-red-50 rounded-xl p-4">

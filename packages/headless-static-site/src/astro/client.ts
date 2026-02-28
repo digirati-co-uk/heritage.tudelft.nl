@@ -1,11 +1,17 @@
 import {
+  type AstroIiifRoutes,
   type AstroParamsLike,
   type IIIFResourceType,
   type IIIFSitemapEntry,
+  type StaticPathStripPrefix,
   asAstroParam,
   extractItemSlugs,
+  getResourceSlugCandidates,
   isHttpUrl,
   normalizeSlug,
+  normalizeSlugForStaticPath,
+  resolveAstroIiifRoutes,
+  runtimeHintFromMeta,
   slugFromParams,
 } from "./shared.ts";
 
@@ -13,6 +19,7 @@ type JsonObject = Record<string, any>;
 
 export interface AstroIiifClientOptions {
   baseUrl?: string;
+  routes?: AstroIiifRoutes;
   fetchFn?: typeof fetch;
   cache?: boolean;
 }
@@ -31,8 +38,24 @@ export interface AstroIiifClientResolvedResource {
   };
 }
 
+export interface AstroIiifStaticPathOptions {
+  param?: string;
+  split?: boolean;
+  type?: IIIFResourceType;
+  stripPrefix?: StaticPathStripPrefix;
+}
+
 function asObject(value: unknown) {
   return value && typeof value === "object" ? (value as JsonObject) : null;
+}
+
+function emptyCollection(id: string, label: string) {
+  return {
+    id,
+    type: "Collection",
+    label: { en: [label] },
+    items: [],
+  } as JsonObject;
 }
 
 function normalizeBaseUrl(input: string | undefined) {
@@ -62,6 +85,7 @@ function toUrl(baseUrl: string, path: string) {
 
 export function createIiifAstroClient(options: AstroIiifClientOptions = {}) {
   const configuredBaseUrl = normalizeBaseUrl(options.baseUrl || "/iiif");
+  const routes = resolveAstroIiifRoutes(options.routes);
   const fetchFn = options.fetchFn || fetch;
   const useCache = options.cache ?? true;
   const cache = new Map<string, any>();
@@ -149,6 +173,67 @@ export function createIiifAstroClient(options: AstroIiifClientOptions = {}) {
     return asObject((await getJsonWithBaseFallback("/collections/collection.json")).json);
   }
 
+  async function loadStoreCollectionsCollection() {
+    const loaded = await tryGetJsonWithBaseFallback("/collections/stores/collection.json");
+    return asObject(loaded?.json);
+  }
+
+  async function getAllManifests() {
+    try {
+      const manifests = await loadManifestsCollection();
+      if (manifests) {
+        return manifests;
+      }
+    } catch (error) {
+      // Missing manifests collection falls through to top/empty fallback.
+    }
+
+    try {
+      const top = await loadTopCollection();
+      if (top) {
+        return top;
+      }
+    } catch (error) {
+      // Missing top collection falls through to empty fallback.
+    }
+
+    const preferredBase = resolvedBaseUrl || configuredBaseUrl || "/iiif";
+    return emptyCollection(toUrl(preferredBase, "/manifests/collection.json"), "Manifests");
+  }
+
+  async function getAllCollections() {
+    try {
+      const collections = await loadCollectionsCollection();
+      if (collections) {
+        return collections;
+      }
+    } catch (error) {
+      // Missing collections collection falls through to top/empty fallback.
+    }
+
+    try {
+      const top = await loadTopCollection();
+      if (top) {
+        return top;
+      }
+    } catch (error) {
+      // Missing top collection falls through to empty fallback.
+    }
+
+    const preferredBase = resolvedBaseUrl || configuredBaseUrl || "/iiif";
+    return emptyCollection(toUrl(preferredBase, "/collections/collection.json"), "Collections");
+  }
+
+  async function getAllStoreCollections() {
+    const stores = await loadStoreCollectionsCollection();
+    if (stores) {
+      return stores;
+    }
+
+    const preferredBase = resolvedBaseUrl || configuredBaseUrl || "/iiif";
+    return emptyCollection(toUrl(preferredBase, "/collections/stores/collection.json"), "Stores");
+  }
+
   async function resolveResource(
     slugOrUrl: string,
     forcedType?: IIIFResourceType | null
@@ -171,53 +256,104 @@ export function createIiifAstroClient(options: AstroIiifClientOptions = {}) {
       };
     }
 
-    const slug = normalizeSlug(slugOrUrl);
-    const sitemap = await getSitemap();
-    const source = sitemap[slug]?.source || null;
-    const sitemapType = sitemap[slug]?.type || null;
-    const remoteFromSource = source?.type === "remote" ? source.url || null : null;
+    const requestedSlug = normalizeSlug(slugOrUrl);
+    const slugCandidates = getResourceSlugCandidates(requestedSlug, forcedType || null, routes);
+    const localCandidates = Array.from(new Set([requestedSlug, ...slugCandidates])).filter(Boolean);
 
-    let type: IIIFResourceType | null = forcedType || (sitemapType as IIIFResourceType | null);
+    let type: IIIFResourceType | null = forcedType || null;
+    let source: IIIFSitemapEntry["source"] | null = null;
     let localJsonUrl: string | null = null;
+    let remoteJsonUrl: string | null = null;
     let resource: JsonObject | null = null;
-    const remoteJsonUrl: string | null = remoteFromSource;
+    let resolvedSlug = localCandidates[0] || requestedSlug;
 
-    if (remoteJsonUrl) {
+    const cachedMeta = new Map<
+      string,
+      {
+        meta: JsonObject | null;
+        runtime: ReturnType<typeof runtimeHintFromMeta>;
+      }
+    >();
+
+    const getMetaForCandidate = async (candidate: string) => {
+      if (cachedMeta.has(candidate)) {
+        return cachedMeta.get(candidate)!;
+      }
+      const loaded = await tryGetJsonWithBaseFallback(`${candidate}/meta.json`);
+      const meta = asObject(loaded?.json);
+      const runtime = runtimeHintFromMeta(meta);
+      const value = { meta, runtime };
+      cachedMeta.set(candidate, value);
+      return value;
+    };
+
+    const runtimeByCandidate = new Map<string, ReturnType<typeof runtimeHintFromMeta>>();
+    let preferredRemoteCandidate: string | null = null;
+
+    for (const candidate of localCandidates) {
+      const { runtime } = await getMetaForCandidate(candidate);
+      runtimeByCandidate.set(candidate, runtime);
+      if (!runtime) {
+        continue;
+      }
+
+      if (!type && runtime.type) {
+        type = runtime.type;
+      }
+      if (!source && runtime.source) {
+        source = runtime.source;
+      }
+
+      const typeMatches = !forcedType || !runtime.type || runtime.type === forcedType;
+      if (!typeMatches) {
+        continue;
+      }
+
+      if (!remoteJsonUrl && runtime.source?.type === "remote" && runtime.source.url) {
+        remoteJsonUrl = runtime.source.url;
+      }
+
+      if (
+        !preferredRemoteCandidate &&
+        runtime.source?.type === "remote" &&
+        runtime.source.url &&
+        runtime.saveToDisk === false
+      ) {
+        preferredRemoteCandidate = candidate;
+        remoteJsonUrl = runtime.source.url;
+        resolvedSlug = candidate;
+      }
+    }
+
+    if (preferredRemoteCandidate && remoteJsonUrl) {
       resource = asObject(await tryGetJson(remoteJsonUrl));
       if (!type && resource?.type && (resource.type === "Manifest" || resource.type === "Collection")) {
         type = resource.type as IIIFResourceType;
       }
     }
 
-    if (!resource && (type === "Manifest" || (!type && sitemapType === "Manifest"))) {
-      const localManifestResult = await tryGetJsonWithBaseFallback(`${slug}/manifest.json`);
-      localJsonUrl = localManifestResult?.url || null;
-      resource = asObject(localManifestResult?.json);
-      type = "Manifest";
-    }
+    const localResourceOrder =
+      type === "Manifest" ? ["manifest"] : type === "Collection" ? ["collection"] : ["manifest", "collection"];
 
-    if (!resource && (type === "Collection" || (!type && sitemapType === "Collection"))) {
-      const localCollectionResult = await tryGetJsonWithBaseFallback(`${slug}/collection.json`);
-      localJsonUrl = localCollectionResult?.url || null;
-      resource = asObject(localCollectionResult?.json);
-      type = "Collection";
-    }
-
-    if (!resource && !type) {
-      const tryManifestResult = await tryGetJsonWithBaseFallback(`${slug}/manifest.json`);
-      resource = asObject(tryManifestResult?.json);
+    for (const kind of localResourceOrder) {
       if (resource) {
-        localJsonUrl = tryManifestResult?.url || null;
-        type = "Manifest";
+        break;
       }
-    }
-
-    if (!resource && !type) {
-      const tryCollectionResult = await tryGetJsonWithBaseFallback(`${slug}/collection.json`);
-      resource = asObject(tryCollectionResult?.json);
-      if (resource) {
-        localJsonUrl = tryCollectionResult?.url || null;
-        type = "Collection";
+      for (const candidate of localCandidates) {
+        const runtime = runtimeByCandidate.get(candidate);
+        if (runtime?.source?.type === "remote" && runtime.saveToDisk === false) {
+          continue;
+        }
+        const localResult = await tryGetJsonWithBaseFallback(`${candidate}/${kind}.json`);
+        const localResource = asObject(localResult?.json);
+        if (!localResource) {
+          continue;
+        }
+        resource = localResource;
+        localJsonUrl = localResult?.url || null;
+        resolvedSlug = candidate;
+        type = kind === "manifest" ? "Manifest" : "Collection";
+        break;
       }
     }
 
@@ -228,16 +364,14 @@ export function createIiifAstroClient(options: AstroIiifClientOptions = {}) {
       }
     }
 
-    const shouldLoadLocalMetadata = !remoteJsonUrl || Boolean(localJsonUrl);
-    const meta = shouldLoadLocalMetadata
-      ? asObject((await tryGetJsonWithBaseFallback(`${slug}/meta.json`))?.json)
-      : null;
-    const indices = shouldLoadLocalMetadata
-      ? asObject((await tryGetJsonWithBaseFallback(`${slug}/indices.json`))?.json)
+    const cachedResolvedMeta = resolvedSlug ? await getMetaForCandidate(resolvedSlug) : null;
+    const meta = cachedResolvedMeta?.meta || null;
+    const indices = resolvedSlug
+      ? asObject((await tryGetJsonWithBaseFallback(`${resolvedSlug}/indices.json`))?.json)
       : null;
 
     return {
-      slug,
+      slug: resolvedSlug,
       type,
       source,
       resource,
@@ -280,8 +414,38 @@ export function createIiifAstroClient(options: AstroIiifClientOptions = {}) {
     return entries.filter(([, entry]) => entry?.type === type).map(([slug]) => slug);
   }
 
-  async function getStaticPaths(type: IIIFResourceType, options: { param?: string; split?: boolean } = {}) {
+  async function getStaticPaths(type: IIIFResourceType, options: AstroIiifStaticPathOptions = {}) {
     const slugs = await listSlugs(type);
+    const param = options.param || "slug";
+    const seen = new Set<string>();
+    const staticPaths = [];
+
+    for (const slug of slugs) {
+      const normalized = normalizeSlugForStaticPath(slug, {
+        type,
+        stripPrefix: options.stripPrefix,
+        routes,
+      });
+      if (!normalized || seen.has(normalized)) {
+        continue;
+      }
+      seen.add(normalized);
+      staticPaths.push({
+        params: {
+          [param]: asAstroParam(normalized, options.split || false),
+        },
+      });
+    }
+
+    return staticPaths;
+  }
+
+  function getStaticPathsFromCollection(collection: JsonObject, options: AstroIiifStaticPathOptions = {}) {
+    const slugs = extractItemSlugs(collection, {
+      type: options.type,
+      stripPrefix: options.stripPrefix,
+      routes,
+    });
     const param = options.param || "slug";
     return slugs.map((slug) => ({
       params: {
@@ -290,14 +454,20 @@ export function createIiifAstroClient(options: AstroIiifClientOptions = {}) {
     }));
   }
 
-  function getStaticPathsFromCollection(collection: JsonObject, options: { param?: string; split?: boolean } = {}) {
-    const slugs = extractItemSlugs(collection);
-    const param = options.param || "slug";
-    return slugs.map((slug) => ({
-      params: {
-        [param]: asAstroParam(slug, options.split || false),
-      },
-    }));
+  function getManifestStaticPathsFromCollection(collection: JsonObject, options: AstroIiifStaticPathOptions = {}) {
+    return getStaticPathsFromCollection(collection, {
+      ...options,
+      type: "Manifest",
+      stripPrefix: options.stripPrefix ?? true,
+    });
+  }
+
+  function getCollectionStaticPathsFromCollection(collection: JsonObject, options: AstroIiifStaticPathOptions = {}) {
+    return getStaticPathsFromCollection(collection, {
+      ...options,
+      type: "Collection",
+      stripPrefix: options.stripPrefix ?? true,
+    });
   }
 
   return {
@@ -305,18 +475,32 @@ export function createIiifAstroClient(options: AstroIiifClientOptions = {}) {
     slugFromParams,
     getSitemap,
     listSlugs,
+    getAllManifests,
+    getAllCollections,
+    getAllStoreCollections,
     loadTopCollection,
     loadManifestsCollection,
     loadCollectionsCollection,
+    loadStoreCollectionsCollection,
     loadResource: resolveResource,
     loadManifest,
     loadCollection,
     loadResourceFromParams,
     loadManifestFromParams,
     loadCollectionFromParams,
-    getManifestStaticPaths: (options?: { param?: string; split?: boolean }) => getStaticPaths("Manifest", options),
-    getCollectionStaticPaths: (options?: { param?: string; split?: boolean }) => getStaticPaths("Collection", options),
+    getManifestStaticPaths: (options?: AstroIiifStaticPathOptions) =>
+      getStaticPaths("Manifest", {
+        ...(options || {}),
+        stripPrefix: options?.stripPrefix ?? true,
+      }),
+    getCollectionStaticPaths: (options?: AstroIiifStaticPathOptions) =>
+      getStaticPaths("Collection", {
+        ...(options || {}),
+        stripPrefix: options?.stripPrefix ?? true,
+      }),
     getStaticPathsFromCollection,
+    getManifestStaticPathsFromCollection,
+    getCollectionStaticPathsFromCollection,
   };
 }
 

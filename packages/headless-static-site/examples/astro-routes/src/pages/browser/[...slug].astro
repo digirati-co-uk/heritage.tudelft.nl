@@ -1,0 +1,33 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { iiif } from "../../lib/iiif-server";
+
+export async function getStaticPaths() {
+  const collection = await iiif.getAllCollections();
+  return iiif.getCollectionStaticPathsFromCollection(collection);
+}
+
+const loaded = await iiif.loadCollectionFromParams(Astro.params);
+const collection = loaded.resource;
+const label = collection?.label?.en?.[0] || loaded.meta?.label || loaded.slug;
+---
+
+<BaseLayout title={label}>
+  <section class="stack">
+    <h1>{label}</h1>
+    <p><a href="/">Back home</a> · <a href="/browser">Browser</a></p>
+
+    <div class="panel stack">
+      <h2>Resolved JSON source</h2>
+      <p class="small">{loaded.links.json || "Unavailable"}</p>
+    </div>
+
+    <pre>{JSON.stringify(loaded, null, 2)}</pre>
+
+
+    <div class="panel stack">
+      <h2>Collection meta.json</h2>
+      <pre>{JSON.stringify(loaded.meta || {}, null, 2)}</pre>
+    </div>
+  </section>
+</BaseLayout>

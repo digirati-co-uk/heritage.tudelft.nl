@@ -16,6 +16,30 @@ export type SiteResponse = {
     completedAt: string | null;
     lastError: string | null;
     buildCount: number;
+    progress?: {
+      phase: string;
+      message: string;
+      step: {
+        id: string;
+        index: number;
+        total: number;
+      };
+      resources: {
+        total: number;
+        processed: number;
+        currentSlug: string | null;
+      };
+      fetch: {
+        queued: number;
+        started: number;
+        completed: number;
+        failed: number;
+        cacheHits: number;
+        inFlight: number;
+        currentUrl: string | null;
+      };
+      updatedAt: string;
+    };
   };
   onboarding: {
     enabled: boolean;
@@ -46,12 +70,19 @@ export type ResourceResponse = {
   resource: any;
   meta: Record<string, any>;
   indices: Record<string, any>;
+  searchRecord: Record<string, any>;
   links: {
     json: string | null;
     localJson: string | null;
     remoteJson: string | null;
     manifestEditor: string | null;
     theseus: string | null;
+    files: {
+      resource: string | null;
+      meta: string | null;
+      indices: string | null;
+      searchRecord: string | null;
+    };
   };
 };
 

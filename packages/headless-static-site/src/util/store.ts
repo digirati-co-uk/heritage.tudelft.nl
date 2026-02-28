@@ -1,16 +1,19 @@
 import type { IIIFStore, Vault } from "@iiif/helpers";
 import type { BuildConfig } from "../commands/build.ts";
+import type { BuildProgressCallbacks } from "./build-progress.ts";
 import type { FileHandler } from "./file-handler.ts";
 
 export interface StoreApi {
   storeId: string;
   getSlug: (resource: { id: string; type: string }) => readonly [string, string];
   requestCache: {
-    fetch<T = any>(url: string): Promise<T>;
-    didChange(url: string): Promise<boolean>;
+    fetch<T = any>(url: string, options?: RequestInit): Promise<T>;
+    didChange(url: string, options?: RequestInit): Promise<boolean>;
     getKey(url: string): Promise<string | null>;
   };
   files: FileHandler;
+  progress?: BuildProgressCallbacks;
+  reportEstimatedResources?: (delta: number) => void;
   // Escape hatch, all config.
   build: BuildConfig;
 }

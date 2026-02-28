@@ -4,7 +4,11 @@
   "description": "IIIF Headless Static Site",
   "type": "module",
   "keywords": [],
-  "files": ["src", "build", "lib"],
+  "files": [
+    "src",
+    "build",
+    "lib"
+  ],
   "main": "lib/scripts.js",
   "module": "lib/scripts.js",
   "bin": {
@@ -18,7 +22,8 @@
     "vite": "vite",
     "dev-server": "bun run ./src/entrypoint.ts",
     "dev-cli": "bun run ./src/index.ts",
-    "build": "pnpm run build:cli && pnpm run build:server && pnpm run build:client && pnpm run build:node-client && pnpm run build:library && pnpm run build:vite-plugin && pnpm run build:astro-integration && pnpm run build:astro-server-lib && pnpm run build:astro-client-lib && pnpm run build:dev-ui",
+    "build": "pnpm run build:tsup && pnpm run build:dev-ui",
+    "build:tsup": "tsup --config tsup.config.ts --env.NODE_ENV production",
     "build:cli": "tsup-node src/index.ts --no-splitting --outDir build --format esm --env.NODE_ENV production",
     "build:server": "tsup-node src/entrypoint.ts --no-splitting --outDir build/server --format esm --env.NODE_ENV production",
     "build:library": "tsup src/library.ts --outDir build",
@@ -26,11 +31,14 @@
     "build:astro-integration": "tsup src/astro-integration.ts --outDir build",
     "build:astro-server-lib": "tsup src/astro/server.ts --outDir build/astro",
     "build:astro-client-lib": "tsup src/astro/client.ts --outDir build/astro",
+    "build:vite-client-lib": "tsup src/vite/client.ts --outDir build/vite",
     "build:dev-ui": "pnpm vite build --config src/dev-server-ui/vite.config.ts || echo 'Skipping dev UI build (install react/react-dom to enable)'",
     "build:client": "tsup src/dev/client.ts --outDir build",
     "build:node-client": "tsup src/dev/node-client.ts --outDir build",
     "lint": "publint",
-    "test": "vitest",
+    "test": "vitest --exclude __tests__/examples",
+    "test:examples": "vitest run __tests__/examples",
+    "test:examples:update": "vitest run __tests__/examples -u",
     "prepack": "pnpm run build"
   },
   "exports": {
@@ -65,6 +73,12 @@
         "default": "./build/vite-plugin.js"
       }
     },
+    "./vite/client": {
+      "import": {
+        "types": "./build/vite/client.d.ts",
+        "default": "./build/vite/client.js"
+      }
+    },
     "./astro": {
       "import": {
         "types": "./build/astro-integration.d.ts",
@@ -86,11 +100,24 @@
   },
   "typesVersions": {
     "*": {
-      "*": ["lib/scripts.d.ts"],
-      "client": ["build/client.d.ts"],
-      "astro": ["build/astro-integration.d.ts"],
-      "astro/server": ["build/astro/server.d.ts"],
-      "astro/client": ["build/astro/client.d.ts"]
+      "*": [
+        "lib/scripts.d.ts"
+      ],
+      "client": [
+        "build/client.d.ts"
+      ],
+      "vite/client": [
+        "build/vite/client.d.ts"
+      ],
+      "astro": [
+        "build/astro-integration.d.ts"
+      ],
+      "astro/server": [
+        "build/astro/server.d.ts"
+      ],
+      "astro/client": [
+        "build/astro/client.d.ts"
+      ]
     }
   },
   "optionalDependencies": {
@@ -104,6 +131,7 @@
     "@iiif/helpers": "^1.5.4",
     "@iiif/parser": "^2.2.5",
     "@rgrove/parse-xml": "^4.2.0",
+    "@webcontainer/env": "^1.1.1",
     "cli-progress": "^3.12.0",
     "commander": "^13.0.0",
     "detect-python-interpreter": "^1.0.0",
