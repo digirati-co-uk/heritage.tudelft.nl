@@ -3,6 +3,7 @@ import { serve } from "@hono/node-server";
 import { createNodeWebSocket } from "@hono/node-ws";
 import { Command } from "commander";
 import server from "./server";
+import { resolveHostUrl } from "./util/resolve-host-url";
 
 const program = new Command();
 
@@ -35,7 +36,7 @@ app.get(
   })
 );
 
-console.log(`Server running: http://localhost:${server.port}`);
+console.log(`Server running: ${resolveHostUrl(`http://localhost:${server.port}`)}`);
 const runningServer = serve(server);
 injectWebSocket(runningServer);
 

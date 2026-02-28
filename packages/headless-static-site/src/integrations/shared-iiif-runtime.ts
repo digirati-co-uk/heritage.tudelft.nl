@@ -12,6 +12,7 @@ import {
   getCustomConfigSource,
   resolveConfigSource,
 } from "../util/get-config";
+import { resolveHostUrl } from "../util/resolve-host-url";
 
 export interface IIIFHSSSPluginOptions {
   /**
@@ -233,7 +234,7 @@ function normalizeAbsoluteHttpUrl(input: string | null | undefined) {
   if (!input || typeof input !== "string") {
     return null;
   }
-  const trimmed = input.trim();
+  const trimmed = resolveHostUrl(input.trim());
   if (!trimmed) {
     return null;
   }
@@ -540,7 +541,7 @@ export function createIiifRuntime(options: IIIFHSSSPluginOptions = {}) {
         ? `[${configuredHost}]`
         : configuredHost;
 
-    return `http://${formattedHost}:${configuredPort}${basePath}`;
+    return resolveHostUrl(`http://${formattedHost}:${configuredPort}${basePath}`);
   }
 
   async function setConfigServerUrl(url: string, options: { rebuildIfDevBuildStarted?: boolean } = {}) {
@@ -580,7 +581,7 @@ export function createIiifRuntime(options: IIIFHSSSPluginOptions = {}) {
   function getIiifDebugUrl(baseUrl: string) {
     const base = normalizePath(basePath);
     const debugPath = base.length > 0 ? `${base}/_debug` : "_debug";
-    return new URL(debugPath, baseUrl).toString();
+    return resolveHostUrl(new URL(debugPath, baseUrl).toString());
   }
 
   async function runBuild(logger?: RuntimeLogger) {

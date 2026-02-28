@@ -23,6 +23,7 @@ import { getNodeGlobals } from "./get-node-globals";
 import type { Linker } from "./linker";
 import { loadScripts } from "./load-scripts";
 import { resolveNetworkConfig } from "./network";
+import { resolveHostUrl } from "./resolve-host-url";
 import type { Rewrite } from "./rewrite";
 import { compileSlugConfig } from "./slug-engine";
 import type { Store } from "./store";
@@ -229,7 +230,7 @@ export async function getBuildConfig(options: BuildOptions, builtIns: BuildBuilt
   const virtualCacheDir = join(cacheDir, "_virtual");
 
   const server = options.dev
-    ? { url: config.server?.url || env.DEV_SERVER || "http://localhost:7111" }
+    ? { url: resolveHostUrl(config.server?.url || env.DEV_SERVER || "http://localhost:7111") }
     : config.server || env.SERVER_URL;
 
   const time = async <T>(label: string, promise: Promise<T>): Promise<T> => {
@@ -252,7 +253,8 @@ export async function getBuildConfig(options: BuildOptions, builtIns: BuildBuilt
   })();
 
   const topicsDir = join(cwd, topicFolder);
-  const configUrl = typeof server === "string" ? server : server?.url;
+  const configUrl =
+    typeof server === "string" ? resolveHostUrl(server) : server?.url ? resolveHostUrl(server.url) : server?.url;
   const makeId = ({ type, slug }: { type: string; slug: string }) => {
     return `${configUrl}/${slug}/${type.toLowerCase()}.json`;
   };

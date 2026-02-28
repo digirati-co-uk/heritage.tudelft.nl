@@ -4,7 +4,11 @@
   "description": "IIIF Headless Static Site",
   "type": "module",
   "keywords": [],
-  "files": ["src", "build", "lib"],
+  "files": [
+    "src",
+    "build",
+    "lib"
+  ],
   "main": "lib/scripts.js",
   "module": "lib/scripts.js",
   "bin": {
@@ -96,12 +100,24 @@
   },
   "typesVersions": {
     "*": {
-      "*": ["lib/scripts.d.ts"],
-      "client": ["build/client.d.ts"],
-      "vite/client": ["build/vite/client.d.ts"],
-      "astro": ["build/astro-integration.d.ts"],
-      "astro/server": ["build/astro/server.d.ts"],
-      "astro/client": ["build/astro/client.d.ts"]
+      "*": [
+        "lib/scripts.d.ts"
+      ],
+      "client": [
+        "build/client.d.ts"
+      ],
+      "vite/client": [
+        "build/vite/client.d.ts"
+      ],
+      "astro": [
+        "build/astro-integration.d.ts"
+      ],
+      "astro/server": [
+        "build/astro/server.d.ts"
+      ],
+      "astro/client": [
+        "build/astro/client.d.ts"
+      ]
     }
   },
   "optionalDependencies": {
@@ -115,6 +131,7 @@
     "@iiif/helpers": "^1.5.4",
     "@iiif/parser": "^2.2.5",
     "@rgrove/parse-xml": "^4.2.0",
+    "@webcontainer/env": "^1.1.1",
     "cli-progress": "^3.12.0",
     "commander": "^13.0.0",
     "detect-python-interpreter": "^1.0.0",

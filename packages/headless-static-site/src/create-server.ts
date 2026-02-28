@@ -18,6 +18,7 @@ import type { BuildStatus } from "./util/build-progress.ts";
 import { FileHandler } from "./util/file-handler";
 import type { IIIFRC, ResolvedConfigSource } from "./util/get-config";
 import { resolveEditablePathForSlug } from "./util/resolve-editable-path";
+import { resolveHostUrl } from "./util/resolve-host-url";
 import { Tracer } from "./util/tracer";
 
 const require = createRequire(import.meta.url);
@@ -51,6 +52,7 @@ function redirectToDebugPath(basePathHeader?: string) {
 export async function createServer(config: IIIFRC, serverOptions: IIIFServerOptions = {}) {
   const app = new Hono();
   const meUrl = serverOptions.customManifestEditor || "https://manifest-editor.digirati.services";
+  const baseServerUrl = resolveHostUrl(config.server?.url || "http://localhost:7111").replace(/\/+$/, "");
   const configSource = serverOptions.configSource;
 
   app.use(async (c, next) => {
@@ -464,7 +466,7 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
       });
 
       const manifestId = `${exactPath}/manifest.json`;
-      const manifestUrl = new URL(manifestId, config.server?.url || "http://localhost:7111/").toString();
+      const manifestUrl = `${baseServerUrl}/${manifestId.replace(/^\/+/, "")}`;
 
       if (isJson) {
         return ctx.json({ manifestUrl, editUrl: `${meUrl}/editor/external?manifest=${manifestUrl}` });
@@ -490,7 +492,7 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
 
     const isManifest = ctx.req.path.endsWith("manifest.json");
     if (isManifest) {
-      const manifestUrl = `${config.server?.url || "http://localhost:7111/"}${ctx.req.path}`;
+      const manifestUrl = `${baseServerUrl}${ctx.req.path}`;
       headers["X-IIIF-Post-Url"] = manifestUrl;
     }
 
@@ -503,7 +505,7 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
       }
 
       const manifestId = ctx.req.path.replace("/edit", "/manifest.json");
-      const manifestUrl = `${config.server?.url || "http://localhost:7111/"}${manifestId}`;
+      const manifestUrl = `${baseServerUrl}${manifestId}`;
 
       return ctx.redirect(`${meUrl}/editor/external?manifest=${manifestUrl}`);
     }
