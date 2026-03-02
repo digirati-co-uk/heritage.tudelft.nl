@@ -9,7 +9,7 @@ import {
   DEFAULT_CONFIG,
   type IIIFRC,
   type ResolvedConfigSource,
-  getCustomConfigSource,
+  mergeIiifConfig,
   resolveConfigSource,
 } from "../util/get-config";
 import { resolveHostUrl } from "../util/resolve-host-url";
@@ -350,10 +350,14 @@ export function createIiifRuntime(options: IIIFHSSSPluginOptions = {}) {
     if (resolvedConfig) {
       return resolvedConfig;
     }
-    const loadedConfigSource = customConfig
-      ? getCustomConfigSource(customConfig as IIIFRC)
-      : await resolveConfigSource(configFile);
-    const normalized = normalizeShorthandConfig(loadedConfigSource, {
+    const loadedConfigSource = await resolveConfigSource(configFile);
+    const mergedInlineConfigSource: ResolvedConfigSource = {
+      ...loadedConfigSource,
+      config: customConfig
+        ? mergeIiifConfig(loadedConfigSource.config, customConfig as IIIFRC)
+        : loadedConfigSource.config,
+    };
+    const normalized = normalizeShorthandConfig(mergedInlineConfigSource, {
       collection,
       collections,
       manifest,

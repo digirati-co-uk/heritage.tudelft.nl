@@ -203,8 +203,15 @@ export async function getBuildConfig(options: BuildOptions, builtIns: BuildBuilt
   log("Available rewrites:", allRewrites.map((e) => e.id).join(", "));
 
   // We manually skip some.
-  const configuredRun = config.run || builtIns.defaultRun;
-  const toRun = new Set(configuredRun);
+  const toRun = new Set(config.run || builtIns.defaultRun);
+  // If topic extraction is configured, ensure the step runs even when omitted from `run`.
+  if (config.config?.["extract-topics"]) {
+    toRun.add("extract-topics");
+  }
+  // If topic thumbnail enrichment is configured, ensure the step runs.
+  if (config.config?.["enrich-topic-thumbnails"]) {
+    toRun.add("enrich-topic-thumbnails");
+  }
   for (const extraction of allExtractions) {
     if (extraction.alwaysRun) {
       toRun.add(extraction.id);

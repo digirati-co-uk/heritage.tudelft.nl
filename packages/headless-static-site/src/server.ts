@@ -12,7 +12,10 @@ import mitt from "mitt";
 import { z } from "zod";
 import { type BuildOptions, build, defaultBuiltIns } from "./commands/build";
 import { createBuildStatusTracker } from "./server/build-status.ts";
-import { findDebugUiDir, registerDebugUiRoutes } from "./server/debug-ui-routes.ts";
+import {
+  findDebugUiDir,
+  registerDebugUiRoutes,
+} from "./server/debug-ui-routes.ts";
 import { editorHtml } from "./server/editor.html";
 import { explorerHtml } from "./server/explorer.html";
 import type { BuildStatus } from "./util/build-progress.ts";
@@ -30,7 +33,9 @@ app.use(async (c, next) => {
     function set(key: string, value: string) {
       c.res.headers.set(key, value);
     }
-    const didRequestPrivateNetwork = c.req.header("access-control-request-private-network");
+    const didRequestPrivateNetwork = c.req.header(
+      "access-control-request-private-network",
+    );
     if (didRequestPrivateNetwork) {
       set("Access-Control-Allow-Private-Network", "true");
     }
@@ -42,9 +47,13 @@ app.use(
   cors({
     origin: "*",
     allowMethods: ["GET", "POST", "PUT", "PATCH", "OPTIONS"],
-    exposeHeaders: ["Content-Type", "X-IIIF-Post-Url", "Access-Control-Allow-Private-Network"],
+    exposeHeaders: [
+      "Content-Type",
+      "X-IIIF-Post-Url",
+      "Access-Control-Allow-Private-Network",
+    ],
     allowHeaders: ["Content-Type", "Access-Control-Request-Private-Network"],
-  })
+  }),
 );
 
 const emitter = mitt<{
@@ -76,7 +85,9 @@ const state = {
 };
 
 function redirectToDebugPath(basePathHeader?: string) {
-  const normalizedBase = (basePathHeader || "").replace(/^\/+/, "").replace(/\/+$/, "");
+  const normalizedBase = (basePathHeader || "")
+    .replace(/^\/+/, "")
+    .replace(/\/+$/, "");
   return normalizedBase.length > 0 ? `/${normalizedBase}/_debug/` : "/_debug/";
 }
 
@@ -85,8 +96,14 @@ function selectInitialPath(devPath: string, defaultPath: string) {
 }
 
 const activePaths = {
-  buildDir: selectInitialPath(defaultBuiltIns.devBuild, defaultBuiltIns.defaultBuildDir),
-  cacheDir: selectInitialPath(defaultBuiltIns.devCache, defaultBuiltIns.defaultCacheDir),
+  buildDir: selectInitialPath(
+    defaultBuiltIns.devBuild,
+    defaultBuiltIns.defaultBuildDir,
+  ),
+  cacheDir: selectInitialPath(
+    defaultBuiltIns.devCache,
+    defaultBuiltIns.defaultCacheDir,
+  ),
 };
 
 const cachedBuild = async (options: BuildOptions) => {
@@ -127,7 +144,9 @@ app.get("/config", async (ctx) => {
   const config = resolvedConfigSource.config;
   return ctx.json({
     isWatching: isWatching,
-    pendingFiles: Array.from(fileHandler.openJsonChanged.keys()).filter(Boolean),
+    pendingFiles: Array.from(fileHandler.openJsonChanged.keys()).filter(
+      Boolean,
+    ),
     configMode: resolvedConfigSource.mode,
     ...config,
   });
@@ -142,6 +161,7 @@ registerDebugUiRoutes({
   fileHandler,
   getActivePaths: () => ({ ...activePaths }),
   getConfig: async () => (await resolveConfigSource()).config,
+  getConfigMode: async () => (await resolveConfigSource()).mode,
   getTraceJson: () => tracer.toJSON(),
   getDebugUiDir: () => findDebugUiDir(cwd(), require.resolve.bind(require)),
   getBuildStatus: () => buildStatusTracker.getBuildStatus(),
@@ -149,6 +169,13 @@ registerDebugUiRoutes({
     emitter.on("build-progress", listener);
     return () => emitter.off("build-progress", listener);
   },
+  defaultRun: defaultBuiltIns.defaultRun,
+  rebuild: async () => 
+    await cachedBuild({
+      cache: true,
+      emit: true,
+      dev: true,
+    }),
 });
 
 app.get("/client.js", async (ctx) => {
@@ -180,7 +207,11 @@ app.get("/watch", async (ctx) => {
     return store.type === "iiif-json";
   });
   const remoteOverrideStores = Object.values(config.stores).filter((store) => {
-    return store.type === "iiif-remote" && typeof store.overrides === "string" && Boolean(store.overrides.trim());
+    return (
+      store.type === "iiif-remote" &&
+      typeof store.overrides === "string" &&
+      Boolean(store.overrides.trim())
+    );
   });
   let watchCount = 0;
 
@@ -233,8 +264,12 @@ app.get("/watch", async (ctx) => {
 
       for await (const event of watcher) {
         try {
-          const changedPath = event.filename ? join(overridesPath, event.filename) : null;
-          const realPath = changedPath ? pathCache.allPaths[changedPath] : undefined;
+          const changedPath = event.filename
+            ? join(overridesPath, event.filename)
+            : null;
+          const realPath = changedPath
+            ? pathCache.allPaths[changedPath]
+            : undefined;
           if (realPath) {
             emitter.emit("file-change", { path: realPath });
           }
@@ -306,7 +341,9 @@ app.get("/unwatch", async (ctx) => {
 });
 
 app.get("/build/save", async (ctx) => {
-  const total = Array.from(fileHandler.openJsonChanged.keys()).filter(Boolean).length;
+  const total = Array.from(fileHandler.openJsonChanged.keys()).filter(
+    Boolean,
+  ).length;
   if (total) {
     await fileHandler.saveAll();
   }
@@ -328,20 +365,21 @@ app.get(
       debug: z.string().optional(),
       enrich: z.string().optional(),
       extract: z.string().optional(),
-    })
+    }),
   ),
   async (ctx) => {
-    const { buildConfig, emitted, enrichments, extractions, parsed, stores } = await cachedBuild({
-      cache: ctx.req.query("cache") !== "false",
-      networkCache: ctx.req.query("networkCache") !== "false",
-      generate: ctx.req.query("generate") !== "false",
-      exact: ctx.req.query("exact"),
-      emit: ctx.req.query("emit") !== "false",
-      debug: ctx.req.query("debug") === "true",
-      enrich: ctx.req.query("enrich") !== "false",
-      extract: ctx.req.query("extract") !== "false",
-      dev: true,
-    });
+    const { buildConfig, emitted, enrichments, extractions, parsed, stores } =
+      await cachedBuild({
+        cache: ctx.req.query("cache") !== "false",
+        networkCache: ctx.req.query("networkCache") !== "false",
+        generate: ctx.req.query("generate") !== "false",
+        exact: ctx.req.query("exact"),
+        emit: ctx.req.query("emit") !== "false",
+        debug: ctx.req.query("debug") === "true",
+        enrich: ctx.req.query("enrich") !== "false",
+        extract: ctx.req.query("extract") !== "false",
+        dev: true,
+      });
 
     const { files, log, fileTypeCache, ...config } = buildConfig;
 
@@ -360,7 +398,7 @@ app.get(
     emitter.emit("full-rebuild", report);
 
     return ctx.json(report);
-  }
+  },
 );
 
 app.post(
@@ -378,7 +416,7 @@ app.post(
       debug: z.string().optional(),
       enrich: z.string().optional(),
       extract: z.string().optional(),
-    })
+    }),
   ),
   async (ctx) => {
     const body = await ctx.req.json();
@@ -387,10 +425,11 @@ app.post(
       state.shouldRebuild = false;
     }
 
-    const { buildConfig, emitted, enrichments, extractions, parsed, stores } = await cachedBuild({
-      ...body,
-      dev: true,
-    });
+    const { buildConfig, emitted, enrichments, extractions, parsed, stores } =
+      await cachedBuild({
+        ...body,
+        dev: true,
+      });
 
     const report = {
       emitted: {
@@ -407,7 +446,7 @@ app.post(
     emitter.emit("full-rebuild", report);
 
     return ctx.json(report);
-  }
+  },
 );
 
 app.get("/*", async (ctx, next) => {
@@ -452,7 +491,11 @@ const saveManifest = async (ctx: Context) => {
 
   // WIthout `/manifest.json`
   const slug = ctx.req.path.replace("/manifest.json", "").slice(1);
-  const realPath = await resolveEditablePathForSlug(fileHandler, activePaths.buildDir, slug);
+  const realPath = await resolveEditablePathForSlug(
+    fileHandler,
+    activePaths.buildDir,
+    slug,
+  );
   if (!realPath) {
     return ctx.notFound();
   }

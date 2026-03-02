@@ -2,6 +2,7 @@ import { existsSync } from "node:fs";
 import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { chdir, cwd } from "node:process";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 
 const cachedBuildMock = vi.fn(async () => ({
@@ -42,9 +43,11 @@ vi.mock("../src/create-server", () => ({
 }));
 
 describe("vite plugin lifecycle", () => {
+  const originalCwd = cwd();
   let testDir = "";
 
   beforeEach(() => {
+    chdir(originalCwd);
     process.env.VITEST = "";
     cachedBuildMock.mockClear();
     requestMock.mockClear();
@@ -54,6 +57,7 @@ describe("vite plugin lifecycle", () => {
   });
 
   afterEach(async () => {
+    chdir(originalCwd);
     if (testDir) {
       await rm(testDir, { recursive: true, force: true });
       testDir = "";
@@ -128,6 +132,10 @@ describe("vite plugin lifecycle", () => {
       const plugin = iiifPlugin({
         enabled: true,
         config: {
+          server: {
+            // Clear server URL so env-based build URL fallback can be asserted.
+            url: "",
+          },
           stores: {
             local: {
               type: "iiif-remote",
@@ -546,6 +554,74 @@ describe("vite plugin lifecycle", () => {
     expect(configured.stores.content.saveManifests).toBe(true);
     expect(configured.stores.content.overrides).toBe("./overrides");
     expect(configured.stores.default).toBeUndefined();
+  });
+
+  test("merges inline config with iiif-config folder config", async () => {
+    testDir = await mkdtemp(join(tmpdir(), "iiif-hss-vite-merge-"));
+    chdir(testDir);
+    await mkdir(join(testDir, "iiif-config", "stores"), { recursive: true });
+    await mkdir(join(testDir, "iiif-config", "config"), { recursive: true });
+    await writeFile(join(testDir, "iiif-config", "config.yml"), "");
+    await writeFile(
+      join(testDir, "iiif-config", "stores", "local.json"),
+      JSON.stringify({ type: "iiif-json", path: "./content" })
+    );
+    await writeFile(
+      join(testDir, "iiif-config", "config", "extract-topics.json"),
+      JSON.stringify({
+        topicTypes: {
+          date: ["Year"],
+        },
+      })
+    );
+
+    const { iiifPlugin } = await import("../src/vite-plugin");
+    const plugin = iiifPlugin({
+      enabled: true,
+      config: {
+        config: {
+          "extract-topics": {
+            topicTypes: {
+              contributor: ["Contributor"],
+            },
+          },
+        },
+      },
+    });
+
+    await plugin.configResolved?.({
+      command: "serve",
+      mode: "development",
+      root: testDir,
+      build: {
+        outDir: "dist",
+      },
+    } as any);
+
+    await plugin.configureServer?.({
+      config: {
+        server: {
+          host: "localhost",
+          port: 5173,
+        },
+      },
+      middlewares: {
+        use: vi.fn(),
+      },
+      httpServer: {
+        listening: false,
+      },
+    } as any);
+
+    const configured = createServerMock.mock.calls.at(-1)?.[0] as any;
+    expect(configured.stores.local).toEqual({
+      type: "iiif-json",
+      path: "./content",
+    });
+    expect(configured.config["extract-topics"].topicTypes).toEqual({
+      date: ["Year"],
+      contributor: ["Contributor"],
+    });
   });
 
   test("rejects shorthand-only options without manifest or collection URLs", async () => {

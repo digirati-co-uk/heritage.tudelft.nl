@@ -159,6 +159,7 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
     fileHandler,
     getActivePaths: () => ({ ...activePaths }),
     getConfig: () => config,
+    getConfigMode: () => (configSource?.mode as any) || "custom",
     getTraceJson: () => tracer.toJSON(),
     getDebugUiDir: () => findDebugUiDir(cwd(), require.resolve.bind(require)),
     manifestEditorUrl: meUrl,
@@ -168,6 +169,14 @@ export async function createServer(config: IIIFRC, serverOptions: IIIFServerOpti
       return () => emitter.off("build-progress", listener);
     },
     onboarding: serverOptions.onboarding,
+    defaultRun: defaultBuiltIns.defaultRun,
+    rebuild: async () => {
+      await cachedBuild({
+        cache: true,
+        emit: true,
+        dev: true,
+      });
+    },
   });
 
   app.get("/watch", async (ctx) => {
