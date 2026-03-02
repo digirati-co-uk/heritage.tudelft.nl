@@ -1,0 +1,30 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { collectionRouteBase, manifestRouteBase } from "../lib/iiif-routes";
+import { iiif } from "../lib/iiif-server";
+
+const manifests = await iiif.getAllManifests();
+const collections = await iiif.getAllCollections();
+const storeCollections = await iiif.getAllStoreCollections();
+const manifestPaths = await iiif.getManifestStaticPaths();
+const collectionPaths = await iiif.getCollectionStaticPaths();
+---
+
+<BaseLayout title="IIIF Astro Custom Routes Example">
+  <section class="stack">
+    <h1>IIIF + Astro Example (custom routes)</h1>
+    <p class="small">
+      This example remaps manifest routes to <code>{manifestRouteBase}</code> and collection routes to <code>{collectionRouteBase}</code>
+      using <code>createIiifAstroServer(&#123; routes &#125;)</code> and <code>createIiifAstroClient(&#123; routes &#125;)</code>.
+    </p>
+    <div class="panel stack">
+      <a href={manifestRouteBase}>Browse manifests ({manifestRouteBase})</a>
+      <a href={collectionRouteBase}>Browse collections ({collectionRouteBase})</a>
+      <p class="small">Manifest routes generated: {manifestPaths.length}</p>
+      <p class="small">Collection routes generated: {collectionPaths.length}</p>
+      <p class="small">All manifests label: {manifests?.label?.en?.[0] ?? "Unknown"}</p>
+      <p class="small">All collections label: {collections?.label?.en?.[0] ?? "Unknown"}</p>
+      <p class="small">Store collections label: {storeCollections?.label?.en?.[0] ?? "Unavailable"}</p>
+    </div>
+  </section>
+</BaseLayout>

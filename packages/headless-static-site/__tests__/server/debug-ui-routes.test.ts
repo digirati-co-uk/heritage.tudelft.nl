@@ -39,6 +39,26 @@ describe("debug UI routes", () => {
       )
     );
     await writeFile(
+      join(baseDir, ".iiif", "build", "meta", "metadata-analysis.json"),
+      JSON.stringify(
+        {
+          foundKeys: {
+            Year: 4,
+            Contributor: 3,
+            Contributors: 2,
+          },
+          foundValues: {},
+          foundValuesComma: {},
+          foundLanguages: {
+            en: 4,
+          },
+          foundUniqueKeys: ["Year", "Contributor", "Contributors"],
+        },
+        null,
+        2
+      )
+    );
+    await writeFile(
       join(baseDir, ".iiif", "build", "collection.json"),
       JSON.stringify(
         {
@@ -72,12 +92,24 @@ describe("debug UI routes", () => {
       )
     );
     await writeFile(
+      join(baseDir, ".iiif", "build", "manifests", "demo", "indices.json"),
+      JSON.stringify({ topics: ["alpha"] }, null, 2)
+    );
+    await writeFile(
+      join(baseDir, ".iiif", "build", "manifests", "demo", "search-record.json"),
+      JSON.stringify({ record: { id: "demo-record" } }, null, 2)
+    );
+    await writeFile(
       join(baseDir, ".iiif", "cache", "manifests", "demo", "meta.json"),
       JSON.stringify({ a: 1 }, null, 2)
     );
     await writeFile(
       join(baseDir, ".iiif", "cache", "manifests", "demo", "indices.json"),
       JSON.stringify({ topics: ["alpha"] }, null, 2)
+    );
+    await writeFile(
+      join(baseDir, ".iiif", "cache", "manifests", "demo", "search-record.json"),
+      JSON.stringify({ record: { id: "demo-record" } }, null, 2)
     );
     await writeFile(
       join(baseDir, "build", "dev-ui", "index.html"),
@@ -110,6 +142,7 @@ describe("debug UI routes", () => {
     const siteJson = await siteRes.json();
     expect(siteJson.featuredItems).toHaveLength(1);
     expect(siteJson.featuredItems[0].slug).toBe("manifests/demo");
+    expect(siteJson.topics.available).toBe(false);
 
     const resourceRes = await server.request("/_debug/api/resource/manifests/demo");
     expect(resourceRes.status).toBe(200);
@@ -117,7 +150,10 @@ describe("debug UI routes", () => {
     expect(resourceJson.type).toBe("Manifest");
     expect(resourceJson.meta.a).toBe(1);
     expect(resourceJson.indices.topics).toEqual(["alpha"]);
+    expect(resourceJson.searchRecord.record.id).toBe("demo-record");
     expect(resourceJson.links.manifestEditor).toContain("manifest-editor");
+    expect(resourceJson.links.files.meta).toContain("/manifests/demo/meta.json");
+    expect(resourceJson.links.files.searchRecord).toContain("/manifests/demo/search-record.json");
   });
 
   test("uses forwarded base path for debug redirects and asset rewrites", async () => {
@@ -186,6 +222,7 @@ describe("debug UI routes", () => {
     expect(statusRes.status).toBe(200);
     const statusJson = await statusRes.json();
     expect(statusJson.build.status).toBe("idle");
+    expect(statusJson.build.progress.phase).toBe("idle");
     expect(statusJson.onboarding.enabled).toBe(true);
     expect(statusJson.onboarding.contentFolder).toBe("./content");
 
@@ -193,6 +230,275 @@ describe("debug UI routes", () => {
     const siteJson = await siteRes.json();
     expect(siteJson.build.status).toBe("idle");
     expect(siteJson.onboarding.enabled).toBe(true);
+  });
+
+  test("streams build status updates for debug UI", async () => {
+    const server = await createServer({
+      server: { url: "http://localhost:7111" },
+      stores: {
+        default: {
+          type: "iiif-json",
+          path: "./content",
+        },
+      },
+    });
+
+    const streamRes = await server.request("/_debug/api/build-events");
+    expect(streamRes.status).toBe(200);
+    expect(streamRes.headers.get("content-type")).toContain("text/event-stream");
+
+    const reader = streamRes.body?.getReader();
+    expect(reader).toBeDefined();
+
+    const chunk = await reader?.read();
+    const text = new TextDecoder().decode(chunk?.value);
+    expect(text).toContain("event: build");
+    expect(text).toContain('"status":"idle"');
+
+    await reader?.cancel();
+  });
+
+  test("exposes metadata analysis and current extract-topics config", async () => {
+    const server = await createServer({
+      server: { url: "http://localhost:7111" },
+      run: ["extract-topics"],
+      config: {
+        "extract-topics": {
+          topicTypes: {
+            date: ["Year"],
+          },
+        },
+      },
+      stores: {
+        default: {
+          type: "iiif-json",
+          path: "./content",
+        },
+      },
+    });
+
+    const response = await server.request("/_debug/api/metadata-analysis");
+    expect(response.status).toBe(200);
+    const json = await response.json();
+    expect(json.analysis?.foundKeys?.Year).toBe(4);
+    expect(json.extractTopicsConfig?.topicTypes?.date).toEqual(["Year"]);
+    expect(json.outputPath.endsWith("/iiif-config/config/extract-topics.json")).toBe(true);
+    expect(json.warnings).toEqual([]);
+  });
+
+  test("creates extract-topics config from metadata endpoint and triggers full rebuild", async () => {
+    const server = await createServer({
+      server: { url: "http://localhost:7111" },
+      stores: {
+        default: {
+          type: "iiif-json",
+          path: "./content",
+        },
+      },
+    });
+
+    const createResponse = await server.request("/_debug/api/metadata-analysis/create-collection", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        topicTypes: {
+          contributor: ["Contributor", "Contributors"],
+          date: ["Year"],
+        },
+        mode: "merge",
+      }),
+    });
+
+    expect(createResponse.status).toBe(200);
+    const createJson = await createResponse.json();
+    expect(createJson.saved).toBe(true);
+    expect(createJson.extractTopicsConfig.topicTypes).toEqual({
+      contributor: ["Contributor", "Contributors"],
+      date: ["Year"],
+    });
+    expect(createJson.rebuild).toEqual({
+      triggered: true,
+      mode: "full",
+      ok: true,
+      error: null,
+    });
+    expect(createJson.warnings).toEqual([]);
+
+    const persisted = JSON.parse(await readFile(join(cwd(), "iiif-config", "config", "extract-topics.json"), "utf-8"));
+    expect(persisted.topicTypes).toEqual({
+      contributor: ["Contributor", "Contributors"],
+      date: ["Year"],
+    });
+  });
+
+  test("merges existing extract-topics config when saving metadata topic groups", async () => {
+    await mkdir(join(cwd(), "iiif-config", "config"), { recursive: true });
+    await writeFile(
+      join(cwd(), "iiif-config", "config", "extract-topics.json"),
+      JSON.stringify(
+        {
+          language: "en",
+          topicTypes: {
+            date: ["Year"],
+          },
+        },
+        null,
+        2
+      )
+    );
+
+    const server = await createServer({
+      server: { url: "http://localhost:7111" },
+      run: ["extract-topics"],
+      stores: {
+        default: {
+          type: "iiif-json",
+          path: "./content",
+        },
+      },
+    });
+
+    const response = await server.request("/_debug/api/metadata-analysis/create-collection", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        topicTypes: {
+          contributor: ["Contributor"],
+        },
+      }),
+    });
+
+    expect(response.status).toBe(200);
+    const json = await response.json();
+    expect(json.extractTopicsConfig).toEqual({
+      language: "en",
+      topicTypes: {
+        date: ["Year"],
+        contributor: ["Contributor"],
+      },
+    });
+  });
+
+  test("includes top-level topics collection summary in site response", async () => {
+    await mkdir(join(cwd(), ".iiif", "build", "topics"), { recursive: true });
+    await writeFile(
+      join(cwd(), ".iiif", "build", "topics", "collection.json"),
+      JSON.stringify(
+        {
+          id: "http://localhost:7111/topics/collection.json",
+          type: "Collection",
+          label: { en: ["Topics"] },
+          items: [
+            {
+              id: "http://localhost:7111/topics/date/collection.json",
+              type: "Collection",
+              "hss:slug": "topics/date",
+            },
+          ],
+        },
+        null,
+        2
+      )
+    );
+
+    const server = await createServer({
+      server: { url: "http://localhost:7111" },
+      stores: {
+        default: {
+          type: "iiif-json",
+          path: "./content",
+        },
+      },
+    });
+
+    const siteRes = await server.request("/_debug/api/site");
+    expect(siteRes.status).toBe(200);
+    const siteJson = await siteRes.json();
+    expect(siteJson.topics).toEqual({
+      available: true,
+      totalItems: 1,
+      slug: "topics",
+      label: "Topics",
+    });
+  });
+
+  test("rejects config writes when not in folder mode", async () => {
+    const server = await createServer({
+      server: { url: "http://localhost:7111" },
+      stores: {
+        default: {
+          type: "iiif-json",
+          path: "./content",
+        },
+      },
+    });
+
+    const response = await server.request("/_debug/api/config/slugs/save", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        slugs: {},
+      }),
+    });
+    expect(response.status).toBe(409);
+    const json = await response.json();
+    expect(String(json.error || "")).toContain("folder mode");
+  });
+
+  test("saves stores in folder mode debug config endpoints", async () => {
+    await mkdir(join(cwd(), "iiif-config", "stores"), { recursive: true });
+    await mkdir(join(cwd(), "iiif-config", "config"), { recursive: true });
+
+    const server = await createServer(
+      {
+        server: { url: "http://localhost:7111" },
+        stores: {
+          default: {
+            type: "iiif-json",
+            path: "./content",
+          },
+        },
+      },
+      {
+        configSource: {
+          mode: "folder",
+          defaultScriptsPath: "./iiif-config/scripts",
+          watchPaths: [],
+        },
+      }
+    );
+
+    const response = await server.request("/_debug/api/config/stores/newStore", {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        store: {
+          type: "iiif-json",
+          path: "./content",
+        },
+      }),
+    });
+    expect(response.status).toBe(200);
+
+    const json = await response.json();
+    expect(json.saved).toBe(true);
+    const persisted = JSON.parse(await readFile(join(cwd(), "iiif-config", "stores", "newStore.json"), "utf-8"));
+    expect(persisted.type).toBe("iiif-json");
+
+    const deleteResponse = await server.request("/_debug/api/config/stores/newStore", {
+      method: "DELETE",
+    });
+    expect(deleteResponse.status).toBe(200);
+    const deletedJson = await deleteResponse.json();
+    expect(deletedJson.deleted).toBe(true);
   });
 
   test("finds packaged debug UI dir from exported module entrypoints", async () => {

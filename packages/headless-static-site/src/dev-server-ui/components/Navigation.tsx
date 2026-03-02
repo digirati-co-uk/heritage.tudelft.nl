@@ -10,6 +10,12 @@ export function Navigation({ debugBase }: { debugBase: string }) {
       <nav className="flex gap-2">
         <a
           className="border border-gray-200 rounded-lg bg-white px-3 py-2 text-sm hover:bg-slate-50"
+          href="/"
+        >
+          Back to homepage
+        </a>
+        <a
+          className="border border-gray-200 rounded-lg bg-white px-3 py-2 text-sm hover:bg-slate-50"
           href={`${debugBase}/`}
         >
           Home
@@ -19,6 +25,42 @@ export function Navigation({ debugBase }: { debugBase: string }) {
           href={`${debugBase}/trace`}
         >
           Trace
+        </a>
+        <a
+          className="border border-gray-200 rounded-lg bg-white px-3 py-2 text-sm hover:bg-slate-50"
+          href={`${debugBase}/metadata`}
+        >
+          Metadata
+        </a>
+        <a
+          className="border border-gray-200 rounded-lg bg-white px-3 py-2 text-sm hover:bg-slate-50"
+          href={`${debugBase}/config/stores`}
+        >
+          Stores
+        </a>
+        {/*<a
+          className="border border-gray-200 rounded-lg bg-white px-3 py-2 text-sm hover:bg-slate-50"
+          href={`${debugBase}/config/slugs`}
+        >
+          Slugs
+        </a>*/}
+        {/*<a
+          className="border border-gray-200 rounded-lg bg-white px-3 py-2 text-sm hover:bg-slate-50"
+          href={`${debugBase}/config/collections`}
+        >
+          Collections
+        </a>*/}
+        {/*<a
+          className="border border-gray-200 rounded-lg bg-white px-3 py-2 text-sm hover:bg-slate-50"
+          href={`${debugBase}/config/folder-collections`}
+        >
+          Folder Collections
+        </a>*/}
+        <a
+          className="border border-gray-200 rounded-lg bg-white px-3 py-2 text-sm hover:bg-slate-50"
+          href={`${debugBase}/topics/thumbnails`}
+        >
+          Topic Thumbnails
         </a>
       </nav>
     </header>

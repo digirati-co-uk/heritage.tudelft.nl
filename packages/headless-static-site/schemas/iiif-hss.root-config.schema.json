@@ -1,0 +1,236 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.example.org/iiif-hss/iiif-hss.root-config.schema.json",
+  "$comment": "Replace the placeholder host/path in $id when you publish this schema.",
+  "title": "IIIF HSS Root Config",
+  "description": "Schema for .iiifrc.yml/.iiifrc.yaml and iiif-config/config.yml.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string", "format": "uri" },
+    "server": {
+      "oneOf": [
+        { "type": "string", "format": "uri" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["url"],
+          "properties": {
+            "url": { "type": "string", "format": "uri" }
+          }
+        }
+      ]
+    },
+    "run": { "$ref": "#/$defs/stringArray" },
+    "generators": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/generator" }
+    },
+    "stores": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/store" }
+    },
+    "slugs": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/slugConfig" }
+    },
+    "config": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "collections": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "index": { "type": "object", "additionalProperties": true },
+        "manifests": { "type": "object", "additionalProperties": true },
+        "collections": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "topics": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    "search": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "indexNames": { "$ref": "#/$defs/stringArray" },
+        "defaultIndex": { "type": "string" },
+        "emitRecord": { "type": "boolean" }
+      }
+    },
+    "network": { "$ref": "#/$defs/networkConfig" },
+    "concurrency": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "cpu": { "type": "integer", "minimum": 1 },
+        "io": { "type": "integer", "minimum": 1 },
+        "link": { "type": "integer", "minimum": 1 },
+        "extract": { "type": "integer", "minimum": 1 },
+        "enrich": { "type": "integer", "minimum": 1 },
+        "enrichCanvas": { "type": "integer", "minimum": 1 },
+        "emit": { "type": "integer", "minimum": 1 },
+        "emitCanvas": { "type": "integer", "minimum": 1 },
+        "write": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "fileTemplates": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "$defs": {
+    "stringArray": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "ignoreValue": {
+      "oneOf": [{ "type": "string" }, { "$ref": "#/$defs/stringArray" }]
+    },
+    "storeMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label"],
+      "properties": {
+        "label": { "type": "string" },
+        "description": { "type": "string" }
+      }
+    },
+    "networkConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "prefetch": { "type": "boolean" },
+        "concurrency": { "type": "integer", "minimum": 1 },
+        "minDelayMs": { "type": "integer", "minimum": 0 },
+        "maxRetries": { "type": "integer", "minimum": 0 },
+        "baseDelayMs": { "type": "integer", "minimum": 0 },
+        "maxDelayMs": { "type": "integer", "minimum": 0 },
+        "jitterRatio": { "type": "number", "minimum": 0, "maximum": 1 },
+        "retryStatuses": {
+          "type": "array",
+          "items": { "type": "integer", "minimum": 100, "maximum": 599 }
+        },
+        "respectRetryAfter": { "type": "boolean" }
+      }
+    },
+    "iiifJsonStore": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "path"],
+      "properties": {
+        "$schema": { "type": "string", "format": "uri" },
+        "type": { "const": "iiif-json" },
+        "path": { "type": "string", "minLength": 1 },
+        "pattern": { "type": "string" },
+        "ignore": { "$ref": "#/$defs/ignoreValue" },
+        "subFiles": { "type": "boolean" },
+        "base": { "type": "string" },
+        "destination": { "type": "string" },
+        "options": { "type": "object", "additionalProperties": true },
+        "metadata": { "$ref": "#/$defs/storeMetadata" },
+        "slugTemplate": {
+          "oneOf": [
+            { "$ref": "#/$defs/slugConfig" },
+            {
+              "type": "array",
+              "minItems": 1,
+              "items": { "$ref": "#/$defs/slugConfig" }
+            }
+          ]
+        },
+        "slugTemplates": { "$ref": "#/$defs/stringArray" },
+        "skip": { "$ref": "#/$defs/stringArray" },
+        "run": { "$ref": "#/$defs/stringArray" },
+        "config": { "type": "object", "additionalProperties": true }
+      }
+    },
+    "iiifRemoteStore": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type"],
+      "anyOf": [{ "required": ["url"] }, { "required": ["urls"] }],
+      "properties": {
+        "$schema": { "type": "string", "format": "uri" },
+        "type": { "const": "iiif-remote" },
+        "url": { "type": "string", "format": "uri" },
+        "urls": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "format": "uri" }
+        },
+        "overrides": { "type": "string" },
+        "saveManifests": { "type": "boolean" },
+        "options": { "type": "object", "additionalProperties": true },
+        "metadata": { "$ref": "#/$defs/storeMetadata" },
+        "slugTemplate": {
+          "oneOf": [
+            { "$ref": "#/$defs/slugConfig" },
+            {
+              "type": "array",
+              "minItems": 1,
+              "items": { "$ref": "#/$defs/slugConfig" }
+            }
+          ]
+        },
+        "slugTemplates": { "$ref": "#/$defs/stringArray" },
+        "skip": { "$ref": "#/$defs/stringArray" },
+        "run": { "$ref": "#/$defs/stringArray" },
+        "config": { "type": "object", "additionalProperties": true },
+        "destination": { "type": "string" },
+        "network": { "$ref": "#/$defs/networkConfig" }
+      }
+    },
+    "store": {
+      "oneOf": [
+        { "$ref": "#/$defs/iiifJsonStore" },
+        { "$ref": "#/$defs/iiifRemoteStore" }
+      ]
+    },
+    "generator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type"],
+      "properties": {
+        "type": { "type": "string" },
+        "output": { "type": "string" },
+        "config": { "type": "object", "additionalProperties": true }
+      }
+    },
+    "slugConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "domain"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["Manifest", "Collection"]
+        },
+        "domain": { "type": "string", "minLength": 1 },
+        "prefix": { "type": "string" },
+        "suffix": { "type": "string" },
+        "examples": {
+          "type": "array",
+          "items": { "type": "string", "format": "uri" }
+        },
+        "protocol": {
+          "type": "string",
+          "enum": ["http", "https"]
+        },
+        "pathSeparator": { "type": "string" },
+        "addedPrefix": { "type": "string" }
+      }
+    }
+  }
+}

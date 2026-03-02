@@ -1,0 +1,36 @@
+---
+import { ManifestClientMeta } from "../../components/ManifestClientMeta";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { iiif } from "../../lib/iiif-server";
+
+export async function getStaticPaths() {
+  const collection = await iiif.getAllManifests();
+  return iiif.getManifestStaticPathsFromCollection(collection);
+}
+
+const loaded = await iiif.loadManifestFromParams(Astro.params);
+const manifest = loaded.resource;
+const label = manifest?.label?.en?.[0] || loaded.meta?.label || loaded.slug;
+---
+
+<BaseLayout title={label}>
+  <section class="stack">
+    <h1>{label}</h1>
+    <p><a href="/">Back home</a> · <a href="/objects">Objects</a></p>
+
+    <div class="panel stack">
+      <h2>Resolved JSON source</h2>
+      <p class="small">{loaded.links.json || "Unavailable"}</p>
+    </div>
+
+    <div class="panel stack">
+      <h2>Manifest meta.json</h2>
+      <pre>{JSON.stringify(loaded.meta || {}, null, 2)}</pre>
+    </div>
+
+    <div class="panel stack">
+      <h2>Client component check</h2>
+      <ManifestClientMeta client:load slug={loaded.slug} />
+    </div>
+  </section>
+</BaseLayout>

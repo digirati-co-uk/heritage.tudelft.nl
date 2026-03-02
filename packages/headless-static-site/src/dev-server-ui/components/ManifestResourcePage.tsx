@@ -23,9 +23,26 @@ export function ManifestResourcePage({
           remote-only.
         </section>
         <section>
-          <JsonPanel title="IIIF Resource" value={data.resource} />
-          <JsonPanel title="meta.json" value={data.meta} />
-          <JsonPanel title="indices.json" value={data.indices} />
+          <JsonPanel
+            title="IIIF Resource"
+            value={data.resource}
+            href={data.links.files.resource}
+          />
+          <JsonPanel
+            title="meta.json"
+            value={data.meta}
+            href={data.links.files.meta}
+          />
+          <JsonPanel
+            title="indices.json"
+            value={data.indices}
+            href={data.links.files.indices}
+          />
+          <JsonPanel
+            title="search-record.json"
+            value={data.searchRecord}
+            href={data.links.files.searchRecord}
+          />
         </section>
       </main>
     );
@@ -80,9 +97,26 @@ export function ManifestResourcePage({
 
       <ResourceSummaryCard data={data} thumb={thumb} />
       <section>
-        <JsonPanel title="IIIF Resource" value={data.resource} />
-        <JsonPanel title="meta.json" value={data.meta} />
-        <JsonPanel title="indices.json" value={data.indices} />
+        <JsonPanel
+          title="IIIF Resource"
+          value={data.resource}
+          href={data.links.files.resource}
+        />
+        <JsonPanel
+          title="meta.json"
+          value={data.meta}
+          href={data.links.files.meta}
+        />
+        <JsonPanel
+          title="indices.json"
+          value={data.indices}
+          href={data.links.files.indices}
+        />
+        <JsonPanel
+          title="search-record.json"
+          value={data.searchRecord}
+          href={data.links.files.searchRecord}
+        />
       </section>
     </main>
   );

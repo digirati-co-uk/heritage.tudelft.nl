@@ -1,5 +1,6 @@
 import { serve } from "@hono/node-server";
 import app from "../server";
+import { resolveHostUrl } from "../util/resolve-host-url";
 
 type ServeOptions = {
   build?: boolean;
@@ -16,6 +17,6 @@ export async function serveCommand(options: ServeOptions) {
     await app.request("/watch");
   }
 
-  console.log(`Server running: http://localhost:${app.port}`);
+  console.log(`Server running: ${resolveHostUrl(`http://localhost:${app.port}`)}`);
   serve(app);
 }

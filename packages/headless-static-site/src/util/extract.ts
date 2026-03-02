@@ -117,6 +117,7 @@ export interface Extraction<Config = any, Temp = any, TempInject = any> {
   id: string;
   name: string;
   types: string[];
+  alwaysRun?: boolean;
   search?: Record<string, SearchExtractionConfig>;
   close?: (config: Config) => Promise<void>;
   collect?: (

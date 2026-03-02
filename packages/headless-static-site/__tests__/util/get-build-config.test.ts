@@ -72,6 +72,95 @@ describe("getBuildConfig search indexNames", () => {
     expect(result.search.indexNames).toEqual(["canvas"]);
   });
 
+  test("emits search record by default", async () => {
+    const config = {
+      stores: {
+        local: {
+          type: "iiif-json" as const,
+          path: "./content",
+        },
+      },
+    };
+
+    const result = await getBuildConfig(
+      {
+        cwd: testDir,
+        scripts: "./no-scripts-here",
+      },
+      {
+        ...defaultBuiltIns,
+        customConfig: config as any,
+      }
+    );
+
+    expect(result.search.emitRecord).toBe(true);
+  });
+
+  test("respects explicit search emitRecord = false", async () => {
+    const config = {
+      stores: {
+        local: {
+          type: "iiif-json" as const,
+          path: "./content",
+        },
+      },
+      search: {
+        emitRecord: false,
+      },
+    };
+
+    const result = await getBuildConfig(
+      {
+        cwd: testDir,
+        scripts: "./no-scripts-here",
+      },
+      {
+        ...defaultBuiltIns,
+        customConfig: config as any,
+      }
+    );
+
+    expect(result.search.emitRecord).toBe(false);
+  });
+
+  test("shares request cache directory between build and dev", async () => {
+    const config = {
+      stores: {
+        local: {
+          type: "iiif-json" as const,
+          path: "./content",
+        },
+      },
+    };
+
+    const buildConfig = await getBuildConfig(
+      {
+        cwd: testDir,
+        scripts: "./no-scripts-here",
+      },
+      {
+        ...defaultBuiltIns,
+        customConfig: config as any,
+      }
+    );
+
+    const devConfig = await getBuildConfig(
+      {
+        cwd: testDir,
+        scripts: "./no-scripts-here",
+        dev: true,
+      },
+      {
+        ...defaultBuiltIns,
+        customConfig: config as any,
+      }
+    );
+
+    expect(buildConfig.requestCacheDir).toBe(".iiif/cache/_requests");
+    expect(devConfig.requestCacheDir).toBe(".iiif/cache/_requests");
+    expect(devConfig.cacheDir).toBe(".iiif/dev/cache");
+  });
+
   test("derives bounded queue concurrency defaults", async () => {
     const config = {
       stores: {
@@ -160,6 +249,93 @@ describe("getBuildConfig search indexNames", () => {
     );
 
     expect(result.extractions.some((step) => step.id === "extract-collection-thumbnail")).toBe(true);
+  });
+
+  test("always includes runtime hints extraction even when run list is restricted", async () => {
+    const config = {
+      stores: {
+        local: {
+          type: "iiif-json" as const,
+          path: "./content",
+        },
+      },
+      run: ["extract-label-string"],
+    };
+
+    const result = await getBuildConfig(
+      {
+        cwd: testDir,
+        scripts: "./no-scripts-here",
+      },
+      {
+        ...defaultBuiltIns,
+        customConfig: config as any,
+      }
+    );
+
+    expect(result.extractions.some((step) => step.id === "extract-runtime-hints")).toBe(true);
+  });
+
+  test("auto-enables extract-topics when config exists", async () => {
+    const config = {
+      stores: {
+        local: {
+          type: "iiif-json" as const,
+          path: "./content",
+        },
+      },
+      config: {
+        "extract-topics": {
+          topicTypes: {
+            date: ["Year"],
+          },
+        },
+      },
+      run: ["metadata-analysis"],
+    };
+
+    const result = await getBuildConfig(
+      {
+        cwd: testDir,
+        scripts: "./no-scripts-here",
+      },
+      {
+        ...defaultBuiltIns,
+        customConfig: config as any,
+      }
+    );
+
+    expect(result.extractions.some((step) => step.id === "extract-topics")).toBe(true);
+  });
+
+  test("auto-enables enrich-topic-thumbnails when config exists", async () => {
+    const config = {
+      stores: {
+        local: {
+          type: "iiif-json" as const,
+          path: "./content",
+        },
+      },
+      config: {
+        "enrich-topic-thumbnails": {
+          selectionStrategy: "first",
+        },
+      },
+      run: ["metadata-analysis"],
+    };
+
+    const result = await getBuildConfig(
+      {
+        cwd: testDir,
+        scripts: "./no-scripts-here",
+      },
+      {
+        ...defaultBuiltIns,
+        customConfig: config as any,
+      }
+    );
+
+    expect(result.enrichments.some((step) => step.id === "enrich-topic-thumbnails")).toBe(true);
   });
 
   test("uses configured server URL for dev configUrl when DEV_SERVER env is absent", async () => {
