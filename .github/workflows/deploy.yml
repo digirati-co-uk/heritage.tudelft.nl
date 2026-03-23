@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       rebuild-index:
-        description: 'Rebuild search index'
+        description: "Rebuild search index"
         required: true
         default: false
         type: boolean
@@ -64,8 +64,6 @@ jobs:
         id: netlify_iiif
         working-directory: apps/iiif
         run: |
-          # First build can be removed after a build issue has been resolved!
-          pnpm run build
           deploy_json=$(npx netlify-cli@23.9.5 deploy \
             --build \
             --prod \
