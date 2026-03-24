@@ -1,6 +1,6 @@
 {
   "@context": "http://iiif.io/api/presentation/3/context.json",
-  "id": "https://example.org/wynk8rg0zir-ml6mpjpf",
+  "id": "http://localhost:7111/manifests/through-the-lens-of/manifest.json",
   "type": "Manifest",
   "label": {
     "nl": ["Door de lens van professor Van Heel: educator in hart en nieren"],
@@ -17,32 +17,48 @@
         "nl": ["Fisheye-foto van Van Heels klaslokaal, Collectie Van Heel"],
         "en": ["Fisheye photo of Van Heel’s classroom, Van Heel Collection"]
       },
-      "placeholderCanvas": [],
-      "accompanyingCanvas": [],
+      "placeholderCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
+      "accompanyingCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
       "items": [
         {
           "id": "https://example.org/wynk8rg0zir-ml6mpjpf/canvas/f4v31q7lgbu-ml6mzeg7/AnnotationPage/ppax0ew9y4b-ml6mzegs",
           "type": "AnnotationPage",
           "items": [
             {
-              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/canvas/f4v31q7lgbu-ml6mzeg7/annotation-page/fe6kqxp4jnc-ml6mzeg7/Annotation/hluvlsy2auk-ml6mzegr",
+              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/canvas/f4v31q7lgbu-ml6mzeg7/AnnotationPage/ppax0ew9y4b-ml6mzegs/Annotation/tlrntfy1mk-mn4nsmt5",
               "type": "Annotation",
               "motivation": "painting",
-              "target": "https://example.org/wynk8rg0zir-ml6mpjpf/canvas/f4v31q7lgbu-ml6mzeg7",
+              "target": "https://example.org/wynk8rg0zir-ml6mpjpf/canvas/f4v31q7lgbu-ml6mzeg7#xywh=0,0,1024,1024",
               "body": {
-                "id": "https://dlc.services/iiif-img/7/37/c4d51a9ae4e0d50e553b123b44e5f8b9/full/1024,1024/0/default.jpg",
-                "type": "Image",
-                "height": 3944,
-                "width": 3944,
-                "service": [
-                  {
-                    "@id": "https://dlc.services/iiif-img/7/37/c4d51a9ae4e0d50e553b123b44e5f8b9",
-                    "@type": "ImageService2",
-                    "profile": "level2",
-                    "width": 3944,
-                    "height": 3944
-                  }
-                ]
+                "id": "https://dlc.services/iiif-img/7/37/c4d51a9ae4e0d50e553b123b44e5f8b9/canvas/c/1/imageanno/0/SpecificResource/eogi7mhiwfk-mn4nsmt5",
+                "type": "SpecificResource",
+                "source": {
+                  "id": "https://dlc.services/iiif-img/7/37/c4d51a9ae4e0d50e553b123b44e5f8b9/60,83,3815,3814/max/0/default.jpg",
+                  "type": "Image",
+                  "height": 3944,
+                  "width": 3944,
+                  "service": [
+                    {
+                      "@id": "https://dlc.services/iiif-img/7/37/c4d51a9ae4e0d50e553b123b44e5f8b9",
+                      "@type": "ImageService2",
+                      "profile": "level2",
+                      "width": 3944,
+                      "height": 3944
+                    }
+                  ]
+                },
+                "selector": {
+                  "type": "ImageApiSelector",
+                  "region": "72,83,3803,3814"
+                }
               }
             }
           ]
@@ -64,8 +80,16 @@
       "label": {
         "none": [""]
       },
-      "placeholderCanvas": [],
-      "accompanyingCanvas": [],
+      "placeholderCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
+      "accompanyingCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
       "items": [
         {
           "id": "https://example.org/wynk8rg0zir-ml6mpjpf/canvas/5gt2h39x5wh-ml6n2tli/annotation-page/3n0mocycown-ml6n2tli",
@@ -119,300 +143,6 @@
       ]
     },
     {
-      "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4",
-      "type": "Canvas",
-      "height": 4000,
-      "width": 6000,
-      "behavior": ["multi-image", "w-12", "h-7"],
-      "label": {
-        "nl": ["Uit de Collectie Van Heel"],
-        "en": ["From the Van Heel Collection"]
-      },
-      "summary": {
-        "nl": [""]
-      },
-      "placeholderCanvas": [],
-      "accompanyingCanvas": [],
-      "items": [
-        {
-          "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/ysfu400bc-ml6nawq4",
-          "type": "AnnotationPage",
-          "items": [
-            {
-              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/ysfu400bc-ml6nawq4/Annotation/69qjxyzpyk9-ml6nedm0",
-              "type": "Annotation",
-              "label": {
-                "nl": ["Portretfoto van Van Heel, jaartal onbekend."],
-                "en": ["Portrait photo of Van Heel, year unknown."]
-              },
-              "summary": {
-                "nl": [
-                  "Collectie Van Heel. Foto door programma Maatwerk Facultaire Collecties."
-                ],
-                "en": [
-                  "Van Heel Collection. Photograph by the programme Tailor-Made Approach to Faculty Collections."
-                ]
-              },
-              "motivation": "painting",
-              "target": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4#xywh=461,253,1436,1457",
-              "body": {
-                "id": "https://dlc.services/iiif-img/7/37/face6c707553527cd4797d905ec2cada/canvas/c/7/imageanno/0/SpecificResource/8y7dfkq6kpo-ml6nedm0",
-                "type": "SpecificResource",
-                "source": {
-                  "id": "https://dlc.services/iiif-img/7/37/face6c707553527cd4797d905ec2cada/50,542,2142,2172/max/0/default.jpg",
-                  "type": "Image",
-                  "height": 3233,
-                  "width": 2307,
-                  "service": [
-                    {
-                      "@id": "https://dlc.services/iiif-img/7/37/face6c707553527cd4797d905ec2cada",
-                      "@type": "ImageService2",
-                      "profile": "level2",
-                      "width": 2307,
-                      "height": 3233
-                    }
-                  ]
-                },
-                "selector": {
-                  "type": "ImageApiSelector",
-                  "region": "50,542,2142,2172"
-                }
-              }
-            },
-            {
-              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/ysfu400bc-ml6nawq4/Annotation/2ij2rqcco6x-ml6nglpc",
-              "type": "Annotation",
-              "label": {
-                "nl": [
-                  "Basisset optiek in houten kist, nog altijd gebruikt in het onderwijs."
-                ],
-                "en": [
-                  "Basic Optics set in wooden box, still used in education."
-                ]
-              },
-              "summary": {
-                "nl": [
-                  "TNW.2024.0021. Collectie Van Heel. Foto door het programma Maatwerk Facultaire Collecties."
-                ],
-                "en": [
-                  "TNW.2024.0021. Van Heel Collection. Photograph by the programme Tailor-Made Approach to Faculty Collections."
-                ]
-              },
-              "motivation": "painting",
-              "target": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4#xywh=3503,213,2008,1505",
-              "body": {
-                "id": "https://dlc.services/iiif-img/7/37/a8c9b316dcf55894f206417a18772f8f/full/1024,768/0/default.jpg",
-                "type": "Image",
-                "height": 3024,
-                "width": 4032,
-                "service": [
-                  {
-                    "@id": "https://dlc.services/iiif-img/7/37/a8c9b316dcf55894f206417a18772f8f",
-                    "@type": "ImageService2",
-                    "profile": "level2",
-                    "width": 4032,
-                    "height": 3024
-                  }
-                ]
-              }
-            },
-            {
-              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/ysfu400bc-ml6nawq4/Annotation/gxvr08bftwq-ml6nfykp",
-              "type": "Annotation",
-              "label": {
-                "nl": ["Glasdia van studenten in collegezaal."],
-                "en": ["Glass slide of students in a lecture hall."]
-              },
-              "summary": {
-                "nl": ["Collectie Van Heel."],
-                "en": ["Van Heel Collection."]
-              },
-              "motivation": "painting",
-              "target": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4#xywh=2171,1101,1650,1650",
-              "body": {
-                "id": "https://dlc.services/iiif-img/7/37/d7d55acc0d13a824059c8577e3913c3f/full/1024,1024/0/default.jpg",
-                "type": "Image",
-                "height": 3944,
-                "width": 3944,
-                "service": [
-                  {
-                    "@id": "https://dlc.services/iiif-img/7/37/d7d55acc0d13a824059c8577e3913c3f",
-                    "@type": "ImageService2",
-                    "profile": "level2",
-                    "width": 3944,
-                    "height": 3944
-                  }
-                ]
-              }
-            },
-            {
-              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/ysfu400bc-ml6nawq4/Annotation/n4dlqlodeq-ml6nf4ob",
-              "type": "Annotation",
-              "label": {
-                "nl": [
-                  "Assemblage van verschillende experimentele lenzen, chemicaliën en overige technische objecten. Waarschijnlijk  gemaakt door Van Heel. "
-                ],
-                "en": [
-                  "Assembly of various experimental lenses, chemicals, and other technical objects. Likely made by Van Heel."
-                ]
-              },
-              "summary": {
-                "nl": [
-                  "TNW.2024.0009. Collectie Van Heel. Foto door het programma Maatwerk Facultaire Collecties."
-                ],
-                "en": [
-                  "TNW.2024.0009. Van Heel Collection. Photograph by the programme Tailor-Made Approach to Faculty Collections."
-                ]
-              },
-              "motivation": "painting",
-              "target": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4#xywh=758,1853,1615,1846",
-              "body": {
-                "id": "https://dlc.services/iiif-img/7/37/cd0e419fd412a70f39ba5fa4c0784d35/full/896,1024/0/default.jpg",
-                "type": "Image",
-                "height": 2803,
-                "width": 2453,
-                "service": [
-                  {
-                    "@id": "https://dlc.services/iiif-img/7/37/cd0e419fd412a70f39ba5fa4c0784d35",
-                    "@type": "ImageService2",
-                    "profile": "level2",
-                    "width": 2453,
-                    "height": 2803
-                  }
-                ]
-              }
-            },
-            {
-              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/ysfu400bc-ml6nawq4/Annotation/a0lwgot4jai-ml6nhcgh",
-              "type": "Annotation",
-              "label": {
-                "nl": [
-                  "Bruin notitieboek met handgeschreven notities van Van Heel, tussen 1953-1960."
-                ],
-                "en": [
-                  "Brown notebook with handwritten notes by Van Heel, from 1953 to 1960."
-                ]
-              },
-              "summary": {
-                "nl": [
-                  "Collectie Van Heel. Foto door het programma Maatwerk Facultaire Collecties."
-                ],
-                "en": [
-                  "Van Heel Collection. Photograph by the programme Tailor-Made Approach to Faculty Collections."
-                ]
-              },
-              "motivation": "painting",
-              "target": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4#xywh=3530,2229,2205,1553",
-              "body": {
-                "id": "https://dlc.services/iiif-img/7/37/a12ba3940dec775f7931eb54fbf723d6/full/1024,722/0/default.jpg",
-                "type": "Image",
-                "height": 2841,
-                "width": 4032,
-                "service": [
-                  {
-                    "@id": "https://dlc.services/iiif-img/7/37/a12ba3940dec775f7931eb54fbf723d6",
-                    "@type": "ImageService2",
-                    "profile": "level2",
-                    "width": 4032,
-                    "height": 2841
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      ],
-      "annotations": [
-        {
-          "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/syfaplrmhx8-ml6nawq4",
-          "type": "AnnotationPage",
-          "items": [
-            {
-              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/syfaplrmhx8-ml6nawq4/annotation/4fg7v8rzdjt-ml6nppfw",
-              "type": "Annotation",
-              "motivation": "tagging",
-              "target": {
-                "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/ysfu400bc-ml6nawq4/Annotation/69qjxyzpyk9-ml6nedm0",
-                "type": "Annotation"
-              },
-              "body": []
-            },
-            {
-              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/syfaplrmhx8-ml6nawq4/annotation/xiwjsffa4w-ml6nqs62",
-              "type": "Annotation",
-              "motivation": "tagging",
-              "target": {
-                "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/ysfu400bc-ml6nawq4/Annotation/n4dlqlodeq-ml6nf4ob",
-                "type": "Annotation"
-              },
-              "body": []
-            },
-            {
-              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/syfaplrmhx8-ml6nawq4/annotation/cop7ukr1jsq-ml6nsqer",
-              "type": "Annotation",
-              "motivation": "tagging",
-              "target": {
-                "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/ysfu400bc-ml6nawq4/Annotation/gxvr08bftwq-ml6nfykp",
-                "type": "Annotation"
-              },
-              "body": []
-            },
-            {
-              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/syfaplrmhx8-ml6nawq4/annotation/vja0dx8fjgg-ml6nuxuo",
-              "type": "Annotation",
-              "motivation": "tagging",
-              "target": {
-                "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/ysfu400bc-ml6nawq4/Annotation/2ij2rqcco6x-ml6nglpc",
-                "type": "Annotation"
-              },
-              "body": []
-            },
-            {
-              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/syfaplrmhx8-ml6nawq4/annotation/8y88o7sskb-ml6nwezb",
-              "type": "Annotation",
-              "motivation": "tagging",
-              "target": {
-                "type": "SpecificResource",
-                "source": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4",
-                "selector": [
-                  {
-                    "type": "FragmentSelector",
-                    "value": "xywh=3744,259,982,615"
-                  }
-                ]
-              },
-              "body": [
-                {
-                  "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/syfaplrmhx8-ml6nawq4/annotation/8y88o7sskb-ml6nwezb/html/en/863bearqwbc-ml6nwezb",
-                  "type": "TextualBody",
-                  "format": "text/html",
-                  "language": "nl",
-                  "value": "<p>Toelichting inhoud basisset.</p>"
-                },
-                {
-                  "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/syfaplrmhx8-ml6nawq4/annotation/8y88o7sskb-ml6nwezb/html/en/29g39wlyqec-mluy4tkb",
-                  "type": "TextualBody",
-                  "format": "text/html",
-                  "language": "en",
-                  "value": "<p>Note on the contents of the box.</p>"
-                }
-              ]
-            },
-            {
-              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/syfaplrmhx8-ml6nawq4/annotation/huyvk1uhv4p-ml6nx9rd",
-              "type": "Annotation",
-              "motivation": "tagging",
-              "target": {
-                "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/ysfu400bc-ml6nawq4/Annotation/a0lwgot4jai-ml6nhcgh",
-                "type": "Annotation"
-              },
-              "body": []
-            }
-          ]
-        }
-      ]
-    },
-    {
       "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/br43az3c1n6-ml6oy935",
       "type": "Canvas",
       "height": 4000,
@@ -430,8 +160,16 @@
           "Bram van Heel began his career as a teacher in 1925 at the Technische Hoogeschool Delft (the predecessor of Delft University of Technology). Just before, he had obtained his doctorate from Leiden University. In Delft, he taught a variety of physics-related topics, but from the very beginning, he had a passion for his field: optics. \n\nOver the years, he increasingly gained ground for optical research and education. He authored numerous publications, including 'Inleiding in de Optica' (Introduction to Optics), which long remained a highly influential work in the training of young optics specialists. \n\nAt the university, he was beloved among his students. Many decades after his death in 1966, former students still spoke highly of this extroverted professor, who brought optics to life with infectious enthusiasm."
         ]
       },
-      "placeholderCanvas": [],
-      "accompanyingCanvas": [],
+      "placeholderCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
+      "accompanyingCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
       "items": [
         {
           "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/br43az3c1n6-ml6oy935/AnnotationPage/odvvdtgz79o-ml6oy935",
@@ -791,63 +529,302 @@
       ]
     },
     {
-      "id": "https://example.org/wynk8rg0zir-ml6mpjpf/canvas/21e7iwfrcwbh-ml6qbqhs",
+      "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4",
       "type": "Canvas",
-      "height": 1000,
-      "width": 1000,
-      "behavior": ["info", "w-12", "h-3"],
+      "height": 4000,
+      "width": 6000,
+      "behavior": ["multi-image", "w-12", "h-7"],
       "label": {
-        "none": [""]
+        "nl": ["Uit de Collectie Van Heel"],
+        "en": ["From the Van Heel Collection"]
       },
-      "placeholderCanvas": [],
-      "accompanyingCanvas": [],
+      "summary": {
+        "nl": [""]
+      },
+      "placeholderCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
+      "accompanyingCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
       "items": [
         {
-          "id": "https://example.org/wynk8rg0zir-ml6mpjpf/canvas/21e7iwfrcwbh-ml6qbqhs/annotation-page/fnvz1oqltq-ml6qbqhs",
+          "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/ysfu400bc-ml6nawq4",
           "type": "AnnotationPage",
           "items": [
             {
-              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/canvas/21e7iwfrcwbh-ml6qbqhs/annotation/y9lf8p2igv-ml6qbqhs",
+              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/ysfu400bc-ml6nawq4/Annotation/69qjxyzpyk9-ml6nedm0",
               "type": "Annotation",
+              "label": {
+                "nl": ["Portretfoto van Van Heel, jaartal onbekend."],
+                "en": ["Portrait photo of Van Heel, year unknown."]
+              },
+              "summary": {
+                "nl": [
+                  "Collectie Van Heel. Foto door programma Maatwerk Facultaire Collecties."
+                ],
+                "en": [
+                  "Van Heel Collection. Photograph by the programme Tailor-Made Approach to Faculty Collections."
+                ]
+              },
               "motivation": "painting",
-              "target": "https://example.org/wynk8rg0zir-ml6mpjpf/canvas/21e7iwfrcwbh-ml6qbqhs",
-              "body": [
-                {
-                  "id": "https://example.org/wynk8rg0zir-ml6mpjpf/canvas/21e7iwfrcwbh-ml6qbqhs/annotation/y9lf8p2igv-ml6qbqhs/html/en/4rj4l1urqlu-ml6qbqhs",
-                  "type": "TextualBody",
-                  "format": "text/html",
-                  "language": "nl",
-                  "value": "<h2 id=\"experimentertainment\">Experiment(ertainment)</h2>\n<p>De enorme populariteit van Van Heels colleges valt niet genoeg te benadrukken. Zijn lessen, waarvan hij keer op keer een schouwspel wist te maken, werden bezocht door studenten uit allerlei richtingen. Wat maakte zijn onderwijs zo boeiend?</p>\n<p>Steeds wist Van Heel de theorie die hij doceerde tastbaar te maken met live experimenten. De studenten zagen de taaie materie voor hun ogen tot leven komen. Zo prepareerde hij, voor een les over de werking van het oog, koeienogen zodanig dat de studenten hun klaslokaal op het netvlies afgebeeld zagen.</p>\n<p>Zijn beroemde aligneermethode bracht hij ook de collegezaal in. Gebaseerd op Youngs interferometer ontwikkelde hij een optische methode die onder andere is ingezet om de gesneuvelde brug over de Maas bij Hedel te herbouwen na de Tweede Wereldoorlog. De studenten konden de techniek zo zelf uittesten.</p>\n<p>Een overgeleverde foto getuigt van één van Van Heels andere demonstraties. Met zijn 180 graden lens nam hij een foto van zijn stampvolle lokaal. Op deze manier konden de leerlingen zichzelf terugzien in fisheye-perspectief.</p>\n<p>Alle proeven waren van tevoren tot in detail uitgewerkt zodat de ‘show’ vlekkeloos kon verlopen. Zo wist Van Heel, als object based teacher avant-la-lettre, zijn studenten eindeloos te verwonderen.</p>"
+              "target": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4#xywh=461,253,1436,1457",
+              "body": {
+                "id": "https://dlc.services/iiif-img/7/37/face6c707553527cd4797d905ec2cada/canvas/c/7/imageanno/0/SpecificResource/8y7dfkq6kpo-ml6nedm0",
+                "type": "SpecificResource",
+                "source": {
+                  "id": "https://dlc.services/iiif-img/7/37/face6c707553527cd4797d905ec2cada/50,542,2142,2172/max/0/default.jpg",
+                  "type": "Image",
+                  "height": 3233,
+                  "width": 2307,
+                  "service": [
+                    {
+                      "@id": "https://dlc.services/iiif-img/7/37/face6c707553527cd4797d905ec2cada",
+                      "@type": "ImageService2",
+                      "profile": "level2",
+                      "width": 2307,
+                      "height": 3233
+                    }
+                  ]
                 },
-                {
-                  "id": "https://example.org/wynk8rg0zir-ml6mpjpf/canvas/1msltux5rh7-mmkcx7z6/annotation/asjwnp0a16f-mmkcx7z6/html/en/zcsp9l1cin8-mmkcx7z6",
-                  "type": "TextualBody",
-                  "format": "text/html",
-                  "language": "en",
-                  "value": "<h2 id=\"experimentertainment\">Experiment(ertainment)</h2>\n<p>The enormous popularity of Van Heel's lectures cannot be overstated. His classes, which he managed to make a spectacle of time and again, were attended by students from various disciplines. What made his teaching so captivating?</p>\n<p>Van Heel always managed to make the theory he taught tangible with live experiments. The students saw the tough subject matter come to life before their very eyes. To illustrate, for a lesson on the workings of the eye, he prepared cow eyes so that the students could see their classroom projected on the retinas.</p>\n<p>He also brought his famous alignment method into the lecture halls. Based on Young's interferometer, he developed an optical method that was used to rebuild the destroyed bridge over the Meuse River near Hedel after World War II. This allowed the students to test the technology themselves.</p>\n<p>A surviving photo illustrates one of Van Heel's other demonstrations. With his 180-degree lens, he took a picture of his packed classroom. This way, the students saw themselves in a fisheye perspective.</p>\n<p>All the experiments had been meticulously prepared in advance so that the ‘show’ could run smoothly. This is how Van Heel, as a pioneering object-based teacher, managed to amaze his students endlessly.</p>"
+                "selector": {
+                  "type": "ImageApiSelector",
+                  "region": "50,542,2142,2172"
                 }
-              ]
+              }
+            },
+            {
+              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/ysfu400bc-ml6nawq4/Annotation/2ij2rqcco6x-ml6nglpc",
+              "type": "Annotation",
+              "label": {
+                "nl": [
+                  "Basisset optiek in houten kist, nog altijd gebruikt in het onderwijs."
+                ],
+                "en": [
+                  "Basic Optics set in wooden box, still used in education."
+                ]
+              },
+              "summary": {
+                "nl": [
+                  "TNW.2024.0021. Collectie Van Heel. Foto door het programma Maatwerk Facultaire Collecties."
+                ],
+                "en": [
+                  "TNW.2024.0021. Van Heel Collection. Photograph by the programme Tailor-Made Approach to Faculty Collections."
+                ]
+              },
+              "motivation": "painting",
+              "target": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4#xywh=3503,213,2008,1505",
+              "body": {
+                "id": "https://dlc.services/iiif-img/7/37/a8c9b316dcf55894f206417a18772f8f/full/1024,768/0/default.jpg",
+                "type": "Image",
+                "height": 3024,
+                "width": 4032,
+                "service": [
+                  {
+                    "@id": "https://dlc.services/iiif-img/7/37/a8c9b316dcf55894f206417a18772f8f",
+                    "@type": "ImageService2",
+                    "profile": "level2",
+                    "width": 4032,
+                    "height": 3024
+                  }
+                ]
+              }
+            },
+            {
+              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/ysfu400bc-ml6nawq4/Annotation/gxvr08bftwq-ml6nfykp",
+              "type": "Annotation",
+              "label": {
+                "nl": ["Glasdia van studenten in collegezaal."],
+                "en": ["Glass slide of students in a lecture hall."]
+              },
+              "summary": {
+                "nl": ["Collectie Van Heel."],
+                "en": ["Van Heel Collection."]
+              },
+              "motivation": "painting",
+              "target": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4#xywh=2171,1101,1650,1650",
+              "body": {
+                "id": "https://dlc.services/iiif-img/7/37/d7d55acc0d13a824059c8577e3913c3f/full/1024,1024/0/default.jpg",
+                "type": "Image",
+                "height": 3944,
+                "width": 3944,
+                "service": [
+                  {
+                    "@id": "https://dlc.services/iiif-img/7/37/d7d55acc0d13a824059c8577e3913c3f",
+                    "@type": "ImageService2",
+                    "profile": "level2",
+                    "width": 3944,
+                    "height": 3944
+                  }
+                ]
+              }
+            },
+            {
+              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/ysfu400bc-ml6nawq4/Annotation/n4dlqlodeq-ml6nf4ob",
+              "type": "Annotation",
+              "label": {
+                "nl": [
+                  "Assemblage van verschillende experimentele lenzen, chemicaliën en overige technische objecten. Waarschijnlijk  gemaakt door Van Heel. "
+                ],
+                "en": [
+                  "Assembly of various experimental lenses, chemicals, and other technical objects. Likely made by Van Heel."
+                ]
+              },
+              "summary": {
+                "nl": [
+                  "TNW.2024.0009. Collectie Van Heel. Foto door het programma Maatwerk Facultaire Collecties."
+                ],
+                "en": [
+                  "TNW.2024.0009. Van Heel Collection. Photograph by the programme Tailor-Made Approach to Faculty Collections."
+                ]
+              },
+              "motivation": "painting",
+              "target": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4#xywh=758,1853,1615,1846",
+              "body": {
+                "id": "https://dlc.services/iiif-img/7/37/cd0e419fd412a70f39ba5fa4c0784d35/full/896,1024/0/default.jpg",
+                "type": "Image",
+                "height": 2803,
+                "width": 2453,
+                "service": [
+                  {
+                    "@id": "https://dlc.services/iiif-img/7/37/cd0e419fd412a70f39ba5fa4c0784d35",
+                    "@type": "ImageService2",
+                    "profile": "level2",
+                    "width": 2453,
+                    "height": 2803
+                  }
+                ]
+              }
+            },
+            {
+              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/ysfu400bc-ml6nawq4/Annotation/a0lwgot4jai-ml6nhcgh",
+              "type": "Annotation",
+              "label": {
+                "nl": [
+                  "Bruin notitieboek met handgeschreven notities van Van Heel, tussen 1953-1960."
+                ],
+                "en": [
+                  "Brown notebook with handwritten notes by Van Heel, from 1953 to 1960."
+                ]
+              },
+              "summary": {
+                "nl": [
+                  "Collectie Van Heel. Foto door het programma Maatwerk Facultaire Collecties."
+                ],
+                "en": [
+                  "Van Heel Collection. Photograph by the programme Tailor-Made Approach to Faculty Collections."
+                ]
+              },
+              "motivation": "painting",
+              "target": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4#xywh=3530,2229,2205,1553",
+              "body": {
+                "id": "https://dlc.services/iiif-img/7/37/a12ba3940dec775f7931eb54fbf723d6/full/1024,722/0/default.jpg",
+                "type": "Image",
+                "height": 2841,
+                "width": 4032,
+                "service": [
+                  {
+                    "@id": "https://dlc.services/iiif-img/7/37/a12ba3940dec775f7931eb54fbf723d6",
+                    "@type": "ImageService2",
+                    "profile": "level2",
+                    "width": 4032,
+                    "height": 2841
+                  }
+                ]
+              }
             }
           ]
         }
       ],
       "annotations": [
         {
-          "id": "https://example.org/wynk8rg0zir-ml6mpjpf/canvas/21e7iwfrcwbh-ml6qbqhs/annotation-page/l0jiw52aur-ml6qbqhs",
+          "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/syfaplrmhx8-ml6nawq4",
           "type": "AnnotationPage",
           "items": [
             {
-              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/canvas/21e7iwfrcwbh-ml6qbqhs/annotation/x6ux2ipswi-ml6qbqhv",
+              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/syfaplrmhx8-ml6nawq4/annotation/4fg7v8rzdjt-ml6nppfw",
               "type": "Annotation",
               "motivation": "tagging",
-              "target": "https://example.org/wynk8rg0zir-ml6mpjpf/canvas/21e7iwfrcwbh-ml6qbqhs",
-              "body": {
-                "id": "https://example.org/wynk8rg0zir-ml6mpjpf/canvas/21e7iwfrcwbh-ml6qbqhs/annotation/x6ux2ipswi-ml6qbqhv/html/en/1jogowohlur-ml6qbqhv",
-                "type": "TextualBody",
-                "format": "text/html",
-                "language": "en",
-                "value": ""
-              }
+              "target": {
+                "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/ysfu400bc-ml6nawq4/Annotation/69qjxyzpyk9-ml6nedm0",
+                "type": "Annotation"
+              },
+              "body": []
+            },
+            {
+              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/syfaplrmhx8-ml6nawq4/annotation/xiwjsffa4w-ml6nqs62",
+              "type": "Annotation",
+              "motivation": "tagging",
+              "target": {
+                "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/ysfu400bc-ml6nawq4/Annotation/n4dlqlodeq-ml6nf4ob",
+                "type": "Annotation"
+              },
+              "body": []
+            },
+            {
+              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/syfaplrmhx8-ml6nawq4/annotation/cop7ukr1jsq-ml6nsqer",
+              "type": "Annotation",
+              "motivation": "tagging",
+              "target": {
+                "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/ysfu400bc-ml6nawq4/Annotation/gxvr08bftwq-ml6nfykp",
+                "type": "Annotation"
+              },
+              "body": []
+            },
+            {
+              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/syfaplrmhx8-ml6nawq4/annotation/vja0dx8fjgg-ml6nuxuo",
+              "type": "Annotation",
+              "motivation": "tagging",
+              "target": {
+                "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/ysfu400bc-ml6nawq4/Annotation/2ij2rqcco6x-ml6nglpc",
+                "type": "Annotation"
+              },
+              "body": []
+            },
+            {
+              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/syfaplrmhx8-ml6nawq4/annotation/8y88o7sskb-ml6nwezb",
+              "type": "Annotation",
+              "motivation": "tagging",
+              "target": {
+                "type": "SpecificResource",
+                "source": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4",
+                "selector": [
+                  {
+                    "type": "FragmentSelector",
+                    "value": "xywh=3744,259,982,615"
+                  }
+                ]
+              },
+              "body": [
+                {
+                  "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/syfaplrmhx8-ml6nawq4/annotation/8y88o7sskb-ml6nwezb/html/en/863bearqwbc-ml6nwezb",
+                  "type": "TextualBody",
+                  "format": "text/html",
+                  "language": "nl",
+                  "value": "<p>Toelichting inhoud basisset.</p>"
+                },
+                {
+                  "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/syfaplrmhx8-ml6nawq4/annotation/8y88o7sskb-ml6nwezb/html/en/29g39wlyqec-mluy4tkb",
+                  "type": "TextualBody",
+                  "format": "text/html",
+                  "language": "en",
+                  "value": "<p>Note on the contents of the box.</p>"
+                }
+              ]
+            },
+            {
+              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/syfaplrmhx8-ml6nawq4/annotation/huyvk1uhv4p-ml6nx9rd",
+              "type": "Annotation",
+              "motivation": "tagging",
+              "target": {
+                "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4/AnnotationPage/ysfu400bc-ml6nawq4/Annotation/a0lwgot4jai-ml6nhcgh",
+                "type": "Annotation"
+              },
+              "body": []
             }
           ]
         }
@@ -856,43 +833,70 @@
     {
       "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/8lo0623vbw4-ml7w0ipb",
       "type": "Canvas",
-      "height": 4000,
+      "height": 6000,
       "width": 8000,
-      "behavior": ["multi-image", "w-12", "h-7"],
+      "behavior": ["multi-image", "w-12", "h-7", "right"],
       "label": {
         "nl": ["Experiment(ertainment)"],
         "en": ["Experiment(ertainment)"]
       },
-      "placeholderCanvas": [],
-      "accompanyingCanvas": [],
+      "summary": {
+        "en": [
+          "De enorme populariteit van Van Heels colleges valt niet genoeg te benadrukken. Zijn lessen, waarvan hij keer op keer een schouwspel wist te maken, werden bezocht door studenten uit allerlei richtingen. Wat maakte zijn onderwijs zo boeiend?\n\nSteeds wist Van Heel de theorie die hij doceerde tastbaar te maken met live experimenten. De studenten zagen de taaie materie voor hun ogen tot leven komen. Zo prepareerde hij, voor een les over de werking van het oog, koeienogen zodanig dat de studenten hun klaslokaal op het netvlies afgebeeld zagen.\n\nZijn beroemde aligneermethode bracht hij ook de collegezaal in. Gebaseerd op Youngs interferometer ontwikkelde hij een optische methode die onder andere is ingezet om de gesneuvelde brug over de Maas bij Hedel te herbouwen na de Tweede Wereldoorlog. De studenten konden de techniek zo zelf uittesten.\nEen overgeleverde foto getuigt van één van Van Heels andere demonstraties. Met zijn 180 graden lens nam hij een foto van zijn stampvolle lokaal. Op deze manier konden de leerlingen zichzelf terugzien in fisheye-perspectief.\n\nAlle proeven waren van tevoren tot in detail uitgewerkt zodat de ‘show’ vlekkeloos kon verlopen. Zo wist Van Heel, als object based teacher avant-la-lettre, zijn studenten eindeloos te verwonderen."
+        ],
+        "nl": [
+          "The enormous popularity of Van Heel's lectures cannot be overstated. His classes, which he managed to make a spectacle of time and again, were attended by students from various disciplines. What made his teaching so captivating?\n\nVan Heel always managed to make the theory he taught tangible with live experiments. The students saw the tough subject matter come to life before their very eyes. To illustrate, for a lesson on the workings of the eye, he prepared cow eyes so that the students could see their classroom projected on the retinas.\n\nHe also brought his famous alignment method into the lecture halls. Based on Young's interferometer, he developed an optical method that was used to rebuild the destroyed bridge over the Meuse River near Hedel after World War II. This allowed the students to test the technology themselves.\n\nA surviving photo illustrates one of Van Heel's other demonstrations. With his 180-degree lens, he took a picture of his packed classroom. This way, the students saw themselves in a fisheye perspective.\n\nAll the experiments had been meticulously prepared in advance so that the ‘show’ could run smoothly. This is how Van Heel, as a pioneering object-based teacher, managed to amaze his students endlessly."
+        ]
+      },
+      "placeholderCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
+      "accompanyingCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
       "items": [
         {
           "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/8lo0623vbw4-ml7w0ipb/AnnotationPage/uji8zs0tfbr-ml7w0ipb",
           "type": "AnnotationPage",
           "items": [
             {
-              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/8lo0623vbw4-ml7w0ipb/AnnotationPage/uji8zs0tfbr-ml7w0ipb/Annotation/8rc62ll8o8n-ml7w0qah",
+              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/8lo0623vbw4-ml7w0ipb/AnnotationPage/uji8zs0tfbr-ml7w0ipb/Annotation/c055alp5n5s-mn4p7gzy",
               "type": "Annotation",
               "label": {
                 "nl": ["Fisheye-foto van Van Heels klaslokaal..."],
                 "en": ["Fisheye photo of Van Heel’s classroom..."]
               },
+              "summary": {
+                "en": [""]
+              },
               "motivation": "painting",
-              "target": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/8lo0623vbw4-ml7w0ipb#xywh=175,231,2143,2143",
+              "target": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/8lo0623vbw4-ml7w0ipb#xywh=566,533,2322,2311",
               "body": {
-                "id": "https://dlc.services/iiif-img/7/37/c4d51a9ae4e0d50e553b123b44e5f8b9/full/1024,1024/0/default.jpg",
-                "type": "Image",
-                "height": 3944,
-                "width": 3944,
-                "service": [
-                  {
-                    "@id": "https://dlc.services/iiif-img/7/37/c4d51a9ae4e0d50e553b123b44e5f8b9",
-                    "@type": "ImageService2",
-                    "profile": "level2",
-                    "width": 3944,
-                    "height": 3944
-                  }
-                ]
+                "id": "https://dlc.services/iiif-img/7/37/c4d51a9ae4e0d50e553b123b44e5f8b9/canvas/c/1/imageanno/0/SpecificResource/15vik8j422-mn4p7gzy",
+                "type": "SpecificResource",
+                "source": {
+                  "id": "https://dlc.services/iiif-img/7/37/c4d51a9ae4e0d50e553b123b44e5f8b9/135,160,3673,3653/max/0/default.jpg",
+                  "type": "Image",
+                  "height": 3944,
+                  "width": 3944,
+                  "service": [
+                    {
+                      "@id": "https://dlc.services/iiif-img/7/37/c4d51a9ae4e0d50e553b123b44e5f8b9",
+                      "@type": "ImageService2",
+                      "profile": "level2",
+                      "width": 3944,
+                      "height": 3944
+                    }
+                  ]
+                },
+                "selector": {
+                  "type": "ImageApiSelector",
+                  "region": "135,160,3673,3653"
+                }
               }
             },
             {
@@ -911,7 +915,7 @@
                 "en": ["Photo archive Optics department, TU Delft."]
               },
               "motivation": "painting",
-              "target": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/8lo0623vbw4-ml7w0ipb#xywh=3408,381,2406,1805",
+              "target": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/8lo0623vbw4-ml7w0ipb#xywh=3873,597,2406,1805",
               "body": {
                 "id": "https://dlc.services/iiif-img/7/37/d32413309ba268a96a4865899ceb0134/full/400,300/0/default.jpg",
                 "type": "Image",
@@ -948,7 +952,7 @@
                 ]
               },
               "motivation": "painting",
-              "target": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/8lo0623vbw4-ml7w0ipb#xywh=5161,1725,2569,2013",
+              "target": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/8lo0623vbw4-ml7w0ipb#xywh=4632,2869,2569,2013",
               "body": {
                 "id": "https://dlc.services/iiif-img/7/37/a9bfba26b5c6497d9b59a5763201f1e1/full/1024,802/0/default.jpg",
                 "type": "Image",
@@ -981,7 +985,7 @@
                 "en": ["Photograph by Johannes Schwartz."]
               },
               "motivation": "painting",
-              "target": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/8lo0623vbw4-ml7w0ipb#xywh=1617,2039,2352,1764",
+              "target": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/8lo0623vbw4-ml7w0ipb#xywh=1304,3248,2721,2041",
               "body": {
                 "id": "https://dlc.services/iiif-img/7/13/2566eb57-9be5-46df-8226-be0a6bf2409a/full/1024,768/0/default.jpg",
                 "type": "Image",
@@ -1124,8 +1128,16 @@
         "nl": ["Schematische weergave van Van Heels aligneermethode"],
         "en": ["Schematic representation of Van Heel's alignment method"]
       },
-      "placeholderCanvas": [],
-      "accompanyingCanvas": [],
+      "placeholderCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
+      "accompanyingCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
       "items": [
         {
           "id": "https://example.org/wynk8rg0zir-ml6mpjpf/canvas/0w1o54mccz9m-ml7wnvji/AnnotationPage/bu7dguz1357-ml7wnvk4",
@@ -1239,8 +1251,16 @@
           "Van Heel believed that educational programmes should ensure that students were well prepared for the labour market, and he developed his curriculum accordingly. For example, he felt it was important for his programme to focus on the application of technical skills.\n\nThis can be illustrated by his encouragement of the collaboration between his group and the Utrecht University Observatory. There, his students had the opportunity to work on equipment that the astronomers could actually use. The fact that his students both designed and were involved in the construction of their designs, is characteristic of Van Heel's view on the importance of craftsmanship. His department even had its own glass-grinding workshop where students could practice. \n\nVan Heel's client-focused approach also fostered close ties between the programme and the industry, and many found employment there after graduation. For example, at N.V. Optische Industrie 'De Oude Delft'."
         ]
       },
-      "placeholderCanvas": [],
-      "accompanyingCanvas": [],
+      "placeholderCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
+      "accompanyingCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
       "items": [
         {
           "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/0inicn0hqna-ml7tsdjw/AnnotationPage/7i99oqkxjuw-ml7tsdjw",
@@ -1405,8 +1425,16 @@
           "Van Heel disapproved of academics’ obscure approach to optics at the time. Many texts and formulas that were central to the field, were geared to the intellectual elite. He, on the other hand, wanted to make the field of optics more accessible. For example, when he was appointed Professor in 1947, he noted:\n\n'It would be desirable if authors in these fields crouched to the level of those eager for application and, at the very least, made their results somewhat accessible in the form of formulas' (translated from Dutch, original citation below).\n\nHe took matters into his own hands by translating the complex material into texts that were easier to understand. Theories of, for example, Smith were tackled in such a way that they were much more applicable. Together with his students, he made significant progress in making the field of optics accessible to a wide audience."
         ]
       },
-      "placeholderCanvas": [],
-      "accompanyingCanvas": [],
+      "placeholderCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
+      "accompanyingCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
       "items": [
         {
           "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/cyboh2a4wo8-ml7ua2x7/AnnotationPage/42aieagquan-ml7ua2x7",
@@ -1689,8 +1717,16 @@
       "label": {
         "none": [""]
       },
-      "placeholderCanvas": [],
-      "accompanyingCanvas": [],
+      "placeholderCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
+      "accompanyingCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
       "items": [
         {
           "id": "https://example.org/wynk8rg0zir-ml6mpjpf/canvas/rm47ojv8sf-ml7uuppd/annotation-page/av49eq3d3i-ml7uuppd",
@@ -1761,8 +1797,16 @@
           "width": 640
         }
       ],
-      "placeholderCanvas": [],
-      "accompanyingCanvas": [],
+      "placeholderCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
+      "accompanyingCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
       "items": [
         {
           "id": "https://example.org/wynk8rg0zir-ml6mpjpf/canvas/7nigq6k7o-ml7x2242/annotation-page/4vajnuynylk-ml7x2242",
@@ -1805,8 +1849,16 @@
       "label": {
         "none": [""]
       },
-      "placeholderCanvas": [],
-      "accompanyingCanvas": [],
+      "placeholderCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
+      "accompanyingCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
       "items": [
         {
           "id": "https://example.org/wynk8rg0zir-ml6mpjpf/canvas/zt8jnno5ac-ml7v8jgw/annotation-page/hn3k34z2fda-ml7v8jgw",
@@ -1822,7 +1874,7 @@
                 "type": "TextualBody",
                 "format": "text/html",
                 "language": "en",
-                "value": "<h2 id=\"colofon\"><strong>Colofon</strong></h2>"
+                "value": "<h2 id=\"colofon\"><strong>Colofon</strong></h2>\n<p>Deze online tentoonstelling is samengesteld door het team Academisch Erfgoed, Geschiedenis en Kunst van de TU Delft.</p>\n<p>De tentoonstelling is gemaakt naar aanleiding van het werk aan de Collectie Van Heel door het programma Maatwerk Facultaire Collecties. De tentoonstelling is daarnaast deels gebaseerd op de tentoonstelling Optica voor allen (2019-2020) bij het Science Centre Delft, georganiseerd door de afdeling Academisch Erfgoed, Geschiedenis en Kunst in samenwerking met de afdeling Imaging Physics van de faculteit TNW.</p>"
               }
             }
           ]
@@ -1843,7 +1895,7 @@
                   "id": "https://example.org/wynk8rg0zir-ml6mpjpf/canvas/zt8jnno5ac-ml7v8jgw/annotation/zyhgo3z28fo-ml7v8jgz/html/en/a3hn10sc73-ml7v8jgz",
                   "type": "TextualBody",
                   "format": "text/html",
-                  "language": "nl",
+                  "language": "en",
                   "value": "<p>Deze online tentoonstelling is samengesteld door de afdeling Academisch Erfgoed, Geschiedenis en Kunst van de TU Delft.</p>\n<p>De tentoonstelling is gemaakt naar aanleiding van het werk aan de Collectie Van Heel door het programma Maatwerk Facultaire Collecties. De tentoonstelling is daarnaast deels gebaseerd op de tentoonstelling Optica voor allen (2019-2020) bij het Science Centre Delft, georganiseerd door de afdeling Academisch Erfgoed, Geschiedenis en Kunst in samenwerking met de afdeling Imaging Physics van de faculteit TNW.</p>\n<h2 id=\"bibliografie\"><strong>Bibliografie</strong></h2>\n<p>A.C.S. van Heel, ‘Verslag&nbsp;van&nbsp;een&nbsp;dag,&nbsp;rede&nbsp;uitgesproken&nbsp;ter&nbsp;gelegenheid&nbsp;van de&nbsp;honderdtweeëntwintigste&nbsp;dies natalis der&nbsp;Technische&nbsp;Hogeschool&nbsp;te&nbsp;Delft’, ongepubliceerd, 1964.</p>\n<p>C.A.J. Simons, ‘A.C.S. van Heel, Teacher and Inspirator of Technical Optics’, in <em>Conference proceedings of SPIE</em>, vol. 3190, 1997, pp. 180-187.</p>\n<p>C.A.J. Simons, ‘A.C.S. van Heel, vader van de Technische Optica in Nederland’, in <em>Delft Integraal</em>, vol. 15, no. 4, 1999, pp. 25-29.</p>\n<p>C.A.J. Simons, ‘Abraham Cornelis Sebastien van Heel (1899 – 1966). Vader van de Technische Optica in Nederland’, ongepubliceerd.</p>\n<p>C.A.J. Simons &amp; W. van Vonno, ‘Abraham Cornelis Sebastiaan van Heel’, in <em>Applied Optics</em>, vol. 6, no. 5, 1967, pp. 799-802.</p>"
                 },
                 {
@@ -1916,10 +1968,6 @@
             "en": ["Experiment(ertainment)"]
           },
           "items": [
-            {
-              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/canvas/21e7iwfrcwbh-ml6qbqhs",
-              "type": "Canvas"
-            },
             {
               "id": "https://example.org/wynk8rg0zir-ml6mpjpf/canvas/1msltux5rh7-mmkcx7z6",
               "type": "Canvas"
