@@ -194,17 +194,17 @@ function normalizeShorthandConfig(
     const remoteStore =
       shorthandUrls.length === 1
         ? {
-            type: "iiif-remote" as const,
-            url: shorthandUrls[0],
-            overrides,
-            saveManifests,
-          }
+          type: "iiif-remote" as const,
+          url: shorthandUrls[0],
+          overrides,
+          saveManifests,
+        }
         : {
-            type: "iiif-remote" as const,
-            urls: shorthandUrls,
-            overrides,
-            saveManifests,
-          };
+          type: "iiif-remote" as const,
+          urls: shorthandUrls,
+          overrides,
+          saveManifests,
+        };
 
     nextConfig.stores.content = remoteStore as any;
   }
@@ -571,11 +571,17 @@ export function createIiifRuntime(options: IIIFHSSSPluginOptions = {}) {
   }
 
   function resolveBuildServerUrl(configuredUrl: string | undefined) {
-    return (
+    const resolved =
       normalizeAbsoluteHttpUrl(serverUrl) ||
       normalizeAbsoluteHttpUrl(configuredUrl) ||
-      normalizeAbsoluteHttpUrl(resolveBuildUrlFromEnv())
-    );
+      normalizeAbsoluteHttpUrl(resolveBuildUrlFromEnv());
+
+    if (!resolved) return null;
+    const normalizedBase = normalizePath(basePath);
+    if (!normalizedBase) return resolved;
+    // Don't double-append if basePath is already present in the resolved URL
+    const suffix = `/${normalizedBase}`;
+    return resolved.endsWith(suffix) ? resolved : `${resolved}${suffix}`;
   }
 
   function normalizePath(value: string) {
