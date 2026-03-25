@@ -11,9 +11,14 @@ import { timeout } from "hono/timeout";
 import mitt from "mitt";
 import { z } from "zod";
 import { type BuildOptions, build, defaultBuiltIns } from "./commands/build";
-import { findDebugUiDir, registerDebugUiRoutes } from "./server/debug-ui-routes.ts";
+import { createBuildStatusTracker } from "./server/build-status.ts";
+import {
+  findDebugUiDir,
+  registerDebugUiRoutes,
+} from "./server/debug-ui-routes.ts";
 import { editorHtml } from "./server/editor.html";
 import { explorerHtml } from "./server/explorer.html";
+import type { BuildStatus } from "./util/build-progress.ts";
 import { FileHandler } from "./util/file-handler";
 import { resolveConfigSource } from "./util/get-config";
 import { resolveEditablePathForSlug } from "./util/resolve-editable-path";
@@ -28,7 +33,9 @@ app.use(async (c, next) => {
     function set(key: string, value: string) {
       c.res.headers.set(key, value);
     }
-    const didRequestPrivateNetwork = c.req.header("access-control-request-private-network");
+    const didRequestPrivateNetwork = c.req.header(
+      "access-control-request-private-network",
+    );
     if (didRequestPrivateNetwork) {
       set("Access-Control-Allow-Private-Network", "true");
     }
@@ -40,15 +47,20 @@ app.use(
   cors({
     origin: "*",
     allowMethods: ["GET", "POST", "PUT", "PATCH", "OPTIONS"],
-    exposeHeaders: ["Content-Type", "X-IIIF-Post-Url", "Access-Control-Allow-Private-Network"],
+    exposeHeaders: [
+      "Content-Type",
+      "X-IIIF-Post-Url",
+      "Access-Control-Allow-Private-Network",
+    ],
     allowHeaders: ["Content-Type", "Access-Control-Request-Private-Network"],
-  })
+  }),
 );
 
 const emitter = mitt<{
   "file-change": { path: string };
   "file-refresh": { path: string };
   "full-rebuild": unknown;
+  "build-progress": BuildStatus;
 }>();
 
 // New Hono server.
@@ -64,20 +76,18 @@ let isWatching = false;
 const fileHandler = new FileHandler(fs, cwd());
 const tracer = new Tracer();
 const storeRequestCaches = {};
-const buildStatus = {
-  status: "idle" as "idle" | "building" | "ready" | "error",
-  startedAt: null as string | null,
-  completedAt: null as string | null,
-  lastError: null as string | null,
-  buildCount: 0,
-};
+const buildStatusTracker = createBuildStatusTracker((status) => {
+  emitter.emit("build-progress", status);
+});
 
 const state = {
   shouldRebuild: false,
 };
 
 function redirectToDebugPath(basePathHeader?: string) {
-  const normalizedBase = (basePathHeader || "").replace(/^\/+/, "").replace(/\/+$/, "");
+  const normalizedBase = (basePathHeader || "")
+    .replace(/^\/+/, "")
+    .replace(/\/+$/, "");
   return normalizedBase.length > 0 ? `/${normalizedBase}/_debug/` : "/_debug/";
 }
 
@@ -86,15 +96,18 @@ function selectInitialPath(devPath: string, defaultPath: string) {
 }
 
 const activePaths = {
-  buildDir: selectInitialPath(defaultBuiltIns.devBuild, defaultBuiltIns.defaultBuildDir),
-  cacheDir: selectInitialPath(defaultBuiltIns.devCache, defaultBuiltIns.defaultCacheDir),
+  buildDir: selectInitialPath(
+    defaultBuiltIns.devBuild,
+    defaultBuiltIns.defaultBuildDir,
+  ),
+  cacheDir: selectInitialPath(
+    defaultBuiltIns.devCache,
+    defaultBuiltIns.defaultCacheDir,
+  ),
 };
 
 const cachedBuild = async (options: BuildOptions) => {
-  buildStatus.status = "building";
-  buildStatus.startedAt = new Date().toISOString();
-  buildStatus.lastError = null;
-  buildStatus.buildCount += 1;
+  buildStatusTracker.startBuild();
 
   try {
     const result = await build(options, defaultBuiltIns, {
@@ -102,16 +115,14 @@ const cachedBuild = async (options: BuildOptions) => {
       fileHandler,
       pathCache,
       tracer,
+      progress: buildStatusTracker.callbacks,
     });
     activePaths.buildDir = result.buildConfig.buildDir;
     activePaths.cacheDir = result.buildConfig.cacheDir;
-    buildStatus.status = "ready";
-    buildStatus.completedAt = new Date().toISOString();
+    buildStatusTracker.completeBuild();
     return result;
   } catch (error) {
-    buildStatus.status = "error";
-    buildStatus.completedAt = new Date().toISOString();
-    buildStatus.lastError = (error as Error)?.message || String(error);
+    buildStatusTracker.failBuild(error);
     throw error;
   }
 };
@@ -133,7 +144,9 @@ app.get("/config", async (ctx) => {
   const config = resolvedConfigSource.config;
   return ctx.json({
     isWatching: isWatching,
-    pendingFiles: Array.from(fileHandler.openJsonChanged.keys()).filter(Boolean),
+    pendingFiles: Array.from(fileHandler.openJsonChanged.keys()).filter(
+      Boolean,
+    ),
     configMode: resolvedConfigSource.mode,
     ...config,
   });
@@ -148,9 +161,21 @@ registerDebugUiRoutes({
   fileHandler,
   getActivePaths: () => ({ ...activePaths }),
   getConfig: async () => (await resolveConfigSource()).config,
+  getConfigMode: async () => (await resolveConfigSource()).mode,
   getTraceJson: () => tracer.toJSON(),
   getDebugUiDir: () => findDebugUiDir(cwd(), require.resolve.bind(require)),
-  getBuildStatus: () => ({ ...buildStatus }),
+  getBuildStatus: () => buildStatusTracker.getBuildStatus(),
+  subscribeBuildProgress: (listener) => {
+    emitter.on("build-progress", listener);
+    return () => emitter.off("build-progress", listener);
+  },
+  defaultRun: defaultBuiltIns.defaultRun,
+  rebuild: async () => 
+    await cachedBuild({
+      cache: true,
+      emit: true,
+      dev: true,
+    }),
 });
 
 app.get("/client.js", async (ctx) => {
@@ -182,7 +207,11 @@ app.get("/watch", async (ctx) => {
     return store.type === "iiif-json";
   });
   const remoteOverrideStores = Object.values(config.stores).filter((store) => {
-    return store.type === "iiif-remote" && typeof store.overrides === "string" && Boolean(store.overrides.trim());
+    return (
+      store.type === "iiif-remote" &&
+      typeof store.overrides === "string" &&
+      Boolean(store.overrides.trim())
+    );
   });
   let watchCount = 0;
 
@@ -235,8 +264,12 @@ app.get("/watch", async (ctx) => {
 
       for await (const event of watcher) {
         try {
-          const changedPath = event.filename ? join(overridesPath, event.filename) : null;
-          const realPath = changedPath ? pathCache.allPaths[changedPath] : undefined;
+          const changedPath = event.filename
+            ? join(overridesPath, event.filename)
+            : null;
+          const realPath = changedPath
+            ? pathCache.allPaths[changedPath]
+            : undefined;
           if (realPath) {
             emitter.emit("file-change", { path: realPath });
           }
@@ -308,7 +341,9 @@ app.get("/unwatch", async (ctx) => {
 });
 
 app.get("/build/save", async (ctx) => {
-  const total = Array.from(fileHandler.openJsonChanged.keys()).filter(Boolean).length;
+  const total = Array.from(fileHandler.openJsonChanged.keys()).filter(
+    Boolean,
+  ).length;
   if (total) {
     await fileHandler.saveAll();
   }
@@ -322,6 +357,7 @@ app.get(
     "query",
     z.object({
       cache: z.string().optional(),
+      networkCache: z.string().optional(),
       generate: z.string().optional(),
       exact: z.string().optional(),
       save: z.string().optional(),
@@ -329,19 +365,21 @@ app.get(
       debug: z.string().optional(),
       enrich: z.string().optional(),
       extract: z.string().optional(),
-    })
+    }),
   ),
   async (ctx) => {
-    const { buildConfig, emitted, enrichments, extractions, parsed, stores } = await cachedBuild({
-      cache: ctx.req.query("cache") !== "false",
-      generate: ctx.req.query("generate") !== "false",
-      exact: ctx.req.query("exact"),
-      emit: ctx.req.query("emit") !== "false",
-      debug: ctx.req.query("debug") === "true",
-      enrich: ctx.req.query("enrich") !== "false",
-      extract: ctx.req.query("extract") !== "false",
-      dev: true,
-    });
+    const { buildConfig, emitted, enrichments, extractions, parsed, stores } =
+      await cachedBuild({
+        cache: ctx.req.query("cache") !== "false",
+        networkCache: ctx.req.query("networkCache") !== "false",
+        generate: ctx.req.query("generate") !== "false",
+        exact: ctx.req.query("exact"),
+        emit: ctx.req.query("emit") !== "false",
+        debug: ctx.req.query("debug") === "true",
+        enrich: ctx.req.query("enrich") !== "false",
+        extract: ctx.req.query("extract") !== "false",
+        dev: true,
+      });
 
     const { files, log, fileTypeCache, ...config } = buildConfig;
 
@@ -360,7 +398,7 @@ app.get(
     emitter.emit("full-rebuild", report);
 
     return ctx.json(report);
-  }
+  },
 );
 
 app.post(
@@ -370,6 +408,7 @@ app.post(
     "json",
     z.object({
       cache: z.string().optional(),
+      networkCache: z.string().optional(),
       generate: z.string().optional(),
       exact: z.string().optional(),
       save: z.string().optional(),
@@ -377,7 +416,7 @@ app.post(
       debug: z.string().optional(),
       enrich: z.string().optional(),
       extract: z.string().optional(),
-    })
+    }),
   ),
   async (ctx) => {
     const body = await ctx.req.json();
@@ -386,10 +425,11 @@ app.post(
       state.shouldRebuild = false;
     }
 
-    const { buildConfig, emitted, enrichments, extractions, parsed, stores } = await cachedBuild({
-      ...body,
-      dev: true,
-    });
+    const { buildConfig, emitted, enrichments, extractions, parsed, stores } =
+      await cachedBuild({
+        ...body,
+        dev: true,
+      });
 
     const report = {
       emitted: {
@@ -406,7 +446,7 @@ app.post(
     emitter.emit("full-rebuild", report);
 
     return ctx.json(report);
-  }
+  },
 );
 
 app.get("/*", async (ctx, next) => {
@@ -451,7 +491,11 @@ const saveManifest = async (ctx: Context) => {
 
   // WIthout `/manifest.json`
   const slug = ctx.req.path.replace("/manifest.json", "").slice(1);
-  const realPath = await resolveEditablePathForSlug(fileHandler, activePaths.buildDir, slug);
+  const realPath = await resolveEditablePathForSlug(
+    fileHandler,
+    activePaths.buildDir,
+    slug,
+  );
   if (!realPath) {
     return ctx.notFound();
   }

@@ -6,6 +6,7 @@ import type { Collection } from "@iiif/presentation-3";
 import { parse } from "yaml";
 import type { IIIFJSONStore } from "../stores/iiif-json.ts";
 import type { IIIFRemoteStore } from "../stores/iiif-remote.ts";
+import type { NetworkConfig } from "./network.ts";
 import type { SlugConfig } from "./slug-engine.ts";
 
 export interface BuildConcurrencyConfig {
@@ -32,14 +33,15 @@ export interface IIIFRC {
   collections?: {
     index?: Partial<Collection>;
     manifests?: Partial<Collection>;
-    collections?: Record<string, Partial<Collection>>;
-    topics?: Record<string, Partial<Collection>>;
+    collections?: Partial<Collection>;
+    topics?: Partial<Collection>;
   };
   search?: {
     indexNames?: string[];
     defaultIndex?: string;
     emitRecord?: boolean;
   };
+  network?: NetworkConfig;
   concurrency?: BuildConcurrencyConfig;
   fileTemplates?: Record<string, any>;
 }
@@ -53,6 +55,7 @@ export interface GenericStore {
     label: string;
     description?: string;
   };
+  slugTemplate?: SlugConfig | SlugConfig[];
   slugTemplates?: string[];
   // Step options
   skip?: string[];
@@ -61,6 +64,7 @@ export interface GenericStore {
   subFiles?: boolean;
   destination?: string;
   ignore?: string[];
+  network?: NetworkConfig;
 }
 
 interface GeneratorConfig {
@@ -97,6 +101,60 @@ export interface ResolvedConfigSource {
 
 export const supportedConfigFiles = [".iiifrc.yml", ".iiifrc.yaml", "iiif.config.js", "iiif.config.ts"];
 
+function isPlainObject(value: unknown): value is Record<string, any> {
+  return Object.prototype.toString.call(value) === "[object Object]";
+}
+
+function cloneConfigValue<T>(value: T): T {
+  if (Array.isArray(value)) {
+    return value.map((item) => cloneConfigValue(item)) as T;
+  }
+  if (isPlainObject(value)) {
+    const cloned: Record<string, any> = {};
+    for (const key of Object.keys(value)) {
+      cloned[key] = cloneConfigValue(value[key]);
+    }
+    return cloned as T;
+  }
+  return value;
+}
+
+function mergeConfigValue(baseValue: unknown, overrideValue: unknown): unknown {
+  if (typeof overrideValue === "undefined") {
+    return cloneConfigValue(baseValue);
+  }
+
+  if (Array.isArray(overrideValue)) {
+    // Arrays are replaced so users can intentionally set order/content.
+    return cloneConfigValue(overrideValue);
+  }
+
+  if (isPlainObject(baseValue) && isPlainObject(overrideValue)) {
+    const merged: Record<string, any> = cloneConfigValue(baseValue);
+    for (const key of Object.keys(overrideValue)) {
+      const nextOverride = overrideValue[key];
+      if (typeof nextOverride === "undefined") {
+        continue;
+      }
+      merged[key] = mergeConfigValue(baseValue[key], nextOverride);
+    }
+    return merged;
+  }
+
+  if (isPlainObject(overrideValue)) {
+    return cloneConfigValue(overrideValue);
+  }
+
+  return overrideValue;
+}
+
+export function mergeIiifConfig(baseConfig: IIIFRC, overrideConfig?: Partial<IIIFRC> | null): IIIFRC {
+  if (!overrideConfig) {
+    return cloneConfigValue(baseConfig || ({} as IIIFRC));
+  }
+  return mergeConfigValue(baseConfig || ({} as IIIFRC), overrideConfig) as IIIFRC;
+}
+
 function normalizeConfigExport(value: unknown) {
   if (!value) {
     return {} as IIIFRC;
@@ -129,7 +187,7 @@ async function loadConfigFile(configFilePath: string): Promise<IIIFRC> {
 
   // Add a timestamp query to avoid stale module cache in long-running watch processes.
   const configUrl = pathToFileURL(configFilePath).href;
-  const loaded = await import(`${configUrl}?t=${Date.now()}`);
+  const loaded = await import(/* @vite-ignore */ `${configUrl}?t=${Date.now()}`);
   return normalizeConfigExport(loaded) as IIIFRC;
 }
 
@@ -140,6 +198,25 @@ async function loadJsonFile(jsonPath: string) {
   } catch (error) {
     throw new Error(`Invalid JSON in "${jsonPath}": ${(error as Error).message}`);
   }
+}
+
+async function loadStoreSidecarConfigs(storeDirectory: string) {
+  const sidecarConfig: Record<string, any> = {};
+  const sidecarPaths: string[] = [];
+  const storeFiles = await fs.promises.readdir(storeDirectory, { withFileTypes: true });
+
+  for (const storeFile of storeFiles) {
+    if (!storeFile.isFile() || !storeFile.name.endsWith(".json") || storeFile.name === "_store.json") {
+      continue;
+    }
+
+    const sidecarPath = join(storeDirectory, storeFile.name);
+    const sidecarName = basename(storeFile.name, ".json");
+    sidecarConfig[sidecarName] = await loadJsonFile(sidecarPath);
+    sidecarPaths.push(sidecarPath);
+  }
+
+  return { sidecarConfig, sidecarPaths };
 }
 
 function normalizeConfig(inputConfig: IIIFRC | null | undefined) {
@@ -168,6 +245,8 @@ async function loadIiifConfigFolder(projectRoot: string): Promise<ResolvedConfig
 
   const configYml = join(iiifConfigRoot, "config.yml");
   const configYaml = join(iiifConfigRoot, "config.yaml");
+  const slugsJson = join(iiifConfigRoot, "slugs.json");
+  const collectionsJson = join(iiifConfigRoot, "collections.json");
   const storesDir = join(iiifConfigRoot, "stores");
   const configDir = join(iiifConfigRoot, "config");
   const scriptsDir = join(iiifConfigRoot, "scripts");
@@ -210,7 +289,8 @@ async function loadIiifConfigFolder(projectRoot: string): Promise<ResolvedConfig
 
       if (storeEntry.isDirectory()) {
         const storeName = storeEntry.name;
-        const storePath = join(storesDir, storeName, "_store.json");
+        const storeDirectory = join(storesDir, storeName);
+        const storePath = join(storeDirectory, "_store.json");
         if (!fs.existsSync(storePath)) {
           continue;
         }
@@ -221,11 +301,20 @@ async function loadIiifConfigFolder(projectRoot: string): Promise<ResolvedConfig
 
         const rawStore = await loadJsonFile(storePath);
         assertStoreValue(storeName, rawStore, storePath);
+        const { sidecarConfig, sidecarPaths } = await loadStoreSidecarConfigs(storeDirectory);
 
         if (rawStore.type === "iiif-json" && !rawStore.path) {
           const defaultPath = join(storesDir, storeName, "manifests");
           rawStore.path = defaultPath;
           rawStore.base = rawStore.base || defaultPath;
+        }
+
+        if (Object.keys(sidecarConfig).length > 0) {
+          rawStore.config = {
+            ...sidecarConfig,
+            ...(rawStore.config || {}),
+          };
+          storeDeclarationPaths.push(...sidecarPaths);
         }
 
         discoveredStores[storeName] = rawStore;
@@ -235,6 +324,18 @@ async function loadIiifConfigFolder(projectRoot: string): Promise<ResolvedConfig
   }
 
   const mergedConfig = normalizeConfig(rootConfig);
+  if (fs.existsSync(slugsJson)) {
+    mergedConfig.slugs = {
+      ...(mergedConfig.slugs || {}),
+      ...(await loadJsonFile(slugsJson)),
+    };
+  }
+  if (fs.existsSync(collectionsJson)) {
+    mergedConfig.collections = {
+      ...(mergedConfig.collections || {}),
+      ...(await loadJsonFile(collectionsJson)),
+    };
+  }
   mergedConfig.stores = {
     ...(rootConfig.stores || {}),
     ...discoveredStores,
@@ -259,6 +360,12 @@ async function loadIiifConfigFolder(projectRoot: string): Promise<ResolvedConfig
   const watchPaths: ConfigWatchPath[] = [];
   if (globalConfigPath && fs.existsSync(globalConfigPath)) {
     watchPaths.push({ path: globalConfigPath, recursive: false });
+  }
+  if (fs.existsSync(slugsJson)) {
+    watchPaths.push({ path: slugsJson, recursive: false });
+  }
+  if (fs.existsSync(collectionsJson)) {
+    watchPaths.push({ path: collectionsJson, recursive: false });
   }
   if (fs.existsSync(configDir)) {
     watchPaths.push({ path: configDir, recursive: true });

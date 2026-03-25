@@ -19,6 +19,8 @@ const ICON =
   typeof iiifIcon === "string" && iiifIcon.trim()
     ? iiifIcon.trim()
     : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h18"/><path d="M3 7h18"/><path d="M3 17h18"/><circle cx="8" cy="7" r="1.3"/><circle cx="16" cy="12" r="1.3"/><circle cx="11" cy="17" r="1.3"/></svg>';
+const SPINNER_ICON =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8.5" opacity="0.25"/><path d="M12 3.5a8.5 8.5 0 0 1 8.5 8.5"><animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="0.9s" repeatCount="indefinite"/></path></svg>';
 
 function trimSlashes(value) {
   return String(value || "")
@@ -138,6 +140,55 @@ function sortResources(resources) {
   );
 }
 
+function getToolbarShadowRoot() {
+  return document.querySelector("astro-dev-toolbar")?.shadowRoot || null;
+}
+
+function ensureToolbarLoadingStyles(shadowRoot) {
+  if (!shadowRoot || shadowRoot.getElementById("hss-toolbar-loading-style")) {
+    return;
+  }
+  const style = document.createElement("style");
+  style.id = "hss-toolbar-loading-style";
+  style.textContent = `
+    [data-app-id="${APP_ID}"].hss-app-loading .icon > svg {
+      animation: hss-app-icon-pulse 1.1s ease-in-out infinite;
+      transform-origin: center;
+    }
+    [data-app-id="${APP_ID}"].hss-app-loading .icon {
+      color: rgba(118, 199, 255, 1);
+    }
+    @keyframes hss-app-icon-pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.68; transform: scale(0.86); }
+    }
+  `;
+  shadowRoot.appendChild(style);
+}
+
+function setToolbarLoadingClass(isLoading) {
+  const shadowRoot = getToolbarShadowRoot();
+  if (!shadowRoot) {
+    return;
+  }
+  ensureToolbarLoadingStyles(shadowRoot);
+
+  const mainButton = shadowRoot.querySelector(`[data-app-id="${APP_ID}"]`);
+  if (mainButton) {
+    mainButton.classList.toggle("hss-app-loading", isLoading);
+  }
+
+  const moreCanvas = shadowRoot.querySelector(
+    'astro-dev-toolbar-app-canvas[data-app-id="astro:more"]',
+  );
+  const moreButton = moreCanvas?.shadowRoot?.querySelector(
+    `[data-app-id="${APP_ID}"]`,
+  );
+  if (moreButton) {
+    moreButton.classList.toggle("hss-app-loading", isLoading);
+  }
+}
+
 export default defineToolbarApp({
   icon: ICON,
   id: APP_ID,
@@ -155,8 +206,15 @@ export default defineToolbarApp({
       activeTab: "inspector",
       actionBusy: "",
       health: null,
+      iconMode: "idle",
       lastError: "",
       lastMessage: "",
+      loading: {
+        health: false,
+        inspect: false,
+        snapshot: false,
+      },
+      open: false,
       pathInput: window.location.pathname || "/",
       resourcePayload: null,
       search: "",
@@ -164,6 +222,7 @@ export default defineToolbarApp({
       selectedSlug: "",
       snapshot: null,
     };
+    let snapshotPollTimer = null;
 
     const style = document.createElement("style");
     style.textContent = `
@@ -211,6 +270,39 @@ export default defineToolbarApp({
       }
       .hss-tabs-wrap {
         padding: 0;
+      }
+      .hss-inline-status {
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 8px;
+        padding: 6px 8px;
+        font-size: 11px;
+        opacity: 0.92;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+      .hss-inline-status.is-loading {
+        border-color: rgba(118, 199, 255, 0.45);
+      }
+      .hss-inline-status-text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .hss-spinner {
+        width: 11px;
+        height: 11px;
+        border: 2px solid rgba(255, 255, 255, 0.35);
+        border-top-color: rgba(118, 199, 255, 1);
+        border-radius: 999px;
+        animation: hss-spin 0.9s linear infinite;
+        flex: 0 0 auto;
+      }
+      @keyframes hss-spin {
+        to {
+          transform: rotate(360deg);
+        }
       }
       .hss-tab {
         border: 1px solid rgba(255, 255, 255, 0.2);
@@ -346,6 +438,64 @@ export default defineToolbarApp({
       app.toggleNotification({ state: false });
     }
 
+    function setLoading(key, value) {
+      if (!(key in state.loading)) {
+        return;
+      }
+      state.loading[key] = Boolean(value);
+    }
+
+    function isBusy() {
+      return (
+        Boolean(state.actionBusy) ||
+        state.loading.snapshot ||
+        state.loading.inspect ||
+        state.loading.health ||
+        state.snapshot?.site?.build?.status === "building"
+      );
+    }
+
+    function updateToolbarIcon() {
+      const iconMode = isBusy() ? "loading" : "idle";
+      if (state.iconMode === iconMode) {
+        setToolbarLoadingClass(iconMode === "loading");
+        return;
+      }
+      state.iconMode = iconMode;
+      setToolbarLoadingClass(iconMode === "loading");
+
+      const nextIcon = iconMode === "loading" ? SPINNER_ICON : ICON;
+      try {
+        if (typeof app.setIcon === "function") {
+          app.setIcon(nextIcon);
+          return;
+        }
+        if (typeof app.update === "function") {
+          app.update({ icon: nextIcon });
+          return;
+        }
+        if (typeof app.setState === "function") {
+          app.setState({ icon: nextIcon });
+        }
+      } catch {
+        // Ignore toolbar icon update errors; inline status still shows loading.
+      }
+    }
+
+    function syncSnapshotPolling() {
+      const shouldPoll = state.open && isBusy();
+      if (shouldPoll && !snapshotPollTimer) {
+        snapshotPollTimer = window.setInterval(() => {
+          requestSnapshot();
+        }, 1200);
+        return;
+      }
+      if (!shouldPoll && snapshotPollTimer) {
+        clearInterval(snapshotPollTimer);
+        snapshotPollTimer = null;
+      }
+    }
+
     function runAction(action) {
       if (state.actionBusy) {
         return;
@@ -355,9 +505,15 @@ export default defineToolbarApp({
       state.lastMessage = `Running ${action}...`;
       render();
       server.send(EVENTS.runAction, { action });
+      requestSnapshot();
     }
 
     function requestSnapshot() {
+      if (state.loading.snapshot) {
+        return;
+      }
+      setLoading("snapshot", true);
+      render();
       server.send(EVENTS.requestSnapshot, {});
     }
 
@@ -375,6 +531,7 @@ export default defineToolbarApp({
       state.lastMessage = `Inspecting ${pathname}...`;
       state.selectedResource = null;
       state.health = null;
+      setLoading("inspect", true);
       render();
       server.send(EVENTS.inspectPath, { pathname });
     }
@@ -390,6 +547,7 @@ export default defineToolbarApp({
       state.lastError = "";
       state.lastMessage = `Inspecting ${normalized}...`;
       state.health = null;
+      setLoading("inspect", true);
       render();
       server.send(EVENTS.inspectSlug, { slug: normalized });
     }
@@ -403,6 +561,7 @@ export default defineToolbarApp({
       }
       state.activeTab = "health";
       state.lastMessage = `Checking source health for ${state.selectedSlug}...`;
+      setLoading("health", true);
       render();
       server.send(EVENTS.healthCheck, { slug: state.selectedSlug });
     }
@@ -447,6 +606,40 @@ export default defineToolbarApp({
 
       const selected = state.selectedResource;
       const selectedLabel = resourceLabel(selected) || selected?.slug || "-";
+      const build = snapshot?.site?.build || null;
+      const buildProgress = build?.progress || null;
+      const resourcesTotal = Number(buildProgress?.resources?.total || 0);
+      const resourcesProcessed = Number(
+        buildProgress?.resources?.processed || 0,
+      );
+      const fetchQueued = Number(buildProgress?.fetch?.queued || 0);
+      const fetchCompleted = Number(buildProgress?.fetch?.completed || 0);
+      const fetchFailed = Number(buildProgress?.fetch?.failed || 0);
+      const fetchInFlight = Number(buildProgress?.fetch?.inFlight || 0);
+      const buildLine = [];
+      buildLine.push(
+        buildStatus === "building"
+          ? `Build: ${buildProgress?.message || "running"}`
+          : `Build: ${buildStatus}`,
+      );
+      if (resourcesTotal > 0) {
+        buildLine.push(`Res ${resourcesProcessed}/${resourcesTotal}`);
+      }
+      if (fetchQueued > 0) {
+        buildLine.push(
+          `Fetch ${fetchCompleted + fetchFailed}/${fetchQueued}${fetchInFlight > 0 ? ` (+${fetchInFlight})` : ""}`,
+        );
+      }
+      if (state.actionBusy) {
+        buildLine.push(`Action: ${state.actionBusy}`);
+      }
+      if (state.loading.inspect) {
+        buildLine.push("Inspecting...");
+      }
+      if (state.loading.snapshot && !state.snapshot) {
+        buildLine.push("Loading snapshot...");
+      }
+      const compactBuildLine = buildLine.join(" | ");
       const debugBasePath = snapshot?.debugBasePath || "/iiif/_debug";
       const debugHome = toAbsoluteUrl(debugBasePath);
       const debugResource =
@@ -483,6 +676,10 @@ export default defineToolbarApp({
       shell.innerHTML = `
         <section class="hss-tabs-wrap">
           <div class="hss-tabs">${tabButtons}</div>
+        </section>
+        <section class="hss-inline-status ${isBusy() ? "is-loading" : ""}" title="${escapeHtml(compactBuildLine)}">
+          ${isBusy() ? '<span class="hss-spinner" aria-hidden="true"></span>' : ""}
+          <span class="hss-inline-status-text">${escapeHtml(compactBuildLine)}</span>
         </section>
 
         <section class="hss-card"${activePanel("overview")}>
@@ -580,6 +777,8 @@ export default defineToolbarApp({
           </div>
         </section>
       `;
+      updateToolbarIcon();
+      syncSnapshotPolling();
     }
 
     shell.addEventListener("input", (event) => {
@@ -651,6 +850,7 @@ export default defineToolbarApp({
     });
 
     server.on(EVENTS.snapshot, (payload) => {
+      setLoading("snapshot", false);
       state.snapshot = payload || null;
       if (!state.selectedSlug && payload?.site?.resources?.length) {
         const first = payload.site.resources[0];
@@ -665,6 +865,7 @@ export default defineToolbarApp({
     });
 
     server.on(EVENTS.resource, (payload) => {
+      setLoading("inspect", false);
       state.resourcePayload = payload || null;
       state.selectedResource = payload?.resource || null;
       state.selectedSlug = normalizeSlug(
@@ -678,6 +879,7 @@ export default defineToolbarApp({
 
     server.on(EVENTS.actionResult, (payload) => {
       state.actionBusy = "";
+      setLoading("snapshot", false);
       if (payload?.ok) {
         if (payload?.snapshot) {
           state.snapshot = payload.snapshot;
@@ -693,6 +895,7 @@ export default defineToolbarApp({
     });
 
     server.on(EVENTS.healthResult, (payload) => {
+      setLoading("health", false);
       state.health = payload || null;
       state.activeTab = "health";
       if (payload?.summary?.ok) {
@@ -709,12 +912,20 @@ export default defineToolbarApp({
 
     server.on(EVENTS.error, (payload) => {
       state.actionBusy = "";
+      setLoading("health", false);
+      setLoading("inspect", false);
+      setLoading("snapshot", false);
       state.lastError = payload?.message || "Unexpected toolbar error";
       render();
       toggleNotification();
     });
 
     app.onToggled((options) => {
+      state.open = Boolean(options?.state);
+      if (!state.open) {
+        syncSnapshotPolling();
+        return;
+      }
       if (!options?.state) {
         return;
       }
@@ -722,6 +933,7 @@ export default defineToolbarApp({
       inspectPath();
     });
 
+    state.open = true;
     requestSnapshot();
     inspectPath();
     render();

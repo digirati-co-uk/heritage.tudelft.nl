@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.example.org/iiif-hss/iiif-hss.plugin-config.schema.json",
+  "$comment": "Replace the placeholder host/path in $id when you publish this schema.",
+  "title": "IIIF HSS Plugin Config",
+  "description": "Schema for iiif-config/config/*.json. These values are plugin-specific, so this schema only enforces object JSON.",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "$schema": { "type": "string", "format": "uri" }
+  }
+}
