@@ -1,14 +1,11 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
 import { ManifestClientMeta } from "../../components/ManifestClientMeta";
+import BaseLayout from "../../layouts/BaseLayout.astro";
 import { iiif } from "../../lib/iiif-server";
 
 export async function getStaticPaths() {
-  const collection = (await iiif.loadManifestsCollection()) || (await iiif.loadTopCollection());
-  if (!collection) {
-    return [];
-  }
-  return iiif.getStaticPathsFromCollection(collection);
+  const collection = await iiif.getAllManifests();
+  return iiif.getManifestStaticPathsFromCollection(collection);
 }
 
 const loaded = await iiif.loadManifestFromParams(Astro.params);

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://schemas.example.org/iiif-hss/iiif-hss.store.schema.json",
+  "type": "iiif-remote",
+  "run": ["extract-topics"],
+  "slugTemplate": {
+    "type": "Manifest",
+    "domain": "datasyllwr.llgc.org.uk",
+    "prefix": "/manifests/PeacePetition/loc/manifests/",
+    "suffix": "-manifest.json"
+  },
+  "urls": [
+    "https://datasyllwr.llgc.org.uk/manifests/PeacePetition/loc/PeaceCollection-HDD001_loc.json",
+    "https://datasyllwr.llgc.org.uk/manifests/PeacePetition/loc/PeaceCollection-HDD002_loc.json",
+    "https://datasyllwr.llgc.org.uk/manifests/PeacePetition/loc/PeaceCollection-HDD003_loc.json",
+    "https://datasyllwr.llgc.org.uk/manifests/PeacePetition/loc/PeaceCollection-HDD004_loc.json",
+    "https://datasyllwr.llgc.org.uk/manifests/PeacePetition/loc/PeaceCollection-HDD005_loc.json"
+  ]
+}

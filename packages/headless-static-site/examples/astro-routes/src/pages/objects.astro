@@ -1,0 +1,36 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { manifestRouteBase } from "../lib/iiif-routes";
+import { iiif } from "../lib/iiif-server";
+
+const collection = await iiif.getAllManifests();
+const items = collection?.items || [];
+const collectionDetails = await iiif.loadCollection("manifests");
+---
+
+<BaseLayout title="Manifest Browser">
+  <section class="stack">
+    <h1>{collection?.label?.en?.[0] ?? "Manifests"}</h1>
+    <p><a href="/">Back home</a></p>
+
+    <div class="panel stack">
+      <h2>Collection meta.json</h2>
+      <pre>{JSON.stringify(collectionDetails.meta || {}, null, 2)}</pre>
+    </div>
+
+    <ul class="items">
+      {
+        items.map((item: any) => {
+          const slug = item?.["hss:slug"];
+          const routeSlug = typeof slug === "string" ? slug.replace(/^(manifests|objects)\//, "") : "";
+          return (
+            <li class="item">
+              <strong>{item?.label?.en?.[0] || slug || item?.id}</strong>
+              <p class="small">{routeSlug ? <a href={`${manifestRouteBase}/${routeSlug}`}>Open manifest page</a> : "No slug available"}</p>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </section>
+</BaseLayout>

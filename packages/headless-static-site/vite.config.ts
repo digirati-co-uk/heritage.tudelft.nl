@@ -10,6 +10,7 @@ enrich(
   },
   async () => {
     console.log("custom enrich");
+
     return {};
   }
 );

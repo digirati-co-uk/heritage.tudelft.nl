@@ -41,7 +41,7 @@ export async function loadScripts(
 
         try {
           const importSpecifier = await getScriptImportSpecifier(file);
-          await import(importSpecifier);
+          await import(/* @vite-ignore */ importSpecifier);
           loaded++;
         } catch (e) {
           console.log(chalk.red(e));

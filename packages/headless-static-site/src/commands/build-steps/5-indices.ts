@@ -1,6 +1,6 @@
 import fs from "node:fs";
-import { join } from "node:path";
-import type { Collection } from "@iiif/presentation-3";
+import { dirname, join } from "node:path";
+import type { Collection, InternationalString } from "@iiif/presentation-3";
 import slug from "slug";
 import { stringify } from "yaml";
 import { createCollection } from "../../util/create-collection.ts";
@@ -53,6 +53,58 @@ export async function indices(
 
   const topLevelCollection: any[] = [];
   const configUrl = typeof server === "string" ? server : server?.url;
+  const folderCollectionsConfig = (config.config?.["folder-collections"] || {}) as {
+    labelStrategy?: "folderName" | "metadata" | "customMap";
+    customMap?: Record<string, string | InternationalString>;
+  };
+
+  function titleCaseFolder(value: string) {
+    return value
+      .split(/[-_\s]+/g)
+      .filter(Boolean)
+      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+      .join(" ");
+  }
+
+  async function getFolderCollectionLabel(originalCollectionSlug: string, manifestSlugs: string[]) {
+    const labelStrategy = folderCollectionsConfig.labelStrategy || "folderName";
+    const folderLeaf = originalCollectionSlug.split("/").filter(Boolean).pop() || originalCollectionSlug;
+
+    if (labelStrategy === "customMap") {
+      const customValue = folderCollectionsConfig.customMap?.[originalCollectionSlug];
+      if (customValue) {
+        return customValue;
+      }
+    }
+
+    if (labelStrategy === "metadata") {
+      for (const manifestSlug of manifestSlugs) {
+        const resource = allResources.find((candidate) => candidate.slug === manifestSlug);
+        if (!resource || resource.source.type !== "disk") {
+          continue;
+        }
+
+        const candidates = [
+          join(resource.source.path, originalCollectionSlug, "_collection.yml"),
+          join(resource.source.path, originalCollectionSlug, "_collection.yaml"),
+          join(dirname(resource.source.filePath), "_collection.yml"),
+          join(dirname(resource.source.filePath), "_collection.yaml"),
+        ];
+
+        for (const candidate of candidates) {
+          if (!fs.existsSync(candidate)) {
+            continue;
+          }
+          const loaded = await files.readYaml(candidate);
+          if (loaded?.label) {
+            return loaded.label;
+          }
+        }
+      }
+    }
+
+    return titleCaseFolder(folderLeaf);
+  }
 
   if (collections && indexCollection) {
     const collectionSlugs = Object.keys(collections);
@@ -76,10 +128,11 @@ export async function indices(
       }
 
       if (!indexCollection[collectionSlug]) {
+        const collectionLabel = await getFolderCollectionLabel(originalCollectionSlug, manifestSlugs);
         const collectionSnippet = createCollection({
           configUrl,
           slug: collectionSlug,
-          label: collectionSlug,
+          label: collectionLabel,
         });
         const collection = {
           ...collectionSnippet,
@@ -228,12 +281,16 @@ export async function indices(
       }
 
       await files.mkdir(join(buildDir, "topics", topicTypeKey));
-      await writeJson(join(buildDir, "topics", "collection.json"), baseTopicTypeCollection);
       (topicTypeCollection as any)["hss:totalItems"] = topicTypeCollection.items.length;
       (topicTypeCollectionSnippet as any)["hss:totalItems"] = topicTypeCollection.items.length;
       await writeJson(join(buildDir, "topics", topicTypeKey, "collection.json"), topicTypeCollection);
       await writeJson(join(buildDir, "topics", topicTypeKey, "meta.json"), topicTypeMeta);
     }
+
+    await files.mkdir(join(buildDir, "topics"));
+    (baseTopicTypeCollection as any)["hss:totalItems"] = baseTopicTypeCollection.items.length;
+    (baseTopicTypeCollectionSnippet as any)["hss:totalItems"] = baseTopicTypeCollection.items.length;
+    await writeJson(join(buildDir, "topics", "collection.json"), baseTopicTypeCollection);
   }
 
   await files.mkdir(join(buildDir, "meta"));
@@ -266,7 +323,7 @@ export async function indices(
   if (manifestCollection) {
     const manifestCollectionJson = createCollection({
       label: "Manifests",
-      ...(config.collections?.index || {}),
+      ...(config.collections?.manifests || {}),
       configUrl,
       slug: "manifests",
     }) as Collection;
@@ -278,6 +335,7 @@ export async function indices(
 
   if (storeCollections) {
     await files.mkdir(join(buildDir, "stores"));
+    const storeCollectionSnippets: Collection[] = [];
     const storeCollectionsJson = Object.entries(storeCollections).map(async ([storeId, items]) => {
       const storeCollectionSnippet = createCollection({
         configUrl,
@@ -285,6 +343,7 @@ export async function indices(
         label: storeId,
       }) as Collection;
 
+      storeCollectionSnippets.push(storeCollectionSnippet);
       topLevelCollection.push(storeCollectionSnippet);
 
       await files.mkdir(join(buildDir, "stores", storeId));
@@ -301,9 +360,21 @@ export async function indices(
       slug: "collections",
       configUrl,
     }) as Collection;
+
+    const storeCollectionsCollectionJson = createCollection({
+      label: "Stores",
+      ...(config.collections?.collections?.stores || {}),
+      slug: "collections/stores",
+      configUrl,
+    }) as Collection;
+    storeCollectionsCollectionJson.items = storeCollectionSnippets;
+    topLevelCollection.push(storeCollectionsCollectionJson);
+
     topLevelCollectionJson.items = topLevelCollection;
     await files.mkdir(join(buildDir, "collections"));
     await writeJson(join(buildDir, "collections/collection.json"), topLevelCollectionJson);
+    await files.mkdir(join(buildDir, "collections", "stores"));
+    await writeJson(join(buildDir, "collections", "stores", "collection.json"), storeCollectionsCollectionJson);
 
     await Promise.all(storeCollectionsJson);
   }

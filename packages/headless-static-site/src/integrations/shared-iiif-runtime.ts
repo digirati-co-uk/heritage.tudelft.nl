@@ -9,9 +9,10 @@ import {
   DEFAULT_CONFIG,
   type IIIFRC,
   type ResolvedConfigSource,
-  getCustomConfigSource,
+  mergeIiifConfig,
   resolveConfigSource,
 } from "../util/get-config";
+import { resolveHostUrl } from "../util/resolve-host-url";
 
 export interface IIIFHSSSPluginOptions {
   /**
@@ -193,17 +194,17 @@ function normalizeShorthandConfig(
     const remoteStore =
       shorthandUrls.length === 1
         ? {
-            type: "iiif-remote" as const,
-            url: shorthandUrls[0],
-            overrides,
-            saveManifests,
-          }
+          type: "iiif-remote" as const,
+          url: shorthandUrls[0],
+          overrides,
+          saveManifests,
+        }
         : {
-            type: "iiif-remote" as const,
-            urls: shorthandUrls,
-            overrides,
-            saveManifests,
-          };
+          type: "iiif-remote" as const,
+          urls: shorthandUrls,
+          overrides,
+          saveManifests,
+        };
 
     nextConfig.stores.content = remoteStore as any;
   }
@@ -233,7 +234,7 @@ function normalizeAbsoluteHttpUrl(input: string | null | undefined) {
   if (!input || typeof input !== "string") {
     return null;
   }
-  const trimmed = input.trim();
+  const trimmed = resolveHostUrl(input.trim());
   if (!trimmed) {
     return null;
   }
@@ -349,10 +350,14 @@ export function createIiifRuntime(options: IIIFHSSSPluginOptions = {}) {
     if (resolvedConfig) {
       return resolvedConfig;
     }
-    const loadedConfigSource = customConfig
-      ? getCustomConfigSource(customConfig as IIIFRC)
-      : await resolveConfigSource(configFile);
-    const normalized = normalizeShorthandConfig(loadedConfigSource, {
+    const loadedConfigSource = await resolveConfigSource(configFile);
+    const mergedInlineConfigSource: ResolvedConfigSource = {
+      ...loadedConfigSource,
+      config: customConfig
+        ? mergeIiifConfig(loadedConfigSource.config, customConfig as IIIFRC)
+        : loadedConfigSource.config,
+    };
+    const normalized = normalizeShorthandConfig(mergedInlineConfigSource, {
       collection,
       collections,
       manifest,
@@ -540,7 +545,7 @@ export function createIiifRuntime(options: IIIFHSSSPluginOptions = {}) {
         ? `[${configuredHost}]`
         : configuredHost;
 
-    return `http://${formattedHost}:${configuredPort}${basePath}`;
+    return resolveHostUrl(`http://${formattedHost}:${configuredPort}${basePath}`);
   }
 
   async function setConfigServerUrl(url: string, options: { rebuildIfDevBuildStarted?: boolean } = {}) {
@@ -566,11 +571,17 @@ export function createIiifRuntime(options: IIIFHSSSPluginOptions = {}) {
   }
 
   function resolveBuildServerUrl(configuredUrl: string | undefined) {
-    return (
+    const resolved =
       normalizeAbsoluteHttpUrl(serverUrl) ||
       normalizeAbsoluteHttpUrl(configuredUrl) ||
-      normalizeAbsoluteHttpUrl(resolveBuildUrlFromEnv())
-    );
+      normalizeAbsoluteHttpUrl(resolveBuildUrlFromEnv());
+
+    if (!resolved) return null;
+    const normalizedBase = normalizePath(basePath);
+    if (!normalizedBase) return resolved;
+    // Don't double-append if basePath is already present in the resolved URL
+    const suffix = `/${normalizedBase}`;
+    return resolved.endsWith(suffix) ? resolved : `${resolved}${suffix}`;
   }
 
   function normalizePath(value: string) {
@@ -580,7 +591,7 @@ export function createIiifRuntime(options: IIIFHSSSPluginOptions = {}) {
   function getIiifDebugUrl(baseUrl: string) {
     const base = normalizePath(basePath);
     const debugPath = base.length > 0 ? `${base}/_debug` : "_debug";
-    return new URL(debugPath, baseUrl).toString();
+    return resolveHostUrl(new URL(debugPath, baseUrl).toString());
   }
 
   async function runBuild(logger?: RuntimeLogger) {

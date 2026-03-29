@@ -2,7 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { iiif } from "../lib/iiif-server";
 
-const collection = (await iiif.loadManifestsCollection()) || (await iiif.loadTopCollection());
+const collection = await iiif.getAllManifests();
 const items = collection?.items || [];
 const collectionDetails = await iiif.loadCollection("manifests");
 ---
@@ -21,10 +21,13 @@ const collectionDetails = await iiif.loadCollection("manifests");
       {
         items.map((item: any) => {
           const slug = item?.["hss:slug"];
+          const routeSlug = typeof slug === "string" ? slug.replace(/^manifests\//, "") : "";
           return (
             <li class="item">
               <strong>{item?.label?.en?.[0] || slug || item?.id}</strong>
-              <p class="small">{slug ? <a href={`/manifests/${slug}`}>Open manifest page</a> : "No slug available"}</p>
+              <p class="small">
+                {routeSlug ? <a href={`/manifests/${routeSlug}`}>Open manifest page</a> : "No slug available"}
+              </p>
             </li>
           );
         })
