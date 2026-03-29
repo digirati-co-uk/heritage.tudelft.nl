@@ -1,0 +1,81 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/92f4aaf5-424a-4acc-b108-b8e636b08e0c/schema.json",
+    "name": "Spiegelpasser volgens A. Lipkens door C. Kühler.",
+    "description": "Spiegelpasser volgens A. Lipkens door C. Kühler. Geodetisch instrument voor het meten van hoeken. Combinatie van een meetpasser en een hoekspiegel naar een ontwerp van Antoine Lipkens. De gemeten hoek tussen twee meetpunten en de passer is het dubbele van de hoek tussen de passerbenen. Aangezien de lengte van de benen bekend is, is de hoek gemakkelijk te tekenen.",
+    "identifier": "2000.0077.GEO",
+    "temporalCoverage": "1825/1850",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "passer",
+        "sameAs": "http://vocab.getty.edu/aat/300022488"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        }
+    ],
+    "creator": [
+        {
+            "@type": "Role",
+            "roleName": "ontwerper",
+            "creator": {
+                "@type": "Person",
+                "name": "Antoine Lipkens"
+            }
+        },
+        {
+            "@type": "Role",
+            "roleName": "producent",
+            "creator": {
+                "@type": "Organization",
+                "name": "Carl Kühler"
+            }
+        }
+    ],
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Wesel, Duitsland",
+        "latitude": 51.6669,
+        "longitude": 6.62037,
+        "sameAs": "https://www.geonames.org/2810678"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 15
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 160
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 30
+    },
+    "citation": "A. Tutein Nolthenius, 'Antoine Lipkens' in: \"Tijdschrift voor Kadaster en Landmeetkunde\", 1 januari 1950, pagina 84-91.",
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/735960f1-dc58-478a-97d5-08c765b6bd9a",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/735960f1-dc58-478a-97d5-08c765b6bd9a/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0077.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2794
+    }
+}

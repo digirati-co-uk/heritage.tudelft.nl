@@ -1,0 +1,85 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/63855ad6-fb0e-42e4-9d78-ccd4bfa2e03b/schema.json",
+    "name": "Waterpasstatief met stengelhaak door Firma Gebr. Caminada",
+    "description": "Waterpasstatief met stengelhaak door de Firma Gebr. Caminada, behorende bij de instrumenten 2000.0016.GEO en 2000.0017.GEO, die zijn gebruikt bij de Rijkswaterpassing (1875-1885). Speciaal voor het opstellen van waterpasinstrumenten van Caminada. Op de poten, die instelbaar zijn, is een schaalverdeling aangebracht.",
+    "identifier": "2000.0291.GEO",
+    "temporalCoverage": "1850/1875",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "statief (standaarden)",
+        "sameAs": "http://vocab.getty.edu/aat/300164679"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        },
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Firma Gebr.  Caminada"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Rotterdam, Nederland",
+        "latitude": 51.88246,
+        "longitude": 4.28784,
+        "sameAs": "https://www.geonames.org/2747890"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 118
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 240
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 240
+    },
+    "citation": "NCG publicaties",
+    "isRelatedTo": [
+        {
+            "@type": "CreativeWork",
+            "name": "Waterpasinstrument op een vast stelschroevenblok door Firma Gebr. Caminada",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/dfa37cfa-cf10-4e79-9cea-695e7faecd23/schema.json",
+            "identifier": "2000.0016.GEO"
+        },
+        {
+            "@type": "CreativeWork",
+            "name": "Waterpasinstrument met twee niveaus door Firma Gebr. Caminada nr. 7",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/3c30e4f6-108d-4ed5-8b70-00f5738c2cab/schema.json",
+            "identifier": "2000.0017.GEO"
+        }
+    ],
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/9bb36b4c-8093-48b8-a23e-1186ce52edc4",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/9bb36b4c-8093-48b8-a23e-1186ce52edc4/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0291.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2988
+    }
+}

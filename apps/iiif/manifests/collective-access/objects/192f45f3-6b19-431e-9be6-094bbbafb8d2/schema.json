@@ -1,0 +1,70 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/192f45f3-6b19-431e-9be6-094bbbafb8d2/schema.json",
+    "name": "Bolrolplanimeter door G. Coradi",
+    "description": "Bolrolplanimeter door G. Coradi, voor de bepaling van oppervlaktes van percelen en van dwars- en lengteprofielen.",
+    "identifier": "2000.0160.GEO",
+    "temporalCoverage": "1890/1910",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "planimeter",
+        "sameAs": "http://vocab.getty.edu/aat/300200057"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "kunststof",
+            "sameAs": "https://data.cultureelerfgoed.nl/term/id/cht/923ba596-bc30-44f5-a26c-cac680e3808d"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "G. Coradi"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 75
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 545
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 195
+    },
+    "citation": "Zeitschrift für Vermessungskunde 1888 blz 162 Die Planimeter Coradi 1912 blz 18 e.v.zie ook fig 17. Het beschreven model is enigszins afwijkend van die van fig. 17.",
+    "isRelatedTo": {
+        "@type": "CreativeWork",
+        "name": "Schijfrolplanimeter door G. Coradi",
+        "sameAs": "https://heritage.tudelft.nl/iiif/manifests/e58d4720-c6d0-4509-9669-5a4ce5f0fe8b/schema.json",
+        "identifier": "2000.0189.GEO"
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/0f2b1745-c7ed-4daf-ad56-98260dec7c7d",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/0f2b1745-c7ed-4daf-ad56-98260dec7c7d/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0160.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2865
+    }
+}

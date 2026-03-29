@@ -1,0 +1,101 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/3dc52d11-ce5b-47a2-8dc7-2a73a6a5a828/schema.json",
+    "name": "Portret van rector magnificus prof. G. Diehl door H. Luns",
+    "description": "Geschilderd portret van rector magnificus prof. ir. Gerardus Diehl (1882-1938), hoogleraar architectuur van 1924 tot 1938. Het werk is geschilderd door Hubert Marie Luns (1881-1942).",
+    "identifier": "2002.0010.CVB",
+    "temporalCoverage": "1925/1950",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "schilderij"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "olieverf",
+            "sameAs": "http://vocab.getty.edu/aat/300014254"
+        },
+        {
+            "@type": "Product",
+            "name": "linnen",
+            "sameAs": "http://vocab.getty.edu/aat/300014069"
+        },
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "maker",
+        "creator": {
+            "@type": "Person",
+            "name": "Huib Luns"
+        }
+    },
+    "about": {
+        "@type": "Person",
+        "name": "G. Diehl"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 875
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 770
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 72
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/d1434513-db45-4b7b-b505-d338b31cb0b2",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/d1434513-db45-4b7b-b505-d338b31cb0b2/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2002.0010.CVB.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 1734
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/952d6d52-2a42-4307-8dcd-24ef1d3fa8eb",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/952d6d52-2a42-4307-8dcd-24ef1d3fa8eb/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2002.0010.CVB.b.JPG",
+            "width": 1600,
+            "height": 1200,
+            "position": 1735
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/221eecdd-4752-4cf8-bf89-453b01586ea3",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/221eecdd-4752-4cf8-bf89-453b01586ea3/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2002.0010.CVB.c.JPG",
+            "width": 1600,
+            "height": 1200,
+            "position": 9025
+        }
+    ]
+}

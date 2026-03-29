@@ -1,0 +1,76 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/3e760cfc-fb2d-4bff-84ce-ae042099c27a/schema.json",
+    "name": "Tekening door J.B.M. Hauser van de tachymeter door M.J.M. Bogaerts",
+    "description": "Tekening door J.B.M. Hauser van het ontwerp van het total station ontwikkeld door prof. dr. ir. M.J.M. Bogaerts. De ontwikkeling van de elektronica was op dat moment nog niet compact genoeg en kon niet geplaatst worden binnen de contouren van dit ontwerp. Beide prototypes zijn daarom voorzien van extra voorzieningen t.b.v. de elektronica.",
+    "identifier": "2005.0006.GEO",
+    "temporalCoverage": "1960/1975",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "tekening",
+        "sameAs": "http://vocab.getty.edu/aat/300033973"
+    },
+    "material": {
+        "@type": "Product",
+        "name": "papier",
+        "sameAs": "http://vocab.getty.edu/aat/300014109"
+    },
+    "creator": {
+        "@type": "Role",
+        "roleName": "ontwerper",
+        "creator": {
+            "@type": "Organization",
+            "name": "TU Delft"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT"
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 720
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 510
+    },
+    "citation": "Bogaerts M.J.M. A self-reducing range-finder with an automatic registration system. Delft z.j.",
+    "isRelatedTo": [
+        {
+            "@type": "CreativeWork",
+            "name": "Tachymeter door TU Delft en Optische Industrie \"De Oude Delft\"",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/f3c33e71-b3d6-4b98-9e9e-a62fa265a1b8/schema.json",
+            "identifier": "2003.0009.GEO"
+        },
+        {
+            "@type": "CreativeWork",
+            "name": "Choke-ring antenna door Ashtech",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/f9f99200-5b04-4659-8594-d00aadb289ed/schema.json",
+            "identifier": "2005.0008.GEO"
+        },
+        {
+            "@type": "CreativeWork",
+            "name": "Tachymeter door TU Delft en Optische Industrie \"De Oude Delft\"",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/8f8ba186-30d0-4ad8-8b07-ec355ec1582f/schema.json",
+            "identifier": "2003.0008.GEO"
+        }
+    ],
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/04f147f1-e063-442d-9e9f-e50d7c39ff9c",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/04f147f1-e063-442d-9e9f-e50d7c39ff9c/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2005_0006_GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 9170
+    }
+}

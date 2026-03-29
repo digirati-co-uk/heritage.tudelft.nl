@@ -1,0 +1,70 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/e58d4720-c6d0-4509-9669-5a4ce5f0fe8b/schema.json",
+    "name": "Schijfrolplanimeter door G. Coradi",
+    "description": "Schijfrolplanimeter door G. Coradi (Scheibenrollplanimeter) voor precisie oppervlaktebepalingen van percelen en dwars- en lengteprofielen.",
+    "identifier": "2000.0189.GEO",
+    "temporalCoverage": "1921",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "planimeter",
+        "sameAs": "http://vocab.getty.edu/aat/300200057"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "karton",
+            "sameAs": "http://vocab.getty.edu/aat/300014224"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "G. Coradi"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 125
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 590
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 330
+    },
+    "citation": "http://www.leinweb.com/snackbar/planimtr/wheatley/s11.htm",
+    "isRelatedTo": {
+        "@type": "CreativeWork",
+        "name": "Bolrolplanimeter door G. Coradi",
+        "sameAs": "https://heritage.tudelft.nl/iiif/manifests/192f45f3-6b19-431e-9be6-094bbbafb8d2/schema.json",
+        "identifier": "2000.0160.GEO"
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/403b1965-d140-4c76-b8f9-1790731f2710",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/403b1965-d140-4c76-b8f9-1790731f2710/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0189.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2895
+    }
+}

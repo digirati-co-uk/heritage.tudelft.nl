@@ -1,0 +1,88 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/98f0583c-7e1f-4cfe-9763-602b94d2ede4/schema.json",
+    "name": "Statief behorende bij de horizontale baak door G. de Koningh",
+    "description": "Driepoot of statief met stengelhaak voor het plaatsen van het stelschroevenblok, behorende bij de horizontale baak van de Koningh. Zie inventarisnummer 2000.0196.GEO en 2000.0351.GEO.",
+    "identifier": "2005.0019.GEO",
+    "temporalCoverage": "1925/1950",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "statief (standaarden)",
+        "sameAs": "http://vocab.getty.edu/aat/300164679"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        },
+        {
+            "@type": "Product",
+            "name": "leer"
+        },
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "G. de Koningh"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Arnhem, Nederland",
+        "latitude": 52.00113,
+        "longitude": 5.89641,
+        "sameAs": "https://www.geonames.org/2759660"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 200
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 1370
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 200
+    },
+    "isRelatedTo": [
+        {
+            "@type": "CreativeWork",
+            "name": "Tachymeter-theodoliet door G. de Koningh",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/abea5f1f-8f79-4da9-bdec-2598133f30d7/schema.json",
+            "identifier": "2000.0351.GEO"
+        },
+        {
+            "@type": "CreativeWork",
+            "name": "Baak volgens prof. J.W Dieperink van G. de Koningh",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/9eeef855-7d3f-47fc-a6cb-73a3754874ff/schema.json",
+            "identifier": "2000.0196.GEO"
+        }
+    ],
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/56d9a1e9-bc7d-4ee6-aa80-33519054cadd",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/56d9a1e9-bc7d-4ee6-aa80-33519054cadd/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2005.0019.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3218
+    }
+}

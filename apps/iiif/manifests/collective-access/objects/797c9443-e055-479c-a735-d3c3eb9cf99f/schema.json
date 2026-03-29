@@ -1,0 +1,70 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/797c9443-e055-479c-a735-d3c3eb9cf99f/schema.json",
+    "name": "Waterpasinstrument op een vast stelschroevenblok door Fa. Becker & Buddingh",
+    "description": "Waterpasinstrument door Fa. Becker & Buddingh, voorzien van een boussole en een niveau dat is vastgemaakt aan de kijker. De kijker geeft een rechtopstaand beeld. Dit instrument is geschikt voor eenvoudige waterpassingen ( bijv. vlakte-waterpassingen).",
+    "identifier": "2000.0018.GEO",
+    "temporalCoverage": "1850/1875",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "waterpasinstrument"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Fa. Becker & Buddingh"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Arnhem, Nederland",
+        "latitude": 52.00113,
+        "longitude": 5.89641,
+        "sameAs": "https://www.geonames.org/2759660"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 235
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 480
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 145
+    },
+    "citation": "Schols, C.M., \"Landmeten en Waterpassen\", Breda: K.M.A., 8e druk 1908, atlasband fig.187.",
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/c16c8678-f1a9-419b-b7c3-1bf9c967eb3d",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/c16c8678-f1a9-419b-b7c3-1bf9c967eb3d/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0018.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2727
+    }
+}

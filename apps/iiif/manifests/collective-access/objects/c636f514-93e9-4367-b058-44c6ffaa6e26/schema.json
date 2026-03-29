@@ -1,0 +1,75 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/c636f514-93e9-4367-b058-44c6ffaa6e26/schema.json",
+    "name": "Rekencilinder door Laboratorium van Geodesie",
+    "description": "Een rekencilinder (werkt als een rekenliniaal) voor vermenigvuldigen, delen. Dit is een prototype voor een rekencilinder voor technisch-wetenschappelijk rekenwerk. Het object is gevonden in de nalatenschap van de Delftse hoogleraar J.M. Tienstra. Verdere toelichting ontbreekt.",
+    "identifier": "2000.0149.GEO",
+    "temporalCoverage": "1925/1950",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "rekencilinder"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "papier",
+            "sameAs": "http://vocab.getty.edu/aat/300014109"
+        },
+        {
+            "@type": "Product",
+            "name": "karton",
+            "sameAs": "http://vocab.getty.edu/aat/300014224"
+        },
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "maker",
+        "creator": {
+            "@type": "Organization",
+            "name": "Laboratorium van  Geodesie"
+        }
+    },
+    "contributor": {
+        "@type": "Role",
+        "roleName": "had in bezit",
+        "contributor": {
+            "@type": "Person",
+            "name": "Jacob Menno Tienstra"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 65
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 365
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 53
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/115a0f4b-c9aa-457e-b0ed-d4dad426a7c7",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/115a0f4b-c9aa-457e-b0ed-d4dad426a7c7/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0149.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2861
+    }
+}

@@ -1,0 +1,66 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/42b3bd2b-5e3d-4129-ae9f-8a526e6e8028/schema.json",
+    "name": "Onderwijsmodel voor de praktijk van fotogrammetrie",
+    "description": "Stereo-plotter gebruikt als onderwijsmodel voor onderwijs in de fotogrammetrie (Geodesie). In het apparaat kunnen twee foto’s (glasplaten) worden geplaatst vanuit twee verschillende hoeken. Via twee oculairs wordt dit als een stereobeeld gezien. Met behulp van de stift kunnen overeenkomstige punten geplot worden op de bijbehorende tekenplaat. Dit model is gebruikt tussen 1930 en 1940 bij de colleges van prof. Schermerhorn (1894-1977), de latere minister-president van Nederland.",
+    "identifier": "2012.0004.GEO",
+    "temporalCoverage": "1930/1940",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "uitwerkingsinstrument"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        },
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Konsortium Luftbild GmbH"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "München, Duitsland",
+        "latitude": 48.13743,
+        "longitude": 11.57549,
+        "sameAs": "https://www.geonames.org/2867714"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT"
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT"
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT"
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/9f66ddb4-c7fa-4fd8-a3d6-fc60059a3624",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/9f66ddb4-c7fa-4fd8-a3d6-fc60059a3624/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2012.0004.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3247
+    }
+}

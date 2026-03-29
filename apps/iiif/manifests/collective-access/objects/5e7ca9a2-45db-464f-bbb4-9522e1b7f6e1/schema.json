@@ -1,0 +1,81 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/5e7ca9a2-45db-464f-bbb4-9522e1b7f6e1/schema.json",
+    "name": "Spiegelreflectiecirkel door Pistor & Martins",
+    "description": "Spiegel-prismacirkel door Pistor & Martins, op een vast stelschroevenblok en met een cardanische bevestiging en een contragewicht. In 1845 werd op deze verbeterde versie van de reflectiecirkel een patent aangevraagd. Naast de betere beeldvorming - door het gebruik van een prisma en het weglaten van de kleine spiegel - is de diametrale aflezing de belangrijkste verbetering. Zie ook inventarisnummer 2000.0440.GEO.",
+    "identifier": "2000.0039.GEO",
+    "temporalCoverage": "1825/1850",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "spiegelreflectiecirkel"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Pistor & Martins"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Berlijn, Duitsland",
+        "latitude": 52.5,
+        "longitude": 13.41667,
+        "sameAs": "https://www.geonames.org/2950157"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 460
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 430
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 300
+    },
+    "citation": "Borda, Jean-Charles de, \"Description et usage du cercle de réflexion: avec différentes méthodes pour calculer les observations nautiques\", Paris: Didot, 1816.",
+    "isRelatedTo": {
+        "@type": "CreativeWork",
+        "name": "Reflectiecirkel met houten handvatten door Th. Wegener",
+        "sameAs": "https://heritage.tudelft.nl/iiif/manifests/df543e23-a55b-4631-b2e4-72c244f06c4e/schema.json",
+        "identifier": "2000.0440.GEO"
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/380913a9-bc81-4f5f-8d04-f1ff549a8aea",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/380913a9-bc81-4f5f-8d04-f1ff549a8aea/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0039.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2749
+    }
+}

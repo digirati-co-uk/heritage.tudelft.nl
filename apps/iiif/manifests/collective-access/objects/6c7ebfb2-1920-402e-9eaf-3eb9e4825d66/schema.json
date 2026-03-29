@@ -1,0 +1,91 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/6c7ebfb2-1920-402e-9eaf-3eb9e4825d66/schema.json",
+    "name": "Horizontale baak door Kern & Co.",
+    "description": "Horizontale baak door Kern & Co. AG,  voor optische precisie afstandmeting, met bevestigingsmogelijkheid aan een statief. Behoort bij een tachymeter (DKRT) van de fa. Kern.",
+    "identifier": "2000.0190.GEO",
+    "temporalCoverage": "1919/1925",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "baak"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        },
+        {
+            "@type": "Product",
+            "name": "karton",
+            "sameAs": "http://vocab.getty.edu/aat/300014224"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Kern & Co. AG"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Aarau, Zwitserland",
+        "latitude": 47.39254,
+        "longitude": 8.04422,
+        "sameAs": "https://www.geonames.org/2661881"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 1495
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 20
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 120
+    },
+    "citation": "S. Bertschmann: Die neuen optische Distanzmesser (1925) blz 26 e.v. verklaring aflezingsmethode. R. Bosshart: Optische Distanzmessung und Polarkoordinatenmethode mit besonderer Berücksichtigung des Boßhardt-Zeiß'schen Reduktionstachymeters. blz 17 e.v. Ze",
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/8272c5ba-d89a-48aa-8a1d-3201bb11c9b1",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/8272c5ba-d89a-48aa-8a1d-3201bb11c9b1/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0190.GEO.a.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 2896
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/06d660cb-deae-45c9-8b60-61a15ca24cb1",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/06d660cb-deae-45c9-8b60-61a15ca24cb1/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0190.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 2897
+        }
+    ]
+}

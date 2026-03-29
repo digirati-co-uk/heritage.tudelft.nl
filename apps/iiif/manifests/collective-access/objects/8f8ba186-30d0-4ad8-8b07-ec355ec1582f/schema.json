@@ -1,0 +1,123 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/8f8ba186-30d0-4ad8-8b07-ec355ec1582f/schema.json",
+    "name": "Tachymeter door TU Delft en Optische Industrie \"De Oude Delft\"",
+    "description": "Geodetisch meetinstrument voor inwinning volgens de methode van poolcoördinaten. Instrument voor het digitaal bepalen van richtingen en afstanden. Het instrument is ontwikkeld na het dissertatie-onderzoek (1969) van M.J.M. Bogaerts. De tachymeter is gebouwd in een samenwerkingsverband tussen de TU Delft en NV Optische Industrie Oude Delft. Zie ook inventarisnummer: 2003.0009.GEO en 2005.0006.GEO.",
+    "identifier": "2003.0008.GEO",
+    "temporalCoverage": "1960/1975",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "elektronische tachymeter",
+        "sameAs": "http://vocab.getty.edu/aat/300379943"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "aluminium",
+            "sameAs": "http://vocab.getty.edu/aat/300011015"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        },
+        {
+            "@type": "Product",
+            "name": "kunststof",
+            "sameAs": "https://data.cultureelerfgoed.nl/term/id/cht/923ba596-bc30-44f5-a26c-cac680e3808d"
+        }
+    ],
+    "creator": [
+        {
+            "@type": "Role",
+            "roleName": "producent",
+            "creator": {
+                "@type": "Organization",
+                "name": "NV de Optische Industrie \"De Oude Delft\""
+            }
+        },
+        {
+            "@type": "Role",
+            "roleName": "maker",
+            "creator": {
+                "@type": "Organization",
+                "name": "TU Delft"
+            }
+        },
+        {
+            "@type": "Role",
+            "roleName": "ontwerper",
+            "creator": {
+                "@type": "Person",
+                "name": "Matthijs Johannes Martinus Bogaerts"
+            }
+        }
+    ],
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Delft, Nederland",
+        "latitude": 51.99968,
+        "longitude": 4.36405,
+        "sameAs": "https://www.geonames.org/2757344"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 190
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 360
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 250
+    },
+    "citation": [
+        "Bogaerts M.J.M. A self-reducing range-finder with an automatic registration system. Delft z.j.",
+        "\"Een vergelijkend onderzoek tussen de meetlijnenmethode en de voerstraatmethode in vlak land. (Proef Dinther-Suawoude) Automatisering bij de voerstraalmethode. Voordrachten gehouden op de Geodetische Studiedag der Nederlandse Landmeetkundige Federatie\", Delft, 20 mei 1966."
+    ],
+    "isRelatedTo": [
+        {
+            "@type": "CreativeWork",
+            "name": "Basisreductietachymeter ontwikkeld door prof. M.J.M. Bogaerts en TU Delft",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/d1922508-aaef-40c2-a4d6-0ee27aa2a38c/schema.json",
+            "identifier": "2005.0003.GEO"
+        },
+        {
+            "@type": "CreativeWork",
+            "name": "Codeschijf voor basisreductietachymeter door TU Delft",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/40457b5c-f2f7-4b60-a717-5e6cbb4e9895/schema.json",
+            "identifier": "2005.0004.GEO"
+        },
+        {
+            "@type": "CreativeWork",
+            "name": "Set van 7 tekeningen van tachymeter ontwikkeld door prof. M.J.M. Bogaerts",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/2f9f32d0-b1e4-4d73-833c-8a489cbb34e2/schema.json",
+            "identifier": "2005.0005.GEO"
+        },
+        {
+            "@type": "CreativeWork",
+            "name": "Tekening door J.B.M. Hauser van de tachymeter door M.J.M. Bogaerts",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/3e760cfc-fb2d-4bff-84ce-ae042099c27a/schema.json",
+            "identifier": "2005.0006.GEO"
+        }
+    ],
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/8965905b-812b-4f4e-8eb8-a155ebcd6193",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/8965905b-812b-4f4e-8eb8-a155ebcd6193/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2003.0008.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3177
+    }
+}

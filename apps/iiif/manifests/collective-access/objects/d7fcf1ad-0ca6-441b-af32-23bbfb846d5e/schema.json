@@ -1,0 +1,76 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/d7fcf1ad-0ca6-441b-af32-23bbfb846d5e/schema.json",
+    "name": "Hellingmeter door Otto Fennel & Söhne",
+    "description": "Hang hellingmeter door Otto Fennel & Söhne, voor het bepalen van een hellingshoek in de kolenmijnen. Dit object is het rechter object in de afbeelding.",
+    "identifier": "2000.0138.GEO",
+    "temporalCoverage": "1850/1875",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "hellingmeter",
+        "sameAs": "http://vocab.getty.edu/aat/300195974"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "textiel",
+            "sameAs": "http://vocab.getty.edu/aat/300231565"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Otto Fennel & Söhne"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Kassel, Duitsland",
+        "latitude": 51.31667,
+        "longitude": 9.5,
+        "sameAs": "https://www.geonames.org/2892518"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 4
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 235
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 140
+    },
+    "isRelatedTo": {
+        "@type": "CreativeWork",
+        "name": "Hangboussole door Otto Fennel & Söhne",
+        "sameAs": "https://heritage.tudelft.nl/iiif/manifests/c80e9c3a-1f1d-4ecc-b8be-c2beb418770b/schema.json",
+        "identifier": "2000.0137.GEO"
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/e50f6406-ac1f-4e93-a8db-79a4781de6cf",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/e50f6406-ac1f-4e93-a8db-79a4781de6cf/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0138.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2859
+    }
+}

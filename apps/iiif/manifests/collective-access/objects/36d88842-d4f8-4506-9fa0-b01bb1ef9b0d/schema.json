@@ -1,0 +1,129 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/36d88842-d4f8-4506-9fa0-b01bb1ef9b0d/schema.json",
+    "name": "Gravimeter door Defforges met bijbehorende slinger door Bianchi",
+    "description": "Slingerinstrument samengesteld door Defforges voor zwaartekrachtmeting, is voorzien van een losse manometer. De bijbehorende slinger door Bianchi is in een speciale kist geplaatst. Bij dit instrument behoort een klok (zie ook 2000.0537.GEO) die bedoeld was voor de meting van de slingertijd. De kap ontbreekt, deze is nodig om de zuil vacuüm te zuigen. Zie ook 2000.0900.GEO en 2007.0182.GEO voor testresultaten. Deze combinatie aangeschaft door de Rijkscommissie voor Graadmeting en Waterpassing heeft nooit naar behoren gewerkt en is later door Vening Meinesz vervangen door het door hem ontwikkelde instrument (zie ook 2000.0535.GEO).",
+    "identifier": "2000.0536.GEO",
+    "temporalCoverage": "1875/1910",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "gravimeter",
+        "sameAs": "http://vocab.getty.edu/aat/300197563"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "ijzer",
+            "sameAs": "http://vocab.getty.edu/aat/300011002"
+        },
+        {
+            "@type": "Product",
+            "name": "koper",
+            "sameAs": "http://vocab.getty.edu/aat/300011020"
+        },
+        {
+            "@type": "Product",
+            "name": "kwik",
+            "sameAs": "http://vocab.getty.edu/aat/300011026"
+        }
+    ],
+    "creator": [
+        {
+            "@type": "Role",
+            "roleName": "maker",
+            "creator": {
+                "@type": "Person",
+                "name": "Defforges"
+            }
+        },
+        {
+            "@type": "Role",
+            "roleName": "maker",
+            "creator": {
+                "@type": "Person",
+                "name": "Bianchi"
+            }
+        }
+    ],
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 900
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 680
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 380
+    },
+    "citation": "zie NCG publicaties en 2007182 doos 8",
+    "isRelatedTo": {
+        "@type": "CreativeWork",
+        "name": "Uurwerk door Strasser & Rohde No. 277",
+        "sameAs": "https://heritage.tudelft.nl/iiif/manifests/686d7823-6545-432a-a5f2-179d95df2f5a/schema.json",
+        "identifier": "2000.0537.GEO"
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/2b639ae3-b6e6-4a6a-918d-6266795b17f9",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/2b639ae3-b6e6-4a6a-918d-6266795b17f9/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0536.GEO.a.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3105
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/22c1d4d1-7a1e-487f-97e9-f5c769cbba01",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/22c1d4d1-7a1e-487f-97e9-f5c769cbba01/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0536.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3106
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/872d6178-d593-4b61-8f1e-06c941eb7b57",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/872d6178-d593-4b61-8f1e-06c941eb7b57/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0536.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 9608
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/6873d4b5-2912-4b56-97a6-e33db38d69b3",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/6873d4b5-2912-4b56-97a6-e33db38d69b3/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0536a.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 9609
+        }
+    ]
+}

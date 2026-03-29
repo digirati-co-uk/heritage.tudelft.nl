@@ -1,0 +1,70 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/e4893c19-dab9-4936-a827-97d1f0280fac/schema.json",
+    "name": "Theodoliet door Kern & Co. AG",
+    "description": "Een theodoliet voor het meten van horizontale en verticale richtingen. Dit is een repetitietheodoliet met een boussole, en voorzien van een richtkijker met een uitschuifbare oculairbuis. Randaflezing is mogelijk door middel van noniën en diametraal geplaatste afleesloepen. Centrering vindt plaats door middel van een schietlood. De richtkijker is voorzien van een niveau en kan gebruikt worden voor waterpassen.",
+    "identifier": "2000.0410.GEO",
+    "temporalCoverage": "1900/1925",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "theodoliet",
+        "sameAs": "http://vocab.getty.edu/aat/300199711"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Kern & Co. AG"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Aarau, Zwitserland",
+        "latitude": 47.39254,
+        "longitude": 8.04422,
+        "sameAs": "https://www.geonames.org/2661881"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 300
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 220
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 180
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/5fd02ae2-2dcf-449f-bed4-74b70082e83a",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/5fd02ae2-2dcf-449f-bed4-74b70082e83a/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0410.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3008
+    }
+}

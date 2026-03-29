@@ -1,0 +1,64 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/944ac7e2-bd0a-4e39-8b81-e693a48e3c10/schema.json",
+    "name": "Waterpasstatief met vaste poten door G. de Koningh",
+    "description": "Waterpasstafief met vaste poten voor het opstellen van het instrument, door G. de Koningh nr 3603. Het instrument is bekend onder inventarisnummer 2000.0337.GEO.",
+    "identifier": "2005.0011.GEO",
+    "temporalCoverage": "1925/1950",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "statief (standaarden)",
+        "sameAs": "http://vocab.getty.edu/aat/300164679"
+    },
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "G. de Koningh"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Arnhem, Nederland",
+        "latitude": 52.00113,
+        "longitude": 5.89641,
+        "sameAs": "https://www.geonames.org/2759660"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 170
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 1500
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 170
+    },
+    "isRelatedTo": {
+        "@type": "CreativeWork",
+        "name": "Waterpasinstrument door G. de Koningh",
+        "sameAs": "https://heritage.tudelft.nl/iiif/manifests/06b4e1ba-f8ee-407d-ae69-07fd51ee31c1/schema.json",
+        "identifier": "2000.0337.GEO"
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/eefa9444-e327-4e96-9d2a-cb9022e1821a",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/eefa9444-e327-4e96-9d2a-cb9022e1821a/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2005.0011.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3210
+    }
+}

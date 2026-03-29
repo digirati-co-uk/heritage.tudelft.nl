@@ -1,0 +1,85 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/f1745ad0-e2c6-49db-9eb0-fc1521dce910/schema.json",
+    "name": "Precisie-schijfpoolplanimeter volgens F. Hohmann door G. Coradi",
+    "description": "Precisie-schijfpoolplanimeter volgens F. Hohmann door G. Coradi, voor oppervlaktebepalingen van op kaart getekende percelen en dwars- en lengteprofielen. In 1883 door G. Coradi geconstrueerd. Voor oppervlaktebepaling (integreren) van op een kaart getekende gesloten figuren. Met bijbehorende opbergdoos.",
+    "identifier": "2000.0243.GEO",
+    "temporalCoverage": "1915",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "schijfpoolplanimeter"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "kunststof",
+            "sameAs": "https://data.cultureelerfgoed.nl/term/id/cht/923ba596-bc30-44f5-a26c-cac680e3808d"
+        },
+        {
+            "@type": "Product",
+            "name": "mineraal",
+            "sameAs": "http://vocab.getty.edu/aat/300011068"
+        }
+    ],
+    "creator": [
+        {
+            "@type": "Role",
+            "roleName": "producent",
+            "creator": {
+                "@type": "Organization",
+                "name": "G. Coradi"
+            }
+        },
+        {
+            "@type": "Role",
+            "roleName": "maker",
+            "creator": {
+                "@type": "Person",
+                "name": "F. Hohmann"
+            }
+        }
+    ],
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Zürich, Zwitserland, EU",
+        "latitude": 47.36667,
+        "longitude": 8.55,
+        "sameAs": "https://www.geonames.org/2657896"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 55
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 270
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 350
+    },
+    "citation": "http://www.mathematik.uni-wuerzburg.de/History/ausstell/planimet/hersteller.html",
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/0310158e-774c-4b6b-946d-f5327132fbfc",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/0310158e-774c-4b6b-946d-f5327132fbfc/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0243.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2948
+    }
+}

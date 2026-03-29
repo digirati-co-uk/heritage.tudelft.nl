@@ -1,0 +1,75 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/06b4e1ba-f8ee-407d-ae69-07fd51ee31c1/schema.json",
+    "name": "Waterpasinstrument door G. de Koningh",
+    "description": "Waterpasinstrument door G. de Koningh, voor zowel doorgaande waterpassing als vlakte waterpassing met een baak. Het waterpasinstrument heeft een hellingschroef en afstandsdraden in de kijker. Het instrument is voorzien van een afgesloten niveau dat door middel van een oculair en een spiegel afgelezen kan worden. Aan de bovenzijde van de kijker is een boussole (kompas) van 400 graden bevestigd. Bij dit instrument hoort een statief met inventarisnummer 20005.0011.GEO.",
+    "identifier": "2000.0337.GEO",
+    "temporalCoverage": "1928",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "waterpasinstrument"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "G. de Koningh"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Arnhem, Nederland",
+        "latitude": 52.00113,
+        "longitude": 5.89641,
+        "sameAs": "https://www.geonames.org/2759660"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 195
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 275
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 130
+    },
+    "isRelatedTo": {
+        "@type": "CreativeWork",
+        "name": "Waterpasstatief met vaste poten door G. de Koningh",
+        "sameAs": "https://heritage.tudelft.nl/iiif/manifests/944ac7e2-bd0a-4e39-8b81-e693a48e3c10/schema.json",
+        "identifier": "2005.0011.GEO"
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/28cee260-8fb9-406e-85e2-170c1608e165",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/28cee260-8fb9-406e-85e2-170c1608e165/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0337.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3387
+    }
+}

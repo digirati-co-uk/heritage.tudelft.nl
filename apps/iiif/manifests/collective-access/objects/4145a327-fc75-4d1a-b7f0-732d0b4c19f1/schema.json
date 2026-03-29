@@ -1,0 +1,101 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/4145a327-fc75-4d1a-b7f0-732d0b4c19f1/schema.json",
+    "name": "Bronzen herdenkingsplaat over zwaartekrachtmetingen prof. F.A. Vening Meinesz",
+    "description": "Bronzen plaat gemaakt door Koninklijke Begeer B.V. ter herdenking van de zwaartekrachtmetingen door prof. dr. ir. Felix Andries Vening Meinesz (1887-1966). Deze proeven zijn in de jaren 1923 tot en met 1937 uitgevoerd in opdracht van Rijkscommissie voor Graadmeting en Waterpassing (thans NCG) in diverse onderzeeërs van de Koninklijke Marine. Zijn tocht met de KXVIII naar Nederlands Oost-Indië in 1934/1935 is verfilmd. Zie voor informatie over de metingen in de diverse onderzeeërs inventarisnummers 2007.0182.GEO en 2007.0183.GEO.",
+    "identifier": "2000.0456.GEO",
+    "temporalCoverage": "1925/1950",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "plaquette (metalen reliëf)",
+        "sameAs": "http://vocab.getty.edu/aat/300190507"
+    },
+    "material": {
+        "@type": "Product",
+        "name": "metaal",
+        "sameAs": "http://vocab.getty.edu/aat/300010900"
+    },
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Koninklijke Begeer  B.V."
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 15
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 700
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 510
+    },
+    "citation": "http://www.inghist.nl/Onderzoek/Projecten/BWN/lemmata/bwn2/meinesz",
+    "isRelatedTo": [
+        {
+            "@type": "CreativeWork",
+            "name": "Archief met aantekenboek door prof. F.A. Vening Meinesz en E.A.J.H. Modderman",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/3207d9ed-dbeb-48fe-a3f6-fc01c7392511/schema.json",
+            "identifier": "2007.0182.GEO"
+        },
+        {
+            "@type": "CreativeWork",
+            "name": "Meetrollen van zwaartekrachtmetingen door prof. F.A. Vening Meinesz, E.A.J.H. Modderman, W. Nieuwenkamp en B. Villinger",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/fca6890b-26a7-4df6-ae85-516dcecd32bc/schema.json",
+            "identifier": "2007.0183.GEO"
+        }
+    ],
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/129cf70d-a63c-4333-9f94-ed1ff62ca423",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/129cf70d-a63c-4333-9f94-ed1ff62ca423/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0456.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3063
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/099f0933-b4d5-41b7-b708-53e9cf07ec35",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/099f0933-b4d5-41b7-b708-53e9cf07ec35/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0456.GEO.a.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3064
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/61280921-603b-468c-a591-51e9b03ba7d1",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/61280921-603b-468c-a591-51e9b03ba7d1/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0456.GEO.b.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3065
+        }
+    ]
+}

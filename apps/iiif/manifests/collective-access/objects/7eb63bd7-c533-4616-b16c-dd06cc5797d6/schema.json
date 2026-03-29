@@ -1,0 +1,71 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/7eb63bd7-c533-4616-b16c-dd06cc5797d6/schema.json",
+    "name": "Glazen buis met houten houder",
+    "description": "Glazen lichtbuis in goudkleurig metaal en houten houder. Demonstratie van totale interne reflectie, zoals in optische fibers.",
+    "identifier": "2024.0094.TNW",
+    "temporalCoverage": "1920/1969",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "component",
+        "sameAs": "http://vocab.getty.edu/aat/300241583"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        },
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        }
+    ],
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT"
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT"
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT"
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/d4135938-ac0c-4a60-aa52-ad63d77d0cfa",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/d4135938-ac0c-4a60-aa52-ad63d77d0cfa/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "width": 1600,
+            "height": 1200,
+            "position": 12080
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/90ebaaf3-a008-48c2-bd94-631e2567ad4c",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/90ebaaf3-a008-48c2-bd94-631e2567ad4c/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "width": 1600,
+            "height": 1200,
+            "position": 12081
+        }
+    ]
+}

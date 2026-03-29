@@ -1,0 +1,70 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/58a204b3-d918-4cfd-a8e2-e867c05a0be6/schema.json",
+    "name": "Tweedelige uitschuifbare waterpasbaak",
+    "description": "Een tweedelige, uitschuifbare waterpasbaak. De baak is voorzien van een blokverdeling en een omgekeerde becijfering. Deze waterpasbaak heeft een effectieve lengte van 17,5 dm.",
+    "identifier": "2000.0242.GEO",
+    "temporalCoverage": "1925/1950",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "waterpasbaak"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        },
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        }
+    ],
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 45
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 1000
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 85
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/7d8901f1-390f-4b86-8aa2-a1cc54bf7646",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/7d8901f1-390f-4b86-8aa2-a1cc54bf7646/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0242.GEO.a.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 2947
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/666978e4-7533-470f-951a-98cb0eeb8fe5",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/666978e4-7533-470f-951a-98cb0eeb8fe5/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0242.GEO.JPG",
+            "width": 1600,
+            "height": 1200,
+            "position": 3131
+        }
+    ]
+}

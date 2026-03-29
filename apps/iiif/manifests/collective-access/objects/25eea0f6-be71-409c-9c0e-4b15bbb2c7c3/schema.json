@@ -1,0 +1,79 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/25eea0f6-be71-409c-9c0e-4b15bbb2c7c3/schema.json",
+    "name": "Tachymeter door Lingee & Micallef",
+    "description": "Tachéomètre door Lingee & Micallef, instrument voor gereduceerde afstandmeting en bepaling van een horizontale richting. Verbeterde versie van het instrument van Sanguet (zie inventarisnummer 2000.0235.GEO). Het kijker van dit instrument is uitgerust met een buisniveau en kan dus gebruikt worden als waterpasinstrument. Bij het instrument behoort een speciaal statief zie inventarisnummer 2005.0001.GEO.",
+    "identifier": "2004.0004.GEO",
+    "temporalCoverage": "1925/1950",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "tachymeter",
+        "sameAs": "http://vocab.getty.edu/aat/300379943"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        },
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        },
+        {
+            "@type": "Product",
+            "name": "leer"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Lingee & Micallef"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 400
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 285
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 285
+    },
+    "citation": "Dubbeld J. en Wit G.F. (Lab van Geodesie) Optische Lengetemeting 1970 blz. 114",
+    "isRelatedTo": {
+        "@type": "CreativeWork",
+        "name": "Statief met vaste poten door Micallef",
+        "sameAs": "https://heritage.tudelft.nl/iiif/manifests/80381207-57b1-4e9d-aa5f-5063ef41cf67/schema.json",
+        "identifier": "2005.0001.GEO"
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/b55869a8-494c-4064-8cf6-0d0b01bf2a85",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/b55869a8-494c-4064-8cf6-0d0b01bf2a85/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2004.0004.GEO.JPG",
+        "width": 1600,
+        "height": 1200,
+        "position": 3190
+    }
+}

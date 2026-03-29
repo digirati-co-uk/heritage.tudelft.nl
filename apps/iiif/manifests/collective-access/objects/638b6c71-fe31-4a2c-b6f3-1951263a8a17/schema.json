@@ -1,0 +1,69 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/638b6c71-fe31-4a2c-b6f3-1951263a8a17/schema.json",
+    "name": "Repetitietheodoliet door Ateliers H. Morin",
+    "description": "Repetitietheodoliet door Ateliers H. Morin, voor het bepalen van horizontale en verticale hoeken. Een Franse repetitietheodoliet voor het meten van horizontale en verticale richtingen. Het instrument is voorzien van een boussole (kompas) en drie buisniveau's, waarvan het niveau op de kijker een speciale bevestiging heeft. De kruisdraden zijn van spinrag.",
+    "identifier": "2000.0304.GEO",
+    "temporalCoverage": "1850/1900",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "repetitietheodoliet"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Ateliers H.  Morin"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Parijs, Frankrijk",
+        "latitude": 48.85341,
+        "longitude": 2.3488,
+        "sameAs": "https://www.geonames.org/2988507"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 230
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 270
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 185
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/4d7f51c8-a009-4661-b062-2e7bbe07f233",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/4d7f51c8-a009-4661-b062-2e7bbe07f233/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0304.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3362
+    }
+}

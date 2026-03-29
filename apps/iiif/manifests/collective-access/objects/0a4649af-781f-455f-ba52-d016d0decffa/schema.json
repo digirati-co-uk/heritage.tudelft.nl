@@ -1,0 +1,79 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/0a4649af-781f-455f-ba52-d016d0decffa/schema.json",
+    "name": "Kadaster-theodoliet door Instrumentenfabriek H.M. Smitt",
+    "description": "Kadaster-theodoliet door Instrumentenfabriek H.M. Smitt, gebruikt voor kadastraal meetwerk. Een kadaster-theodoliet is gemaakt voor het meten van horizontale richtingen. Het instrument is voorzien van een repetitie-inrichting. De kijker is omlegbaar in de tweede as en voorzien van los ruiterniveau (alhidaniveau). Dit instrument is beter bestand tegen weersinvloeden vanwege het feit dat het koper een galvanische matvernikkeling heeft ondergaan in plaats van de in die tijd gebruikelijke behandeling met schellakvernis.",
+    "identifier": "2000.0303.GEO",
+    "temporalCoverage": "1899/1909",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "kadastertheodoliet"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        },
+        {
+            "@type": "Product",
+            "name": "kunststof",
+            "sameAs": "https://data.cultureelerfgoed.nl/term/id/cht/923ba596-bc30-44f5-a26c-cac680e3808d"
+        },
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Instrumentenfabriek H.M. Smitt"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Bilthoven, Nederland",
+        "latitude": 52.13,
+        "longitude": 5.20139,
+        "sameAs": "https://www.geonames.org/2758927"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 290
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 155
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 135
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/56475f3c-1d6d-47df-ae33-4d9a781cfd9e",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/56475f3c-1d6d-47df-ae33-4d9a781cfd9e/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0303.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3361
+    }
+}

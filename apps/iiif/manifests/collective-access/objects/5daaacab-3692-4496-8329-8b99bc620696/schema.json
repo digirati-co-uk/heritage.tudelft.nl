@@ -1,0 +1,76 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/5daaacab-3692-4496-8329-8b99bc620696/schema.json",
+    "name": "Dubbel pentagoon prisma door Robert Reiss GmbH",
+    "description": "Een dubbel pentagoon prisma door Robert Reiss GmbH, met aflodings-stralengang tussen de twee prisma's door het houten handvat. Voor het uitzetten en bepalen van hoeken van 90 (haakse hoek) en 180 graden.",
+    "identifier": "2000.0281.GEO",
+    "temporalCoverage": "1900/1925",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "hoekspiegel",
+        "sameAs": "https://data.cultureelerfgoed.nl/term/id/cht/e8fb5077-d503-48f7-9ca3-25aac69d0095"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        },
+        {
+            "@type": "Product",
+            "name": "hars",
+            "sameAs": "http://vocab.getty.edu/aat/300012882"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Robert Reiss GmbH"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Bad Liebenwerda, Duitsland",
+        "latitude": 51.51826,
+        "longitude": 13.39459,
+        "sameAs": "https://www.geonames.org/2953408"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 160
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 27
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 30
+    },
+    "citation": "K&L 1912 blz 82-83: Prazisions Doppelprisma \"Zentral\" J.E. Alberda en J.B. Ebbinge. Inleiding Landmeetkunde (zevendruk) blz 90 e.v.",
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/f3a0dda9-603d-4141-ac79-7fd3750ac6fb",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/f3a0dda9-603d-4141-ac79-7fd3750ac6fb/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0281.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2979
+    }
+}

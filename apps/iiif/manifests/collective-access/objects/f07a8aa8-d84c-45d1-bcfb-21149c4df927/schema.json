@@ -1,0 +1,66 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/f07a8aa8-d84c-45d1-bcfb-21149c4df927/schema.json",
+    "name": "Waterpasinstrument in een leren draagtas door Cowley",
+    "description": "Waterpasinstrument door Cowley in een leren draagtas. Het instrument bestaat uit een kast met een inwendig optisch systeem. Van bovenaf kijkend in het apparaat zijn twee halve beelden te zien: de ene helft rechtopstaand, de andere ondersteboven. Als het instrument zo gekanteld wordt dat overeenkomstige delen van de beelden naast elkaar staan is de kast horizontaal. Het waterpas wordt gebruikt in combinatie met een statief.",
+    "identifier": "2005.0009.GEO",
+    "temporalCoverage": "1950/1975",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "waterpasinstrument"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "leer"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Cowley"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 80
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 160
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 170
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/3f5e6901-8bad-40de-af47-2ecb9e3e75e3",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/3f5e6901-8bad-40de-af47-2ecb9e3e75e3/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2005.0009.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3208
+    }
+}

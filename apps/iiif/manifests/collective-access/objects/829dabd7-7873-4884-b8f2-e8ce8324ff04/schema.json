@@ -1,0 +1,48 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/829dabd7-7873-4884-b8f2-e8ce8324ff04/schema.json",
+    "name": "Relais door Siemens & Halske",
+    "description": "Relais door Siemens & Halske Berlin.",
+    "identifier": "2000.0374.GEO",
+    "temporalCoverage": "1875/1900",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "relay",
+        "sameAs": "http://vocab.getty.edu/aat/300429880"
+    },
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Siemens & Halske"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT"
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT"
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT"
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/404ad327-afd4-4bc5-8012-86a8611049c6",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/404ad327-afd4-4bc5-8012-86a8611049c6/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0374.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 9091
+    }
+}

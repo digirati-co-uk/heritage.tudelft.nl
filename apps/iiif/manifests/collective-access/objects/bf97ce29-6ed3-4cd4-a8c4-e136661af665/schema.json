@@ -1,0 +1,85 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/bf97ce29-6ed3-4cd4-a8c4-e136661af665/schema.json",
+    "name": "Vizierliniaal door M. Hildebrand",
+    "description": "Een vizierliniaal (Kippregel) door M. Hildebrand, met richtkijker, een dradenafstandmeter met verticale rand (360 graden) en twee buisniveau's; een voor de juiste bepaling van de verticale richting, en een voor het stellen van het planchet (tekentafel). Inventaris nummer 2000.0377.GEO is de bevestigingsplaat voor het tekentafelblad.",
+    "identifier": "2000.0268.GEO",
+    "temporalCoverage": "1875/1900",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "vizierliniaal"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        }
+    ],
+    "creator": [
+        {
+            "@type": "Role",
+            "roleName": "producent",
+            "creator": {
+                "@type": "Organization",
+                "name": "Hildebrand & Schramm"
+            }
+        },
+        {
+            "@type": "Role",
+            "roleName": "maker",
+            "creator": {
+                "@type": "Person",
+                "name": "Max Hildebrand"
+            }
+        }
+    ],
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Freiberg, Duitsland",
+        "latitude": 50.91089,
+        "longitude": 13.33881,
+        "sameAs": "https://www.geonames.org/2925192"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 235
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 510
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 80
+    },
+    "isRelatedTo": {
+        "@type": "CreativeWork",
+        "name": "Stelschroevenblok door Hildebrand & Schramm",
+        "sameAs": "https://heritage.tudelft.nl/iiif/manifests/f1f7b7ba-b798-46d3-b921-1f7dad201cae/schema.json",
+        "identifier": "2000.0377.GEO"
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/a72d498d-8615-4fdb-9c7e-ee9ebf3cd885",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/a72d498d-8615-4fdb-9c7e-ee9ebf3cd885/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0268.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2967
+    }
+}

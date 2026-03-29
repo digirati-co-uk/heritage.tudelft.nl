@@ -1,0 +1,62 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/7f802b1f-ca05-4b02-b797-306ac61062a1/schema.json",
+    "name": "Waterpasvizier door A.J.J. Berkhout",
+    "description": "Waterpasvizier door A.J.J. Berkhout, voor instructie aan studenten. Een waterpasvizier op twee vaste poten en één stelschroef. Het vizier en het niveau zijn afneembaar. Het instrument is gemaakt door een amanuensis.",
+    "identifier": "2000.0123.GEO",
+    "temporalCoverage": "1924",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "waterpasinstrument"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "maker",
+        "creator": {
+            "@type": "Person",
+            "name": "A.J.J. Berkhout"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 225
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 260
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 175
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/c7fc56be-cd26-4291-a919-6fe65fb6df53",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/c7fc56be-cd26-4291-a919-6fe65fb6df53/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0123.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2843
+    }
+}

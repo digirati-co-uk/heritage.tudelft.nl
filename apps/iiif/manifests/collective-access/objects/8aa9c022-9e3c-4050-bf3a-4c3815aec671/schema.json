@@ -1,0 +1,70 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/8aa9c022-9e3c-4050-bf3a-4c3815aec671/schema.json",
+    "name": "Repetitie-theodoliet door Buff & Berger",
+    "description": "Repetitie-theodoliet door Buff & Berger, voor het meten van horizontale en verticale richtingen. Het instrument is voorzien van een boussole en diametrale aflezing. Typisch Amerikaans aan dit instrument zijn de vier stelschroeven.",
+    "identifier": "2000.0114.GEO",
+    "temporalCoverage": "1897",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "repetitietheodoliet"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Buff & Berger"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Boston, VS",
+        "latitude": 30.79186,
+        "longitude": -83.78989,
+        "sameAs": "https://www.geonames.org/4183849"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 315
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 250
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 210
+    },
+    "citation": "http://www.profsurv.com/ps_scripts/article.idc?id=107",
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/b0b82cd7-d3cb-4797-a291-abf8d9e1f93a",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/b0b82cd7-d3cb-4797-a291-abf8d9e1f93a/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0114.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2833
+    }
+}

@@ -1,0 +1,79 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/adf77820-1b64-48ba-88ca-6b8b8f8e06c9/schema.json",
+    "name": "Toerenteller door Th. Horn",
+    "description": "Mechanische toerenteller met drie bereiken, geproduceerd door Th. Horn in Leipzig. Het instrument is voorzien van een waterpas en is gevat in zwart kistje.",
+    "identifier": "2000.0102.EWI",
+    "temporalCoverage": "1900/1925",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "toerenteller"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        },
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        },
+        {
+            "@type": "Product",
+            "name": "textiel",
+            "sameAs": "http://vocab.getty.edu/aat/300231565"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Person",
+            "name": "Th. Horn"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Leipzig, Duitsland",
+        "latitude": 51.33962,
+        "longitude": 12.37129,
+        "sameAs": "https://www.geonames.org/2879139"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 32
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 130
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 60
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/ebee86a8-4a5e-4501-b997-8e5721315488",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/ebee86a8-4a5e-4501-b997-8e5721315488/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0102.EWI.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 1893
+    }
+}

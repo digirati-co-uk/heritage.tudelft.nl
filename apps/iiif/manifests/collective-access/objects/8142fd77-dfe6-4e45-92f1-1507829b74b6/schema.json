@@ -1,0 +1,71 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/8142fd77-dfe6-4e45-92f1-1507829b74b6/schema.json",
+    "name": "Hellingmeter door Gebr. Wichmann",
+    "description": "Hellingmeter door Gebr. Wichmann voor het bepalen van de hellingshoek t.b.v. het reduceren van schuine afstanden naar kaartafstanden en hoogte verschillen. Een meetinstrument voor het bepalen van hellingshoeken (elevatie en depressiehoeken tot 60 graden), naar een ontwerp van Brandis. Met dit type instrument werden aanvankelijk boomhoogten bepaald. In een later stadium werd deze hellingmeter, voorzien van een afstand- en hoogtereductie, gebruikt bij lengtemetingen met de meethand.",
+    "identifier": "2000.0209.GEO",
+    "temporalCoverage": "1875/1900",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "hellingmeter",
+        "sameAs": "http://vocab.getty.edu/aat/300195974"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "papier",
+            "sameAs": "http://vocab.getty.edu/aat/300014109"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Gebr. Wichmann"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Berlijn, Duitsland",
+        "latitude": 52.5,
+        "longitude": 13.41667,
+        "sameAs": "https://www.geonames.org/2950157"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 75
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 140
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 30
+    },
+    "citation": "Brandis. Zeitschrift f\"r Vermessung 1892 blz 603 over ontstaan en ontwikkeling. Serbert. Vermessungstechnick Instrumentkunde blz 20 afd 12. Wilski. Markscheidekunde 1929 blz 28. Zeitschrift für Vermessumg 1889 blz 647 en 1890 blz 87. Jordan 1914 en 1931",
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/81e8702e-3e69-4050-a808-8cb7f85188dd",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/81e8702e-3e69-4050-a808-8cb7f85188dd/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0209.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2915
+    }
+}

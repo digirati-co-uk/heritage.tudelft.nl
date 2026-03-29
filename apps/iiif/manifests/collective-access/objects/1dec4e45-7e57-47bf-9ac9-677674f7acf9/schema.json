@@ -1,0 +1,67 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/1dec4e45-7e57-47bf-9ac9-677674f7acf9/schema.json",
+    "name": "Kadastertheodoliet door C. Bamberg",
+    "description": "Kadastertheodoliet door C. Bamberg, geodetisch meetinstrument voor het bepalen van horizontale richting. Kadaster-theodoliet op een vast stelschroevenblok en horizontale rand. Randaflezing is mogelijk met behulp van twee diametraal geplaatste micrometermicroscopen. De kijker is omlegbaar. Dit meetinstrument werd gebruikt voor het meten van horizontale richtingen.",
+    "identifier": "2000.0090.GEO",
+    "temporalCoverage": "1884",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "kadastertheodoliet"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        },
+        {
+            "@type": "Product",
+            "name": "keramiek",
+            "sameAs": "http://vocab.getty.edu/aat/300386879"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "maker",
+        "creator": {
+            "@type": "Person",
+            "name": "Carl Bamberg"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 250
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 275
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 235
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/c588cd3b-d2a7-4d77-9dbd-e4ed09973112",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/c588cd3b-d2a7-4d77-9dbd-e4ed09973112/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0090.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2808
+    }
+}

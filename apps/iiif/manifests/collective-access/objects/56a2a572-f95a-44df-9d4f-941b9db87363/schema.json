@@ -1,0 +1,70 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/56a2a572-f95a-44df-9d4f-941b9db87363/schema.json",
+    "name": "Demonstatiemodel van buisniveau",
+    "description": "Onderwijsmodel of demonstratie model van een buisniveau, ter verduidelijking van de werking van de buisniveau's van waterpasinstrumenten en theodolieten.",
+    "identifier": "2007.0101.GEO",
+    "temporalCoverage": "1900/1975",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "buisniveau"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        },
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        }
+    ],
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 120
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 500
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 80
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/9a6ad009-0026-46e8-98ed-4322d9fd8184",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/9a6ad009-0026-46e8-98ed-4322d9fd8184/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2007.0101.GEO.a.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3229
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/36ad4c0b-68ed-4c7a-8190-edc145c50078",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/36ad4c0b-68ed-4c7a-8190-edc145c50078/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2007.0101.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3230
+        }
+    ]
+}

@@ -1,0 +1,72 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/d6e21525-d772-4c8c-ac46-b776ff076292/schema.json",
+    "name": "Precisie-poolplanimeter volgens F. Hohmann door G. Coradi",
+    "description": "Precisie-poolplanimeter volgens F. Hohmann door G. Coradi, geodetisch meetinstrument voor oppervlaktebepalingen van percelen en dwars- en lengteprofielen voor het bepalen van oppervlakten van vlakken op een kaart (integreren). \nPrecisie-poolplanimeter (integreermachine) volgens de constructie van F. Hohmann. Aan het eind van de poolarm bevindt zich een scheefstaand loopwiel waaraan een schijf verbonden is. Op deze schijf rust een meetrol. De plaats van de meetrol is afhankelijk van de stand van de omlooparm. Met dit type planimeter werd getracht een aantal nadelen van de gewone poolplanimeter op te heffen. Deze nadelen zijn onder meer de gelijktijdige rollende en glijdende beweging van de meetrol, de afhankelijkheid van het papieroppervlak en het feit dat het gewicht van de planimeter deels op de puntlagering van de meetrol rust. Bij het instrument hoort een losse controle cirkel en een houten kist. Inclusief onbekend raderwerk met telmechanisme.",
+    "identifier": "2000.0085.GEO",
+    "temporalCoverage": "1892",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "poolplanimeter"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "karton",
+            "sameAs": "http://vocab.getty.edu/aat/300014224"
+        }
+    ],
+    "creator": [
+        {
+            "@type": "Role",
+            "roleName": "producent",
+            "creator": {
+                "@type": "Organization",
+                "name": "G. Coradi"
+            }
+        },
+        {
+            "@type": "Role",
+            "roleName": "maker",
+            "creator": {
+                "@type": "Person",
+                "name": "F. Hohmann"
+            }
+        }
+    ],
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 63
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 435
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 190
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/a9de62ef-d03a-423b-84de-b20148d8cdb0",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/a9de62ef-d03a-423b-84de-b20148d8cdb0/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0085.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2802
+    }
+}

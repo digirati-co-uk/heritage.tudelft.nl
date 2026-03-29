@@ -1,0 +1,56 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/193ff30b-4e3f-45bc-a00c-f4d10a5205d9/schema.json",
+    "name": "Pantograaf met ivoren wieltjes volgens C. Scheiner",
+    "description": "Pantograaf met ivoren wieltjes voor het vergroten of verkleinen van tekeningen. Het instrument is in 1603 uitgevonden door de Duitse Jezuïet Christopher Scheiner (1573-1650).",
+    "identifier": "2000.0135.GEO",
+    "temporalCoverage": "1750/1800",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "pantograaf"
+    },
+    "material": {
+        "@type": "Product",
+        "name": "metaal",
+        "sameAs": "http://vocab.getty.edu/aat/300010900"
+    },
+    "creator": {
+        "@type": "Role",
+        "roleName": "ontwerper",
+        "creator": {
+            "@type": "Person",
+            "name": "Christoph Scheiner"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 70
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 400
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 300
+    },
+    "citation": "http://www.faculty.fairfield.edu/jmac/sj/scientists/scheiner.htm Wybter &Turner",
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/01edfafe-f9fa-4b59-8809-8d8689e0b1de",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/01edfafe-f9fa-4b59-8809-8d8689e0b1de/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0135.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2857
+    }
+}

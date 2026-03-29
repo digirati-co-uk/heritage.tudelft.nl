@@ -1,0 +1,64 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/e5fce907-f936-4d7b-b2cf-c6acce6a0a82/schema.json",
+    "name": "Zakhellingmeter door L. Casella",
+    "description": "Zakhellingmeter door L. Casella, voor het bepalen van hellingshoeken. Het instrument heeft aan één kant een kompas en aan de andere kant een hellingmeter. Hoeken (richtingen) worden gemeten in gehele graden. Vooral gebruikt bij metingen tijdens exploraties.",
+    "identifier": "2000.0116.GEO",
+    "temporalCoverage": "1875/1900",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "hellingmeter",
+        "sameAs": "http://vocab.getty.edu/aat/300195974"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "L. Casella  (Londen)"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 67
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 190
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 30
+    },
+    "citation": "http://americanhistory2.si.edu/surveying/object.cfm?recordnumber=997284 L. P. Casella An Illustrated and Descriptive Catalogue of Surveying Philosophical Mathematical Optical Photographic and Standard Meteorological Instruments (London [ca. 1871]) p. 71.",
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/6b7a2b9a-9714-4820-aaa7-9e03b0432425",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/6b7a2b9a-9714-4820-aaa7-9e03b0432425/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0116.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2835
+    }
+}

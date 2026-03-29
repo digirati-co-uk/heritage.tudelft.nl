@@ -1,0 +1,66 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/64c80be5-a6ac-46d8-b34b-54a06b2bfd51/schema.json",
+    "name": "Flesjeswaterpas",
+    "description": "Flesjeswaterpas, voor het bepalen van hoogteverschillen met een baak of meetlat. Het hoogteverschil werd bepaald met behulp van de vloeistofspiegel in de beide flesjes. Bij de flesjes horen beschermdoppen.",
+    "identifier": "2000.0178.GEO",
+    "temporalCoverage": "1800/1900",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "flesjeswaterpas"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        },
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        }
+    ],
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 320
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 1260
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 150
+    },
+    "citation": "H.C. Pouls. De landmeter",
+    "isRelatedTo": {
+        "@type": "CreativeWork",
+        "name": "Statief voor équerre of Hollandse cirkel",
+        "sameAs": "https://heritage.tudelft.nl/iiif/manifests/dc6ddbbb-ed8b-4fbf-98f0-bfd164beca70/schema.json",
+        "identifier": "2000.0543.GEO"
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/b4b809cd-c132-4175-8b63-969892649b76",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/b4b809cd-c132-4175-8b63-969892649b76/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0178.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2882
+    }
+}

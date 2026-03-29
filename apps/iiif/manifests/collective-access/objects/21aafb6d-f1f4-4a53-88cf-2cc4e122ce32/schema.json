@@ -1,0 +1,77 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/21aafb6d-f1f4-4a53-88cf-2cc4e122ce32/schema.json",
+    "name": "Afstandsprisma",
+    "description": "Afstandsprisma volgens M.C. Hensoldt, voor detailmeten en verkennen. Is gebruikt voor een grove bepaling van afstanden t.b.v. exploratiedoeleinden. De meetprocedure is als volgt. In het beginpunt wordt met de afstandmeter gericht op het eindpunt van de te meten lijn en met het pentagoonprisma en lijn haaks uitgezet. Langs deze (basis-)lijn wordt gelopen totdat het eindpunt in het beeld komt van het afgeslepen deel van prisma. De afstand naar dit punt is nu 50x de afgelegde afstand langs de loodlijn. Zo kan met dit instrument een afstand tot 4 km worden gemeten.\nZie ook inventarisnummer 2000.0301.GEO.",
+    "identifier": "2000.0450.GEO",
+    "temporalCoverage": "1900/1950",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "afstandmeter"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        }
+    ],
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 15
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 80
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 45
+    },
+    "citation": "W. Schermerhorn & H.J. van Steenis. Derde druk (1953) blz 466.",
+    "isRelatedTo": {
+        "@type": "CreativeWork",
+        "name": "Afstandsprisma volgens M.C. Hensoldt",
+        "sameAs": "https://heritage.tudelft.nl/iiif/manifests/ee217b07-d8ba-4c4b-9de8-66b96e3c3322/schema.json",
+        "identifier": "2000.0301.GEO"
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/942aaba3-6936-4b68-9c9f-3ba56dafba5c",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/942aaba3-6936-4b68-9c9f-3ba56dafba5c/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0450.GEO.a.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3053
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/ad838371-52c2-41fc-89d1-3a25da05fe43",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/ad838371-52c2-41fc-89d1-3a25da05fe43/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0450.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3054
+        }
+    ]
+}

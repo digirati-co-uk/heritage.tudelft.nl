@@ -1,0 +1,88 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/52d84cce-1656-4bb9-896a-f1ec1010d1a0/schema.json",
+    "name": "Herdenkingsplaquette voor gevallenen van WOII door prof. L.O. Wenckebach",
+    "description": "De Delftse hoogleraar Ludwig Oswald Wenckebach (1895–1962) ontwierp dit bronzen reliëf voor de medewerkers en studenten van de TU Delft - toen nog een Technische Hogeschool - die het leven lieten door de Tweede Wereldoorlog.\nDe centrale dichtregel 'Het schild was zwak, maar sterk is het betrouwen' komt uit het gedicht 'In Memoriam Anton Marinus Pleyte' van oud-TH-student Hendrik Jan Scheepmaker. Natuurkundestudent Pleyte (1921) is in 1943 gefusilleerd vanwege zijn verzetsactiviteiten.\nOp 21 oktober 1948 werden zowel de plaquette van Wenckebach als het schilderij van De Josselin de Jong, een verbeelding van het studentenverzet, tijdens een plechtige bijeenkomst overgedragen aan het college van curatoren en officieel onthuld in het toenmalige hoofdgebouw aan de Oude Delft 95.\nLater is de plaquette naar het toenmalige hoofdgebouw van de TH aan de Julianalaan gebracht. En in 2007 is de plaquette in de Aula van de TU geplaatst.",
+    "identifier": "2020.0001.CVB",
+    "temporalCoverage": "1948",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "plaquette"
+    },
+    "material": {
+        "@type": "Product",
+        "name": "brons",
+        "sameAs": "http://vocab.getty.edu/aat/300010957"
+    },
+    "creator": {
+        "@type": "Role",
+        "roleName": "ontwerper",
+        "creator": {
+            "@type": "Person",
+            "name": "Ludwig Oswald Wenckebach"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT"
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT"
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT"
+    },
+    "isRelatedTo": [
+        {
+            "@type": "CreativeWork",
+            "name": "Schilderij \"1940-1945 studenten streden en leden\" door prof. G. de Josselin de Jong",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/a991b854-e6b5-4403-936d-003ebd404356/schema.json",
+            "identifier": "2007.0103.CVB"
+        },
+        {
+            "@type": "CreativeWork",
+            "name": "Portret van Frans van Hasselt door M.L. van Hasselt",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/e605bf54-b5ac-4c33-aaec-3af71c4fa604/schema.json",
+            "identifier": "2011.0007.CVB"
+        },
+        {
+            "@type": "CreativeWork",
+            "name": "Gedenksteen voor Frans van Hasselt",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/2e2ac04c-537f-44ee-9425-db5667bb5820/schema.json",
+            "identifier": "2011.0008.CVB"
+        }
+    ],
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/f4c83934-63be-479f-aecf-573beec8058a",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/f4c83934-63be-479f-aecf-573beec8058a/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "_DSF1149_medium.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 8960
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/f6b5eafe-5844-48a6-85c6-2abc60c0aa04",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/f6b5eafe-5844-48a6-85c6-2abc60c0aa04/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "_DSF1178_small.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 10651
+        }
+    ]
+}

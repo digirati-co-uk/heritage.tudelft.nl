@@ -1,0 +1,90 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/db6748da-21a7-440c-b86f-62ebd7ff7d4a/schema.json",
+    "name": "Astrolabium door Daniel White Co.",
+    "description": "Astrolabium door Daniel White Co., voor nauwkeurige astronomische plaats- en of tijd bepaling aan de hand van sterren. Het stelschroevenblok is voorzien van vierstelschroeven. Bij het instrument hoort een statief, en een houten kist.",
+    "identifier": "2000.0539.GEO",
+    "temporalCoverage": "1952",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "astrolabium",
+        "sameAs": "http://vocab.getty.edu/aat/300195790"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        },
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Daniel White  Co."
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 1610
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 870
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 870
+    },
+    "isRelatedTo": {
+        "@type": "CreativeWork",
+        "name": "Statief bij het astrolabium door Daniel White Co.",
+        "sameAs": "https://heritage.tudelft.nl/iiif/manifests/c7030358-1419-4f5b-bfc6-8240c14c74af/schema.json",
+        "identifier": "2005.0010.GEO"
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/d5ffec94-6afe-493f-8f74-3ef5b93382aa",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/d5ffec94-6afe-493f-8f74-3ef5b93382aa/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0539.GEO.a.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3108
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/bccf6e91-c39b-4bde-b28f-a98f39abe67d",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/bccf6e91-c39b-4bde-b28f-a98f39abe67d/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0539.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3109
+        }
+    ]
+}

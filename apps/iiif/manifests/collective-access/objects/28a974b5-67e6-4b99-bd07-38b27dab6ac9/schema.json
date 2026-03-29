@@ -1,0 +1,73 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/28a974b5-67e6-4b99-bd07-38b27dab6ac9/schema.json",
+    "name": "Demonstratiemodel van de stralengang van T1 theodoliet door Wild",
+    "description": "Een onderwijsmodel die de stralengang van een theodoliet type Wild T1 door H. Wild Werkstätte für Feinmechanik und Optik demonstreert. Zie 2000.0411.GEO voor een theodoliet van dit type.",
+    "identifier": "2000.0413.GEO",
+    "temporalCoverage": "1975/2000",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "repetitietheodoliet"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        },
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Wild Heerbrugg"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 70
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 325
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 220
+    },
+    "isRelatedTo": {
+        "@type": "CreativeWork",
+        "name": "Repetitietheodoliet door Wild type T1",
+        "sameAs": "https://heritage.tudelft.nl/iiif/manifests/1727663c-73d8-4be5-927f-925334fce5f2/schema.json",
+        "identifier": "2000.0411.GEO"
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/0fe6c3ee-9783-4a16-80ea-53d38bf61a63",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/0fe6c3ee-9783-4a16-80ea-53d38bf61a63/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0413.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3011
+    }
+}

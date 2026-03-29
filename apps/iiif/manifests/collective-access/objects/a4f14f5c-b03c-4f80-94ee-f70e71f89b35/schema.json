@@ -1,0 +1,68 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/a4f14f5c-b03c-4f80-94ee-f70e71f89b35/schema.json",
+    "name": "Gasontwikkelingsapparaat door Kipp & Zonen",
+    "description": "Gasontwikkelingsapparaat door Kipp & Zonen, ook wel \"Toestel van Kipp\" genoemd. Het wordt gebruikt om gassen te maken, zoals waterstof, zwavelwaterstof en kooldioxide. Dit wordt bereid door de chemische reactie van een vloeibaar zuur met een vaste stof. Het bestaat uit drie glazen bollen boven elkaar. Tussen deze bollen bestaan verbindingen. Het bovenste en het onderste vat bevatten een vloeistof, die reageert met de vaste stof in de middelste bol. De reactie stopt als geen gasmengsel meer wordt afgenomen.\nUitgevonden door Kipp in 1844. Op afbeeldingen van vroege modellen is te zien dat de onderste ruimte bol is. Vermoedelijk zal de onderste ruimte bij vroege modellen bol zijn en bij latere modellen een andere vorm hebben.",
+    "identifier": "2003.0001.TMD",
+    "temporalCoverage": "1925/1950",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "Toestel van Kipp"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        },
+        {
+            "@type": "Product",
+            "name": "rubber"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Kipp & Zonen"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Delft, Nederland",
+        "latitude": 51.99968,
+        "longitude": 4.36405,
+        "sameAs": "https://www.geonames.org/2757344"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 570
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 270
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 217
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/95fa4907-4ea9-4c22-a6bd-84ce50ef52a7",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/95fa4907-4ea9-4c22-a6bd-84ce50ef52a7/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2003.0001.TMD.JPG",
+        "width": 1600,
+        "height": 1200,
+        "position": 5625
+    }
+}

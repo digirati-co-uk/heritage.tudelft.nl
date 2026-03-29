@@ -1,0 +1,74 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/9acc5cec-de66-4b28-9ab0-47f4623da220/schema.json",
+    "name": "Relatiegeschenk van Rijkswaterstaat",
+    "description": "Relatiegeschenk van Rijkswaterstaat Adviesdienst Geo-informatie en ICT in gebruik sinds 2004, mede voor (vervoegd) gepensioneerden.",
+    "identifier": "2012.0001.GEO",
+    "temporalCoverage": "2004",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "relatiegeschenk",
+        "sameAs": "http://vocab.getty.edu/aat/300233979"
+    },
+    "material": {
+        "@type": "Product",
+        "name": "brons",
+        "sameAs": "http://vocab.getty.edu/aat/300010957"
+    },
+    "creator": [
+        {
+            "@type": "Role",
+            "roleName": "ontwerper",
+            "creator": {
+                "@type": "Person",
+                "name": "Mark (Nederlands) Brouwers"
+            }
+        },
+        {
+            "@type": "Role",
+            "roleName": "producent",
+            "creator": {
+                "@type": "Organization",
+                "name": "Artihove Art Center"
+            }
+        }
+    ],
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Bergschenhoek, Nederland",
+        "latitude": 51.99,
+        "longitude": 4.49861,
+        "sameAs": "https://www.geonames.org/2759113"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 50
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 100
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 150
+    },
+    "citation": "Geo-Inf0 2007 - 1, blz 39",
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/0c4a45e9-7202-4cba-a7d6-1bd6685d7306",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/0c4a45e9-7202-4cba-a7d6-1bd6685d7306/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2012.0001.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3244
+    }
+}
