@@ -9,7 +9,7 @@ export const facetConfig = {
   metadata: {
     // Override labels.
     exampleOfWork: {
-      label: { en: ["Example of work"], nl: ["Voorbeeld van werk"] },
+      label: { en: ["Object name"], nl: ["Objectnaam"] },
     },
     material: {
       label: { en: ["Material"], nl: ["Materiaal"] },
