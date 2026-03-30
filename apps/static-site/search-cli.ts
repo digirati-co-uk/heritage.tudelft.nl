@@ -9,7 +9,7 @@ import cliProgress from "cli-progress";
 import { Command } from "commander";
 import Typesense from "typesense";
 
-const IIIF_DIRECTORY = resolve(cwd(), "../iiif/.iiif/build");
+const IIIF_DIRECTORY = resolve(cwd(), "../iiif/build");
 const IIIF_SOURCE_DIRECTORY = resolve(cwd(), "../iiif");
 const LOCK_FILE_PATH = resolve(cwd(), "search-lock.yaml");
 
