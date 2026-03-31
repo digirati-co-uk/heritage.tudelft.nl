@@ -1,0 +1,74 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/2123c93f-6403-4ed8-8bfc-7c1c6627c042/schema.json",
+    "name": "Waterpasinstrument door G. de Koningh",
+    "description": "Waterpasinstrument door G. de Koningh, voor hoogteverschilmeting. Het instrument is voorzien van ronde tappen en een ruiterniveau. Het niveau en de kijker zijn apart afneembaar. Het bijbehorende statief is bekend onder 2000.0521.GEO.",
+    "identifier": "2000.0353.GEO",
+    "temporalCoverage": "1916",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "waterpasinstrument"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "G. de Koningh"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Arnhem, Nederland",
+        "latitude": 52.00113,
+        "longitude": 5.89641,
+        "sameAs": "https://www.geonames.org/2759660"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 245
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 370
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 150
+    },
+    "isRelatedTo": {
+        "@type": "CreativeWork",
+        "name": "Statief voor het waterpasinstrument door G. de Koningh",
+        "sameAs": "https://heritage.tudelft.nl/iiif/manifests/2079b686-8d50-46c1-bf95-d676bbba5b29/schema.json",
+        "identifier": "2000.0521.GEO"
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/dd3741eb-b60b-4a6b-a05d-988c0b00dfae",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/dd3741eb-b60b-4a6b-a05d-988c0b00dfae/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0353.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3411
+    }
+}

@@ -1,0 +1,78 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/1f6f1979-bf65-43b2-81ba-08dfedcd9ab7/schema.json",
+    "name": "Heliotroop door Meyerstein",
+    "description": "Heliotroop door Meyerstein, geodetisch meetinstrument welke in combinatie met een theodoliet gebruikt werd voor het meten van verre richtingen. Tijdens de meting moesten de spiegels doorlopend gericht blijven op de standplaats van de theodoliet (Primaire driehoeksmeting). \nDit instrument werd gebruikt voor het zichtbaar maken van een richtpunt t.b.v driehoeksmeting.  C.F. Gauss vond als hulpmiddel hiervoor de heliotroop uit, een apparaat dat werkte door weerkaatsing van zonnestralen met behulp van spiegels en een kleine telescoop. Dit instrument is analoog aan het ontwerp van Gauss uit 1820 die zijn eigen toestel bij Breithapt bestelde. De beschrijving van het instrument verscheen voor het eerst in The Gentleman's Magazine.",
+    "identifier": "2000.0040.GEO",
+    "temporalCoverage": "1850/1875",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "heliotroop"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Meyerstein (Göttingen)"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 380
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 500
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 160
+    },
+    "citation": "Schlötzer, A., 'Der Heliotrop seine Geschichte Konstruktion und Genauigkeit', in: \"Zeitschrift des Bayerischen Geometer-Vereins\", 1909, p.10.",
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/0c1bbc87-915a-4eb8-9c9d-aebb334a5a1f",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/0c1bbc87-915a-4eb8-9c9d-aebb334a5a1f/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0040.GEO.a.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 2750
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/1239cb04-5dc6-4987-82fe-e8d499d1a28a",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/1239cb04-5dc6-4987-82fe-e8d499d1a28a/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0040.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 2751
+        }
+    ]
+}

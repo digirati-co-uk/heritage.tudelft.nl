@@ -1,0 +1,89 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/7a236706-f0b7-40e7-9745-993ff8462acf/schema.json",
+    "name": "Reflectiecirkel met houten handvatten door Th. Wegener",
+    "description": "Een reflectiecirkel (patent cirkel) door Th. Wegener met houten handvatten. Het instrument is voorzien van een prisma, diverse filters en noniusaflezing. Het instrument kan opgeborgen worden in een houten kist. Aan de binnenzijde van de kist is een ijkcertificaat d.d. 4 juni 1890 van de adviseur verificateur (P.J. Kaiser) 's Rijks-Zeeïnstrumenten bevestigd. Dit instrument is te gebruiken als een sextant. Voor het bepalen van hoeken die ook groter zijn dan 120 graden.",
+    "identifier": "2000.0439.GEO",
+    "temporalCoverage": "1875/1890",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "plaatsbepalingsinstrument"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        },
+        {
+            "@type": "Product",
+            "name": "hout"
+        },
+        {
+            "@type": "Product",
+            "name": "textiel"
+        },
+        {
+            "@type": "Product",
+            "name": "papier"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "maker",
+        "creator": {
+            "@type": "Person",
+            "name": "Th.  Wegener"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 135
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 335
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 305
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/c19cb62a-8c04-4c53-b9ed-a856b7cb4a63",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/c19cb62a-8c04-4c53-b9ed-a856b7cb4a63/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0439.GEO.a.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3039
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/d9256c7a-a3ba-4bc7-b62d-62c6dfa7964d",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/d9256c7a-a3ba-4bc7-b62d-62c6dfa7964d/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0439.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3040
+        }
+    ]
+}

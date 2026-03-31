@@ -1,0 +1,106 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/49fe2202-c893-438b-b854-365dc9fac23c/schema.json",
+    "name": "Portret van prof. J.C. Dijxhoorn door A.F. Gips",
+    "description": "Geschilderd portret van prof. ir. Johan Christiaan Dijxhoorn (1862-1941), hoogleraar werktuigbouwkunde van 1902 tot 1932. Het werk is geschilderd door Abraham Frans Gips (1861-1943).",
+    "identifier": "2002.0002.CVB",
+    "temporalCoverage": "1924",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "schilderij"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "olieverf",
+            "sameAs": "http://vocab.getty.edu/aat/300014254"
+        },
+        {
+            "@type": "Product",
+            "name": "linnen",
+            "sameAs": "http://vocab.getty.edu/aat/300014069"
+        },
+        {
+            "@type": "Product",
+            "name": "hout"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "maker",
+        "creator": {
+            "@type": "Person",
+            "name": "Abraham Frans Gips"
+        }
+    },
+    "about": {
+        "@type": "Person",
+        "name": "Johan Christiaan Dijxhoorn"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 1375
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 1115
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 77
+    },
+    "isRelatedTo": {
+        "@type": "CreativeWork",
+        "name": "Bronzen plaquette van prof. J.C. Dijxhoorn",
+        "sameAs": "https://heritage.tudelft.nl/iiif/manifests/78d5d473-8b5f-4ddc-85bd-c9ec3f1ab9bc/schema.json",
+        "identifier": "2000.0348.TMD"
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/f735bb22-83d3-444d-9b1a-0259de0ad3c4",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/f735bb22-83d3-444d-9b1a-0259de0ad3c4/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2002.0002.CVB.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 1710
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/96c932d7-f111-4a08-86c0-065a07529bfa",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/96c932d7-f111-4a08-86c0-065a07529bfa/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2002.0002.CVB.a.JPG",
+            "width": 1600,
+            "height": 1200,
+            "position": 1711
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/ebba67fb-15ae-4491-b40b-3515dee70a07",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/ebba67fb-15ae-4491-b40b-3515dee70a07/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2002.0002.CVB.b.JPG",
+            "width": 1600,
+            "height": 1200,
+            "position": 9017
+        }
+    ]
+}

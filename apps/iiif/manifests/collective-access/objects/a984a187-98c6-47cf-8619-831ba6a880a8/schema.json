@@ -1,0 +1,102 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/a984a187-98c6-47cf-8619-831ba6a880a8/schema.json",
+    "name": "Theodoliet type T2 met elektronische afstandmeter type DI 10 door Wild",
+    "description": "Wild T2 Theodoliet met gekoppelde elektronische afstandmeter DI 10 geproduceerd door Wild Heerbrugg AG. De afstandmeter gebruikt infrarode stralen als draaggolf. Deze 'Distomat' bestaat uit twee hoofdonderdelen: de richtkop, die op de theodoliet geplaatst wordt, de verwerkingseenheid en voeding. Bij dit instrument hoort de reflector van Wild. De meting met dit apparaat moest zorgvuldig gebeuren, berucht zijn de fouten van veelvouden van 10 of 100 meter. Geschikt voor afstanden tot 2000 meter t.b.v. kringnetmetingen voor de vijfde orde coördinaat stelsel van Nederland. Statief (583 F) met inventarisnummer 2005.0015 ligt op Z-5.",
+    "identifier": "2000.0359.GEO",
+    "temporalCoverage": "1971",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "theodoliet",
+        "sameAs": "http://vocab.getty.edu/aat/300199711"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        },
+        {
+            "@type": "Product",
+            "name": "hout"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Wild Heerbrugg"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 167
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 1400
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 600
+    },
+    "isRelatedTo": {
+        "@type": "CreativeWork",
+        "name": "Universeel statief met schuifpoten door Wild",
+        "sameAs": "https://heritage.tudelft.nl/iiif/manifests/877ae74e-c3d4-4929-9bca-a7d565cf7f5d/schema.json",
+        "identifier": "2005.0015.GEO"
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/c3d38797-cafb-4e7d-9ad5-228d0ba88263",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/c3d38797-cafb-4e7d-9ad5-228d0ba88263/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0359.GEO.a.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3416
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/0c3f66ca-2b56-490e-ac8e-3c3c3325d582",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/0c3f66ca-2b56-490e-ac8e-3c3c3325d582/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0359.GEO.b.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3417
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/b17b4170-bcd6-415e-8fb5-a54cc3c87d11",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/b17b4170-bcd6-415e-8fb5-a54cc3c87d11/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0359.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3418
+        }
+    ]
+}

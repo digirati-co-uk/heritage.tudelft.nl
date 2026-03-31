@@ -1,0 +1,85 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/05a53e6d-2298-4f85-a58a-b25bcbefd6d5/schema.json",
+    "name": "Richtkompas door M. Hildebrand",
+    "description": "Boussole-tachymetertheodoliet door M. Hildebrand, voor zowel detailmeting volgens de voerstraal methode als eenvoudige tijd en/of plaats bepaling in de tropen. Een eenheids-bergboussole voorzien van richtkijker met draden afstandmeter van Horstink. In 1932 werden door luitenant-kolonel J. Th. Horstink van de Topografische Dienst van Nederlands-Indië enkele voorstellen gedaan tot verbetering van de bergboussole. Hieruit is dit instrument ontstaan. De voornaamste verbeteringen zijn: horizontale en verticale afstandsdraden, een extra gewone horizontale rand en een afneembaar niveau op de kijker. Het instrument heeft een Nederlandse kompasaanduiding: rechtsom Noord, Oost, Zuid, West. Zie ook 2000.0254.GEO voor de oude bergboussole, en 2000.0879.GEO voor de opvolger van dit model. Het bijbehorende statief heeft als inventarisnummer 2000.0513.GEO.",
+    "identifier": "2000.0314.GEO",
+    "temporalCoverage": "1932/1950",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "boussoletachymeter"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        },
+        {
+            "@type": "Product",
+            "name": "kunststof"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "maker",
+        "creator": {
+            "@type": "Person",
+            "name": "Max Hildebrand"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 180
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 210
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 210
+    },
+    "isRelatedTo": [
+        {
+            "@type": "CreativeWork",
+            "name": "Berg-boussole volgens M. Hildebrand door Kipp & Zonen",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/ba288ef3-41d2-42d0-8336-8528588c7cef/schema.json",
+            "identifier": "2000.0254.GEO"
+        },
+        {
+            "@type": "CreativeWork",
+            "name": "Bergboussole door M. Hildebrand",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/171e92f7-4141-4f25-aa1f-a645a12b71d4/schema.json",
+            "identifier": "2000.0879.GEO"
+        },
+        {
+            "@type": "CreativeWork",
+            "name": "Statief van boussole-tachymetertheodoliet door M. Hildebrand",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/67fc7af8-19b5-456d-887f-23a064aba3c9/schema.json",
+            "identifier": "2000.0513.GEO"
+        }
+    ],
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/09412167-eaa1-48ba-ac19-352231347e76",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/09412167-eaa1-48ba-ac19-352231347e76/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0314.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3367
+    }
+}

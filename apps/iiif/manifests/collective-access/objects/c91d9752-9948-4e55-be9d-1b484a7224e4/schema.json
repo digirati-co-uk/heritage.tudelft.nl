@@ -1,0 +1,65 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/c91d9752-9948-4e55-be9d-1b484a7224e4/schema.json",
+    "name": "Cirkel-waterpasinstrument volgens het principe van Lenoir",
+    "description": "Waterpasinstrument met rand volgens het principe van Lenoir. De kijker en het niveau zijn los en afneembaar. Verschillende delen van het instrument zijn voorzien van een 'schildpadmotief'. Dit instrument is geschikt voor eenvoudige waterpassingen.",
+    "identifier": "2000.0022.GEO",
+    "temporalCoverage": "1850/1900",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "waterpasinstrument"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "maker",
+        "creator": {
+            "@type": "Person",
+            "name": "Etienne Lenoir"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 175
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 280
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 170
+    },
+    "citation": [
+        "Kerkwijk, G.A. van, \"Geodesie, Voor De Kadetten Van Alle Wapenen\" , Breda: Van Broese, 1860, pp.146-147.",
+        "Schols, C.M., \"Landmeten en Waterpassen\", Breda: K.M.A., 1899, tekstband p.209, atlasband fig.169."
+    ],
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/cb3eac82-9607-405c-87d1-59c0e7604cba",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/cb3eac82-9607-405c-87d1-59c0e7604cba/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0022.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2731
+    }
+}

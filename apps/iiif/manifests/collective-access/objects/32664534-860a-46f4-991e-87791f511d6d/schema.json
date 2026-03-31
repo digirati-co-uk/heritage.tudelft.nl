@@ -1,0 +1,86 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/32664534-860a-46f4-991e-87791f511d6d/schema.json",
+    "name": "Zelfportret van prof. A.F. Gips",
+    "description": "Geschilderd zelfportret van prof. Abraham Frans (Bram) Gips (1861-1943), hoogleraar handtekenen en geschiedenis der schilder- en beeldhouwkunst van 1905 tot 1930, en daarvoor leraar vanaf 1894 aan de Polytechnische school van Delft en vervolgens de Technische Hoogeschool van Delft.",
+    "identifier": "2003.0729.BKD",
+    "temporalCoverage": "1924",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "schilderij"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "olieverf",
+            "sameAs": "http://vocab.getty.edu/aat/300014254"
+        },
+        {
+            "@type": "Product",
+            "name": "linnen",
+            "sameAs": "http://vocab.getty.edu/aat/300014069"
+        },
+        {
+            "@type": "Product",
+            "name": "hout"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "maker",
+        "creator": {
+            "@type": "Person",
+            "name": "Abraham Frans Gips"
+        }
+    },
+    "about": {
+        "@type": "Person",
+        "name": "Abraham Frans Gips"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 680
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 550
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 50
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/c1a5abc3-8df1-4d10-8a31-8aead61e9350",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/c1a5abc3-8df1-4d10-8a31-8aead61e9350/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2003.0729.BKD.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 603
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/cb8d8f16-ec68-495b-bf51-0bb692716e9e",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/cb8d8f16-ec68-495b-bf51-0bb692716e9e/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2003.0729.BKD.a.JPG",
+            "width": 1600,
+            "height": 1200,
+            "position": 8928
+        }
+    ]
+}

@@ -1,0 +1,77 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/cdf640d6-871f-4b12-bd86-763acda7a890/schema.json",
+    "name": "Ruiterniveau door Julius Wanschaff",
+    "description": "Ruiterniveau (ook wel alhidadeniveau), hulpmiddel voor horizontaal stellen van de tweede as van een theodoliet, met een houten handvat.",
+    "identifier": "2000.0380.GEO",
+    "temporalCoverage": "1875/1925",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "ruiterniveau"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        },
+        {
+            "@type": "Product",
+            "name": "textiel"
+        },
+        {
+            "@type": "Product",
+            "name": "hout"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Julius Wanschaff"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Berlijn, Duitsland",
+        "latitude": 52.5,
+        "longitude": 13.41667,
+        "sameAs": "https://www.geonames.org/2950157"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 100
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 140
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 35
+    },
+    "citation": "C.M. Schols. Landmeten en Waterpassen Atlas 1908 fig 27a 27b en 27c",
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/a8fbc788-78a0-45f4-9a7e-e3982cd2c492",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/a8fbc788-78a0-45f4-9a7e-e3982cd2c492/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0380.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3432
+    }
+}

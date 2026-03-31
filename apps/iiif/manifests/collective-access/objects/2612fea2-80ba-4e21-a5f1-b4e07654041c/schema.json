@@ -1,0 +1,79 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/2612fea2-80ba-4e21-a5f1-b4e07654041c/schema.json",
+    "name": "Waterpasstatief door G. de Koningh",
+    "description": "Waterpasstatief door G. de Koningh met vaste poten, hulpmiddel bij waterpassen. Hoort bij waterpasinstrument 2000.0814.GEO.",
+    "identifier": "2000.0525.GEO",
+    "temporalCoverage": "1925/1950",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "statief (standaarden)",
+        "sameAs": "http://vocab.getty.edu/aat/300164679"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "hout"
+        },
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "leer"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "G. de Koningh"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Arnhem, Nederland",
+        "latitude": 52.00113,
+        "longitude": 5.89641,
+        "sameAs": "https://www.geonames.org/2759660"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 230
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 1510
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 230
+    },
+    "isRelatedTo": {
+        "@type": "CreativeWork",
+        "name": "Waterpasinstrument door G. de Koningh",
+        "sameAs": "https://heritage.tudelft.nl/iiif/manifests/ff26c704-0acc-4c22-83aa-ae2f218a0c73/schema.json",
+        "identifier": "2000.0814.GEO"
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/ec7d9c72-704d-4297-a430-a9a423ea2607",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/ec7d9c72-704d-4297-a430-a9a423ea2607/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0525.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3085
+    }
+}

@@ -1,0 +1,76 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/271bc738-6412-4485-be9e-88fa8be6b208/schema.json",
+    "name": "24 zwart/wit foto's in lijst van hout",
+    "description": "24 kleine zwart/wit foto's met nummering 1 t/m 6. In houten lijst met schelprand. Achterkant van lijst met geplakte papieren label met tekst \"WAARNEMINGSBOEK NO 41, BL. 92-117. 1934\"",
+    "identifier": ".;2024.4004.TNW",
+    "temporalCoverage": "1934",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "foto",
+        "sameAs": "http://vocab.getty.edu/aat/300128347"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "papier"
+        },
+        {
+            "@type": "Product",
+            "name": "hout"
+        },
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        }
+    ],
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 270
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 265
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 20
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/8962a2e2-bc4e-4528-b9f5-0ab1dff09eca",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/8962a2e2-bc4e-4528-b9f5-0ab1dff09eca/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "width": 1600,
+            "height": 1200,
+            "position": 11934
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/f261ca1b-6802-4bc3-9897-8726494cc098",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/f261ca1b-6802-4bc3-9897-8726494cc098/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "width": 1600,
+            "height": 1200,
+            "position": 11935
+        }
+    ]
+}

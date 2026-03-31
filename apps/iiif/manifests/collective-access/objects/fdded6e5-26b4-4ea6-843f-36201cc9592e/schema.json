@@ -1,0 +1,73 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/fdded6e5-26b4-4ea6-843f-36201cc9592e/schema.json",
+    "name": "Spiegelreflectiecirkel door J. Dollond and Son",
+    "description": "Spiegelreflectiecirkel door J. Dollond and Son, voor navigatie doeleinden en gebruikt door hydrografen (landmeters op zee). Een reflectiecirkel is een spiegelinstrument voor hoekmeting, met een houten handvat en diverse uitwisselbare kijkers en lenzen. De eerste reflectiecirkel werd op aanwijzing van Borda in 1775 door Lenoir te Parijs vervaardigd. Het meetprincipe is hetzelfde als bij de octant en sextant, maar met dit instrument kan een repetitiemeting worden uitgevoerd, bovendien kunnen ook grote hoeken worden gemeten.",
+    "identifier": "2000.0037.GEO",
+    "temporalCoverage": "1775/1825",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "spiegelreflectiecirkel"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        },
+        {
+            "@type": "Product",
+            "name": "hout"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "J. Dollond and Son"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Londen, VK",
+        "latitude": 51.50853,
+        "longitude": -0.12574,
+        "sameAs": "https://www.geonames.org/2643743"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 180
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 310
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 270
+    },
+    "citation": "Borda, Jean-Charles de, \"Description et usage du cercle de réflexion: avec différentes méthodes pour calculer les observations nautiques\", Paris: Didot, 1816.",
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/b0850475-706b-4d87-86c7-bc20d666b2da",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/b0850475-706b-4d87-86c7-bc20d666b2da/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0037.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2747
+    }
+}

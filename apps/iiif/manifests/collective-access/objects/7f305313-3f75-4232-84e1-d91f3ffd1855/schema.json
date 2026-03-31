@@ -1,0 +1,96 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/7f305313-3f75-4232-84e1-d91f3ffd1855/schema.json",
+    "name": "Cartometer volgens E. Fleischhauer door L. Tesdorpf",
+    "description": "Cartometer door L. Tesdorpf voor het bepalen van afstanden over een kromme of gebogen lijnstuk op een kaart. Deze cartometer is voorzien van drie wielen en is opgeborgen in een met textiel bekleed etui. Gebruiksaanwijzing is aanwezig. Dit type is ontworpen door E. Fleischhauer. Op 15 november 1905 is Tesdorpf overgenomen door F. Sartorius (Göttingen).",
+    "identifier": "2000.0350.GEO",
+    "temporalCoverage": "1892/1900",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "kartometer",
+        "sameAs": "http://vocab.getty.edu/aat/300199974"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "hout"
+        },
+        {
+            "@type": "Product",
+            "name": "textiel"
+        },
+        {
+            "@type": "Product",
+            "name": "papier"
+        }
+    ],
+    "creator": [
+        {
+            "@type": "Role",
+            "roleName": "ontwerper",
+            "creator": {
+                "@type": "Person",
+                "name": "E. Fleischhauer"
+            }
+        },
+        {
+            "@type": "Role",
+            "roleName": "producent",
+            "creator": {
+                "@type": "Organization",
+                "name": "Ludwig Tesdorpf"
+            }
+        },
+        {
+            "@type": "Role",
+            "roleName": "maker",
+            "creator": {
+                "@type": "Person",
+                "name": "Ludwig Tesdorpf"
+            }
+        }
+    ],
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Stuttgart, Duitsland",
+        "latitude": 48.78232,
+        "longitude": 9.17702,
+        "sameAs": "https://www.geonames.org/2825297"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 40
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 140
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 135
+    },
+    "citation": "Zeitschrift für Instrumenten 1889 blz 130-143 Preislijst 1898 van Ludwig Tesdorpf blz 76 enn 77 zie ook Illustrationen Tafel XXII figur 63",
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/0654fa23-7b79-454d-bbc8-140a184bd591",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/0654fa23-7b79-454d-bbc8-140a184bd591/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0350.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3408
+    }
+}

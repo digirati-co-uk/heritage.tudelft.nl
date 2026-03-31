@@ -1,0 +1,69 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/4058fcd8-5d9a-411a-81b3-2e8e8a262516/schema.json",
+    "name": "Theodoliet door C. Sickler",
+    "description": "Theodoliet door C. Sickler, voor het bepalen van hoeken (360 graden) en ook waterpassen. Een kleine theodoliet voor het meten van horizontale en verticale richtingen. Het instrument heeft een vast stelschroevenblok en is voorzien van een horizontale met diametrale noniusaflezing en een verticale rand met enkele noniusaflezing. Op de kijker is een buisniveau bevestigd t.b.v. eenvoudig waterpassen.",
+    "identifier": "2000.0294.GEO",
+    "temporalCoverage": "1850/1900",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "theodoliet",
+        "sameAs": "http://vocab.getty.edu/aat/300199711"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "C. Sickler"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Karlsruhe, Duitsland",
+        "latitude": 49.00937,
+        "longitude": 8.40444,
+        "sameAs": "https://www.geonames.org/2892794"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 215
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 170
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 100
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/56fc05e9-d9fa-48ce-afcf-bba403d1395d",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/56fc05e9-d9fa-48ce-afcf-bba403d1395d/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0294.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2991
+    }
+}

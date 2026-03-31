@@ -1,0 +1,71 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/335f7dbf-2ce8-40c4-afdb-7eef47a4a97f/schema.json",
+    "name": "Kompas met afneembare richtkijker door F.W. Breithaupt & Sohn",
+    "description": "Boussole (kompas) door F.W. Breithaupt & Sohn, met een afneembare richtkijker voor het bepalen van richtingen t.o.v. het magnetisch noorden (0 - 360 graden verdeling).",
+    "identifier": "2000.0011.GEO",
+    "temporalCoverage": "1800/1850",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "landmeterskompas",
+        "sameAs": "http://vocab.getty.edu/aat/300199916"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "F.W. Breithaupt & Sohn",
+            "sameAs": "http://www.wikidata.org/entity/Q1386377"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Kassel, Duitsland",
+        "latitude": 51.31667,
+        "longitude": 9.5,
+        "sameAs": "https://www.geonames.org/2892518"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 225
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 265
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 165
+    },
+    "citation": "Schols, C.M., \"Landmeten en Waterpassen\", Breda: K.M.A., 8e druk 1908, H.7.",
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/6c52fb79-7db7-455d-aefe-2192763535a2",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/6c52fb79-7db7-455d-aefe-2192763535a2/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0011.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2720
+    }
+}

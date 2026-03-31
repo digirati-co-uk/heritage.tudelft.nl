@@ -1,0 +1,70 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/353ce46c-1d5a-4b41-8516-2d1d5b0b614f/schema.json",
+    "name": "Hellingmeter door Gebr. Wichmann",
+    "description": "Geodetisch meetinstrument door de Gebr. Wichmann voor het bepalen van de helling in procenten en de lengtecorrectie voor een 20 m meetband. De lengte-correctie voor een twintig meter meetband en het hellingspercentage kunnen direct afgelezen worden.",
+    "identifier": "2000.0210.GEO",
+    "temporalCoverage": "1900/1925",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "hellingmeter",
+        "sameAs": "http://vocab.getty.edu/aat/300195974"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Gebr. Wichmann"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Berlijn, Duitsland",
+        "latitude": 52.5,
+        "longitude": 13.41667,
+        "sameAs": "https://www.geonames.org/2950157"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 95
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 130
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 30
+    },
+    "citation": "Brückner. Zeitschrift für Vermessung 1907 blz 376",
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/ad115802-f069-42bc-9260-180c627fbd9e",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/ad115802-f069-42bc-9260-180c627fbd9e/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0210.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2916
+    }
+}

@@ -1,0 +1,86 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/6d54c2ed-d788-43cb-aa1f-0ce3be0d1c41/schema.json",
+    "name": "Basis reductietachymeter door Carl Zeiss",
+    "description": "Basis reductietachymeter door Carl Zeiss, voor detailmeting volgens de voerstraal methode. Instrument voor richtingmeting en direct gereduceerde afstanden tot 61 meter op een vast stelschroevenblok. Op de basis bevindt zich een verschuifbaar prisma. Via de excentrisch geplaatste kijker wordt het beeld van een object (jalon) via het verschuifbare prisma en een vastprisma waargenomen.",
+    "identifier": "2000.0812.GEO",
+    "temporalCoverage": "1950/1975",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "tachymeter",
+        "sameAs": "http://vocab.getty.edu/aat/300379943"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Carl Zeiss"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Jena, Duitsland",
+        "latitude": 50.92878,
+        "longitude": 11.5899,
+        "sameAs": "https://www.geonames.org/2895044"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 260
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 575
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 155
+    },
+    "citation": "Jena Photogrammetrie Geodäsie (Jenaoptik Jena GmbH) blz 58-59.",
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/43289ff9-8673-4739-9e98-ac10f4de48bb",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/43289ff9-8673-4739-9e98-ac10f4de48bb/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0812.GEO.a.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3274
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/a19552c6-a2b3-4c4b-9e46-3903ad4864fc",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/a19552c6-a2b3-4c4b-9e46-3903ad4864fc/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0812.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3275
+        }
+    ]
+}

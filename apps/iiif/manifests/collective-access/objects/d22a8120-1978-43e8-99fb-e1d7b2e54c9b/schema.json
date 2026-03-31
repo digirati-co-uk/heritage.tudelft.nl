@@ -1,0 +1,91 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/d22a8120-1978-43e8-99fb-e1d7b2e54c9b/schema.json",
+    "name": "Planchet door Kern & Co. AG",
+    "description": "Planchet door Kern & Co. AG, voor het direct maken van een kaart in het terrein Planchet (tekentafel) en vizierliniaal (Kippregel). Het apparaat bestaat uit drie delen, een meetinstrument, een statief en een planchet. Het planchet kan door middel van een onderstel met drie stelschroeven horizontaal opgesteld worden. De vizierliniaal is voorzien van een kijker met een Hammerdiagram voor het meten van horizontale en verticale afstanden ten opzichte van het planchet. Voor de meting is een verticale baak nodig; zie inventarisnummer 2000.0246.GEO. Statief: afmetingen 910*120*50. Planchet: afmetingen 610*540*30. Houten kist met meetinstrument: zie afmetingen Bijbehorend statief met inventarisnummer 2005.0014.GEO.",
+    "identifier": "2004.0001.GEO",
+    "temporalCoverage": "1936/1950",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "planchet"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "glas"
+        },
+        {
+            "@type": "Product",
+            "name": "hout"
+        },
+        {
+            "@type": "Product",
+            "name": "leer"
+        },
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Kern & Co. AG"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Aarau, Zwitserland",
+        "latitude": 47.39254,
+        "longitude": 8.04422,
+        "sameAs": "https://www.geonames.org/2661881"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 163
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 415
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 243
+    },
+    "citation": "Documentatie TMD",
+    "isRelatedTo": [
+        {
+            "@type": "CreativeWork",
+            "name": "Tachymeter-theodoliet door Kern & Co. AG type DKR",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/c8eb185e-96fb-45e1-9194-ca0e88202e69/schema.json",
+            "identifier": "2000.0300.GEO"
+        },
+        {
+            "@type": "CreativeWork",
+            "name": "Statief met afdekplaat en klemschroef door Kern & Co. AG",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/92cdca2f-74b3-4a09-af07-6c77e8790e94/schema.json",
+            "identifier": "2005.0014.GEO"
+        }
+    ],
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/63822057-a210-46fe-8cf5-e85b1e0a2654",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/63822057-a210-46fe-8cf5-e85b1e0a2654/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2004.0001.GEO.JPG",
+        "width": 1600,
+        "height": 1200,
+        "position": 3187
+    }
+}

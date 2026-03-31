@@ -1,0 +1,66 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/c4f9fbbe-b552-4825-8e55-409a4f441165/schema.json",
+    "name": "Selectie van mineralen in kistjes door verschillende producenten",
+    "description": "Collectie van ca.140 kistjes met mineralen, gebruikt voor educatie bij de voormalige faculteit Mijnbouwkunde. Deze zijn geselecteerd uit een grotere collectie, waarbij het uitgangspunt was om een optimale spreiding in soorten mineralen, verscheidenheid aan producenten en vindplaatsen te realiseren. De kistjes zijn over het algemeen gelabeld met de naam van het mineraal, de vindplaats en de producent. In de kistjes bevindt zich naast de gesteenten soms ook nog een label met daarop gegevens. \nDe mineralen zijn grotendeels gevat in twee maten houten kistjes, handgemaakt binnen de TU Delft. Een enkele verpakking is van mdf of karton gemaakt.",
+    "identifier": "2022.0105.CTG",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "mineraal"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "mineraal",
+            "sameAs": "http://vocab.getty.edu/aat/300011068"
+        },
+        {
+            "@type": "Product",
+            "name": "asbest",
+            "sameAs": "http://vocab.getty.edu/aat/300011071"
+        },
+        {
+            "@type": "Product",
+            "name": "karton"
+        },
+        {
+            "@type": "Product",
+            "name": "hout"
+        },
+        {
+            "@type": "Product",
+            "name": "asbestverdacht",
+            "sameAs": "http://vocab.getty.edu/aat/300011071verdacht"
+        }
+    ],
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 150
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 160
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 110
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/7de5dd35-26a3-49e2-9ff5-6cb6694d357f",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/7de5dd35-26a3-49e2-9ff5-6cb6694d357f/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2022.0105.CTG.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 10218
+    }
+}

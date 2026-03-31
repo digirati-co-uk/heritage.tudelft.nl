@@ -1,0 +1,77 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/f946e5c7-e4e9-4a78-9bf2-67e4cfee19dd/schema.json",
+    "name": "Uitklapbare verticale schaakbordbaak door Wild",
+    "description": "Een uitklapbare, verticale schaakbordbaak door H. Wild Werkstätte für Feinmechanik und Optik, voor gebruik met een waterpasinstrument (Wild N2) met een totale lengte van 400 centimeter. De schaakbordbaak geeft bij aflezing met een waterpasinstrument van de draden een evenwichtig beeld indien de verdeling door de zon beschenen wordt.",
+    "identifier": "2000.0504.GEO",
+    "temporalCoverage": "1925/1950",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "baak"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "hout"
+        },
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Wild Heerbrugg"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 70
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 2000
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 110
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/3a1e55fa-ad19-4bce-ac3c-d10bd7b48ca9",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/3a1e55fa-ad19-4bce-ac3c-d10bd7b48ca9/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0504.GEO.a.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3070
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/0545f3b1-8f80-4195-943f-6542497b272c",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/0545f3b1-8f80-4195-943f-6542497b272c/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0504.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3071
+        }
+    ]
+}

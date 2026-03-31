@@ -1,0 +1,62 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/ceeb68c2-738c-4f32-af8e-78b1f6d56c10/schema.json",
+    "name": "Waterpasvizier door A.J.J. Berkhout",
+    "description": "Waterpasvizier door A.J.J. Berkhout. Instrument voor het bepalen van hoogteverschillen door studenten van de Polytechnische School Delft. Het vizier en het niveau zijn afneembaar. Het instrument is voorzien van een schildpadmotief. Vier transversaalschalen op palmhouten latjes",
+    "identifier": "2000.0111.GEO",
+    "temporalCoverage": "1900/1925",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "waterpasinstrument"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "gietijzer",
+            "sameAs": "http://vocab.getty.edu/aat/300011004"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "maker",
+        "creator": {
+            "@type": "Person",
+            "name": "A.J.J. Berkhout"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 215
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 260
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 175
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/c33ab745-da73-46f2-8a38-60e6bdd5a480",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/c33ab745-da73-46f2-8a38-60e6bdd5a480/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0111.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2829
+    }
+}

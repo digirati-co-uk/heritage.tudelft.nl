@@ -1,0 +1,75 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/2f9f32d0-b1e4-4d73-833c-8a489cbb34e2/schema.json",
+    "name": "Set van 7 tekeningen van tachymeter ontwikkeld door prof. M.J.M. Bogaerts",
+    "description": "Set van 7 tekeningen van het elektronisch gedeelte van de afstandmeter van de totalstation of tachymeter ontwikkeld door prof.dr.ir. M.J.M. Bogaerts.\n\n1. Digitale fasemeter \n\n2. Schuifregister en teller detailpuntnummer \n\n3. Generator\n\n4. Tijdbasis \n\n5. Registratie \n\n6. Overzicht elektronisch gedeelte \n\n7. Blokschema\n\nZie ook  inventarisnummer 2005.0003.GEO, 2003.0008.GEO en 2003.0009.GEO.",
+    "identifier": "2005.0005.GEO",
+    "temporalCoverage": "1950/1975",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "tekening",
+        "sameAs": "http://vocab.getty.edu/aat/300033973"
+    },
+    "material": {
+        "@type": "Product",
+        "name": "papier"
+    },
+    "creator": {
+        "@type": "Role",
+        "roleName": "ontwerper",
+        "creator": {
+            "@type": "Organization",
+            "name": "TU Delft"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT"
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 470
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 430
+    },
+    "citation": "Bogaerts M.J.M. A self-reducing range-finder with an automatic registration system. Delft z.j.",
+    "isRelatedTo": [
+        {
+            "@type": "CreativeWork",
+            "name": "Basisreductietachymeter ontwikkeld door prof. M.J.M. Bogaerts en TU Delft",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/d1922508-aaef-40c2-a4d6-0ee27aa2a38c/schema.json",
+            "identifier": "2005.0003.GEO"
+        },
+        {
+            "@type": "CreativeWork",
+            "name": "Tachymeter door TU Delft en Optische Industrie \"De Oude Delft\"",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/8f8ba186-30d0-4ad8-8b07-ec355ec1582f/schema.json",
+            "identifier": "2003.0008.GEO"
+        },
+        {
+            "@type": "CreativeWork",
+            "name": "Tachymeter door TU Delft en Optische Industrie \"De Oude Delft\"",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/f3c33e71-b3d6-4b98-9e9e-a62fa265a1b8/schema.json",
+            "identifier": "2003.0009.GEO"
+        }
+    ],
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/729abaa7-e73e-449b-b1d1-5619c01262c1",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/729abaa7-e73e-449b-b1d1-5619c01262c1/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2005.0005.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3202
+    }
+}

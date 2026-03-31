@@ -1,0 +1,96 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/b5685905-1428-48aa-838d-0ba6e83bf4c0/schema.json",
+    "name": "Theodoliet door Julius Wanschaff type W21 nr 6",
+    "description": "Theodoliet door Julius Wanschaff type W21 nr 6, voor het meten van horizontale richtingen. De diameter van de horizontale rand is 21 cm. De theodoliet is gebruikt bij de Rijksdriehoeksmeting van Nederland in de periode 1886-1928 (secondaire metingen). Zowel de kijker als het bijbehorende alhidadeniveau bevinden zich in twee met leer beklede houten kisten. De kijker en de afleesmicroscopen zijn afneembaar. Aan het einde van beide afleesmicroscopen zijn borsteltjes bevestigd. De eerste as met de alhidade en de kijker (oculair) zijn gemerkt met een 6. Met soortelijke instrumenten is het tweede orde net van de RD gemeten. Enkele zijn nadat de bijhouding van het RD-net aan het Kadaster is overgedragen nog in eigendom van het Kadaster. Zie ook nummer 2000.0102.GEO In de bijbehorende doos kan de kijker en andere losse onderdelen zoals een diafragma, oculair en prisma.",
+    "identifier": "2008.0015.GEO",
+    "temporalCoverage": "1890/1930",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "theodoliet",
+        "sameAs": "http://vocab.getty.edu/aat/300199711"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "glas"
+        },
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "textiel"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Julius Wanschaff"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Berlijn, Duitsland",
+        "latitude": 52.5,
+        "longitude": 13.41667,
+        "sameAs": "https://www.geonames.org/2950157"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 510
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 520
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 310
+    },
+    "citation": "publicaties NCG",
+    "isRelatedTo": {
+        "@type": "CreativeWork",
+        "name": "Theodoliet door Julius Wanschaff type W5",
+        "sameAs": "https://heritage.tudelft.nl/iiif/manifests/4d8d67b3-4c71-4292-85da-78005e1f246c/schema.json",
+        "identifier": "2000.0102.GEO"
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/e1e3d247-3392-440a-9d9b-a75114454bb8",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/e1e3d247-3392-440a-9d9b-a75114454bb8/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2008.0015.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 9121
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/d3092193-61fa-409b-92b5-110745e39523",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/d3092193-61fa-409b-92b5-110745e39523/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2008.0015.GEO.JPG",
+            "width": 1600,
+            "height": 1200,
+            "position": 9122
+        }
+    ]
+}

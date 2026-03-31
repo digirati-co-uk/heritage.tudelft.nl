@@ -1,0 +1,53 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/af0777e6-247d-4ae5-a798-8af2ef168137/schema.json",
+    "name": "Richtingmerk met een lamp",
+    "description": "Een richtingmerk met een lamp en een aansluiting voor zwakstroom. Het apparaat werd gebruikt als hulpmiddel voor het bepalen van richting.",
+    "identifier": "2000.0856.GEO",
+    "temporalCoverage": "1950/1975",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "richtmerk"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        }
+    ],
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 55
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 240
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 65
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/ac17f06c-59d6-448c-97d6-97190a42897c",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/ac17f06c-59d6-448c-97d6-97190a42897c/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0856.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3314
+    }
+}

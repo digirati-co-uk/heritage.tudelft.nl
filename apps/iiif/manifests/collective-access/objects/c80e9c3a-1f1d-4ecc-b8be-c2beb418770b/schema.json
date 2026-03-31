@@ -1,0 +1,76 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/c80e9c3a-1f1d-4ecc-b8be-c2beb418770b/schema.json",
+    "name": "Hangboussole door Otto Fennel & Söhne",
+    "description": "Hangboussole door Otto Fennel & Söhne, met een cardanische bevestiging en een randverdeling van 24 uur voor het bepalen van richting in de kolenmijnen. Dit object is het linker object in de afbeelding.",
+    "identifier": "2000.0137.GEO",
+    "temporalCoverage": "1850/1875",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "landmeterskompas",
+        "sameAs": "http://vocab.getty.edu/aat/300199916"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Otto Fennel & Söhne"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Kassel, Duitsland",
+        "latitude": 51.31667,
+        "longitude": 9.5,
+        "sameAs": "https://www.geonames.org/2892518"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 5
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 190
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 140
+    },
+    "citation": "Otto Fennel opgeleid door F.W. Breithaupt & Sohn richtte in 1851 in Kassel zijn eigen onderneming op die ongeveer 100 jaar lang heeft bestaan.",
+    "isRelatedTo": {
+        "@type": "CreativeWork",
+        "name": "Hellingmeter door Otto Fennel & Söhne",
+        "sameAs": "https://heritage.tudelft.nl/iiif/manifests/d7fcf1ad-0ca6-441b-af32-23bbfb846d5e/schema.json",
+        "identifier": "2000.0138.GEO"
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/55ed6941-02c2-4588-b6ec-50a8248503d1",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/55ed6941-02c2-4588-b6ec-50a8248503d1/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000_0138_GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 9144
+    }
+}

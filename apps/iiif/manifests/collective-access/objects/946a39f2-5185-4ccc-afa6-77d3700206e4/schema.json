@@ -1,0 +1,72 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/946a39f2-5185-4ccc-afa6-77d3700206e4/schema.json",
+    "name": "Verticale Dieperinkbaak door Kipp & Zonen",
+    "description": "Een verticale Dieperink baak door Kipp & Zonen uit een stuk, als hulpmiddel bij het waterpassen, met een totale bruikbare lengte van 300 cm. Te gebruiken met een waterpasinstrument voor een doorgaande waterpassing.",
+    "identifier": "2000.0510.GEO",
+    "temporalCoverage": "1925/1950",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "waterpasbaak"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "hout"
+        },
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        }
+    ],
+    "creator": [
+        {
+            "@type": "Role",
+            "roleName": "ontwerper",
+            "creator": {
+                "@type": "Person",
+                "name": "J.W. Dieperink"
+            }
+        },
+        {
+            "@type": "Role",
+            "roleName": "producent",
+            "creator": {
+                "@type": "Organization",
+                "name": "Kipp & Zonen"
+            }
+        }
+    ],
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 80
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 3010
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 105
+    },
+    "citation": "W.Schermerhorn & H.J. van Steenis. Leerboek der Landmeetkunde. Derde druk blz 99.",
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/a24dcaba-70aa-40f0-9115-4bb13c03e0d8",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/a24dcaba-70aa-40f0-9115-4bb13c03e0d8/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0510.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3077
+    }
+}

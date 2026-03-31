@@ -1,0 +1,70 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/63be3ad0-cace-4fb7-b3bc-a2d510f5c4ab/schema.json",
+    "name": "Demonstratiemodel van een micrometer",
+    "description": "Onderwijsmodel van een micrometer, voor het nauwkeurig instellen van de hoogte van een meetinstrument. Het instrument is voorzien van een aansluitpunten voor het bevestigen van een ander meetinstrument. De micrometer is gebruikt voor het onderwijs.",
+    "identifier": "2000.0452.GEO",
+    "temporalCoverage": "1900/1950",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "micrometer",
+        "sameAs": "http://vocab.getty.edu/aat/300198990"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "hout"
+        }
+    ],
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 200
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 200
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 200
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/d2d7ab0f-971a-421c-b936-c4e2d326167c",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/d2d7ab0f-971a-421c-b936-c4e2d326167c/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0452.GEO.a.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3056
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/46215be1-09ea-4381-8fdb-3e156c5d4aa3",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/46215be1-09ea-4381-8fdb-3e156c5d4aa3/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0452.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3057
+        }
+    ]
+}

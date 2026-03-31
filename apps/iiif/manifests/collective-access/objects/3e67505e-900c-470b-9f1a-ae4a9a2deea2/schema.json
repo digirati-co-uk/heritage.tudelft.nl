@@ -1,0 +1,100 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/3e67505e-900c-470b-9f1a-ae4a9a2deea2/schema.json",
+    "name": "Portret van ir. J.F. de Vogel door H. Luns",
+    "description": "Geschilderd portret van ir. J.F. de Vogel, door Huib Luns.",
+    "identifier": "2002.0013.CVB",
+    "temporalCoverage": "1935",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "schilderij"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "olieverf",
+            "sameAs": "http://vocab.getty.edu/aat/300014254"
+        },
+        {
+            "@type": "Product",
+            "name": "linnen",
+            "sameAs": "http://vocab.getty.edu/aat/300014069"
+        },
+        {
+            "@type": "Product",
+            "name": "hout"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "maker",
+        "creator": {
+            "@type": "Person",
+            "name": "Huib Luns"
+        }
+    },
+    "about": {
+        "@type": "Person",
+        "name": "J.F.  de   Vogel"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 1796
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 1297
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 41
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/ab9dba50-d590-4ba9-bd6b-578f69f36471",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/ab9dba50-d590-4ba9-bd6b-578f69f36471/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2002.0013.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 1745
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/202452a3-81c4-4a34-8b18-8969471dd4c3",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/202452a3-81c4-4a34-8b18-8969471dd4c3/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2002.0013.CVB.a.JPG",
+            "width": 1600,
+            "height": 1200,
+            "position": 1746
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/8a5f234a-3b7d-407a-8063-e99a833588a0",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/8a5f234a-3b7d-407a-8063-e99a833588a0/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2002.0013.CVB.b.JPG",
+            "width": 1600,
+            "height": 1200,
+            "position": 9028
+        }
+    ]
+}

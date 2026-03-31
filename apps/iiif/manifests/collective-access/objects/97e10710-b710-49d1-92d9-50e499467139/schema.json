@@ -1,0 +1,54 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/97e10710-b710-49d1-92d9-50e499467139/schema.json",
+    "name": "Kompas",
+    "description": "Een kompas (ook wel boussole) met een vizier en een niet beweegbare spiegel. Dit kompas is voorzien van bevestigingsmogelijkheid op een instrument (theodoliet).",
+    "identifier": "2000.0414.GEO",
+    "temporalCoverage": "1875/1900",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "landmeterskompas",
+        "sameAs": "http://vocab.getty.edu/aat/300199916"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        }
+    ],
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 100
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 100
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 80
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/b867a0c0-6a11-4e8d-aed8-cd5da986e138",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/b867a0c0-6a11-4e8d-aed8-cd5da986e138/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0414.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3012
+    }
+}

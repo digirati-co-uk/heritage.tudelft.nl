@@ -1,0 +1,92 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/6128061c-fad8-4564-abeb-978b0a652d9e/schema.json",
+    "name": "Anéroide-barometer in een houten kist volgens F.H. Reitz door R. Deutschbein",
+    "description": "Anéroide-barometer door R. Deutschbein, een meetinstrument voor hoogtemeting, in een houten kist naar een ontwerp van Reitz. Bij deze barometer, die voor het eerst in 1873 door uitvinder Reitz werd beschreven, wordt de zeer kleine beweging van een fijne verdeling door een sterk vergrotende microscoop waargenomen. In het kistje bevindt zich ook een thermometer.",
+    "identifier": "2000.0313.GEO",
+    "temporalCoverage": "1875/1900",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "aneroïdebarometer",
+        "sameAs": "http://vocab.getty.edu/aat/300195781"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "hout"
+        },
+        {
+            "@type": "Product",
+            "name": "textiel"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        },
+        {
+            "@type": "Product",
+            "name": "leer"
+        }
+    ],
+    "creator": [
+        {
+            "@type": "Role",
+            "roleName": "ontwerper",
+            "creator": {
+                "@type": "Person",
+                "name": "F.H. Reitz"
+            }
+        },
+        {
+            "@type": "Role",
+            "roleName": "producent",
+            "creator": {
+                "@type": "Organization",
+                "name": "R. Deutschbein"
+            }
+        }
+    ],
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Hamburg, Duitsland",
+        "latitude": 53.55073,
+        "longitude": 9.99302,
+        "sameAs": "https://www.geonames.org/2911298"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 80
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 170
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 185
+    },
+    "citation": "Zeitschrift für Vermessunswesen 1873 en 1887 Jordan (1914) blz 666 667",
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/99b6b124-0b2f-48cf-85a4-958f2dd3e90a",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/99b6b124-0b2f-48cf-85a4-958f2dd3e90a/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0313.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3366
+    }
+}

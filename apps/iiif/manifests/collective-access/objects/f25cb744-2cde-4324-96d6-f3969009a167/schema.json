@@ -1,0 +1,78 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/f25cb744-2cde-4324-96d6-f3969009a167/schema.json",
+    "name": "Signaallamp op verstelbaar plateau door C. Bamberg",
+    "description": "Een signaallamp (seinlamp) door C. Bamberg  op een houten in hoogte verstelbaar plateau. Voor signalering van een ver verwijderd richtpunt in de nacht. Het object (ook wel een heliotroop met kunstlicht) is gebruikt bij de azimut-bepalingen voor de Rijksdriehoeksmeting in de jaren 1896-1899.",
+    "identifier": "2000.0833.GEO",
+    "temporalCoverage": "1875/1900",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "verlichtingsmiddel",
+        "sameAs": "http://vocab.getty.edu/aat/300037581"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "hout"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "maker",
+        "creator": {
+            "@type": "Person",
+            "name": "Carl Bamberg"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 540
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 790
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 160
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/e2e7cfcf-e274-4740-b7fc-c216bb1e143f",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/e2e7cfcf-e274-4740-b7fc-c216bb1e143f/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0833.GEO.a.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3293
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/47e7f179-5a87-493d-8ebf-30810f4e7a5d",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/47e7f179-5a87-493d-8ebf-30810f4e7a5d/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0833.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3294
+        }
+    ]
+}

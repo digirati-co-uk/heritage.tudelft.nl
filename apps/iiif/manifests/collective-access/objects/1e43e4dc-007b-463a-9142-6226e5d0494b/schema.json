@@ -1,0 +1,72 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/1e43e4dc-007b-463a-9142-6226e5d0494b/schema.json",
+    "name": "Trekpen door Van Pelt",
+    "description": "Een trekpen door Van Pelt, voor het trekken van lijnen van Oost-Indische inkt, de lijndikte kan variabel ingesteld worden.",
+    "identifier": "2000.0865.GEO",
+    "temporalCoverage": "1900/1925",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "trekpen",
+        "sameAs": "http://vocab.getty.edu/aat/300022466"
+    },
+    "material": {
+        "@type": "Product",
+        "name": "metaal",
+        "sameAs": "http://vocab.getty.edu/aat/300010900"
+    },
+    "creator": {
+        "@type": "Role",
+        "roleName": "maker",
+        "creator": {
+            "@type": "Person",
+            "name": "Van Pelt"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 15
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 150
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 18
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/47a3ee8e-7fe2-432d-9718-557df0cddd87",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/47a3ee8e-7fe2-432d-9718-557df0cddd87/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0865.GEO.a.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3322
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/d1277d3b-5ee9-4fb4-8319-4a20239c08e6",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/d1277d3b-5ee9-4fb4-8319-4a20239c08e6/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0865.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3323
+        }
+    ]
+}

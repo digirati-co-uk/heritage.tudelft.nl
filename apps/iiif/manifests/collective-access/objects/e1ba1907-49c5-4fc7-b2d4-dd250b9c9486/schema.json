@@ -1,0 +1,75 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/e1ba1907-49c5-4fc7-b2d4-dd250b9c9486/schema.json",
+    "name": "Zonneprisma volgens R. Roelofs door Van Leeuwen",
+    "description": "Zonneprisma in houten kistje geproduceerd door C.J. van Leeuwen (1917-1994) uit Delft, naar ontwerp van prof. R. Roelofs. Aan de binnenzijde van de deksel staat \"Solar - Prism Prof. R. Roelofs - Netherlands\", met daaronder de patentnummers van verschillende landen. Ook afgebeeld is het logo van de producent met de tekst: \"Van Leeuwen Delft\". Op zowel het prisma als de deksel is het voormalige inventarisnummer van het Laboratorium van Geodesie te lezen: 1909.",
+    "identifier": "2018.0002.GEO",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "zonneprisma"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        },
+        {
+            "@type": "Product",
+            "name": "hout"
+        }
+    ],
+    "creator": [
+        {
+            "@type": "Role",
+            "roleName": "ontwerper",
+            "creator": {
+                "@type": "Person",
+                "name": "R. Roelofs"
+            }
+        },
+        {
+            "@type": "Role",
+            "roleName": "producent",
+            "creator": {
+                "@type": "Organization",
+                "name": "Van Leeuwen"
+            }
+        }
+    ],
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 50
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 100
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 90
+    },
+    "citation": "Aardoom, L., 'Cornelis Johannes van Leeuwen (1917-1994), Fabrikant van speciale instrumenten', in: \"De Hollandse Cirkel\", jaargang 24 nr. 3, 2022, pp.8-16.",
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/d001dca1-3cc1-4249-bc73-9dc7da8362e7",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/d001dca1-3cc1-4249-bc73-9dc7da8362e7/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "Bestand 24-01-18 12 48 35.jpeg",
+        "width": 1600,
+        "height": 1200,
+        "position": 7465
+    }
+}

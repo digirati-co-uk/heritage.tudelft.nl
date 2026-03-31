@@ -1,0 +1,70 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/597e1880-9174-4bda-b848-282facf09433/schema.json",
+    "name": "Anemometer door Richard Frères",
+    "description": "Anemometer of windsnelheidsmeter door Richard Frères voor het meten van luchtsnelheid. De meter bestaat uit een molen met acht wieken, die via een wormwiel is gekoppeld aan een telwerk. De meter is eveneens voorzien van een stopwatch. \nHet instrument zit in een houten, met textiel beklede doos. De doos bevat een gebruiksaanwijzing en een ijkcertificaat.",
+    "identifier": "2000.0521.TMD",
+    "temporalCoverage": "1925/1950",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "windsnelheidsmeter",
+        "sameAs": "https://data.cultureelerfgoed.nl/term/id/cht/16190739-e0ce-499d-b93f-ef20b3fd8bd9"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        },
+        {
+            "@type": "Product",
+            "name": "hout"
+        },
+        {
+            "@type": "Product",
+            "name": "textiel"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Richard Frères"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 85
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 290
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 120
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/0d54ec7d-b109-499c-b226-6f6a69f82e21",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/0d54ec7d-b109-499c-b226-6f6a69f82e21/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0521.TMD.JPG",
+        "width": 1600,
+        "height": 1200,
+        "position": 4372
+    }
+}

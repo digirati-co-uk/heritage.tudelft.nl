@@ -1,0 +1,62 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/d4d333a4-9777-4a86-adb8-bd31fce9144d/schema.json",
+    "name": "Houten tekenhaak door Albert Nestler AG",
+    "description": "Houten tekenhaak door Albert Nestler AG, een hulpmiddel bij het maken van technische tekeningen op een tekentafel.",
+    "identifier": "2005.0021.GEO",
+    "temporalCoverage": "1950/1975",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "tekenhaak",
+        "sameAs": "http://vocab.getty.edu/aat/300024257"
+    },
+    "material": {
+        "@type": "Product",
+        "name": "hout"
+    },
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Albert Nestler  AG"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Lahr, Duitsland",
+        "latitude": 51.44438,
+        "longitude": 7.8011,
+        "sameAs": "https://www.geonames.org/2881880"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 10
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 780
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 225
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/e77f901a-138c-4599-8ab9-a69b22cb40ba",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/e77f901a-138c-4599-8ab9-a69b22cb40ba/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2005.0021.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3220
+    }
+}

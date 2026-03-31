@@ -1,0 +1,67 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/9f84669b-4629-4efb-8fad-1b083b9fbc9a/schema.json",
+    "name": "Schijfplanimeter door G.C. Starke",
+    "description": "Schijfplanimeter door G.C. Starke, geodetisch meetinstrument voor oppervlaktebepalingen van percelen en van dwars- en lengteprofielen. De eerste in de praktijk bruikbare planimeter werd door Kasper Wetli uitgevonden en door Georg Starke in 1849 geconstrueerd. De beweging van de omloopstift wordt direct ontbonden in een rechtlijnige beweging van de omlooparm en een loodrecht daarop staande beweging van een wagen, waarop een omloopschijf bevestigd is. Op de schijf rust een meetrol. De beweging van de omlooparm brengt de schijf via een strak gespannen draad aan het draaien. De omwenteling van de meetrol wordt rechtstreeks overgebracht op een telwerk. De positie van de meetrol op de schijf wordt beïnvloed door de beweging van de wagen.",
+    "identifier": "2000.0075.GEO",
+    "temporalCoverage": "1850/1870",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "schijfplanimeter"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "mineraal",
+            "sameAs": "http://vocab.getty.edu/aat/300011068"
+        },
+        {
+            "@type": "Product",
+            "name": "textiel"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "maker",
+        "creator": {
+            "@type": "Person",
+            "name": "G.C. Starke"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 145
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 370
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 480
+    },
+    "citation": "http://www.mathematik.uni-wuerzburg.de/History/ausstell/planimet/starke.html",
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/c5a63dec-a48b-47fd-b178-f7a527e703ae",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/c5a63dec-a48b-47fd-b178-f7a527e703ae/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0075.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2792
+    }
+}

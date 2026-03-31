@@ -1,0 +1,52 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/03b4723d-8093-4831-b0dc-3b51ebfd1b87/schema.json",
+    "name": "Twee houten kisten met barogrammen",
+    "description": "Twee houten kisten met barogrammen van de periodes van 2 april 1900 tot 31 oktober 1909, en 1 november 1909 tot 29 december 1919. Een barogram is een strook papier of karton met verdeling voor het vastleggen (tekenen) van het verloop van de gemeten druk door een barograaf (een barometer, met een schrijfstift). Barogrammen registreren de wisseling in de luchtdruk ter ondersteuning bij hoogtemetingen.",
+    "identifier": "2000.0863.GEO",
+    "temporalCoverage": "1900/1925",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "barogram"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "papier"
+        },
+        {
+            "@type": "Product",
+            "name": "hout"
+        }
+    ],
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 120
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 330
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 100
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/d424e396-68d5-4437-a38e-4b4c7ea8dc05",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/d424e396-68d5-4437-a38e-4b4c7ea8dc05/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0863.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3321
+    }
+}

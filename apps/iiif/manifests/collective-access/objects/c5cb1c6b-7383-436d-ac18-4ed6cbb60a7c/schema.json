@@ -1,0 +1,107 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/c5cb1c6b-7383-436d-ac18-4ed6cbb60a7c/schema.json",
+    "name": "Zelfportret van prof. H. Luns",
+    "description": "Geschilderd zelfportret van prof. Hubert Marie (Huib) Luns (1881-1942), hoogleraar handtekenen en geschiedenis der schilder- en beeldhouwkunst van 1931 tot 1942.",
+    "identifier": "2002.0011.CVB",
+    "temporalCoverage": "1930",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "schilderij"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "olieverf",
+            "sameAs": "http://vocab.getty.edu/aat/300014254"
+        },
+        {
+            "@type": "Product",
+            "name": "linnen",
+            "sameAs": "http://vocab.getty.edu/aat/300014069"
+        },
+        {
+            "@type": "Product",
+            "name": "hout"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "maker",
+        "creator": {
+            "@type": "Person",
+            "name": "Huib Luns"
+        }
+    },
+    "about": {
+        "@type": "Person",
+        "name": "Huib Luns"
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Delft, Nederland",
+        "latitude": 51.99968,
+        "longitude": 4.36405,
+        "sameAs": "https://www.geonames.org/2757344"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 1085
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 903
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 50
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/9c7299bd-1292-4e32-9535-cfd097ae8d6b",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/9c7299bd-1292-4e32-9535-cfd097ae8d6b/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2002.0011.CVB.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 1737
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/16156db6-4308-41d2-a00d-0b9cebfd61d0",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/16156db6-4308-41d2-a00d-0b9cebfd61d0/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2002.0011.CVB.a.JPG",
+            "width": 1600,
+            "height": 1200,
+            "position": 1738
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/d470d825-4548-4397-bbc0-4e5a961750f1",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/d470d825-4548-4397-bbc0-4e5a961750f1/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2002.0011.CVB.b.JPG",
+            "width": 1600,
+            "height": 1200,
+            "position": 9026
+        }
+    ]
+}

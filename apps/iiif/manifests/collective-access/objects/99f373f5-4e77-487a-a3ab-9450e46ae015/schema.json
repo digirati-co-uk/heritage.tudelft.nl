@@ -1,0 +1,50 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/99f373f5-4e77-487a-a3ab-9450e46ae015/schema.json",
+    "name": "Fles met onbekende vloeistof",
+    "description": "Fles gevuld met onbekende donkere vloeistof.",
+    "identifier": "2013.0047.CTG",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "onbekend"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "olie",
+            "sameAs": "http://vocab.getty.edu/aat/300014254"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        }
+    ],
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 230
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT"
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT"
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/d5061b43-d064-42d9-8f62-5412b1c32f95",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/d5061b43-d064-42d9-8f62-5412b1c32f95/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2013.0047.CTG.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 9604
+    }
+}

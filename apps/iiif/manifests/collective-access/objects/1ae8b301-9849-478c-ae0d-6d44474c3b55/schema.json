@@ -1,0 +1,65 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/1ae8b301-9849-478c-ae0d-6d44474c3b55/schema.json",
+    "name": "Heliotroop volgens Adolph Steinheil",
+    "description": "Heliotroopspiegel volgens Adolph Steinheil, bedoeld om op een richtpunt zonlicht te laten spiegelen in de richting van het richtingsmeetinstrument. Gebruikt bij triangulatie. Met een dergelijke \"zonne-\"spiegel werd het richtpunt voor een theodoliet of ander meetinstrument zichtbaar gemaakt.",
+    "identifier": "2000.0024.GEO",
+    "temporalCoverage": "1850/1875",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "heliotroop"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        },
+        {
+            "@type": "Product",
+            "name": "hout"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "ontwerper",
+        "creator": {
+            "@type": "Person",
+            "name": "Adolph Steinheil"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 280
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 55
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 230
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/fff28bb8-d37e-4fd9-a137-80e3d860117d",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/fff28bb8-d37e-4fd9-a137-80e3d860117d/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0024.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2733
+    }
+}

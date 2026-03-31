@@ -1,0 +1,61 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/374c68ab-85a1-479d-847f-93844896f3f5/schema.json",
+    "name": "Niveaubeproever",
+    "description": "Niveaubeproever, voor het testen van niveaus. Apparaat, ook wel libel of waterpas genoemd, gebruikt om de kwaliteit van niveau's te beproeven. Met het apparaat kan de luchtbel in het niveau nauwkeurig worden ingesteld. Als het niveau daarna 180 graden wordt gedraaid, moet de luchtbel zich op dezelfde plaats bevinden. Bij het apparaat hoort een met ether gevuld niveau. De afmetingen zijn 150mm * 20mm * 20mm.",
+    "identifier": "2003.0010.GEO",
+    "temporalCoverage": "1925/1975",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "ijkapparatuur"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "messing"
+        },
+        {
+            "@type": "Product",
+            "name": "ijzer",
+            "sameAs": "http://vocab.getty.edu/aat/300011002"
+        },
+        {
+            "@type": "Product",
+            "name": "kunststof"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        }
+    ],
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 75
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 350
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 80
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/bcd69992-33c8-4272-bad2-2955f69db2c1",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/bcd69992-33c8-4272-bad2-2955f69db2c1/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2003.0010.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3180
+    }
+}

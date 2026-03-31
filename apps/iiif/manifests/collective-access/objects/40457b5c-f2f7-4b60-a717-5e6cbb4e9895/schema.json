@@ -1,0 +1,75 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/40457b5c-f2f7-4b60-a717-5e6cbb4e9895/schema.json",
+    "name": "Codeschijf voor basisreductietachymeter door TU Delft",
+    "description": "Ontwerp van de codeschijf voor het digitaal uitlezen van een gradenboog in het 400 gon stelsel. De codeschijven werden fotografisch verkleind voor de zelfregistrerende tachymeter van prof.dr.ir. M.J.M. Bogaerts. Zie ook inventarisnummer: 2005.0003.GEO, 2003.0008.GEO en 2003.0009.GEO.",
+    "identifier": "2005.0004.GEO",
+    "temporalCoverage": "1950/1975",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "landmeetaccessoire",
+        "sameAs": "http://vocab.getty.edu/aat/300207254"
+    },
+    "material": {
+        "@type": "Product",
+        "name": "papier"
+    },
+    "creator": {
+        "@type": "Role",
+        "roleName": "ontwerper",
+        "creator": {
+            "@type": "Organization",
+            "name": "TU Delft"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT"
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 1020
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 730
+    },
+    "citation": "Bogaerts M.J.M. A self-reducing range-finder with an automatic registration system. Delft z.j.",
+    "isRelatedTo": [
+        {
+            "@type": "CreativeWork",
+            "name": "Basisreductietachymeter ontwikkeld door prof. M.J.M. Bogaerts en TU Delft",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/d1922508-aaef-40c2-a4d6-0ee27aa2a38c/schema.json",
+            "identifier": "2005.0003.GEO"
+        },
+        {
+            "@type": "CreativeWork",
+            "name": "Tachymeter door TU Delft en Optische Industrie \"De Oude Delft\"",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/8f8ba186-30d0-4ad8-8b07-ec355ec1582f/schema.json",
+            "identifier": "2003.0008.GEO"
+        },
+        {
+            "@type": "CreativeWork",
+            "name": "Tachymeter door TU Delft en Optische Industrie \"De Oude Delft\"",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/f3c33e71-b3d6-4b98-9e9e-a62fa265a1b8/schema.json",
+            "identifier": "2003.0009.GEO"
+        }
+    ],
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/c92d4e0d-5a3e-4658-93d1-cfc8cf76ac33",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/c92d4e0d-5a3e-4658-93d1-cfc8cf76ac33/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2005.0004.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3201
+    }
+}

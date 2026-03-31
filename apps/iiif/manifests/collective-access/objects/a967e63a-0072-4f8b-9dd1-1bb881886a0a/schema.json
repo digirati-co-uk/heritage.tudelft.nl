@@ -1,0 +1,61 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/a967e63a-0072-4f8b-9dd1-1bb881886a0a/schema.json",
+    "name": "Kijker door G. Heyde",
+    "description": "Kijker door G. Heyde, bedoeld voor astronomische waarnemingen. Het instrument is aangekocht voor metingen vanuit de koepel van het voormalige geodesie-gebouw aan de Kanaalweg te Delft. De koepel voldeed niet voor dat doel, en is voornamelijk gebruikt voor practicum doeleinden. Voor ster- en zonwaarnemingen.",
+    "identifier": "2004.0007.GEO",
+    "temporalCoverage": "1900/1925",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "richtkijker"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "glas"
+        },
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "maker",
+        "creator": {
+            "@type": "Person",
+            "name": "Gustav Heyde"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 143
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 1060
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 187
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/59c41670-1543-4030-90ce-e4b0a13f5cf2",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/59c41670-1543-4030-90ce-e4b0a13f5cf2/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2004.0007.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3193
+    }
+}

@@ -1,0 +1,69 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/5bf86751-7916-46bd-8ac0-960c3341320f/schema.json",
+    "name": "Driedelige uitschuifbare baak",
+    "description": "Driedelige, uitschuifbare baak, een hulpmiddel bij tachymetrie en waterpassen. Op de baak is een E-verdeling aangebracht evenals een omgekeerde becijfering. Aan één kant is een verdeling aangebracht voor waterpassen, aan de andere kant een horizontale verdeling voor tachymetrie.",
+    "identifier": "2000.0241.GEO",
+    "temporalCoverage": "1900/1925",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "baak"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "hout"
+        },
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        }
+    ],
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 55
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 1800
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 110
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/1e3299f4-ea74-4c28-972c-fb344f682601",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/1e3299f4-ea74-4c28-972c-fb344f682601/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0241.GEO.a.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 2945
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/34237d0c-1d46-44dd-9065-dcad8f3316d3",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/34237d0c-1d46-44dd-9065-dcad8f3316d3/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0241.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 2946
+        }
+    ]
+}

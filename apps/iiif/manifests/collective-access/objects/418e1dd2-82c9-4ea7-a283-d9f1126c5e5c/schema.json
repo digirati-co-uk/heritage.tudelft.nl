@@ -1,0 +1,73 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/418e1dd2-82c9-4ea7-a283-d9f1126c5e5c/schema.json",
+    "name": "Waterpasinstrument door Instrumentenfabriek H.M. Smitt",
+    "description": "Waterpasinstrument door Instrumentenfabriek H.M. Smitt, voorzien van een horizontale rand en micrometer-hellingschroef, een afneembaar oriënteringskompas (boussole) en een reversieniveau dat bevestigd is aan de kijker. Diameter objectief 40 mm en een brandpunt van 40 cm, en -oorspronkelijk - kruisdraden van spinrag (die nu vergaan zijn).",
+    "identifier": "2000.0115.GEO",
+    "temporalCoverage": "1897/1907",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "waterpasinstrument"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        },
+        {
+            "@type": "Product",
+            "name": "kunststof"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Instrumentenfabriek H.M. Smitt"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Bilthoven, Nederland",
+        "latitude": 52.13,
+        "longitude": 5.20139,
+        "sameAs": "https://www.geonames.org/2758927"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 250
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 425
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 230
+    },
+    "citation": "Firma Smitt heeft tussen 1902 en 1912 intrumenten vervaardigd.",
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/1180c51c-1e88-4697-ba89-d9e55bfe3eef",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/1180c51c-1e88-4697-ba89-d9e55bfe3eef/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0115.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2834
+    }
+}

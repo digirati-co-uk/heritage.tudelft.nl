@@ -1,0 +1,75 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/594230d7-b60d-4bd6-8511-307aaf297ca0/schema.json",
+    "name": "Statief behorende bij waterpasinstrument door G. de Koningh",
+    "description": "Speciaal statief behoort bij waterpasinstrument door G. de Koningh, met inventarisnummer 2000.0529.GEO.",
+    "identifier": "2005.0016.GEO",
+    "temporalCoverage": "1925/1975",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "statief (standaarden)",
+        "sameAs": "http://vocab.getty.edu/aat/300164679"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "hout"
+        },
+        {
+            "@type": "Product",
+            "name": "ijzer",
+            "sameAs": "http://vocab.getty.edu/aat/300011002"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "G. de Koningh"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Arnhem, Nederland",
+        "latitude": 52.00113,
+        "longitude": 5.89641,
+        "sameAs": "https://www.geonames.org/2759660"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 130
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 1400
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 130
+    },
+    "isRelatedTo": {
+        "@type": "CreativeWork",
+        "name": "Waterpasinstrument door G. de Koningh",
+        "sameAs": "https://heritage.tudelft.nl/iiif/manifests/c9ca30b8-10e6-4ace-8c35-d4a9c963ed09/schema.json",
+        "identifier": "2000.0529.GEO"
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/5a812cef-0be2-4586-a91f-8ff32d83ef23",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/5a812cef-0be2-4586-a91f-8ff32d83ef23/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2005.0016.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3215
+    }
+}

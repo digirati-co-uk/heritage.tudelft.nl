@@ -1,0 +1,66 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/ae7dd72e-5193-4e81-b014-4ec9fc88c197/schema.json",
+    "name": "Standaardmeter door C. Bamberg",
+    "description": "Standaardmeter door C. Bamberg, gebruikt voor de vergelijking van de standmeter van de Rijks Driehoeksmeting (NCG). Twee stalen eindmaatstaven in een houten kist. De maatstaven hebben afzonderlijk een lengte van één meter. Geijkt door de Kaiserliche Normal-Eigungs-Kommision op 27 januari 1893. De set bestaat uit twee bijna identieke kisten.",
+    "identifier": "2000.0226.GEO",
+    "temporalCoverage": "1893",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "meetstaaf"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "hout"
+        },
+        {
+            "@type": "Product",
+            "name": "papier"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "maker",
+        "creator": {
+            "@type": "Person",
+            "name": "Carl Bamberg"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 33
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 1060
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 65
+    },
+    "citation": "Er is een ijkverklaring",
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/6cb6567b-f54f-438d-8bdd-779b34ea672c",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/6cb6567b-f54f-438d-8bdd-779b34ea672c/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0226.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2933
+    }
+}

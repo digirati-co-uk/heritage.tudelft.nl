@@ -1,0 +1,73 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/4aaaf0d6-9095-45ec-84e9-c4bb61a86502/schema.json",
+    "name": "Metalen meter voor kartering door F.W. Breithaupt & Sohn",
+    "description": "Metalen meter voor kartering van 1:1000 door F.W. Breithaupt & Sohn, voorzien van links en rechts oplopende becijfering, met twee handvatten in een houten kist. Verdeling van 0 - 1000 millimeter en vice versa.",
+    "identifier": "2000.0825.GEO",
+    "temporalCoverage": "1925/1950",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "meetstaaf"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "hout"
+        },
+        {
+            "@type": "Product",
+            "name": "textiel"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "F.W. Breithaupt & Sohn",
+            "sameAs": "http://www.wikidata.org/entity/Q1386377"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Kassel, Duitsland",
+        "latitude": 51.31667,
+        "longitude": 9.5,
+        "sameAs": "https://www.geonames.org/2892518"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 50
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 1170
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 80
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/556f59ce-56df-4525-87d8-1dc6bb239c4e",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/556f59ce-56df-4525-87d8-1dc6bb239c4e/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0825.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3287
+    }
+}

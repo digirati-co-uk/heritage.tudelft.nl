@@ -1,0 +1,84 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/f9200e49-92f6-4948-94de-194e15804075/schema.json",
+    "name": "Tachymeter door Otto Fennel",
+    "description": "Tachymeter door Otto Fennel & Söhne, voor richting- en (gereduceerde) afstandmeting. Deze tachymeter is uitgevoerd als een schuiftachymeter naar een ontwerp van twee Belgische officieren; Pequellier en Wagner. Vervaardigd door Otto Fennel & Söhne in Kassel.",
+    "identifier": "2000.0197.GEO",
+    "temporalCoverage": "1903",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "tachymeter",
+        "sameAs": "http://vocab.getty.edu/aat/300379943"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "hout"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        },
+        {
+            "@type": "Product",
+            "name": "textiel"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Otto Fennel & Söhne"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Kassel, Duitsland",
+        "latitude": 51.31667,
+        "longitude": 9.5,
+        "sameAs": "https://www.geonames.org/2892518"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 540
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 300
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 470
+    },
+    "citation": "http://www.surveyhistory.org/tacheometer.htm W. Tinter: Osterreichische Zeitschrift für Vermessungswesen 1876 Heft 5-8. C. Wagners Tachygraphometer J. Dubbeld en G.F. Witt (Lab. voor GEODESIE): Optische Lengtemeting (vervolg) 1970 blz 110 en 111. Otto Fen",
+    "isRelatedTo": {
+        "@type": "CreativeWork",
+        "name": "Statief voor tachymeter-theodoliet door Otto Fennel & Söhne",
+        "sameAs": "https://heritage.tudelft.nl/iiif/manifests/f07930ad-331a-466a-a54f-acc1fac40280/schema.json",
+        "identifier": "2000.0515.GEO"
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/58fb5752-e8b1-477d-b95e-dc6049c595b7",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/58fb5752-e8b1-477d-b95e-dc6049c595b7/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0197.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2903
+    }
+}

@@ -1,0 +1,61 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/ede9151f-e803-4c58-ae4e-2fff886ef635/schema.json",
+    "name": "Waterpasinstrument op een vast stelschroevenblok door E. Wenckebach",
+    "description": "Waterpasinstrument door E. Wenckebach, op een vast stelschroevenblok. Het instrument is voorzien van een horizontale rand, een hellingschroef en een oculair-prisma. Dit type heeft ronde tappen en een ruiterniveau.",
+    "identifier": "2000.0063.GEO",
+    "temporalCoverage": "1840/1860",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "waterpasinstrument"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "maker",
+        "creator": {
+            "@type": "Person",
+            "name": "Eduard (Nederlands Wenckebach"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 194
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 335
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 125
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/31e948a5-dea0-4179-ba89-83ca373a6f4b",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/31e948a5-dea0-4179-ba89-83ca373a6f4b/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0063.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2781
+    }
+}

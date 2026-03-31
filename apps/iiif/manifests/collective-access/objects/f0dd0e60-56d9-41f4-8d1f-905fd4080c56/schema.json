@@ -1,0 +1,53 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/f0dd0e60-56d9-41f4-8d1f-905fd4080c56/schema.json",
+    "name": "Buisniveau",
+    "description": "Buisniveau of hangniveau, voor het horizontaal stellen van een lijnvormig object, zoals bijv. een draad in een mijngang.",
+    "identifier": "2000.0130;2000.0130;2000.0130.GEO;GEO;GEO",
+    "temporalCoverage": "1850/1925",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "buisniveau"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        }
+    ],
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 21
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 90
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 94
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/9308704d-afb6-4ea6-a415-55b02b5fa06a",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/9308704d-afb6-4ea6-a415-55b02b5fa06a/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0130.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2852
+    }
+}

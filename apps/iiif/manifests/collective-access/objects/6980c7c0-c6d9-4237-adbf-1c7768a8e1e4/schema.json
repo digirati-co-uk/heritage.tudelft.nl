@@ -1,0 +1,78 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/6980c7c0-c6d9-4237-adbf-1c7768a8e1e4/schema.json",
+    "name": "'De taafelen sinuum, tangentium & secantium of der hoekmaten, raaklijnen en snijlijnen', door C.J. Voogt",
+    "description": "Een boek geschreven door C.J. Voogt met de titel 'De taafelen sinuum, tangentium & secantium of der hoekmaten, raaklijnen en snijlijnen', uitgegeven door Johannes van Keulen in Amsterdam in 1685.",
+    "identifier": "2000.0842.GEO",
+    "temporalCoverage": "1685",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "boek",
+        "sameAs": "http://vocab.getty.edu/aat/300028051"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "papier"
+        },
+        {
+            "@type": "Product",
+            "name": "leer"
+        }
+    ],
+    "creator": [
+        {
+            "@type": "Role",
+            "roleName": "producent",
+            "creator": {
+                "@type": "Organization",
+                "name": "Joannes van Keulen en Zoonen"
+            }
+        },
+        {
+            "@type": "Role",
+            "roleName": "maker",
+            "creator": {
+                "@type": "Person",
+                "name": "C.J. (Nederlands) Voogt"
+            }
+        }
+    ],
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Amsterdam, Nederland",
+        "latitude": 52.37302,
+        "longitude": 4.89856,
+        "sameAs": "https://www.geonames.org/2759793"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 50
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 160
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 110
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/c5aa742e-77c5-4f2b-a022-bba548c0ddcb",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/c5aa742e-77c5-4f2b-a022-bba548c0ddcb/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0842.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3303
+    }
+}

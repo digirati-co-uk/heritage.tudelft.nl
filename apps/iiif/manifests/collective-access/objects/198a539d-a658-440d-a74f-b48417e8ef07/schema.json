@@ -1,0 +1,98 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/198a539d-a658-440d-a74f-b48417e8ef07/schema.json",
+    "name": "Waterpasinstrument door F.W. Breithaupt & Sohn volgens H.J. Heuvelink",
+    "description": "Waterpasinstrument door F.W. Breithaupt & Sohn, voor nauwkeurige hoogteverschilmeting d.m.v. doorgaande waterpassing, met een reversieniveau en een micrometerhellingschroef. Het is gebouwd volgens aanwijzingen van prof. ir. Hendrik Jan Heuvelink (1861-1949) en gebruikt voor onderzoek naar methoden voor de herziening (tweede nauwkeurigheidswaterpassing (1926-1940)) van de Rijkswaterpassing van Nederland. Dit instrument is getest in 1921 door de latere minister-president van Nederland ir. Willem Schermerhorn (1894-1977), evenals het identieke instrument de nr 31322 van de T.H. Bandung, waarbij aangemerkt wordt dat de nr 31322 beter was.",
+    "identifier": "2000.0249.GEO",
+    "temporalCoverage": "1921",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "reversieniveau waterpasinstrument"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        },
+        {
+            "@type": "Product",
+            "name": "textiel"
+        }
+    ],
+    "creator": [
+        {
+            "@type": "Role",
+            "roleName": "producent",
+            "creator": {
+                "@type": "Organization",
+                "name": "F.W. Breithaupt & Sohn",
+                "sameAs": "http://www.wikidata.org/entity/Q1386377"
+            }
+        },
+        {
+            "@type": "Role",
+            "roleName": "ontwerper",
+            "creator": {
+                "@type": "Person",
+                "name": "Hendrik Jan Heuvelink"
+            }
+        }
+    ],
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Kassel, Duitsland",
+        "latitude": 51.31667,
+        "longitude": 9.5,
+        "sameAs": "https://www.geonames.org/2892518"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 280
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 540
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 190
+    },
+    "citation": "De Ingenieur van 21 januari 1922 nr 3. Brief van fa. Breithaupt d.d. 17-12-1982 geleverd op 9 mei 1921 aan de T.H. Delft",
+    "isRelatedTo": [
+        {
+            "@type": "CreativeWork",
+            "name": "Hangbaak volgens prof. J.W. Dieperink",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/378b4f57-cbc5-4356-b14f-361dab26486d/schema.json",
+            "identifier": "2000.0239.GEO"
+        },
+        {
+            "@type": "CreativeWork",
+            "name": "Waterpasbaak",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/32e53c4b-22aa-4451-bd95-7f6cd599d964/schema.json",
+            "identifier": "2000.0244.GEO"
+        }
+    ],
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/3ee4337b-eeee-4ee9-bf07-1d595c09f4d2",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/3ee4337b-eeee-4ee9-bf07-1d595c09f4d2/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0249.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2953
+    }
+}

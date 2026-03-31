@@ -1,0 +1,78 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/7806fe09-23b3-4666-b066-cf0100cb0a2d/schema.json",
+    "name": "Planimeter door M. Kloth",
+    "description": "Een grafische planimeter door M. Kloth, ook wel hyperbeltafel (nomogram) als hulpmiddel bij oppervlakte bepalingen van willekeurige driehoeken op kaart met schaal 1:1000.\nIn een kartonnen doos met een gebruiksaanwijzing in het Duits. Zie ook inventarisnummer 2000.0393.GEO.",
+    "identifier": "2000.0392.GEO",
+    "temporalCoverage": "1900/1925",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "planimeter",
+        "sameAs": "http://vocab.getty.edu/aat/300200057"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "glas"
+        },
+        {
+            "@type": "Product",
+            "name": "karton"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "M. Kloth"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Osnabrück, Duitsland, EU",
+        "latitude": 52.27264,
+        "longitude": 8.0498,
+        "sameAs": "https://www.geonames.org/2856883"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 10
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 225
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 225
+    },
+    "citation": [
+        "Beschrijving gebruik in binnenkant van de opbergdoos",
+        "Duits patent DE26695 [Patent gaat ook over een productiemethode. Het is niet zeker dat die methode voor dit exemplaar is gebruikt. Er zijn minstens 2 verschillende productiemethodes bekend]"
+    ],
+    "isRelatedTo": {
+        "@type": "CreativeWork",
+        "name": "Planimeter door M. Kloth",
+        "sameAs": "https://heritage.tudelft.nl/iiif/manifests/6368ab62-5082-4c87-8dc4-0f3814210d6c/schema.json",
+        "identifier": "2000.0393.GEO"
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/15129982-96de-4541-ba6f-44bc52594d51",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/15129982-96de-4541-ba6f-44bc52594d51/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0392.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3253
+    }
+}

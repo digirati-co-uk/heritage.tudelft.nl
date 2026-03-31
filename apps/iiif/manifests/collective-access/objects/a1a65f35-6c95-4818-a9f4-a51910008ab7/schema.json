@@ -1,0 +1,69 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/a1a65f35-6c95-4818-a9f4-a51910008ab7/schema.json",
+    "name": "Standaardmeter door Dumoulin-Froment",
+    "description": "Standaardmeter door Dumoulin-Froment, gebruikt voor het ijken van waterpasbaken t.b.v. nauwkeurigheidswaterpassen van 1875-1885. Normaalmeetstaaf die werd gebruikt voor de bepaling van de lengte en uitzettingscoëfficient van de waterpasbaken. De meetstaaf kan worden opgeborgen in een houten kist. Aan de binnenzijde van de kist zijn handgeschreven aantekeningen bevestigd, waaronder de Ministeriële Beschikking van 20-6-1900 nr 213 en verwijzing naar archief NCG.",
+    "identifier": "2000.0225.GEO",
+    "temporalCoverage": "1850/1900",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "meetstaaf"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Dumoulin-Froment"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Parijs, Frankrijk",
+        "latitude": 48.85341,
+        "longitude": 2.3488,
+        "sameAs": "https://www.geonames.org/2988507"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 30
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 1020
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 20
+    },
+    "citation": "Zeitschrift für Instrumenten 1881 blz 278. K&L 1890 blz 44",
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/480765e0-7890-4c7e-b06d-9940d2b9e1fc",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/480765e0-7890-4c7e-b06d-9940d2b9e1fc/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0225.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2932
+    }
+}

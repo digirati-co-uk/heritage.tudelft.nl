@@ -1,0 +1,65 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/c1552624-73fe-4867-bfcd-259b001ce797/schema.json",
+    "name": "Incomplete heliotroop in een houten kist volgens Bertrand",
+    "description": "Houten kist met een incomplete heliotroopuitrusting voor het bepalen van richting. De uitrusting bestaat uit twee heliotroopspiegels, een stelschroef en een stengelhaak (voor bevestiging aan een statief). Deze heliotroop is gebruikt bij de driehoeksmeting van Nederland en in de werkplaats van de Rijksdriehoeksmeting vervaardigd. Dit type instrument is in 1829 door Bertrand ontworpen (zie verder ook 2000.0230). Op een richtpunt (ver van een standplaats) werd dit hulpmiddel zodanig geplaatst dat zonlicht via de spiegel in de richting van de standplaats werd teruggekaatst. Er moest wel tijdens de meting doorlopend iemand bij dit instrument staan die d.m.v. een houten hamertje de spiegel de juiste stand tikte, waardoor tijdens de meting de weerkaatsing van het zonlicht gericht blijft op de standplaats van de theodoliet.",
+    "identifier": "2000.0231.GEO",
+    "temporalCoverage": "1870/1880",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "heliotroop"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "hout"
+        },
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "leer"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "ontwerper",
+        "creator": {
+            "@type": "Person",
+            "name": "Bertrand"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 94
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 554
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 198
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/1df059cc-91bc-42da-9797-ac35b78b1fe3",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/1df059cc-91bc-42da-9797-ac35b78b1fe3/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0231.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2936
+    }
+}

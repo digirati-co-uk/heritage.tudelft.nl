@@ -1,0 +1,68 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/a85feb90-0e89-43a8-9664-1b5db82de24e/schema.json",
+    "name": "Repetitietheodoliet door G. de Koningh",
+    "description": "Een repetitietheodoliet door G. de Koningh, voor het meten van horizontale en verticale hoeken. Het instrument is voorzien van een ruiterniveau en een noniusaflezing.",
+    "identifier": "2000.0408.GEO",
+    "temporalCoverage": "1918",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "repetitietheodoliet"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "G. de Koningh"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Arnhem, Nederland",
+        "latitude": 52.00113,
+        "longitude": 5.89641,
+        "sameAs": "https://www.geonames.org/2759660"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 335
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 240
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 190
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/24996c77-35af-4c16-b3f0-d639303aa631",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/24996c77-35af-4c16-b3f0-d639303aa631/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0408.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3005
+    }
+}

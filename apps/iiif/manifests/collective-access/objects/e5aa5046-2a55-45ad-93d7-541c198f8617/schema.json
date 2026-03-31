@@ -1,0 +1,73 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/e5aa5046-2a55-45ad-93d7-541c198f8617/schema.json",
+    "name": "Standaardmeter door Repsold",
+    "description": "Een speciaal met thermometer uitgerust basistoestel, aangeschaft in opdracht van de regering bij de gebroeders Repsold in Hamburg en in 1867 geleverd. De meter is gebruikt bij de basismeting van Stamkart in de Haarlemmermeer en voor de basismeting van de triangulatie door Oudemans op Java. Later toegevoegd aan de lijst van instrumenten die behoorde bij de Rijkscommissie voor Graadmeting en Waterpassing en in ongerede geraakt (tussen 1912 en 1925) tijdens gebruik bij de Rijksuniversiteit van Leiden. \nIn de bijbehorende kist bevindt zich een notitie van de Rijkscommissie voor Graadmeting en Waterpassing door prof.ir. Hendrik Jan Heuvelink (1861-1949) van 26 mei 1926 met de tekst:\n\"Basistoestel van Repsold. In 1912 nam de astronoom H.G. v.d. Sande Bakhuyzen het initiatief om den basistoestel naar zijne inzichten te verbeteren. In plaats van de glazen plaatjes op de meetstaven werden invar-plaatjes aangebracht. De oorspronkelijke glazen plaatjes zijn gemonteerd op twee houten latjes. Een van de staafjes met verdeelpunt in een lange meetstaaf is te Leiden zoek geraakt.\"",
+    "identifier": "2004.0010.GEO",
+    "temporalCoverage": "1867",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "meetstaaf"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "hout"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Repsold"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Hamburg-Mitte, Duitsland",
+        "latitude": 53.55,
+        "longitude": 10.01667,
+        "sameAs": "https://www.geonames.org/2911288"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 120
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 1100
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 160
+    },
+    "citation": "zie publicaties van de NCG. Een foto van het instrument in gebruik is te vinden in het gemeentearchief Delft nummer 50372.",
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/8d977e37-8805-40be-a18d-d70b04681b6c",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/8d977e37-8805-40be-a18d-d70b04681b6c/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2004.0010.GEO.JPG",
+        "width": 1600,
+        "height": 1200,
+        "position": 3197
+    }
+}

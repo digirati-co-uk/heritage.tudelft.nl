@@ -1,0 +1,76 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/4abae2e5-136e-4e8f-9465-e99397a0b821/schema.json",
+    "name": "Graveermes",
+    "description": "Een graveermes aan een rond handvat dat op drie poten staat. De poten zijn voorzien van kogels, zodat het geheel over het te graveren materiaal bewogen kan worden. In het midden van het handvat is een vergrootglas bevestigd. zie ook inventarisnummer 2000.0876.GEO.",
+    "identifier": "2000.0877.GEO",
+    "temporalCoverage": "1950/1975",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "mes (snijgereedschap)",
+        "sameAs": "http://vocab.getty.edu/aat/300024668"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        }
+    ],
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 70
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 80
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 80
+    },
+    "isRelatedTo": {
+        "@type": "CreativeWork",
+        "name": "Graveermes",
+        "sameAs": "https://heritage.tudelft.nl/iiif/manifests/33e8ca7f-1fbb-401c-86f7-d3f969060570/schema.json",
+        "identifier": "2000.0876.GEO"
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/d17388a4-945d-4016-9d25-a7e84178c67f",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/d17388a4-945d-4016-9d25-a7e84178c67f/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0877.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 9095
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/77f9aded-1c96-4f5c-b200-6571461546d6",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/77f9aded-1c96-4f5c-b200-6571461546d6/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000_0876_GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 9171
+        }
+    ]
+}

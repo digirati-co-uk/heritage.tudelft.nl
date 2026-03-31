@@ -1,0 +1,68 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/6ffc7a25-7995-44c9-a8a9-b5145c0e5e2e/schema.json",
+    "name": "Waterpasinstrument door B. Holsboer",
+    "description": "Waterpasinstrument door B. Holsboer, voor doorgaande waterpassing met een baak. Gebruikt voor hoogteverschilmeting. De kijkerbuis van dit instrument wordt op drie punten ondersteunt. Het instrument is voorzien van twee buisniveau's. Apart aan dit instrument is het dwarsgeplaatste buisniveau.",
+    "identifier": "2000.0311.GEO",
+    "temporalCoverage": "1875/1900",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "waterpasinstrument"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "B. Holsboer"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Arnhem, Nederland",
+        "latitude": 52.00113,
+        "longitude": 5.89641,
+        "sameAs": "https://www.geonames.org/2759660"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 245
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 400
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 175
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/b84b4593-6880-4982-b030-e37f7a71c842",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/b84b4593-6880-4982-b030-e37f7a71c842/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0311.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3364
+    }
+}

@@ -1,0 +1,77 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/a5a89562-31c6-4a20-a1c4-86a66a95b6de/schema.json",
+    "name": "Magic Brain Calculator door Chadwick Co.",
+    "description": "Magic Brain Calculator door Chadwick Co., een handmatig bedienbare rekenmachine door middel van verstelbare schuifjes en een pen. Deze goedkope machines waren betaalbaar voor bijna iedereen, en werden bijvoorbeeld gebruikt door scholieren in de jaren 50 en 60.",
+    "identifier": "1997.0078.TMD",
+    "temporalCoverage": "1955/1970",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "Mechanische zakrekenmachine"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "kunststof"
+        },
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Chadwick Company"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 10
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 145
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 70
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/7ecee576-3b0e-488a-8607-6227d5a60574",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/7ecee576-3b0e-488a-8607-6227d5a60574/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "1997.0078.TMD.JPG",
+            "width": 1600,
+            "height": 1200,
+            "position": 6929
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/abc9ccce-0c0b-42a1-a535-228c52aa2df8",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/abc9ccce-0c0b-42a1-a535-228c52aa2df8/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "1997.0078.TMD.JPG",
+            "width": 1600,
+            "height": 1200,
+            "position": 9388
+        }
+    ]
+}

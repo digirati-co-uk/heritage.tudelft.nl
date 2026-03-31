@@ -1,0 +1,55 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/fb7add53-cc6c-491d-933d-92cb2aa57161/schema.json",
+    "name": "Waterpasinstrument door A.J.J. Berkhout",
+    "description": "Waterpas door A.J.J. Berkhout, voor doorgaande waterpassing met een waterpasbaak. Type 'alles vast' voor hoogteverschilmetingen met eenvoudige hellingschroef.",
+    "identifier": "2000.0545.GEO",
+    "temporalCoverage": "1903",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "waterpasinstrument"
+    },
+    "material": {
+        "@type": "Product",
+        "name": "metaal",
+        "sameAs": "http://vocab.getty.edu/aat/300010900"
+    },
+    "creator": {
+        "@type": "Role",
+        "roleName": "maker",
+        "creator": {
+            "@type": "Person",
+            "name": "A.J.J. Berkhout"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 240
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 475
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 180
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/4fa0dfd4-fa73-45ca-993a-8e7642ce44fc",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/4fa0dfd4-fa73-45ca-993a-8e7642ce44fc/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0545.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3116
+    }
+}

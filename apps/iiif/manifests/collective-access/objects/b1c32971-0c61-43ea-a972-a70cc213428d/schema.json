@@ -1,0 +1,98 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/b1c32971-0c61-43ea-a972-a70cc213428d/schema.json",
+    "name": "Hollandse cirkel door J.M. Kleman & Zoon",
+    "description": "Een theodoliet door J.M. Kleman & Zoon, voor het meten van horizontale en verticale hoeken, op een houten voet. Het instrument is voorzien van een zekerheidskijker, twee niveaus, een kogelscharnier en een noniusaflezing. 0 - 180 graden",
+    "identifier": "2000.0061.GEO",
+    "temporalCoverage": "1800/1850",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "hollandse cirkel"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "J.M. Kleman & Zoon"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Amsterdam, Nederland",
+        "latitude": 52.37302,
+        "longitude": 4.89856,
+        "sameAs": "https://www.geonames.org/2759793"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 270
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 270
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 230
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/51007e2a-af6e-425d-b3c4-73077300870f",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/51007e2a-af6e-425d-b3c4-73077300870f/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0061.GEO.a.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 2777
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/6c0021d5-a5da-4a69-ba4f-aef2d49a0600",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/6c0021d5-a5da-4a69-ba4f-aef2d49a0600/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0061.GEO.b.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 2778
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/2d2998c8-bcdf-4f54-a701-4a811fb683bc",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/2d2998c8-bcdf-4f54-a701-4a811fb683bc/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0061.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 2779
+        }
+    ]
+}

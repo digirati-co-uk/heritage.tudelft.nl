@@ -1,0 +1,73 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/2e7b8243-1d67-4a35-b0cf-c97b6058ce93/schema.json",
+    "name": "Hollandse cirkel op een houten voet door J.M. Kleman & Zoon",
+    "description": "Hollandse cirkel  door J.M. Kleman & Zoon op een houten voet. Het instrument is voorzien van een kompas, een vaste richtkijker, een controlekijker en een kogelscharnier. De toevoeging van de kijkers maakte het mogelijk nauwkeuriger en over langere afstanden te meten. Het nadeel was dat de cirkelrand in het vlak van de te meten punten gebracht moest worden.",
+    "identifier": "2000.0050.GEO",
+    "temporalCoverage": "1809/1857",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "hollandse cirkel"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        },
+        {
+            "@type": "Product",
+            "name": "hout"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "J.M. Kleman & Zoon"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Amsterdam, Nederland",
+        "latitude": 52.37302,
+        "longitude": 4.89856,
+        "sameAs": "https://www.geonames.org/2759793"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 310
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 220
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 205
+    },
+    "citation": "Pouls, H.C., \"De landmeter: inleiding in de geschiedenis van de Nederlandse landmeetkunde van de Romeinse tot de Franse tijd\", Alphen aan de Rijn: Canaletto/Repro-Holland, 1997.",
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/e4df10f0-40d2-42cf-8806-53b1e65e18e2",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/e4df10f0-40d2-42cf-8806-53b1e65e18e2/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0050.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2764
+    }
+}

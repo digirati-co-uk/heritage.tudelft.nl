@@ -1,0 +1,53 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/c5abc659-a85f-4aea-a680-87e80365338c/schema.json",
+    "name": "Zakwaterpasinstrument",
+    "description": "Zakwaterpasinstrument voor hoogtemeting met buisniveau die vanuit de kijker te zien is.\nGeodetisch meetinstrument voor eenvoudige bepalingen van het hoogte verschil.",
+    "identifier": "2000.0216.GEO",
+    "temporalCoverage": "1900/1925",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "waterpasinstrument"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        }
+    ],
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 32
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 137
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 22
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/f38463b4-360f-4900-a80a-cee1e61fe837",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/f38463b4-360f-4900-a80a-cee1e61fe837/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0216.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2923
+    }
+}

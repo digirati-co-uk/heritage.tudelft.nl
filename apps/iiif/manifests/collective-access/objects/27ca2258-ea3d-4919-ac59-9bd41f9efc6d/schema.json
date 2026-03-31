@@ -1,0 +1,79 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/27ca2258-ea3d-4919-ac59-9bd41f9efc6d/schema.json",
+    "name": "Repetitietheodoliet door F.W. Breithaupt & Sohn",
+    "description": "Repetitietheodoliet door F.W. Breithaupt & Sohn, voor de detailmeting volgens de voerstraalmethode. Een repetitietheodoliet werd gebruikt voor het meten van horizontale en verticale hoeken voorzien van afstandsdraden. In 1927 vond Heckmann een nieuwe methode van afstand meten uit, waarbij gebruikt werd gemaakt van speciale afstandsdraden in de kijker en een aparte hierbij behorende horizontale baak (zie inventarisnummer 2000.0191.GEO). Het instrument staat op een vast stelschroevenblok en is voorzien van een horizontale rand met schaalmicroscopen, van een verticale rand met noniën met afleesmicroscopen en een z.g. alhidadeniveau (ruiterniveau).",
+    "identifier": "2000.0299.GEO",
+    "temporalCoverage": "1925/1950",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "repetitietheodoliet"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        },
+        {
+            "@type": "Product",
+            "name": "kunststof"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "F.W. Breithaupt & Sohn",
+            "sameAs": "http://www.wikidata.org/entity/Q1386377"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Kassel, Duitsland",
+        "latitude": 51.31667,
+        "longitude": 9.5,
+        "sameAs": "https://www.geonames.org/2892518"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 380
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 250
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 210
+    },
+    "isRelatedTo": {
+        "@type": "CreativeWork",
+        "name": "Horizontale baak volgens Heckmann door F.W. Breithaupt & Sohn",
+        "sameAs": "https://heritage.tudelft.nl/iiif/manifests/668ce1e0-8a74-414f-ba60-09aab328b04c/schema.json",
+        "identifier": "2000.0191.GEO"
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/b126a07e-1f48-4afa-b135-d7979fa382e2",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/b126a07e-1f48-4afa-b135-d7979fa382e2/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0299.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2995
+    }
+}

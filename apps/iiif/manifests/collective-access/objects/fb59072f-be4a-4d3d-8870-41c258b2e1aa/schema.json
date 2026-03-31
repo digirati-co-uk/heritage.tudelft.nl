@@ -1,0 +1,100 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/fb59072f-be4a-4d3d-8870-41c258b2e1aa/schema.json",
+    "name": "Portret van J.A. Keurenaer door H. Goovaerts",
+    "description": "Geschilderd portret van Johannes Augustus Keurenaer, directeur van de Koninklijke Akademie voor Civiel Ingenieurs van 1859 tot 1864. Geschilderd door Henri Goovaerts.",
+    "identifier": "2002.0007.CVB",
+    "temporalCoverage": "1850/1900",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "schilderij"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "olieverf",
+            "sameAs": "http://vocab.getty.edu/aat/300014254"
+        },
+        {
+            "@type": "Product",
+            "name": "linnen",
+            "sameAs": "http://vocab.getty.edu/aat/300014069"
+        },
+        {
+            "@type": "Product",
+            "name": "hout"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "maker",
+        "creator": {
+            "@type": "Person",
+            "name": "Henri Goovaerts"
+        }
+    },
+    "about": {
+        "@type": "Person",
+        "name": "Johannes Augustus  Keurenaer"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 1117
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 914
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 58
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/61f5a944-d288-4b87-bdf0-27dcbe4271ff",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/61f5a944-d288-4b87-bdf0-27dcbe4271ff/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2002.0007.CVB.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 1726
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/5aad8c92-6882-463a-9df5-1923e0eb0a98",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/5aad8c92-6882-463a-9df5-1923e0eb0a98/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2002.0007.CVB.a.JPG",
+            "width": 1600,
+            "height": 1200,
+            "position": 1727
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/5de31b96-d39a-472c-bf16-c8497d8cf5ec",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/5de31b96-d39a-472c-bf16-c8497d8cf5ec/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2002.0007.CVB.b.JPG",
+            "width": 1600,
+            "height": 1200,
+            "position": 9022
+        }
+    ]
+}

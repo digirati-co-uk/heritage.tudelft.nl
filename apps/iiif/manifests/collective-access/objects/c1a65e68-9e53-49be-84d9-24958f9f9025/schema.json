@@ -1,0 +1,60 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/c1a65e68-9e53-49be-84d9-24958f9f9025/schema.json",
+    "name": "Flesjeswaterpas door TU Delft",
+    "description": "Flesjeswaterpas om in een onregelmatig terrein (bijvoorbeeld door een rivierbedding) een bekende hoogte over te brengen naar een ander punt. Het waterpas werkt volgens de wet van de communicerende vaten. Het flesjes waterpas bestaat uit twee 'flesjes', de slang die de verbinding vormde is niet aanwezig. De flesjes zijn waarschijnlijk in eigen beheer gemaakt. Ieder flesje is aan twee zijden voorzien van een messing kraan, de schaalverdeling loopt van 1 tot 20.",
+    "identifier": "2006.0048.GEO",
+    "temporalCoverage": "1950/1975",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "flesjeswaterpas"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "glas"
+        },
+        {
+            "@type": "Product",
+            "name": "messing"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "maker",
+        "creator": {
+            "@type": "Organization",
+            "name": "TU Delft"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 40
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 410
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 50
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/50f85865-7455-482b-8bc4-cd8fef71c036",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/50f85865-7455-482b-8bc4-cd8fef71c036/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2006.0048.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3228
+    }
+}

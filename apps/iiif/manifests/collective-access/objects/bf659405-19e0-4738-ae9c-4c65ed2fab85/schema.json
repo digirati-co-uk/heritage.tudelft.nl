@@ -1,0 +1,95 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/bf659405-19e0-4738-ae9c-4c65ed2fab85/schema.json",
+    "name": "Anaglyf door het Institut Géografique National",
+    "description": "Twee hulpmiddelen door het Institut Géografique National, om landkaarten van reliëf te voorzien: een map met luchtfoto's die volgens het anaglyfenprocédé zijn bewerkt (weergegeven in een rode en een groene kleur) en een drie dimensionale reliëfkaart van de zuidkust van Frankrijk.",
+    "identifier": "2000.0887.GEO",
+    "temporalCoverage": "1950/1975",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "anaglief",
+        "sameAs": "http://vocab.getty.edu/aat/300127198"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "papier"
+        },
+        {
+            "@type": "Product",
+            "name": "kunststof"
+        },
+        {
+            "@type": "Product",
+            "name": "hout"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "maker",
+        "creator": {
+            "@type": "Organization",
+            "name": "Institut Géografique National"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 50
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 640
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 400
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/b9ea7b3a-265e-496d-bc0f-9cd5ba099f3e",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/b9ea7b3a-265e-496d-bc0f-9cd5ba099f3e/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0887.GEO.a.JPG",
+            "width": 1600,
+            "height": 1200,
+            "position": 3162
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/dc9c0f73-ee65-44ef-9aac-15fb1ac79fbf",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/dc9c0f73-ee65-44ef-9aac-15fb1ac79fbf/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0887.GEO.b.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3345
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/d0e2ea6d-99f7-4c4c-a8b2-087ba6a5752b",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/d0e2ea6d-99f7-4c4c-a8b2-087ba6a5752b/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0887.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3346
+        }
+    ]
+}

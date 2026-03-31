@@ -1,0 +1,84 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/7ee46889-3e68-47ad-ae54-71f633ecea9c/schema.json",
+    "name": "RDS-baak met uitschuifbare voet door Wild",
+    "description": "Deze baak met uitschuifbare voet behoort bij de tachymeter-theodoliet type RDS, beide geproduceerd door Wild Heerbrugg. Het betreft een tweedelige klapbaak, die tot een totale lengte van 3 meter uitgeklapt kan worden. De baak is voorzien van een schaakbordverdeling in centimeters, de eerste meter in rood, de tweede en derde meter in zwart.\nRond 1960 zijn er 10 van deze baken aangeschaft bij leverancier Ahrend voor het \"Lab v. Geodesie\".",
+    "identifier": "2023.0004.GEO",
+    "temporalCoverage": "1960",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "baak"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "hout"
+        },
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Wild Heerbrugg"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Heerbrugg, Zwitserland",
+        "latitude": 47.41488,
+        "longitude": 9.62684,
+        "sameAs": "https://www.geonames.org/2660395"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 3000
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 110
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 150
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/8c4d27fd-b697-4aa9-9a22-506208e06c87",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/8c4d27fd-b697-4aa9-9a22-506208e06c87/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2023.0004.GEO.JPG",
+            "width": 1600,
+            "height": 1200,
+            "position": 10491
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/1f35ba76-21a0-4e30-838c-091b62946c36",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/1f35ba76-21a0-4e30-838c-091b62946c36/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2023.0004c.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 10492
+        }
+    ]
+}

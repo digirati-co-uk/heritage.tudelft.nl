@@ -1,0 +1,70 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/0bc1ae0f-fc62-40b7-8983-21cb5f38c1e0/schema.json",
+    "name": "Schijfrolplanimeter door G. Coradi",
+    "description": "Schijfrolplanimeter door G. Coradi, voor oppervlaktebepalingen van percelen en dwars- en lengteprofielen, speciaal voor lange vlakken, zoals wegen.",
+    "identifier": "2000.0161.GEO",
+    "temporalCoverage": "1884/1900",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "planimeter",
+        "sameAs": "http://vocab.getty.edu/aat/300200057"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "karton"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "G. Coradi"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Zürich, Zwitserland, EU",
+        "latitude": 47.36667,
+        "longitude": 8.55,
+        "sameAs": "https://www.geonames.org/2657896"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 650
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 190
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 605
+    },
+    "citation": "Mogelijk Duits patent DE267793 (1913) ?",
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/ec696a39-ca4c-488d-b50c-c113c2d93d47",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/ec696a39-ca4c-488d-b50c-c113c2d93d47/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0161.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2866
+    }
+}

@@ -1,0 +1,107 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/73e2f765-cbc4-4c80-af25-684bb9f2d646/schema.json",
+    "name": "Chronometer in een houten kistje door Ulysse Nardin",
+    "description": "Een chronometer door Ulysse Nardinin een houten kistje, voor astronomische metingen met een theodoliet of sextant t.b.v. plaatsbepaling en azimuthbepaling. Deze chronometer met nummer 17984 is door de maker in december 1937 geijkt, en op 9 december 1960 en 11 juli 1967 gecontroleerd door N.V. Observator Rotterdam. Dit geheel is twee keer verpakt in een kistje, de kleinste is met textiel bekleed. Tijdmeting op 0,1 seconde. Het kistje bevat diverse ijkcertificaten.",
+    "identifier": "2000.0433.GEO",
+    "temporalCoverage": "1937",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "chronometer",
+        "sameAs": "http://vocab.getty.edu/aat/300195967"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "hout"
+        },
+        {
+            "@type": "Product",
+            "name": "textiel"
+        },
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "leer"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Ulysse Nardin"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Le Locle, Zwitserland",
+        "latitude": 47.05619,
+        "longitude": 6.74913,
+        "sameAs": "https://www.geonames.org/2659960"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 120
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 195
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 235
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/31d5a0bf-4956-4f85-814c-1b1d4dd5732e",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/31d5a0bf-4956-4f85-814c-1b1d4dd5732e/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0433.GEO.a.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3034
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/2c7d98c2-d3a8-41c0-b1d2-dafe3c4f7835",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/2c7d98c2-d3a8-41c0-b1d2-dafe3c4f7835/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0433.GEO.b.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3035
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/02d949ee-20ee-46e0-9f5a-74ff8099999b",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/02d949ee-20ee-46e0-9f5a-74ff8099999b/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0433.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3036
+        }
+    ]
+}

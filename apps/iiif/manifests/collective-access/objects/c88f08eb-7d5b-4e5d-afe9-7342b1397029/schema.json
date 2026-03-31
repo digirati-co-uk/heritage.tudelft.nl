@@ -1,0 +1,82 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/c88f08eb-7d5b-4e5d-afe9-7342b1397029/schema.json",
+    "name": "Thermometer in houten koker door H. Geissler",
+    "description": "Thermometer door H. Geissler in een houten koker, gebruikt bij de basisafstandsmeting van de Rijkscommissie Graadmeting en Waterpassing te Stroe voor de temperatuurcorrectie van de afstandsstaven. Bereik van 0 tot 55 graden Celsius.",
+    "identifier": "2000.0881.GEO",
+    "temporalCoverage": "1897",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "thermometer",
+        "sameAs": "http://vocab.getty.edu/aat/300198647"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "kwik"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        },
+        {
+            "@type": "Product",
+            "name": "hout"
+        }
+    ],
+    "creator": [
+        {
+            "@type": "Role",
+            "roleName": "ontwerper",
+            "creator": {
+                "@type": "Person",
+                "name": "Johann Heinrich Wilhelm Geissler"
+            }
+        },
+        {
+            "@type": "Role",
+            "roleName": "producent",
+            "creator": {
+                "@type": "Organization",
+                "name": "Ch.J. Geissler & Sohn"
+            }
+        }
+    ],
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Berlijn, Duitsland",
+        "latitude": 52.5,
+        "longitude": 13.41667,
+        "sameAs": "https://www.geonames.org/2950157"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 20
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 415
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 20
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/cfa0eae2-5b89-4462-a636-d8f48817713e",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/cfa0eae2-5b89-4462-a636-d8f48817713e/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0881.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3340
+    }
+}

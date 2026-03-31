@@ -1,0 +1,64 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/a393c63f-7db7-4e76-9f25-7e1248e350c9/schema.json",
+    "name": "Statief voor pantometer",
+    "description": "Statief voor het opstellen van een instrument (pantometer). Het statief is oorspronkelijk gebruikt bij een gemeente. Zie ook 2000.0347.GEO.",
+    "identifier": "2000.0851.GEO",
+    "temporalCoverage": "1900/1925",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "statief (standaarden)",
+        "sameAs": "http://vocab.getty.edu/aat/300164679"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "hout"
+        },
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "leer"
+        }
+    ],
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 120
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 1100
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 120
+    },
+    "isRelatedTo": {
+        "@type": "CreativeWork",
+        "name": "Pantometer door Pessler & Sohn",
+        "sameAs": "https://heritage.tudelft.nl/iiif/manifests/6f6925fb-8c5c-47e1-818c-c61b8286cf5d/schema.json",
+        "identifier": "2000.0347.GEO"
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/5210da16-b3ca-404e-9135-5428043d52a5",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/5210da16-b3ca-404e-9135-5428043d52a5/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0851.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3309
+    }
+}

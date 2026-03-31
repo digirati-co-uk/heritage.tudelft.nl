@@ -1,0 +1,100 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/afbcde8e-6bd1-4778-a1df-d831cf4520f1/schema.json",
+    "name": "Portret van prof. W.H.L. Janssen van Raaij door A.F. Gips",
+    "description": "Geschilderd portret van prof. ir. Willem Hendrik Leonard Janssen van Raaij (1862-1937), hoogleraar zuivere en toegepaste wiskunde en de mechanica van 1902 tot 1932. Het werk is geschilderd door Abraham Frans Gips (1861-1943).",
+    "identifier": "2002.0018.CVB",
+    "temporalCoverage": "1932",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "schilderij"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "olieverf",
+            "sameAs": "http://vocab.getty.edu/aat/300014254"
+        },
+        {
+            "@type": "Product",
+            "name": "linnen",
+            "sameAs": "http://vocab.getty.edu/aat/300014069"
+        },
+        {
+            "@type": "Product",
+            "name": "hout"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "maker",
+        "creator": {
+            "@type": "Person",
+            "name": "Abraham Frans Gips"
+        }
+    },
+    "about": {
+        "@type": "Person",
+        "name": "Willem Hendrik Leonard Janssen van Raay"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 743
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 595
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 55
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/99fedee2-7ccd-4da4-9071-ace01aaa34ad",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/99fedee2-7ccd-4da4-9071-ace01aaa34ad/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2002.0018.CVB.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 1760
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/39ec8181-54e3-44df-b089-d2153e91a403",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/39ec8181-54e3-44df-b089-d2153e91a403/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2002.0018.CVB.a.JPG",
+            "width": 1600,
+            "height": 1200,
+            "position": 1761
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/81416edf-ee4b-47ef-8b88-71387075c952",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/81416edf-ee4b-47ef-8b88-71387075c952/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2002.0018.CVB.b.JPG",
+            "width": 1600,
+            "height": 1200,
+            "position": 9044
+        }
+    ]
+}

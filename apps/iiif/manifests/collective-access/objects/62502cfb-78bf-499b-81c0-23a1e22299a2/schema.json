@@ -1,0 +1,86 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/62502cfb-78bf-499b-81c0-23a1e22299a2/schema.json",
+    "name": "Voetenschaal in een houten doosje door J.M. Kleman & Zoon",
+    "description": "Voetenschaal door J.M. Kleman & Zoon, in een houten doosje met een afschuifbare deksel. Op de voetenschaal zijn de Parijse, Rijnlandse, Engelse en Amsterdamse voet aangebracht. Cartografisch meetinstrument voor het uitzetten of opmeten op een kaart van afstanden op schaal.",
+    "identifier": "2000.0072.GEO",
+    "temporalCoverage": "1807/1857",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "liniaal",
+        "sameAs": "http://vocab.getty.edu/aat/300266529"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "hout"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "J.M. Kleman & Zoon"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Amsterdam, Nederland",
+        "latitude": 52.37302,
+        "longitude": 4.89856,
+        "sameAs": "https://www.geonames.org/2759793"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 8
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 395
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 32
+    },
+    "citation": "(bron: H.C. Pouls, 'De landmeter.' (1997).",
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/48f51e11-f31b-4b8a-b522-0ac5fb23e5c6",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/48f51e11-f31b-4b8a-b522-0ac5fb23e5c6/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0072.GEO.a.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 2788
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/af8d179b-0559-455d-9f66-0b280910b93d",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/af8d179b-0559-455d-9f66-0b280910b93d/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0072.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 2789
+        }
+    ]
+}

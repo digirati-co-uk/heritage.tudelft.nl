@@ -1,0 +1,73 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/618fec10-5fc9-435a-bdd0-7dca09da8661/schema.json",
+    "name": "Planchetinstrument door Carl Zeiss",
+    "description": "Planchetinstrument (Profilkippriegel) geproduceerd door Carl Zeiss voor de directe grafische opname van dwarsprofielen. Een instrument waarbij de drie linialen mechanisch gekoppeld kunnen worden aan de kijker. Door deze koppeling veroorzaakt de verticale beweging van de kijker een horizontale draaiing van de liniaal over de meettafel. Met behulp van dit instrument kunnen snel en zonder rekenen direct in het terrein dwarsprofielen getekend worden. De liniaal kan ook ontkoppeld worden, waarbij het instrument voor normale planchetopnamen gebruikt kan worden.",
+    "identifier": "2000.0352.GEO",
+    "temporalCoverage": "1925/1950",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "planchetinstrument"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        },
+        {
+            "@type": "Product",
+            "name": "kunststof"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Carl Zeiss"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Jena, Duitsland",
+        "latitude": 50.92878,
+        "longitude": 11.5899,
+        "sameAs": "https://www.geonames.org/2895044"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 130
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 550
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 150
+    },
+    "citation": "Zeitschrift für Instrumenten. November 1928 blz 559-561",
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/ea2771b5-bf30-4af5-a38e-3e0ea5476064",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/ea2771b5-bf30-4af5-a38e-3e0ea5476064/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0352.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3410
+    }
+}

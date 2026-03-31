@@ -1,0 +1,81 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/b7a86010-dfe2-44cc-88f8-b669269ffd5d/schema.json",
+    "name": "Zwart metalen goniometer met inscriptie \"Carl Zeiss Jena\"",
+    "description": "Zwart metaalen goniometer met ronde fluwelen bord.",
+    "identifier": "2024.0002.TNW",
+    "temporalCoverage": "1920/1966",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "goniometer",
+        "sameAs": "http://vocab.getty.edu/aat/300197556"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        },
+        {
+            "@type": "Product",
+            "name": "fluweel",
+            "sameAs": "http://vocab.getty.edu/aat/300133711"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Zeiss"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 370
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 250
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 260
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/a750b6dc-7dc7-47ce-b418-7617dd472a4f",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/a750b6dc-7dc7-47ce-b418-7617dd472a4f/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "width": 1600,
+            "height": 1200,
+            "position": 11945
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/42f9543a-86e1-467b-9d07-4939b7c30463",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/42f9543a-86e1-467b-9d07-4939b7c30463/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "width": 1600,
+            "height": 1200,
+            "position": 11946
+        }
+    ]
+}

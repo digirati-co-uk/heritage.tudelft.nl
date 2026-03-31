@@ -1,0 +1,73 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/d9ac0fa8-44d0-41f6-839a-c4ad7495c359/schema.json",
+    "name": "Theodoliet door G. de Koningh",
+    "description": "Theodoliet door G. de Koningh, voor het bepalen van horizontale en verticale hoeken. Een repetitietheodoliet met diametraalaflezing van de randen voor het meten van horizontale en verticale richtingen. Het instrument is voorzien van een oriënteringskompas (boussole), twee buisniveau's en een los ruiterniveau (alhidadeniveau). Dit is vermoedelijk één van de eerste theodolieten die door De Koningh is vervaardigd.",
+    "identifier": "2000.0312.GEO",
+    "temporalCoverage": "1897/1907",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "theodoliet",
+        "sameAs": "http://vocab.getty.edu/aat/300199711"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        },
+        {
+            "@type": "Product",
+            "name": "kunststof"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "G. de Koningh"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Arnhem, Nederland",
+        "latitude": 52.00113,
+        "longitude": 5.89641,
+        "sameAs": "https://www.geonames.org/2759660"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 400
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 250
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 220
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/9a0765cf-fa70-47d9-ba41-539f8f409aa2",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/9a0765cf-fa70-47d9-ba41-539f8f409aa2/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0312.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3365
+    }
+}

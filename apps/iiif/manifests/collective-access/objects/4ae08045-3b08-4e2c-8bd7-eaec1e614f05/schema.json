@@ -1,0 +1,76 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/4ae08045-3b08-4e2c-8bd7-eaec1e614f05/schema.json",
+    "name": "Basismeetset door J.Carpentier",
+    "description": "Instrumentarium door J.Carpentier, voor het uitzetten van een basismeting (lengtemeting). Een set voor basismetingen die waarschijnlijk is aangeschaft voor de Eerste Basisdriehoeksmeting, uitgevoerd door Stamkart rond 1860 maar later afgekeurd. Het instrumentarium bestaat uit een houten kist met een meetlint (meetband) van de metaallegering invar, een staalkabel en zes ijkpunten voorzien niveau's, stelschroeven en schietloden. Een tweede houten kist bevat vier vastleggingsbouten, zes hoogtemerken die op de ijkpunten kunnen worden geplaatst, twee klossen dik garen en vijf korte kettingen. Twee stalen piketten en een onbekend voorwerp bevinden zich buiten de kisten. De bijbehorende houten bokken zijn niet aanwezig. (Plank 4 en 5).",
+    "identifier": "2000.0528.GEO",
+    "temporalCoverage": "1875/1900",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "landmeetaccessoire",
+        "sameAs": "http://vocab.getty.edu/aat/300207254"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "hout"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        },
+        {
+            "@type": "Product",
+            "name": "textiel"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "maker",
+        "creator": {
+            "@type": "Person",
+            "name": "J. Carpentier"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 425
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 550
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 240
+    },
+    "isRelatedTo": {
+        "@type": "CreativeWork",
+        "name": "Onderdelen van invar meetband in een beklede houten kist",
+        "sameAs": "https://heritage.tudelft.nl/iiif/manifests/7e2a5a21-30a1-41a5-9567-40a124cfcf41/schema.json",
+        "identifier": "2000.0432.GEO"
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/8a9cd4ac-2446-4815-b81d-8b5b67aadd0c",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/8a9cd4ac-2446-4815-b81d-8b5b67aadd0c/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0528.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3088
+    }
+}

@@ -1,0 +1,87 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/2d8700a6-8b14-4eaa-ba13-2c23eb80d184/schema.json",
+    "name": "Afstandmeter door AGA",
+    "description": "Een elektronisch-optische afstandmeter als onderdeel van de AGA Geodimeter. De AGA Geodimeter is een geodetisch instrument dat werd gebruikt voor afstandmeting tot 50 kilometer, gebaseerd op de principes zoals aangegeven door de Zweedse Dr. Erik Bergstrand in 'Arkiv för Fysik' in 1949, waarbij gebruik wordt gemaakt van de snelheid van het licht. Bij het instrument horen een set spiegels en een kist met hulpstukken (zie ook 2000.0818.GEO, 2000.0334.GEO en 2005.0013.GEO). Model 1 werd geproduceerd in 1953 en model 2 werd in 1955 geïntroduceerd. Meet afstanden van 0 tot 50 kilometer. Als lichtbron werd gebruik gemaakt van gemakkelijk te vervangen lampen. Bij de meter horen reserveonderdelen, een omvormer en twee gloeilampjes (deze liggen bij 2000.0334.GEO).",
+    "identifier": "2000.0534.GEO",
+    "temporalCoverage": "1947",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "geodimeter",
+        "sameAs": "http://vocab.getty.edu/aat/300197549"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "kunststof"
+        },
+        {
+            "@type": "Product",
+            "name": "hout"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "AGA"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 1540
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 1100
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 1200
+    },
+    "citation": "Z.A. Description of Aga geodimeter type NASM-1 Bergstrand system. The International Hydrographical Review XXX no1 mei 1953 p. 171 - 173.",
+    "isRelatedTo": [
+        {
+            "@type": "CreativeWork",
+            "name": "Geodimeter-reflector door AGA",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/2fd43a61-fbed-4d36-ab2a-0d002ed5e5d3/schema.json",
+            "identifier": "2000.0334.GEO"
+        },
+        {
+            "@type": "CreativeWork",
+            "name": "Prisma door AGA",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/761f9e3a-9268-449c-936a-6619aa5044d2/schema.json",
+            "identifier": "2000.0818.GEO"
+        },
+        {
+            "@type": "CreativeWork",
+            "name": "Statief met uitschuifbare poten en klemschroef door AGA",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/fffbdfc5-4954-43a4-9b5b-004a221c68c8/schema.json",
+            "identifier": "2005.0013.GEO"
+        }
+    ],
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/d9df784d-1dcb-4edf-8238-b1c10b968f56",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/d9df784d-1dcb-4edf-8238-b1c10b968f56/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0534.GEO.JPG",
+        "width": 1600,
+        "height": 1200,
+        "position": 3149
+    }
+}

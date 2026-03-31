@@ -1,0 +1,74 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/7a8d5e6e-130e-4359-b674-a91b181890c6/schema.json",
+    "name": "Waterpasinstrument door G. de Koningh",
+    "description": "Waterpasinstrument door G. de Koningh, voor doorgaande waterpassing met een baak. Gebruikt voor hoogteverschilmeting. Het instrument is voorzien van een hellingschroef en een prisma waarmee het buisniveau afgelezen kan worden. Dit type is veelvuldig door Rijkswaterstaat gebruikt bij technische metingen. De stelschroeven is voorzien van een klemplaat, voor eenvoudige bevestiging op een statief. Kan op statief met inventarisnummer 2000.0526.GEO.",
+    "identifier": "2000.0305.GEO",
+    "temporalCoverage": "1941",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "waterpasinstrument"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "G. de Koningh"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Arnhem, Nederland",
+        "latitude": 52.00113,
+        "longitude": 5.89641,
+        "sameAs": "https://www.geonames.org/2759660"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 170
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 275
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 125
+    },
+    "isRelatedTo": {
+        "@type": "CreativeWork",
+        "name": "Waterpasstatief door G. de Koningh",
+        "sameAs": "https://heritage.tudelft.nl/iiif/manifests/3eabc535-e2a9-4345-99ed-1d445c3de8ba/schema.json",
+        "identifier": "2000.0526.GEO"
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/d91e60ec-c1a6-4d30-9140-88930270f272",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/d91e60ec-c1a6-4d30-9140-88930270f272/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0305.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3363
+    }
+}

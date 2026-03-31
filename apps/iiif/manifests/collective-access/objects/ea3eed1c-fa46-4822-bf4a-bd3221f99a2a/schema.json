@@ -1,0 +1,63 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/ea3eed1c-fa46-4822-bf4a-bd3221f99a2a/schema.json",
+    "name": "Hellingmeter volgens C.A. Schmalcalder",
+    "description": "Hellingmeter volgens C.A. Schmalcalder, geodetisch meetinstrument voor het bepalen van hellinghoeken. Naar een ontwerp van de Duitse instrumentenmaker Charles A. Schmalcalder. Door middel van een prisma is de hellingshoek af te lezen. Elevatiehoeken tot 60 graden en depressiehoeken tot 45 graden.",
+    "identifier": "2000.0117.GEO",
+    "temporalCoverage": "1825/1875",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "hellingmeter",
+        "sameAs": "http://vocab.getty.edu/aat/300195974"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "ontwerper",
+        "creator": {
+            "@type": "Person",
+            "name": "Charles Augustus Schmalcalder"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 90
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 20
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 70
+    },
+    "citation": "http://www.uzes.net/compass_2.htm Schneitler. Instrumente und werkzeuge (1858) blz 263",
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/c91c38e6-6f53-4c1c-a075-12373ae2d0b4",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/c91c38e6-6f53-4c1c-a075-12373ae2d0b4/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0117.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2836
+    }
+}

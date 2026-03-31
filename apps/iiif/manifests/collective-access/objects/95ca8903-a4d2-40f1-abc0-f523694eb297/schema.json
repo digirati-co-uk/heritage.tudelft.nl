@@ -1,0 +1,54 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/95ca8903-a4d2-40f1-abc0-f523694eb297/schema.json",
+    "name": "Meetketting van tien meter",
+    "description": "Een tien meter lange meetketting, bestaande uit vijftig schakels van 20 centimeter. Om de vijf schakels bevindt zich een messing ring. Meetkettingen werden gebruikt als hulpmiddel bij afstandmeting.",
+    "identifier": "2000.0371.GEO",
+    "temporalCoverage": "1850/1875",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "meetketting",
+        "sameAs": "http://vocab.getty.edu/aat/300225086"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "messing"
+        },
+        {
+            "@type": "Product",
+            "name": "ijzer",
+            "sameAs": "http://vocab.getty.edu/aat/300011002"
+        }
+    ],
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 60
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 330
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 140
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/d401fd9f-da6d-4e72-859b-40d23ecd69c6",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/d401fd9f-da6d-4e72-859b-40d23ecd69c6/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0371.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3425
+    }
+}

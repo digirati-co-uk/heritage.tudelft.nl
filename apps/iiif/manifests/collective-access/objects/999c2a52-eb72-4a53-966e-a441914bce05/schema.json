@@ -1,0 +1,76 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/999c2a52-eb72-4a53-966e-a441914bce05/schema.json",
+    "name": "Contact-tachymeter door J.L. Sanguet",
+    "description": "Een contact-tachymeter (autoréducteur of tachéomètre) door J.L. Sanguet, voor richting- en afstandmeting. Het instrument reduceert mechanisch (verticale stang) de schuine afstand naar een afstand in een horizontaal kaartvlak en het hoogteverschil. Het instrument is voorzien van een afneembare kijker (met afstandsdraden in de kijker).",
+    "identifier": "2000.0235.GEO",
+    "temporalCoverage": "1865/1900",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "optische tachymeter"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "ontwerper",
+        "creator": {
+            "@type": "Person",
+            "name": "J.L. Sanguet"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 330
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 310
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 140
+    },
+    "citation": "http://perso.wanadoo.fr/geoanse/geo/modernes.htm Les Tachéomètres Auto-Réducteurs - Principes description et emploi du tachéomètre à levier système Sanguet du tachéomètre de précision Morin-Despiau du tachéomètre auto-rapporteur Vittoz et du tachéomètre a",
+    "isRelatedTo": [
+        {
+            "@type": "CreativeWork",
+            "name": "Tachymeter-transporteur door J.L. Sanguet",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/61b699c5-557c-47cd-87a9-38f8ee39988a/schema.json",
+            "identifier": "2000.0174.GEO"
+        },
+        {
+            "@type": "CreativeWork",
+            "name": "Contact-tachymeter door Kern & Co.",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/8e164b98-f288-446f-9eb0-93ff64e902f3/schema.json",
+            "identifier": "2000.0250.GEO"
+        }
+    ],
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/535871b0-6005-4a10-a636-6d1bb74599a4",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/535871b0-6005-4a10-a636-6d1bb74599a4/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0235.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2940
+    }
+}
