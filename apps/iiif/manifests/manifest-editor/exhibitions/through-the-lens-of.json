@@ -3,8 +3,8 @@
   "id": "http://localhost:7111/manifests/through-the-lens-of/manifest.json",
   "type": "Manifest",
   "label": {
-    "nl": ["Door de lens van professor Van Heel: educator in hart en nieren"],
-    "en": ["Through the lens of Professor Van Heel: an educator at heart"]
+    "nl": ["Door de lens van professor Van Heel"],
+    "en": ["Through the lens of Professor Van Heel"]
   },
   "items": [
     {
@@ -14,8 +14,14 @@
       "width": 1024,
       "behavior": ["w-8", "h-8"],
       "label": {
-        "nl": ["Fisheye-foto van Van Heels klaslokaal, Collectie Van Heel"],
-        "en": ["Fisheye photo of Van Heel’s classroom, Van Heel Collection"]
+        "nl": ["Fisheye-foto van Van Heels klaslokaal"],
+        "en": ["Fisheye photo of Van Heel’s classroom"]
+      },
+      "requiredStatement": {
+        "value": {
+          "nl": ["Collectie Van Heel"],
+          "en": ["Van Heel Collection"]
+        }
       },
       "placeholderCanvas": {
         "id": "https://iiif-parser/empty-canvas",
@@ -78,7 +84,8 @@
       "width": 1000,
       "behavior": ["info", "w-4", "h-8"],
       "label": {
-        "none": [""]
+        "nl": ["Educator in hart en nieren"],
+        "en": ["Educator at heart"]
       },
       "placeholderCanvas": {
         "id": "https://iiif-parser/empty-canvas",
@@ -106,14 +113,14 @@
                   "type": "TextualBody",
                   "format": "text/html",
                   "language": "nl",
-                  "value": "<h2 id=\"introductie\">Introductie</h2>\n<p>Wat maakt een gevierd docent tot een gevierd docent? Is het de drang naar onderwijsvernieuwing? De liefde voor het vakgebied? De blijvende indruk op studenten? Voor Prof. dr. Abraham van Heel was het <em>all of the above</em>.</p>\n<p>Als grondlegger van het vakgebied optica in Nederland en onderwijzer aan wat toen nog de Technische Hoogeschool Delft heette, heeft hij bijgedragen aan de zelfontplooiing van vele jonge wetenschappers. Hun leven lang zouden zij met een glimlach terugdenken aan zijn met experimenten gevulde colleges. Want een spektakel maken van een les: dat kon Van Heel als geen ander.</p>\n<p>Een doorkijkje in de lessen van professor Van Heel, decennia na dato.</p>"
+                  "value": "<p>Wat maakt een gevierd docent tot een gevierd docent? Is het de drang naar onderwijsvernieuwing? De liefde voor het vakgebied? De blijvende indruk op studenten? Voor Prof. dr. Abraham van Heel was het <em>all of the above</em>.</p>\n<p>Als grondlegger van het vakgebied optica in Nederland en onderwijzer aan wat toen nog de Technische Hoogeschool Delft heette, heeft hij bijgedragen aan de zelfontplooiing van vele jonge wetenschappers. Hun leven lang zouden zij met een glimlach terugdenken aan zijn met experimenten gevulde colleges. Want een spektakel maken van een les: dat kon Van Heel als geen ander.</p>\n<p>Een doorkijkje in de lessen van professor Van Heel, decennia na dato.</p>"
                 },
                 {
                   "id": "https://example.org/wynk8rg0zir-ml6mpjpf/canvas/xr3zp3vrxl-mmkcsgfp/annotation/k9ox5ocn9q-mmkcsgfp/html/en/lce02x3zwv-mmkcsgfq",
                   "type": "TextualBody",
                   "format": "text/html",
                   "language": "en",
-                  "value": "<h2 id=\"introduction\">Introduction</h2>\n<p>What makes a celebrated teacher celebrated? Is it the drive for educational innovation? The love for the field? The lasting impression they leave on their students? For Prof. Dr. Abraham van Heel, it was all of the above.</p>\n<p>As the founder of the field of optics in the Netherlands and a teacher at Delft University of Technology, he contributed to the personal development of many young scientists. They would fondly look back on his experiment-filled lectures for the rest of their lives. Because making a spectacle out of a lecture: that was something Van Heel could do like no other.</p>\n<p>A glimpse into Professor Van Heel’s lessons, decades later.</p>"
+                  "value": "<p>What makes a celebrated teacher celebrated? Is it the drive for educational innovation? The love for the field? The lasting impression they leave on their students? For Prof. Dr. Abraham van Heel, it was all of the above.</p>\n<p>As the founder of the field of optics in the Netherlands and a teacher at Delft University of Technology, he contributed to the personal development of many young scientists. They would fondly look back on his experiment-filled lectures for the rest of their lives. Because making a spectacle out of a lecture: that was something Van Heel could do like no other.</p>\n<p>A glimpse into Professor Van Heel’s lessons, decades later.</p>"
                 }
               ]
             }
@@ -1715,7 +1722,8 @@
       "width": 1000,
       "behavior": ["info", "left", "w-12", "h-1"],
       "label": {
-        "none": [""]
+        "nl": ["Citaat"],
+        "en": ["Quote"]
       },
       "placeholderCanvas": {
         "id": "https://iiif-parser/empty-canvas",
@@ -1742,7 +1750,7 @@
                 "type": "TextualBody",
                 "format": "text/html",
                 "language": "en",
-                "value": "<h2>Het zou gewenscht zijn, dat de schrijvers op deze gebieden zich nederbogen tot het peil van de op toepassing belusten en hun uitkomsten desnoods in de vorm van recepten eenigszins toegankelijk maakten. - Van Heel, 1947</h2>"
+                "value": "<i>Het zou gewenscht zijn, dat de schrijvers op deze gebieden zich nederbogen tot het peil van de op toepassing belusten en hun uitkomsten desnoods in de vorm van recepten eenigszins toegankelijk maakten.</i> - Van Heel, 1947"
               }
             }
           ]
@@ -1916,139 +1924,6 @@
                   "value": "<h2 id=\"top\">Credits</h2><p>This online exhibition was curated by the department of Academic Heritage, History, and Art at Delft University of Technology.</p>\n<p>The exhibition could be created thanks to the work of the Tailor-Made Approach to Faculty Collections programme on the Van Heel Collection. It is also partly based on the exhibition Optics for All (2019-2020) at the Delft Science Centre, curated by the department of Academic Heritage, History, and Art in collaboration with the Imaging Physics department of the Faculty of Applied Sciences.</p>\n<h2 id=\"bibliography\">Bibliography</h2>\n<p>A.C.S. van Heel, ‘Verslag&nbsp;van&nbsp;een&nbsp;dag,&nbsp;rede&nbsp;uitgesproken&nbsp;ter&nbsp;gelegenheid&nbsp;van de&nbsp;honderdtweeëntwintigste&nbsp;dies natalis der&nbsp;Technische&nbsp;Hogeschool&nbsp;te&nbsp;Delft’, ongepubliceerd, 1964.</p>\n<p>C.A.J. Simons, ‘A.C.S. van Heel, Teacher and Inspirator of Technical Optics’, in <em>Conference proceedings of SPIE</em>, vol. 3190, 1997, pp. 180-187.</p>\n<p>C.A.J. Simons, ‘A.C.S. van Heel, vader van de Technische Optica in Nederland’, in <em>Delft Integraal</em>, vol. 15, no. 4, 1999, pp. 25-29.</p>\n<p>C.A.J. Simons, ‘Abraham Cornelis Sebastien van Heel (1899 – 1966). Vader van de Technische Optica in Nederland’, ongepubliceerd.</p>\n<p>C.A.J. Simons &amp; W. van Vonno, ‘Abraham Cornelis Sebastiaan van Heel’, in <em>Applied Optics</em>, vol. 6, no. 5, 1967, pp. 799-802.</p>"
                 }
               ]
-            }
-          ]
-        }
-      ]
-    }
-  ],
-  "structures": [
-    {
-      "id": "https://example.org/wynk8rg0zir-ml6mpjpf/range/brglsj2ssfj-mlz1houe",
-      "type": "Range",
-      "label": {
-        "nl": ["Overzicht"],
-        "en": ["Table of contents"]
-      },
-      "items": [
-        {
-          "id": "https://example.org/wynk8rg0zir-ml6mpjpf/range/xtlard5o5po-mlz1houc",
-          "type": "Range",
-          "label": {
-            "en": ["Introduction"],
-            "nl": ["Introductie"]
-          },
-          "items": [
-            {
-              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/canvas/f4v31q7lgbu-ml6mzeg7",
-              "type": "Canvas"
-            },
-            {
-              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/canvas/5gt2h39x5wh-ml6n2tli",
-              "type": "Canvas"
-            },
-            {
-              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/canvas/xr3zp3vrxl-mmkcsgfp",
-              "type": "Canvas"
-            },
-            {
-              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/9bfobfho17j-ml6nawq4",
-              "type": "Canvas"
-            }
-          ]
-        },
-        {
-          "id": "https://example.org/wynk8rg0zir-ml6mpjpf/range/brglsj2ssfj-mlz1houe/range/v53ys1jehuh-mlz1igix",
-          "type": "Range",
-          "label": {
-            "en": ["Career in Delft"],
-            "nl": [""]
-          },
-          "items": [
-            {
-              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/br43az3c1n6-ml6oy935",
-              "type": "Canvas"
-            }
-          ]
-        },
-        {
-          "id": "https://example.org/wynk8rg0zir-ml6mpjpf/range/brglsj2ssfj-mlz1houe/range/rywo25vds5h-mlz1k1x3",
-          "type": "Range",
-          "label": {
-            "en": ["Experiment(ertainment)"]
-          },
-          "items": [
-            {
-              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/canvas/1msltux5rh7-mmkcx7z6",
-              "type": "Canvas"
-            },
-            {
-              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/8lo0623vbw4-ml7w0ipb",
-              "type": "Canvas"
-            },
-            {
-              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/canvas/0w1o54mccz9m-ml7wnvji",
-              "type": "Canvas"
-            }
-          ]
-        },
-        {
-          "id": "https://example.org/wynk8rg0zir-ml6mpjpf/range/brglsj2ssfj-mlz1houe/range/8fybfq3zbiu-mlz1l2js",
-          "type": "Range",
-          "label": {
-            "en": ["From Learning to the Labour Market "]
-          },
-          "items": [
-            {
-              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/0inicn0hqna-ml7tsdjw",
-              "type": "Canvas"
-            }
-          ]
-        },
-        {
-          "id": "https://example.org/wynk8rg0zir-ml6mpjpf/range/brglsj2ssfj-mlz1houe/range/cy50ee4nwf-mlz1l5j3",
-          "type": "Range",
-          "label": {
-            "en": ["The Accessibility of Optics"]
-          },
-          "items": [
-            {
-              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/Canvas/cyboh2a4wo8-ml7ua2x7",
-              "type": "Canvas"
-            },
-            {
-              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/canvas/rm47ojv8sf-ml7uuppd",
-              "type": "Canvas"
-            }
-          ]
-        },
-        {
-          "id": "https://example.org/wynk8rg0zir-ml6mpjpf/range/brglsj2ssfj-mlz1houe/range/ligs1iq6ofg-mlz1lgj4",
-          "type": "Range",
-          "label": {
-            "en": ["Always a Teacher"]
-          },
-          "items": [
-            {
-              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/canvas/7nigq6k7o-ml7x2242",
-              "type": "Canvas"
-            }
-          ]
-        },
-        {
-          "id": "https://example.org/wynk8rg0zir-ml6mpjpf/range/brglsj2ssfj-mlz1houe/range/0lbfv65bgjx-mlz1lkmo",
-          "type": "Range",
-          "label": {
-            "en": ["Credits"]
-          },
-          "items": [
-            {
-              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/canvas/zt8jnno5ac-ml7v8jgw",
-              "type": "Canvas"
-            },
-            {
-              "id": "https://example.org/wynk8rg0zir-ml6mpjpf/canvas/4yc1jrbyf0f-mmkcokcu",
-              "type": "Canvas"
             }
           ]
         }
