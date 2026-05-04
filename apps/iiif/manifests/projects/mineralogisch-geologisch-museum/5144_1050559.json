@@ -1,0 +1,212 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "https://dlc.services/iiif-resource/v3/7/string1string2string3/mgm/5144_1050559",
+  "type": "Manifest",
+  "label": {
+    "nl": [
+      "Kyaniet"
+    ]
+  },
+  "metadata": [
+    {
+      "label": {
+        "nl": [
+          "Naam"
+        ]
+      },
+      "value": {
+        "nl": [
+          "Kyaniet"
+        ]
+      }
+    },
+    {
+      "label": {
+        "nl": [
+          "Inventarisnummer(s)"
+        ]
+      },
+      "value": {
+        "nl": [
+          "5144",
+          "RGM.1050559"
+        ]
+      }
+    },
+    {
+      "label": {
+        "nl": [
+          "Locatie van oorsprong"
+        ]
+      },
+      "value": {
+        "nl": [
+          "Maine, Shetford, Verenigde Staten"
+        ]
+      }
+    },
+    {
+      "label": {
+        "nl": [
+          "Vitrine in MGM"
+        ]
+      },
+      "value": {
+        "nl": [
+          "9B"
+        ]
+      }
+    },
+    {
+      "label": {
+        "nl": [
+          "Nickel-Strunz classificaties"
+        ]
+      },
+      "value": {
+        "nl": [
+          "9.AF.15"
+        ]
+      }
+    },
+    {
+      "label": {
+        "nl": [
+          "Materialen"
+        ]
+      },
+      "value": {
+        "nl": [
+          "kyaniet"
+        ]
+      }
+    }
+  ],
+  "thumbnail": [
+    {
+      "id": "https://dlc.services/thumbs/7/19/ae591694-2117-4bf7-9f01-f0f9a7c214eb/full/1024,/0/default.jpg",
+      "type": "Image",
+      "height": 685,
+      "width": 1024,
+      "service": [
+        {
+          "id": "https://dlc.services/thumbs/v3/7/19/ae591694-2117-4bf7-9f01-f0f9a7c214eb",
+          "type": "ImageService3",
+          "profile": "level0",
+          "sizes": [
+            {
+              "width": 100,
+              "height": 67
+            },
+            {
+              "width": 200,
+              "height": 134
+            },
+            {
+              "width": 400,
+              "height": 267
+            },
+            {
+              "width": 1024,
+              "height": 685
+            }
+          ],
+          "@context": "http://iiif.io/api/image/3/context.json"
+        }
+      ],
+      "format": "image/jpeg"
+    }
+  ],
+  "items": [
+    {
+      "id": "https://dlc.services/iiif-img/7/19/ae591694-2117-4bf7-9f01-f0f9a7c214eb/canvas/c/1",
+      "type": "Canvas",
+      "label": {
+        "nl": [
+          "Canvas 1"
+        ]
+      },
+      "height": 685,
+      "width": 1024,
+      "requiredStatement": {
+        "label": {
+          "nl": [
+            "Attribution"
+          ]
+        },
+        "value": {
+          "nl": [
+            "<span>TU Delft Science Centre. <a href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\">CC BY-NC-ND 4.0</a> <a href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" title=\"CC BY-NC-ND 4.0\"><img src=\"https://licensebuttons.net/l/by-nc-nd/4.0/88x31.png\"/></a></span>"
+          ]
+        }
+      },
+      "rights": "https://creativecommons.org/licenses/by-nc-nd/4.0/",
+      "thumbnail": [
+        {
+          "id": "https://dlc.services/thumbs/7/19/ae591694-2117-4bf7-9f01-f0f9a7c214eb/full/1024,/0/default.jpg",
+          "type": "Image",
+          "height": 685,
+          "width": 1024,
+          "service": [
+            {
+              "id": "https://dlc.services/thumbs/v3/7/19/ae591694-2117-4bf7-9f01-f0f9a7c214eb",
+              "type": "ImageService3",
+              "profile": "level0",
+              "sizes": [
+                {
+                  "width": 100,
+                  "height": 67
+                },
+                {
+                  "width": 200,
+                  "height": 134
+                },
+                {
+                  "width": 400,
+                  "height": 267
+                },
+                {
+                  "width": 1024,
+                  "height": 685
+                }
+              ],
+              "@context": "http://iiif.io/api/image/3/context.json"
+            }
+          ],
+          "format": "image/jpeg"
+        }
+      ],
+      "items": [
+        {
+          "id": "https://dlc.services/iiif-img/7/19/ae591694-2117-4bf7-9f01-f0f9a7c214eb/canvas/c/1/page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://dlc.services/iiif-img/7/19/ae591694-2117-4bf7-9f01-f0f9a7c214eb/canvas/c/1/page/image",
+              "type": "Annotation",
+              "motivation": "painting",
+              "body": {
+                "id": "https://dlc.services/iiif-img/7/19/ae591694-2117-4bf7-9f01-f0f9a7c214eb/full/full/0/default.jpg",
+                "type": "Image",
+                "height": 685,
+                "width": 1024,
+                "service": [
+                  {
+                    "id": "https://dlc.services/iiif-img/v3/7/19/ae591694-2117-4bf7-9f01-f0f9a7c214eb",
+                    "type": "ImageService3",
+                    "profile": "level2",
+                    "width": 7424,
+                    "height": 4963,
+                    "@context": "http://iiif.io/api/image/3/context.json"
+                  }
+                ],
+                "format": "image/jpeg"
+              },
+              "target": "https://dlc.services/iiif-img/7/19/ae591694-2117-4bf7-9f01-f0f9a7c214eb/canvas/c/1"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
