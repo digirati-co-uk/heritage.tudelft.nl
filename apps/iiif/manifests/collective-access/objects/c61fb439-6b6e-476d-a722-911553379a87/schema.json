@@ -1,0 +1,74 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/c61fb439-6b6e-476d-a722-911553379a87/schema.json",
+    "name": "Glazen spiegel lens verzameling in houten dozen. met plaat met tekst \"r= 240\"",
+    "description": "Lens van spiegelglas in houten kist met schuifdeksel. Wit kunststof plaat met zwart tekst \"r=240\"",
+    "identifier": "2024.0007.TNW",
+    "temporalCoverage": "1930/1970",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "lens",
+        "sameAs": "http://vocab.getty.edu/aat/300266807"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        },
+        {
+            "@type": "Product",
+            "name": "kunststof",
+            "sameAs": "https://data.cultureelerfgoed.nl/term/id/cht/923ba596-bc30-44f5-a26c-cac680e3808d"
+        }
+    ],
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "CMT",
+        "value": 4
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "CMT",
+        "value": 18
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "CMT",
+        "value": 18
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/532bfc52-7f35-4e92-ad53-87bd8d1d18dd",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/532bfc52-7f35-4e92-ad53-87bd8d1d18dd/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "width": 1600,
+            "height": 1200,
+            "position": 11967
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/a59d1502-a117-47a1-8116-153dfbd3fb6a",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/a59d1502-a117-47a1-8116-153dfbd3fb6a/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "width": 1600,
+            "height": 1200,
+            "position": 11968
+        }
+    ]
+}

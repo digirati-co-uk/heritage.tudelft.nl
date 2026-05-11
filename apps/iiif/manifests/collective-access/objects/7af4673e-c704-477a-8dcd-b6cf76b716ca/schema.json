@@ -1,0 +1,100 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/7af4673e-c704-477a-8dcd-b6cf76b716ca/schema.json",
+    "name": "Spectrograaf van glas gemonteerd op een houten plateau bedekt met zwart vilt",
+    "description": "Rechthoekige spectrograaf vastgezet aan houten blokken bedekt met zwart vilt. Alles gemonteerd op een platte houten plateau, voor 3/4 bedekt met zwart vilt. Gebruik onbekend, waarschijnlijk zelfgemaakt (van Van Heel?)",
+    "identifier": "2024.0006.TNW",
+    "temporalCoverage": "1920/1966",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "spectrograaf",
+        "sameAs": "http://www.wikidata.org/entity/Q911551"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        },
+        {
+            "@type": "Product",
+            "name": "vilt",
+            "sameAs": "http://vocab.getty.edu/aat/300014107"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        },
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "maker",
+        "creator": {
+            "@type": "Person",
+            "name": "Abraham Cornelis Sebastiaan Van Heel"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "CMT",
+        "value": 10
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "CMT",
+        "value": 305
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "CMT",
+        "value": 35
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/3dff1be8-9100-4e39-a908-1c70b01f9645",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/3dff1be8-9100-4e39-a908-1c70b01f9645/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "width": 1600,
+            "height": 1200,
+            "position": 11964
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/a87d1b13-e7d2-4a51-8dec-1ec025c2c719",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/a87d1b13-e7d2-4a51-8dec-1ec025c2c719/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "width": 1600,
+            "height": 1200,
+            "position": 11965
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/54129fde-4641-4cfa-8e4d-3906390a2559",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/54129fde-4641-4cfa-8e4d-3906390a2559/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "width": 1600,
+            "height": 1200,
+            "position": 11966
+        }
+    ]
+}

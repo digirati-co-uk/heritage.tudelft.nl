@@ -1,0 +1,76 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/5234fe14-f7e7-44ab-8261-88ca127d3f44/schema.json",
+    "name": "Apertometer van Carl Zeiss, in originele doos",
+    "description": "Apertometer, ontworpen om de lensopening van microscoop-objectieven op te meten. Met lens in aparte metaalen container met inscriptie \"Carl Zeiss Jena Apertometer System 692\". In originele houten doos gevoerd met blauw fluweel. Tekst op deksel van doos, gestempeld in goud: \"Apertometer nach Abbe Carl Zeiss Jena\".",
+    "identifier": "2024.0095.TNW",
+    "temporalCoverage": "1880/1919",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "apertometer",
+        "sameAs": "http://vocab.getty.edu/aat/300195785"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        },
+        {
+            "@type": "Product",
+            "name": "fluweel",
+            "sameAs": "http://vocab.getty.edu/aat/300133711"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Zeiss"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue"
+    },
+    "width": {
+        "@type": "QuantitativeValue"
+    },
+    "depth": {
+        "@type": "QuantitativeValue"
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/777f3838-986b-45e6-bda9-813290f4ecd3",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/777f3838-986b-45e6-bda9-813290f4ecd3/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "width": 1600,
+            "height": 1200,
+            "position": 12082
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/e314bcbf-d3bf-488a-89d2-52699e827aec",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/e314bcbf-d3bf-488a-89d2-52699e827aec/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "width": 1600,
+            "height": 1200,
+            "position": 12083
+        }
+    ]
+}
