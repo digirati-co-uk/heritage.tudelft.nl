@@ -14,8 +14,12 @@ export function ObjectMetadata() {
         allowHtml={true}
         separator="<br>"
         customValueRender={(item, fallback) => {
-          const label = getValue(item.label).toLowerCase();
-          if (facetConfig.metadata[label]?.interactive) {
+          const metadataLabel = getValue(item.label, {language: locale})
+          const facet = Object.entries(facetConfig.metadata).find(facet => {
+            const facetLabel = getValue(facet[1].label, {language: locale})
+            return facetLabel === metadataLabel
+          })
+          if (facet && facet[1].interactive) {
             // This is a bit.. meh with the try/catch
             try {
               const values =
@@ -28,7 +32,7 @@ export function ObjectMetadata() {
                     return (
                       <li key={value} className="underline">
                         <Link
-                          href={`/search?${TYPESENSE_COLLECTION_NAME}[refinementList][topic_${label}][0]=${value}`}
+                          href={`/search?${TYPESENSE_COLLECTION_NAME}[refinementList][topic_${facet[0]}][0]=${value}`}
                         >
                           {value}
                         </Link>
