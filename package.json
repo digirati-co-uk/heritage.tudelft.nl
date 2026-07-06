@@ -2,8 +2,8 @@
   "name": "heritage.tudelft.nl",
   "private": true,
   "scripts": {
-    "build": "turbo build",
-    "dev": "turbo dev",
+    "build": "turbo build --filter=\"./*/*/\"",
+    "dev": "turbo dev --filter=\"./*/*/\"",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
@@ -52,7 +52,10 @@
       "@page-blocks/web-components": "https://pkg.pr.new/@page-blocks/web-components@7f5aaad"
     }
   },
-  "workspaces": ["apps/*", "packages/*"],
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "dependencies": {
     "bun-types": "*",
     "@atlas-viewer/atlas": "^3.0.0",
