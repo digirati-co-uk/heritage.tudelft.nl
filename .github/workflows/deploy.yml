@@ -20,11 +20,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Setup bun.sh environment
-        uses: oven-sh/setup-bun@v1
-        with:
-          bun-version: latest
-
       - uses: pnpm/action-setup@v3
         with:
           version: 9
@@ -98,7 +93,7 @@ jobs:
       - name: Build IIIF Search
         working-directory: apps/static-site
         run: |
-          bun search-cli.ts index-manifests ${{ github.event.inputs.rebuild-index && '--recreate' || '' }}
+          node search-cli.ts index-manifests ${{ github.event.inputs.rebuild-index && '--recreate' || '' }}
         env:
           TYPESENSE_API_KEY: ${{ secrets.TYPESENSE_ADMIN_API_KEY }}
           TYPESENSE_HOST: 63flhve71t2un5xgp.a1.typesense.net
