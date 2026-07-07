@@ -1,0 +1,100 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/fe10aa4e-f992-404d-93a5-a5fe46e510b4/schema.json",
+    "name": "Zelfgemaakte verrekijker gemaakt van kartonnen kokers met houten steun, waarschijnlijk gemaakt door A.C.S. van Heel",
+    "description": "Zelfgemaakte verrekijker gemaakt van kartonnen kokers, waarschijnlijk door A.C.S. van Heel. Houten frame. Lenzen van een ander instrument, op hun plaats gehouden met piepschuim en lijm.",
+    "identifier": "2024.0013.TNW",
+    "temporalCoverage": "1920/1966",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "binoculaire",
+        "sameAs": "http://vocab.getty.edu/aat/300024587"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "karton",
+            "sameAs": "http://vocab.getty.edu/aat/300014224"
+        },
+        {
+            "@type": "Product",
+            "name": "piepschuim",
+            "sameAs": "http://vocab.getty.edu/aat/300014492"
+        },
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "maker",
+        "creator": {
+            "@type": "Person",
+            "name": "Abraham Cornelis Sebastiaan Van Heel"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "CMT",
+        "value": 65
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "CMT",
+        "value": 115
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "CMT",
+        "value": 14
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/aeff6972-47db-4d9f-8c01-9160de91de43",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/aeff6972-47db-4d9f-8c01-9160de91de43/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "width": 1600,
+            "height": 1200,
+            "position": 11988
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/7580568f-2415-4e5e-945f-b9777ab66117",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/7580568f-2415-4e5e-945f-b9777ab66117/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "width": 1600,
+            "height": 1200,
+            "position": 11989
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/5c05ba52-dc54-440c-8acc-839207afbd94",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/5c05ba52-dc54-440c-8acc-839207afbd94/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "width": 1600,
+            "height": 1200,
+            "position": 11990
+        }
+    ]
+}

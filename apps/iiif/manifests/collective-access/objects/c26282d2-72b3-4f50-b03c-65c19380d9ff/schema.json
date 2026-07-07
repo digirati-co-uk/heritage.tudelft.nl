@@ -1,0 +1,69 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/c26282d2-72b3-4f50-b03c-65c19380d9ff/schema.json",
+    "name": "40,5 cm coma lens van zwart en zilver metaal",
+    "description": "Zwart metalen lens gemonteerd op een zilveren metalen staaf. Zwarte boord op zijkant met tekst \"f- 40,5 cm coma-lens waarn. Bk 12, 7-9-49\". Gemaakt 7/9/1949",
+    "identifier": "2024.0036.TNW",
+    "temporalCoverage": "1949",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "coma lens",
+        "sameAs": "http://vocab.getty.edu/aat/300266807"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        }
+    ],
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "CMT",
+        "value": 18
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "CMT",
+        "value": 6
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "CMT",
+        "value": 6
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/166e1626-6475-4df3-a875-f134a783fce7",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/166e1626-6475-4df3-a875-f134a783fce7/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "width": 1600,
+            "height": 1200,
+            "position": 12024
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/506e1a32-77ad-4d33-838e-ebb8e22dd127",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/506e1a32-77ad-4d33-838e-ebb8e22dd127/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "width": 1600,
+            "height": 1200,
+            "position": 12025
+        }
+    ]
+}
