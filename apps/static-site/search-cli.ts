@@ -76,6 +76,19 @@ async function readJsonFile(path: string): Promise<any> {
   }
 }
 
+async function readPublications(): Promise<any[]> {
+  const publicationsPath = join(
+    cwd(),
+    ".contentlayer/generated/Publication/_index.json",
+  );
+
+  if (!existsSync(publicationsPath)) {
+    return [];
+  }
+
+  return readJsonFile(publicationsPath);
+}
+
 async function indexManifests(options: {
   recreate?: boolean;
   allowErrors?: boolean;
@@ -184,9 +197,7 @@ async function indexManifests(options: {
 
   // Handle publications
   try {
-    const { allPublications } = await import(
-      "./.contentlayer/generated/index.mjs"
-    );
+    const allPublications = await readPublications();
 
     if (allPublications?.length) {
       const publicationDocs = allPublications.map((publication: any) => ({
