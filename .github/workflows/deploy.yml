@@ -47,9 +47,6 @@ jobs:
         working-directory: packages/headless-static-site
         run: pnpm run build
 
-      - name: Link HSS CLI
-        run: pnpm install --frozen-lockfile
-
       - uses: actions/cache@v4
         with:
           path: |

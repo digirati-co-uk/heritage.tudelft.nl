@@ -22,19 +22,31 @@ This website provides access to the different facets of the academic heritage te
 
 2.  **Start developing.**
 
-    From the route of the project install the latest project dependancies and start the development server.
+    From the root of the project, install the latest project dependencies:
 
     ```sh
     pnpm install
     ```
 
-    then run a first build, to create the IIIF:
+    Then run a first build to create the IIIF output and the static site:
 
     ```sh
     pnpm run build
     ```
 
     to start the development server run
+    The IIIF app depends on the local `iiif-hss` workspace package. The root
+    build uses Turbo, so it builds `packages/headless-static-site` before
+    `apps/iiif`; no second `pnpm install` should be needed after the build.
+
+    If you only want to rebuild the IIIF output directly, include its workspace
+    dependencies:
+
+    ```sh
+    pnpm --filter @repo/iiif... run build
+    ```
+
+    To start the development server run:
 
     ```sh
     pnpm dev
