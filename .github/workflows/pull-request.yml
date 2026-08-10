@@ -89,7 +89,6 @@ jobs:
         run: |
           npx netlify-cli@23.9.5 deploy \
             --build \
-            --skip-functions-cache \
             --filter=static-site \
             --alias=deploy-debug-${{ github.event.number }} \
             --message="Deploy debug from GitHub Actions"
