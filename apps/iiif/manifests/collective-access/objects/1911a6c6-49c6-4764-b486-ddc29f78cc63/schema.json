@@ -1,0 +1,92 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/1911a6c6-49c6-4764-b486-ddc29f78cc63/schema.json",
+    "name": "Mechanische coördinatenberekenaar in houten kist door Rost",
+    "description": "Mechanische coördinatenberekenaar door Rost in een houten kist. Instrument voor het omzetten van hoekige coördinaten naar poolcoördinaten en omgekeerd. Het instrument heeft een draaibare gradenboog in 400 gon waarop x en y coördinaten zijn verdeeld. De coördinaten worden berekend met behulp van een schaalverdeling die te zien is door een drietal objectieven. Het instrument is voorzien van een gebruiksaanwijzing.",
+    "identifier": "2000.0898.GEO",
+    "temporalCoverage": "1950/1975",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "coördinatenberekenaar"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Rost R&A"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 310
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 520
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 360
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/1479eaa5-97ba-44de-870f-263a8fa2932a",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/1479eaa5-97ba-44de-870f-263a8fa2932a/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0898.GEO.JPG",
+            "width": 1600,
+            "height": 1200,
+            "position": 3164
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/2b2d4b6f-2eac-48ae-b8e9-c39f18e09e7d",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/2b2d4b6f-2eac-48ae-b8e9-c39f18e09e7d/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0898.GEO.a.JPG",
+            "width": 1600,
+            "height": 1200,
+            "position": 3165
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/40ccc907-f339-4cfd-9b32-3563a0a0340b",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/40ccc907-f339-4cfd-9b32-3563a0a0340b/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0898.GEO.b.JPG",
+            "width": 1600,
+            "height": 1200,
+            "position": 3166
+        }
+    ]
+}

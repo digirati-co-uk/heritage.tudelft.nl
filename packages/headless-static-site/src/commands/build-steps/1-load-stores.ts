@@ -7,7 +7,15 @@ import type { ActiveResourceJson, ParsedResource, Store } from "../../util/store
 import type { BuildConfig } from "../build.ts";
 
 export async function loadStores(
-  { storeResources }: { storeResources: Record<string, ParsedResource[]> },
+  {
+    storeResources,
+    storeIds,
+    storeConfigs,
+  }: {
+    storeResources: Record<string, ParsedResource[]>;
+    storeIds?: string[];
+    storeConfigs?: Record<string, any>;
+  },
   buildConfig: BuildConfig,
   customFs?: IFS
 ) {
@@ -16,7 +24,7 @@ export async function loadStores(
   const {
     options,
     config,
-    stores,
+    stores: configuredStores,
     cacheDir,
     storeTypes,
     requestCacheDir,
@@ -37,10 +45,15 @@ export async function loadStores(
   let validCount = 0;
   let invalidCount = 0;
 
+  const stores = storeIds || configuredStores;
+
   for (const store of stores) {
-    const requestCache = createStoreRequestCache(store, requestCacheDir);
-    const storeConfig = config.stores[store];
-    const resources = storeResources[store];
+    const requestCache = createStoreRequestCache(store, requestCacheDir, !options.cache);
+    const storeConfig = (storeConfigs && storeConfigs[store]) || config.stores[store];
+    if (!storeConfig) {
+      throw new Error(`Missing store config for "${store}"`);
+    }
+    const resources = storeResources[store] || [];
 
     const progress = makeProgressBar("Loading store", resources.length, options.ui);
 

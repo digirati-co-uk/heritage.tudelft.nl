@@ -1,0 +1,98 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/668ce1e0-8a74-414f-ba60-09aab328b04c/schema.json",
+    "name": "Horizontale baak volgens Heckmann door F.W. Breithaupt & Sohn",
+    "description": "Horizontale baak behorende bij de precisie draden afstandmeter, ontworpen door Heckmann en vervaardigd door F.W. Breithaupt.",
+    "identifier": "2000.0191.GEO",
+    "temporalCoverage": "1925/1950",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "baak"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "papier",
+            "sameAs": "http://vocab.getty.edu/aat/300014109"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "F.W. Breithaupt & Sohn",
+            "sameAs": "http://www.wikidata.org/entity/Q1386377"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Kassel, Duitsland",
+        "latitude": 51.31667,
+        "longitude": 9.5,
+        "sameAs": "https://www.geonames.org/2892518"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 154
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 35
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 40
+    },
+    "citation": "Entwerff geschichte Entfernungsmesser blz 28 ontstaan in 1927. dit model is anders dan in folder Breithaupt 1929-31; gelijk aan folder 1933 (alleen cijfer 1 is niet gelijk; anders dan in artikel Zeitschrift für Vermessung 1936 heft 4 en latere afbeeldinge",
+    "isRelatedTo": {
+        "@type": "CreativeWork",
+        "name": "Repetitietheodoliet door F.W. Breithaupt & Sohn",
+        "sameAs": "https://heritage.tudelft.nl/iiif/manifests/27ca2258-ea3d-4919-ac59-9bd41f9efc6d/schema.json",
+        "identifier": "2000.0299.GEO"
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/5f82d991-e21e-43a0-8715-3b9674323140",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/5f82d991-e21e-43a0-8715-3b9674323140/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0191.GEO.a.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 2898
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/29dfbb4a-07e1-48d7-a996-9e18139679cb",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/29dfbb4a-07e1-48d7-a996-9e18139679cb/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0191.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 2899
+        }
+    ]
+}

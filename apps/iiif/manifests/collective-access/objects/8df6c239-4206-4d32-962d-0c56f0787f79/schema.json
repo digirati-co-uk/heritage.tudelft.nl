@@ -1,0 +1,77 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/8df6c239-4206-4d32-962d-0c56f0787f79/schema.json",
+    "name": "Bauernfeind-prisma in een met textiel bekleed doosje",
+    "description": "Bauernfeind-prisma in een met textiel bekleed doosje, voor het uitzetten van rechte hoeken.",
+    "identifier": "2000.0427.GEO",
+    "temporalCoverage": "1875/1900",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "hoekspiegel",
+        "sameAs": "https://data.cultureelerfgoed.nl/term/id/cht/e8fb5077-d503-48f7-9ca3-25aac69d0095"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        },
+        {
+            "@type": "Product",
+            "name": "textiel",
+            "sameAs": "http://vocab.getty.edu/aat/300231565"
+        },
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "ontwerper",
+        "creator": {
+            "@type": "Person",
+            "name": "Karl Maximilian von Bauernfeind"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 30
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 63
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 48
+    },
+    "citation": [
+        "Schols, C.M., \"Landmeten en Waterpassen\", Breda: K.M.A., 1908, atlasband fig.93.",
+        "Schermerhorn, W. en Steenis, H.J. van, \"Leerboek Der Landmeetkunde: voor het Middelbaar en Hoger Technisch Onderwijs en voor de Praktijk\", Amsterdam: Argus, 1953, pp.132-133."
+    ],
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/73c55be5-3822-4662-a547-327ac041a52d",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/73c55be5-3822-4662-a547-327ac041a52d/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0427.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3025
+    }
+}

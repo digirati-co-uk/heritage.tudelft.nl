@@ -1,0 +1,74 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/e004650f-72ae-49fa-b85e-d2123f9686e4/schema.json",
+    "name": "Meterstaaf in een houten kist door Becker & Buddingh",
+    "description": "Meterstaaf in een houten kist door Becker & Buddingh, hulpmiddel bij afstandmeting, 0 - 102 centimeter. Een koperen meterstaaf in een houten kist. Het instrument is voorzien van een millimeterverdeling en een noniusaflezing.",
+    "identifier": "2000.0362.GEO",
+    "temporalCoverage": "1875/1925",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "meetstaaf"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Becker & Buddingh"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Arnhem, Nederland",
+        "latitude": 52.00113,
+        "longitude": 5.89641,
+        "sameAs": "https://www.geonames.org/2759660"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 80
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 1210
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 90
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/4b625aa0-bd89-40a8-b586-c17683393110",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/4b625aa0-bd89-40a8-b586-c17683393110/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0362.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3419
+    }
+}

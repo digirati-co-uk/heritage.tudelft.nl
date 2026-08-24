@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 import { Configure, InfiniteHits, SearchBox, useCurrentRefinements, useHits, useSearchBox } from "react-instantsearch";
 import { CollectionItemHit } from "./CollectionItemHit";
 import { FacetList } from "./FacetList";
-import { SearchWrapper, getFacets } from "./SearchWrapper";
+import { SearchWrapper } from "./SearchWrapper";
 
 type ManifestSearchContent = {
   searchBoxPlaceholder: string;
@@ -21,8 +21,6 @@ export function ManifestSearch({
   collectionSlug: string;
   content: ManifestSearchContent;
 }) {
-  const facets = getFacets();
-
   const [dom, setDom] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -32,13 +30,17 @@ export function ManifestSearch({
   return (
     <div>
       <SearchWrapper>
-        <Configure facetsRefinements={{ collections: [collectionSlug] }} />
+        {(facets) => (
+          <>
+            <Configure facetsRefinements={{ collections: [collectionSlug] }} />
 
-        {facets.map((facet) => {
-          return <FacetList key={facet} facet={facet} />;
-        })}
+            {facets.map((facet) => {
+              return <FacetList key={facet} facet={facet} />;
+            })}
 
-        {dom && createPortal(<ManifestHits content={content} />, dom)}
+            {dom && createPortal(<ManifestHits content={content} />, dom)}
+          </>
+        )}
       </SearchWrapper>
     </div>
   );

@@ -1,0 +1,73 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/508d5d5a-92c7-41c0-bc43-ebb99be5c8a1/schema.json",
+    "name": "Barometer in een leren etui door American Paulin System Inc.",
+    "description": "Barometer door American Paulin System Inc. in een leren etui, gebruikt voor het onderwijs. Is ook gebruikt voor hoogteverschil meting in de voormalige koloniën van Nederland.",
+    "identifier": "2000.0852.GEO",
+    "temporalCoverage": "1925/1950",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "barometer"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        },
+        {
+            "@type": "Product",
+            "name": "leer"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "American Paulin  System Inc."
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Los Angeles, VS",
+        "latitude": 34.05223,
+        "longitude": -118.24368,
+        "sameAs": "https://www.geonames.org/5368361"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 90
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 140
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 140
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/5a1c5a57-f90b-4ff2-87e2-da20b224af92",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/5a1c5a57-f90b-4ff2-87e2-da20b224af92/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0852.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3310
+    }
+}

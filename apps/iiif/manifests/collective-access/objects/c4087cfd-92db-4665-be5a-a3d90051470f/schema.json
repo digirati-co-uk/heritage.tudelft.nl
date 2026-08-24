@@ -1,0 +1,71 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/c4087cfd-92db-4665-be5a-a3d90051470f/schema.json",
+    "name": "Repetitie-theodoliet door F.W. Breithaupt & Sohn",
+    "description": "Repetitie-theodoliet geproduceerd door F.W. Breithaupt & Sohn, geodetisch meetinstrument voor het bepalen van horizontale en verticale hoeken, en gereduceerde afstanden ten behoeve van het maken van kaarten met behulp van de voerstraalmethode. Met losse dubbelbeeldafstandmeter en boussole voor het bepalen van horizontale en verticale richtingen, naar een ontwerp van Werner Uhink (1896-1973). De tachymeter is voorzien van twee spiegelprisma's, een biprisma in de kijker en een spleetoculair. Het instrument heeft, ondanks de grotere nauwkeurigheid in vergelijking met andere dubbelbeeldafstandmeters (zie Redta van Zeiss), nauwelijks opgang gevonden.",
+    "identifier": "2000.0100.GEO",
+    "temporalCoverage": "1925/1950",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "repetitietheodoliet"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "F.W. Breithaupt & Sohn",
+            "sameAs": "http://www.wikidata.org/entity/Q1386377"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Kassel, Duitsland",
+        "latitude": 51.31667,
+        "longitude": 9.5,
+        "sameAs": "https://www.geonames.org/2892518"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 365
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 365
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 230
+    },
+    "citation": "Tijdschrift K&L 1928 blz 42-45 hierin staat dat op aanwijzing van prof. Schermerhorn en prof. Heuvelinkeen er een dubbelbeeldafstandmeter is gebouwd. Verder Zeitschrift für Instrumenten 1929 blz 581-595 Entworfs Geschichte Optischen EntfernnungsMesser blz",
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/ac5c3e0b-bf29-4083-88bf-b4573bfb096a",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/ac5c3e0b-bf29-4083-88bf-b4573bfb096a/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0100.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2815
+    }
+}

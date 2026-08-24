@@ -1,0 +1,75 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/6e7fac15-6d63-40df-aba1-907afb393d59/schema.json",
+    "name": "Theodoliet door G. de Koningh",
+    "description": "Theodoliet door G. de Koningh, voor het meten van horizontale en verticale hoeken op een vast stelschroevenblok. Het instrument is voorzien van een horizontale rand met micrometeraflezing, een verticale rand met noniusaflezing en twee afleeskijkers.",
+    "identifier": "2000.0355.GEO",
+    "temporalCoverage": "1928",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "theodoliet",
+        "sameAs": "http://vocab.getty.edu/aat/300199711"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        },
+        {
+            "@type": "Product",
+            "name": "kunststof",
+            "sameAs": "https://data.cultureelerfgoed.nl/term/id/cht/923ba596-bc30-44f5-a26c-cac680e3808d"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "G. de Koningh"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Arnhem, Nederland",
+        "latitude": 52.00113,
+        "longitude": 5.89641,
+        "sameAs": "https://www.geonames.org/2759660"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 315
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 280
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 290
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/3852820a-8579-4cf3-81cb-ed61bd22d7b2",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/3852820a-8579-4cf3-81cb-ed61bd22d7b2/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0355.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3414
+    }
+}

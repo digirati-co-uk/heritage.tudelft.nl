@@ -1,0 +1,61 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/be0e4342-916b-47bb-bed1-60fb870dae47/schema.json",
+    "name": "Afstandsmeter in een houten kist",
+    "description": "Een afstandsmeter voor de basis te Stroe in een houten kist. Met een liniaal van invar met een millimeterverdeling. Geodetisch meetinstrument, gebruikt bij de voorbereiding van de basisafstandmeting ten behoeve van de Rijsdriehoeksmeting. Waarschijnlijk een onderdeel van inventarisnummer 2000.0367.GEO.",
+    "identifier": "2000.0443.GEO",
+    "temporalCoverage": "1885/1910",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "afstandmeetinstrument",
+        "sameAs": "http://vocab.getty.edu/aat/300198750"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        }
+    ],
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 22
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 285
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 105
+    },
+    "isRelatedTo": {
+        "@type": "CreativeWork",
+        "name": "Schuif-tachymeter op een vast stelschroevenblok door Otto Fennel & Söhne",
+        "sameAs": "https://heritage.tudelft.nl/iiif/manifests/93158c9c-4e6b-4822-9972-673549a9ac3d/schema.json",
+        "identifier": "2000.0367.GEO"
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/add5762e-4166-4198-80a7-3c96e07fcfbd",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/add5762e-4166-4198-80a7-3c96e07fcfbd/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0443.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3048
+    }
+}

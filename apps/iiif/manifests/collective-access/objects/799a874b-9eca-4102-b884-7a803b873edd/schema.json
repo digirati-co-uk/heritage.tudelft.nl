@@ -1,0 +1,69 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/799a874b-9eca-4102-b884-7a803b873edd/schema.json",
+    "name": "Twee horizontale baken door H.Wild Werkstätte",
+    "description": "Twee horizontale baken door H.Wild Werkstätte für Feinmechanik und Optik. Voor dubbelbeeldafstandmeting behorende bij de Wild opzet precisie afstandmeter. Bij deze baak behoort ook een statief",
+    "identifier": "2000.0194.GEO",
+    "temporalCoverage": "1925/1950",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "baak"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        },
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Wild Heerbrugg"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 30
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 1550
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 80
+    },
+    "citation": "S. Bertschmann: Die neue optische Distanzmesser uit 1925 blz 26 e.v. R. Bosshadt: Optische Distanz messung und Polarkoornaten Methode mit besonderer berücksichitgung des Reduktionstachymeters. J. Dubbeld en G.F. Witt (Lab. voor GEODESIE): Optische Lengtem",
+    "isRelatedTo": {
+        "@type": "CreativeWork",
+        "name": "Afstandmeter door Wild",
+        "sameAs": "https://heritage.tudelft.nl/iiif/manifests/a62bb487-535f-4156-ac7e-8f7f3954f51f/schema.json",
+        "identifier": "2000.0260.GEO"
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/e7f5b9b6-3854-453a-b985-0e33f694adef",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/e7f5b9b6-3854-453a-b985-0e33f694adef/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0194.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2900
+    }
+}

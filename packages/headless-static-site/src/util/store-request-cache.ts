@@ -6,8 +6,8 @@ import type { IFS } from "unionfs";
 
 export function createStoreRequestCache(storeKey: string, cacheDir: string, noCache = false, customFs?: IFS) {
   const fs = customFs?.promises || nfs.promises;
-  const cache = new Map<string, string>();
-  const didChangeCache = new Map<string, string>();
+  const cache = new Map<string, any>();
+  const didChangeCache = new Map<string, any>();
 
   async function pathExists(to: string) {
     try {
@@ -18,40 +18,82 @@ export function createStoreRequestCache(storeKey: string, cacheDir: string, noCa
     }
   }
 
+  function getCachePath(url: string) {
+    const hash = createHash("sha256").update(url).digest("hex");
+    return join(cacheDir, `${storeKey}/${hash}.json`);
+  }
+
+  async function readCached(url: string) {
+    if (cache.has(url)) {
+      return cache.get(url);
+    }
+    if (didChangeCache.has(url)) {
+      return didChangeCache.get(url);
+    }
+    if (noCache) {
+      return null;
+    }
+
+    const cachePath = getCachePath(url);
+    if (!(await pathExists(cachePath))) {
+      return null;
+    }
+
+    const rawData = (await fs.readFile(cachePath)).toString("utf-8");
+    if (!rawData.length) {
+      return null;
+    }
+    try {
+      const data = JSON.parse(rawData);
+      cache.set(url, data);
+      return data;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  async function writeCached(url: string, data: any) {
+    if (noCache) {
+      return;
+    }
+    const dir = join(cacheDir, storeKey);
+    const cachePath = getCachePath(url);
+    await fs.mkdir(dir, { recursive: true });
+    await fs.writeFile(cachePath, JSON.stringify(data));
+  }
+
+  async function requestJson(url: string, options?: RequestInit) {
+    const resp = await fetch(url, options);
+    if (resp.status === 404) {
+      return {};
+    }
+    return resp.json();
+  }
+
   return {
     async getKey(url: string) {
       if (cache.has(url) || didChangeCache.has(url)) {
         return url;
       }
+      if (noCache) {
+        return null;
+      }
+      if (await pathExists(getCachePath(url))) {
+        return url;
+      }
       return null;
     },
     async didChange(url: string, options?: RequestInit) {
-      let data = null;
-
-      if (cache.has(url)) {
-        data = cache.get(url);
-      }
-
       if (didChangeCache.has(url)) {
         return true;
       }
 
-      if (!data && (await pathExists(url))) {
-        try {
-          const rawData = await fs.readFile(url);
-          if (rawData.length) {
-            data = JSON.parse(rawData.toString("utf-8"));
-          }
-        } catch (e) {
-          // ignore.
-        }
-      }
-
+      const data = await readCached(url);
       if (!data) {
         return true;
       }
 
-      const freshData = await fetch(url, options).then((r) => r.json());
+      const freshData = await requestJson(url, options);
 
       const didChange = objectHash(data) !== objectHash(freshData as any);
 
@@ -62,51 +104,26 @@ export function createStoreRequestCache(storeKey: string, cacheDir: string, noCa
       return didChange;
     },
     async fetch(url: string, options?: RequestInit) {
-      const hash = createHash("sha256").update(url).digest("hex");
-      const dir = join(cacheDir, storeKey);
-      const cachePath = join(cacheDir, `${storeKey}/${hash}.json`);
-
       if (didChangeCache.has(url)) {
         const data = didChangeCache.get(url);
         didChangeCache.delete(url);
-
-        // Also populate the cache.
-        await fs.mkdir(dir, { recursive: true });
-        await fs.writeFile(cachePath, JSON.stringify(data));
-        cache.set(cachePath, data as any);
+        cache.set(url, data as any);
+        await writeCached(url, data);
 
         return data;
       }
 
-      if (cache.has(cachePath)) {
-        return cache.get(cachePath);
-      }
-
-      if ((await pathExists(cachePath)) && !noCache) {
-        const rawData = (await fs.readFile(cachePath)).toString("utf-8");
-        if (rawData.length) {
-          try {
-            const data = JSON.parse(rawData);
-            cache.set(url, data);
-            return data;
-          } catch (e) {
-            // ignore.
-          }
+      if (!noCache) {
+        const data = await readCached(url);
+        if (data) {
+          return data;
         }
       }
 
       try {
-        const resp = await fetch(url, options);
-
-        if (resp.status === 404) {
-          return {};
-        }
-
-        const data = await resp.json();
-        const cachedData = { ...data, _cached: true };
-        cache.set(url, cachedData as any);
-        await fs.mkdir(dir, { recursive: true });
-        await fs.writeFile(cachePath, JSON.stringify(cachedData));
+        const data = await requestJson(url, options);
+        cache.set(url, data as any);
+        await writeCached(url, data);
         return data;
       } catch (e) {
         console.log("Error fetching", url, (e as any).message);

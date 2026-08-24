@@ -1,0 +1,85 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/a107684c-47d6-49bc-bfc6-505ff4f6026d/schema.json",
+    "name": "Chronometer door Ulysse Nardin nr. 2081",
+    "description": "Een cardanisch opgehangen chronometer door Ulysse Nardin, in een houten kistje. Het kistje bevat twee ijkcertificaten van de firma N.V. Observator daterend uit 1952 en 1967. 0 - 60 seconden, 0 - 60 minuten, 0 - 24 uur.",
+    "identifier": "2000.0809.GEO",
+    "temporalCoverage": "1925/1950",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "chronometer",
+        "sameAs": "http://vocab.getty.edu/aat/300195967"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        },
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        },
+        {
+            "@type": "Product",
+            "name": "textiel",
+            "sameAs": "http://vocab.getty.edu/aat/300231565"
+        },
+        {
+            "@type": "Product",
+            "name": "papier",
+            "sameAs": "http://vocab.getty.edu/aat/300014109"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Ulysse Nardin"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Le Locle, Zwitserland",
+        "latitude": 47.05619,
+        "longitude": 6.74913,
+        "sameAs": "https://www.geonames.org/2659960"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 200
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 210
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 185
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/3c977064-e569-4da3-b58e-66d3e8393213",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/3c977064-e569-4da3-b58e-66d3e8393213/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0809.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3271
+    }
+}

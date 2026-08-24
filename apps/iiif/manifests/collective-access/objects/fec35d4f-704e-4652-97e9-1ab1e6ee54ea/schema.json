@@ -1,0 +1,69 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/fec35d4f-704e-4652-97e9-1ab1e6ee54ea/schema.json",
+    "name": "Uitklapbare verticale E baak",
+    "description": "Een uitklapbare, verticale E baak van drie meter. Bij de omgekeerde E verdeling wordt iedere centimeter als een wit, rood of zwart vakje afgebeeld. Voor waterpassen en tachymetrie. In combinatie met alle niet automatische waterpasinstrumenten met omgekeerd beeld, zoals 2000.0121.GEO en of 2000.0252.GEO.",
+    "identifier": "2000.0505.GEO",
+    "temporalCoverage": "1925/1950",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "waterpasbaak"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        },
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        }
+    ],
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 90
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 3000
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 110
+    },
+    "citation": "W. Schermerhorn & H.J. van Steenis. Leerboek der Landmeetkunde derde druk (1953) blz 97 en 98",
+    "isRelatedTo": [
+        {
+            "@type": "CreativeWork",
+            "name": "Waterpasinstrument door Carl Zeiss",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/10d20b7a-d711-4042-8592-139c8c96df2e/schema.json",
+            "identifier": "2000.0121.GEO"
+        },
+        {
+            "@type": "CreativeWork",
+            "name": "Waterpasinstrument volgens H. Wild door Carl Zeiss",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/78e21983-8210-42d6-9d02-239a587174a8/schema.json",
+            "identifier": "2000.0252.GEO"
+        }
+    ],
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/6bffb203-6a36-466d-acca-248472445587",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/6bffb203-6a36-466d-acca-248472445587/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0505.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3072
+    }
+}

@@ -1,5 +1,5 @@
 import fs from "node:fs";
-import { join } from "node:path";
+import { isAbsolute, join } from "node:path";
 import { cwd } from "node:process";
 import { loadJson } from "./load-json";
 
@@ -37,7 +37,8 @@ export function createFiletypeCache(cacheFile: string) {
           return fileTypeCache[filePath];
         }
 
-        let jsonResource = await loadJson(join(cwd(), filePath), true);
+        const jsonPath = isAbsolute(filePath) ? filePath : join(cwd(), filePath);
+        let jsonResource = await loadJson(jsonPath, true);
 
         if (jsonResource.default) {
           jsonResource = jsonResource.default;

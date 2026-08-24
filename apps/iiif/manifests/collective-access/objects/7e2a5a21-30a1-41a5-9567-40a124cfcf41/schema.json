@@ -1,0 +1,66 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/7e2a5a21-30a1-41a5-9567-40a124cfcf41/schema.json",
+    "name": "Onderdelen van invar meetband in een beklede houten kist",
+    "description": "Onderdelen voor de invar meetband. Twee voorwerpen met millimeterverdeling behorend bij de invardraden t.b.v. precisie lengtemeting in een met textiel beklede houten kist (zie ook 2000.0528). Voor nauwkeurige basisafstandmeting bij bijvoorbeeld de Loenermark en de Afsluitdijk.",
+    "identifier": "2000.0432.GEO",
+    "temporalCoverage": "1900/1950",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "meetband",
+        "sameAs": "http://vocab.getty.edu/aat/300204852"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        },
+        {
+            "@type": "Product",
+            "name": "textiel",
+            "sameAs": "http://vocab.getty.edu/aat/300231565"
+        }
+    ],
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 65
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 175
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 65
+    },
+    "isRelatedTo": {
+        "@type": "CreativeWork",
+        "name": "Basismeetset door J.Carpentier",
+        "sameAs": "https://heritage.tudelft.nl/iiif/manifests/4ae08045-3b08-4e2c-8bd7-eaec1e614f05/schema.json",
+        "identifier": "2000.0528.GEO"
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/9a54f295-e5e5-40fc-bb58-f23d4ce9d53d",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/9a54f295-e5e5-40fc-bb58-f23d4ce9d53d/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0432.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3033
+    }
+}

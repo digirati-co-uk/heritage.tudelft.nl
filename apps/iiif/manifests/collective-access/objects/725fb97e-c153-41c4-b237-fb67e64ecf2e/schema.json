@@ -1,0 +1,74 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/725fb97e-c153-41c4-b237-fb67e64ecf2e/schema.json",
+    "name": "Bauernfeind-prisma",
+    "description": "Bauernfeind-prima, voor het uitzetten en bepalen van haakse hoeken. Een geodetisch hulpmiddel voor het uitzetten van haakse hoeken. Het prisma is in 1851 door Bauernfeind ontworpen. In de deksel is een aantekening over het voorwerp bevestigd (alleen rechts gebruiken). Bij verkeerd gebruik werd er geen hoek van 90 graden ermee uitgezet.",
+    "identifier": "2000.0280.GEO",
+    "temporalCoverage": "1850/1900",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "hoekspiegel",
+        "sameAs": "https://data.cultureelerfgoed.nl/term/id/cht/e8fb5077-d503-48f7-9ca3-25aac69d0095"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        },
+        {
+            "@type": "Product",
+            "name": "textiel",
+            "sameAs": "http://vocab.getty.edu/aat/300231565"
+        },
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "ontwerper",
+        "creator": {
+            "@type": "Person",
+            "name": "Karl Maximilian von Bauernfeind"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 30
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 70
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 55
+    },
+    "citation": "C.M. Schols. Landmeten en Waterpassen Atlas (achtste druk) fig 93 en 94. J.E. Alberda en J.B. Ebbinge. Inleiding Landmeetkunde (zevende druk) blz 91 e.v.",
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/0a1252b3-0b15-4482-9554-aecd103f12df",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/0a1252b3-0b15-4482-9554-aecd103f12df/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0280.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2978
+    }
+}

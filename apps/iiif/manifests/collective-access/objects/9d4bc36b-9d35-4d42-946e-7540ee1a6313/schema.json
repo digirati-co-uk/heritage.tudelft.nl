@@ -1,0 +1,75 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/9d4bc36b-9d35-4d42-946e-7540ee1a6313/schema.json",
+    "name": "Ruiterniveau",
+    "description": "Geodetisch meetinstrument voor het stellen en controleren van de tweede as van een theodoliet. Een ruiterniveau (alhidadeniveau) bestaande uit twee buisniveau's met een houten handvat, voor het horizontaal stellen van de tweede as van een theodoliet.",
+    "identifier": "2000.0800.GEO",
+    "temporalCoverage": "1925/1950",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "ruiterniveau"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        },
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        }
+    ],
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 185
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 200
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 30
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/6e6c1248-d82b-4010-aa12-c332eb1974f1",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/6e6c1248-d82b-4010-aa12-c332eb1974f1/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0800.GEO.a.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3262
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/2233e1eb-25ad-4885-a84d-9b07b3d2e25c",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/2233e1eb-25ad-4885-a84d-9b07b3d2e25c/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0800.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3263
+        }
+    ]
+}

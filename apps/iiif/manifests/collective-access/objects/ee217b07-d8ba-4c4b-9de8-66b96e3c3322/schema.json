@@ -1,0 +1,69 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/ee217b07-d8ba-4c4b-9de8-66b96e3c3322/schema.json",
+    "name": "Afstandsprisma volgens M.C. Hensoldt",
+    "description": "Afstandsprisma volgens M.C. Hensoldt, voor detailmeten en verkennen. Is gebruikt voor een grove bepaling van afstanden t.b.v. exploratiedoeleinden. De meetprocedure is als volgt. In het beginpunt wordt met de afstandmeter gericht op het eindpunt van de te meten lijn en met het pentagoonprisma en lijn haaks uitgezet. Langs deze (basis-)lijn wordt gelopen totdat het eindpunt in het beeld komt van het afgeslepen deel van prisma. De afstand naar dit punt is nu 50x de afgelegde afstand langs de loodlijn. Zo kan met dit instrument een afstand tot 4 km worden gemeten.\nZie ook inventarisnummer 2000.0450.GEO.",
+    "identifier": "2000.0301.GEO",
+    "temporalCoverage": "1900/1925",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "afstandmeter"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "ontwerper",
+        "creator": {
+            "@type": "Person",
+            "name": "Moritz Carl Hensoldt"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 15
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 60
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 45
+    },
+    "citation": "W. Schermerhorn & H.J. van Steenis. Leerboek der Landmeetkunde derde druk (1954) blz 466.",
+    "isRelatedTo": {
+        "@type": "CreativeWork",
+        "name": "Afstandsprisma",
+        "sameAs": "https://heritage.tudelft.nl/iiif/manifests/21aafb6d-f1f4-4a53-88cf-2cc4e122ce32/schema.json",
+        "identifier": "2000.0450.GEO"
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/ce7e2325-5f8d-4855-b5c1-3d09a8af6696",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/ce7e2325-5f8d-4855-b5c1-3d09a8af6696/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0301.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3359
+    }
+}

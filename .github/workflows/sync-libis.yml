@@ -2,8 +2,8 @@ name: Sync Collective Access
 
 on:
   schedule:
-    # Daily schedule
-    - cron: "0 3 * * *"
+  # Daily schedule at 03:00
+   - cron: "0 3 * * *"
 
   workflow_dispatch:
     inputs:

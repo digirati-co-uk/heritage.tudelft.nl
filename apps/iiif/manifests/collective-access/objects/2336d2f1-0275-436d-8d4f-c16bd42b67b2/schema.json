@@ -1,0 +1,95 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/2336d2f1-0275-436d-8d4f-c16bd42b67b2/schema.json",
+    "name": "Waterpasinstrument met étui door Instrumentenfabriek H.M. Smitt",
+    "description": "Waterpasinstrument met étui door de Instrumentenfabriek H.M. Smitt, voor een eenvoudige waterpassing met een baak. Uitgerust met een hellingschroef en een stokbevestiging. Het instrument is in delen uitneembaar.",
+    "identifier": "2000.0364.GEO",
+    "temporalCoverage": "1902/1912",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "waterpasinstrument"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        },
+        {
+            "@type": "Product",
+            "name": "textiel",
+            "sameAs": "http://vocab.getty.edu/aat/300231565"
+        },
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Instrumentenfabriek H.M. Smitt"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Bilthoven, Nederland",
+        "latitude": 52.13,
+        "longitude": 5.20139,
+        "sameAs": "https://www.geonames.org/2758927"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 53
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 127
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 190
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/da751ba0-af95-44f6-a777-0e39fe12f2fc",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/da751ba0-af95-44f6-a777-0e39fe12f2fc/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0364.GEO.a.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3421
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/fb54d6db-dcd8-42ab-a681-43a4361c079e",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/fb54d6db-dcd8-42ab-a681-43a4361c079e/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0364.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3422
+        }
+    ]
+}

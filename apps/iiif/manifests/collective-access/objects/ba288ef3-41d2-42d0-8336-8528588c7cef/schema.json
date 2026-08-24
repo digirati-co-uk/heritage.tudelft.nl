@@ -1,0 +1,87 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/ba288ef3-41d2-42d0-8336-8528588c7cef/schema.json",
+    "name": "Berg-boussole volgens M. Hildebrand door Kipp & Zonen",
+    "description": "Berg-boussole ontworpen door M. Hildebrand en geproduceerd door Kipp & Zonen, voor zowel azimuth bepaling t.o.v. het magnetisch noorden als gewone richting meting, de cirkel is verdeeld van 0 - 360 graden. Deze Boussole tranche-montagne (bergboussole) heeft een excentrisch geplaatste richtkijker met buisniveau op een vast stelschroevenblok. Opvolger van dit instrument is 2000.0879.GEO. Dit type instrumenten zijn in het voormalige Nederlands-Indië gebruikt voor topografische opnamen.",
+    "identifier": "2000.0254.GEO",
+    "temporalCoverage": "1900/1925",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "landmeterskompas",
+        "sameAs": "http://vocab.getty.edu/aat/300199916"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        }
+    ],
+    "creator": [
+        {
+            "@type": "Role",
+            "roleName": "producent",
+            "creator": {
+                "@type": "Organization",
+                "name": "Kipp & Zonen"
+            }
+        },
+        {
+            "@type": "Role",
+            "roleName": "ontwerper",
+            "creator": {
+                "@type": "Person",
+                "name": "Max Hildebrand"
+            }
+        }
+    ],
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 190
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 240
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 205
+    },
+    "isRelatedTo": [
+        {
+            "@type": "CreativeWork",
+            "name": "Bergboussole door M. Hildebrand",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/171e92f7-4141-4f25-aa1f-a645a12b71d4/schema.json",
+            "identifier": "2000.0879.GEO"
+        },
+        {
+            "@type": "CreativeWork",
+            "name": "Richtkompas door M. Hildebrand",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/05a53e6d-2298-4f85-a58a-b25bcbefd6d5/schema.json",
+            "identifier": "2000.0314.GEO"
+        }
+    ],
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/10bfae28-5365-444c-b884-0442f593f7a6",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/10bfae28-5365-444c-b884-0442f593f7a6/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0254.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2958
+    }
+}

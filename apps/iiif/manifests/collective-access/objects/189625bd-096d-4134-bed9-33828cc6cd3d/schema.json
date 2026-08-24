@@ -1,0 +1,79 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/189625bd-096d-4134-bed9-33828cc6cd3d/schema.json",
+    "name": "Transversaalschaal door J.M. Kleman & Zoon",
+    "description": "Transversaalschaal door J.M. Kleman & Zoon, hulpmiddel voor de cartografie om gemeten afstanden op een kaart af te beelden. Deze transversaalschaal is bedoeld voor afstanden die gemeten zijn in Rijnlandse voeten en duimen. De verdeling van de deze transversaalschaal is zowel in het tientalligstelsel (Arabisch-Indisch) als het toen gangbare twaalftalligstelsel (Romeins).",
+    "identifier": "2000.0070.GEO",
+    "temporalCoverage": "1775/1825",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "transversaalschaal"
+    },
+    "material": {
+        "@type": "Product",
+        "name": "metaal",
+        "sameAs": "http://vocab.getty.edu/aat/300010900"
+    },
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "J.M. Kleman & Zoon"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Amsterdam, Nederland",
+        "latitude": 52.37302,
+        "longitude": 4.89856,
+        "sameAs": "https://www.geonames.org/2759793"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 1
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 470
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 70
+    },
+    "citation": "De Amsterdammer J.M. Kleman begon in 1781 als instrumentmaker. In 1807 kwam zijn zoon in de firma en heette voortaan J.M. Kleman & Zoon. In 1857 overleed de laatste eigenaar en werd de zaak opgeheven. (bron: H.C. Pouls 'De landmeter.' (1997).",
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/60a946b4-e8b5-4f3f-831c-20b8fba7b68b",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/60a946b4-e8b5-4f3f-831c-20b8fba7b68b/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0070.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 9139
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/4c65f05c-e27f-4825-bd57-999bc9ed3b9a",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/4c65f05c-e27f-4825-bd57-999bc9ed3b9a/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0070.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 9140
+        }
+    ]
+}

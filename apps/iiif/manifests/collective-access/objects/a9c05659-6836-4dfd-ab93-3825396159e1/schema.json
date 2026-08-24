@@ -1,0 +1,69 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/a9c05659-6836-4dfd-ab93-3825396159e1/schema.json",
+    "name": "Thermometer in houten koker door H. Geissler",
+    "description": "Een thermometer in een houten koker door H. Geissler. Dit instrument werd gebruikt bij de basisafstandmeting van de Rijkscommissie Graadmeting en Waterpassing te Stroe voor de temperatuurcorrectie van de afstandsstaven.",
+    "identifier": "2000.0882.GEO",
+    "temporalCoverage": "1897",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "thermometer",
+        "sameAs": "http://vocab.getty.edu/aat/300198647"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "kwik",
+            "sameAs": "http://vocab.getty.edu/aat/300011026"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        },
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "ontwerper",
+        "creator": {
+            "@type": "Person",
+            "name": "Johann Heinrich Wilhelm Geissler"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 20
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 415
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 20
+    },
+    "citation": "NCG publicaties",
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/57cd96b4-1a61-4075-8ccf-5d61fbdecad5",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/57cd96b4-1a61-4075-8ccf-5d61fbdecad5/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0882.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3341
+    }
+}

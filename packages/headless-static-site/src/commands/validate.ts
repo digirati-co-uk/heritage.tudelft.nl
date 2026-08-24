@@ -3,16 +3,35 @@ import { join } from "node:path";
 import { cwd } from "node:process";
 import chalk from "chalk";
 import type { Command } from "commander";
-import { getConfig } from "../util/get-config.ts";
+import { resolveConfigSource } from "../util/get-config.ts";
 import { loadJson } from "../util/load-json.ts";
 import { resolveFromSlug } from "../util/resolve-from-slug.ts";
 import { compileReverseSlugConfig, compileSlugConfig } from "../util/slug-engine.ts";
 
-type ValidateOptions = unknown;
+type ValidateOptions = {
+  config?: string;
+};
 
 export async function validateCommand(options: ValidateOptions, command?: Command) {
   let didError = false;
-  const config = await getConfig();
+  let resolvedConfig;
+  try {
+    resolvedConfig = await resolveConfigSource(options?.config);
+  } catch (error) {
+    console.log(chalk.red`  - ${String((error as Error).message || error)}`);
+    process.exit(1);
+  }
+
+  const config = resolvedConfig.config;
+  if (resolvedConfig.mode === "folder") {
+    const hasFolderRootConfig =
+      existsSync(join(cwd(), "iiif-config", "config.yml")) || existsSync(join(cwd(), "iiif-config", "config.yaml"));
+    if (!hasFolderRootConfig) {
+      didError = true;
+      console.log(chalk.red`  - Missing iiif-config/config.yml (or config.yaml)`);
+    }
+  }
+
   if (config.slugs) {
     const slugs = Object.keys(config.slugs);
     for (const slugName of slugs) {

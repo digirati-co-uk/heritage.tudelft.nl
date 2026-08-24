@@ -337,7 +337,9 @@ export async function indices(
         name: index,
         ...searchIndex.schema,
       });
-      await files.writeFile(data, searchIndex.records.map((record) => JSON.stringify(record)).join("\n"));
+      if (searchIndex.emitCombined !== false) {
+        await files.writeFile(data, searchIndex.records.map((record) => JSON.stringify(record)).join("\n"));
+      }
     }
   }
 

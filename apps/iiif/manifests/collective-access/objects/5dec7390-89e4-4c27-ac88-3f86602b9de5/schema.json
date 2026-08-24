@@ -1,0 +1,63 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/5dec7390-89e4-4c27-ac88-3f86602b9de5/schema.json",
+    "name": "Belichtingsmeter door J. Decoudun",
+    "description": "Belichtingsmeter door J. Decoudun, instrument voor het berekenen van sluitertijden en diafragma van een fototoestel. Met een gebruiksaanwijzing en een begeleidende brief. De meter werd gebruikt bij fotografie om het fototoestel zo in te stellen dat de foto goed belicht werd.",
+    "identifier": "2000.0397.GEO",
+    "temporalCoverage": "1900/1925",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "belichtingsmeter",
+        "sameAs": "http://vocab.getty.edu/aat/300225799"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "papier",
+            "sameAs": "http://vocab.getty.edu/aat/300014109"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "maker",
+        "creator": {
+            "@type": "Person",
+            "name": "J. Decoudun"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 15
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 65
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 65
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/f5787c95-9898-458d-bdc0-dda7053dc4ec",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/f5787c95-9898-458d-bdc0-dda7053dc4ec/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0397.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3258
+    }
+}

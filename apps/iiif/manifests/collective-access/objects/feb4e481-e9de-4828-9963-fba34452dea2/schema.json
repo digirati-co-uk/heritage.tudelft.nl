@@ -1,0 +1,56 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/feb4e481-e9de-4828-9963-fba34452dea2/schema.json",
+    "name": "Groothoekcamera en foto",
+    "description": "Groothoeklenscamera van Schneider Optik. Met zwart-witfoto gemaakt door camera, van het TNW-gebouw en de parkeerplaats.",
+    "identifier": "2024.0109.TNW",
+    "temporalCoverage": "1920/1969",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "camera",
+        "sameAs": "http://vocab.getty.edu/aat/300022636"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "kunststof",
+            "sameAs": "https://data.cultureelerfgoed.nl/term/id/cht/923ba596-bc30-44f5-a26c-cac680e3808d"
+        },
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Schneider GmbH"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue"
+    },
+    "width": {
+        "@type": "QuantitativeValue"
+    },
+    "depth": {
+        "@type": "QuantitativeValue"
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/6d87fd24-cf6a-44d4-b7f6-ad3fcf05cd8b",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/6d87fd24-cf6a-44d4-b7f6-ad3fcf05cd8b/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "width": 1600,
+        "height": 1200,
+        "position": 12061
+    }
+}

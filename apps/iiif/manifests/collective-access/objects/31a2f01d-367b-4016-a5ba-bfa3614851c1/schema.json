@@ -1,0 +1,84 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/31a2f01d-367b-4016-a5ba-bfa3614851c1/schema.json",
+    "name": "Spiegelsextant door L.J. Harri",
+    "description": "Spiegelsextant door L.J. Harri, voor het uit de hand meten van hoeken. De sextant heeft een randverdeling op zilver, een afleesloep en diverse uitwisselbare kijkers.",
+    "identifier": "2000.0126.GEO",
+    "temporalCoverage": "1850/1875",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "sextant",
+        "sameAs": "http://vocab.getty.edu/aat/300201687"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        },
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "maker",
+        "creator": {
+            "@type": "Person",
+            "name": "Leendert Johannes Harri"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 130
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 305
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 250
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/2a8b62ca-ec56-45d4-9b1f-bce1604e04bd",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/2a8b62ca-ec56-45d4-9b1f-bce1604e04bd/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0126.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 2849
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/190cf572-eb73-4696-9f29-87faa6bf5bcb",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/190cf572-eb73-4696-9f29-87faa6bf5bcb/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0126.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 9077
+        }
+    ]
+}

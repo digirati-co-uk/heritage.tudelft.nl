@@ -1,0 +1,73 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/d6ffadf0-d79e-4155-8caf-95e5432026e3/schema.json",
+    "name": "Roltransporteur in étui door Wild",
+    "description": "Roltransporteur door H. Wild Werkstätte für Feinmechanik und Optik, tekeninstrument voor uitvoeren van kartering van poolcoördinaten (voerstraalmethode) m.b.v. de Wild RDS of RDH. \nEen andere naam voor dit instrument is rolpoolcoördinatograaf. Het instrument heeft een cirkelverdeling van 400 graden (Europees gradenstelsel) en vier verschillende schalen in een met textiel beklede etui.",
+    "identifier": "2000.0222.GEO",
+    "temporalCoverage": "1925/1950",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "transporteur"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "kunststof",
+            "sameAs": "https://data.cultureelerfgoed.nl/term/id/cht/923ba596-bc30-44f5-a26c-cac680e3808d"
+        },
+        {
+            "@type": "Product",
+            "name": "textiel",
+            "sameAs": "http://vocab.getty.edu/aat/300231565"
+        },
+        {
+            "@type": "Product",
+            "name": "karton",
+            "sameAs": "http://vocab.getty.edu/aat/300014224"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Wild Heerbrugg"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 50
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 107
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 410
+    },
+    "citation": "Schermerhorn & van Steenis. Leerboek der Landmeetkunde hoofdstuk XX.",
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/9a4356aa-2953-4ce8-9b94-ec8b10bf7921",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/9a4356aa-2953-4ce8-9b94-ec8b10bf7921/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0222.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2929
+    }
+}

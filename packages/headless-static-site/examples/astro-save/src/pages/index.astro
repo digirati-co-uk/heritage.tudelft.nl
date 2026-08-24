@@ -1,0 +1,24 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { iiif } from "../lib/iiif-server";
+
+const top = await iiif.loadTopCollection();
+const manifests = await iiif.loadManifestsCollection();
+const manifestPaths = await iiif.getManifestStaticPaths();
+---
+
+<BaseLayout title="IIIF Astro Example">
+  <section class="stack">
+    <h1>IIIF + Astro Example (Local save: true)</h1>
+    <p class="small">
+      This site uses <code>iiif-hss/astro</code> with a remote collection with local manifest saving enabled. Static manifest routes are generated at build
+      time using <code>iiif-hss/astro/server</code>.
+    </p>
+    <div class="panel stack">
+      <a href="/collection">Open collection page</a>
+      <p class="small">Top collection items: {top?.items?.length ?? 0}</p>
+      <p class="small">Manifest routes generated: {manifestPaths.length}</p>
+      <p class="small">Manifest collection label: {manifests?.label?.en?.[0] ?? "Unknown"}</p>
+    </div>
+  </section>
+</BaseLayout>

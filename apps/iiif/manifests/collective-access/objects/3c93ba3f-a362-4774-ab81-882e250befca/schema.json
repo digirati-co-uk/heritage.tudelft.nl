@@ -1,0 +1,69 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/3c93ba3f-a362-4774-ab81-882e250befca/schema.json",
+    "name": "Ruiterniveau door Robert Reiss",
+    "description": "Ruiterniveau door Robert Reiss GmbH, voor het horizontaal stellen van de tweede as van een theodoliet, vooral bij richtingmetingen met veel hoogte verschil. Voorzien van een verstelbare buisniveauverdeling d.m.v. een horizontale stelschroef.",
+    "identifier": "2000.0375.GEO",
+    "temporalCoverage": "1925/1950",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "ruiterniveau"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Robert Reiss GmbH"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Bad Liebenwerda, Duitsland",
+        "latitude": 51.51826,
+        "longitude": 13.39459,
+        "sameAs": "https://www.geonames.org/2953408"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 145
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 125
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 25
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/970b353c-bc1b-4d7b-bd50-c9506fc2bc92",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/970b353c-bc1b-4d7b-bd50-c9506fc2bc92/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0375.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3428
+    }
+}

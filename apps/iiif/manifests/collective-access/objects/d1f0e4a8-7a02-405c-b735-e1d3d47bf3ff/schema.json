@@ -1,0 +1,79 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/d1f0e4a8-7a02-405c-b735-e1d3d47bf3ff/schema.json",
+    "name": "Poolcoördinator in een houten kist door Haag-Streit AG",
+    "description": "Poolcoördinator in een houten kist door Haag-Streit AG, als hulpmiddel bij het tekenen van metingen volgens de voerstraal methode.",
+    "identifier": "2000.0500.GEO",
+    "temporalCoverage": "1950/1975",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "poolcoördinatograaf"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        },
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        },
+        {
+            "@type": "Product",
+            "name": "kunststof",
+            "sameAs": "https://data.cultureelerfgoed.nl/term/id/cht/923ba596-bc30-44f5-a26c-cac680e3808d"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Haag-Streit AG"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Köniz, Zwitserland",
+        "latitude": 46.92436,
+        "longitude": 7.41457,
+        "sameAs": "https://www.geonames.org/2660119"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 185
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 650
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 620
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/74619953-69f7-4e88-bb25-55bf5d48fad8",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/74619953-69f7-4e88-bb25-55bf5d48fad8/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0500.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3066
+    }
+}

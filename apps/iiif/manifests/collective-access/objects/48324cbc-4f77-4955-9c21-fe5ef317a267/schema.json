@@ -1,0 +1,105 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/48324cbc-4f77-4955-9c21-fe5ef317a267/schema.json",
+    "name": "Zelfgemaakte stereoscoop met houten handvat en twee Zeiss-lenzen, waarschijnlijk gemaakt door A.C.S. van Heel",
+    "description": "Zelfgemaakte stereoscoop, waarschijnlijke door A.C.S. van Heel. Houten handvat met inscriptie \"I 25\"  in groen inkt. Messing en houders voor twee lenzen, waarvan één met Zeiss-keurmerk. Andere lens met geplakt papieren label met handgeschreven formules.",
+    "identifier": "2024.0010.TNW",
+    "temporalCoverage": "1920/1966",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "stereoscoop",
+        "sameAs": "http://vocab.getty.edu/aat/300162919"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        },
+        {
+            "@type": "Product",
+            "name": "messing",
+            "sameAs": "http://vocab.getty.edu/aat/300010946"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        }
+    ],
+    "creator": [
+        {
+            "@type": "Role",
+            "roleName": "producent",
+            "creator": {
+                "@type": "Organization",
+                "name": "Zeiss"
+            }
+        },
+        {
+            "@type": "Role",
+            "roleName": "maker",
+            "creator": {
+                "@type": "Person",
+                "name": "Abraham Cornelis Sebastiaan Van Heel"
+            }
+        }
+    ],
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "CMT",
+        "value": 19
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "CMT",
+        "value": 13
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "CMT",
+        "value": 10
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/f934e621-f64f-40bb-9bd7-d9caf6555b17",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/f934e621-f64f-40bb-9bd7-d9caf6555b17/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "width": 1600,
+            "height": 1200,
+            "position": 11981
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/64093fb5-be67-4bb9-8ed0-f48184c4b71d",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/64093fb5-be67-4bb9-8ed0-f48184c4b71d/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "width": 1600,
+            "height": 1200,
+            "position": 11982
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/88c42330-4cff-421f-9267-d817cb8280ec",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/88c42330-4cff-421f-9267-d817cb8280ec/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "width": 1600,
+            "height": 1200,
+            "position": 11983
+        }
+    ]
+}

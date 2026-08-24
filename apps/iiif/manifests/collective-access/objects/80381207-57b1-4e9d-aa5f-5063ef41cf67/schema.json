@@ -1,0 +1,79 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/80381207-57b1-4e9d-aa5f-5063ef41cf67/schema.json",
+    "name": "Statief met vaste poten door Micallef",
+    "description": "Statief met vaste poten door Micallef, voorzien van klemschroef. De kop van het statief is voorzien van een doosniveau. Speciaal voor de tachymetertheodoliet met inventarisnummer 2004.0004.GEO. Voor terreinopname volgens de voerstraalmethode (richting en afstand) ook wel de poolcoördinatenmethode.",
+    "identifier": "2005.0001.GEO",
+    "temporalCoverage": "1925/1950",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "statief (standaarden)",
+        "sameAs": "http://vocab.getty.edu/aat/300164679"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        },
+        {
+            "@type": "Product",
+            "name": "leer"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Micallef"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 200
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 1400
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 200
+    },
+    "citation": "Dubbeld J. en Wit G.F. (Lab van Geodesie) Optische Lengetemeting 1970 blz. 114",
+    "isRelatedTo": {
+        "@type": "CreativeWork",
+        "name": "Tachymeter door Lingee & Micallef",
+        "sameAs": "https://heritage.tudelft.nl/iiif/manifests/25eea0f6-be71-409c-9c0e-4b15bbb2c7c3/schema.json",
+        "identifier": "2004.0004.GEO"
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/2642e496-6d7e-4ef6-9c26-6f719dc50fc6",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/2642e496-6d7e-4ef6-9c26-6f719dc50fc6/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2005.0001.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3198
+    }
+}

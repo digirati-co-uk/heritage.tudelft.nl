@@ -1,0 +1,83 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/9b913b20-63f7-4b59-b5dd-18c54e5b533e/schema.json",
+    "name": "Chess Challenger schaakcomputer door Fidelity Electronics",
+    "description": "Elektronische schaakcomputer door Fidelity Electronics in een met de hand vervaardigd houten koffertje. Op het deksel is een metalen plaatje bevestigd met de tekst: 'Ter nagedachtenis aan Albert de Haan (overleden) 29 oktober 1979'.",
+    "identifier": "1998.0011.TMD",
+    "temporalCoverage": "1975",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "schaakcomputer"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "kunststof",
+            "sameAs": "https://data.cultureelerfgoed.nl/term/id/cht/923ba596-bc30-44f5-a26c-cac680e3808d"
+        },
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Fidelity Electronics"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 60
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 410
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 270
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/7f5d8c2e-a78b-4ab1-8aa4-ef4ba3971bb4",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/7f5d8c2e-a78b-4ab1-8aa4-ef4ba3971bb4/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "1998.0011.TMD.JPG",
+            "width": 1600,
+            "height": 1200,
+            "position": 5167
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/9db0cd60-c64f-4a45-88be-b0502be8da85",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/9db0cd60-c64f-4a45-88be-b0502be8da85/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "1998.0011.TMD.a.JPG",
+            "width": 1600,
+            "height": 1200,
+            "position": 5168
+        }
+    ]
+}

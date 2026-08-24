@@ -14,7 +14,7 @@ export const extractFilesList: Extraction<{
     return !cache.dims;
   },
   async handler(manifest, api, config) {
-    const filesDir = join(api.build.cacheDir, manifest.slug, "files");
+    const filesDir = api.filesDir;
     const filesExist = existsSync(filesDir);
 
     if (filesExist) {

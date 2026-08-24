@@ -1,0 +1,76 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/4220bcd1-b4ae-4c86-9c3e-8d82c55aa748/schema.json",
+    "name": "Bronzen plaquette met afbeelding van ir. H.J. Heuvelink naar een ontwerp van Odé",
+    "description": "Bronzen plaquette naar een ontwerp van Odé, met de afbeelding van H.J. Heuvelink, hoogleraar Geodesie van 1897 tot 1922. Bij het bord hoorde een marmeren plaat.",
+    "identifier": "2003.0013.GEO",
+    "temporalCoverage": "1925/1950",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "plaquette (metalen reliëf)",
+        "sameAs": "http://vocab.getty.edu/aat/300190507"
+    },
+    "material": {
+        "@type": "Product",
+        "name": "brons",
+        "sameAs": "http://vocab.getty.edu/aat/300010957"
+    },
+    "creator": {
+        "@type": "Role",
+        "roleName": "ontwerper",
+        "creator": {
+            "@type": "Person",
+            "name": "Arend Willem Maurits Odé"
+        }
+    },
+    "about": {
+        "@type": "Person",
+        "name": "Hendrik Jan Heuvelink"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 5
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 575
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 400
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/948638fe-3419-4dfb-85d5-292a4da5f88d",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/948638fe-3419-4dfb-85d5-292a4da5f88d/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2003.0013.GEO.JPG",
+            "width": 1600,
+            "height": 1200,
+            "position": 3183
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/30bc283e-c883-497c-ab6a-520290ef4f78",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/30bc283e-c883-497c-ab6a-520290ef4f78/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2003_0013_GEO_a.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 9168
+        }
+    ]
+}

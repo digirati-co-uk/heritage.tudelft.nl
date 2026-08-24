@@ -1,0 +1,91 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/a14b9346-4644-444e-bd15-e36425862d02/schema.json",
+    "name": "Kadaster-theodoliet door G. de Koningh",
+    "description": "Theodoliet door G. de Koningh, voor kadastraal meetwerk zoals veelhoeksmetingen (polygonen). \nOmdat deze theodoliet alleen geschikt is voor het meten van alleen horizontale richtingen wordt dit ook wel een kadaster theodoliet genoemd. Dit is een kleine 'polygoon-theodoliet' op een vast stelschroevenblok. Het instrument is voorzien van een doorboorde as met een speciaal kijker voor het centreren. De vervaardiger De Koningh heeft een dergelijke constructie voor het eerst gemaakt in 1909. Het instrument vervaardigt n.a.v. opmerkingen van de ingenieur verificateur van het Kadaster de Boer met medewerking van landmeter Polee.",
+    "identifier": "2000.0345.GEO",
+    "temporalCoverage": "1911",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "kadastertheodoliet"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        },
+        {
+            "@type": "Product",
+            "name": "keramiek",
+            "sameAs": "http://vocab.getty.edu/aat/300386879"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "G. de Koningh"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Arnhem, Nederland",
+        "latitude": 52.00113,
+        "longitude": 5.89641,
+        "sameAs": "https://www.geonames.org/2759660"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 250
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 190
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 170
+    },
+    "citation": "Kadaseter & Landmeetkunde 1909 blz 245-248 K&L 1921 blz 93-95 Zeitschrift für Instrumenten 1911 blz 28/29.",
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/dbc26f2f-a10d-41dd-a3ff-72e3000301b5",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/dbc26f2f-a10d-41dd-a3ff-72e3000301b5/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0345.GEO.a.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3400
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/a1b1c035-6a91-4675-9b0d-aff44ea79dfa",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/a1b1c035-6a91-4675-9b0d-aff44ea79dfa/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0345.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3401
+        }
+    ]
+}

@@ -1,0 +1,63 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/f5817432-cc44-43f1-bd8a-d73b18f1a3e2/schema.json",
+    "name": "Richtkompas met gradenboog en waterpas door H. Hoffmann",
+    "description": "Boussole door H. Hoffmann, met bereik van 0 tot 360 graden horizontaal; 0 tot 90 graden verticaal. Kompas met een gradenboog en een waterpas voor metingen in kolenmijnen. De gradenboog is verticaal geplaatst en voorzien van een wijzer. Het instrument werd met een speciale pen in de rots geplaatst.",
+    "identifier": "2000.0861.GEO",
+    "temporalCoverage": "1914",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "landmeterskompas",
+        "sameAs": "http://vocab.getty.edu/aat/300199916"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "maker",
+        "creator": {
+            "@type": "Person",
+            "name": "H. Hoffmann"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 255
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 320
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 110
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/991d73a6-f616-4ea5-bd8e-d9cba5ea9c3c",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/991d73a6-f616-4ea5-bd8e-d9cba5ea9c3c/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0861.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3320
+    }
+}

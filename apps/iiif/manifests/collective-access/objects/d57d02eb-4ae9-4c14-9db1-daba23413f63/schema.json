@@ -1,0 +1,71 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/d57d02eb-4ae9-4c14-9db1-daba23413f63/schema.json",
+    "name": "Theodoliet door Ludwig Tesdorpf",
+    "description": "Theodoliet door Ludwig Tesdorpf, voor kadastrale metingen, zoals het bepalen van hoeken in het terrein. De kijker, voorzien van een buisniveau, kan gebruikt worden als waterpasinstrument. De randverdeling is in graden.",
+    "identifier": "2004.0006.GEO",
+    "temporalCoverage": "1900/1905",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "theodoliet",
+        "sameAs": "http://vocab.getty.edu/aat/300199711"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "koper",
+            "sameAs": "http://vocab.getty.edu/aat/300011020"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Ludwig Tesdorpf"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Stuttgart, Duitsland",
+        "latitude": 48.78232,
+        "longitude": 9.17702,
+        "sameAs": "https://www.geonames.org/2825297"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 150
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 280
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 150
+    },
+    "citation": "Haupt Catalog 1904 Ludwig Tesdorpf blz. 29",
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/a04dc8f7-0f7d-4ffa-ae7e-1b7d2b3124e7",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/a04dc8f7-0f7d-4ffa-ae7e-1b7d2b3124e7/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2004.0006.GEO.JPG",
+        "width": 1600,
+        "height": 1200,
+        "position": 3192
+    }
+}

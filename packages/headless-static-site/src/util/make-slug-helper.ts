@@ -3,18 +3,26 @@ import type { GenericStore } from "./get-config.ts";
 
 function getDefaultSlug(slug: string) {
   const url = new URL(slug);
-  let path = url.pathname;
-  let extension = "";
+  let path = url.pathname.replace(/\/+$/, "");
+  let suffix = "";
 
-  const parts = path.split(".");
-  const lastPart = parts[parts.length - 1];
-  if (lastPart.indexOf(".") !== -1) {
-    const pathParts = path.split(".");
-    extension = pathParts.pop() || "";
-    path = pathParts.join(".");
+  if (/\/manifest\.json$/i.test(path)) {
+    path = path.replace(/\/manifest\.json$/i, "");
+    suffix = "manifest.json";
+  } else if (/\/collection\.json$/i.test(path)) {
+    path = path.replace(/\/collection\.json$/i, "");
+    suffix = "collection.json";
+  } else if (/\.json$/i.test(path)) {
+    path = path.replace(/\.json$/i, "");
+    suffix = "json";
   }
 
-  return [path, `default:${url.hostname}/${extension}`] as const;
+  path = path.replace(/^\/+/, "").replace(/\/+$/, "");
+  if (!path) {
+    path = url.hostname;
+  }
+
+  return [path, `default:${url.hostname}/${suffix}`] as const;
 }
 export function makeGetSlugHelper(store: GenericStore, slugs: BuildConfig["slugs"]) {
   if (store.slugTemplates) {

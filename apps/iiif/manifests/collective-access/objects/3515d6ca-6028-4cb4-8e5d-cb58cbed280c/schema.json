@@ -1,0 +1,70 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/3515d6ca-6028-4cb4-8e5d-cb58cbed280c/schema.json",
+    "name": "Buisniveau",
+    "description": "Buisniveau, hulpmiddel voor het horizontaal stellen van een planchet (tekentafel) op een statief.",
+    "identifier": "2000.0382.GEO",
+    "temporalCoverage": "1850/1875",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "buisniveau"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        }
+    ],
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 26
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 210
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 20
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/9bc1977f-dfc7-4001-bed1-2a516005d5af",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/9bc1977f-dfc7-4001-bed1-2a516005d5af/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0382.GEO.a.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3434
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/b3fe5ed3-87be-4c01-a8d0-ff68d7b6a377",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/b3fe5ed3-87be-4c01-a8d0-ff68d7b6a377/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0382.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3435
+        }
+    ]
+}

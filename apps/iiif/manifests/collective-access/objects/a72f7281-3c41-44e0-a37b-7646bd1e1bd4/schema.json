@@ -1,0 +1,87 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/a72f7281-3c41-44e0-a37b-7646bd1e1bd4/schema.json",
+    "name": "Vierzijdig prisma volgens Wollaston",
+    "description": "Vierzijdig prisma voor het uitzetten van hoeken van negentig graden in een met textiel bekleed doosje. Het prisma is een ontwerp van Wollaston. Een kleine uitvoering van dit prisma vormde een onderdeel van een door Wollaston uitgevonden tekenapparaat de 'Camera Lucida'. In het midden van de negentiende eeuw werd het ook als meetinstrument gebruikt. Zie 2000.0219.GEO en 2000.0220.GEO voor voorbeelden van de 'Camera Lucida'.",
+    "identifier": "2000.0282.GEO",
+    "temporalCoverage": "1800/1850",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "hoekspiegel",
+        "sameAs": "https://data.cultureelerfgoed.nl/term/id/cht/e8fb5077-d503-48f7-9ca3-25aac69d0095"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        },
+        {
+            "@type": "Product",
+            "name": "textiel",
+            "sameAs": "http://vocab.getty.edu/aat/300231565"
+        },
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "ontwerper",
+        "creator": {
+            "@type": "Person",
+            "name": "William Hide (Brits Wollaston"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 25
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 60
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 73
+    },
+    "isRelatedTo": [
+        {
+            "@type": "CreativeWork",
+            "name": "Chambre Claire volgens W.H. Wollaston door P. Berville",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/99082466-41d0-4a49-9508-54a6c6497e38/schema.json",
+            "identifier": "2000.0219.GEO"
+        },
+        {
+            "@type": "CreativeWork",
+            "name": "Demonstatiemodel van Chambre Claire volgens W.H. Wollaston door P. Berville",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/bbc121b2-a1e1-4339-adea-c348c9f98e7b/schema.json",
+            "identifier": "2000.0220.GEO"
+        }
+    ],
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/328d8245-d962-4e52-96ea-094d933f713d",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/328d8245-d962-4e52-96ea-094d933f713d/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0282.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2980
+    }
+}

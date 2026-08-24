@@ -1,0 +1,64 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/7c1bfa0b-87f5-4b1c-8e1b-7093067e7e0f/schema.json",
+    "name": "Bauernfeind-prisma",
+    "description": "Bauernfeind-prima, voor het uitzetten van hoeken van zestig of dertig graden.",
+    "identifier": "2000.0286.GEO",
+    "temporalCoverage": "1875/1900",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "hoekspiegel",
+        "sameAs": "https://data.cultureelerfgoed.nl/term/id/cht/e8fb5077-d503-48f7-9ca3-25aac69d0095"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "ontwerper",
+        "creator": {
+            "@type": "Person",
+            "name": "Karl Maximilian von Bauernfeind"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 55
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 38
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 15
+    },
+    "citation": "W. Schermerhorn & H.J. van Steenis. Leerboek der Landmeetkunde derde druk blz 133",
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/07f1874b-7f4c-4ab7-be1a-a9b70c16f172",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/07f1874b-7f4c-4ab7-be1a-a9b70c16f172/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0286.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2984
+    }
+}

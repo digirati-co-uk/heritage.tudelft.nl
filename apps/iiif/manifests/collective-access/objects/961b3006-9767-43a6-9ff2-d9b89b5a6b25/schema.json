@@ -1,0 +1,90 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/961b3006-9767-43a6-9ff2-d9b89b5a6b25/schema.json",
+    "name": "Rechthoekige coördinatograaf in een houten kist door Haag-Streit AG",
+    "description": "Een rechthoekige coördinatograaf door Haag-Streit AG, voor het uitzetten van rechthoekige coördinaten in een houten kist. In de kist bevindt zich een gebruiksaanwijzing.",
+    "identifier": "2000.0507.GEO",
+    "temporalCoverage": "1950/1975",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "rechthoekige coördinatograaf"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        },
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Haag-Streit AG"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Köniz, Zwitserland",
+        "latitude": 46.92436,
+        "longitude": 7.41457,
+        "sameAs": "https://www.geonames.org/2660119"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 140
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 950
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 710
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/d9a66960-1565-4c87-bc7d-1758a0eb82ee",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/d9a66960-1565-4c87-bc7d-1758a0eb82ee/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0507.GEO.a.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3073
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/a936f6fa-83f2-455e-9bbe-db7e88b50fcb",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/a936f6fa-83f2-455e-9bbe-db7e88b50fcb/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0507.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3074
+        }
+    ]
+}

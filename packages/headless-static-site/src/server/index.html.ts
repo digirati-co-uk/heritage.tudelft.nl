@@ -79,7 +79,7 @@ export function indexHtml() {
             const $config = document.getElementById("config");
 
             const stores = await helper.getStores();
-            const slugs = await helper.getSlugs;
+            const slugs = await helper.getSlugs();
 
             $config.innerText = JSON.stringify(
               {
@@ -127,7 +127,13 @@ export function indexHtml() {
                   url +
                   '&ref=hss">[view]</a>' +
                   (overrides ? '<a class="' + l + '" href="/editor/' + item + '#copy">[save copy]</a>' : "") +
-                  (editable[item] ? '<a target="_blank" class="' + l + '" href="https://manifest-editor.digirati.services/editor/external?manifest=' + url + '">[edit]</a>' : "");
+                  (editable[item]
+                    ? '<a target="_blank" class="' +
+                      l +
+                      '" href="https://manifest-editor.digirati.services/editor/external?manifest=' +
+                      url +
+                      '">[edit]</a>'
+                    : "");
 
                 $ul.appendChild($li);
               }

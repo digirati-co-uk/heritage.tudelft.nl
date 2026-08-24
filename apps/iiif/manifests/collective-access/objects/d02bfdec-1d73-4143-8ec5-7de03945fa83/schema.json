@@ -1,0 +1,57 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/d02bfdec-1d73-4143-8ec5-7de03945fa83/schema.json",
+    "name": "Stangplanimeter door Eckert & Hamann",
+    "description": "Stangplanimeter door Eckert & Hamann, in een verbeterde versie voor oppervlaktebepalingen van percelen en dwars- en lengteprofielen.",
+    "identifier": "2000.0083.GEO",
+    "temporalCoverage": "1897/1910",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "planimeter",
+        "sameAs": "http://vocab.getty.edu/aat/300200057"
+    },
+    "material": {
+        "@type": "Product",
+        "name": "metaal",
+        "sameAs": "http://vocab.getty.edu/aat/300010900"
+    },
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Eckert & Hamann"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 50
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 55
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 225
+    },
+    "citation": "\"Neues Instrument zur Bestimmung des Inhaltes einer gegebenen Fläche\", Zeitung für Landwirthschaft, 22(729) 1 juli 1897, p.97-98.",
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/c6d04cfa-a3fb-4e92-bab7-064fe9bc5f84",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/c6d04cfa-a3fb-4e92-bab7-064fe9bc5f84/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0083.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2800
+    }
+}

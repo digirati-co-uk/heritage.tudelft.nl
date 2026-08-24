@@ -1,0 +1,107 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/1da03a31-f787-4640-bede-ba92ecf53fba/schema.json",
+    "name": "Verticale centimeterbaak door Wild",
+    "description": "Een verticale centimeterbaak van H. Wild Werkstätte met een verdeling op een speciale metaallegering invar. Deze baak kan alleen gebruikt worden in combinatie met de Wild N3 (waterpasinstrument). De combinatie Wild N3 en baak is gebruikt tijdens de 3e nauwkeurigheidswaterpassing t.b.v. NAP. Met behulp van de optische micrometer op het instrument kan op tot op 0,01 mm afgelezen worden. Voor doorgaande nauwkeurigheidswaterpassingen met een waterpasinstrument met planparallelle plaat (Wild N3). Gebruikt bij de derde en vierde nauwkeurigheidswaterpassing. Totale bruikbare lengte is 300 cm.",
+    "identifier": "2000.0511.GEO",
+    "temporalCoverage": "1950/1975",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "waterpasbaak"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Wild Heerbrugg"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 55
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 3070
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 150
+    },
+    "citation": "W. Schermerhorn & H.J. van Steenis. Leerboek der Landmeetjunde derde druk blz 111.",
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/107f68ac-23f4-4f15-9e19-24c7f761b5db",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/107f68ac-23f4-4f15-9e19-24c7f761b5db/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0511.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 10282
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/96723e59-b94e-435b-aa0b-93b8799d8036",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/96723e59-b94e-435b-aa0b-93b8799d8036/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0511a.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 10290
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/b86be13f-7910-43e3-a18d-fa1faa212527",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/b86be13f-7910-43e3-a18d-fa1faa212527/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0511b.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 10291
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/f586fc3f-6036-402a-998d-7a4d9e3044e2",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/f586fc3f-6036-402a-998d-7a4d9e3044e2/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0511c.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 10292
+        }
+    ]
+}

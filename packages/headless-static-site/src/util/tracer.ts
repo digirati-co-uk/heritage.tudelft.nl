@@ -66,6 +66,35 @@ export class Tracer {
     }
   > = {};
 
+  private getThumbnailId(value: any): string | null {
+    if (!value) {
+      return null;
+    }
+    if (typeof value === "string") {
+      return value;
+    }
+    if (Array.isArray(value) && value.length > 0) {
+      const first = value[0];
+      if (typeof first === "string") {
+        return first;
+      }
+      return first?.id || first?.["@id"] || null;
+    }
+    return value?.id || value?.["@id"] || null;
+  }
+
+  private setResourceDefaults(slug: string, value?: { label?: any; thumbnail?: any }) {
+    if (!value) {
+      return;
+    }
+    if (value.label && (!this.resources[slug].label || Object.keys(this.resources[slug].label).length === 0)) {
+      this.resources[slug].label = value.label;
+    }
+    if (value.thumbnail && !this.resources[slug].thumbnail) {
+      this.resources[slug].thumbnail = this.getThumbnailId(value.thumbnail);
+    }
+  }
+
   private ensureResource(slug: string) {
     if (!this.resources[slug]) {
       this.resources[slug] = {
@@ -81,6 +110,12 @@ export class Tracer {
         withinCollections: [],
       };
     }
+  }
+
+  setResourceInfo(resource: ActiveResourceJson, value?: { label?: any; thumbnail?: any }) {
+    const slug = resource.slug;
+    this.ensureResource(slug);
+    this.setResourceDefaults(slug, value);
   }
 
   startExtractions(resource: ActiveResourceJson) {
@@ -112,7 +147,7 @@ export class Tracer {
       this.resources[slug].label = result.meta.label;
     }
     if (result.meta?.thumbnail) {
-      this.resources[slug].thumbnail = result.meta.thumbnail?.id;
+      this.resources[slug].thumbnail = this.getThumbnailId(result.meta.thumbnail);
     }
 
     // Update global extractions tracking

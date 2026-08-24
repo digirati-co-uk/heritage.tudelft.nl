@@ -1,0 +1,103 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/f7ed82aa-e195-40c2-b9e8-f0a457e651d2/schema.json",
+    "name": "Theodoliet door Julius Wanschaff nr. 2",
+    "description": "Theodoliet door Julius Wanschaff, voor het bepalen van horizontale richtingen, voor driehoeksmeting (triangulatie).  De diameter van de horizontale rand is 35 cm. De theodoliet is gebruikt bij de Rijksdriehoeksmeting van Nederland in de periode 1886-1904 (primaire meting). Deze theodoliet is bekend onder de theodoliet nummer 2 (Rijksdriehoeksmeting I). Het ruiterniveau (alhidadeniveau), de kijker en de afleesmicroscopen zijn afneembaar. Aan het einde van beide afleesmicroscopen zijn borsteltjes bevestigd. Zie voor de nummer 1 het inventarisnummer 2000.0103.GEO.",
+    "identifier": "2008.0012.GEO",
+    "temporalCoverage": "1886/1925",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "theodoliet",
+        "sameAs": "http://vocab.getty.edu/aat/300199711"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        },
+        {
+            "@type": "Product",
+            "name": "textiel",
+            "sameAs": "http://vocab.getty.edu/aat/300231565"
+        },
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Julius Wanschaff"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Berlijn, Duitsland",
+        "latitude": 52.5,
+        "longitude": 13.41667,
+        "sameAs": "https://www.geonames.org/2950157"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 710
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 770
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 500
+    },
+    "citation": "zie publicaties van de Nederlandse Commissie voor Geodesie voorheen Rijksciommisie voor Graadmeting en waterpassing.",
+    "isRelatedTo": {
+        "@type": "CreativeWork",
+        "name": "Theodoliet door Julius Wanschaff nr. 1",
+        "sameAs": "https://heritage.tudelft.nl/iiif/manifests/c5cdff9e-95f1-441c-9694-b9ea31583b13/schema.json",
+        "identifier": "2000.0103.GEO"
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/796fb615-9a02-4999-9c79-9f78f168e4fc",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/796fb615-9a02-4999-9c79-9f78f168e4fc/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2008.0012.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 9119
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/f0045987-07da-479c-a972-1c2c49627358",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/f0045987-07da-479c-a972-1c2c49627358/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2008.0012.GEO.JPG",
+            "width": 1600,
+            "height": 1200,
+            "position": 9120
+        }
+    ]
+}

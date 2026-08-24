@@ -20,7 +20,7 @@ export async function createManifestBySlug(slug: string) {
       if (!existsSync(target)) {
         const newId = `manifest-editor/illustrations/${slugWithoutPrefix}.json`;
         const template = await readFile(
-          resolve(cwd(), "content/illustration-template.json"),
+          resolve(cwd(), "public/illustration-template.json"),
           "utf-8",
         );
         const json = JSON.parse(template);

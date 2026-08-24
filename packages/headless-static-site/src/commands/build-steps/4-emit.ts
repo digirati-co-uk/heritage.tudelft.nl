@@ -4,6 +4,7 @@ import { Vault, createThumbnailHelper } from "@iiif/helpers";
 import type { Collection, Manifest } from "@iiif/presentation-3";
 import PQueue from "p-queue";
 import { getValue } from "../../extract/extract-label-string.ts";
+import type { CanvasSearchIndex, CanvasSearchIndexFile } from "../../util/enrich.ts";
 import { isEmpty } from "../../util/is-empty.ts";
 import { makeProgressBar } from "../../util/make-progress-bar.ts";
 import type { ActiveResourceJson } from "../../util/store.ts";
@@ -21,7 +22,8 @@ export async function emit(
     allPaths?: Record<string, string>;
     idsToSlugs?: Record<string, { slug: string; type: string }>;
   },
-  { options, server, cacheDir, buildDir, log, imageServiceLoader, files, search }: BuildConfig
+  { options, server, cacheDir, buildDir, log, imageServiceLoader, files, search, concurrency }: BuildConfig,
+  { canvasSearchIndex }: { canvasSearchIndex?: CanvasSearchIndex }
 ) {
   if (!options.emit) {
     return {};
@@ -34,9 +36,9 @@ export async function emit(
     canvases: 0,
     total: 0,
   };
-  const queue = new PQueue();
-  const canvasQueue = new PQueue({ autoStart: false });
-
+  const queue = new PQueue({ concurrency: concurrency.emit });
+  const canvasQueue = new PQueue({ autoStart: false, concurrency: concurrency.emitCanvas });
+  const canvasSearchIndexFile: CanvasSearchIndexFile = {};
   const siteMap: Record<
     string,
     {
@@ -84,6 +86,57 @@ export async function emit(
   const storeCollections: Record<string, Array<any>> = {};
   const manifestCollection: any[] = [];
   const snippets: Record<string, any> = {};
+  const metaThumbnailBySlug: Record<string, any> = {};
+  const idToSlugMap: Record<
+    string,
+    {
+      slug: string;
+      type: string;
+    }
+  > = {};
+
+  if (idsToSlugs) {
+    for (const [id, value] of Object.entries(idsToSlugs)) {
+      idToSlugMap[id] = value;
+      if (configUrl) {
+        const fileName = value.type === "Manifest" ? "manifest.json" : "collection.json";
+        idToSlugMap[`${configUrl}/${value.slug}/${fileName}`] = value;
+      }
+    }
+  }
+
+  const normalizeThumbnail = (thumbnail: any) => {
+    if (!thumbnail) {
+      return null;
+    }
+    if (Array.isArray(thumbnail)) {
+      return thumbnail.length ? thumbnail : null;
+    }
+    if (typeof thumbnail === "string") {
+      return [{ id: thumbnail, type: "Image" }];
+    }
+    if (thumbnail.id || thumbnail["@id"]) {
+      return [thumbnail];
+    }
+    return null;
+  };
+
+  const getMetaThumbnailForSlug = async (slug: string) => {
+    if (Object.prototype.hasOwnProperty.call(metaThumbnailBySlug, slug)) {
+      return metaThumbnailBySlug[slug];
+    }
+
+    const metaPath = join(cacheDir, slug, "meta.json");
+    if (!files.exists(metaPath)) {
+      metaThumbnailBySlug[slug] = null;
+      return null;
+    }
+
+    const metaJson = await files.loadJson(metaPath);
+    const thumbnail = normalizeThumbnail((metaJson as any).thumbnail || (metaJson as any).default?.thumbnail);
+    metaThumbnailBySlug[slug] = thumbnail;
+    return thumbnail;
+  };
 
   for (let iteration = 0; iteration < 2; iteration++) {
     for (const manifest of allResources) {
@@ -121,14 +174,21 @@ export async function emit(
         vault.getStore().setState(vaultJson);
 
         // @todo thumbnail extraction step and use this.
+        const getMetaThumbnail = async () => {
+          try {
+            const metaJson = await files.loadJson(cache["meta.json"]);
+            return metaJson.thumbnail || metaJson.default?.thumbnail || null;
+          } catch (err) {
+            return null;
+          }
+        };
+
         const getThumbnail = async () => {
           try {
             if (resource.thumbnail) {
               return resource.thumbnail;
             }
-
-            const metaJson = await files.loadJson(cache["meta.json"]);
-            return metaJson.thumbnail || metaJson.default.thumbnail || null;
+            return getMetaThumbnail();
           } catch (err) {
             return null;
           }
@@ -152,7 +212,14 @@ export async function emit(
 
           const maybeThumbnail = await getThumbnail();
           if (maybeThumbnail) {
-            thumbnail = { best: maybeThumbnail };
+            const best = Array.isArray(maybeThumbnail)
+              ? maybeThumbnail[0]
+              : typeof maybeThumbnail === "string"
+                ? { id: maybeThumbnail }
+                : maybeThumbnail;
+            if (best) {
+              thumbnail = { best };
+            }
           }
 
           if (!thumbnail) {
@@ -176,6 +243,13 @@ export async function emit(
               },
               true
             );
+          }
+        }
+
+        if (manifest.type === "Collection" && !resource.thumbnail) {
+          const metaThumbnail = normalizeThumbnail(await getMetaThumbnail());
+          if (metaThumbnail) {
+            resource.thumbnail = metaThumbnail as any;
           }
         }
 
@@ -236,7 +310,9 @@ export async function emit(
             }
 
             if (resource.items) {
-              resource.items = resource.items.map((item: any) => {
+              const rewrittenItems: any[] = [];
+              for (const rawItem of resource.items as any[]) {
+                const item = rawItem as any;
                 if (allPaths[item.path]) {
                   if (item.type === "Manifest") {
                     item.id = `${configUrl}/${allPaths[item.path]}/manifest.json`;
@@ -250,21 +326,87 @@ export async function emit(
                   item.id = newId;
                 }
 
-                if (item.type === "Manifest") {
-                  const hasSnippet = snippets[item.id];
-                  if (hasSnippet) {
-                    item.label = item.label || hasSnippet.label;
-                    item.thumbnail = item.thumbnail || hasSnippet.thumbnail;
-                    item["hss:slug"] = hasSnippet["hss:slug"];
+                let hasSnippet = snippets[item.id];
+                if (!hasSnippet) {
+                  const lookup = item.id ? idToSlugMap[item.id] : null;
+                  if (lookup) {
+                    const fileName = lookup.type === "Manifest" ? "manifest.json" : "collection.json";
+                    const resolvedId = configUrl ? `${configUrl}/${lookup.slug}/${fileName}` : item.id;
+                    hasSnippet = snippets[resolvedId] || indexCollection[lookup.slug];
+                    if (!hasSnippet) {
+                      const fallbackThumbnail = await getMetaThumbnailForSlug(lookup.slug);
+                      hasSnippet = {
+                        label: item.label,
+                        "hss:slug": lookup.slug,
+                        thumbnail: fallbackThumbnail || undefined,
+                      };
+                    }
                   }
                 }
 
-                return item;
-              });
+                if (hasSnippet) {
+                  item.label = item.label || hasSnippet.label;
+                  item.thumbnail = item.thumbnail || hasSnippet.thumbnail;
+                  item["hss:slug"] = item["hss:slug"] || hasSnippet["hss:slug"];
+                }
+
+                rewrittenItems.push(item);
+              }
+              resource.items = rewrittenItems as any;
+            }
+
+            if (!resource.thumbnail && resource.items?.length) {
+              const firstItemWithThumbnail = resource.items.find((item: any) => item?.thumbnail);
+              const derivedItemThumbnail = normalizeThumbnail(firstItemWithThumbnail?.thumbnail);
+              if (derivedItemThumbnail) {
+                resource.thumbnail = derivedItemThumbnail as any;
+                snippet.thumbnail = derivedItemThumbnail;
+              }
             }
           }
 
           files.saveJson(join(manifestBuildDirectory, fileName), resource);
+        }
+
+        if (canvasSearchIndex?.[manifest.slug]) {
+          const searchIndexesToEmit = Object.keys(canvasSearchIndex[manifest.slug]);
+          if (searchIndexesToEmit.length) {
+            canvasSearchIndexFile[manifest.slug] = canvasSearchIndexFile[manifest.slug] || [];
+            for (const searchIndex of searchIndexesToEmit) {
+              const indexDetails = canvasSearchIndex[manifest.slug][searchIndex];
+              const { records, remoteRecords } = indexDetails;
+
+              if (remoteRecords.length) {
+                for (const remoteRecord of remoteRecords) {
+                  if (remoteRecord.url) {
+                    canvasSearchIndexFile[manifest.slug].push({
+                      index: searchIndex,
+                      type: "remote",
+                      canvasIndex: remoteRecord.canvasIndex,
+                      canvas: remoteRecord.canvas,
+                      format: remoteRecord.format,
+                      url: remoteRecord.url,
+                      recordId: remoteRecord.recordId,
+                    });
+                  }
+                }
+              }
+
+              if (records.length) {
+                const indexFile = `${searchIndex}.search.jsonl`;
+                canvasSearchIndexFile[manifest.slug].push({
+                  index: searchIndex,
+                  type: "file",
+                  format: "record-jsonl",
+                  path: join(manifest.slug, indexFile),
+                });
+                await files.writeFile(
+                  join(manifestBuildDirectory, indexFile),
+                  records.map((item) => JSON.stringify(item)).join("\n")
+                );
+              }
+            }
+          }
         }
 
         files.copy(
@@ -339,6 +481,10 @@ export async function emit(
   progress.stop();
 
   stats.total = Date.now() - start;
+
+  // Emit the canvasSearchIndexFile
+  // @todo also emit meta/search/{index}.mapping.json
+  await files.saveJson(join(buildDir, "meta", "canvas-search-index.json"), canvasSearchIndexFile);
 
   return {
     stats,

@@ -1,0 +1,65 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/fffbdfc5-4954-43a4-9b5b-004a221c68c8/schema.json",
+    "name": "Statief met uitschuifbare poten en klemschroef door AGA",
+    "description": "Statief met uitschuifbare poten en klemschroef, behorende bij de holle spiegel reflector van de afstandmeter door AGA, bekend onder inventarisnummer 2000.0334.GEO en 2000.0534.GEO.",
+    "identifier": "2005.0013.GEO",
+    "temporalCoverage": "1950/1975",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "statief (standaarden)",
+        "sameAs": "http://vocab.getty.edu/aat/300164679"
+    },
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "AGA"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 150
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 1520
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 150
+    },
+    "isRelatedTo": [
+        {
+            "@type": "CreativeWork",
+            "name": "Geodimeter-reflector door AGA",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/2fd43a61-fbed-4d36-ab2a-0d002ed5e5d3/schema.json",
+            "identifier": "2000.0334.GEO"
+        },
+        {
+            "@type": "CreativeWork",
+            "name": "Afstandmeter door AGA",
+            "sameAs": "https://heritage.tudelft.nl/iiif/manifests/2d8700a6-8b14-4eaa-ba13-2c23eb80d184/schema.json",
+            "identifier": "2000.0534.GEO"
+        }
+    ],
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/d65d4a2e-c196-4622-88ad-fba5cb150695",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/d65d4a2e-c196-4622-88ad-fba5cb150695/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2005.0013.GEO.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 3212
+    }
+}
