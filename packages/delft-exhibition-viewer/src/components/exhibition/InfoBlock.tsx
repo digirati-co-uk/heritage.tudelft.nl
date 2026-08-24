@@ -16,15 +16,19 @@ export interface InfoBlockProps {
   id?: string;
   scrollEnabled?: boolean;
   index: number;
+  content?: {
+    readMore?: string;
+  };
 }
 
-export function InfoBlock({ id, index, canvas, strategy, firstInfo, scrollEnabled }: InfoBlockProps) {
+export function InfoBlock({ id, index, canvas, strategy, firstInfo, scrollEnabled, content }: InfoBlockProps) {
   const className = getClassName(canvas.behavior, firstInfo);
   const locale = useIIIFLanguage();
   const items = getItemsByLocale(strategy.items, locale);
   const vault = useVault();
   const annotationPage = vault.get(canvas.annotations || []);
   const annotations = vault.get(annotationPage.flatMap((page) => page?.items || []));
+  const readMoreLabel = content?.readMore || "Read more";
 
   return (
     <BaseGridSection
@@ -53,11 +57,11 @@ export function InfoBlock({ id, index, canvas, strategy, firstInfo, scrollEnable
           <Suspense
             fallback={
               <div className="underline underline-offset-4">
-                <LocaleString>Read more</LocaleString>
+                <LocaleString>{readMoreLabel}</LocaleString>
               </div>
             }
           >
-            <ReadMoreBlock />
+            <ReadMoreBlock label={readMoreLabel} />
           </Suspense>
         ) : (
           ""

@@ -19,6 +19,7 @@ export interface ExhibitionPageProps {
   content: {
     exhibition: string;
     tableOfContents: string;
+    readMore: string;
   };
 }
 

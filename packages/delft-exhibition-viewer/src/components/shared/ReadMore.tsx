@@ -6,7 +6,7 @@ import { usePress } from "react-aria";
 import { LocaleString } from "react-iiif-vault";
 import { InfoBlockContentsInner } from "./InfoBlockContents";
 
-export function ReadMoreBlock() {
+export function ReadMoreBlock({ label = "Read more" }: { label?: string }) {
   const [isOpen, setIsOpen] = useState(false);
   const annotationsToShow = useInfoBlockContents();
   const { pressProps: closeProps } = usePress({
@@ -38,7 +38,7 @@ export function ReadMoreBlock() {
         </div>
       </Dialog>
       <button className="underline underline-offset-4" {...openProps}>
-        <LocaleString>Read more</LocaleString>
+        <LocaleString>{label}</LocaleString>
       </button>
     </>
   );

@@ -11,6 +11,7 @@ export * from "./components/exhibition/BaseExhibitionBlock";
 export * from "./components/exhibition/ImageBlock";
 export * from "./components/exhibition/InfoBlock";
 export * from "./components/exhibition/MediaBlock";
+export * from "./components/exhibition/RangeTitleBlock";
 export * from "./components/exhibition/TitleBlock";
 
 // Icons
@@ -53,11 +54,13 @@ export * from "./DelftSlideshow";
 
 // Helpers
 export * from "./helpers/exhibition-store";
+export * from "./helpers/canvas-navigation";
 export * from "./helpers/exhibition";
 export * from "./helpers/get-items-by-locale";
 export * from "./helpers/MapCanvases";
 export * from "./helpers/MapCanvasStrategy";
 export * from "./helpers/object-links";
+export * from "./helpers/range-navigation";
 export * from "./helpers/use-canvas-highlights";
 export * from "./helpers/use-hash-value";
 export * from "./helpers/use-intersection-ref";
