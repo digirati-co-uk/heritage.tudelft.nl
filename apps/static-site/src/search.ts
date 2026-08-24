@@ -2,6 +2,11 @@ import { facetConfig } from "@/facets";
 import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter";
 import type { TypesenseInstantsearchAdapterOptions } from "typesense-instantsearch-adapter";
 import { IIIF_URL } from "./iiif.client";
+import {
+  createSessionCacheKey,
+  getSessionJSON,
+  setSessionJSON,
+} from "./search-session";
 
 const TYPESENSE_API_KEY =
   process.env.NEXT_PUBLIC_TYPESENSE_API_KEY ||
@@ -33,7 +38,7 @@ const searchConfiguration: TypesenseInstantsearchAdapterOptions = {
   additionalSearchParameters: {},
 };
 
-export async function createTypesense() {
+export async function createTypesense(randomSeed?: number) {
   const manifestSchema: any = await fetch(
     `${IIIF_URL}meta/search/manifests.schema.json`,
   ).then((r) => r.json());
@@ -76,11 +81,34 @@ export async function createTypesense() {
     highlight_fields: "label,summary",
     highlight_start_tag: "<mark>",
     highlight_end_tag: "</mark>",
-    sort_by: "_rand():asc",
     per_page: 20,
   };
 
   const client = new TypesenseInstantSearchAdapter(searchConfiguration);
+  const searchClient = client.searchClient as any;
+  const search = searchClient.search.bind(searchClient);
+
+  searchClient.search = async (requests: any[] | any) => {
+    const isMultiSearch = Array.isArray(requests);
+    const requestList = isMultiSearch ? requests : [requests];
+    const cacheKey = getRandomSearchCacheKey(randomSeed, requestList);
+    const cachedResponse = cacheKey ? getSessionJSON<any>(cacheKey) : undefined;
+
+    if (cachedResponse) return cachedResponse;
+
+    const randomizedRequests = requestList.map((request: any) =>
+      withRandomSort(request, randomSeed),
+    );
+    const response = await search(
+      isMultiSearch ? randomizedRequests : randomizedRequests[0],
+    );
+
+    if (cacheKey) {
+      setSessionJSON(cacheKey, response);
+    }
+
+    return response;
+  };
 
   return {
     facets: finalFacets,
@@ -90,15 +118,43 @@ export async function createTypesense() {
   };
 }
 
-// Helper function to toggle random sorting at runtime:
-export function updateSearchAdapter(
-  query: string,
-  adapter: TypesenseInstantSearchAdapter,
+function withRandomSort(request: any, randomSeed?: number) {
+  const indexName = stripSort(request.indexName);
+  const hasQuery = (request.params?.query || "").trim();
+
+  return {
+    ...request,
+    indexName: hasQuery
+      ? indexName
+      : `${indexName}/sort/${getRandomSort(randomSeed)}`,
+  };
+}
+
+function getRandomSort(randomSeed?: number) {
+  return randomSeed ? `_rand(${randomSeed}):asc` : "_rand():asc";
+}
+
+function stripSort(indexName: string) {
+  return indexName.replace(/\/sort\/.*$/, "");
+}
+
+function getRandomSearchCacheKey(
+  randomSeed: number | undefined,
+  requests: any[],
 ) {
-  const params = searchConfiguration.additionalSearchParameters;
-  const enable = query.trim().length === 0;
-  if (params) {
-    params.sort_by = enable ? "_rand():asc" : "";
+  if (!randomSeed) return null;
+  if (requests.some((request) => (request.params?.query || "").trim())) {
+    return null;
   }
-  adapter.updateConfiguration(searchConfiguration);
+
+  return createSessionCacheKey("typesense-random", [
+    randomSeed,
+    requests.map((request) => ({
+      indexName: stripSort(request.indexName),
+      params: {
+        ...(request.params || {}),
+        query: "",
+      },
+    })),
+  ]);
 }

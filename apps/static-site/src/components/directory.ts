@@ -4,6 +4,7 @@ import { HeadingParagraph } from "@/components/blocks/HeadingParagraph";
 import { FeaturedCardGrid } from "@/components/blocks/FeaturedCardGrid";
 import { InfoBox } from "@/components/blocks/InfoBox";
 import { createDirectory } from "@page-blocks/react";
+import { HomepageSearchBlock } from "./pages/HomepageSearch";
 import * as FramePanel from "./blocks/FramePanel";
 
 export const directory = createDirectory({
@@ -23,6 +24,7 @@ export const directory = createDirectory({
     FramePanel: FramePanel.default,
     FeaturedCardGrid,
     InfoBox,
+    HomepageSearch: HomepageSearchBlock,
   },
 });
 
