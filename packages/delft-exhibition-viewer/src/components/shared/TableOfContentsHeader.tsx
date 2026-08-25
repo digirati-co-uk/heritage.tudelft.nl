@@ -10,18 +10,18 @@ export function TableOfContentsHeader({
 }) {
   return (
     <div
-      className={"col-span-12 w-full px-5 pb-8 text-black scroll-m-9"}
+      className={"col-span-12 w-full pr-5 pb-9 text-black scroll-m-9"}
       id="top"
     >
-      <div className="flex flex-col gap-5">
-        <div className="flex flex-row justify-between">
-          <div className="text-xl uppercase">{content.exhibition}</div>
+      <div className="flex flex-col gap-2">
+        <h1 className="text-4xl font-medium leading-tight">
+          <LocaleString>{label}</LocaleString>
+        </h1>
+        {/*
+        <div className="font-mono delft-title text-xl font-normal tracking-normal opacity-70">
+          {content.exhibition}
         </div>
-        <div className="flex flex-row justify-between">
-          <h2 className="text-4xl font-light">
-            <LocaleString>{label}</LocaleString>
-          </h2>
-        </div>
+        */}
       </div>
     </div>
   );

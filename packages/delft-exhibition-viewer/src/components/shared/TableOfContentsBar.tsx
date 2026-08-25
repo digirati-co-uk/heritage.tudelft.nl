@@ -204,7 +204,7 @@ export function TableOfContentsBar({
           open={isTocOpen}
           onClose={() => setTocOpen(false)}
         >
-          <Dialog.Panel className="delft-toc-contents z-40 flex w-full max-w-screen-xl flex-col px-10 py-6 text-TextPrimary overflow-y-auto">
+          <Dialog.Panel className="delft-toc-contents z-40 flex w-full max-w-screen-xl flex-col px-10 pb-6 pt-3 text-TextPrimary overflow-y-auto">
             <TableOfContents
               treeLabel={tree?.label}
               items={items}

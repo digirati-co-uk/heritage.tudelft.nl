@@ -105,6 +105,13 @@ export function DelftExhibitionInner(props: DelftExhibitionProps) {
     () => groupRangeItemsByCanvasIndex(tableOfContentsItems),
     [tableOfContentsItems],
   );
+  const firstRangeTitleCanvasIndex = useMemo(
+    () =>
+      tableOfContentsItems.find(
+        (item) => item.type === "Range" && item.depth === 0 && item.canvasIndex !== undefined,
+      )?.canvasIndex,
+    [tableOfContentsItems],
+  );
 
   useEffect(() => {
     if (typeof window === "undefined" || !window.location.hash) return;
@@ -133,7 +140,13 @@ export function DelftExhibitionInner(props: DelftExhibitionProps) {
   const renderRangeTitles = (index: number) => {
     if (hideRangeTitles) return null;
     const rangeTitles = rangeTitlesByCanvasIndex.get(index);
-    return rangeTitles?.length ? <RangeTitleBlock items={rangeTitles} scrollEnabled={!enabled} /> : null;
+    return rangeTitles?.length ? (
+      <RangeTitleBlock
+        items={rangeTitles}
+        isFirstRangeTitle={firstRangeTitleCanvasIndex === 0 && index === firstRangeTitleCanvasIndex}
+        scrollEnabled={!enabled}
+      />
+    ) : null;
   };
 
   const { pressProps: closeButtonProps } = usePress({

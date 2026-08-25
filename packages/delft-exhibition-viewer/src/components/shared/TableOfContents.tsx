@@ -30,10 +30,10 @@ export function TableOfContents({
 
   return (
     <>
-      <div className="mb-2 flex flex-col">
+      <div className="flex flex-col pb-4">
         <div className="flex">
           {showManifestDetails ? (
-            <LocaleString as="div" className="flex-1 font-mono text-lg uppercase">
+            <LocaleString as="div" className="flex-1 font-mono text-lg uppercase sm:text-2xl">
               {content.tableOfContents}
             </LocaleString>
           ) : (
@@ -83,7 +83,7 @@ export function TableOfContents({
                 <a
                   className={twMerge(
                     "text-md w-fit leading-tight underline-offset-4 hover:underline",
-                    active ? "font-bold underline" : "",
+                    active ? "font-bold" : "",
                   )}
                   href={getTableOfContentsItemHref(item)}
                   aria-current={active ? "location" : undefined}
