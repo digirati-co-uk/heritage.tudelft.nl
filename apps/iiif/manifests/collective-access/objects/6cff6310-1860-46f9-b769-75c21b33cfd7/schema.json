@@ -3,7 +3,7 @@
     "@type": "CreativeWork",
     "@id": "https://heritage.tudelft.nl/iiif/manifests/6cff6310-1860-46f9-b769-75c21b33cfd7/schema.json",
     "name": "3x rechthoekige spiegels in originele houten doos",
-    "description": "3x rechthoekige spiegels. In originele houten doos, gevoerd met groene vilt. \"ODETA\" handgeschreven op onderkant.",
+    "description": "3x rechthoekige spiegels. In originele houten doos, gevoerd met groene vilt. \"ODETA\" handgeschreven op onderkant.;3x rechthoekige spiegels. In originele houten doos, gevoerd met groene vilt. \"ODETA\" handgeschreven op onderkant.",
     "identifier": "2024.0116.TNW",
     "temporalCoverage": "1950/1979",
     "exampleOfWork": {
@@ -11,11 +11,18 @@
         "name": "spiegel",
         "sameAs": "http://vocab.getty.edu/aat/300037682"
     },
-    "material": {
-        "@type": "Product",
-        "name": "glas",
-        "sameAs": "http://vocab.getty.edu/aat/300010797"
-    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        }
+    ],
     "height": {
         "@type": "QuantitativeValue"
     },

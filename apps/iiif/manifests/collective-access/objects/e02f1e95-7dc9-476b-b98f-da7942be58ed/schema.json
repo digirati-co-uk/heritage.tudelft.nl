@@ -1,0 +1,62 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/e02f1e95-7dc9-476b-b98f-da7942be58ed/schema.json",
+    "name": "Model van geostationaire satelliet GEOS schaal 1:20 door Hupkens Models",
+    "description": "Model van geostationaire satelliet GEOS (schaal 1:20) door Hupkens Models, met zonnepanelen. Het model, dat op een standaard staat, heeft aan de boven- en onderkant telkens vier antenne's, vier afneembare armen met instrumentarium aan de uiteinden. De GEOS, die gebruikt werd voor het meten van elektrische en magnetische velden, is in 1977 gelanceerd en bevond zich in geostationaire baan op 35900 km hoogte.",
+    "identifier": "2000.0140.TMD",
+    "temporalCoverage": "1975",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "Model"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "kunststof",
+            "sameAs": "https://data.cultureelerfgoed.nl/term/id/cht/923ba596-bc30-44f5-a26c-cac680e3808d"
+        },
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Hupkens Models"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 330
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 280
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 280
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/0029763c-a0de-4691-9232-70d0d3feb567",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/0029763c-a0de-4691-9232-70d0d3feb567/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2000.0140.TMD.JPG",
+        "width": 1600,
+        "height": 1200,
+        "position": 4110
+    }
+}

@@ -1,0 +1,72 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/c2bbffad-9457-40e2-ae56-c6638883ecd7/schema.json",
+    "name": "Dwarsdoorsnede van elektronenbuis door Philips type PL 81",
+    "description": "Een dwarsdoorsnede (van boven af) van een elektronenbuis geproduceerd door Philips van het type PL 81 Pentode. De buis is in kunsthars gegoten. Het type is een lijntijdbasis-buis en deze werd in de eerste generatie televisieontvangers toegepast.",
+    "identifier": "2003.0069.EWI",
+    "temporalCoverage": "1950/1975",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "elektronenbuis"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        },
+        {
+            "@type": "Product",
+            "name": "kunststof",
+            "sameAs": "https://data.cultureelerfgoed.nl/term/id/cht/923ba596-bc30-44f5-a26c-cac680e3808d"
+        },
+        {
+            "@type": "Product",
+            "name": "hars",
+            "sameAs": "http://vocab.getty.edu/aat/300012882"
+        },
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Koninklijke Philips Electronics"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 50
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 120
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 70
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/ad0021b0-d363-4057-b16b-5579419604bb",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/ad0021b0-d363-4057-b16b-5579419604bb/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2003.0069.EWI.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2684
+    }
+}
