@@ -1,0 +1,73 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/8c3eed85-0948-4bb1-89fb-d83124a6f14b/schema.json",
+    "name": "Microscoop door Nedoptifa",
+    "description": "Microscoop geproduceerd door de Nederlandsche Optiek- en Instrumentenfabriek Dr. C.E. Bleeker (Nedoptifa) in Zeist. Deze microscoop is voorzien van serienummer 12598. Het oculair is geproduceerd door Busch met een vergroting van factor 5. De revolver is voorzien van drie objectieven: Nedoptifa Zeist N50 x0.85 No 13258, Nedoptifa Utrecht N8 x0.25 No 7875 en Ernst Leitz Welzlar 2.",
+    "identifier": "2022.0005.CTG",
+    "temporalCoverage": "1932/1978",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "microscoop"
+    },
+    "material": {
+        "@type": "Product",
+        "name": "metaal",
+        "sameAs": "http://vocab.getty.edu/aat/300010900"
+    },
+    "creator": [
+        {
+            "@type": "Role",
+            "roleName": "producent",
+            "creator": {
+                "@type": "Organization",
+                "name": "Bleeker Nedoptifa"
+            }
+        }
+    ],
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "CMT",
+        "value": 31
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "CMT",
+        "value": 15
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "CMT",
+        "value": 18
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/18f68785-b0c9-4b2f-bb0c-6ab1769ac672",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/18f68785-b0c9-4b2f-bb0c-6ab1769ac672/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2022.0005.CTG.JPG",
+            "width": 1600,
+            "height": 1200,
+            "position": 9792
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/202d4932-8a17-41d7-a28f-bda2729d3772",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/202d4932-8a17-41d7-a28f-bda2729d3772/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2022.0005a.CTG.JPG",
+            "width": 1600,
+            "height": 1200,
+            "position": 9793
+        }
+    ]
+}
