@@ -1,0 +1,83 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/a5fec446-e264-4fb7-835d-78f0dbc627ae/schema.json",
+    "name": "Stroomregelaar door Bleeker Nedoptifa",
+    "description": "Instrument waarmee een elektrische stroom zeer fijn kan worden afgesteld. Het instrument is voorzien van een aangekoppelde netvoeding en een ingebouwde meter. Bereik van 0-1.1 Volt.",
+    "identifier": "1994.0333.TMD",
+    "temporalCoverage": "1950/1975",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "Meetinstrument"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "hout",
+            "sameAs": "http://vocab.getty.edu/aat/300011914"
+        },
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "kunststof",
+            "sameAs": "https://data.cultureelerfgoed.nl/term/id/cht/923ba596-bc30-44f5-a26c-cac680e3808d"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "Bleeker Nedoptifa"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 330
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 330
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 160
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/4ab960fa-c35d-476e-ae7c-a7e838d5afec",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/4ab960fa-c35d-476e-ae7c-a7e838d5afec/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "1994.0333.TMD.JPG",
+            "width": 1600,
+            "height": 1200,
+            "position": 4697
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/3b9f05f7-9344-4aa7-ace4-15924351b581",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/3b9f05f7-9344-4aa7-ace4-15924351b581/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "1994.0333.TMD.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 9428
+        }
+    ]
+}

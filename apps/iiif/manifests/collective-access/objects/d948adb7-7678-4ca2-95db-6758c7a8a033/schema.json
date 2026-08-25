@@ -1,0 +1,71 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/d948adb7-7678-4ca2-95db-6758c7a8a033/schema.json",
+    "name": "Model van verticale stoommachine door Zimmer en Zonen",
+    "description": "Model van een verticale stoommachine door Zimmer en Zonen. De machine is voorzien van een gouverneur (een inrichting om de machine met een constante snelheid te laten lopen) en een pomp.",
+    "identifier": "1991.0016.TMD",
+    "temporalCoverage": "1845",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "Model"
+    },
+    "material": {
+        "@type": "Product",
+        "name": "metaal",
+        "sameAs": "http://vocab.getty.edu/aat/300010900"
+    },
+    "creator": {
+        "@type": "Role",
+        "roleName": "maker",
+        "creator": {
+            "@type": "Organization",
+            "name": "Zimmer En Zonen"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 665
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 444
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 450
+    },
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/544475b3-c7c2-4b3f-87e1-d8ab3af1a284",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/544475b3-c7c2-4b3f-87e1-d8ab3af1a284/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "1991.0016.TMD.a.JPG",
+            "width": 1600,
+            "height": 1200,
+            "position": 3857
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/507a38ff-ebe2-4f14-be53-3d0b19dcd2d4",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/507a38ff-ebe2-4f14-be53-3d0b19dcd2d4/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "1991.0016.TMD.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3858
+        }
+    ]
+}
