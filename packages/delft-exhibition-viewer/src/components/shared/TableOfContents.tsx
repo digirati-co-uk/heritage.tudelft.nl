@@ -6,6 +6,8 @@ import {
   getTableOfContentsItemHref,
   type TableOfContentsItem,
 } from "@/helpers/range-navigation";
+import { getCanvasNavigationId } from "@/helpers/canvas-navigation";
+import { scrollElementIntoViewInstantly } from "@/helpers/instant-scroll";
 import { useHashValue } from "@/helpers/use-hash-value";
 import { IIIFIcon } from "@/components/icons/IIIFIcon";
 
@@ -24,9 +26,23 @@ export function TableOfContents({
   showManifestDetails?: boolean;
 }) {
   const manifest = useManifest();
-  const [hash] = useHashValue();
+  const [hash, setHash] = useHashValue();
   const currentItem = providedCurrentItem || findCurrentTableOfContentsItem(items, hash);
   let topLevelIndex = 0;
+
+  const scrollToItem = (item: TableOfContentsItem) => {
+    const target =
+      document.getElementById(item.targetId) ||
+      (item.canvasIndex !== undefined ? document.getElementById(getCanvasNavigationId(item.canvasIndex)) : null);
+    if (!target) return false;
+
+    const href = getTableOfContentsItemHref(item);
+    const hashValue = href.startsWith("#") ? href.slice(1) : href;
+    scrollElementIntoViewInstantly(target, { block: "start" });
+    window.history.pushState(null, "", href);
+    setHash(hashValue);
+    return true;
+  };
 
   return (
     <>
@@ -87,6 +103,11 @@ export function TableOfContents({
                   )}
                   href={getTableOfContentsItemHref(item)}
                   aria-current={active ? "location" : undefined}
+                  onClick={(event) => {
+                    if (scrollToItem(item)) {
+                      event.preventDefault();
+                    }
+                  }}
                 >
                   {label}
                 </a>

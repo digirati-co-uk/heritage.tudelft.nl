@@ -19,6 +19,7 @@ import { TopIcon } from "./components/icons/TopIcon";
 import { TableOfContentsBar } from "./components/shared/TableOfContentsBar";
 import { TableOfContentsHeader } from "./components/shared/TableOfContentsHeader";
 import { MapCanvasStrategy } from "./helpers/MapCanvasStrategy";
+import { scrollElementIntoViewInstantly } from "./helpers/instant-scroll";
 import { createTableOfContentsItems, groupRangeItemsByCanvasIndex } from "./helpers/range-navigation";
 
 export type DelftExhibitionProps = {
@@ -114,6 +115,22 @@ export function DelftExhibitionInner(props: DelftExhibitionProps) {
   );
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+    const root = document.documentElement;
+    const body = document.body;
+    const previousRootScrollBehavior = root.style.scrollBehavior;
+    const previousBodyScrollBehavior = body.style.scrollBehavior;
+
+    root.style.scrollBehavior = "auto";
+    body.style.scrollBehavior = "auto";
+
+    return () => {
+      root.style.scrollBehavior = previousRootScrollBehavior;
+      body.style.scrollBehavior = previousBodyScrollBehavior;
+    };
+  }, []);
+
+  useEffect(() => {
     if (typeof window === "undefined" || !window.location.hash) return;
     const hash = window.location.hash.slice(1);
     const targetId = (() => {
@@ -129,7 +146,7 @@ export function DelftExhibitionInner(props: DelftExhibitionProps) {
     const frame = window.requestAnimationFrame(() => {
       const target = document.getElementById(targetId);
       if (target) {
-        target.scrollIntoView({ block: "start" });
+        scrollElementIntoViewInstantly(target, { block: "start" });
         initialHashScrollKey.current = scrollKey;
       }
     });

@@ -34,6 +34,11 @@
   --delft-title-transform: uppercase;
 }
 
+html:has(.delft-exhibition-viewer),
+body:has(.delft-exhibition-viewer) {
+  scroll-behavior: auto;
+}
+
 .exhibition-viewer.exhibition-viewer-dialog {
   @apply relative z-50;
 }

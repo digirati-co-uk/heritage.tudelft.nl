@@ -5,9 +5,9 @@ import { type ReactNode, useCallback, useEffect, useLayoutEffect, useMemo, useRe
 import { useHover } from "react-aria";
 import { CanvasContext, CanvasPanel, useCanvas, useVault } from "react-iiif-vault";
 import { LocaleString } from "react-iiif-vault";
-import { LazyLoadComponent } from "react-lazy-load-image-component";
 import { twMerge } from "tailwind-merge";
 import invariant from "tiny-invariant";
+import { useIntersectionObserver } from "usehooks-ts";
 import { useStore } from "zustand";
 import { createExhibitionStore } from "../helpers/exhibition-store";
 import { useCanvasHighlights } from "../helpers/use-canvas-highlights";
@@ -35,6 +35,9 @@ export interface CanvasPreviewBlockProps {
   }>;
   viewTransition?: boolean;
 }
+
+const EAGER_CANVAS_COUNT = 3;
+const LAZY_LOAD_ROOT_MARGIN = "1200px 0px";
 
 function CanvasPreviewBlockInner({
   cover,
@@ -485,6 +488,16 @@ function CanvasPreviewBlockInner({
 }
 
 export function CanvasPreviewBlock(props: CanvasPreviewBlockProps) {
+  const [lazyRef, isNearViewport] = useIntersectionObserver({
+    threshold: 0,
+    root: null,
+    rootMargin: LAZY_LOAD_ROOT_MARGIN,
+    initialIsIntersecting: props.index < EAGER_CANVAS_COUNT,
+  });
+  const shouldRender =
+    props.index < EAGER_CANVAS_COUNT ||
+    isNearViewport ||
+    (typeof window !== "undefined" && !("IntersectionObserver" in window));
   const inner = props.canvasId ? (
     <CanvasContext canvas={props.canvasId}>
       <CanvasPreviewBlockInner {...props} />
@@ -493,16 +506,9 @@ export function CanvasPreviewBlock(props: CanvasPreviewBlockProps) {
     <CanvasPreviewBlockInner {...props} />
   );
 
-  // if (props.index < 3) {
-  return <div className="relative h-full w-full bg-ViewerBackground">{inner}</div>;
-  // }
-
-  // @todo come back to this, breaking some things.
   return (
-    <div className="relative h-full w-full bg-ViewerBackground">
-      <LazyLoadComponent placeholder={<div />} visibleByDefault={false} threshold={300}>
-        {inner}
-      </LazyLoadComponent>
+    <div ref={lazyRef} className="relative h-full w-full bg-ViewerBackground">
+      {shouldRender ? inner : null}
     </div>
   );
 }
