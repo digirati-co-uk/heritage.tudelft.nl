@@ -82,6 +82,7 @@ export default async function Exhibition({
             content={{
               exhibition: t("Exhibition"),
               tableOfContents: t("Table of contents"),
+              readMore: t("Read more"),
             }}
           />
           <Slot name="exhibition" context={{ locale, exhibition }} />

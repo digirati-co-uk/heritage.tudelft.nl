@@ -1,13 +1,56 @@
 import { Dialog } from "@headlessui/react";
-import { createRangeHelper, getValue } from "@iiif/helpers";
+import { createRangeHelper } from "@iiif/helpers";
 import type { InternationalString } from "@iiif/presentation-3";
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { usePress } from "react-aria";
 import { LocaleString, useManifest, useVault, useVaultSelector } from "react-iiif-vault";
 import { twMerge } from "tailwind-merge";
+import {
+  createTableOfContentsItems,
+  findCurrentTableOfContentsItem,
+  type TableOfContentsItem,
+} from "../../helpers/range-navigation";
+import { getCanvasNavigationId } from "../../helpers/canvas-navigation";
 import { useHashValue } from "../../helpers/use-hash-value";
 import { ContentsIcon } from "../icons/ContentsIcon";
 import { TableOfContents } from "./TableOfContents";
+
+function findCurrentItemFromScrollPosition(items: TableOfContentsItem[]) {
+  if (typeof window === "undefined") return null;
+
+  let currentItem: TableOfContentsItem | null = null;
+  let nextItem: { item: TableOfContentsItem; top: number } | null = null;
+
+  for (const [index, item] of items.entries()) {
+    const nextCanvasIndex = items.slice(index + 1).find((candidate) => candidate.canvasIndex !== undefined)?.canvasIndex;
+    const lastFallbackCanvasIndex =
+      item.canvasIndex === undefined
+        ? undefined
+        : nextCanvasIndex === undefined || nextCanvasIndex <= item.canvasIndex
+          ? item.canvasIndex
+          : nextCanvasIndex - 1;
+    let element = document.getElementById(item.targetId);
+    if (!element && item.canvasIndex !== undefined && lastFallbackCanvasIndex !== undefined) {
+      for (let canvasIndex = item.canvasIndex; canvasIndex <= lastFallbackCanvasIndex; canvasIndex++) {
+        element = document.getElementById(getCanvasNavigationId(canvasIndex));
+        if (element) break;
+      }
+    }
+    if (!element) continue;
+
+    const top = element.getBoundingClientRect().top;
+    if (top <= 40) {
+      currentItem = item;
+      continue;
+    }
+
+    if (!nextItem || top < nextItem.top) {
+      nextItem = { item, top };
+    }
+  }
+
+  return currentItem || nextItem?.item || null;
+}
 
 export function TableOfContentsBar({
   initialOpen = false,
@@ -17,6 +60,8 @@ export function TableOfContentsBar({
   content,
   onPlay,
   children,
+  enabledCanvasId,
+  showManifestDetails = true,
 }: {
   hideInitial?: boolean;
   initialOpen?: boolean;
@@ -25,6 +70,8 @@ export function TableOfContentsBar({
   content: { tableOfContents: string | InternationalString };
   onPlay?: () => void;
   children?: React.ReactNode;
+  enabledCanvasId?: string;
+  showManifestDetails?: boolean;
 }) {
   const [hash] = useHashValue(() => {
     // custom on change.
@@ -36,17 +83,55 @@ export function TableOfContentsBar({
   const range = useVaultSelector((s, vault) => vault.get((manifest?.structures || [])[0]));
   const canvases = useVaultSelector((s, vault) => vault.get(manifest?.items || []));
   const tree = useMemo(() => rangeHelper.rangeToTableOfContentsTree(range), [range, rangeHelper]);
+  const items = useMemo(() => createTableOfContentsItems(tree, canvases), [tree, canvases]);
 
-  const items = tree?.items || canvases || [];
+  const hashCurrentItem = findCurrentTableOfContentsItem(items, hash);
+  const [scrollCurrentItem, setScrollCurrentItem] = useState<TableOfContentsItem | null>(null);
 
-  const hashAsNumber = hash ? Number.parseInt(hash, 10) : null;
-  const currentItem = hashAsNumber ? items[hashAsNumber] : null;
+  const refreshScrollCurrentItem = useCallback(() => {
+    setScrollCurrentItem(findCurrentItemFromScrollPosition(items));
+  }, [items]);
+
+  useEffect(() => {
+    if (!items.length || typeof window === "undefined") {
+      setScrollCurrentItem(null);
+      return;
+    }
+
+    let frame: number | null = null;
+    const scheduleRefresh = () => {
+      if (frame !== null) return;
+      frame = window.requestAnimationFrame(() => {
+        frame = null;
+        refreshScrollCurrentItem();
+      });
+    };
+
+    scheduleRefresh();
+    window.addEventListener("scroll", scheduleRefresh, { passive: true });
+    window.addEventListener("resize", scheduleRefresh);
+
+    return () => {
+      if (frame !== null) window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", scheduleRefresh);
+      window.removeEventListener("resize", scheduleRefresh);
+    };
+  }, [items, refreshScrollCurrentItem]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const frame = window.requestAnimationFrame(refreshScrollCurrentItem);
+    return () => window.cancelAnimationFrame(frame);
+  }, [hash, refreshScrollCurrentItem]);
+
+  const currentItem = scrollCurrentItem || hashCurrentItem;
 
   const [isTocOpen, setTocOpen] = useState(initialOpen);
 
   const toggleProps = usePress({
     onPress: () => {
-      setTocOpen((o) => !o);
+      if (!isTocOpen) refreshScrollCurrentItem();
+      setTocOpen((isOpen) => !isOpen);
     },
   });
 
@@ -54,7 +139,14 @@ export function TableOfContentsBar({
     <div className="relative">
       {!fixed && isTocOpen ? (
         <div className="delft-toc-contents absolute bottom-0 z-30 mb-14 px-14 py-4 text-TextPrimary overflow-y-auto bg-ControlBar left-0 right-0">
-          <TableOfContents items={items} treeLabel={tree?.label} />
+          <TableOfContents
+            items={items}
+            content={content}
+            currentItem={currentItem}
+            treeLabel={tree?.label}
+            enabledCanvasId={enabledCanvasId}
+            showManifestDetails={showManifestDetails}
+          />
         </div>
       ) : null}
 
@@ -112,8 +204,15 @@ export function TableOfContentsBar({
           open={isTocOpen}
           onClose={() => setTocOpen(false)}
         >
-          <Dialog.Panel className="delft-toc-contents z-40 flex w-full max-w-screen-xl flex-col px-10 py-6 text-TextPrimary border-b overflow-y-auto border-ControlBarBorder">
-            <TableOfContents treeLabel={tree?.label} items={items} />
+          <Dialog.Panel className="delft-toc-contents z-40 flex w-full max-w-screen-xl flex-col px-10 pb-6 pt-3 text-TextPrimary overflow-y-auto">
+            <TableOfContents
+              treeLabel={tree?.label}
+              items={items}
+              content={content}
+              currentItem={currentItem}
+              enabledCanvasId={enabledCanvasId}
+              showManifestDetails={showManifestDetails}
+            />
           </Dialog.Panel>
         </Dialog>
       ) : null}

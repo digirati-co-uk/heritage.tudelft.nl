@@ -1,12 +1,18 @@
 import { flushSync } from "react-dom";
 
+type ViewTransitionElement = HTMLElement | null | (() => HTMLElement | null);
+
+function getTransitionElement(element: ViewTransitionElement) {
+  return typeof element === "function" ? element() : element;
+}
+
 export function withViewTransition(
-  element: HTMLElement | null,
-  fn: () => any,
+  element: ViewTransitionElement,
+  fn: (event?: unknown) => any,
   name: string,
   out = false,
   enabled = false,
-) {
+): (event?: unknown) => any {
   if (
     (typeof document !== "undefined" && !document.startViewTransition) ||
     !enabled
@@ -14,20 +20,28 @@ export function withViewTransition(
     return fn;
   }
 
-  return (e: any) => {
-    if (!element || typeof document === "undefined") return fn();
-    if (!out) {
-      element.style.viewTransitionName = name;
+  return (event?: unknown) => {
+    const transitionElement = getTransitionElement(element);
+    if (!transitionElement || typeof document === "undefined") return fn(event);
+
+    if (out) {
+      transitionElement.style.viewTransitionName = "";
     }
 
-    document
-      .startViewTransition(() => {
-        flushSync(fn);
-        element.style.viewTransitionName = out ? name : "";
-      })
-      .finished.then(() => {
-        if (out) {
-          element.style.viewTransitionName = "";
+    if (!out) {
+      transitionElement.style.viewTransitionName = name;
+    }
+
+    const transition = document.startViewTransition(() => {
+      flushSync(() => fn(event));
+      transitionElement.style.viewTransitionName = out ? name : "";
+    });
+
+    transition.finished
+      .catch(() => undefined)
+      .finally(() => {
+        if (transitionElement.style.viewTransitionName === name) {
+          transitionElement.style.viewTransitionName = "";
         }
       });
   };
