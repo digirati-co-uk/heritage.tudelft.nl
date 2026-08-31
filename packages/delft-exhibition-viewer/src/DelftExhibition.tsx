@@ -48,6 +48,7 @@ export type DelftExhibitionProps = {
     imageInfoIcon?: boolean;
     coverImages?: boolean;
     hideRangeTitles?: boolean;
+    viewTransition?: boolean;
   };
   content?: {
     exhibition: string;
@@ -96,6 +97,7 @@ export function DelftExhibitionInner(props: DelftExhibitionProps) {
     fullWidthGrid = false,
     hideTableOfContents = !!props.canvasId,
     hideRangeTitles = !!props.canvasId,
+    viewTransition = false,
   } = props.options || {};
   const rangeHelper = useMemo(() => createRangeHelper(vault), [vault]);
   const range = useVaultSelector((s, vault) => vault.get((manifest?.structures || [])[0]));
@@ -265,6 +267,7 @@ export function DelftExhibitionInner(props: DelftExhibitionProps) {
                       alternativeMode={alternativeImageMode}
                       transitionScale={transitionScale}
                       imageInfoIcon={imageInfoIcon}
+                      viewTransition={viewTransition}
                     />
                   </>
                 );
