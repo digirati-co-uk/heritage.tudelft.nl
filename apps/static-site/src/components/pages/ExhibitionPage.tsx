@@ -56,6 +56,7 @@ export default function ExhibitionPage(props: ExhibitionPageProps) {
           alternativeImageMode: true,
           cutCorners: true,
           fullTitleBar: !useOldHeader.includes(props.slug),
+          viewTransition: true,
         }}
         content={props.content}
       />
