@@ -1,6 +1,7 @@
 import { CloseIcon } from "@/components/icons/CloseIcon";
 import type { DefaultPresetOptions, Preset } from "@atlas-viewer/atlas";
 import { Dialog } from "@headlessui/react";
+import { getValue } from "@iiif/helpers";
 import { type ReactNode, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useHover } from "react-aria";
 import { CanvasContext, CanvasPanel, useCanvas, useVault } from "react-iiif-vault";
@@ -185,6 +186,10 @@ function CanvasPreviewBlockInner({
 
     return null;
   }, [objectLinks, stepIndex, tour]);
+  const hasCanvasTitle = Boolean(getValue(canvas.label));
+  const hasCanvasSummary = Boolean(getValue(canvas.summary));
+  const hasCanvasAnnotations = steps.length > 0;
+  const hasAlternativeSidebar = hasCanvasTitle || hasCanvasSummary || hasCanvasAnnotations;
   const previewHoverZoom = isReady && !isOpen;
 
   const containerStyle = useMemo(
@@ -369,49 +374,55 @@ function CanvasPreviewBlockInner({
               ) : null}
             </div>
             {alternativeMode ? (
-              <div className="z-10 max-h-[40vh] w-full overflow-y-auto text-InfoBlockText lg:order-1 lg:max-h-[100vh] lg:max-w-md">
-                {canvas.label || canvas.summary || canvas.seeAlso?.length ? (
-                  <div className="mb-4 bg-InfoBlock text-InfoBlockText px-8">
-                    <div>
-                      <Hookable type="localeStringEditor" property="label" resource={canvas}>
-                        <LocaleString as="h2" className="sticky top-0 bg-InfoBlock pb-4 pt-6 font-mono delft-title">
-                          {canvas.label}
-                        </LocaleString>
-                      </Hookable>
-                      <Hookable type="localeStringEditor" property="summary" resource={canvas}>
-                        <LocaleString className="whitespace-pre-wrap" enableDangerouslySetInnerHTML>
-                          {canvas.summary}
-                        </LocaleString>
-                      </Hookable>
-                    </div>
-                    {canvas.requiredStatement && (
-                      <div className="mt-8 text-sm opacity-60">
-                        <LocaleString>{canvas.requiredStatement.value}</LocaleString>
+              hasAlternativeSidebar ? (
+                <div className="z-10 max-h-[40vh] w-full overflow-y-auto text-InfoBlockText lg:order-1 lg:max-h-[100vh] lg:max-w-md">
+                  {hasCanvasTitle || hasCanvasSummary || canvas.seeAlso?.length ? (
+                    <div className="mb-4 bg-InfoBlock text-InfoBlockText px-8">
+                      <div>
+                        {hasCanvasTitle ? (
+                          <Hookable type="localeStringEditor" property="label" resource={canvas}>
+                            <LocaleString as="h2" className="sticky top-0 bg-InfoBlock pb-4 pt-6 font-mono delft-title">
+                              {canvas.label}
+                            </LocaleString>
+                          </Hookable>
+                        ) : null}
+                        {hasCanvasSummary ? (
+                          <Hookable type="localeStringEditor" property="summary" resource={canvas}>
+                            <LocaleString className="whitespace-pre-wrap" enableDangerouslySetInnerHTML>
+                              {canvas.summary}
+                            </LocaleString>
+                          </Hookable>
+                        ) : null}
                       </div>
-                    )}
-                    {canvas.seeAlso?.length ? <RenderSeeAlso resource={canvas.seeAlso[0]} /> : null}
-                  </div>
-                ) : null}
-                {steps.length === 0 ? <div>{objectLink?.component || null}</div> : null}
-                {steps.length > 1 ? (
-                  <div className="flex flex-col gap-2 bg-InfoBlock text-InfoBlockText px-8 pb-8">
-                    <h3 className="sticky top-0 bg-InfoBlock pb-4 pt-6 font-mono delft-title">Annotations</h3>
-                    {steps.map((step, index) => {
-                      return (
-                        <VisibleAnnotationsListingItem
-                          key={`step-${index}`}
-                          canvas={canvas}
-                          goToStep={goToStep}
-                          hoverProps={hoverProps}
-                          index={index}
-                          step={step}
-                          stepIndex={stepIndex}
-                        />
-                      );
-                    })}
-                  </div>
-                ) : null}
-              </div>
+                      {canvas.requiredStatement && (
+                        <div className="mt-8 text-sm opacity-60">
+                          <LocaleString>{canvas.requiredStatement.value}</LocaleString>
+                        </div>
+                      )}
+                      {canvas.seeAlso?.length ? <RenderSeeAlso resource={canvas.seeAlso[0]} /> : null}
+                    </div>
+                  ) : null}
+                  {steps.length === 0 ? <div>{objectLink?.component || null}</div> : null}
+                  {hasCanvasAnnotations ? (
+                    <div className="flex flex-col gap-2 bg-InfoBlock text-InfoBlockText px-8 pb-8">
+                      <h3 className="sticky top-0 bg-InfoBlock pb-4 font-mono delft-title">Annotations</h3>
+                      {steps.map((step, index) => {
+                        return (
+                          <VisibleAnnotationsListingItem
+                            key={`step-${index}`}
+                            canvas={canvas}
+                            goToStep={goToStep}
+                            hoverProps={hoverProps}
+                            index={index}
+                            step={step}
+                            stepIndex={stepIndex}
+                          />
+                        );
+                      })}
+                    </div>
+                  ) : null}
+                </div>
+              ) : null
             ) : (
               <footer className="background-black flex flex-col items-center gap-8 p-8 text-white md:min-h-32 md:flex-row">
                 <div className="flex-1">
