@@ -1,7 +1,7 @@
 import type { Canvas, Reference, SpecificResource } from "@iiif/presentation-3";
 import type { CanvasNormalized } from "@iiif/presentation-3-normalized";
 import { Fragment, memo, useMemo } from "react";
-import { CanvasContext, useVault } from "react-iiif-vault";
+import { AtlasStoreProvider, CanvasContext, useVault } from "react-iiif-vault";
 import { toRef } from "@iiif/parser";
 
 export interface MapCanvasesProps {
@@ -24,6 +24,10 @@ function doCanvasPropsMatch(
   prevProps: MapCanvasesProps,
   nextProps: MapCanvasesProps,
 ) {
+  if (prevProps.onlyCanvasId !== nextProps.onlyCanvasId) {
+    return false;
+  }
+
   if (prevProps.items === nextProps.items) {
     return true;
   }
@@ -79,7 +83,7 @@ export const MapCanvases = memo(function MapCanvases(props: MapCanvasesProps) {
 
     return (
       <CanvasContext canvas={id} key={id}>
-        {renderedChildren}
+        <AtlasStoreProvider name={id}>{renderedChildren}</AtlasStoreProvider>
       </CanvasContext>
     );
   });
