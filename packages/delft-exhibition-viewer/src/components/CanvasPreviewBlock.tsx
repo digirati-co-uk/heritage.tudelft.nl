@@ -11,6 +11,7 @@ import invariant from "tiny-invariant";
 import { useIntersectionObserver } from "usehooks-ts";
 import { useStore } from "zustand";
 import { createExhibitionStore } from "../helpers/exhibition-store";
+import { isModalOpenSuppressed, stopModalEvent, suppressModalOpen } from "../helpers/modal-interaction";
 import { useCanvasHighlights } from "../helpers/use-canvas-highlights";
 import { withViewTransition } from "../helpers/with-view-transition";
 import { Hookable } from "./EditorHooks";
@@ -221,6 +222,11 @@ function CanvasPreviewBlockInner({
   }, []);
 
   const openPreview = (event?: unknown) => {
+    if (isModalOpenSuppressed()) {
+      stopModalEvent(event);
+      return;
+    }
+
     withViewTransition(
       () => container.current,
       () => setIsOpen(true),
@@ -264,7 +270,10 @@ function CanvasPreviewBlockInner({
         open={isOpen}
         onClose={withViewTransition(
           () => container.current,
-          () => setIsOpen(false),
+          (event) => {
+            suppressModalOpen(event);
+            setIsOpen(false);
+          },
           `canvas-preview-block-${index}`,
           true,
           viewTransition,
@@ -276,7 +285,10 @@ function CanvasPreviewBlockInner({
             type="button"
             onClick={withViewTransition(
               () => container.current,
-              () => setIsOpen(false),
+              (event) => {
+                suppressModalOpen(event);
+                setIsOpen(false);
+              },
               `canvas-preview-block-${index}`,
               true,
               viewTransition,
@@ -533,6 +545,7 @@ export function CanvasPreviewBlock(props: CanvasPreviewBlockProps) {
     isNearViewport ||
     props.isOpen ||
     (typeof window !== "undefined" && !("IntersectionObserver" in window));
+
   const inner = props.canvasId ? (
     <CanvasContext canvas={props.canvasId}>
       <CanvasPreviewBlockInner {...props} />

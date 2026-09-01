@@ -1,4 +1,5 @@
 import { getClassName } from "@/helpers/exhibition";
+import { isModalOpenSuppressed, stopModalEvent } from "@/helpers/modal-interaction";
 import { hasSelectedText, isInteractiveElement } from "@/helpers/text-block-interaction";
 import type { MouseEvent } from "react";
 import { LocaleString, useCanvas } from "react-iiif-vault";
@@ -27,6 +28,11 @@ export function BaseExhibitionBlock(props: BaseExhibitionBlockProps) {
   const className = getClassName(behavior, false, { fullWidthGrid: props.fullWidthGrid });
 
   const openFromSummary = (event: MouseEvent<HTMLDivElement>) => {
+    if (isModalOpenSuppressed()) {
+      stopModalEvent(event);
+      return;
+    }
+
     if (!onSummaryClick || event.defaultPrevented || isInteractiveElement(event.target) || hasSelectedText()) {
       return;
     }
