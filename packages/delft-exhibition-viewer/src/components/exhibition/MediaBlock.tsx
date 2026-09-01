@@ -7,6 +7,7 @@ import { usePress } from "react-aria";
 import { type MediaStrategy, type SingleYouTubeVideo, useThumbnail } from "react-iiif-vault";
 import { LocaleString } from "react-iiif-vault";
 import { BaseExhibitionBlock } from "./BaseExhibitionBlock";
+import { isModalOpenSuppressed, stopModalEvent, suppressModalOpen } from "@/helpers/modal-interaction";
 
 export interface MediaBlockProps {
   canvas: CanvasNormalized;
@@ -27,11 +28,21 @@ export function MediaBlock(props: MediaBlockProps) {
   const [isOpen, setIsOpen] = useState(false);
   const thumbnail = useThumbnail({ width: 1024, height: 1024 });
   const media = props.strategy.media as SingleYouTubeVideo;
+  const openMedia = (event?: unknown) => {
+    if (isModalOpenSuppressed()) {
+      stopModalEvent(event);
+      return;
+    }
+    setIsOpen(true);
+  };
   const { pressProps } = usePress({
-    onPress: () => setIsOpen(true),
+    onPress: (event) => openMedia(event),
   });
   const { pressProps: closePressProps } = usePress({
-    onPress: () => setIsOpen(false),
+    onPress: (event) => {
+      suppressModalOpen(event);
+      setIsOpen(false);
+    },
   });
   const annotation = media.annotation;
 
@@ -44,7 +55,7 @@ export function MediaBlock(props: MediaBlockProps) {
       index={props.index}
       scrollEnabled={props.scrollEnabled}
       fullWidthGrid={props.fullWidthGrid}
-      onSummaryClick={() => setIsOpen(true)}
+      onSummaryClick={openMedia}
     >
       <img
         {...pressProps}
@@ -52,10 +63,18 @@ export function MediaBlock(props: MediaBlockProps) {
         src={thumbnail?.id}
         alt={getValue(label) || "An image of the canvas"}
       />
-      <Dialog className="exhibition-viewer exhibition-viewer-dialog" open={isOpen} onClose={() => setIsOpen(false)}>
+      <Dialog
+        className="exhibition-viewer exhibition-viewer-dialog"
+        open={isOpen}
+        onClose={(event) => {
+          suppressModalOpen(event);
+          setIsOpen(false);
+        }}
+      >
         <div className="fixed modal-top left-0 right-0 bottom-0 bg-BackgroundOverlay" aria-hidden="true" />
         <div className="mobile-height fixed modal-top left-0 right-0 bottom-0 flex w-screen items-center p-4">
           <button
+            type="button"
             className="absolute right-6 top-6 z-20 flex h-16 w-16 items-center justify-center rounded bg-ControlBar hover:bg-ControlHover"
             {...closePressProps}
           >

@@ -2,6 +2,7 @@ import { BaseGridSection } from "@/components/shared/BaseGridSection";
 import { ReadMoreBlock } from "@/components/shared/ReadMore";
 import { getClassName } from "@/helpers/exhibition";
 import { getItemsByLocale } from "@/helpers/get-items-by-locale";
+import { isModalOpenSuppressed, stopModalEvent } from "@/helpers/modal-interaction";
 import { hasSelectedText, isInteractiveElement } from "@/helpers/text-block-interaction";
 import { useInfoBlockContents } from "@/hooks/use-info-box-contents";
 import type { CanvasNormalized } from "@iiif/presentation-3-normalized";
@@ -33,6 +34,11 @@ export function InfoBlock({ id, index, canvas, strategy, firstInfo, scrollEnable
   const [isReadMoreOpen, setIsReadMoreOpen] = useState(false);
 
   const openReadMoreFromBlock = (event: MouseEvent<HTMLElement>) => {
+    if (isModalOpenSuppressed()) {
+      stopModalEvent(event);
+      return;
+    }
+
     if (!hasReadMoreContent || event.defaultPrevented || isInteractiveElement(event.target) || hasSelectedText()) {
       return;
     }
