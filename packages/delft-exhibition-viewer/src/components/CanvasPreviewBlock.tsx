@@ -41,9 +41,7 @@ export interface CanvasPreviewBlockProps {
 }
 
 const EAGER_CANVAS_COUNT = 3;
-const LAZY_LOAD_ROOT_MARGIN = "600px 0px";
-const LAZY_RENDER_DELAY_MS = 100;
-const LAZY_UNRENDER_DELAY_MS = 800;
+const LAZY_LOAD_ROOT_MARGIN = "1200px 0px";
 
 function sameSpatial(a: any, b: any) {
   return a && b && a.x === b.x && a.y === b.y && a.width === b.width && a.height === b.height;
@@ -542,23 +540,11 @@ export function CanvasPreviewBlock(props: CanvasPreviewBlockProps) {
     rootMargin: LAZY_LOAD_ROOT_MARGIN,
     initialIsIntersecting: props.index < EAGER_CANVAS_COUNT,
   });
-  const [shouldRender, setShouldRender] = useState(() => props.index < EAGER_CANVAS_COUNT);
-  const shouldForceRender =
-    props.index < EAGER_CANVAS_COUNT || props.isOpen || (typeof window !== "undefined" && !("IntersectionObserver" in window));
-
-  useEffect(() => {
-    if (shouldForceRender) {
-      setShouldRender(true);
-      return;
-    }
-
-    const delay = isNearViewport ? LAZY_RENDER_DELAY_MS : LAZY_UNRENDER_DELAY_MS;
-    const timer = window.setTimeout(() => {
-      setShouldRender(isNearViewport);
-    }, delay);
-
-    return () => window.clearTimeout(timer);
-  }, [isNearViewport, shouldForceRender]);
+  const shouldRender =
+    props.index < EAGER_CANVAS_COUNT ||
+    isNearViewport ||
+    props.isOpen ||
+    (typeof window !== "undefined" && !("IntersectionObserver" in window));
 
   const inner = props.canvasId ? (
     <CanvasContext canvas={props.canvasId}>
