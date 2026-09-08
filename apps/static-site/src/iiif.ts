@@ -21,31 +21,20 @@ export function relativeIIIFUrl(remoteOrLocal: string) {
   return remoteOrLocal;
 }
 
-export async function loadCollection(slug: string) {
+export const loadCollection = cache(async function loadCollection(
+  slug: string,
+) {
   try {
-    const collectionReq = fetch(
+    const response = await fetch(
       `${IIIF_URL}${slug}/collection.json`,
       fetchOptions,
     );
-    // const metaReq = fetch(`${IIIF_URL}${slug}/meta.json`);
-    const ret: { collection: Collection; meta: any } = { meta: {} } as any;
-
-    const [collection, meta] = await Promise.all([
-      collectionReq,
-      Promise.resolve({ ok: false }),
-    ]);
-
-    if (meta.ok) {
-      // ret.meta = await meta.json();
-    }
-
-    ret.collection = await collection.json();
-
-    return ret;
-  } catch (error) {
+    if (!response.ok) return { collection: null, meta: null };
+    return { collection: (await response.json()) as Collection, meta: {} };
+  } catch {
     return { collection: null, meta: null };
   }
-}
+});
 
 export async function loadCollectionMeta(slug: string) {
   const resp = await fetch(`${IIIF_URL}${slug}/meta.json`);
@@ -56,9 +45,9 @@ export async function loadCollectionMeta(slug: string) {
   }
 }
 
-export async function loadMeta(name: string) {
-  return fetch(`${IIIF_URL}/meta/${name}`, fetchOptions).then((r) => r.json());
-}
+export const loadMeta = cache(async function loadMeta(name: string) {
+  return fetch(`${IIIF_URL}meta/${name}`, fetchOptions).then((r) => r.json());
+});
 
 export async function loadManifest(slug: string) {
   try {
@@ -67,9 +56,10 @@ export async function loadManifest(slug: string) {
 
     return await Promise.all([manifestReq, metaReq]).then(
       async ([manifest, meta]) => {
+        if (!manifest.ok) return { manifest: null, meta: null };
         return {
           manifest: await manifest.json(),
-          meta: await meta.json(),
+          meta: meta.ok ? await meta.json() : {},
         };
       },
     );

@@ -39,7 +39,7 @@ extract({
     },
 }, async (_, api, config) => {
     const resource = api.resource;
-    const metadata = resource?.metadata;
+    const metadata = resource?.metadata || [];
     const related = [];
     let identifier = null;
     if (metadata.length) {
@@ -51,13 +51,13 @@ extract({
             const value = metadataItem.value?.nl || metadataItem.value?.none;
             if (label && label[0]) {
                 if (label[0] === 'Inventarisnummer') {
-                    const singeValue = value[0];
+                    const singeValue = value?.[0];
                     if (singeValue) {
                         identifier = singeValue;
                     }
                 }
                 if (label[0] === 'Gerelateerd erfgoedobject') {
-                    const singeValue = value[0];
+                    const singeValue = value?.[0];
                     if (singeValue) {
                         const regex = /([A-Z]{3}\.[0-9]{4}\.[0-9]{4})/g;
                         const matches = singeValue.match(regex);

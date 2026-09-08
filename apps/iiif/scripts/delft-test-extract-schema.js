@@ -9,10 +9,12 @@ extract(
     invalidate: () => true,
     search: {
       manifests: {
-        fields: [
-          // New field example, extract from schema.
-          { name: "identifier", type: "string", optional: true },
-        ],
+        schema: {
+          fields: [
+            // New field example, extract from schema.
+            { name: "identifier", type: "string", optional: true },
+          ],
+        },
       },
     },
   },
@@ -26,7 +28,9 @@ extract(
 
     return {
       indices: {
-        exampleOfWork: [schema.exampleOfWork.name],
+        exampleOfWork: schema.exampleOfWork?.name
+          ? [schema.exampleOfWork.name]
+          : [],
       },
       search: {
         record: {
