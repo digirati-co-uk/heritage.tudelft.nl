@@ -1,6 +1,6 @@
 {
   "@context": "http://iiif.io/api/presentation/3/context.json",
-  "id": "https://example.org/plkuud9q64-mqqgmb7q",
+  "id": "http://localhost:7111/manifests/mineralen_gezondheid/manifest.json",
   "type": "Manifest",
   "behavior": [
     "fullpage",
@@ -17,68 +17,6 @@
     ]
   },
   "items": [
-    {
-      "id": "https://example.org/plkuud9q64-mqqgmb7q/canvas/ttngwin8yq-mradqwku",
-      "type": "Canvas",
-      "height": 1000,
-      "width": 1000,
-      "behavior": [
-        "info",
-        "w-12",
-        "h-2"
-      ],
-      "label": {
-        "en": [
-          "AFBEELDINGEN ZIJN PLACEHOLDERS VOOR DEMO"
-        ]
-      },
-      "placeholderCanvas": [],
-      "accompanyingCanvas": [],
-      "items": [
-        {
-          "id": "https://example.org/plkuud9q64-mqqgmb7q/canvas/ttngwin8yq-mradqwku/annotation-page/z0f48zhh5sf-mradqwku",
-          "type": "AnnotationPage",
-          "items": [
-            {
-              "id": "https://example.org/plkuud9q64-mqqgmb7q/canvas/ttngwin8yq-mradqwku/annotation/b5t58pfhk0v-mradqwku",
-              "type": "Annotation",
-              "motivation": "painting",
-              "target": "https://example.org/plkuud9q64-mqqgmb7q/canvas/ttngwin8yq-mradqwku",
-              "body": {
-                "id": "https://example.org/plkuud9q64-mqqgmb7q/canvas/ttngwin8yq-mradqwku/annotation/b5t58pfhk0v-mradqwku/html/en/mb4h0i51vgl-mradqwku",
-                "type": "TextualBody",
-                "format": "text/html",
-                "height": 1000,
-                "width": 1000,
-                "language": "en",
-                "value": "<p>AFBEELDINGEN ZIJN PLACEHOLDERS VOOR DEMO</p>\n<p>===========================================</p>"
-              }
-            }
-          ]
-        }
-      ],
-      "annotations": [
-        {
-          "id": "https://example.org/plkuud9q64-mqqgmb7q/canvas/ttngwin8yq-mradqwku/annotation-page/kbeb88xkx7-mradqwku",
-          "type": "AnnotationPage",
-          "items": [
-            {
-              "id": "https://example.org/plkuud9q64-mqqgmb7q/canvas/ttngwin8yq-mradqwku/annotation/isfrqy70u7-mradqwkx",
-              "type": "Annotation",
-              "motivation": "tagging",
-              "target": "https://example.org/plkuud9q64-mqqgmb7q/canvas/ttngwin8yq-mradqwku",
-              "body": {
-                "id": "https://example.org/plkuud9q64-mqqgmb7q/canvas/ttngwin8yq-mradqwku/annotation/isfrqy70u7-mradqwkx/html/en/l0kqsmnde9b-mradqwkx",
-                "type": "TextualBody",
-                "format": "text/html",
-                "language": "en",
-                "value": ""
-              }
-            }
-          ]
-        }
-      ]
-    },
     {
       "id": "https://example.org/plkuud9q64-mqqgmb7q/Canvas/rg4lh7rct0d-mqqlxzk0",
       "type": "Canvas",
@@ -101,8 +39,16 @@
           "<p>Goud, edelstenen of zeldzame aardemetalen krijgen aandacht als de meest waardevolle mineralen ter wereld. Maar veel ‘gewone’ mineralen zijn voor ons zo cruciaal dat de mens niet zonder kan, en anderen zijn weer giftig.</p><p>De belangrijkste mineralen die wij nodig hebben zijn calcium, chloride, magnesium, fosfaat, kalium, natrium en zwavel; daarnaast hebben wij een heel klein beetje nodig van onder meer koper, ijzer, zink, jodium, en fluoride. Wij krijgen deze mineralen binnen door het voedsel dat wij eten, zoals planten, en deze krijgen op hun beurt mineralen uit de bodem en het gesteente waarop ze groeien en uit het water dat ze opnemen. Maar naast onze voeding spelen vele mineralen ook op een andere manier een belangrijke rol.</p>"
         ]
       },
-      "placeholderCanvas": [],
-      "accompanyingCanvas": [],
+      "placeholderCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
+      "accompanyingCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
       "items": [
         {
           "id": "https://example.org/plkuud9q64-mqqgmb7q/Canvas/rg4lh7rct0d-mqqlxzk0/AnnotationPage/ln5qk0vgve-mqqlxzk0",
@@ -206,8 +152,8 @@
     {
       "id": "https://example.org/plkuud9q64-mqqgmb7q/Canvas/fcw1g51bkq7-mqqgypg7",
       "type": "Canvas",
-      "height": 4000,
-      "width": 6000,
+      "height": 2366,
+      "width": 3863,
       "behavior": [
         "multi-image",
         "right",
@@ -224,115 +170,192 @@
           "<p>Diamant is een bijzonder fraai mineraal, maar ook erg gevaarlijk; de opbrengst van diamanten afkomstig uit conflictgebieden, zoals Afrika, worden gebruikt om oorlogen te financieren. Het mineraal diamant is hierdoor niet direct dodelijk maar heeft indirect wel een dodelijke uitwerking.</p><p>De zogenaamde Bloeddiamanten hebben een grote rol gespeeld in de conflicten in Sierra Leone en de Democratische Republiek Congo; tijdens deze conflicten werden miljoenen mensen onderdrukt en zijn duizenden vermoord. De film Blood Diamond, uit 2006, heeft bijgedragen aan een grotere bekendheid onder het groot publiek.</p>"
         ]
       },
-      "placeholderCanvas": [],
-      "accompanyingCanvas": [],
+      "thumbnail": [
+        {
+          "id": "https://dlc.services/iiif-img/v3/7/39/f981a1b7-7665-48d3-9bcc-48d8ad229c94/1748,1250,3863,2366/512,/0/default.jpg",
+          "type": "Image",
+          "format": "image/jpeg",
+          "height": 314,
+          "width": 512,
+          "service": [
+            {
+              "@context": "http://iiif.io/api/image/3/context.json",
+              "id": "https://dlc.services/iiif-img/v3/7/39/f981a1b7-7665-48d3-9bcc-48d8ad229c94",
+              "type": "ImageService3",
+              "profile": "level2",
+              "protocol": "http://iiif.io/api/image",
+              "width": 7360,
+              "height": 4912,
+              "maxWidth": 10000,
+              "sizes": [
+                {
+                  "width": 1024,
+                  "height": 683
+                },
+                {
+                  "width": 400,
+                  "height": 267
+                },
+                {
+                  "width": 200,
+                  "height": 133
+                },
+                {
+                  "width": 100,
+                  "height": 67
+                }
+              ],
+              "tiles": [
+                {
+                  "width": 512,
+                  "height": 512,
+                  "scaleFactors": [
+                    1,
+                    2,
+                    4,
+                    8,
+                    16,
+                    32,
+                    64
+                  ]
+                }
+              ],
+              "extraQualities": [
+                "bitonal",
+                "color",
+                "gray"
+              ],
+              "extraFormats": [
+                "tif",
+                "gif"
+              ],
+              "extraFeatures": [
+                "baseUriRedirect",
+                "canonicalLinkHeader",
+                "cors",
+                "jsonldMediaType",
+                "mirroring",
+                "profileLinkHeader",
+                "regionByPct",
+                "regionByPx",
+                "regionSquare",
+                "rotationArbitrary",
+                "rotationBy90s",
+                "sizeByConfinedWh",
+                "sizeByH",
+                "sizeByPct",
+                "sizeByW",
+                "sizeByWh"
+              ]
+            }
+          ]
+        }
+      ],
+      "placeholderCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
+      "accompanyingCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
       "items": [
         {
           "id": "https://example.org/plkuud9q64-mqqgmb7q/Canvas/fcw1g51bkq7-mqqgypg7/AnnotationPage/7iu2ohkzt9d-mqqgypg7",
           "type": "AnnotationPage",
           "items": [
             {
-              "id": "https://example.org/plkuud9q64-mqqgmb7q/Canvas/fcw1g51bkq7-mqqgypg7/AnnotationPage/7iu2ohkzt9d-mqqgypg7/annotation/9ht3h9q7wq5-mqqh63m5",
+              "id": "https://example.org/plkuud9q64-mqqgmb7q/Canvas/fcw1g51bkq7-mqqgypg7/AnnotationPage/7iu2ohkzt9d-mqqgypg7/annotation/1x4o8ojoxg7-mtvkgm8j",
               "type": "Annotation",
-              "label": {
-                "en": [
-                  "Image Label"
-                ]
-              },
-              "summary": {
-                "en": [
-                  ""
-                ]
-              },
               "motivation": "painting",
               "target": "https://example.org/plkuud9q64-mqqgmb7q/Canvas/fcw1g51bkq7-mqqgypg7",
               "body": {
-                "id": "https://dlc.services/iiif-img/7/19/551ac08a-cebd-4b61-8d0b-866732e44369/full/max/0/default.jpg",
-                "type": "Image",
-                "format": "image/jpeg",
-                "height": 4918,
-                "width": 7360,
-                "service": [
-                  {
-                    "@context": "http://iiif.io/api/image/2/context.json",
-                    "@id": "https://dlc.services/iiif-img/7/19/551ac08a-cebd-4b61-8d0b-866732e44369",
-                    "@type": "iiif:Image",
-                    "profile": [
-                      "http://iiif.io/api/image/2/level2.json",
-                      {
-                        "formats": [
-                          "tif",
-                          "jpg",
-                          "gif",
-                          "png"
-                        ],
-                        "qualities": [
-                          "bitonal",
-                          "default",
-                          "gray",
-                          "color"
-                        ],
-                        "supports": [
-                          "regionByPx",
-                          "sizeByW",
-                          "sizeByWhListed",
-                          "cors",
-                          "regionSquare",
-                          "sizeByDistortedWh",
-                          "canonicalLinkHeader",
-                          "sizeByConfinedWh",
-                          "sizeByPct",
-                          "jsonldMediaType",
-                          "regionByPct",
-                          "rotationArbitrary",
-                          "sizeByH",
-                          "baseUriRedirect",
-                          "rotationBy90s",
-                          "profileLinkHeader",
-                          "sizeByForcedWh",
-                          "sizeByWh",
-                          "mirroring"
-                        ]
-                      }
-                    ],
-                    "protocol": "http://iiif.io/api/image",
-                    "width": 7360,
-                    "height": 4918,
-                    "sizes": [
-                      {
-                        "width": 1024,
-                        "height": 684
-                      },
-                      {
-                        "width": 400,
-                        "height": 267
-                      },
-                      {
-                        "width": 200,
-                        "height": 134
-                      },
-                      {
-                        "width": 100,
-                        "height": 67
-                      }
-                    ],
-                    "tiles": [
-                      {
-                        "width": 512,
-                        "height": 512,
-                        "scaleFactors": [
-                          1,
-                          2,
-                          4,
-                          8,
-                          16,
-                          32,
-                          64
-                        ]
-                      }
-                    ]
-                  }
-                ]
+                "type": "SpecificResource",
+                "source": {
+                  "id": "https://dlc.services/iiif-img/v3/7/39/f981a1b7-7665-48d3-9bcc-48d8ad229c94/1748,1250,3863,2366/max/0/default.jpg",
+                  "type": "Image",
+                  "format": "image/jpeg",
+                  "height": 2366,
+                  "width": 3863,
+                  "service": [
+                    {
+                      "@context": "http://iiif.io/api/image/3/context.json",
+                      "id": "https://dlc.services/iiif-img/v3/7/39/f981a1b7-7665-48d3-9bcc-48d8ad229c94",
+                      "type": "ImageService3",
+                      "profile": "level2",
+                      "protocol": "http://iiif.io/api/image",
+                      "width": 7360,
+                      "height": 4912,
+                      "maxWidth": 10000,
+                      "sizes": [
+                        {
+                          "width": 1024,
+                          "height": 683
+                        },
+                        {
+                          "width": 400,
+                          "height": 267
+                        },
+                        {
+                          "width": 200,
+                          "height": 133
+                        },
+                        {
+                          "width": 100,
+                          "height": 67
+                        }
+                      ],
+                      "tiles": [
+                        {
+                          "width": 512,
+                          "height": 512,
+                          "scaleFactors": [
+                            1,
+                            2,
+                            4,
+                            8,
+                            16,
+                            32,
+                            64
+                          ]
+                        }
+                      ],
+                      "extraQualities": [
+                        "bitonal",
+                        "color",
+                        "gray"
+                      ],
+                      "extraFormats": [
+                        "tif",
+                        "gif"
+                      ],
+                      "extraFeatures": [
+                        "baseUriRedirect",
+                        "canonicalLinkHeader",
+                        "cors",
+                        "jsonldMediaType",
+                        "mirroring",
+                        "profileLinkHeader",
+                        "regionByPct",
+                        "regionByPx",
+                        "regionSquare",
+                        "rotationArbitrary",
+                        "rotationBy90s",
+                        "sizeByConfinedWh",
+                        "sizeByH",
+                        "sizeByPct",
+                        "sizeByW",
+                        "sizeByWh"
+                      ]
+                    }
+                  ]
+                },
+                "selector": {
+                  "type": "ImageApiSelector",
+                  "region": "1748,1250,3863,2366"
+                }
               }
             }
           ]
@@ -366,89 +389,56 @@
           "<p>Zilver is niet alleen populair voor het maken van sieraden, maar het wordt al eeuwenlang ook gebruikt om infecties te behandelen. Dit komt door de mineraal zijn antibacteriële eigenschappen.</p><p>Klik op de plaatjes voor meer informatie!</p>"
         ]
       },
-      "placeholderCanvas": [],
-      "accompanyingCanvas": [],
+      "placeholderCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
+      "accompanyingCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
       "items": [
         {
           "id": "https://example.org/plkuud9q64-mqqgmb7q/Canvas/b1rni4nhm9-mqqh91x6/AnnotationPage/yhfqxa04hpb-mqqh91x6",
           "type": "AnnotationPage",
           "items": [
             {
-              "id": "https://example.org/plkuud9q64-mqqgmb7q/Canvas/b1rni4nhm9-mqqh91x6/AnnotationPage/yhfqxa04hpb-mqqh91x6/annotation/drfzl0snv8v-mqqmczag",
+              "id": "https://example.org/plkuud9q64-mqqgmb7q/Canvas/b1rni4nhm9-mqqh91x6/AnnotationPage/yhfqxa04hpb-mqqh91x6/annotation/vyqshbazpw-mtvkmyeh",
               "type": "Annotation",
-              "motivation": "painting",
-              "target": "https://example.org/plkuud9q64-mqqgmb7q/Canvas/b1rni4nhm9-mqqh91x6#xywh=98,1516,3596,2400",
-              "summary": {
-                "nl": [
-                  "De eerste vastgelegde werking van zilver is de instructie van de Perzische koning Cyrus de Grote (ca. 590–530 v.Chr.) om uitsluitend water uit zilveren kannen te drinken. Zeelieden, maar bijvoorbeeld ook Amerikaanse kolonisten in de negentiende eeuw legden een zilveren munten in watervaten om bederf te vermijden. \nVoor het Apollo-maanladingsprogramma ontwikkelde NASA een automaat die zilverionen afgeeft aan het watersysteem van het ruimtevaartuig om aanwezige bacteriën te doden. Dit systeem wordt nog steeds gebruikt. \nRomeinen gebruikte zilver om op wonden te leggen, en nu nog worden er wondcompressen met zilver gebruikt men om infecties te voorkomen en de wond sneller dicht te laten gaan. \n"
-                ]
-              },
               "label": {
-                "nl": [
+                "en": [
                   "Hoe werd zilver gebruikt?"
                 ]
               },
+              "summary": {
+                "en": [
+                  "<p>De eerste vastgelegde werking van zilver is de instructie van de Perzische koning Cyrus de Grote (ca. 590–530 v.Chr.) om uitsluitend water uit zilveren kannen te drinken. Zeelieden, maar bijvoorbeeld ook Amerikaanse kolonisten in de negentiende eeuw legden een zilveren munten in watervaten om bederf te vermijden. </p>\n<p>Voor het Apollo-maanladingsprogramma ontwikkelde NASA een automaat die zilverionen afgeeft aan het watersysteem van het ruimtevaartuig om aanwezige bacteriën te doden. Dit systeem wordt nog steeds gebruikt. </p>\n<p>Romeinen gebruikte zilver om op wonden te leggen, en nu nog worden er wondcompressen met zilver gebruikt men om infecties te voorkomen en de wond sneller dicht te laten gaan.</p>"
+                ]
+              },
+              "motivation": "painting",
+              "target": "https://example.org/plkuud9q64-mqqgmb7q/Canvas/b1rni4nhm9-mqqh91x6#xywh=132,1438,3594,2400",
               "body": {
-                "id": "https://dlc.services/iiif-img/7/19/0cc925cf-2a02-40ff-8c75-002519493754/full/max/0/default.jpg",
+                "id": "https://dlc.services/iiif-img/v3/7/39/8a81eab7-c9e3-4c77-92c7-5b7ed528ac84/full/max/0/default.jpg",
                 "type": "Image",
                 "format": "image/jpeg",
-                "height": 4912,
-                "width": 7360,
-                "label": {
-                  "en": [
-                    "stap 1"
-                  ]
-                },
+                "height": 4928,
+                "width": 7380,
                 "service": [
                   {
-                    "@context": "http://iiif.io/api/image/2/context.json",
-                    "@id": "https://dlc.services/iiif-img/7/19/0cc925cf-2a02-40ff-8c75-002519493754",
-                    "@type": "iiif:Image",
-                    "profile": [
-                      "http://iiif.io/api/image/2/level2.json",
-                      {
-                        "formats": [
-                          "tif",
-                          "jpg",
-                          "gif",
-                          "png"
-                        ],
-                        "qualities": [
-                          "bitonal",
-                          "default",
-                          "gray",
-                          "color"
-                        ],
-                        "supports": [
-                          "regionByPx",
-                          "sizeByW",
-                          "sizeByWhListed",
-                          "cors",
-                          "regionSquare",
-                          "sizeByDistortedWh",
-                          "canonicalLinkHeader",
-                          "sizeByConfinedWh",
-                          "sizeByPct",
-                          "jsonldMediaType",
-                          "regionByPct",
-                          "rotationArbitrary",
-                          "sizeByH",
-                          "baseUriRedirect",
-                          "rotationBy90s",
-                          "profileLinkHeader",
-                          "sizeByForcedWh",
-                          "sizeByWh",
-                          "mirroring"
-                        ]
-                      }
-                    ],
+                    "@context": "http://iiif.io/api/image/3/context.json",
+                    "id": "https://dlc.services/iiif-img/v3/7/39/8a81eab7-c9e3-4c77-92c7-5b7ed528ac84",
+                    "type": "ImageService3",
+                    "profile": "level2",
                     "protocol": "http://iiif.io/api/image",
-                    "width": 7360,
-                    "height": 4912,
+                    "width": 7380,
+                    "height": 4928,
+                    "maxWidth": 10000,
                     "sizes": [
                       {
                         "width": 1024,
-                        "height": 683
+                        "height": 684
                       },
                       {
                         "width": 400,
@@ -456,7 +446,7 @@
                       },
                       {
                         "width": 200,
-                        "height": 133
+                        "height": 134
                       },
                       {
                         "width": 100,
@@ -477,6 +467,33 @@
                           64
                         ]
                       }
+                    ],
+                    "extraQualities": [
+                      "bitonal",
+                      "color",
+                      "gray"
+                    ],
+                    "extraFormats": [
+                      "tif",
+                      "gif"
+                    ],
+                    "extraFeatures": [
+                      "baseUriRedirect",
+                      "canonicalLinkHeader",
+                      "cors",
+                      "jsonldMediaType",
+                      "mirroring",
+                      "profileLinkHeader",
+                      "regionByPct",
+                      "regionByPx",
+                      "regionSquare",
+                      "rotationArbitrary",
+                      "rotationBy90s",
+                      "sizeByConfinedWh",
+                      "sizeByH",
+                      "sizeByPct",
+                      "sizeByW",
+                      "sizeByWh"
                     ]
                   }
                 ]
@@ -586,11 +603,11 @@
           "type": "AnnotationPage",
           "items": [
             {
-              "id": "https://example.org/plkuud9q64-mqqgmb7q/Canvas/b1rni4nhm9-mqqh91x6/AnnotationPage/a0im58fo7o6-mqqh91x6/annotation/qp8nocr3c2-mqqmh1u9",
+              "id": "https://example.org/plkuud9q64-mqqgmb7q/Canvas/b1rni4nhm9-mqqh91x6/AnnotationPage/a0im58fo7o6-mqqh91x6/annotation/7lpgjxjecbn-mtvknzj2",
               "type": "Annotation",
               "motivation": "tagging",
               "target": {
-                "id": "https://example.org/plkuud9q64-mqqgmb7q/Canvas/b1rni4nhm9-mqqh91x6/AnnotationPage/yhfqxa04hpb-mqqh91x6/annotation/drfzl0snv8v-mqqmczag",
+                "id": "https://example.org/plkuud9q64-mqqgmb7q/Canvas/b1rni4nhm9-mqqh91x6/AnnotationPage/yhfqxa04hpb-mqqh91x6/annotation/vyqshbazpw-mtvkmyeh",
                 "type": "Annotation"
               },
               "body": []
@@ -630,8 +647,16 @@
           "<p>Lood was een erg populair mineraal doordat het makkelijk te bewerken is en in grote hoeveelheden voor handen komt, maar het is ook erg schadelijk. Lood is zeer giftig, bij jonge kinderen lijdt een concentratie van tien microgram per deciliter al tot hersenbeschadiging, en lood in het lichaam kan leiden tot algemeen verminderde vruchtbaarheid en kan agressief gedrag veroorzaken.</p>"
         ]
       },
-      "placeholderCanvas": [],
-      "accompanyingCanvas": [],
+      "placeholderCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
+      "accompanyingCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
       "items": [
         {
           "id": "https://example.org/plkuud9q64-mqqgmb7q/Canvas/ta1l191bu4m-mqqhb8xd/AnnotationPage/3jbo4rif8-mqqhb8xd",
@@ -967,8 +992,16 @@
           "<p>Kwik heeft de unieke eigenschap dat het als enig metaal vloeibaar is bij kamertemperatuur, hierdoor waren veel mensen overtuigd dat het magische en genezende krachten had. Echter is kwik zeer giftig. Het inademen van kwikdamp kan hersenbeschadiging, blindheid, doofheid en krankzinnigheid veroorzaken. Bij vaste inname worden vooral de nieren aangetast. Giftigheid door huidcontact met vloeibaar kwik is minder giftig.</p>"
         ]
       },
-      "placeholderCanvas": [],
-      "accompanyingCanvas": [],
+      "placeholderCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
+      "accompanyingCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
       "items": [
         {
           "id": "https://example.org/plkuud9q64-mqqgmb7q/Canvas/ri2ugr5dok-mqqhfnlm/AnnotationPage/o7yrlbq8ck-mqqhfnlm",
@@ -1132,79 +1165,46 @@
           "<p>Het mineraal Sylvien (kaliumchloride) is een tweeslachtig mineraal: het kan een positieve bijdrage leveren aan het leven, maar wordt ook ingezet om het leven te beëindigen.</p><p>Sylvien is vernoemd naar de Leidse hoogleraar en medicus Franciscus de le Boë (1614-1672) die de Latijnse naam Sylvius had aangenomen.</p>"
         ]
       },
-      "placeholderCanvas": [],
-      "accompanyingCanvas": [],
+      "placeholderCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
+      "accompanyingCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
       "items": [
         {
           "id": "https://example.org/plkuud9q64-mqqgmb7q/Canvas/3yeya2nr27g-mqqhjm9z/AnnotationPage/1unb7ekg07-mqqhjm9z",
           "type": "AnnotationPage",
           "items": [
             {
-              "id": "https://example.org/plkuud9q64-mqqgmb7q/Canvas/3yeya2nr27g-mqqhjm9z/AnnotationPage/1unb7ekg07-mqqhjm9z/annotation/kctav8nuq7-mqqk229j",
+              "id": "https://example.org/plkuud9q64-mqqgmb7q/Canvas/3yeya2nr27g-mqqhjm9z/AnnotationPage/1unb7ekg07-mqqhjm9z/annotation/rnji1xixi1-mtvkr2r7",
               "type": "Annotation",
               "motivation": "painting",
               "target": "https://example.org/plkuud9q64-mqqgmb7q/Canvas/3yeya2nr27g-mqqhjm9z",
               "body": {
-                "id": "https://dlc.services/iiif-img/7/19/3eaa4812-1212-4ebb-bc07-cefdb9ae16f2/full/max/0/default.jpg",
+                "id": "https://dlc.services/iiif-img/v3/7/39/9b7dd631-cbbd-4f3c-b77a-3fa1f0dcd02f/full/max/0/default.jpg",
                 "type": "Image",
                 "format": "image/jpeg",
-                "height": 4916,
+                "height": 4912,
                 "width": 7360,
-                "label": {
-                  "en": [
-                    "stap 2"
-                  ]
-                },
                 "service": [
                   {
-                    "@context": "http://iiif.io/api/image/2/context.json",
-                    "@id": "https://dlc.services/iiif-img/7/19/3eaa4812-1212-4ebb-bc07-cefdb9ae16f2",
-                    "@type": "iiif:Image",
-                    "profile": [
-                      "http://iiif.io/api/image/2/level2.json",
-                      {
-                        "formats": [
-                          "jpg",
-                          "tif",
-                          "gif",
-                          "png"
-                        ],
-                        "qualities": [
-                          "bitonal",
-                          "default",
-                          "gray",
-                          "color"
-                        ],
-                        "supports": [
-                          "regionByPx",
-                          "sizeByW",
-                          "sizeByWhListed",
-                          "cors",
-                          "regionSquare",
-                          "sizeByDistortedWh",
-                          "canonicalLinkHeader",
-                          "sizeByConfinedWh",
-                          "sizeByPct",
-                          "jsonldMediaType",
-                          "regionByPct",
-                          "rotationArbitrary",
-                          "sizeByH",
-                          "baseUriRedirect",
-                          "rotationBy90s",
-                          "profileLinkHeader",
-                          "sizeByForcedWh",
-                          "sizeByWh",
-                          "mirroring"
-                        ]
-                      }
-                    ],
+                    "@context": "http://iiif.io/api/image/3/context.json",
+                    "id": "https://dlc.services/iiif-img/v3/7/39/9b7dd631-cbbd-4f3c-b77a-3fa1f0dcd02f",
+                    "type": "ImageService3",
+                    "profile": "level2",
                     "protocol": "http://iiif.io/api/image",
                     "width": 7360,
-                    "height": 4916,
+                    "height": 4912,
+                    "maxWidth": 10000,
                     "sizes": [
                       {
                         "width": 1024,
-                        "height": 684
+                        "height": 683
                       },
                       {
                         "width": 400,
@@ -1212,7 +1212,7 @@
                       },
                       {
                         "width": 200,
-                        "height": 134
+                        "height": 133
                       },
                       {
                         "width": 100,
@@ -1233,6 +1233,33 @@
                           64
                         ]
                       }
+                    ],
+                    "extraQualities": [
+                      "bitonal",
+                      "color",
+                      "gray"
+                    ],
+                    "extraFormats": [
+                      "tif",
+                      "gif"
+                    ],
+                    "extraFeatures": [
+                      "baseUriRedirect",
+                      "canonicalLinkHeader",
+                      "cors",
+                      "jsonldMediaType",
+                      "mirroring",
+                      "profileLinkHeader",
+                      "regionByPct",
+                      "regionByPx",
+                      "regionSquare",
+                      "rotationArbitrary",
+                      "rotationBy90s",
+                      "sizeByConfinedWh",
+                      "sizeByH",
+                      "sizeByPct",
+                      "sizeByW",
+                      "sizeByWh"
                     ]
                   }
                 ]
@@ -1297,8 +1324,16 @@
           "<p>Arseen is uiterst giftig mineraal, bij inname verwoest het je spijsverteringskanaal, veelal met dodelijke afloop. Symptomen zijn braken, diarree en buikpijn, en een vergiftiging kan binnen minuten tot enkele uren fataal worden.</p>"
         ]
       },
-      "placeholderCanvas": [],
-      "accompanyingCanvas": [],
+      "placeholderCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
+      "accompanyingCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
       "items": [
         {
           "id": "https://example.org/plkuud9q64-mqqgmb7q/Canvas/ma8530kzc3-mqqk33j3/AnnotationPage/9asyud034rl-mqqk33j3",
@@ -1541,8 +1576,16 @@
           ""
         ]
       },
-      "placeholderCanvas": [],
-      "accompanyingCanvas": [],
+      "placeholderCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
+      "accompanyingCanvas": {
+        "id": "https://iiif-parser/empty-canvas",
+        "type": "Canvas",
+        "items": []
+      },
       "items": [
         {
           "id": "https://example.org/plkuud9q64-mqqgmb7q/canvas/oxcgdovua5-mqqk4grq/annotation-page/sekx9tx126-mqqk4grq",
@@ -1558,7 +1601,7 @@
                 "type": "TextualBody",
                 "format": "text/html",
                 "language": "en",
-                "value": "<h2 id=\"meer-weten\">Meer weten?</h2>\n<p>Benieuwd naar ….</p>\n<p><a href=\"https://deploy-preview-99--heritage-tudelft.netlify.app/nl/objects/1423_1042781\">Bekijk de mineralen van dit artikel in het archief!</a></p>"
+                "value": "<h2 id=\"meer-weten\">Meer weten?</h2>\n<p>Bekijk de andere verhalen van het MGM!</p>\n<p><a href=\"https://deploy-preview-99--heritage-tudelft.netlify.app/nl/objects/1423_1042781\">Bekijk de mineralen van dit artikel in het archief!</a></p>"
               }
             }
           ]
@@ -1579,7 +1622,7 @@
                 "type": "TextualBody",
                 "format": "text/html",
                 "language": "en",
-                "value": "<h2 id=\"meer-weten\">Meer weten?</h2>\n<p>Benieuwd naar ….</p>\n<p><a href=\"https://deploy-preview-99--heritage-tudelft.netlify.app/nl/objects/1423_1042781\">Bekijk de mineralen van dit artikel in het archief!</a></p>"
+                "value": "<h2 id=\"meer-weten\">Meer weten?</h2>\n<p>Bekijk de andere verhalen van het MGM!</p>\n<p><a href=\"https://deploy-preview-99--heritage-tudelft.netlify.app/nl/objects/1423_1042781\">Bekijk de mineralen van dit artikel in het archief!</a></p>"
               }
             }
           ]
