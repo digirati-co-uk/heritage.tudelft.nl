@@ -41,7 +41,7 @@ export interface CanvasPreviewBlockProps {
 }
 
 const EAGER_CANVAS_COUNT = 3;
-const LAZY_LOAD_ROOT_MARGIN = "1200px 0px";
+const LAZY_LOAD_ROOT_MARGIN = "600px 0px";
 
 function sameSpatial(a: any, b: any) {
   return a && b && a.x === b.x && a.y === b.y && a.width === b.width && a.height === b.height;
@@ -73,8 +73,9 @@ function CanvasPreviewBlockInner({
         objectLinks,
         firstStep: false,
       }),
-    [vault, canvas],
+    [vault, canvas, objectLinks],
   );
+  useEffect(() => () => store.getState().pause(), [store]);
   const paintingPage = canvas?.items[0] ? vault.get(canvas.items[0]) : null;
   const hasMultipleAnnotations = (paintingPage?.items.length || 0) > 1;
 
@@ -91,7 +92,7 @@ function CanvasPreviewBlockInner({
       goToStep(-1);
       pause();
     }
-  }, [isOpen, autoPlay]);
+  }, [isOpen, autoPlay, play, goToStep, pause]);
 
   useEffect(() => {
     setHovered(null);
@@ -202,23 +203,38 @@ function CanvasPreviewBlockInner({
     [isOpen],
   );
 
+  const previewCleanup = useRef<(() => void) | null>(null);
+  useEffect(() => () => previewCleanup.current?.(), []);
+
   const onCreated = useCallback((preset: Preset) => {
+    previewCleanup.current?.();
+    let disposed = false;
+    let readyTimer: ReturnType<typeof setTimeout> | undefined;
     const clear = preset.runtime.registerHook("useAfterFrame", () => {
       const renderers = (preset.renderer as any).renderers;
       const canvasRenderer = renderers[0]?.canvas ? renderers[0] : null;
       if (!canvasRenderer) {
         setIsReady(true);
         clear();
+        return;
       }
       if ((canvasRenderer as any).isReady()) {
         preset.runtime.updateNextFrame();
-        setTimeout(() => {
-          setIsReady(true);
+        readyTimer = setTimeout(() => {
+          if (!disposed) setIsReady(true);
         }, 300);
         clear();
       }
     });
-    setTimeout(() => preset.runtime.updateNextFrame(), 1000);
+    const frameTimer = setTimeout(() => {
+      if (!disposed) preset.runtime.updateNextFrame();
+    }, 1000);
+    previewCleanup.current = () => {
+      disposed = true;
+      clear();
+      clearTimeout(readyTimer);
+      clearTimeout(frameTimer);
+    };
   }, []);
 
   const openPreview = (event?: unknown) => {
@@ -534,6 +550,10 @@ function CanvasPreviewBlockInner({
 }
 
 export function CanvasPreviewBlock(props: CanvasPreviewBlockProps) {
+  // Keep dialogs alive even when their preview leaves the mounting window.
+  const [uncontrolledIsOpen, setUncontrolledIsOpen] = useState(false);
+  const isOpen = props.isOpen ?? uncontrolledIsOpen;
+  const onOpenChange = props.onOpenChange ?? setUncontrolledIsOpen;
   const [lazyRef, isNearViewport] = useIntersectionObserver({
     threshold: 0,
     root: null,
@@ -541,21 +561,23 @@ export function CanvasPreviewBlock(props: CanvasPreviewBlockProps) {
     initialIsIntersecting: props.index < EAGER_CANVAS_COUNT,
   });
   const shouldRender =
-    props.index < EAGER_CANVAS_COUNT ||
-    isNearViewport ||
-    props.isOpen ||
-    (typeof window !== "undefined" && !("IntersectionObserver" in window));
+    isNearViewport || isOpen || (typeof window !== "undefined" && !("IntersectionObserver" in window));
 
   const inner = props.canvasId ? (
     <CanvasContext canvas={props.canvasId}>
-      <CanvasPreviewBlockInner {...props} />
+      <CanvasPreviewBlockInner {...props} isOpen={isOpen} onOpenChange={onOpenChange} />
     </CanvasContext>
   ) : (
-    <CanvasPreviewBlockInner {...props} />
+    <CanvasPreviewBlockInner {...props} isOpen={isOpen} onOpenChange={onOpenChange} />
   );
 
   return (
-    <div ref={lazyRef} className="relative h-full w-full overflow-hidden bg-ViewerBackground">
+    <div
+      ref={lazyRef}
+      data-canvas-preview={props.canvasId || ""}
+      data-panel-mounted={shouldRender ? "true" : "false"}
+      className="relative h-full w-full overflow-hidden bg-ViewerBackground"
+    >
       {shouldRender ? inner : null}
     </div>
   );
