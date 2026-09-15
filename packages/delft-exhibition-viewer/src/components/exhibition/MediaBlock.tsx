@@ -44,10 +44,11 @@ export function MediaBlock(props: MediaBlockProps) {
       index={props.index}
       scrollEnabled={props.scrollEnabled}
       fullWidthGrid={props.fullWidthGrid}
+      onSummaryClick={() => setIsOpen(true)}
     >
       <img
         {...pressProps}
-        className="h-full w-full object-cover"
+        className="h-full w-full cursor-pointer object-cover transition-transform duration-300 ease-out hover:scale-[1.02] group-hover/exhibition-block:scale-[1.02]"
         src={thumbnail?.id}
         alt={getValue(label) || "An image of the canvas"}
       />

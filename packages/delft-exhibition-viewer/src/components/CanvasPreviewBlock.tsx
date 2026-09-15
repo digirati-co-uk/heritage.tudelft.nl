@@ -1,13 +1,14 @@
 import { CloseIcon } from "@/components/icons/CloseIcon";
 import type { DefaultPresetOptions, Preset } from "@atlas-viewer/atlas";
 import { Dialog } from "@headlessui/react";
+import { getValue } from "@iiif/helpers";
 import { type ReactNode, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useHover } from "react-aria";
 import { CanvasContext, CanvasPanel, useCanvas, useVault } from "react-iiif-vault";
 import { LocaleString } from "react-iiif-vault";
-import { LazyLoadComponent } from "react-lazy-load-image-component";
 import { twMerge } from "tailwind-merge";
 import invariant from "tiny-invariant";
+import { useIntersectionObserver } from "usehooks-ts";
 import { useStore } from "zustand";
 import { createExhibitionStore } from "../helpers/exhibition-store";
 import { useCanvasHighlights } from "../helpers/use-canvas-highlights";
@@ -34,6 +35,15 @@ export interface CanvasPreviewBlockProps {
     component: ReactNode;
   }>;
   viewTransition?: boolean;
+  isOpen?: boolean;
+  onOpenChange?: (isOpen: boolean) => void;
+}
+
+const EAGER_CANVAS_COUNT = 3;
+const LAZY_LOAD_ROOT_MARGIN = "1200px 0px";
+
+function sameSpatial(a: any, b: any) {
+  return a && b && a.x === b.x && a.y === b.y && a.width === b.width && a.height === b.height;
 }
 
 function CanvasPreviewBlockInner({
@@ -45,9 +55,13 @@ function CanvasPreviewBlockInner({
   transitionScale = false,
   imageInfoIcon = false,
   viewTransition = false,
+  isOpen: controlledIsOpen,
+  onOpenChange,
 }: CanvasPreviewBlockProps) {
   const container = useRef<HTMLDivElement>(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const [uncontrolledIsOpen, setUncontrolledIsOpen] = useState(false);
+  const isOpen = controlledIsOpen ?? uncontrolledIsOpen;
+  const setIsOpen = onOpenChange ?? setUncontrolledIsOpen;
   const vault = useVault();
   const canvas = useCanvas();
   const store = useMemo(
@@ -64,6 +78,7 @@ function CanvasPreviewBlockInner({
   const hasMultipleAnnotations = (paintingPage?.items.length || 0) > 1;
 
   const { currentStep, goToStep, isPlaying, nextStep, pause, play, playPause, previousStep, steps } = useStore(store);
+  const highlights = useCanvasHighlights();
 
   const step = currentStep === -1 ? null : steps[currentStep];
 
@@ -171,6 +186,11 @@ function CanvasPreviewBlockInner({
 
     return null;
   }, [objectLinks, stepIndex, tour]);
+  const hasCanvasTitle = Boolean(getValue(canvas.label));
+  const hasCanvasSummary = Boolean(getValue(canvas.summary));
+  const hasCanvasAnnotations = steps.length > 0;
+  const hasAlternativeSidebar = hasCanvasTitle || hasCanvasSummary || hasCanvasAnnotations;
+  const previewHoverZoom = isReady && !isOpen;
 
   const containerStyle = useMemo(
     () => ({
@@ -200,21 +220,27 @@ function CanvasPreviewBlockInner({
     setTimeout(() => preset.runtime.updateNextFrame(), 1000);
   }, []);
 
+  const openPreview = (event?: unknown) => {
+    withViewTransition(
+      () => container.current,
+      () => setIsOpen(true),
+      `canvas-preview-block-${index}`,
+      false,
+      viewTransition,
+    )(event);
+  };
+
   return (
     <>
       <div
         ref={container}
         className={twMerge(
-          "exhibition-canvas-panel z-10 h-full bg-ViewerBackground canvas-preview-transition",
-          transitionScale && "hover:scale-105 transition-transform duration-1000",
+          "exhibition-canvas-panel z-10 h-full cursor-pointer bg-ViewerBackground canvas-preview-transition",
+          previewHoverZoom &&
+            "transition-transform duration-300 ease-out hover:scale-[1.02] group-hover/exhibition-block:scale-[1.02]",
+          previewHoverZoom && transitionScale && "hover:scale-105 transition-transform duration-1000",
         )}
-        onClick={withViewTransition(
-          container.current,
-          () => setIsOpen(true),
-          `canvas-preview-block-${index}`,
-          false,
-          viewTransition,
-        )}
+        onClick={(event) => openPreview(event)}
       >
         <Hookable type="canvasPreviewEditor" resource={canvas}>
           <CanvasPanel.Viewer
@@ -224,9 +250,7 @@ function CanvasPreviewBlockInner({
             homeCover={cover || !hasMultipleAnnotations}
             onCreated={onCreated}
           >
-            <CanvasPanel.RenderCanvas strategies={["images"]} enableSizes={false}>
-              <Highlights />
-            </CanvasPanel.RenderCanvas>
+            <CanvasPanel.RenderCanvas strategies={["images"]} enableSizes={false} />
           </CanvasPanel.Viewer>
         </Hookable>
       </div>
@@ -235,22 +259,11 @@ function CanvasPreviewBlockInner({
           <InfoIcon />
         </div>
       )}
-      <div className="absolute bottom-4 left-0 right-0 z-20 text-center font-mono text-sm text-ImageCaption">
-        {canvas.requiredStatement ? (
-          <div className="">
-            <LocaleString className="image-caption-inline">{canvas.requiredStatement.value}</LocaleString>
-          </div>
-        ) : (
-          <Hookable type="localeStringEditor" property="label" resource={canvas}>
-            <LocaleString className="image-caption-inline">{canvas.label}</LocaleString>
-          </Hookable>
-        )}
-      </div>
       <Dialog
         className="exhibition-viewer exhibition-viewer-dialog"
         open={isOpen}
         onClose={withViewTransition(
-          container.current,
+          () => container.current,
           () => setIsOpen(false),
           `canvas-preview-block-${index}`,
           true,
@@ -262,7 +275,7 @@ function CanvasPreviewBlockInner({
           <button
             type="button"
             onClick={withViewTransition(
-              container.current,
+              () => container.current,
               () => setIsOpen(false),
               `canvas-preview-block-${index}`,
               true,
@@ -306,6 +319,39 @@ function CanvasPreviewBlockInner({
                         }
 
                         const isHovered = hovered === index;
+                        const isSelected = stepIndex === index;
+                        const highlight = highlights.find(
+                          (highlight: any) =>
+                            (step.annotationId && highlight.annotationId === step.annotationId) ||
+                            sameSpatial(highlight?.selector?.spatial, step.region?.selector?.spatial),
+                        ) as any;
+                        const boxStyle = highlight?.selector?.boxStyle || null;
+                        const hasBoxStyle = boxStyle && Object.keys(boxStyle).length > 0;
+                        const inactiveStyle = {
+                          background: "rgba(255, 255, 255, 0)",
+                          cursor: "pointer",
+                          border: "2px solid transparent",
+                          borderColor: "transparent",
+                          outline: "2px solid transparent",
+                          outlineOffset: "4px",
+                          ":hover": {
+                            border: "2px solid transparent",
+                            borderColor: "transparent",
+                            outline: "2px solid rgb(250, 204, 21)",
+                          },
+                        };
+                        const hoverStyle =
+                          isHovered || isSelected
+                            ? hasBoxStyle
+                              ? { cursor: "pointer", ...boxStyle }
+                              : {
+                                  cursor: "pointer",
+                                  border: "2px solid transparent",
+                                  borderColor: "transparent",
+                                  outline: "2px solid rgb(250, 204, 21)",
+                                  outlineOffset: "4px",
+                                }
+                            : inactiveStyle;
                         return (
                           <box
                             key={`hover-overlays-${index}`}
@@ -317,22 +363,7 @@ function CanvasPreviewBlockInner({
                               goToStep(index);
                             }}
                             html
-                            style={
-                              isHovered
-                                ? {
-                                    background: "rgba(255, 255, 255, .5)",
-                                    outline: "2px solid rgb(250, 204, 21)",
-                                    outlineOffset: "4px",
-                                  }
-                                : {
-                                    background: "rgba(255, 255, 255, 0)",
-                                    outline: "2px solid transparent",
-                                    outlineOffset: "4px",
-                                    ":hover": {
-                                      outline: "2px solid rgb(250, 204, 21)",
-                                    },
-                                  }
-                            }
+                            style={hoverStyle as any}
                           />
                         );
                       }
@@ -343,49 +374,55 @@ function CanvasPreviewBlockInner({
               ) : null}
             </div>
             {alternativeMode ? (
-              <div className="z-10 max-h-[40vh] w-full overflow-y-auto text-InfoBlockText lg:order-1 lg:max-h-[100vh] lg:max-w-md">
-                {canvas.label || canvas.summary || canvas.seeAlso?.length ? (
-                  <div className="mb-4 bg-InfoBlock text-InfoBlockText px-8">
-                    <div>
-                      <Hookable type="localeStringEditor" property="label" resource={canvas}>
-                        <LocaleString as="h2" className="sticky top-0 bg-InfoBlock pb-4 pt-6 font-mono delft-title">
-                          {canvas.label}
-                        </LocaleString>
-                      </Hookable>
-                      <Hookable type="localeStringEditor" property="summary" resource={canvas}>
-                        <LocaleString className="whitespace-pre-wrap" enableDangerouslySetInnerHTML>
-                          {canvas.summary}
-                        </LocaleString>
-                      </Hookable>
-                    </div>
-                    {canvas.requiredStatement && (
-                      <div className="mt-8 text-sm opacity-60">
-                        <LocaleString>{canvas.requiredStatement.value}</LocaleString>
+              hasAlternativeSidebar ? (
+                <div className="z-10 max-h-[40vh] w-full overflow-y-auto text-InfoBlockText lg:order-1 lg:max-h-[100vh] lg:max-w-md">
+                  {hasCanvasTitle || hasCanvasSummary || canvas.seeAlso?.length ? (
+                    <div className="mb-4 bg-InfoBlock text-InfoBlockText px-8">
+                      <div>
+                        {hasCanvasTitle ? (
+                          <Hookable type="localeStringEditor" property="label" resource={canvas}>
+                            <LocaleString as="h2" className="sticky top-0 bg-InfoBlock pb-4 pt-6 font-mono delft-title">
+                              {canvas.label}
+                            </LocaleString>
+                          </Hookable>
+                        ) : null}
+                        {hasCanvasSummary ? (
+                          <Hookable type="localeStringEditor" property="summary" resource={canvas}>
+                            <LocaleString className="whitespace-pre-wrap" enableDangerouslySetInnerHTML>
+                              {canvas.summary}
+                            </LocaleString>
+                          </Hookable>
+                        ) : null}
                       </div>
-                    )}
-                    {canvas.seeAlso?.length ? <RenderSeeAlso resource={canvas.seeAlso[0]} /> : null}
-                  </div>
-                ) : null}
-                {steps.length === 0 ? <div>{objectLink?.component || null}</div> : null}
-                {steps.length > 1 ? (
-                  <div className="flex flex-col gap-2 bg-InfoBlock text-InfoBlockText px-8 pb-8">
-                    <h3 className="sticky top-0 bg-InfoBlock pb-4 pt-6 font-mono delft-title">Annotations</h3>
-                    {steps.map((step, index) => {
-                      return (
-                        <VisibleAnnotationsListingItem
-                          key={`step-${index}`}
-                          canvas={canvas}
-                          goToStep={goToStep}
-                          hoverProps={hoverProps}
-                          index={index}
-                          step={step}
-                          stepIndex={stepIndex}
-                        />
-                      );
-                    })}
-                  </div>
-                ) : null}
-              </div>
+                      {canvas.requiredStatement && (
+                        <div className="mt-8 text-sm opacity-60">
+                          <LocaleString>{canvas.requiredStatement.value}</LocaleString>
+                        </div>
+                      )}
+                      {canvas.seeAlso?.length ? <RenderSeeAlso resource={canvas.seeAlso[0]} /> : null}
+                    </div>
+                  ) : null}
+                  {steps.length === 0 ? <div>{objectLink?.component || null}</div> : null}
+                  {hasCanvasAnnotations ? (
+                    <div className="flex flex-col gap-2 bg-InfoBlock text-InfoBlockText px-8 pb-8">
+                      <h3 className="sticky top-0 bg-InfoBlock pb-4 font-mono delft-title">Annotations</h3>
+                      {steps.map((step, index) => {
+                        return (
+                          <VisibleAnnotationsListingItem
+                            key={`step-${index}`}
+                            canvas={canvas}
+                            goToStep={goToStep}
+                            hoverProps={hoverProps}
+                            index={index}
+                            step={step}
+                            stepIndex={stepIndex}
+                          />
+                        );
+                      })}
+                    </div>
+                  ) : null}
+                </div>
+              ) : null
             ) : (
               <footer className="background-black flex flex-col items-center gap-8 p-8 text-white md:min-h-32 md:flex-row">
                 <div className="flex-1">
@@ -485,6 +522,17 @@ function CanvasPreviewBlockInner({
 }
 
 export function CanvasPreviewBlock(props: CanvasPreviewBlockProps) {
+  const [lazyRef, isNearViewport] = useIntersectionObserver({
+    threshold: 0,
+    root: null,
+    rootMargin: LAZY_LOAD_ROOT_MARGIN,
+    initialIsIntersecting: props.index < EAGER_CANVAS_COUNT,
+  });
+  const shouldRender =
+    props.index < EAGER_CANVAS_COUNT ||
+    isNearViewport ||
+    props.isOpen ||
+    (typeof window !== "undefined" && !("IntersectionObserver" in window));
   const inner = props.canvasId ? (
     <CanvasContext canvas={props.canvasId}>
       <CanvasPreviewBlockInner {...props} />
@@ -493,16 +541,9 @@ export function CanvasPreviewBlock(props: CanvasPreviewBlockProps) {
     <CanvasPreviewBlockInner {...props} />
   );
 
-  // if (props.index < 3) {
-  return <div className="relative h-full w-full bg-ViewerBackground">{inner}</div>;
-  // }
-
-  // @todo come back to this, breaking some things.
   return (
-    <div className="relative h-full w-full bg-ViewerBackground">
-      <LazyLoadComponent placeholder={<div />} visibleByDefault={false} threshold={300}>
-        {inner}
-      </LazyLoadComponent>
+    <div ref={lazyRef} className="relative h-full w-full overflow-hidden bg-ViewerBackground">
+      {shouldRender ? inner : null}
     </div>
   );
 }
@@ -517,7 +558,15 @@ function Highlights() {
       {highlights.map((highlight, index) => {
         const target = highlight?.selector?.spatial as any;
         if (!target) return null;
-        return <box key={index} target={target} relativeStyle html style={{ border: "2px dashed red" }} />;
+        return (
+          <box
+            key={index}
+            target={target}
+            relativeStyle
+            html
+            style={{ ...(highlight?.selector?.boxStyle || {}), pointerEvents: "none" } as any}
+          />
+        );
       })}
     </>
   );

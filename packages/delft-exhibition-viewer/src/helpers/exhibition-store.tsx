@@ -50,6 +50,7 @@ export type ExhibitionStoreOptions = {
   objectLinks: Array<ObjectLink>;
   timePerSlide?: number;
   startCanvasIndex?: number;
+  initialStep?: number;
   firstStep?: boolean;
 };
 
@@ -213,6 +214,7 @@ export function createExhibitionStore(options: ExhibitionStoreOptions) {
     objectLinks,
     timePerSlide = 5000,
     startCanvasIndex = 0,
+    initialStep,
     firstStep = false,
   } = options;
 
@@ -266,7 +268,7 @@ export function createExhibitionStore(options: ExhibitionStoreOptions) {
     };
 
     return {
-      currentStep: startIndex || 0,
+      currentStep: initialStep ?? (startIndex || 0),
       steps: allSteps,
 
       isPlaying: false,
@@ -312,7 +314,7 @@ export function createExhibitionStore(options: ExhibitionStoreOptions) {
       },
 
       goToStep(step: number) {
-        if (step >= 0 && step < get().steps.length) {
+        if (step === -1 || (step >= 0 && step < get().steps.length)) {
           set({ currentStep: step });
         }
       },

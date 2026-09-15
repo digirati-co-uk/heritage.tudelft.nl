@@ -10,22 +10,16 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v7
 
-      - name: Setup bun.sh environment
-        uses: oven-sh/setup-bun@v1
+      - uses: pnpm/action-setup@v6
         with:
-          bun-version: latest
-
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 9
           run_install: |
             - recursive: true
               args: [--frozen-lockfile, --strict-peer-dependencies]
 
       - name: Setup node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 24
           cache: "pnpm"
@@ -36,7 +30,7 @@ jobs:
 
       - name: Check for HSS changes
         id: hss_changes
-        uses: dorny/paths-filter@v3
+        uses: dorny/paths-filter@v4
         with:
           filters: |
             hss:
@@ -47,11 +41,8 @@ jobs:
         working-directory: packages/headless-static-site
         run: pnpm dlx pkg-pr-new publish
 
-      - name: Link HSS CLI
-        run: pnpm install --frozen-lockfile
-
       - name: Cache .iiif/cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: apps/iiif/.iiif/cache
           key: ${{ runner.os }}-iiif-cache-${{ hashFiles('apps/iiif/.iiifrc.yml') }}
@@ -59,7 +50,7 @@ jobs:
             ${{ runner.os }}-iiif-cache-
 
       - name: Cache Next.js build cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: apps/static-site/.next/cache
           key: ${{ runner.os }}-iiif-cache-${{ hashFiles('**/pnpm-lock.yaml') }}--${{ hashFiles('app/static-site/src/**/*.ts', 'app/static-site/src/**/*.tsx') }}
@@ -163,7 +154,7 @@ jobs:
         if: (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy-preview'))
         working-directory: apps/static-site
         run: |
-          bun run ./typesense-update.ts --recreate-index
+          node search-cli.ts index-manifests --recreate
         env:
           TYPESENSE_API_KEY: ${{ secrets.TYPESENSE_ADMIN_API_KEY }}
           TYPESENSE_HOST: 63flhve71t2un5xgp.a1.typesense.net
@@ -172,7 +163,7 @@ jobs:
           TYPESENSE_COLLECTION_NAME: preview-manifests
 
       - name: Find Comment
-        uses: peter-evans/find-comment@v3
+        uses: peter-evans/find-comment@v4
         id: fc
         with:
           issue-number: ${{ github.event.pull_request.number }}
@@ -181,7 +172,7 @@ jobs:
 
       - name: Create or update comment
         if: (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'deploy-preview'))
-        uses: peter-evans/create-or-update-comment@v4
+        uses: peter-evans/create-or-update-comment@v5
         with:
           comment-id: ${{ steps.fc.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}

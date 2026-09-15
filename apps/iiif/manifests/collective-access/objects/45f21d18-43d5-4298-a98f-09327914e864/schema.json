@@ -1,0 +1,72 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/45f21d18-43d5-4298-a98f-09327914e864/schema.json",
+    "name": "Audion radiolamp door L. De Forest",
+    "description": "De eerste Audion radiolamp werd in 1906 door de Amerikaan Lee de Forest (1873-1961) gefabriceerd. Deze buis dateert van 1908. De buis is opgehangen aan veren in een transparante kunststoffen doos.",
+    "identifier": "2002.0200.EWI",
+    "temporalCoverage": "1908",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "radiobuis"
+    },
+    "material": [
+        {
+            "@type": "Product",
+            "name": "kunststof",
+            "sameAs": "https://data.cultureelerfgoed.nl/term/id/cht/923ba596-bc30-44f5-a26c-cac680e3808d"
+        },
+        {
+            "@type": "Product",
+            "name": "glas",
+            "sameAs": "http://vocab.getty.edu/aat/300010797"
+        },
+        {
+            "@type": "Product",
+            "name": "metaal",
+            "sameAs": "http://vocab.getty.edu/aat/300010900"
+        },
+        {
+            "@type": "Product",
+            "name": "textiel",
+            "sameAs": "http://vocab.getty.edu/aat/300231565"
+        }
+    ],
+    "creator": {
+        "@type": "Role",
+        "roleName": "ontwerper",
+        "creator": {
+            "@type": "Person",
+            "name": "Lee De Forest"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 113
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 80
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 80
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/3b02a2f8-fdcc-44ee-bfde-525cff58c04a",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/3b02a2f8-fdcc-44ee-bfde-525cff58c04a/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2002.0200.EWI.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 2133
+    }
+}

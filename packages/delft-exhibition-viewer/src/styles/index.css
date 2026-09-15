@@ -10,6 +10,11 @@ html {
   scroll-behavior: smooth;
 }
 
+html:has(.delft-exhibition-viewer),
+body:has(.delft-exhibition-viewer) {
+  scroll-behavior: auto;
+}
+
 html,
 body {
   @apply bg-BackgroundPrimary text-TextSecondary;

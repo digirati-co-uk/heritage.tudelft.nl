@@ -2,16 +2,17 @@
   "name": "static-site",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev -H 0.0.0.0 --webpack",
     "build:content": "contentlayer build",
     "build": "contentlayer build && next build",
     "start": "next start",
-    "search": "tsx search-cli.ts",
-    "search:manifests": "tsx search-cli.ts index-manifests",
-    "search:status": "tsx search-cli.ts status",
-    "search:clean": "tsx search-cli.ts clean",
-    "search:import": "tsx search-cli.ts import"
+    "search": "node search-cli.ts",
+    "search:manifests": "node search-cli.ts index-manifests",
+    "search:status": "node search-cli.ts status",
+    "search:clean": "node search-cli.ts clean",
+    "search:import": "node search-cli.ts import"
   },
   "dependencies": {
     "@headlessui/react": "1.7.18",
@@ -51,7 +52,7 @@
   },
   "devDependencies": {
     "@mdxeditor/editor": "^3.48.0",
-    "@netlify/plugin-nextjs": "^5.14.4",
+    "@netlify/plugin-nextjs": "^5.15.13",
     "@repo/typescript-config": "workspace:*",
     "@types/node": "^17.0.12",
     "@types/react": "^19",

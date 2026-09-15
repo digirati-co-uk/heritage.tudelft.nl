@@ -3,21 +3,24 @@ import { InfoBlock } from "@/components/exhibition/InfoBlock";
 import { MediaBlock } from "@/components/exhibition/MediaBlock";
 import { Dialog } from "@headlessui/react";
 import type { Manifest } from "@iiif/presentation-3";
-import { type ReactNode, Suspense, lazy, useRef, useState } from "react";
-import { LanguageProvider, ManifestContext, VaultProvider, useExistingVault, useManifest } from "react-iiif-vault";
+import { type ReactNode, Suspense, lazy, useEffect, useMemo, useRef, useState } from "react";
+import { useManifest, useVault, useVaultSelector } from "react-iiif-vault";
 import { TitlePanel } from "./components/exhibition/TitleBlock";
 import "./styles/lib.css";
 import { CloseIcon } from "@/components/icons/CloseIcon";
-import type { Vault } from "@iiif/helpers";
+import { createRangeHelper, type Vault } from "@iiif/helpers";
 import { usePress } from "react-aria";
 import { twMerge } from "tailwind-merge";
 import { useMediaQuery } from "usehooks-ts";
+import { RangeTitleBlock } from "./components/exhibition/RangeTitleBlock";
 import { Provider } from "./components/Provider";
 import { PlayIcon } from "./components/icons/PlayIcon";
 import { TopIcon } from "./components/icons/TopIcon";
 import { TableOfContentsBar } from "./components/shared/TableOfContentsBar";
 import { TableOfContentsHeader } from "./components/shared/TableOfContentsHeader";
 import { MapCanvasStrategy } from "./helpers/MapCanvasStrategy";
+import { scrollElementIntoViewInstantly } from "./helpers/instant-scroll";
+import { createTableOfContentsItems, groupRangeItemsByCanvasIndex } from "./helpers/range-navigation";
 
 export type DelftExhibitionProps = {
   manifest: Manifest | string;
@@ -44,10 +47,13 @@ export type DelftExhibitionProps = {
     transitionScale?: boolean;
     imageInfoIcon?: boolean;
     coverImages?: boolean;
+    hideRangeTitles?: boolean;
+    viewTransition?: boolean;
   };
   content?: {
     exhibition: string;
     tableOfContents: string;
+    readMore?: string;
   };
 
   customVault?: Vault;
@@ -73,7 +79,9 @@ export function DelftExhibition(props: DelftExhibitionProps) {
 
 export function DelftExhibitionInner(props: DelftExhibitionProps) {
   const manifest = useManifest();
+  const vault = useVault();
   const containerRef = useRef<HTMLDivElement>(null);
+  const initialHashScrollKey = useRef<string | null>(null);
   const [enabled, setEnabled] = useState(false);
 
   const {
@@ -88,7 +96,77 @@ export function DelftExhibitionInner(props: DelftExhibitionProps) {
     coverImages = false,
     fullWidthGrid = false,
     hideTableOfContents = !!props.canvasId,
+    hideRangeTitles = !!props.canvasId,
+    viewTransition = false,
   } = props.options || {};
+  const rangeHelper = useMemo(() => createRangeHelper(vault), [vault]);
+  const range = useVaultSelector((s, vault) => vault.get((manifest?.structures || [])[0]));
+  const canvases = useVaultSelector((s, vault) => vault.get(manifest?.items || []));
+  const tree = useMemo(() => rangeHelper.rangeToTableOfContentsTree(range), [range, rangeHelper]);
+  const tableOfContentsItems = useMemo(() => createTableOfContentsItems(tree, canvases), [tree, canvases]);
+  const rangeTitlesByCanvasIndex = useMemo(
+    () => groupRangeItemsByCanvasIndex(tableOfContentsItems),
+    [tableOfContentsItems],
+  );
+  const firstRangeTitleCanvasIndex = useMemo(
+    () =>
+      tableOfContentsItems.find(
+        (item) => item.type === "Range" && item.depth === 0 && item.canvasIndex !== undefined,
+      )?.canvasIndex,
+    [tableOfContentsItems],
+  );
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const root = document.documentElement;
+    const body = document.body;
+    const previousRootScrollBehavior = root.style.scrollBehavior;
+    const previousBodyScrollBehavior = body.style.scrollBehavior;
+
+    root.style.scrollBehavior = "auto";
+    body.style.scrollBehavior = "auto";
+
+    return () => {
+      root.style.scrollBehavior = previousRootScrollBehavior;
+      body.style.scrollBehavior = previousBodyScrollBehavior;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.location.hash) return;
+    const hash = window.location.hash.slice(1);
+    const targetId = (() => {
+      try {
+        return decodeURIComponent(hash);
+      } catch {
+        return hash;
+      }
+    })();
+    const scrollKey = `${manifest?.id || ""}:${targetId}`;
+    if (initialHashScrollKey.current === scrollKey) return;
+
+    const frame = window.requestAnimationFrame(() => {
+      const target = document.getElementById(targetId);
+      if (target) {
+        scrollElementIntoViewInstantly(target, { block: "start" });
+        initialHashScrollKey.current = scrollKey;
+      }
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [manifest?.id, tableOfContentsItems.length]);
+
+  const renderRangeTitles = (index: number) => {
+    if (hideRangeTitles) return null;
+    const rangeTitles = rangeTitlesByCanvasIndex.get(index);
+    return rangeTitles?.length ? (
+      <RangeTitleBlock
+        items={rangeTitles}
+        isFirstRangeTitle={firstRangeTitleCanvasIndex === 0 && index === firstRangeTitleCanvasIndex}
+        scrollEnabled={!enabled}
+      />
+    ) : null;
+  };
 
   const { pressProps: closeButtonProps } = usePress({
     onPress: () => setEnabled(false),
@@ -176,44 +254,57 @@ export function DelftExhibitionInner(props: DelftExhibitionProps) {
                 const foundLinks = (props.viewObjectLinks || []).filter((link) => link.canvasId === canvas.id);
 
                 return (
-                  <ImageBlock
-                    key={index}
-                    scrollEnabled={!enabled}
-                    canvas={canvas}
-                    index={index}
-                    fullWidthGrid={fullWidthGrid}
-                    coverImages={coverImages}
-                    objectLinks={foundLinks}
-                    alternativeMode={alternativeImageMode}
-                    transitionScale={transitionScale}
-                    imageInfoIcon={imageInfoIcon}
-                  />
+                  <>
+                    {renderRangeTitles(index)}
+                    <ImageBlock
+                      key={index}
+                      scrollEnabled={!enabled}
+                      canvas={canvas}
+                      index={index}
+                      fullWidthGrid={fullWidthGrid}
+                      coverImages={coverImages}
+                      objectLinks={foundLinks}
+                      alternativeMode={alternativeImageMode}
+                      transitionScale={transitionScale}
+                      imageInfoIcon={imageInfoIcon}
+                      viewTransition={viewTransition}
+                    />
+                  </>
                 );
               },
 
               // Textual content
               "textual-content": ({ index, canvas, strategy }) => (
-                <InfoBlock
-                  scrollEnabled={!enabled}
-                  index={index}
-                  firstInfo={fullTitleBar && index === 1}
-                  canvas={canvas}
-                  strategy={strategy}
-                />
+                <>
+                  {renderRangeTitles(index)}
+                    <InfoBlock
+                      scrollEnabled={!enabled}
+                      index={index}
+                      firstInfo={fullTitleBar && index === 1}
+                      canvas={canvas}
+                      strategy={strategy}
+                      content={{
+                        readMore: props.content?.readMore || "Read more",
+                      }}
+                    />
+                </>
               ),
 
               // Media content
               media: ({ index, canvas, strategy }) => (
-                <Suspense key={index} fallback={<div className={"cut-corners bg-black text-white"} />}>
-                  <MediaBlock
-                    key={index}
-                    scrollEnabled={!enabled}
-                    canvas={canvas}
-                    strategy={strategy}
-                    index={index}
-                    fullWidthGrid={fullWidthGrid}
-                  />
-                </Suspense>
+                <>
+                  {renderRangeTitles(index)}
+                  <Suspense key={index} fallback={<div className={"cut-corners bg-black text-white"} />}>
+                    <MediaBlock
+                      key={index}
+                      scrollEnabled={!enabled}
+                      canvas={canvas}
+                      strategy={strategy}
+                      index={index}
+                      fullWidthGrid={fullWidthGrid}
+                    />
+                  </Suspense>
+                </>
               ),
             }}
           </MapCanvasStrategy>

@@ -1,4 +1,6 @@
 import { getClassName } from "@/helpers/exhibition";
+import { hasSelectedText, isInteractiveElement } from "@/helpers/text-block-interaction";
+import type { MouseEvent } from "react";
 import { LocaleString, useCanvas } from "react-iiif-vault";
 import { twMerge } from "tailwind-merge";
 import { BaseGridSection } from "../shared/BaseGridSection";
@@ -8,11 +10,12 @@ interface BaseExhibitionBlockProps {
   index: number;
   scrollEnabled?: boolean;
   fullWidthGrid?: boolean;
+  onSummaryClick?: () => void;
   children: React.ReactNode;
 }
 
 export function BaseExhibitionBlock(props: BaseExhibitionBlockProps) {
-  const { id, index, scrollEnabled, children } = props;
+  const { id, index, scrollEnabled, children, onSummaryClick } = props;
   const canvas = useCanvas();
   const behavior = canvas?.behavior || [];
   const isLeft = behavior.includes("left");
@@ -22,6 +25,14 @@ export function BaseExhibitionBlock(props: BaseExhibitionBlockProps) {
   const isCover = behavior.includes("image-cover") || behavior.includes("cover");
   const showSummary = Boolean(canvas?.summary && (isLeft || isRight || isBottom || isTop));
   const className = getClassName(behavior, false, { fullWidthGrid: props.fullWidthGrid });
+
+  const openFromSummary = (event: MouseEvent<HTMLDivElement>) => {
+    if (!onSummaryClick || event.defaultPrevented || isInteractiveElement(event.target) || hasSelectedText()) {
+      return;
+    }
+
+    onSummaryClick();
+  };
 
   if (!canvas) return null;
 
@@ -42,11 +53,12 @@ export function BaseExhibitionBlock(props: BaseExhibitionBlockProps) {
             isLeft && "flex-row-reverse",
             isBottom && "flex-col",
             isTop && "flex-col-reverse",
+            onSummaryClick && "group/exhibition-block",
           )}
         >
           <div
             className={twMerge(
-              "cut-corners flex-1 md:w-2/3",
+              "cut-corners flex-1 overflow-hidden md:w-2/3",
               (isBottom || isTop) && "w-full md:w-full",
               "aspect-square md:aspect-auto",
             )}
@@ -54,9 +66,12 @@ export function BaseExhibitionBlock(props: BaseExhibitionBlockProps) {
             {children}
           </div>
           <div
+            onClick={openFromSummary}
             className={twMerge(
               "cut-corners flex flex-col bg-InfoBlock text-InfoBlockText overflow-y-auto p-5 md:w-1/3",
               (isBottom || isTop) && "w-full md:w-full",
+              onSummaryClick &&
+                "exhibition-summary-click-target cursor-pointer transition-colors duration-150 hover:bg-[#242424] group-hover/exhibition-block:bg-[#242424]",
             )}
           >
             <div

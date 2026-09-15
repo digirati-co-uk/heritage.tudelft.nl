@@ -34,8 +34,30 @@
   --delft-title-transform: uppercase;
 }
 
+html:has(.delft-exhibition-viewer),
+body:has(.delft-exhibition-viewer) {
+  scroll-behavior: auto;
+}
+
 .exhibition-viewer.exhibition-viewer-dialog {
   @apply relative z-50;
+}
+
+.exhibition-viewer :where(a[href], button:not(:disabled), [role="button"]:not([aria-disabled="true"])) {
+  cursor: pointer;
+}
+
+.exhibition-viewer :where(button:disabled, [aria-disabled="true"]) {
+  cursor: not-allowed;
+}
+
+.exhibition-summary-click-target {
+  transition: background-color 160ms ease-in-out;
+}
+
+.exhibition-summary-click-target:hover {
+  background-color: #242424;
+  background-color: color-mix(in srgb, var(--delft-info-block) 84%, white);
 }
 
 .exhibition-viewer.exhibition-viewer-toc {

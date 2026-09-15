@@ -39,6 +39,7 @@ export function useHashValue(onChange?: (hashValue: string) => void) {
 
     window.addEventListener("hashchange", windowHashChange);
     tableOfContentsEmitter.on("change", hashChange);
+    _setHashValue(window.location.hash.slice(1));
 
     return () => {
       window.removeEventListener("hashchange", windowHashChange);
