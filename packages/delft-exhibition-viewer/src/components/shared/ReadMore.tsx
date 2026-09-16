@@ -3,7 +3,6 @@ import { useInfoBlockContents } from "@/hooks/use-info-box-contents";
 import { Dialog } from "@headlessui/react";
 import { type CSSProperties, useEffect, useRef, useState } from "react";
 import { LocaleString } from "react-iiif-vault";
-import { isModalOpenSuppressed, stopModalEvent, suppressModalOpen } from "@/helpers/modal-interaction";
 import { InfoBlockContentsInner } from "./InfoBlockContents";
 
 export function ReadMoreBlock({
@@ -75,10 +74,7 @@ export function ReadMoreBlock({
       <Dialog
         className="exhibition-viewer exhibition-viewer-dialog"
         open={isOpen}
-        onClose={(event) => {
-          suppressModalOpen(event);
-          setIsOpen(false);
-        }}
+        onClose={() => setIsOpen(false)}
         aria-label={label}
         onClick={(event) => event.stopPropagation()}
       >
@@ -96,10 +92,7 @@ export function ReadMoreBlock({
               type="button"
               aria-label="Close"
               className="absolute right-[calc(0.75rem+var(--read-more-scrollbar-width))] top-3 z-10 flex h-7 w-7 shrink-0 items-center justify-center rounded bg-white text-black shadow-sm ring-1 ring-black/10 hover:bg-slate-100 md:right-[calc(1rem+var(--read-more-scrollbar-width))] md:top-4"
-              onClick={(event) => {
-                suppressModalOpen(event);
-                setIsOpen(false);
-              }}
+              onClick={() => setIsOpen(false)}
             >
               <CloseIcon fill="currentColor" />
             </button>
@@ -114,10 +107,6 @@ export function ReadMoreBlock({
         className="underline underline-offset-4"
         onClick={(event) => {
           event.stopPropagation();
-          if (isModalOpenSuppressed()) {
-            stopModalEvent(event);
-            return;
-          }
           setIsOpen(true);
         }}
       >
