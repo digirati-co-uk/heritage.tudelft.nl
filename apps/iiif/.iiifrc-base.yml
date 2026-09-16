@@ -33,6 +33,14 @@ search:
 collections:
   index:
     label: { "en": ["TU Delft Academic Heritage"], "nl": ["Academisch Erfgoed TU Delft"] }
+  featured:
+    label: { "en": ["Collections"], "nl": ["Collecties"] }
+    summary: { "en": ["Explore the academic heritage of TU Delft — museum objects, rare books, maps, photographs, and scientific
+            instruments spanning 180 years of history."], "nl": ["Ontdek het academisch erfgoed van de TU Delft — museumobjecten, zeldzame boeken, kaarten, foto's en wetenschappelijke instrumenten die 180 jaar geschiedenis omspannen."] }
+    items:
+      - collections/museumcollectie
+      - collections/tresor
+      - collections/andere-collecties
 
 config:
   extract-thumbnail-local:
@@ -49,6 +57,12 @@ config:
         property: seeAlso
 
 stores:
+  new-collections:
+    type: iiif-json
+    path: "./collections"
+    pattern: "**/*.{json,yaml,yml}"
+
+
   collective-access:
     type: iiif-json
     path: ./manifests/collective-access
