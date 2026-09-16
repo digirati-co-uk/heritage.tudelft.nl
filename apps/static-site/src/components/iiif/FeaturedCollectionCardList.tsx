@@ -1,4 +1,5 @@
 import { Link, getObjectSlug } from "@/i18n/navigation";
+import { getValue } from "@iiif/helpers";
 import type { Collection } from "@iiif/presentation-3";
 import { useTranslations } from "next-intl";
 import type { CSSProperties } from "react";
@@ -35,6 +36,7 @@ export function FeaturedCollectionCardList({ background = "#F3CE49", collections
             <li key={collection.id} className="min-w-0 snap-start">
               <Link
                 href={`/${getObjectSlug(collection["hss:slug"])}`}
+                aria-label={getValue(collection.label)}
                 className="cut-corners group flex h-full flex-col bg-[var(--card-color)] text-black focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-black"
               >
                 <div className="cut-corners relative aspect-square w-full shrink-0 bg-zinc-300">

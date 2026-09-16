@@ -53,9 +53,9 @@ export default async function Collections2Page({ params }: { params: Promise<{ l
               className="mt-24"
               id={featuredCollection["hss:slug"].replace(/collections\//g, "")}
             >
-              <h2 className="text-4xl mb-6">
+              <Link className="text-4xl mb-6 block hover:underline" href={`/${featuredCollection["hss:slug"]}`}>
                 <AutoLanguage>{featuredCollection.label}</AutoLanguage>
-              </h2>
+              </Link>
               <p className="text-xl max-w-3xl my-2">
                 <AutoLanguage html>{featuredCollection.summary}</AutoLanguage>
               </p>
