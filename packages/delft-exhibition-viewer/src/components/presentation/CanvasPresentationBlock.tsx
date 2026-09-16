@@ -66,6 +66,7 @@ export function CanvasPresentationBlock(props: CanvasPresentationBlockProps) {
         renderPreset={config}
         resizeHash={props.fullWidth ? 1 : 2}
         homeOnResize
+        loadWhenVisible
         onCreated={(preset) => {
           atlas.current = preset;
           const clear = preset.runtime.registerHook("useAfterFrame", () => {

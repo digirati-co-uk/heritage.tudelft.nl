@@ -42,8 +42,8 @@ export const extractSearchRecord = extract(
     const id = resource.slug.replace("manifests/", "");
     const meta = await api.meta.value;
     const collections = meta.partOfCollections || [];
-    // const plaintext = (await api.resourceFiles.readFile("keywords.txt"))?.toString("utf-8") || "";
-    const plaintext = (api.resource.metadata || []).map((i) => getValue(i.value)).join(" ");
+    const description = resource.vault?.get(resource.id) || api.resource;
+    const plaintext = (description.metadata || []).map((i) => getValue(i.value)).join(" ");
     // This is what we want to be able to support.
     return {
       search: {
@@ -52,9 +52,9 @@ export const extractSearchRecord = extract(
           id: btoa(id),
           type: resource.type,
           slug: resource.slug,
-          label: getValue(api.resource.label),
-          full_label: api.resource.label,
-          summary: getValue(api.resource.summary),
+          label: getValue(description.label),
+          full_label: description.label,
+          summary: getValue(description.summary),
           thumbnail: meta.thumbnail?.id,
           url: meta.url,
           plaintext,

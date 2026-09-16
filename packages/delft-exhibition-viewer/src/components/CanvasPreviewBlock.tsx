@@ -247,6 +247,7 @@ function CanvasPreviewBlockInner({
             containerStyle={containerStyle}
             renderPreset={config}
             homeOnResize
+            loadWhenVisible
             homeCover={cover || !hasMultipleAnnotations}
             onCreated={onCreated}
           >
@@ -298,6 +299,7 @@ function CanvasPreviewBlockInner({
                   containerStyle={{ height: "100%", minHeight: 0 }}
                   runtimeOptions={openConfig[1].runtimeOptions}
                   renderPreset={openConfig}
+                  loadWhenVisible
                 >
                   <CanvasPanel.RenderCanvas
                     strategies={["images"]}
