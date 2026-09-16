@@ -1,4 +1,5 @@
 import { Page } from "@/components/Page";
+import { CollectionBreadcrumbs } from "@/components/iiif/CollectionBreadcrumbs";
 import { CollectionPage } from "@/components/pages/CollectionPage";
 import { baseURL, getDefaultMetaMdx, makeTitle } from "@/helpers/metadata";
 import { loadCollection } from "@/iiif";
@@ -64,7 +65,7 @@ export default async function Collection({
   if (!collectionData) notFound();
 
   return (
-    <Page>
+    <Page breadcrumbs={collectionData.partOf} current={collectionData.label}>
       <CollectionPage collection={collectionData as any} meta={meta as any} slug={slug} />
     </Page>
   );
