@@ -1,13 +1,19 @@
 "use client";
 
+import type { Collection } from "@iiif/presentation-3";
 import { LanguageProvider } from "react-iiif-vault";
 import { Hits, Pagination, SearchBox } from "react-instantsearch";
+import { CollectionFacet } from "../search/CollectionFacet";
 import { FacetList } from "../search/FacetList";
 import { SearchHit } from "../search/SearchHit";
 import { SearchTabs } from "../search/SearchTabs";
 import { SearchWrapper } from "../search/SearchWrapper";
 
-export function SearchPage({ title, locale }: { title: string; locale: string }) {
+export function SearchPage({
+  title,
+  locale,
+  featured,
+}: { title: string; locale: string; featured: Collection | null }) {
   return (
     <LanguageProvider language={locale}>
       <div>
@@ -48,6 +54,9 @@ export function SearchPage({ title, locale }: { title: string; locale: string })
                   />
                 </div>
                 <div className="w-full md:w-1/4">
+                  {featured && (
+                    <CollectionFacet sections={featured.items.filter((item) => item.type === "Collection")} />
+                  )}
                   {facets.map((facet) => {
                     return <FacetList key={facet} facet={facet} />;
                   })}

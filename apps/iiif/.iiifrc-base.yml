@@ -1,8 +1,14 @@
 server:
   url: http://localhost:3000/iiif
 
-# Run these everywhere.
+builtInScripts: true
+output:
+  # Preserve shared topic URLs for Delft's spelling and punctuation variants.
+  topicSlugCollisions: merge
+
+# Every step is owned by Delft in ./scripts.
 run:
+  - extract-runtime-hints
   - flat-manifests
   - delft-labels
   - extract-remote-source
@@ -19,19 +25,37 @@ run:
   - extract-search-record
   - delft-test-extract-schema
   - extract-collection-thumbnail
+  - featured-part-of
+  - collection-item-order
+  - collection-thumbnail
 search:
   indexNames: ["manifests"]
   defaultIndex: manifests
   emitRecord: true
 
 collections:
+  hydrate:
+    - collections/museumcollectie
+    - collections/tresor
+    - collections/andere-collecties
   index:
     label: { "en": ["TU Delft Academic Heritage"], "nl": ["Academisch Erfgoed TU Delft"] }
+  featured:
+    label: { "en": ["Collections"], "nl": ["Collecties"] }
+    summary: { "en": ["Explore the academic heritage of TU Delft — museum objects, rare books, maps, photographs, and scientific
+            instruments spanning 180 years of history."], "nl": ["Ontdek het academisch erfgoed van de TU Delft — museumobjecten, zeldzame boeken, kaarten, foto's en wetenschappelijke instrumenten die 180 jaar geschiedenis omspannen."] }
+    items:
+      - collections/museumcollectie
+      - collections/tresor
+      - collections/andere-collecties
 
 config:
   extract-thumbnail-local:
     width: 1080
     height: 1080
+
+  featured-part-of:
+    searchRecords: true
 
   extract-files-list:
     fileTemplates:
@@ -43,6 +67,12 @@ config:
         property: seeAlso
 
 stores:
+  new-collections:
+    type: iiif-json
+    path: "./collections"
+    pattern: "**/*.{json,yaml,yml}"
+
+
   collective-access:
     type: iiif-json
     path: ./manifests/collective-access

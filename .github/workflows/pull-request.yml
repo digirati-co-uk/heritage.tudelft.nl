@@ -24,28 +24,11 @@ jobs:
           node-version: 24
           cache: "pnpm"
 
-      - name: Build HSS
-        working-directory: packages/headless-static-site
-        run: pnpm run build
-
-      - name: Check for HSS changes
-        id: hss_changes
-        uses: dorny/paths-filter@v4
-        with:
-          filters: |
-            hss:
-              - 'packages/headless-static-site/**'
-
-      - name: Preview HSS
-        if: steps.hss_changes.outputs.hss == 'true'
-        working-directory: packages/headless-static-site
-        run: pnpm dlx pkg-pr-new publish
-
       - name: Cache .iiif/cache
         uses: actions/cache@v6
         with:
           path: apps/iiif/.iiif/cache
-          key: ${{ runner.os }}-iiif-cache-${{ hashFiles('apps/iiif/.iiifrc.yml') }}
+          key: ${{ runner.os }}-iiif-cache-${{ hashFiles('pnpm-lock.yaml', 'apps/iiif/.iiifrc-base.yml', 'apps/iiif/iiif.config.js', 'apps/iiif/scripts/**', 'apps/iiif/helpers/**') }}
           restore-keys: |
             ${{ runner.os }}-iiif-cache-
 

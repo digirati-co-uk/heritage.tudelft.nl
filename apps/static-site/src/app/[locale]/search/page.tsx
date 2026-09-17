@@ -1,6 +1,7 @@
 import { Page } from "@/components/Page";
 import { SearchPage } from "@/components/pages/SearchPage";
 import { getBasicMetadata, getDefaultMetaMdx, getMdx, makeTitle } from "@/helpers/metadata";
+import { loadCollection } from "@/iiif";
 import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { getTranslations } from "next-intl/server";
@@ -31,10 +32,11 @@ export async function generateMetadata(data: { params: Promise<{ locale: string 
 export default async function Search({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const { collection: featured } = await loadCollection("featured");
   const page = getMdx({ params: { pageName: "Search", path: "/search", locale: locale } });
   return (
     <Page>
-      <SearchPage title={page.title} locale={locale} />
+      <SearchPage title={page.title} locale={locale} featured={featured} />
     </Page>
   );
 }

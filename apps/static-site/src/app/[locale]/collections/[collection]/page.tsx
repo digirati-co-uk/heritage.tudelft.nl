@@ -1,5 +1,8 @@
 import { Page } from "@/components/Page";
+import { CollectionBreadcrumbs } from "@/components/iiif/CollectionBreadcrumbs";
+import { CollectionListingBox } from "@/components/iiif/CollectionListingBox";
 import { CollectionPage } from "@/components/pages/CollectionPage";
+import { CollectionPage2 } from "@/components/pages/CollectionPage2";
 import { baseURL, getDefaultMetaMdx, makeTitle } from "@/helpers/metadata";
 import { loadCollection } from "@/iiif";
 import { getValue } from "@iiif/helpers";
@@ -63,9 +66,12 @@ export default async function Collection({
 
   if (!collectionData) notFound();
 
+  const colour = collectionData.background || (collectionData.partOf || []).find((c) => c.background)?.background;
+
   return (
-    <Page>
-      <CollectionPage collection={collectionData as any} meta={meta as any} slug={slug} />
+    <Page breadcrumbs={collectionData.partOf} current={collectionData.label} background={colour}>
+      <CollectionPage2 collection={collectionData as any} meta={meta as any} slug={slug} />
+      {/*<CollectionPage collection={collectionData as any} meta={meta as any} slug={slug} />*/}
     </Page>
   );
 }
