@@ -1,6 +1,15 @@
 import type { InternationalString } from "@iiif/presentation-3";
 import { useLocale } from "next-intl";
 
+export type AutoLanguageProps = {
+  className?: string;
+  children: InternationalString | string | null | undefined;
+  lines?: boolean;
+  html?: boolean;
+  first?: boolean;
+  mapString?: (text: string) => string;
+};
+
 export function AutoLanguage({
   className,
   children,
@@ -8,14 +17,7 @@ export function AutoLanguage({
   html,
   first = false,
   mapString: m = (text) => text,
-}: {
-  html?: boolean;
-  lines?: boolean;
-  className?: string;
-  first?: boolean;
-  children: InternationalString | string | null | undefined;
-  mapString?: (text: string) => string;
-}) {
+}: AutoLanguageProps) {
   const locale = useLocale();
   if (!children) {
     return null;
@@ -61,7 +63,7 @@ export function AutoLanguage({
                 <div key={`line-${n}`} className={className}>
                   {m(line)}
                 </div>
-              )
+              ),
             )}
           </>
         );

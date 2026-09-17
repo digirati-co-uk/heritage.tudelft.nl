@@ -1,10 +1,12 @@
 import { Link } from "@/i18n/navigation";
 import type { Collection } from "@iiif/presentation-3";
 import { getTranslations } from "next-intl/server";
+import { Suspense } from "react";
 import { CollectionCard } from "../iiif/CollectionCard";
 import { CollectionListingBox } from "../iiif/CollectionListingBox";
 import { FeaturedCollectionCardList } from "../iiif/FeaturedCollectionCardList";
 import { ManifestCardGrid } from "../iiif/ManifestCardGrid";
+import { ReadMore } from "../iiif/ReadMore";
 import { SharingAndViewingLinks } from "../iiif/SharingAndViewingLinks";
 import { AutoLanguage } from "./AutoLanguage";
 
@@ -32,7 +34,9 @@ export async function CollectionPage2(props: { collection: Collection; meta: any
             <AutoLanguage>{collection.label}</AutoLanguage>
           </h1>
           <p className="text-xl">
-            <AutoLanguage html>{collection.summary}</AutoLanguage>
+            <ReadMore className="mb-4 text-xl" html first lines label={t("Read more")} closeLabel={t("Show less")}>
+              {collection.summary}
+            </ReadMore>
           </p>
         </div>
         <div className="w-full max-w-sm">
