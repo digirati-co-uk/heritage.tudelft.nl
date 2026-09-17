@@ -160,7 +160,7 @@ export function ManifestPage({
         />
       )}
       <div>
-        <h1 className="mb-4 text-4xl font-medium">
+        <h1 className="mb-4 text-2xl md:text-4xl font-medium">
           <AutoLanguage>{manifest.label || content.untitled}</AutoLanguage>
         </h1>
         {manifest.requiredStatement ? (
@@ -168,7 +168,7 @@ export function ManifestPage({
             <AutoLanguage>{manifest.requiredStatement.value}</AutoLanguage>
           </p>
         ) : null}
-        <div className="relative h-[800px] max-h-[70%]">
+        <div className="relative h-[500px] lg:h-[800px] max-h-[60%] lg:max-h-[70%] -mx-5 md:mx-0">
           <CanvasPanel.Viewer
             onCreated={(preset) => {
               atlas.current = preset;
@@ -187,7 +187,7 @@ export function ManifestPage({
           </CanvasPanel.Viewer>
           <ViewerSliderControls />
         </div>
-        <div className="mb-4">
+        <div className="mb-4  -mx-5 md:mx-0">
           <ObjectThumbnails />
         </div>
         <div className="grid-cols-3 md:grid">

@@ -17,11 +17,11 @@ export function CollectionBreadcrumbs({
 
   return (
     <nav className={twMerge("w-full max-w-screen-xl px-5 py-5 lg:px-10", className ?? "")}>
-      <ol className="flex gap-2 items-baseline">
+      <ol className="flex gap-2 items-baseline flex-wrap">
         {filtered.map((part, n) => {
           const slug = part["hss:slug"] === "featured" ? "/collections" : `/${part["hss:slug"]}`;
           return (
-            <li key={part.id} className={twMerge(n === 0 ? "text-3xl" : "", "flex items-center gap-2")}>
+            <li key={part.id} className={twMerge("text-nowrap", n === 0 ? "text-3xl" : "", "flex items-center gap-2")}>
               {n > 0 && n < filtered.length && <span>→</span>}
               <Link href={slug} className="hover:underline">
                 <AutoLanguage>{part.label}</AutoLanguage>
@@ -30,12 +30,10 @@ export function CollectionBreadcrumbs({
           );
         })}
         {current && (
-          <>
+          <span className="flex items-center gap-2">
             <span>→</span>
-            <li className="flex items-center gap-2">
-              <AutoLanguage>{current}</AutoLanguage>
-            </li>
-          </>
+            <AutoLanguage>{current}</AutoLanguage>
+          </span>
         )}
       </ol>
     </nav>
