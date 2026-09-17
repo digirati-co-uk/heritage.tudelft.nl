@@ -79,7 +79,7 @@ export default async function Collections(props: {
           featuredCollection.type !== "Collection" ? null : (
             <section
               key={featuredCollection.id}
-              className="mt-24"
+              className="my-24"
               id={featuredCollection["hss:slug"].replace(/collections\//g, "")}
             >
               <Link className="text-4xl mb-6 block hover:underline" href={`/${featuredCollection["hss:slug"]}`}>

@@ -57,7 +57,7 @@ export async function CollectionPage2(props: { collection: Collection; meta: any
       </div>
 
       {featuredCollections.length > 0 && (
-        <div className="clear-both">
+        <div className="clear-both my-24">
           {(featuredCollections as any).map((c: Collection) => (
             <div key={c.id}>
               <Link className="block text-3xl mb-4 hover:underline" href={`/${c["hss:slug"]}`}>
