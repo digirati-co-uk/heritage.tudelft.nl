@@ -1,13 +1,14 @@
 "use client";
 import viewerConfig from "@/viewers.json";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { twMerge } from "tailwind-merge";
 import { CopyToClipboard } from "../atoms/CopyToClipboard";
 import { EditInManifestEditor } from "../atoms/EditInManifestEditor";
-import { AutoLanguage } from "../pages/AutoLanguage";
-import { IIIFLogo } from "./IIIFLogo";
 import { LinkIcon } from "../icons/LinkIcon";
 import { OpenModalIcon } from "../icons/OpenModalIcon";
-import { useTranslations } from "next-intl";
+import { AutoLanguage } from "../pages/AutoLanguage";
+import { IIIFLogo } from "./IIIFLogo";
 
 export type SharingAndViewingLinksContent = {
   sharingViewers: string;
@@ -23,6 +24,7 @@ export function SharingAndViewingLinks({
   content,
   sharingOptionsOpen,
   setSharingOptionsOpen,
+  useBackgroundColor,
 }: {
   resource: {
     id: string;
@@ -31,12 +33,14 @@ export function SharingAndViewingLinks({
   content: SharingAndViewingLinksContent;
   sharingOptionsOpen: boolean;
   setSharingOptionsOpen?: (open: boolean) => void;
+  useBackgroundColor?: boolean;
 }) {
   const [sharingExpanded, setSharingExpanded] = useState(false);
-  const configuredViewers = viewerConfig.viewers.filter((viewer) =>
-    viewer.enabled?.includes(resource.type),
-  );
+  const configuredViewers = viewerConfig.viewers.filter((viewer) => viewer.enabled?.includes(resource.type));
   const t = useTranslations();
+
+  const colorClasses = useBackgroundColor ? "bg-[var(--card-color)] text-black" : "bg-black text-white";
+  const hoverClasses = useBackgroundColor ? "hover:text-black/50" : "hover:text-slate-300";
 
   return (
     <>
@@ -46,20 +50,17 @@ export function SharingAndViewingLinks({
       ) : null}
       {configuredViewers.length === 0 ? null : (
         <div className="overflow-hidden font-mono">
-          <div className="cut-corners w-full place-self-start bg-black p-5 text-white">
+          <div className={twMerge("cut-corners w-full place-self-start p-5", colorClasses)}>
             <h3 className="mb-4 uppercase">{content.sharingViewers}</h3>
             <ul className="text-md flex list-none flex-col gap-1 underline-offset-4">
               <li className="flex items-center gap-4">
-                <IIIFLogo
-                  className="translate-x-[2px] text-xl text-slate-300"
-                  title={content.iiifLabel}
-                />
+                <IIIFLogo className={twMerge("translate-x-[2px] text-xl", hoverClasses)} title={content.iiifLabel} />
                 <CopyToClipboard
                   href={resource.id}
                   target="_blank"
                   copiedText={content.copiedMessage}
                   rel="noreferrer"
-                  className="underline hover:text-slate-300 data-[copied=true]:no-underline data-[copied=true]:opacity-50"
+                  className={`underline data-[copied=true]:no-underline data-[copied=true]:opacity-50 ${hoverClasses}`}
                 >
                   {content.iiifLabel}
                 </CopyToClipboard>
@@ -70,22 +71,17 @@ export function SharingAndViewingLinks({
                   suppressHydrationWarning
                   copiedText={content.copiedMessage}
                   href={
-                    typeof window !== "undefined"
-                      ? window.location.href
-                          .replace("/en/", "/")
-                          .replace("/nl/", "/")
-                      : ""
+                    typeof window !== "undefined" ? window.location.href.replace("/en/", "/").replace("/nl/", "/") : ""
                   }
                   target="_blank"
-                  className="underline hover:text-slate-300 data-[copied=true]:no-underline data-[copied=true]:opacity-50"
+                  className={`underline data-[copied=true]:no-underline data-[copied=true]:opacity-50 ${hoverClasses}`}
                   rel="noreferrer"
                 >
                   {content.currentPage}
                 </CopyToClipboard>
               </li>
               {configuredViewers.map((viewer, i) => {
-                if (!sharingExpanded && i > viewerConfig.showMax - 1)
-                  return null;
+                if (!sharingExpanded && i > viewerConfig.showMax - 1) return null;
 
                 return (
                   <li key={viewer.id} className="flex items-center gap-3">
@@ -93,7 +89,7 @@ export function SharingAndViewingLinks({
                     <a
                       href={viewer.link.replace("{url}", resource.id)}
                       target="_blank"
-                      className="underline hover:text-slate-300"
+                      className={`underline ${hoverClasses}`}
                       rel="noreferrer"
                     >
                       <AutoLanguage>{viewer.label}</AutoLanguage>
@@ -105,6 +101,7 @@ export function SharingAndViewingLinks({
                 <li key="sharing-options" className="flex items-center gap-3">
                   <OpenModalIcon className="text-2xl opacity-50" />
                   <button
+                    type="button"
                     className="underline ml-1"
                     onClick={() => setSharingOptionsOpen(!sharingOptionsOpen)}
                   >
@@ -115,12 +112,11 @@ export function SharingAndViewingLinks({
               {configuredViewers.length > viewerConfig.showMax ? (
                 <li className="mt-4">
                   <button
+                    type="button"
                     onClick={() => setSharingExpanded(!sharingExpanded)}
-                    className="uppercase hover:text-slate-300 hover:underline"
+                    className={`uppercase hover:underline ${hoverClasses}`}
                   >
-                    {sharingExpanded
-                      ? `${content.showLess} -`
-                      : `${content.showMore} +`}
+                    {sharingExpanded ? `${content.showLess} -` : `${content.showMore} +`}
                   </button>
                 </li>
               ) : null}

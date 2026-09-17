@@ -71,7 +71,7 @@ export default async function Collection({
   return (
     <Page breadcrumbs={collectionData.partOf} current={collectionData.label} background={colour}>
       <CollectionPage2 collection={collectionData as any} meta={meta as any} slug={slug} />
-      <CollectionPage collection={collectionData as any} meta={meta as any} slug={slug} />
+      {/*<CollectionPage collection={collectionData as any} meta={meta as any} slug={slug} />*/}
     </Page>
   );
 }

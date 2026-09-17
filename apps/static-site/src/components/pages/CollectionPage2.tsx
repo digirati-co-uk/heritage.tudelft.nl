@@ -1,23 +1,23 @@
 import { Link } from "@/i18n/navigation";
 import type { Collection } from "@iiif/presentation-3";
 import { getTranslations } from "next-intl/server";
-import { useMemo } from "react";
+import { CollectionCard } from "../iiif/CollectionCard";
 import { CollectionListingBox } from "../iiif/CollectionListingBox";
 import { FeaturedCollectionCardList } from "../iiif/FeaturedCollectionCardList";
+import { ManifestCardGrid } from "../iiif/ManifestCardGrid";
 import { SharingAndViewingLinks } from "../iiif/SharingAndViewingLinks";
-import { SharingOptions } from "../iiif/SharingOptions";
 import { AutoLanguage } from "./AutoLanguage";
 
 export async function CollectionPage2(props: { collection: Collection; meta: any; slug: string }) {
   const t = await getTranslations();
-  const { collection, meta, slug } = props;
+  const { collection } = props;
 
   const featuredCollections = collection.items.filter((item) => {
-    return item.type === "Collection" && item.items.length && item.items[0]?.type === "Collection";
+    return item.type === "Collection" && item?.items?.length && item.items[0]?.type === "Collection";
   });
 
   const otherCollections = collection.items.filter((item) => {
-    return item.type === "Collection" && (!item.items.length || item.items[0]?.type !== "Collection");
+    return item.type === "Collection" && (!item.items?.length || item.items[0]?.type !== "Collection");
   });
 
   const manifests = collection.items.filter((item) => {
@@ -38,6 +38,7 @@ export async function CollectionPage2(props: { collection: Collection; meta: any
         <div className="w-full max-w-sm">
           <CollectionListingBox collection={collection} />
           <SharingAndViewingLinks
+            useBackgroundColor
             sharingOptionsOpen={false}
             resource={{
               id: props.collection.id,
@@ -56,7 +57,7 @@ export async function CollectionPage2(props: { collection: Collection; meta: any
       </div>
 
       {featuredCollections.length > 0 && (
-        <div>
+        <div className="clear-both">
           {(featuredCollections as any).map((c: Collection) => (
             <div key={c.id}>
               <Link className="block text-3xl mb-4 hover:underline" href={`/${c["hss:slug"]}`}>
@@ -67,22 +68,22 @@ export async function CollectionPage2(props: { collection: Collection; meta: any
                 <AutoLanguage html>{c.summary}</AutoLanguage>
               </p>
               <FeaturedCollectionCardList collections={c.items.filter((t) => t.type === "Collection")} />
+              <div className="text-right clear-both mt-2">
+                <Link href={`/${c["hss:slug"]}`} className="text-xl font-bold underline underline-offset-4">
+                  View all {c.items.length} collections
+                </Link>
+              </div>
             </div>
           ))}
         </div>
       )}
 
-      {otherCollections.length > 0 && (
-        <div>
-          <h2 className="text-3xl mb-4">{t("Other Collections")}</h2>
-          <div>
-            {otherCollections.map((c) => (
-              <Link className="block text-3xl mb-4 hover:underline" href={`/${c["hss:slug"]}`}>
-                <AutoLanguage>{c.label}</AutoLanguage>
-              </Link>
-            ))}
-          </div>
-        </div>
+      {(otherCollections.length > 0 || manifests.length > 0) && (
+        <ManifestCardGrid key={collection.id} manifests={manifests}>
+          {otherCollections.map((collection) => (
+            <CollectionCard key={collection.id} collection={collection} />
+          ))}
+        </ManifestCardGrid>
       )}
     </div>
   );
