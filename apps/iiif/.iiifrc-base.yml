@@ -26,12 +26,18 @@ run:
   - delft-test-extract-schema
   - extract-collection-thumbnail
   - featured-part-of
+  - collection-item-order
+  - collection-thumbnail
 search:
   indexNames: ["manifests"]
   defaultIndex: manifests
   emitRecord: true
 
 collections:
+  hydrate:
+    - collections/museumcollectie
+    - collections/tresor
+    - collections/andere-collecties
   index:
     label: { "en": ["TU Delft Academic Heritage"], "nl": ["Academisch Erfgoed TU Delft"] }
   featured:

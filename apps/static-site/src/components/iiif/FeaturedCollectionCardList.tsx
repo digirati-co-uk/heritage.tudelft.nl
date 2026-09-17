@@ -11,13 +11,13 @@ interface FeaturedCollectionCardListProps {
   collections: Collection["items"];
 }
 
-export function FeaturedCollectionCardList({ background = "#F3CE49", collections }: FeaturedCollectionCardListProps) {
+export function FeaturedCollectionCardList({ background, collections }: FeaturedCollectionCardListProps) {
   const t = useTranslations();
 
   if (!collections.length) return null;
 
   return (
-    <div className="mt-8 min-w-0" style={{ "--card-color": background } as CSSProperties}>
+    <div className="mt-8 min-w-0" style={background ? ({ "--card-color": background } as CSSProperties) : {}}>
       <FeaturedCollectionCarousel>
         {collections.map((collection) => {
           const summary =
