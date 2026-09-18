@@ -1,0 +1,212 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "https://dlc.services/iiif-resource/v3/7/string1string2string3/mgm/6484_1052808",
+  "type": "Manifest",
+  "label": {
+    "nl": [
+      "Glaukoniet"
+    ]
+  },
+  "metadata": [
+    {
+      "label": {
+        "nl": [
+          "Naam"
+        ]
+      },
+      "value": {
+        "nl": [
+          "Glaukoniet"
+        ]
+      }
+    },
+    {
+      "label": {
+        "nl": [
+          "Inventarisnummer(s)"
+        ]
+      },
+      "value": {
+        "nl": [
+          "6484",
+          "RGM.1052808"
+        ]
+      }
+    },
+    {
+      "label": {
+        "nl": [
+          "Locatie van oorsprong"
+        ]
+      },
+      "value": {
+        "nl": [
+          "Berufj\u00f6rdhur, Ijsland"
+        ]
+      }
+    },
+    {
+      "label": {
+        "nl": [
+          "Vitrine in MGM"
+        ]
+      },
+      "value": {
+        "nl": [
+          "12D"
+        ]
+      }
+    },
+    {
+      "label": {
+        "nl": [
+          "Nickel-Strunz classificaties"
+        ]
+      },
+      "value": {
+        "nl": [
+          "9.EC.15"
+        ]
+      }
+    },
+    {
+      "label": {
+        "nl": [
+          "Materialen"
+        ]
+      },
+      "value": {
+        "nl": [
+          "glaukoniet"
+        ]
+      }
+    }
+  ],
+  "thumbnail": [
+    {
+      "id": "https://dlc.services/thumbs/7/19/38fccbe2-37d6-42af-8a90-538f77376419/full/1024,/0/default.jpg",
+      "type": "Image",
+      "height": 685,
+      "width": 1024,
+      "service": [
+        {
+          "id": "https://dlc.services/thumbs/v3/7/19/38fccbe2-37d6-42af-8a90-538f77376419",
+          "type": "ImageService3",
+          "profile": "level0",
+          "sizes": [
+            {
+              "width": 100,
+              "height": 67
+            },
+            {
+              "width": 200,
+              "height": 134
+            },
+            {
+              "width": 400,
+              "height": 268
+            },
+            {
+              "width": 1024,
+              "height": 685
+            }
+          ],
+          "@context": "http://iiif.io/api/image/3/context.json"
+        }
+      ],
+      "format": "image/jpeg"
+    }
+  ],
+  "items": [
+    {
+      "id": "https://dlc.services/iiif-img/7/19/38fccbe2-37d6-42af-8a90-538f77376419/canvas/c/1",
+      "type": "Canvas",
+      "label": {
+        "nl": [
+          "Canvas 1"
+        ]
+      },
+      "height": 685,
+      "width": 1024,
+      "requiredStatement": {
+        "label": {
+          "nl": [
+            "Attribution"
+          ]
+        },
+        "value": {
+          "nl": [
+            "<span>TU Delft Science Centre. <a href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\">CC BY-NC-ND 4.0</a> <a href=\"https://creativecommons.org/licenses/by-nc-nd/4.0/\" title=\"CC BY-NC-ND 4.0\"><img src=\"https://licensebuttons.net/l/by-nc-nd/4.0/88x31.png\"/></a></span>"
+          ]
+        }
+      },
+      "rights": "https://creativecommons.org/licenses/by-nc-nd/4.0/",
+      "thumbnail": [
+        {
+          "id": "https://dlc.services/thumbs/7/19/38fccbe2-37d6-42af-8a90-538f77376419/full/1024,/0/default.jpg",
+          "type": "Image",
+          "height": 685,
+          "width": 1024,
+          "service": [
+            {
+              "id": "https://dlc.services/thumbs/v3/7/19/38fccbe2-37d6-42af-8a90-538f77376419",
+              "type": "ImageService3",
+              "profile": "level0",
+              "sizes": [
+                {
+                  "width": 100,
+                  "height": 67
+                },
+                {
+                  "width": 200,
+                  "height": 134
+                },
+                {
+                  "width": 400,
+                  "height": 268
+                },
+                {
+                  "width": 1024,
+                  "height": 685
+                }
+              ],
+              "@context": "http://iiif.io/api/image/3/context.json"
+            }
+          ],
+          "format": "image/jpeg"
+        }
+      ],
+      "items": [
+        {
+          "id": "https://dlc.services/iiif-img/7/19/38fccbe2-37d6-42af-8a90-538f77376419/canvas/c/1/page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://dlc.services/iiif-img/7/19/38fccbe2-37d6-42af-8a90-538f77376419/canvas/c/1/page/image",
+              "type": "Annotation",
+              "motivation": "painting",
+              "body": {
+                "id": "https://dlc.services/iiif-img/7/19/38fccbe2-37d6-42af-8a90-538f77376419/full/full/0/default.jpg",
+                "type": "Image",
+                "height": 685,
+                "width": 1024,
+                "service": [
+                  {
+                    "id": "https://dlc.services/iiif-img/v3/7/19/38fccbe2-37d6-42af-8a90-538f77376419",
+                    "type": "ImageService3",
+                    "profile": "level2",
+                    "width": 7376,
+                    "height": 4937,
+                    "@context": "http://iiif.io/api/image/3/context.json"
+                  }
+                ],
+                "format": "image/jpeg"
+              },
+              "target": "https://dlc.services/iiif-img/7/19/38fccbe2-37d6-42af-8a90-538f77376419/canvas/c/1"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
