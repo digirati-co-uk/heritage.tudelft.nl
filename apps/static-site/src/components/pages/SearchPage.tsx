@@ -13,7 +13,7 @@ export function SearchPage({ title, locale }: { title: string; locale: string })
       <div>
         <h1 className="mb-4 mt-6 text-3xl font-medium leading-tight text-gray-900">{title}</h1>
 
-        <SearchWrapper routing>
+        <SearchWrapper routing seedKey="heritage-search-seed">
           {(facets) => (
             <>
               <SearchBox

@@ -42,8 +42,12 @@ export default block(
   function FramePanel(props: z.infer<typeof boxProps>) {
     const [isOpen, setIsOpen] = useState(false);
     const titleSize = props.small ? "md:text-xl" : "text-2xl md:text-4xl";
+    const titleClamp = props.small ? "line-clamp-4" : "line-clamp-3";
     const filters = props.unfiltered ? "" : "grayscale";
     const fallbackBackground = props.fallbackBackgroundColor || "bg-yellow-400";
+    const backgroundColorBlend = props.backgroundImage
+      ? "mix-blend-multiply"
+      : "";
     const height = props.fullHeight ? "h-full" : "aspect-square";
 
     if (!props.frameUrl) return null;
@@ -65,7 +69,9 @@ export default block(
           <div className="text-md text-center font-mono uppercase">
             {props.type || " "}
           </div>
-          <div className={`mx-auto text-center ${titleSize} font-medium`}>
+          <div
+            className={`mx-auto max-w-full overflow-hidden hyphens-auto [hyphenate-limit-chars:12_4_6] [hyphenate-limit-last:always] [overflow-wrap:break-word] [word-break:normal] text-center ${titleSize} ${titleClamp} font-medium`}
+          >
             {props.title || " "}
           </div>
           <div className="text-center">{props.subtitle || " "}</div>
@@ -83,7 +89,7 @@ export default block(
           ) : null}
           {props.backgroundColor ? (
             <div
-              className={`safe-inset absolute inset-0 mix-blend-multiply ${props.backgroundColor} pointer-events-none`}
+              className={`safe-inset absolute inset-0 ${backgroundColorBlend} ${props.backgroundColor} pointer-events-none`}
             ></div>
           ) : null}
         </div>
