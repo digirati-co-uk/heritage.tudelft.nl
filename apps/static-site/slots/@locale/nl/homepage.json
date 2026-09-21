@@ -12,58 +12,20 @@
       }
     },
     {
-      "id": "tahrtf",
-      "type": "CardGrid",
-      "data": {},
-      "slots": {
-        "gridItems": {
-          "slot_id": "gridItems",
-          "blocks": [
-            {
-              "id": "srl2d",
-              "type": "PublicationBox",
-              "data": {
-                "type": "publication",
-                "title": "Martin Baker C-2 Ejection Seat",
-                "link": "/publications/ejection-seat",
-                "subtitle": "Cormac Duggan",
-                "backgroundImage": "https://dlc.services/thumbs/7/37/e7154d7e15c435b7341bce58bc42b9ad/full/full/0/default.jpg",
-                "backgroundColor": "bg-orange-400"
-              }
-            },
-            {
-              "id": "as4ci8",
-              "type": "FramePanel",
-              "data": {
-                "className": "",
-                "frameUrl": "https://tu-delft-heritage.github.io/campus-atlas/",
-                "thumbnail": "https://dlc.services/iiif-img/7/4/e85579cc-ddc7-4fab-bd3c-0884f48d1e6b/full/1000,/0/default.jpg",
-                "title": "Campus Atlas",
-                "subtitle": "Allmaps",
-                "type": "App",
-                "frameLabel": "Campus Atlas",
-                "frameDescription": "Explore the historical campus through a collection of maps, plans and photographs.",
-                "dark": false,
-                "small": false,
-                "unfiltered": false,
-                "backgroundImage": "https://dlc.services/thumbs/7/4/e85579cc-ddc7-4fab-bd3c-0884f48d1e6b/full/full/0/default.jpg",
-                "backgroundColor": "bg-blue-500"
-              }
-            },
-            {
-              "id": "ayp06m",
-              "type": "CollectionBox",
-              "data": {
-                "type": "collection",
-                "title": "Reuzenarbeid",
-                "link": "/collections/lib-tresor-reuzenarbeid",
-                "subtitle": "Trésor",
-                "backgroundImage": "https://dlc.services/thumbs/7/6/261f1de9-e515-4d11-bc08-3c15516d50f7/full/full/0/default.jpg",
-                "backgroundColor": "bg-yellow-400"
-              }
-            }
-          ]
-        }
+      "id": "homepage-search",
+      "type": "HomepageSearch",
+      "data": {
+        "title": "Uit de collecties",
+        "count": 6,
+        "includeMainCategories": true,
+        "useCategoryColors": true,
+        "objectColor": "bg-indigo-500",
+        "exhibitionColor": "bg-green-500",
+        "collectionColor": "bg-yellow-400",
+        "publicationColor": "bg-orange-500",
+        "randomizeCategorySlots": true,
+        "showShuffle": true,
+        "size": "medium"
       }
     }
   ]
