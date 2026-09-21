@@ -12,7 +12,7 @@ export function InfoBlockPresentation({ canvas, index, strategy }: InfoBlockProp
   const active = step?.canvasId === canvas.id;
 
   return (
-    <BaseSlide className={"bg-white flex items-center px-8 pb-8"} index={index} active={active}>
+    <BaseSlide className={"bg-white flex items-center p-8"} index={index} active={active}>
       <InfoBlockContents
         canvasId={canvas.id}
         fallback={

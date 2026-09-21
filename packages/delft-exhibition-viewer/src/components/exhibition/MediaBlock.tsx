@@ -27,8 +27,11 @@ export function MediaBlock(props: MediaBlockProps) {
   const [isOpen, setIsOpen] = useState(false);
   const thumbnail = useThumbnail({ width: 1024, height: 1024 });
   const media = props.strategy.media as SingleYouTubeVideo;
+  const openMedia = () => {
+    setIsOpen(true);
+  };
   const { pressProps } = usePress({
-    onPress: () => setIsOpen(true),
+    onPress: openMedia,
   });
   const { pressProps: closePressProps } = usePress({
     onPress: () => setIsOpen(false),
@@ -44,7 +47,7 @@ export function MediaBlock(props: MediaBlockProps) {
       index={props.index}
       scrollEnabled={props.scrollEnabled}
       fullWidthGrid={props.fullWidthGrid}
-      onSummaryClick={() => setIsOpen(true)}
+      onSummaryClick={openMedia}
     >
       <img
         {...pressProps}
@@ -55,48 +58,53 @@ export function MediaBlock(props: MediaBlockProps) {
       <Dialog className="exhibition-viewer exhibition-viewer-dialog" open={isOpen} onClose={() => setIsOpen(false)}>
         <div className="fixed modal-top left-0 right-0 bottom-0 bg-BackgroundOverlay" aria-hidden="true" />
         <div className="mobile-height fixed modal-top left-0 right-0 bottom-0 flex w-screen items-center p-4">
-          <button
-            className="absolute right-6 top-6 z-20 flex h-16 w-16 items-center justify-center rounded bg-ControlBar hover:bg-ControlHover"
-            {...closePressProps}
-          >
-            <CloseIcon fill="#fff" />
-          </button>
-          <Dialog.Panel className="relative flex h-full w-full flex-col justify-center overflow-y-auto overflow-x-hidden rounded bg-InfoBlock text-InfoBlockText">
-            <div className="relative w-full h-full flex-1">
-              {media.type === "VideoYouTube" ? (
-                <iframe
-                  title="YouTube video player"
-                  className="h-full w-full border-none object-cover"
-                  src={`https://www.youtube.com/embed/${(media as SingleYouTubeVideo).youTubeId}?enablejsapi=1&origin=${getWindowHost()}&modestbranding=1&rel=0`}
-                  // @ts-ignore
-                  referrerPolicy="no-referrer compute-pressure"
-                  sandbox="allow-scripts allow-same-origin allow-presentation"
-                />
-              ) : (
-                <Suspense>
-                  <IIIFMediaPlayer
-                    className="absolute bottom-0 left-0 right-0 top-0 z-10"
-                    poster={thumbnail?.id}
-                    // autoPlay
-                    media={{
-                      duration: media.duration,
-                      format: "video/mp4",
-                      url: media.url,
-                    }}
+          {/* Include the close control in the panel to avoid touchend closing it as an outside tap. */}
+          <Dialog.Panel className="h-full w-full">
+            <button
+              aria-label="Close"
+              type="button"
+              className="absolute right-6 top-6 z-20 flex h-16 w-16 items-center justify-center rounded bg-ControlBar hover:bg-ControlHover"
+              {...closePressProps}
+            >
+              <CloseIcon fill="#fff" />
+            </button>
+            <div className="relative flex h-full w-full flex-col justify-center overflow-y-auto overflow-x-hidden rounded bg-InfoBlock text-InfoBlockText">
+              <div className="relative w-full h-full flex-1">
+                {media.type === "VideoYouTube" ? (
+                  <iframe
+                    title="YouTube video player"
+                    className="h-full w-full border-none object-cover"
+                    src={`https://www.youtube.com/embed/${(media as SingleYouTubeVideo).youTubeId}?enablejsapi=1&origin=${getWindowHost()}&modestbranding=1&rel=0`}
+                    // @ts-ignore
+                    referrerPolicy="no-referrer compute-pressure"
+                    sandbox="allow-scripts allow-same-origin allow-presentation"
                   />
-                </Suspense>
-              )}
-            </div>
-            {label || summary ? (
-              <div className="p-8 text-InfoBlockText">
-                {label ? (
-                  <h3 className="mb-2 uppercase">
-                    <LocaleString>{label}</LocaleString>
-                  </h3>
-                ) : null}
-                <p>{summary ? <LocaleString>{summary}</LocaleString> : null}</p>
+                ) : (
+                  <Suspense>
+                    <IIIFMediaPlayer
+                      className="absolute bottom-0 left-0 right-0 top-0 z-10"
+                      poster={thumbnail?.id}
+                      // autoPlay
+                      media={{
+                        duration: media.duration,
+                        format: "video/mp4",
+                        url: media.url,
+                      }}
+                    />
+                  </Suspense>
+                )}
               </div>
-            ) : null}
+              {label || summary ? (
+                <div className="p-8 text-InfoBlockText">
+                  {label ? (
+                    <h3 className="mb-2 uppercase">
+                      <LocaleString>{label}</LocaleString>
+                    </h3>
+                  ) : null}
+                  <p>{summary ? <LocaleString>{summary}</LocaleString> : null}</p>
+                </div>
+              ) : null}
+            </div>
           </Dialog.Panel>
         </div>
       </Dialog>

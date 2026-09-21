@@ -30,17 +30,26 @@ export function TableOfContents({
   const currentItem = providedCurrentItem || findCurrentTableOfContentsItem(items, hash);
   let topLevelIndex = 0;
 
+  const getTargetElement = (item: TableOfContentsItem) =>
+    document.getElementById(item.targetId) ||
+    (item.canvasIndex !== undefined ? document.getElementById(getCanvasNavigationId(item.canvasIndex)) : null);
+
   const scrollToItem = (item: TableOfContentsItem) => {
-    const target =
-      document.getElementById(item.targetId) ||
-      (item.canvasIndex !== undefined ? document.getElementById(getCanvasNavigationId(item.canvasIndex)) : null);
+    const target = getTargetElement(item);
     if (!target) return false;
 
     const href = getTableOfContentsItemHref(item);
     const hashValue = href.startsWith("#") ? href.slice(1) : href;
-    scrollElementIntoViewInstantly(target, { block: "start" });
     window.history.pushState(null, "", href);
     setHash(hashValue);
+
+    window.requestAnimationFrame(() => {
+      const targetAfterClose = getTargetElement(item);
+      if (targetAfterClose) {
+        scrollElementIntoViewInstantly(targetAfterClose, { block: "start" });
+      }
+    });
+
     return true;
   };
 
@@ -104,9 +113,8 @@ export function TableOfContents({
                   href={getTableOfContentsItemHref(item)}
                   aria-current={active ? "location" : undefined}
                   onClick={(event) => {
-                    if (scrollToItem(item)) {
-                      event.preventDefault();
-                    }
+                    event.preventDefault();
+                    scrollToItem(item);
                   }}
                 >
                   {label}

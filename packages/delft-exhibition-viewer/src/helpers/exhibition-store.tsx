@@ -5,7 +5,7 @@ import { createContext, useContext } from "react";
 import invariant from "tiny-invariant";
 import { useStore } from "zustand";
 import { type StoreApi, createStore } from "zustand/vanilla";
-import type { ObjectLink } from "./object-links";
+import { type ObjectLink, normalizeImageServiceId } from "./object-links";
 
 export interface ExhibitionStep {
   canvasId: string;
@@ -151,23 +151,11 @@ function getCanvasTourSteps({
     }
 
     const objectLink = imageService
-      ? objectLinks.find((link) => {
-          if (link.service === imageService) {
-            return true;
-          }
-          // DLCS "canonical" hack.
-          if (imageService.replace("/iiif-img/v3/", "/iiif-img/") === link.service) {
-            return true;
-          }
-          if (imageService.replace("/iiif-img/v2/", "/iiif-img/") === link.service) {
-            return true;
-          }
-          if (imageService.replace("/thumbs/", "/iiif-img/") === link.service) {
-            return true;
-          }
-
-          return false;
-        }) || null
+      ? objectLinks.find(
+          (link) =>
+            link.canvasId === canvas.id &&
+            normalizeImageServiceId(link.service) === normalizeImageServiceId(imageService),
+        ) || null
       : null;
 
     steps.push({
