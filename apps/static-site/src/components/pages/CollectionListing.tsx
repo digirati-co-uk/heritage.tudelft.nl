@@ -1,13 +1,14 @@
 import { renderCollectionLabel } from "@/helpers/collection-label";
-import { IIIF_URL, loadCollection } from "@/iiif";
+import { loadCollection } from "@/iiif";
 import { getTranslations } from "next-intl/server";
 import { Box } from "../blocks/Box";
 import { AutoLanguage } from "./AutoLanguage";
 
-const siteCollections = await fetch(`${IIIF_URL}collections/site/collection.json`).then((r) => r.json());
-const allCollections = await fetch(`${IIIF_URL}collections/collection.json`).then((r) => r.json());
-
 export async function CollectionListing() {
+  const [{ collection: siteCollections }, { collection: allCollections }] = await Promise.all([
+    loadCollection("collections/site"),
+    loadCollection("collections"),
+  ]);
   const t = await getTranslations();
   const fallbackBg = "bg-cyan-500 group-hover:bg-cyan-600 transition-background duration-500 ease-in-out";
 
@@ -16,7 +17,7 @@ export async function CollectionListing() {
       <h2 className="my-5 text-2xl font-medium">{t("Curated collections")}</h2>
 
       <div className="mb-8 grid-cols-1 gap-0.5 md:grid md:grid-cols-4">
-        {siteCollections.items.map((collection: any) => {
+        {siteCollections?.items.map((collection: any) => {
           const id = (collection.id.split("/iiif/").pop() || "").replace("/manifest.json", "");
           const thumbnail = (collection.thumbnail || [])[0];
 
@@ -42,10 +43,10 @@ export async function CollectionListing() {
       <h2 className="my-5 text-2xl font-medium">{t("All Collections")}</h2>
 
       <div className="mb-8 grid-cols-1 gap-0.5 md:grid md:grid-cols-4">
-        {allCollections.items.map((collection: any) => {
+        {allCollections?.items.map((collection: any) => {
           const id = (collection.id.split("/iiif/").pop() || "").replace("/manifest.json", "");
           const slug = (collection as any)["hss:slug"];
-          if (!slug.startsWith("collections/")) return null;
+          if (!slug?.startsWith("collections/") || slug === "collections/stores") return null;
           const thumbnail = ((collection as any).thumbnail || [])[0];
 
           return (

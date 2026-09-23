@@ -32,15 +32,19 @@ Source code for the special collections and academic heritage website of Delft U
     pnpm run build
     ```
 
-    The IIIF app depends on the local `iiif-hss` workspace package. The root
-    build uses Turbo, so it builds `packages/headless-static-site` before
-    `apps/iiif`; no second `pnpm install` should be needed after the build.
+    The IIIF pipeline and the website build separately. Every build
+    script that runs can be found in `apps/iiif/scripts`; `builtInScripts: false` disables HSS defaults.
+    Edit the global and store-specific `run` lists in `apps/iiif/.iiifrc-base.yml`.
 
-    If you only want to rebuild the IIIF output directly, include its workspace
-    dependencies:
+    During this migration the IIIF app links to `../headless-static-site`. Install and
+    build that sibling repository first (`pnpm install && pnpm build` there).
+    Then build the IIIF output with:
 
     ```sh
-    pnpm --filter @repo/iiif... run build
+    pnpm --filter @repo/iiif run build
+    pnpm --filter @repo/iiif test
+    pnpm --filter @repo/iiif verify
+    pnpm --filter static-site exec node --test tests/iiif.test.mjs
     ```
 
     To start the development server run:
@@ -96,7 +100,7 @@ Before updating the index, rebuild the generated data that should be indexed:
 
 ```sh
 # From the monorepo root:
-pnpm --filter @repo/iiif... run build
+pnpm --filter @repo/iiif run build
 
 # If publication content changed:
 cd apps/static-site
@@ -146,27 +150,3 @@ Main branch is automatically deployed to the live site.
 [Live site](https://heritage.tudelft.nl/)
 
 [Changelog](https://github.com/digirati-co-uk/heritage.tudelft.nl/issues)
-
-## Updating Headless Static Site
-
-Ensure you have the headless static site origin:
-
-```sh
-git remote add -f hss git@github.com:digirati-co-uk/headless-static-site.git
-```
-
-Then you can pull changes using:
-
-```sh
-git subtree pull --prefix=packages/headless-static-site hss main
-```
-
-Or contribute changes back using:
-
-```sh
-git subtree push --prefix=packages/headless-static-site hss feature/my-feature
-```
-
-Where `feature/my-feature` is the name of a branch you want to push to the headless static site repository.
-
-Read more about this process here: https://www.atlassian.com/git/tutorials/git-subtree

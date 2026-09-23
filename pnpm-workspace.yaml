@@ -1,4 +1,6 @@
 packages:
   - "apps/*"
   - "packages/*"
-  - "packages/headless-static-site/examples/*"
+  - "!packages/headless-static-site"
+overrides:
+  "@atlas-viewer/atlas": "https://pkg.pr.new/atlas-viewer/atlas/@atlas-viewer/atlas@c7c1460"
