@@ -63,25 +63,43 @@
         "unitCode": "MMT",
         "value": 500
     },
-    "citation": "zie publicaties van de Nederlandse Commissie voor Geodesie voorheen Rijksciommisie voor Graadmeting en waterpassing.",
+    "citation": [
+        "zie publicaties van de Nederlandse Commissie voor Geodesie voorheen Rijksciommisie voor Graadmeting en waterpassing."
+    ],
     "isRelatedTo": {
         "@type": "CreativeWork",
         "name": "Theodoliet door Julius Wanschaff nr. 1",
         "sameAs": "https://heritage.tudelft.nl/iiif/manifests/c5cdff9e-95f1-441c-9694-b9ea31583b13/schema.json",
         "identifier": "2000.0103.GEO"
     },
-    "image": {
-        "@type": "ImageObject",
-        "contentUrl": {
-            "@context": "http://iiif.io/api/presentation/3/context.json",
-            "@id": "https://dlc.services/iiif-img/7/18/796fb615-9a02-4999-9c79-9f78f168e4fc",
-            "@type": "Image"
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/796fb615-9a02-4999-9c79-9f78f168e4fc",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/796fb615-9a02-4999-9c79-9f78f168e4fc/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2008.0012.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 9119
         },
-        "thumbnailUrl": "https://dlc.services/thumbs/7/18/796fb615-9a02-4999-9c79-9f78f168e4fc/full/full/0/default.jpg",
-        "encodingFormat": "https://iiif.io/api/image/3.0/",
-        "caption": "2008.0012.GEO.jpg",
-        "width": 1600,
-        "height": 1200,
-        "position": 9119
-    }
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/f0045987-07da-479c-a972-1c2c49627358",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/f0045987-07da-479c-a972-1c2c49627358/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2008.0012.GEO.JPG",
+            "width": 1600,
+            "height": 1200,
+            "position": 9120
+        }
+    ]
 }

@@ -47,18 +47,34 @@
         "unitCode": "MMT",
         "value": 100
     },
-    "image": {
-        "@type": "ImageObject",
-        "contentUrl": {
-            "@context": "http://iiif.io/api/presentation/3/context.json",
-            "@id": "https://dlc.services/iiif-img/7/18/ea75e965-3adb-4aa8-a4ad-2b2224bac4b9",
-            "@type": "Image"
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/ea75e965-3adb-4aa8-a4ad-2b2224bac4b9",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/ea75e965-3adb-4aa8-a4ad-2b2224bac4b9/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "Instructie prisma_01.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 9765
         },
-        "thumbnailUrl": "https://dlc.services/thumbs/7/18/ea75e965-3adb-4aa8-a4ad-2b2224bac4b9/full/full/0/default.jpg",
-        "encodingFormat": "https://iiif.io/api/image/3.0/",
-        "caption": "Instructie prisma_01.jpg",
-        "width": 1600,
-        "height": 1200,
-        "position": 9765
-    }
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/994dfe8a-2863-49f5-9ac8-083f7fc3b42d",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/994dfe8a-2863-49f5-9ac8-083f7fc3b42d/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "Instructie prisma_02.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 9766
+        }
+    ]
 }

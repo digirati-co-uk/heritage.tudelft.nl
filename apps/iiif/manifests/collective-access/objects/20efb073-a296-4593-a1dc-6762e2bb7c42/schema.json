@@ -46,25 +46,43 @@
         "unitCode": "MMT",
         "value": 70
     },
-    "citation": "NCG publicaties",
+    "citation": [
+        "NCG publicaties"
+    ],
     "isRelatedTo": {
         "@type": "CreativeWork",
         "name": "Eikenhouten piket",
         "sameAs": "https://heritage.tudelft.nl/iiif/manifests/7cc6c249-792d-408c-ab34-836c07364406/schema.json",
         "identifier": "2000.0133.GEO"
     },
-    "image": {
-        "@type": "ImageObject",
-        "contentUrl": {
-            "@context": "http://iiif.io/api/presentation/3/context.json",
-            "@id": "https://dlc.services/iiif-img/7/18/dbc39932-79f6-491f-a7dd-18c51d022a03",
-            "@type": "Image"
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/dbc39932-79f6-491f-a7dd-18c51d022a03",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/dbc39932-79f6-491f-a7dd-18c51d022a03/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0297.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 2993
         },
-        "thumbnailUrl": "https://dlc.services/thumbs/7/18/dbc39932-79f6-491f-a7dd-18c51d022a03/full/full/0/default.jpg",
-        "encodingFormat": "https://iiif.io/api/image/3.0/",
-        "caption": "2000.0297.GEO.jpg",
-        "width": 1600,
-        "height": 1200,
-        "position": 2993
-    }
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/bc8db049-c232-4f87-a835-4aa6d572258c",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/bc8db049-c232-4f87-a835-4aa6d572258c/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0297.GEO.a.JPG",
+            "width": 1600,
+            "height": 1200,
+            "position": 3138
+        }
+    ]
 }

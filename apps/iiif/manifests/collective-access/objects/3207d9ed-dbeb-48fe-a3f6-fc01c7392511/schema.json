@@ -39,7 +39,9 @@
         "unitCode": "MMT",
         "value": 250
     },
-    "citation": "Jaarverslagen Nederlandse Commissie voor Geodesie (NCG) vanaf 1906.",
+    "citation": [
+        "Jaarverslagen Nederlandse Commissie voor Geodesie (NCG) vanaf 1906."
+    ],
     "isRelatedTo": [
         {
             "@type": "CreativeWork",
@@ -66,18 +68,34 @@
             "identifier": "2000.0900.GEO"
         }
     ],
-    "image": {
-        "@type": "ImageObject",
-        "contentUrl": {
-            "@context": "http://iiif.io/api/presentation/3/context.json",
-            "@id": "https://dlc.services/iiif-img/7/18/e811958f-51e5-43bd-b693-04f6a3779caf",
-            "@type": "Image"
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/7c720c4b-04a2-4c5a-9fe6-a306162d5b3f",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/7c720c4b-04a2-4c5a-9fe6-a306162d5b3f/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2007.0182.GEO.JPG",
+            "width": 1600,
+            "height": 1200,
+            "position": 9105
         },
-        "thumbnailUrl": "https://dlc.services/thumbs/7/18/e811958f-51e5-43bd-b693-04f6a3779caf/full/full/0/default.jpg",
-        "encodingFormat": "https://iiif.io/api/image/3.0/",
-        "caption": "2007.0182.GEO.JPG",
-        "width": 1600,
-        "height": 1200,
-        "position": 9106
-    }
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/e811958f-51e5-43bd-b693-04f6a3779caf",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/e811958f-51e5-43bd-b693-04f6a3779caf/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2007.0182.GEO.JPG",
+            "width": 1600,
+            "height": 1200,
+            "position": 9106
+        }
+    ]
 }

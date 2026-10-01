@@ -48,17 +48,32 @@
         "unitCode": "CMT",
         "value": 2
     },
-    "image": {
-        "@type": "ImageObject",
-        "contentUrl": {
-            "@context": "http://iiif.io/api/presentation/3/context.json",
-            "@id": "https://dlc.services/iiif-img/7/18/8962a2e2-bc4e-4528-b9f5-0ab1dff09eca",
-            "@type": "Image"
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/8962a2e2-bc4e-4528-b9f5-0ab1dff09eca",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/8962a2e2-bc4e-4528-b9f5-0ab1dff09eca/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "width": 1600,
+            "height": 1200,
+            "position": 11934
         },
-        "thumbnailUrl": "https://dlc.services/thumbs/7/18/8962a2e2-bc4e-4528-b9f5-0ab1dff09eca/full/full/0/default.jpg",
-        "encodingFormat": "https://iiif.io/api/image/3.0/",
-        "width": 1600,
-        "height": 1200,
-        "position": 12438
-    }
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/f261ca1b-6802-4bc3-9897-8726494cc098",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/f261ca1b-6802-4bc3-9897-8726494cc098/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "width": 1600,
+            "height": 1200,
+            "position": 11935
+        }
+    ]
 }

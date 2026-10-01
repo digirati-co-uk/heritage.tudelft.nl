@@ -30,18 +30,48 @@
         "unitCode": "MMT",
         "value": 10
     },
-    "image": {
-        "@type": "ImageObject",
-        "contentUrl": {
-            "@context": "http://iiif.io/api/presentation/3/context.json",
-            "@id": "https://dlc.services/iiif-img/7/18/eda45871-effa-4e27-b92d-55c83869b17f",
-            "@type": "Image"
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/eda45871-effa-4e27-b92d-55c83869b17f",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/eda45871-effa-4e27-b92d-55c83869b17f/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0344.GEO.a.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3397
         },
-        "thumbnailUrl": "https://dlc.services/thumbs/7/18/eda45871-effa-4e27-b92d-55c83869b17f/full/full/0/default.jpg",
-        "encodingFormat": "https://iiif.io/api/image/3.0/",
-        "caption": "2000.0344.GEO.a.jpg",
-        "width": 1600,
-        "height": 1200,
-        "position": 3397
-    }
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/9626d445-ba1a-4237-b14a-e7fd62f9c462",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/9626d445-ba1a-4237-b14a-e7fd62f9c462/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0344.GEO.b.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3398
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/c56dbad5-8863-4680-aa5b-b7cf37927591",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/c56dbad5-8863-4680-aa5b-b7cf37927591/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0344.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3399
+        }
+    ]
 }

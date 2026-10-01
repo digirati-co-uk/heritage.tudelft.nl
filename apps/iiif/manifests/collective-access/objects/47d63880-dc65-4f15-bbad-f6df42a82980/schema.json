@@ -57,25 +57,43 @@
         "unitCode": "MMT",
         "value": 900
     },
-    "citation": "H.J. Buisman. Landmeten en Waterpassen 2e druk (Haarlem 1921) fig 222. Van de zelfde auteur de 1e druk 1910 met afbeelding op blz 168 met vier stelschroeven.",
+    "citation": [
+        "H.J. Buisman. Landmeten en Waterpassen 2e druk (Haarlem 1921) fig 222. Van de zelfde auteur de 1e druk 1910 met afbeelding op blz 168 met vier stelschroeven."
+    ],
     "isRelatedTo": {
         "@type": "CreativeWork",
         "name": "Waterpasstatief met een klemplaat door Troughton & Simms",
         "sameAs": "https://heritage.tudelft.nl/iiif/manifests/ec1cee77-20f9-43b7-9e3d-d6e2963340dc/schema.json",
         "identifier": "2005.0012.GEO"
     },
-    "image": {
-        "@type": "ImageObject",
-        "contentUrl": {
-            "@context": "http://iiif.io/api/presentation/3/context.json",
-            "@id": "https://dlc.services/iiif-img/7/18/26187aa1-aac2-43b9-9e99-347c4611a484",
-            "@type": "Image"
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/26187aa1-aac2-43b9-9e99-347c4611a484",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/26187aa1-aac2-43b9-9e99-347c4611a484/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0339.GEO.a.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3390
         },
-        "thumbnailUrl": "https://dlc.services/thumbs/7/18/26187aa1-aac2-43b9-9e99-347c4611a484/full/full/0/default.jpg",
-        "encodingFormat": "https://iiif.io/api/image/3.0/",
-        "caption": "2000.0339.GEO.a.jpg",
-        "width": 1600,
-        "height": 1200,
-        "position": 3390
-    }
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/8a1208a7-6216-41a2-b2b9-b07548c61c99",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/8a1208a7-6216-41a2-b2b9-b07548c61c99/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0339.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3391
+        }
+    ]
 }

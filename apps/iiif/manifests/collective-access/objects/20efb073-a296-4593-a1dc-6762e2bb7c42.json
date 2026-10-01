@@ -276,6 +276,66 @@
                     ]
                 }
             ]
+        },
+        {
+            "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/20efb073-a296-4593-a1dc-6762e2bb7c42/canvas/1",
+            "type": "Canvas",
+            "height": 200,
+            "width": 300,
+            "thumbnail": [
+                {
+                    "id": "https://dlc.services/thumbs/v3/7/18/bc8db049-c232-4f87-a835-4aa6d572258c/full/max/0/default.jpg",
+                    "type": "Image",
+                    "format": "image/jpeg",
+                    "service": [
+                        {
+                            "@context": "http://iiif.io/api/image/3/context.json",
+                            "id": "https://dlc.services/thumbs/v3/7/18/bc8db049-c232-4f87-a835-4aa6d572258c",
+                            "type": "ImageService3",
+                            "profile": "level0",
+                            "sizes": [
+                                {
+                                    "width": 200,
+                                    "height": 134
+                                },
+                                {
+                                    "width": 100,
+                                    "height": 67
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "items": [
+                {
+                    "id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/20efb073-a296-4593-a1dc-6762e2bb7c42/canvas/1/annotation-page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://dlc.services/iiif-img/v3/7/18/bc8db049-c232-4f87-a835-4aa6d572258c",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "target": "https://tu-delft-heritage.github.io/collective-access-data/iiif/objects/20efb073-a296-4593-a1dc-6762e2bb7c42/canvas/1",
+                            "body": {
+                                "id": "https://dlc.services/iiif-img/v3/7/18/bc8db049-c232-4f87-a835-4aa6d572258c/full/max/0/default.jpg",
+                                "type": "Image",
+                                "format": "image/jpeg",
+                                "height": 200,
+                                "width": 300,
+                                "service": [
+                                    {
+                                        "@context": "http://iiif.io/api/image/3/context.json",
+                                        "id": "https://dlc.services/iiif-img/v3/7/18/bc8db049-c232-4f87-a835-4aa6d572258c",
+                                        "type": "ImageService3",
+                                        "profile": "level2"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }

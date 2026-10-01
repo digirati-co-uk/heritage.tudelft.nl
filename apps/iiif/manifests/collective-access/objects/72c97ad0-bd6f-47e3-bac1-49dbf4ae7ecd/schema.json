@@ -54,18 +54,48 @@
         "unitCode": "MMT",
         "value": 50
     },
-    "image": {
-        "@type": "ImageObject",
-        "contentUrl": {
-            "@context": "http://iiif.io/api/presentation/3/context.json",
-            "@id": "https://dlc.services/iiif-img/7/18/2d1f01c0-0f04-48b6-be9f-cacd3bc92bf6",
-            "@type": "Image"
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/2d1f01c0-0f04-48b6-be9f-cacd3bc92bf6",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/2d1f01c0-0f04-48b6-be9f-cacd3bc92bf6/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2002.0015.CVB.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 1751
         },
-        "thumbnailUrl": "https://dlc.services/thumbs/7/18/2d1f01c0-0f04-48b6-be9f-cacd3bc92bf6/full/full/0/default.jpg",
-        "encodingFormat": "https://iiif.io/api/image/3.0/",
-        "caption": "2002.0015.CVB.jpg",
-        "width": 1600,
-        "height": 1200,
-        "position": 9029
-    }
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/03467bc0-b629-4365-a42a-25955baf74a7",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/03467bc0-b629-4365-a42a-25955baf74a7/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2002.0015.CVB.a.JPG",
+            "width": 1600,
+            "height": 1200,
+            "position": 1752
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/fc5f9966-749b-4b83-af10-ace40ef4b2d4",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/fc5f9966-749b-4b83-af10-ace40ef4b2d4/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2002.0015.CVB.b.JPG",
+            "width": 1600,
+            "height": 1200,
+            "position": 9029
+        }
+    ]
 }

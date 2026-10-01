@@ -63,7 +63,9 @@
         "unitCode": "MMT",
         "value": 210
     },
-    "citation": "In 1907 en 1908 is deze chronometer getest door Modderman (NCG) zie inhoud van de koffer van Vening Meinesz 2000900.",
+    "citation": [
+        "In 1907 en 1908 is deze chronometer getest door Modderman (NCG) zie inhoud van de koffer van Vening Meinesz 2000900."
+    ],
     "isRelatedTo": [
         {
             "@type": "CreativeWork",
@@ -84,18 +86,34 @@
             "identifier": "2007.0183.GEO"
         }
     ],
-    "image": {
-        "@type": "ImageObject",
-        "contentUrl": {
-            "@context": "http://iiif.io/api/presentation/3/context.json",
-            "@id": "https://dlc.services/iiif-img/7/18/cbd07d2f-0363-4510-b8c3-316a2b7e7d38",
-            "@type": "Image"
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/cbd07d2f-0363-4510-b8c3-316a2b7e7d38",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/cbd07d2f-0363-4510-b8c3-316a2b7e7d38/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0808.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3269
         },
-        "thumbnailUrl": "https://dlc.services/thumbs/7/18/cbd07d2f-0363-4510-b8c3-316a2b7e7d38/full/full/0/default.jpg",
-        "encodingFormat": "https://iiif.io/api/image/3.0/",
-        "caption": "2000.0808.GEO.jpg",
-        "width": 1600,
-        "height": 1200,
-        "position": 3270
-    }
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/442b60b9-18f7-4bb2-80ee-59d52f9b8078",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/442b60b9-18f7-4bb2-80ee-59d52f9b8078/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0808.GEO.a.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3270
+        }
+    ]
 }

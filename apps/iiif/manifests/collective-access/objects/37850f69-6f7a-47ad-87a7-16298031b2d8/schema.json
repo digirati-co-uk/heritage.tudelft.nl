@@ -36,18 +36,34 @@
         "sameAs": "https://heritage.tudelft.nl/iiif/manifests/70a104d5-fdcf-4793-afea-4e9a6587222e/schema.json",
         "identifier": "2003.0004.GEO"
     },
-    "image": {
-        "@type": "ImageObject",
-        "contentUrl": {
-            "@context": "http://iiif.io/api/presentation/3/context.json",
-            "@id": "https://dlc.services/iiif-img/7/18/6496983d-1423-405f-b5c1-8afb08946713",
-            "@type": "Image"
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/6496983d-1423-405f-b5c1-8afb08946713",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/6496983d-1423-405f-b5c1-8afb08946713/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0859.GEO.a.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3317
         },
-        "thumbnailUrl": "https://dlc.services/thumbs/7/18/6496983d-1423-405f-b5c1-8afb08946713/full/full/0/default.jpg",
-        "encodingFormat": "https://iiif.io/api/image/3.0/",
-        "caption": "2000.0859.GEO.a.jpg",
-        "width": 1600,
-        "height": 1200,
-        "position": 3317
-    }
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/d03c8afe-62de-4afc-a0f4-6f53b05502d2",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/d03c8afe-62de-4afc-a0f4-6f53b05502d2/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0859.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3318
+        }
+    ]
 }

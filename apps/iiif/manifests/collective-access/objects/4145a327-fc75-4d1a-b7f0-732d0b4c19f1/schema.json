@@ -39,7 +39,9 @@
         "unitCode": "MMT",
         "value": 510
     },
-    "citation": "http://www.inghist.nl/Onderzoek/Projecten/BWN/lemmata/bwn2/meinesz",
+    "citation": [
+        "http://www.inghist.nl/Onderzoek/Projecten/BWN/lemmata/bwn2/meinesz"
+    ],
     "isRelatedTo": [
         {
             "@type": "CreativeWork",
@@ -54,18 +56,48 @@
             "identifier": "2007.0183.GEO"
         }
     ],
-    "image": {
-        "@type": "ImageObject",
-        "contentUrl": {
-            "@context": "http://iiif.io/api/presentation/3/context.json",
-            "@id": "https://dlc.services/iiif-img/7/18/129cf70d-a63c-4333-9f94-ed1ff62ca423",
-            "@type": "Image"
+    "image": [
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/129cf70d-a63c-4333-9f94-ed1ff62ca423",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/129cf70d-a63c-4333-9f94-ed1ff62ca423/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0456.GEO.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3063
         },
-        "thumbnailUrl": "https://dlc.services/thumbs/7/18/129cf70d-a63c-4333-9f94-ed1ff62ca423/full/full/0/default.jpg",
-        "encodingFormat": "https://iiif.io/api/image/3.0/",
-        "caption": "2000.0456.GEO.jpg",
-        "width": 1600,
-        "height": 1200,
-        "position": 3065
-    }
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/099f0933-b4d5-41b7-b708-53e9cf07ec35",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/099f0933-b4d5-41b7-b708-53e9cf07ec35/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0456.GEO.a.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3064
+        },
+        {
+            "@type": "ImageObject",
+            "contentUrl": {
+                "@context": "http://iiif.io/api/presentation/3/context.json",
+                "@id": "https://dlc.services/iiif-img/7/18/61280921-603b-468c-a591-51e9b03ba7d1",
+                "@type": "Image"
+            },
+            "thumbnailUrl": "https://dlc.services/thumbs/7/18/61280921-603b-468c-a591-51e9b03ba7d1/full/full/0/default.jpg",
+            "encodingFormat": "https://iiif.io/api/image/3.0/",
+            "caption": "2000.0456.GEO.b.jpg",
+            "width": 1600,
+            "height": 1200,
+            "position": 3065
+        }
+    ]
 }
