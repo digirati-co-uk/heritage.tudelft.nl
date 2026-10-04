@@ -1,10 +1,14 @@
 import { Link } from "@/i18n/navigation";
-import type { InternationalString } from "@iiif/presentation-3";
+import type { Collection, InternationalString } from "@iiif/presentation-3";
+import { useTranslations } from "next-intl";
+import { AutoLanguage } from "../pages/AutoLanguage";
 
 export function SearchHit({
   hit,
 }: {
   hit: {
+    partOf?: Collection["partOf"];
+    background?: string;
     type: string;
     thumbnail: string;
     label: string;
@@ -13,6 +17,8 @@ export function SearchHit({
     _highlightResult: any;
   };
 }) {
+  const t = useTranslations();
+  const parent = hit.partOf?.[hit.partOf.length - 1];
   const url = `/${hit.slug}`;
   const result = hit._highlightResult as any;
   return (
@@ -43,6 +49,22 @@ export function SearchHit({
             className="prose prose-xl leading-snug md:leading-normal"
             dangerouslySetInnerHTML={{ __html: result.plaintext.value }}
           />
+        )}
+        {parent && (
+          <p className="mt-4 flex flex-wrap items-center gap-2 text-sm">
+            {t("Part of")}
+            <Link
+              href={
+                parent["hss:slug"]
+                  ? `/${parent["hss:slug"]}`
+                  : parent.id.replace(/^.*\/collections\/(.+)\/collection\.json$/, "/collections/$1")
+              }
+              className="px-2 py-1 text-black underline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+              style={{ backgroundColor: parent.background || hit.background || "var(--card-color)" }}
+            >
+              <AutoLanguage>{parent.label}</AutoLanguage>
+            </Link>
+          </p>
         )}
       </section>
     </article>

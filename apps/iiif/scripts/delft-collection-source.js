@@ -1,4 +1,6 @@
 import { extract } from "iiif-hss";
+import { join } from "node:path";
+import { writeFile } from "node:fs/promises";
 
 extract(
   {

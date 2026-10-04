@@ -8,11 +8,18 @@
   },
   "scripts": {
     "build": "iiif-hss build --out ./build --scripts ./scripts",
-    "dev": "IIIF_URL=http://localhost:7111 bun exec iiif-hss-dev"
+    "dev": "IIIF_URL=http://localhost:7111 iiif-hss-dev",
+    "test": "node --test tests/*.test.js",
+    "verify": "node tests/verify-build.js"
   },
   "dependencies": {
     "@iiif/helpers": "^1.2.19",
-    "iiif-hss": "workspace:*",
+    "@iiif/parser": "^2.2.13",
+    "iiif-hss": "https://pkg.pr.new/digirati-co-uk/headless-static-site/iiif-hss@7f47f4c",
+    "micromatch": "^4.0.5",
+    "slug": "^8.2.3",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7",
     "yaml": "^2.7.0"
   }
 }

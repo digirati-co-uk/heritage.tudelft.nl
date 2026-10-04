@@ -37,10 +37,6 @@ jobs:
           node-version: 24
           cache: "pnpm"
 
-      - name: Build HSS
-        working-directory: packages/headless-static-site
-        run: pnpm run build
-
       - uses: actions/cache@v6
         with:
           path: |

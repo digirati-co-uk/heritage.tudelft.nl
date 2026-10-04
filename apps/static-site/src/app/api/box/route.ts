@@ -56,6 +56,7 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
     const collectionItems = [...siteCollections.items, ...allCollections.items];
 
     for (const item of collectionItems) {
+      if (!item["hss:slug"]?.startsWith("collections/") || item["hss:slug"] === "collections/stores") continue;
       let label = getValue(item.label, { fallbackLanguages: ["nl", "en"] });
       if (!label) {
         label = ((item.label && item.label.nl) || [
