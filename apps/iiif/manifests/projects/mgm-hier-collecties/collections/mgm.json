@@ -1,0 +1,51 @@
+{
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    "id": "http://localhost:8000/output/collections/mgm.json",
+    "type": "Collection",
+    "label": {
+        "nl": [
+            "Mineralogisch Geologisch Museum"
+        ],
+        "en": [
+            "Mineralogical Geological Museum"
+        ]
+    },
+    "items": [
+        {
+            "id": "http://localhost:8000/output/collections/stories.json",
+            "label": {
+                "nl": [
+                    "MGM Verhalen"
+                ],
+                "en": [
+                    "MGM Stories"
+                ]
+            },
+            "type": "Collection"
+        },
+        {
+            "id": "http://localhost:8000/output/collections/minerals.json",
+            "label": {
+                "nl": [
+                    "Mineralen"
+                ],
+                "en": [
+                    "Minerals"
+                ]
+            },
+            "type": "Collection"
+        },
+        {
+            "id": "http://localhost:8000/output/collections/26_09_10/expeditieverslagen.json",
+            "label": {
+                "nl": [
+                    "Expeditieverslagen"
+                ],
+                "en": [
+                    "Expedition reports"
+                ]
+            },
+            "type": "Collection"
+        }
+    ]
+}

@@ -1,0 +1,51 @@
+{
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    "id": "http://localhost:8000/output/collections/minerals.json",
+    "type": "Collection",
+    "label": {
+        "nl": [
+            "Mineralen"
+        ],
+        "en": [
+            "Minerals"
+        ]
+    },
+    "items": [
+        {
+            "id": "http://localhost:8000/output/collections/all_minerals.json",
+            "label": {
+                "nl": [
+                    "Volledige Mineralen Collectie Mineralogisch Geologisch Museum"
+                ],
+                "en": [
+                    "Full Mineral Collection Mineralogical Geological Museum"
+                ]
+            },
+            "type": "Collection"
+        },
+        {
+            "id": "http://localhost:8000/output/collections/by_group.json",
+            "label": {
+                "nl": [
+                    "Mineraalcollectie per Strunz Classificatie Groep"
+                ],
+                "en": [
+                    "Mineralcollection per Strunz Classification Group"
+                ]
+            },
+            "type": "Collection"
+        },
+        {
+            "id": "http://localhost:8000/output/collections/26_09_10/by_vitrine.json",
+            "label": {
+                "nl": [
+                    "Mineralen per vitrine in het museum"
+                ],
+                "en": [
+                    "Minerals by display case in the museum"
+                ]
+            },
+            "type": "Collection"
+        }
+    ]
+}
