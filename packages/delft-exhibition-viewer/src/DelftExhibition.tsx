@@ -110,9 +110,8 @@ export function DelftExhibitionInner(props: DelftExhibitionProps) {
   );
   const firstRangeTitleCanvasIndex = useMemo(
     () =>
-      tableOfContentsItems.find(
-        (item) => item.type === "Range" && item.depth === 0 && item.canvasIndex !== undefined,
-      )?.canvasIndex,
+      tableOfContentsItems.find((item) => item.type === "Range" && item.depth === 0 && item.canvasIndex !== undefined)
+        ?.canvasIndex,
     [tableOfContentsItems],
   );
 
@@ -183,18 +182,23 @@ export function DelftExhibitionInner(props: DelftExhibitionProps) {
         <Dialog className="exhibition-viewer exhibition-viewer-dialog" open={enabled} onClose={() => setEnabled(false)}>
           <div className="fixed modal-top left-0 right-0 bg-black/30" aria-hidden="true" />
           <div className="mobile-height fixed modal-top left-0 bottom-0 right-0 flex w-screen items-center lg:p-4">
-            <button
-              className="absolute top-3 right-3 lg:right-8 lg:top-8 z-30 flex h-8 w-8 items-center justify-center rounded bg-CloseBackground text-CloseText hover:bg-CloseBackgroundHover"
-              {...closeButtonProps}
-            >
-              <CloseIcon fill="currentColor" />
-            </button>
-            <Dialog.Panel className="relative flex h-full w-full justify-center overflow-y-auto overflow-x-hidden rounded bg-white">
-              {enabled ? (
-                <Suspense>
-                  <Presentation {...props} options={{ autoPlay: true }} />
-                </Suspense>
-              ) : null}
+            {/* Include the close control in the panel to avoid touchend closing it as an outside tap. */}
+            <Dialog.Panel className="h-full w-full">
+              <button
+                type="button"
+                aria-label="Close"
+                className="absolute top-3 right-3 lg:right-8 lg:top-8 z-30 flex h-8 w-8 items-center justify-center rounded bg-CloseBackground text-CloseText hover:bg-CloseBackgroundHover"
+                {...closeButtonProps}
+              >
+                <CloseIcon fill="currentColor" />
+              </button>
+              <div className="relative flex h-full w-full justify-center overflow-y-auto overflow-x-hidden rounded bg-white">
+                {enabled ? (
+                  <Suspense>
+                    <Presentation {...props} options={{ autoPlay: true }} />
+                  </Suspense>
+                ) : null}
+              </div>
             </Dialog.Panel>
           </div>
         </Dialog>
@@ -277,16 +281,16 @@ export function DelftExhibitionInner(props: DelftExhibitionProps) {
               "textual-content": ({ index, canvas, strategy }) => (
                 <>
                   {renderRangeTitles(index)}
-                    <InfoBlock
-                      scrollEnabled={!enabled}
-                      index={index}
-                      firstInfo={fullTitleBar && index === 1}
-                      canvas={canvas}
-                      strategy={strategy}
-                      content={{
-                        readMore: props.content?.readMore || "Read more",
-                      }}
-                    />
+                  <InfoBlock
+                    scrollEnabled={!enabled}
+                    index={index}
+                    firstInfo={fullTitleBar && index === 1}
+                    canvas={canvas}
+                    strategy={strategy}
+                    content={{
+                      readMore: props.content?.readMore || "Read more",
+                    }}
+                  />
                 </>
               ),
 

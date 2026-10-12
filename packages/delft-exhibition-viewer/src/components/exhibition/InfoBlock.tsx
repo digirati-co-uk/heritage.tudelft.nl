@@ -47,7 +47,8 @@ export function InfoBlock({ id, index, canvas, strategy, firstInfo, scrollEnable
       id={id || `${index}`}
       className={twMerge(
         "cut-corners bg-InfoBlock p-6 text-InfoBlockText",
-        hasReadMoreContent && "exhibition-summary-click-target cursor-pointer transition-colors duration-150 hover:bg-[#242424]",
+        hasReadMoreContent &&
+          "exhibition-summary-click-target cursor-pointer transition-colors duration-150 hover:bg-[#242424]",
         className,
       )}
       onClick={openReadMoreFromBlock}
@@ -76,11 +77,7 @@ export function InfoBlock({ id, index, canvas, strategy, firstInfo, scrollEnable
               </div>
             }
           >
-            <ReadMoreBlock
-              label={readMoreLabel}
-              isOpen={isReadMoreOpen}
-              onOpenChange={setIsReadMoreOpen}
-            />
+            <ReadMoreBlock label={readMoreLabel} isOpen={isReadMoreOpen} onOpenChange={setIsReadMoreOpen} />
           </Suspense>
         ) : (
           ""
