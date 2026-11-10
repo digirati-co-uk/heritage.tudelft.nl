@@ -1,0 +1,61 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/5cf522b7-b5b8-4d0c-922e-74abd3bb560e/schema.json",
+    "name": "Delfts blauwe vaas met achtkantige deksel",
+    "description": "Vaas van Delfts blauw aardewerk. Het oppervlak van de vaas is voorzien van verticale ribbels. De voet is rond, de opening is achthoekig, evenals het deksel, dat bekroond wordt door een leeuwtje.",
+    "identifier": "2002.0046.CVB",
+    "temporalCoverage": "1880/1899",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "vaas"
+    },
+    "material": {
+        "@type": "Product",
+        "name": "aardewerk",
+        "sameAs": "http://vocab.getty.edu/aat/300140803"
+    },
+    "creator": {
+        "@type": "Role",
+        "roleName": "maker",
+        "creator": {
+            "@type": "Organization",
+            "name": "De Koninklijke  Porceleyne Fles"
+        }
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "CMT",
+        "value": 38
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "CMT",
+        "value": 19
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "CMT",
+        "value": 19
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/47e0e797-4512-4377-b486-9e10355ff918",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/47e0e797-4512-4377-b486-9e10355ff918/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2002.0046.CVB.JPG",
+        "width": 1600,
+        "height": 1200,
+        "position": 1807
+    },
+    "isPartOf": [
+        {
+            "@id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/collections/7b35ae59-1507-447a-a9ac-4641a7bf24b1.json",
+            "@type": "Collection"
+        }
+    ]
+}

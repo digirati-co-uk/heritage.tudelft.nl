@@ -1,0 +1,68 @@
+{
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "@id": "https://heritage.tudelft.nl/iiif/manifests/215f5072-1dc9-42a2-812c-a4dc1d638b3f/schema.json",
+    "name": "Delfts blauwe vaas met ronde deksel",
+    "description": "Vaas van Delfts blauw aardewerk met achthoekige voet en ronde opening.",
+    "identifier": "2002.0034.CVB",
+    "temporalCoverage": "1880/1899",
+    "exampleOfWork": {
+        "@type": "CreativeWork",
+        "name": "vaas"
+    },
+    "material": {
+        "@type": "Product",
+        "name": "aardewerk",
+        "sameAs": "http://vocab.getty.edu/aat/300140803"
+    },
+    "creator": {
+        "@type": "Role",
+        "roleName": "producent",
+        "creator": {
+            "@type": "Organization",
+            "name": "De Koninklijke  Porceleyne Fles"
+        }
+    },
+    "locationCreated": {
+        "@type": "Place",
+        "address": "Delft, Nederland",
+        "latitude": 51.99968,
+        "longitude": 4.36405,
+        "sameAs": "https://www.geonames.org/2757344"
+    },
+    "height": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 495
+    },
+    "width": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 255
+    },
+    "depth": {
+        "@type": "QuantitativeValue",
+        "unitCode": "MMT",
+        "value": 255
+    },
+    "image": {
+        "@type": "ImageObject",
+        "contentUrl": {
+            "@context": "http://iiif.io/api/presentation/3/context.json",
+            "@id": "https://dlc.services/iiif-img/7/18/c70e5f42-41f0-46d1-bdb2-03a12bcc3338",
+            "@type": "Image"
+        },
+        "thumbnailUrl": "https://dlc.services/thumbs/7/18/c70e5f42-41f0-46d1-bdb2-03a12bcc3338/full/full/0/default.jpg",
+        "encodingFormat": "https://iiif.io/api/image/3.0/",
+        "caption": "2002.0034.CVB.jpg",
+        "width": 1600,
+        "height": 1200,
+        "position": 1789
+    },
+    "isPartOf": [
+        {
+            "@id": "https://tu-delft-heritage.github.io/collective-access-data/iiif/collections/7b35ae59-1507-447a-a9ac-4641a7bf24b1.json",
+            "@type": "Collection"
+        }
+    ]
+}
