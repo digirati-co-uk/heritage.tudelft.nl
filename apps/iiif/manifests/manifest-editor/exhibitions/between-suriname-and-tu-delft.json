@@ -1,0 +1,1419 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/manifest.json",
+  "type": "Manifest",
+  "behavior": [
+    "fullpage",
+    "template-exhibition-fullpage"
+  ],
+  "label": {
+    "en": [
+      "Between Suriname and TU Delft"
+    ]
+  },
+  "summary": {
+    "en": [
+      "Five stories of study, work and connection"
+    ]
+  },
+  "thumbnail": [
+    {
+      "id": "https://dlc.services/iiif-img/v3/7/21/f453ee340cefe84074022d6582ef5444/full/400,/0/default.jpg",
+      "type": "Image",
+      "format": "image/jpeg",
+      "service": [
+        {
+          "id": "https://dlc.services/iiif-img/v3/7/21/f453ee340cefe84074022d6582ef5444",
+          "type": "ImageService3",
+          "profile": "level2"
+        }
+      ]
+    }
+  ],
+  "service": [
+    {
+      "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft#exhibition-viewer-theme",
+      "type": "Service",
+      "profile": "https://exhibitionviewer.org/iiif/theme-service",
+      "label": {
+        "en": [
+          "Exhibition viewer theme"
+        ]
+      },
+      "theme": {
+        "version": 1,
+        "preset": "delft",
+        "shared": {
+          "fontSans": "\"Tahoma\", \"Fira Sans\", sans-serif",
+          "fontMono": "\"Fira Mono\", monospace",
+          "titleTransform": "uppercase"
+        },
+        "delft": {
+          "tokens": {
+            "backgroundPrimary": "#e5e7eb",
+            "backgroundSecondary": "#fff",
+            "backgroundOverlay": "rgba(0, 0, 0, 0.3)",
+            "textPrimary": "#fff",
+            "textSecondary": "#000",
+            "imageCaption": "#fff",
+            "annotationSelected": "#facc15",
+            "controlBar": "#6d6e70",
+            "controlBarBorder": "#5a5b5d",
+            "controlHover": "rgba(0, 0, 0, 0.1)",
+            "progressBar": "#fff",
+            "closeBackground": "#000",
+            "closeBackgroundHover": "#373737",
+            "closeText": "#fff",
+            "titleCard": "#facc15",
+            "titleCardText": "#000",
+            "infoBlock": "#000",
+            "infoBlockText": "#fff",
+            "viewerBackground": "#373737"
+          },
+          "exhibition": {
+            "cutCorners": true,
+            "fullTitleBar": false,
+            "fullWidthGrid": false,
+            "hideTableOfContents": false,
+            "tableOfContentsPlacement": "footer",
+            "showProgressBar": true,
+            "showProgressTableOfContents": true,
+            "showNavigationControls": true,
+            "disablePresentation": false,
+            "hideTitle": false,
+            "hideTitleCard": false,
+            "alternativeImageMode": true,
+            "transitionScale": false,
+            "imageInfoIcon": false,
+            "coverImages": false,
+            "ignoreCanvasBackgrounds": false
+          },
+          "presentation": {
+            "cutCorners": false,
+            "isFloating": false,
+            "floatingPosition": "bottom-left",
+            "labelOnlyFloating": true,
+            "ignoreCanvasBackgrounds": false
+          },
+          "slideshow": {
+            "alternativeImageMode": true,
+            "transitionScale": false,
+            "imageInfoIcon": false,
+            "coverImages": false,
+            "ignoreCanvasBackgrounds": false
+          }
+        },
+        "scroll": {
+          "tokens": {
+            "titleBackground": "#fff",
+            "titleColor": "#444",
+            "annotationBackground": "#fff",
+            "annotationColor": "#333",
+            "annotationRadius": "0px",
+            "annotationMaxWidth": "30em",
+            "infoBlockBackground": "#fff",
+            "infoBlockColor": "#444"
+          },
+          "options": {
+            "showTitleBlock": true,
+            "showTableOfContents": false,
+            "tableOfContentsPlacement": "header",
+            "showProgressBar": true,
+            "showProgressTableOfContents": true,
+            "showScrollToTop": true,
+            "showNavigationControls": true,
+            "ignoreCanvasBackgrounds": false,
+            "titleBlock": {
+              "fullHeight": true
+            }
+          }
+        }
+      }
+    }
+  ],
+  "items": [
+    {
+      "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/01",
+      "type": "Canvas",
+      "width": 1800,
+      "height": 720,
+      "behavior": [
+        "image",
+        "w-12",
+        "h-5"
+      ],
+      "label": {
+        "en": [
+          "Between Suriname and TU Delft"
+        ]
+      },
+      "summary": {
+        "en": [
+          "Stills from the five films. New Media Centre, TU Delft."
+        ]
+      },
+      "items": [
+        {
+          "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/01/page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/01/page/image",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/01",
+              "body": {
+                "id": "https://dlc.services/iiif-img/v3/7/21/f453ee340cefe84074022d6582ef5444/full/max/0/default.jpg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "width": 1800,
+                "height": 720,
+                "service": [
+                  {
+                    "id": "https://dlc.services/iiif-img/v3/7/21/f453ee340cefe84074022d6582ef5444",
+                    "type": "ImageService3",
+                    "profile": "level2"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/02",
+      "type": "Canvas",
+      "width": 1000,
+      "height": 1000,
+      "behavior": [
+        "info",
+        "w-12",
+        "h-2"
+      ],
+      "label": {
+        "en": [
+          "Between Suriname and TU Delft"
+        ]
+      },
+      "items": [
+        {
+          "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/02/page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/02/page/text",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/02",
+              "body": [
+                {
+                  "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/02/page/text/en",
+                  "type": "TextualBody",
+                  "format": "text/html",
+                  "language": "en",
+                  "value": "<p>In 2025 Suriname marked fifty years of independence. Sanjeev Ramsoekh, a student from Suriname, asked whether TU Delft would also look back on its own ties with the country. This exhibition is the answer. Students, staff and alumni of TU Delft tell what the link between Suriname and TU Delft means to them, now and over the generations.</p>"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/04",
+      "type": "Canvas",
+      "width": 1000,
+      "height": 1000,
+      "behavior": [
+        "info",
+        "w-12",
+        "h-2"
+      ],
+      "label": {
+        "en": [
+          "Six people, five films"
+        ]
+      },
+      "items": [
+        {
+          "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/04/page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/04/page/text",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/04",
+              "body": [
+                {
+                  "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/04/page/text/en",
+                  "type": "TextualBody",
+                  "format": "text/html",
+                  "language": "en",
+                  "value": "<p>Six people tell their own story in five short films. Five of them grew up in Suriname. Achmed Neijhorst studied computer science in Delft from 1987 to 1992, and his son Jordy studies here now. Nitesh Bharosa came to Delft around 2000 and is now a professor at TU Delft. Shenaya Rocha-Dalger studied architecture, and Sanjeev Ramsoekh is finishing his master’s in civil engineering. Hillebrand Ehrenburg went the other way. In 1983, as a young civil engineer from Delft, he started work at the Ministry of Public Works in Paramaribo.</p><p>They talk about how they came to Delft, what they ran into there, and what TU Delft could mean for Suriname. The films were recorded in 2026, in Dutch with English subtitles. Below them is a short history of the ties between Suriname and Delft.</p>"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/05",
+      "type": "Canvas",
+      "width": 1600,
+      "height": 900,
+      "behavior": [
+        "w-8",
+        "h-6"
+      ],
+      "label": {
+        "en": [
+          "Thrown in at the deep end"
+        ]
+      },
+      "thumbnail": [
+        {
+          "id": "https://i.ytimg.com/vi/CY1iPkH3r9c/maxresdefault.jpg",
+          "type": "Image",
+          "format": "image/jpeg",
+          "width": 1280,
+          "height": 720
+        }
+      ],
+      "items": [
+        {
+          "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/05/page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/05/page/video",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/05#xywh=0,0,1600,900",
+              "label": {
+                "en": [
+                  "Thrown in at the deep end"
+                ]
+              },
+              "body": {
+                "id": "https://www.youtube.com/watch?v=CY1iPkH3r9c",
+                "type": "Video",
+                "service": [
+                  {
+                    "profile": "http://digirati.com/objectifier",
+                    "params": {
+                      "data": "https://www.youtube.com/embed/CY1iPkH3r9c"
+                    }
+                  },
+                  {
+                    "id": "https://www.youtube.com/watch?v=CY1iPkH3r9c",
+                    "profile": "https://www.youtube.com"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/06",
+      "type": "Canvas",
+      "width": 1000,
+      "height": 1000,
+      "behavior": [
+        "info",
+        "w-4",
+        "h-6"
+      ],
+      "label": {
+        "en": [
+          "Hillebrand Ehrenburg"
+        ]
+      },
+      "items": [
+        {
+          "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/06/page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/06/page/text",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/06",
+              "body": [
+                {
+                  "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/06/page/text/en",
+                  "type": "TextualBody",
+                  "format": "text/html",
+                  "language": "en",
+                  "value": "<p>Hillebrand Ehrenburg’s grandfather and five of his six uncles had studied in Delft. He chose civil engineering, a field in which you sometimes got to work outdoors. After graduating in 1982 he applied for a job at the Ministry of Public Works in Paramaribo. In November he went to Suriname to help organise a joint congress of Delft and the University of Suriname. On the morning after it closed, he woke up in a guesthouse near Fort Zeelandia to heavy gunfire: the December murders had begun. Back in the Netherlands, he expected the job to be off. At the end of January a letter came from the Surinamese embassy: the job was his. Despite the political situation, he went anyway, and stayed for three years. Later, as a consulting engineer, he supervised Delft students who did their graduation projects in Suriname. Looking back on that first job, in which he was put straight in charge of a small section with no one to guide him, he says: “I was really thrown in at the deep end.”</p>"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/07",
+      "type": "Canvas",
+      "width": 1000,
+      "height": 1000,
+      "behavior": [
+        "info",
+        "w-4",
+        "h-5"
+      ],
+      "label": {
+        "en": [
+          "Achmed and Jordy Neijhorst"
+        ]
+      },
+      "items": [
+        {
+          "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/07/page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/07/page/text",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/07",
+              "body": [
+                {
+                  "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/07/page/text/en",
+                  "type": "TextualBody",
+                  "format": "text/html",
+                  "language": "en",
+                  "value": "<p>Achmed Neijhorst was six when Suriname became independent. His parents took him to the stadium where, at midnight, the Dutch flag was lowered and the Surinamese flag raised. From 1987 to 1992 he studied computer science in Delft. Surinamese students had complained to the student housing foundation that they lost out when rooms were allocated, and were given two floors of their own. Achmed lived for a while in the one on the Van Hasseltlaan. His son Jordy, who is nineteen, now lives in the other, on the Korvezeestraat. Jordy wants to gain experience in Europe first and then take it back home: “I want to give something back to Suriname.”</p>"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/08",
+      "type": "Canvas",
+      "width": 1600,
+      "height": 900,
+      "behavior": [
+        "w-8",
+        "h-5"
+      ],
+      "label": {
+        "en": [
+          "Something to give back"
+        ]
+      },
+      "thumbnail": [
+        {
+          "id": "https://i.ytimg.com/vi/wokSG_PZPIY/maxresdefault.jpg",
+          "type": "Image",
+          "format": "image/jpeg",
+          "width": 1280,
+          "height": 720
+        }
+      ],
+      "items": [
+        {
+          "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/08/page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/08/page/video",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/08#xywh=0,0,1600,900",
+              "label": {
+                "en": [
+                  "Something to give back"
+                ]
+              },
+              "body": {
+                "id": "https://www.youtube.com/watch?v=wokSG_PZPIY",
+                "type": "Video",
+                "service": [
+                  {
+                    "profile": "http://digirati.com/objectifier",
+                    "params": {
+                      "data": "https://www.youtube.com/embed/wokSG_PZPIY"
+                    }
+                  },
+                  {
+                    "id": "https://www.youtube.com/watch?v=wokSG_PZPIY",
+                    "profile": "https://www.youtube.com"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/09",
+      "type": "Canvas",
+      "width": 1600,
+      "height": 900,
+      "behavior": [
+        "w-8",
+        "h-5"
+      ],
+      "label": {
+        "en": [
+          "Standing up for who you are"
+        ]
+      },
+      "thumbnail": [
+        {
+          "id": "https://i.ytimg.com/vi/-C6UFBK1ul0/maxresdefault.jpg",
+          "type": "Image",
+          "format": "image/jpeg",
+          "width": 1280,
+          "height": 720
+        }
+      ],
+      "items": [
+        {
+          "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/09/page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/09/page/video",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/09#xywh=0,0,1600,900",
+              "label": {
+                "en": [
+                  "Standing up for who you are"
+                ]
+              },
+              "body": {
+                "id": "https://www.youtube.com/watch?v=-C6UFBK1ul0",
+                "type": "Video",
+                "service": [
+                  {
+                    "profile": "http://digirati.com/objectifier",
+                    "params": {
+                      "data": "https://www.youtube.com/embed/-C6UFBK1ul0"
+                    }
+                  },
+                  {
+                    "id": "https://www.youtube.com/watch?v=-C6UFBK1ul0",
+                    "profile": "https://www.youtube.com"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/10",
+      "type": "Canvas",
+      "width": 1000,
+      "height": 1000,
+      "behavior": [
+        "info",
+        "w-4",
+        "h-5"
+      ],
+      "label": {
+        "en": [
+          "Shenaya Rocha-Dalger"
+        ]
+      },
+      "items": [
+        {
+          "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/10/page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/10/page/text",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/10",
+              "body": [
+                {
+                  "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/10/page/text/en",
+                  "type": "TextualBody",
+                  "format": "text/html",
+                  "language": "en",
+                  "value": "<p>Shenaya Rocha-Dalger first heard about TU Delft at secondary school in Suriname, when students from Delft came to talk about it. She wanted to combine drawing, buildings and people, and chose architecture. She was the only Surinamese student in her year. Like other students from Suriname, she paid the full fee and received no Dutch student finance. She failed her first courses: a new way of teaching, new terms, “a whole different world”. After her bachelor’s and master’s she is now getting ready to apply for jobs. She hopes TU Delft can help Suriname with its roads and its ageing buildings. What she takes with her is “standing up for who I am”.</p>"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/11",
+      "type": "Canvas",
+      "width": 1000,
+      "height": 1000,
+      "behavior": [
+        "info",
+        "w-4",
+        "h-5"
+      ],
+      "label": {
+        "en": [
+          "Nitesh Bharosa"
+        ]
+      },
+      "items": [
+        {
+          "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/11/page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/11/page/text",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/11",
+              "body": [
+                {
+                  "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/11/page/text/en",
+                  "type": "TextualBody",
+                  "format": "text/html",
+                  "language": "en",
+                  "value": "<p>Nitesh Bharosa was born and raised in Suriname. Around 2000 he wanted to study digitalisation, which Suriname did not yet offer. He arrived in Delft at eighteen, in autumn, in the cold and the rain. On his first day he headed for the tall building he knew from pictures and ended up at IKEA. Fellow students asked whether he spoke Dutch, and where Suriname was. Many people in the Netherlands, he realised, did not know that Suriname had long been a Dutch colony. Today he is professor of GovTech at TU Delft. He looks for ways to connect knowledge in Delft with questions in Suriname, as equal partners. To the next generation he says: “Don’t be afraid. Go for it.”</p>"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/12",
+      "type": "Canvas",
+      "width": 1600,
+      "height": 900,
+      "behavior": [
+        "w-8",
+        "h-5"
+      ],
+      "label": {
+        "en": [
+          "Don’t be afraid. Go for it."
+        ]
+      },
+      "thumbnail": [
+        {
+          "id": "https://i.ytimg.com/vi/2ztvtHnLwIg/maxresdefault.jpg",
+          "type": "Image",
+          "format": "image/jpeg",
+          "width": 1280,
+          "height": 720
+        }
+      ],
+      "items": [
+        {
+          "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/12/page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/12/page/video",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/12#xywh=0,0,1600,900",
+              "label": {
+                "en": [
+                  "Don’t be afraid. Go for it."
+                ]
+              },
+              "body": {
+                "id": "https://www.youtube.com/watch?v=2ztvtHnLwIg",
+                "type": "Video",
+                "service": [
+                  {
+                    "profile": "http://digirati.com/objectifier",
+                    "params": {
+                      "data": "https://www.youtube.com/embed/2ztvtHnLwIg"
+                    }
+                  },
+                  {
+                    "id": "https://www.youtube.com/watch?v=2ztvtHnLwIg",
+                    "profile": "https://www.youtube.com"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/13",
+      "type": "Canvas",
+      "width": 1600,
+      "height": 900,
+      "behavior": [
+        "w-8",
+        "h-5"
+      ],
+      "label": {
+        "en": [
+          "That’s where I belong"
+        ]
+      },
+      "thumbnail": [
+        {
+          "id": "https://i.ytimg.com/vi/xPPr-8PLRnY/maxresdefault.jpg",
+          "type": "Image",
+          "format": "image/jpeg",
+          "width": 1280,
+          "height": 720
+        }
+      ],
+      "items": [
+        {
+          "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/13/page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/13/page/video",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/13#xywh=0,0,1600,900",
+              "label": {
+                "en": [
+                  "That’s where I belong"
+                ]
+              },
+              "body": {
+                "id": "https://www.youtube.com/watch?v=xPPr-8PLRnY",
+                "type": "Video",
+                "service": [
+                  {
+                    "profile": "http://digirati.com/objectifier",
+                    "params": {
+                      "data": "https://www.youtube.com/embed/xPPr-8PLRnY"
+                    }
+                  },
+                  {
+                    "id": "https://www.youtube.com/watch?v=xPPr-8PLRnY",
+                    "profile": "https://www.youtube.com"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/14",
+      "type": "Canvas",
+      "width": 1000,
+      "height": 1000,
+      "behavior": [
+        "info",
+        "w-4",
+        "h-5"
+      ],
+      "label": {
+        "en": [
+          "Sanjeev Ramsoekh"
+        ]
+      },
+      "items": [
+        {
+          "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/14/page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/14/page/text",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/14",
+              "body": [
+                {
+                  "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/14/page/text/en",
+                  "type": "TextualBody",
+                  "format": "text/html",
+                  "language": "en",
+                  "value": "<p>Sanjeev Ramsoekh grew up in Suriname. Some of his uncles had studied in Delft. From his secondary school almost everyone went to the Netherlands, and a large group to Delft. He took his bachelor’s in civil engineering and is now finishing his master’s. In Delft he found fellow students who were fans of physics, as he was: “That’s where I belong.” Many engineers in Suriname who have never been to the Netherlands draw their moment diagrams the Dutch way, because their teachers studied in Delft. A video about Surinamese alumni of the University of Amsterdam made Sanjeev wonder whether something similar existed for TU Delft. That question led to this exhibition.</p>"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/15",
+      "type": "Canvas",
+      "width": 1000,
+      "height": 1000,
+      "behavior": [
+        "info",
+        "w-12",
+        "h-3"
+      ],
+      "label": {
+        "en": [
+          "Background: Suriname and Delft"
+        ]
+      },
+      "items": [
+        {
+          "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/15/page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/15/page/text",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/15",
+              "body": [
+                {
+                  "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/15/page/text/en",
+                  "type": "TextualBody",
+                  "format": "text/html",
+                  "language": "en",
+                  "value": "<p>Suriname was a Dutch colony from 1667. Its plantations, which grew sugar, coffee and cotton, were worked by enslaved people, most of them brought from Africa. Slavery was abolished in 1863, but the formerly enslaved had to go on working on the plantations under state supervision until 1873. From the 1850s, and above all after abolition, contract workers were brought in from China, British India and Java. In 1954 Suriname became an autonomous country within the Kingdom of the Netherlands, and on 25 November 1975 it became independent.</p>"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/24",
+      "type": "Canvas",
+      "width": 1000,
+      "height": 1000,
+      "behavior": [
+        "info",
+        "w-8",
+        "h-4"
+      ],
+      "label": {
+        "en": [
+          "1853: the first student born in Suriname"
+        ]
+      },
+      "items": [
+        {
+          "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/24/page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/24/page/text",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/24",
+              "body": [
+                {
+                  "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/24/page/text/en",
+                  "type": "TextualBody",
+                  "format": "text/html",
+                  "language": "en",
+                  "value": "<p>The ties go back a long way. In 1853 François James Tyndall, who was born in Suriname, enrolled at the Royal Academy in Delft, the predecessor of TU Delft. He took courses there to prepare for the civil service in the Dutch East Indies, where he later became a judge. Since then, students from Suriname have come to Delft, and engineers from Delft have gone to work in Suriname.</p>"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/03",
+      "type": "Canvas",
+      "width": 2412,
+      "height": 1796,
+      "behavior": [
+        "image",
+        "w-4",
+        "h-4"
+      ],
+      "label": {
+        "en": [
+          "François James Tyndall in the register, 1853"
+        ]
+      },
+      "summary": {
+        "en": [
+          "François James Tyndall, born in Nickerie in 1831, was the first student born in Suriname to enrol in Delft. The register of the Royal Academy records his enrolment on 12 September 1853. Nationaal Archief, The Hague, 3.12.08.04, inv. no. 3."
+        ]
+      },
+      "items": [
+        {
+          "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/03/page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/03/page/image",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/03",
+              "body": {
+                "id": "https://dlc.services/iiif-img/v3/7/21/d7aed02ee60ffe10aac1ca9f48f652e2/full/max/0/default.jpg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "width": 2412,
+                "height": 1796,
+                "service": [
+                  {
+                    "id": "https://dlc.services/iiif-img/v3/7/21/d7aed02ee60ffe10aac1ca9f48f652e2",
+                    "type": "ImageService3",
+                    "profile": "level2"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/16",
+      "type": "Canvas",
+      "width": 2012,
+      "height": 1866,
+      "behavior": [
+        "image",
+        "w-4",
+        "h-4"
+      ],
+      "label": {
+        "en": [
+          "The Royal Academy, 1864"
+        ]
+      },
+      "summary": {
+        "en": [
+          "The ‘funeral’ of the Royal Academy on the night of 30 June to 1 July 1864: some sixty students paraded along the Oude Delft with torches and music. Etching by Cornelis van der Griendt. Rijksmuseum, Amsterdam."
+        ]
+      },
+      "items": [
+        {
+          "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/16/page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/16/page/image",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/16",
+              "body": {
+                "id": "https://iiif.micr.io/tvZzA/full/max/0/default.jpg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "width": 2012,
+                "height": 1866,
+                "service": [
+                  {
+                    "id": "https://iiif.micr.io/tvZzA",
+                    "type": "ImageService3",
+                    "profile": "level2"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/17",
+      "type": "Canvas",
+      "width": 1000,
+      "height": 1000,
+      "behavior": [
+        "info",
+        "w-8",
+        "h-4"
+      ],
+      "label": {
+        "en": [
+          "1864–1905: a handful of students"
+        ]
+      },
+      "items": [
+        {
+          "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/17/page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/17/page/text",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/17",
+              "body": [
+                {
+                  "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/17/page/text/en",
+                  "type": "TextualBody",
+                  "format": "text/html",
+                  "language": "en",
+                  "value": "<p>Suriname had no university of its own until 1968. Families who wanted their children to become engineers, or fully qualified lawyers and doctors, sent them to the Netherlands. Few of them went to Delft. Between 1864 and 1905, eighteen students born in Suriname enrolled there, against 696 born in the Dutch East Indies. Delft trained its engineers above all for the East Indies. Of the 55 mining engineers who graduated between 1850 and 1900, 53 went to the East Indies and one to Suriname.</p>"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/18",
+      "type": "Canvas",
+      "width": 1000,
+      "height": 1000,
+      "behavior": [
+        "info",
+        "w-8",
+        "h-4"
+      ],
+      "label": {
+        "en": [
+          "1951–1976: more students come"
+        ]
+      },
+      "items": [
+        {
+          "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/18/page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/18/page/text",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/18",
+              "body": [
+                {
+                  "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/18/page/text/en",
+                  "type": "TextualBody",
+                  "format": "text/html",
+                  "language": "en",
+                  "value": "<p>After the Second World War, more students came. From 1951 Surinamese students could receive a government grant, on condition that they work in Suriname for five years after graduating. Companies such as Philips and, later, AKZO bought off that obligation for those who had become engineers in Delft. In 1954, 24 Surinamese students were enrolled at Delft Technical College, as TU Delft was then called. Among Surinamese students in the Netherlands, only medicine drew more. In the spring of 1976 the Technical College had some six hundred foreign students, out of roughly 9,500 in all. About five hundred of them came from what was then called the Third World, mainly from Suriname, Indonesia and the Netherlands Antilles.</p>"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/19",
+      "type": "Canvas",
+      "width": 2619,
+      "height": 2569,
+      "behavior": [
+        "image",
+        "w-4",
+        "h-4"
+      ],
+      "label": {
+        "en": [
+          "Zanderij, 1947"
+        ]
+      },
+      "summary": {
+        "en": [
+          "KLM crew and passengers at Zanderij airport, Suriname, 1947. Photo: Willem van de Poll, Nationaal Archief (CC0)."
+        ]
+      },
+      "items": [
+        {
+          "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/19/page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/19/page/image",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/19",
+              "body": {
+                "id": "https://service.archief.nl/iip/iipsrv?IIIF=/a4/f6/db/cd/2a/80/4a/36/8a/a5/93/0f/f4/8e/1b/dd/a1babe03-52d7-4a75-a486-486be556248b.jp2/full/max/0/default.jpg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "width": 2619,
+                "height": 2569,
+                "service": [
+                  {
+                    "id": "https://service.archief.nl/iip/iipsrv?IIIF=/a4/f6/db/cd/2a/80/4a/36/8a/a5/93/0f/f4/8e/1b/dd/a1babe03-52d7-4a75-a486-486be556248b.jp2",
+                    "type": "ImageService3",
+                    "profile": "level2"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/20",
+      "type": "Canvas",
+      "width": 2576,
+      "height": 1574,
+      "behavior": [
+        "image",
+        "w-8",
+        "h-6"
+      ],
+      "label": {
+        "en": [
+          "Visit from Paramaribo, 1980"
+        ]
+      },
+      "summary": {
+        "en": [
+          "The President Curator, chancellor and rector of the University of Suriname visiting the Technical College, 6 October 1980. TU Delft Library, heritage collections."
+        ]
+      },
+      "items": [
+        {
+          "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/20/page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/20/page/image",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/20",
+              "body": {
+                "id": "https://dlc.services/iiif-img/v3/7/21/25efce2d2a75e192c2a10c6d95637d28/full/max/0/default.jpg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "width": 2576,
+                "height": 1574,
+                "service": [
+                  {
+                    "id": "https://dlc.services/iiif-img/v3/7/21/25efce2d2a75e192c2a10c6d95637d28",
+                    "type": "ImageService3",
+                    "profile": "level2"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/21",
+      "type": "Canvas",
+      "width": 1000,
+      "height": 1000,
+      "behavior": [
+        "info",
+        "w-4",
+        "h-6"
+      ],
+      "label": {
+        "en": [
+          "1976–1989: cooperation, broken and resumed"
+        ]
+      },
+      "items": [
+        {
+          "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/21/page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/21/page/text",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/21",
+              "body": [
+                {
+                  "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/21/page/text/en",
+                  "type": "TextualBody",
+                  "format": "text/html",
+                  "language": "en",
+                  "value": "<p>From 1976 the department of Civil Engineering prepared joint research with the young University of Suriname, on rivers and road building. In December 1982, ten people from Delft attended a congress in Paramaribo, where an agreement on cooperation was to be signed. In the night after the congress closed, the military regime arrested fifteen of its opponents, among them three staff members of the University of Suriname. They were tortured and killed in Fort Zeelandia. Delft called its staff and students back and suspended the cooperation. In February 1989, after democracy had been restored in Suriname, the dean of Civil Engineering signed a declaration of intent in Paramaribo. Delft would help to rebuild the faculty of engineering, starting with chalk, paper, lecture notes, a portable computer and a printer.</p>"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/22",
+      "type": "Canvas",
+      "width": 1000,
+      "height": 1000,
+      "behavior": [
+        "info",
+        "w-12",
+        "h-2"
+      ],
+      "label": {
+        "en": [
+          "Today"
+        ]
+      },
+      "items": [
+        {
+          "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/22/page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/22/page/text",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/22",
+              "body": [
+                {
+                  "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/22/page/text/en",
+                  "type": "TextualBody",
+                  "format": "text/html",
+                  "language": "en",
+                  "value": "<p>Today about 150 TU Delft alumni live in Suriname, according to the Alumni Office, and students from Suriname still come to Delft. Nitesh Bharosa hopes that TU Delft will keep reflecting on these ties, not only in an anniversary year.</p>"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/23",
+      "type": "Canvas",
+      "width": 1000,
+      "height": 1000,
+      "behavior": [
+        "info",
+        "w-12",
+        "h-3"
+      ],
+      "label": {
+        "en": [
+          "Colophon"
+        ]
+      },
+      "items": [
+        {
+          "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/23/page",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/23/page/text",
+              "type": "Annotation",
+              "motivation": "painting",
+              "target": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/23",
+              "body": [
+                {
+                  "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/23/page/text/en",
+                  "type": "TextualBody",
+                  "format": "text/html",
+                  "language": "en",
+                  "value": "<p>Interviews: Anouk Dijkstra (Alumni Office), Klaas P. van der Tempel (Studium Generale) and Abel Streefland (TU Delft Library)</p><p>Recording and editing: New Media Centre, TU Delft</p><p>Text: Abel Streefland</p><p>Website: Jules Schoonman</p><p>A project of TU Delft Library, Studium Generale and the TU Delft Alumni Office, 2026.</p><p>With thanks to Hillebrand Ehrenburg, Achmed and Jordy Neijhorst, Shenaya Rocha-Dalger, Nitesh Bharosa and Sanjeev Ramsoekh.</p>"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "structures": [
+    {
+      "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/range/toc",
+      "type": "Range",
+      "label": {
+        "en": [
+          "Table of contents"
+        ]
+      },
+      "items": [
+        {
+          "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/range/intro",
+          "type": "Range",
+          "label": {
+            "en": [
+              "Introduction"
+            ]
+          },
+          "items": [
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/01",
+              "type": "Canvas"
+            },
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/02",
+              "type": "Canvas"
+            },
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/04",
+              "type": "Canvas"
+            }
+          ]
+        },
+        {
+          "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/range/hillebrand",
+          "type": "Range",
+          "label": {
+            "en": [
+              "Hillebrand Ehrenburg"
+            ]
+          },
+          "items": [
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/05",
+              "type": "Canvas"
+            },
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/06",
+              "type": "Canvas"
+            }
+          ]
+        },
+        {
+          "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/range/neijhorst",
+          "type": "Range",
+          "label": {
+            "en": [
+              "Achmed and Jordy Neijhorst"
+            ]
+          },
+          "items": [
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/07",
+              "type": "Canvas"
+            },
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/08",
+              "type": "Canvas"
+            }
+          ]
+        },
+        {
+          "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/range/shenaya",
+          "type": "Range",
+          "label": {
+            "en": [
+              "Shenaya Rocha-Dalger"
+            ]
+          },
+          "items": [
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/09",
+              "type": "Canvas"
+            },
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/10",
+              "type": "Canvas"
+            }
+          ]
+        },
+        {
+          "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/range/nitesh",
+          "type": "Range",
+          "label": {
+            "en": [
+              "Nitesh Bharosa"
+            ]
+          },
+          "items": [
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/11",
+              "type": "Canvas"
+            },
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/12",
+              "type": "Canvas"
+            }
+          ]
+        },
+        {
+          "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/range/sanjeev",
+          "type": "Range",
+          "label": {
+            "en": [
+              "Sanjeev Ramsoekh"
+            ]
+          },
+          "items": [
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/13",
+              "type": "Canvas"
+            },
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/14",
+              "type": "Canvas"
+            }
+          ]
+        },
+        {
+          "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/range/background",
+          "type": "Range",
+          "label": {
+            "en": [
+              "Suriname and Delft"
+            ]
+          },
+          "items": [
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/15",
+              "type": "Canvas"
+            },
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/24",
+              "type": "Canvas"
+            },
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/03",
+              "type": "Canvas"
+            },
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/16",
+              "type": "Canvas"
+            },
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/17",
+              "type": "Canvas"
+            },
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/18",
+              "type": "Canvas"
+            },
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/19",
+              "type": "Canvas"
+            },
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/20",
+              "type": "Canvas"
+            },
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/21",
+              "type": "Canvas"
+            },
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/22",
+              "type": "Canvas"
+            }
+          ]
+        },
+        {
+          "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/range/colophon",
+          "type": "Range",
+          "label": {
+            "en": [
+              "Colophon"
+            ]
+          },
+          "items": [
+            {
+              "id": "https://heritage.tudelft.nl/iiif/manifests/between-suriname-and-tu-delft/canvas/23",
+              "type": "Canvas"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
